@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Application extends Model
 {
     use HasFactory;
+    public function plan(){
+        return $this->belongsTo(Plan::class);
+    }
 }
