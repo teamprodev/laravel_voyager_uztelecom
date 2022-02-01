@@ -123,7 +123,7 @@
 
                         </div><!-- panel-body -->
 
-                        <div class="panel-footer">
+                        <div class="panel-footer text-center">
                             @section('submit-buttons')
                                 <button type="submit" class="btn btn-primary save">{{ __('voyager::generic.save') }}</button>
                             @stop
