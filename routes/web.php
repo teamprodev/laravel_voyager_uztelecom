@@ -21,5 +21,5 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
-    Route::get('login', [VoyagerAuthController::class, 'login'])->name('voyager.login');
+//    Route::get('login', [VoyagerAuthController::class, 'login'])->name('voyager.login');
 });
