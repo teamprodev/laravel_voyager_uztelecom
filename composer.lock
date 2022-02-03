@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "671e3daf0e8f633d390bf35a474b7146",
+    "content-hash": "6c6cb2ab5e6d219fdc3a3cea59c19e57",
     "packages": [
         {
             "name": "arrilot/laravel-widgets",
@@ -71,6 +71,50 @@
                 "source": "https://github.com/arrilot/laravel-widgets/tree/3.13.1"
             },
             "time": "2020-09-20T19:56:38+00:00"
+        },
+        {
+            "name": "asadbek/eimzo",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Asadbekinha/eimzo.git",
+                "reference": "d5fb1e347431592639377f0d98d715601803c708"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Asadbekinha/eimzo/zipball/d5fb1e347431592639377f0d98d715601803c708",
+                "reference": "d5fb1e347431592639377f0d98d715601803c708",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Asadbek\\Eimzo\\Providers\\EimzoServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Asadbek\\Eimzo\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Asadbekinha",
+                    "email": "fayzulloevasadbek@gmail.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/Asadbekinha/eimzo/issues",
+                "source": "https://github.com/Asadbekinha/eimzo/tree/master"
+            },
+            "time": "2022-02-03T06:18:25+00:00"
         },
         {
             "name": "asm89/stack-cors",
@@ -8600,12 +8644,14 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "asadbek/eimzo": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.0.0"
 }

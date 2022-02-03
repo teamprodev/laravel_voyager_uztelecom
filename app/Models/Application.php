@@ -12,11 +12,11 @@ class Application extends Model
         return $this->belongsTo(Plan::class);
     }
     public function scopeUser(){
-        $user = auth()->user();
-        switch ($user->role_id) {
-            case 1: {
-
-            } break;
-        }
+//        $user = auth()->user();
+//        switch ($user->role_id) {
+//            case 1: {
+//
+//            } break;
+//        }
     }
 }

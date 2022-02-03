@@ -129,6 +129,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/larapack/doctrine-support" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/arrilot/laravel-widgets" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/tcg/voyager" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/asadbek/eimzo" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

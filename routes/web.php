@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\VoyagerAuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,4 +21,5 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
+    Route::get('login', [VoyagerAuthController::class, 'login'])->name('voyager.login');
 });
