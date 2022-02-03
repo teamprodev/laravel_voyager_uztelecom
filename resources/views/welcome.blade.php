@@ -17,7 +17,7 @@
                         <a href="/admin" class="text-lg p-4">Авторизоваться</a>
 
 
-                            <a href="#" class="text-lg p-4">Регистрация</a>
+                            <a href="/register" class="text-lg p-4">Регистрация</a>
 
 
 
