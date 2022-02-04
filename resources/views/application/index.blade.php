@@ -14,11 +14,11 @@
 
 <div class="w-full flex">
     <div class="w-2/12 h-screen bg-blue-400">
-        @include('application.sidebar')
+        @include('site.dashboard.sidebar')
     </div>
     <div class="w-10/12">
         <div>
-            @include('application.navbar')
+            @include('site.dashboard.navbar')
         </div>
         <div>
             @yield('content')
