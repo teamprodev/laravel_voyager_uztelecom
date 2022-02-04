@@ -31,7 +31,7 @@ class CreateApplicationJob implements ShouldQueue
     /**
      * Execute the job.
      *
-     * @return void
+     * @return Application
      */
     public function handle()
     {
@@ -42,7 +42,9 @@ class CreateApplicationJob implements ShouldQueue
             $application->save();
         } catch (\Exception $exception){
             DB::rollBack();
+            throw $exception;
         }
         DB::commit();
+        return $application;
     }
 }

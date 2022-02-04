@@ -29,7 +29,7 @@ class ApplicationController extends Controller
     }
     public function store(ApplicationRequest $request){
         try {
-            $this->dispatchNow(new CreateApplicationJob(ApplicationData::fill($request->all()), $request));
+            $this->dispatchNow(new CreateApplicationJob($request));
             return redirect()->route('site.applications.index')->with('success', trans('site.application_success'));
         } catch (\Exception $e) {
             return redirect()->back()->with('danger', trans('site.application_failed'));
