@@ -29,9 +29,11 @@ Route::get('/register', function () {
     return view('register');
 });
 
-Route::get('/application', function () {
-    return view('applications.main');
+Route::get('/site', function () {
+    return view('site.applications.index');
 });
+
+
 Auth::routes();
 
 Route::group(
