@@ -1,4 +1,4 @@
-@extends('application.index')
+@extends('applications.index')
 
 @section('content')
     <div class="w-11/12 mx-auto shadow-md mt-6">
