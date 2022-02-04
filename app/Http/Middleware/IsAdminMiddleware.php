@@ -21,7 +21,7 @@ class IsAdminMiddleware
             return $next($request);
         }
         if(in_array(auth()->user()->role_id, [1, 2])){
-            
+
         }
 
     }
