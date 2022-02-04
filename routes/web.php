@@ -28,6 +28,9 @@ Route::get('/register', function () {
     return view('register');
 });
 
+Route::get('/application', function () {
+    return view('application.main');
+});
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
