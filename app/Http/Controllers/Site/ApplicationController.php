@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Site;
 
 use App\Http\Requests\ApplicationRequest;
+use App\Jobs\CreateApplicationJob;
 use App\Models\Application;
+use App\Structures\ApplicationData;
 use Illuminate\Http\Request;
 
 class ApplicationController extends Controller
@@ -26,6 +28,11 @@ class ApplicationController extends Controller
         return view('site.applications.create');
     }
     public function store(ApplicationRequest $request){
-        return "Store";
+        try {
+            $this->dispatchNow(new CreateApplicationJob(ApplicationData::fill($request->all()), $request));
+            return redirect()->route('site.applications.index')->with('success', trans('site.application_success'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('danger', trans('site.application_failed'));
+        }
     }
 }
