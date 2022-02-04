@@ -12,12 +12,12 @@
             <div class="d-flex justify-content-end">
 
 
-                        <a href="{{ url('/home') }}" class="text-lg p-4">Домой</a>
+                        <a href="{{ url('/home') }}" class="text-lg p-4" style="text-decoration: none;">Домой</a>
 
-                        <a href="/admin" class="text-lg p-4">Авторизоваться</a>
+                        <a href="/admin" class="text-lg p-4" style="text-decoration: none;">Авторизоваться</a>
 
 
-                            <a href="/register" class="text-lg p-4">Регистрация</a>
+                        <a href="/register" class="text-lg p-4" style="text-decoration: none;">Регистрация</a>
 
 
 

@@ -27,3 +27,7 @@ Route::group(['prefix' => 'admin'], function () {
 Route::get('/register', function () {
     return view('register');
 });
+
+Route::get('/application', function () {
+    return view('application.main');
+});
