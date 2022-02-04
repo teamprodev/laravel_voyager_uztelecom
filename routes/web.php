@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Site\ApplicationController;
 use App\Http\Controllers\VoyagerAuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,4 +34,26 @@ Route::get('/application', function () {
 });
 Auth::routes();
 
+Route::group(
+    [
+        'as' => 'site',
+        'prefix' => 'site'
+    ],
+    function(){
+        Route::group(
+            [
+                'as' => 'applications',
+                'prefix' => 'applications'
+            ],
+            function(){
+                Route::get('', [ApplicationController::class, 'index'])->name('index');
+                Route::get('show', [ApplicationController::class, 'show'])->name('show');
+                Route::get('edit', [ApplicationController::class, 'edit'])->name('edit');
+                Route::get('update', [ApplicationController::class, 'update'])->name('update');
+                Route::get('create', [ApplicationController::class, 'create'])->name('create');
+                Route::get('store', [ApplicationController::class, 'store'])->name('store');
+
+            });
+    }
+);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
