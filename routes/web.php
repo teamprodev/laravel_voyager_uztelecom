@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Site\ApplicationController;
+use App\Http\Controllers\Site\DashboardController;
 use App\Http\Controllers\VoyagerAuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,23 +17,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('site.applications.index');
 });
-
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
-//    Route::get('login', [VoyagerAuthController::class, 'login'])->name('voyager.login');
 });
-
-Route::get('/register', function () {
-    return view('register');
-});
-
-Route::get('/site', function () {
-    return view('site.applications.index');
-});
-
 
 Auth::routes();
 
@@ -54,6 +44,15 @@ Route::group(
                 Route::get('update', [ApplicationController::class, 'update'])->name('update');
                 Route::get('create', [ApplicationController::class, 'create'])->name('create');
                 Route::get('store', [ApplicationController::class, 'store'])->name('store');
+
+            });
+        Route::group(
+            [
+                'as' => 'dashboard.',
+                'prefix' => 'dashboard'
+            ],
+            function(){
+                Route::get('', [DashboardController::class, 'index'])->name('index');
 
             });
     }
