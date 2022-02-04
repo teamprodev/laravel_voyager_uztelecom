@@ -29,7 +29,7 @@ Route::get('/register', function () {
 });
 
 Route::get('/application', function () {
-    return view('application.main');
+    return view('applications.main');
 });
 Auth::routes();
 
