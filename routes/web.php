@@ -31,3 +31,6 @@ Route::get('/register', function () {
 Route::get('/application', function () {
     return view('application.main');
 });
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
