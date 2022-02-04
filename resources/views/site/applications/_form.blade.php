@@ -1,6 +1,4 @@
-@extends('applications.index')
 
-@section('content')
     <div class="w-11/12 mx-auto shadow-md mt-6">
         <div class="w-full flex">
             <div class="w-8/12">
@@ -166,4 +164,3 @@
             <button class="bg-green-500 p-2 rounded-md text-white">Сохранить и отправить</button>
         </div>
     </div>
-@endsection
