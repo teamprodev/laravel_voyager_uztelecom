@@ -38,13 +38,13 @@ Auth::routes();
 
 Route::group(
     [
-        'as' => 'site',
+        'as' => 'site.',
         'prefix' => 'site'
     ],
     function(){
         Route::group(
             [
-                'as' => 'applications',
+                'as' => 'applications.',
                 'prefix' => 'applications'
             ],
             function(){
