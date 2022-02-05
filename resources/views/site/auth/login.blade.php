@@ -1,7 +1,4 @@
-@extends('site.auth.layout')
-
-@section('login')
-    <div class="w-96">
+<div class="w-96">
         <div class="mt-4">
         <label class="block text-sm">
             Email Adress
@@ -29,4 +26,3 @@
             <a href="#" class="text-lg text-center text-gray-700 hover:text-red-500">Forgot your Password?</a>
         </div>
     </div>
-@endsection                                                                                                             

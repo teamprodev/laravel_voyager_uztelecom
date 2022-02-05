@@ -42,7 +42,7 @@ class RegisterController extends Controller
     }
     public function showRegistrationForm()
     {
-        return view('site.auth.register');
+        return view('site.auth.auth');
     }
     /**
      * Get a validator for an incoming registration request.
