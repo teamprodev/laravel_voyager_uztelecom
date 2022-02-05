@@ -33,6 +33,10 @@ Route::get('/site', function () {
     return view('site.applications.index');
 });
 
+Route::get('/table', function () {
+    return view('site.applications._form');
+});
+
 
 Auth::routes();
 

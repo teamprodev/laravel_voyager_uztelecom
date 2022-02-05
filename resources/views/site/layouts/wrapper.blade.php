@@ -9,6 +9,7 @@
 @endsection
 
 @section('content')
+    @yield('components')
     @yield('center_content')
 @endsection
 
