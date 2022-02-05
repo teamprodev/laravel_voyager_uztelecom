@@ -17,12 +17,14 @@ class IsAdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!Auth::check()){
-            return $next($request);
-        }
-        if(!in_array(auth()->user()->role_id, [1, 2]) && $request->is('admin')){
-            return redirect()->route('/')->with('success', trans('site.application_success'));
-        }
+        return $next($request);
+
+//        if(!Auth::check()){
+//            return $next($request);
+//        }
+//        if(!in_array(auth()->user()->role_id, [1, 2]) && $request->is('admin')){
+//            return redirect()->route('/')->with('success', trans('site.application_success'));
+//        }
 
     }
 }
