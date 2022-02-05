@@ -82,7 +82,7 @@
         }
     </style>
 <!--Container-->
-<div class="container w-full md:w-4/5  ml-72 mt-6 px-2">
+<div class="px-8">
 <div class=" my-4">
     <a href="{{route('site.applications.create')}}" class="bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white">Создать новую заявку</a>
 </div>
@@ -94,22 +94,28 @@
             <thead>
             <tr>
                 <th data-priority="1">Id</th>
-                <th data-priority="1">Name</th>
-                <th data-priority="2">User</th>
-                <th data-priority="3">Office</th>
-                <th data-priority="4">Age</th>
-                <th data-priority="5">Start date</th>
+                <th data-priority="1">Ташаббускор (буюртмачи номи )</th>
+                <th data-priority="2">Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)</th>
+                <th data-priority="3">Махсулот келишининг муддати</th>
+                <th data-priority="4">Харид режаси (сумма)</th>
+                <th data-priority="5">Валюта</th>
+                <th data-priority="6">Махсулотни келтириш учун қўйилган талаб INCOTERMS, (омбордан олиб кетиш/ харидорга етказиб бериш)</th>
+                <th data-priority="7">Изох</th>
+                <th data-priority="8">Дата создания</th>
             </tr>
             </thead>
             <tbody>
             @foreach($applications as $application)
                 <tr>
-                    <td>{{$application->id}}</td>
-                    <td>{{$application->name}}</td>
-                    <td>{{$application->user->name}}</td>
-                    <td>61</td>
-                    <td>2011/04/25</td>
-                    <td>$320,800</td>
+                    <td>AAA</td>
+                    <td>BBB</td>
+                    <td>CCC</td>
+                    <td>DDD</td>
+                    <td>EEE</td>
+                    <td>123</td>
+                    <td>FFF</td>
+                    <td>GGG</td>
+                    <td>2022-02-03 06:43:45</td>
                 </tr>
             @endforeach
             </tbody>

@@ -19,19 +19,21 @@
 
 </head>
 
-<body>
-<nav>
+<body class="flex">
+<nav class="w-2/12">
     @yield('menu-left')
 </nav>
-<div>
-    @yield('top-bar')
-</div>
-<div>
+<div class="w-10/12">
+    <div>
+        @yield('top-bar')
+    </div>
+    <div class="w-full">
 
-    @yield('content')
-    {{--<div class="cat__footer">--}}
-    {{--@yield('footer')--}}
-    {{--</div>--}}
+        @yield('content')
+        {{--<div class="cat__footer">--}}
+        {{--@yield('footer')--}}
+        {{--</div>--}}
+    </div>
 </div>
 </body>
 <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
