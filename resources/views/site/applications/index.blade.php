@@ -96,7 +96,6 @@
                 </svg>
                 <span class="ml-2">PDF</span>
             </button>
-            <input class="cursor-pointer absolute block opacity-0 py-2 px-2 w-full -mt-10" type="file" name="vacancyImageFiles" @change="fileName" multiple>
         </div>
         <div class="overflow-hidden relative h-18 w-24 my-2 rounded-md cursor-pointer">
             <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 w-full inline-flex items-center">
@@ -106,7 +105,6 @@
                 </svg>
                 <span class="ml-2">Excel</span>
             </button>
-            <input class="cursor-pointer absolute block opacity-0 py-2 px-2 w-full -mt-10" type="file" name="vacancyImageFiles" @change="fileName" multiple>
         </div>
     </div>
 
