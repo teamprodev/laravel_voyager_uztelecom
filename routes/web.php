@@ -72,4 +72,3 @@ Route::get('/layout', function () {
 Route::get('/profile', function () {
     return view('site.profile.profile');
 });
-
