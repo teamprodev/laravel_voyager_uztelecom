@@ -83,9 +83,30 @@
     </style>
 <!--Container-->
 <div class="px-8">
-<div class=" my-4">
-    <a href="{{route('site.applications.create')}}" class="bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white">Создать новую заявку</a>
-</div>
+    <div class="flex">
+        <div class=" m-4">
+            <a href="{{route('site.applications.create')}}" class="bg-blue-500 hover:bg-blue-700 h-18 transition duration-300 rounded-md text-white cursor-pointer py-2 px-2 w-full text-base">Создать новую заявку</a>
+        </div>
+
+        <div class="overflow-hidden relative h-18 w-24 my-2 rounded-md cursor-pointer mr-3">
+            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 w-full inline-flex items-center">
+                <svg fill="#FFF" height="16" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
+                </svg>
+                <span class="ml-2">PDF</span>
+            </button>
+        </div>
+        <div class="overflow-hidden relative h-18 w-24 my-2 rounded-md cursor-pointer">
+            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 w-full inline-flex items-center">
+                <svg fill="#FFF" height="16" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
+                </svg>
+                <span class="ml-2">Excel</span>
+            </button>
+        </div>
+    </div>
 
     <!--Card-->
     <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
