@@ -84,7 +84,7 @@
 <!--Container-->
 <div class="container w-full md:w-4/5 2xl:ml-90 lg:ml-52 xl:ml-72 md:ml-44 mt-6 px-2">
 <div class=" my-4">
-    <a href="/table" class="bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white">Создать новую заявку</a>
+    <a href="{{route('site.applications.create')}}" class="bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white">Создать новую заявку</a>
 </div>
 
     <!--Card-->
@@ -93,75 +93,25 @@
         <table id="example" class="stripe hover" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
             <thead>
             <tr>
+                <th data-priority="1">Id</th>
                 <th data-priority="1">Name</th>
-                <th data-priority="2">Position</th>
+                <th data-priority="2">User</th>
                 <th data-priority="3">Office</th>
                 <th data-priority="4">Age</th>
                 <th data-priority="5">Start date</th>
-                <th data-priority="6">Salary</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$320,800</td>
-            </tr>
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$320,800</td>
-            </tr>
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$320,800</td>
-            </tr>
-
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$320,800</td>
-            </tr>
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$320,800</td>
-            </tr>
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$320,800</td>
-            </tr>
-
-            <!-- Rest of your data (refer to https://datatables.net/examples/server_side/ for server side processing)-->
-
-            <tr>
-                <td>Donna Snider</td>
-                <td>Customer Support</td>
-                <td>New York</td>
-                <td>27</td>
-                <td>2011/01/25</td>
-                <td>$112,000</td>
-            </tr>
+            @foreach($applications as $application)
+                <tr>
+                    <td>{{$application->id}}</td>
+                    <td>{{$application->name}}</td>
+                    <td>{{$application->user->name}}</td>
+                    <td>61</td>
+                    <td>2011/04/25</td>
+                    <td>$320,800</td>
+                </tr>
+            @endforeach
             </tbody>
 
         </table>

@@ -25,6 +25,7 @@
                     <i class="fas fa-sign-in-alt text-white mr-1"></i>
                     <a href="#" class="text-white hover:text-blue-200">Выход</a>
                 </li>
+                {{menu('site')}}
             </ul>
         </div>
     </div>
