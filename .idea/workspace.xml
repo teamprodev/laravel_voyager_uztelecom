@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PhpIncludePathManager">
+  <component name="ChangeListManager">
+    <list default="true" id="3e6dbe0a-f44b-4030-9122-122f130deab4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/site/dashboard/navbar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/dashboard/navbar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
       <path value="d:/Develop/Projects/library/" />
       <path value="$PROJECT_DIR$/vendor/ramsey/uuid" />
@@ -127,82 +149,32 @@
       <path value="$PROJECT_DIR$/vendor/mcamara/laravel-localization" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="7.4" />
-  <component name="PhpRuntimeConfiguration">
-    <extensions>
-      <extension name="Ev" enabled="false" />
-      <extension name="SQLite" enabled="false" />
-      <extension name="SplType" enabled="false" />
-      <extension name="Zend OPcache" enabled="false" />
-      <extension name="ZendDebugger" enabled="false" />
-      <extension name="ZendUtils" enabled="false" />
-      <extension name="apcu" enabled="false" />
-      <extension name="couchbase" enabled="false" />
-      <extension name="cubrid" enabled="false" />
-      <extension name="dba" enabled="false" />
-      <extension name="enchant" enabled="false" />
-      <extension name="ffmpeg" enabled="false" />
-      <extension name="gearman" enabled="false" />
-      <extension name="geoip" enabled="false" />
-      <extension name="gmagick" enabled="false" />
-      <extension name="gmp" enabled="false" />
-      <extension name="gnupg" enabled="false" />
-      <extension name="grpc" enabled="false" />
-      <extension name="http" enabled="false" />
-      <extension name="ibm_db2" enabled="false" />
-      <extension name="igbinary" enabled="false" />
-      <extension name="imagick" enabled="false" />
-      <extension name="inotify" enabled="false" />
-      <extension name="ldap" enabled="false" />
-      <extension name="libevent" enabled="false" />
-      <extension name="libsodium" enabled="false" />
-      <extension name="memcache" enabled="false" />
-      <extension name="memcached" enabled="false" />
-      <extension name="meta" enabled="false" />
-      <extension name="ming" enabled="false" />
-      <extension name="mongo" enabled="false" />
-      <extension name="mongodb" enabled="false" />
-      <extension name="mssql" enabled="false" />
-      <extension name="mysql" enabled="false" />
-      <extension name="ncurses" enabled="false" />
-      <extension name="newrelic" enabled="false" />
-      <extension name="oauth" enabled="false" />
-      <extension name="oci8" enabled="false" />
-      <extension name="pcntl" enabled="false" />
-      <extension name="pdo_ibm" enabled="false" />
-      <extension name="pdo_pgsql" enabled="false" />
-      <extension name="pdo_sqlite" enabled="false" />
-      <extension name="pgsql" enabled="false" />
-      <extension name="posix" enabled="false" />
-      <extension name="pspell" enabled="false" />
-      <extension name="pthreads" enabled="false" />
-      <extension name="rar" enabled="false" />
-      <extension name="recode" enabled="false" />
-      <extension name="redis" enabled="false" />
-      <extension name="rrd" enabled="false" />
-      <extension name="shmop" enabled="false" />
-      <extension name="snmp" enabled="false" />
-      <extension name="sqlite3" enabled="false" />
-      <extension name="sqlsrv" enabled="false" />
-      <extension name="ssh2" enabled="false" />
-      <extension name="suhosin" enabled="false" />
-      <extension name="svn" enabled="false" />
-      <extension name="sybase" enabled="false" />
-      <extension name="sysvmsg" enabled="false" />
-      <extension name="sysvsem" enabled="false" />
-      <extension name="sysvshm" enabled="false" />
-      <extension name="tidy" enabled="false" />
-      <extension name="v8js" enabled="false" />
-      <extension name="wincache" enabled="false" />
-      <extension name="xhprof" enabled="false" />
-      <extension name="yaml" enabled="false" />
-      <extension name="zend" enabled="false" />
-      <extension name="zmq" enabled="false" />
-    </extensions>
+  <component name="ProjectId" id="24g5mAtvlthdPVTSDKw1W6KigAU" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PhpUnit">
-    <phpunit_settings>
-      <PhpUnitSettings load_method="PHPUNIT_PHAR" custom_loader_path="$PROJECT_DIR$/vendor/autoload.php" phpunit_phar_path="D:/Develop/General/PHP/Element/Code, Testing/Unit Testing/PHPUnit/Installer/Phpunit.phar/phpunit-5.3.2.phar" />
-    </phpunit_settings>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3e6dbe0a-f44b-4030-9122-122f130deab4" name="Changes" comment="" />
+      <created>1644039546634</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1644039546634</updated>
+      <workItem from="1644039547882" duration="5107000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>
