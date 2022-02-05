@@ -62,3 +62,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/layout', function () {
     return view('site.auth.layout');
 });
+Route::get('/profile', function () {
+    return view('site.profile.profile');
+});
