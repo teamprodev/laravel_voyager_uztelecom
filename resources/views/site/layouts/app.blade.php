@@ -27,7 +27,7 @@
     <div>
         @yield('top-bar')
     </div>
-    <div class="w-10/12">
+    <div class="w-full">
 
         @yield('content')
         {{--<div class="cat__footer">--}}

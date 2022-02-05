@@ -1,9 +1,9 @@
 @extends('site.layouts.wrapper')
 
 @section('center_content')
-    <div class="w-9/12 mx-auto shadow-md ml-72 my-6">
+    <div class="">
         <div class="w-full flex">
-            <div class="w-10/12 p-6">
+            <div class="p-6">
                 <table class="table-auto">
                     <tbody>
                     <tr>
