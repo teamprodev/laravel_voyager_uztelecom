@@ -68,9 +68,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/layout', function () {
     return view('site.auth.layout');
 });
-<<<<<<< HEAD
-=======
+
 Route::get('/profile', function () {
     return view('site.profile.profile');
 });
->>>>>>> b39b394897784f45fefd3e78716519c55c48929e
+
