@@ -82,7 +82,7 @@
         }
     </style>
 <!--Container-->
-<div class="container w-full md:w-4/5 2xl:ml-90 lg:ml-52 xl:ml-72 md:ml-44 mt-6 px-2">
+<div class="px-8">
 <div class=" my-4">
     <a href="{{route('site.applications.create')}}" class="bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white">Создать новую заявку</a>
 </div>
