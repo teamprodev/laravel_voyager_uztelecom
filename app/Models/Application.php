@@ -11,6 +11,9 @@ class Application extends Model
     public function plan(){
         return $this->belongsTo(Plan::class);
     }
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
     public function scopeUser($query){
         $user = auth()->user();
         switch ($user->role_id) {
@@ -24,7 +27,7 @@ class Application extends Model
                 $user_list = User::where('department_id', $user->department_id)->pluck('id')->toArray();
                 return $query->whereIn('user_id', $user_list);
             } break;
-            
+
         }
     }
 }
