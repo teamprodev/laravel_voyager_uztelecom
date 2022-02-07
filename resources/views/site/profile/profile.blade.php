@@ -3,7 +3,7 @@
 
 
    <div class="bg-blue-50 h-screen">
-       <div class="max-w-4xl flex items-center flex-col mx-auto pt-8">
+       <div class="max-w-4xl flex items-center flex-col mx-auto pt-2">
 
            <div class="sm:w-2/5 w-3/5">
                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" class="rounded-lg shadow-2xl mx-auto w-44 h-44">
