@@ -35,4 +35,10 @@ class ApplicationController extends Controller
             return redirect()->back()->with('danger', trans('site.application_failed'));
         }
     }
+
+
+    public function form(Application $application , Request $request){
+            dd($request->all());
+        return route('site.applications.form', compact($application));
+    }
 }
