@@ -2,7 +2,7 @@
 <form action="{{ route('site.applications.form') }}" method="post">
     @csrf
 
-<div class="mt-20">
+<div class="mt-6">
         <div class="w-full flex">
             <div class="p-6">
                     <table class="table-auto">

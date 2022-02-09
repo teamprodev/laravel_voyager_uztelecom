@@ -1,8 +1,5 @@
-<nav class="bg-white fixed w-full border-gray-200 sm:px-4 py-2.5 dark:bg-gray-800 border-b shadow-md">
+<nav class="bg-white fixed w-10/12 right-0 border-gray-200 sm:px-4 py-2.5 dark:bg-gray-800 border-b shadow-md">
     <div class="flex justify-between flex-wrap items-center mx-auto">
-        <a href="#" class="flex items-start ml-8 w-1/12">
-            <img src="{{ asset('/images/Uztelecom_Logo.png') }}" alt="">
-        </a>
         <div class="hidden relative w-5/12 mr-3 md:block">
             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                 <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
@@ -39,36 +36,36 @@
                     </div>
                 @endif
             </div>
-            @auth
-            <ul class="list-reset flex justify-between flex-1 md:flex-none items-center">
-                <li class="flex-1 md:flex-none md:mr-3">
-                    <a class="inline-block py-2 px-4 text-black no-underline" href="#">Active</a>
-                </li>
-                <li class="flex-1 md:flex-none md:mr-3">
-                    <a class="inline-block text-black no-underline hover:text-gray-200 hover:text-underline py-2 px-4" href="#">link</a>
-                </li>
-                <li class="flex-1 md:flex-none md:mr-3">
-                    <div class="relative inline-block">
-                        <button onclick="toggleDD('myDropdown')" class="drop-button text-black py-2 px-2">
-                            <span class="pr-2">
-                                <i class="em em-robot_face"></i>
-                            </span> Hi, User
-                            <svg class="h-3 fill-current inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path>
-                            </svg>
-                        </button>
-                        <div id="myDropdown" class="dropdownlist absolute bg-gray-800 text-black right-0 mt-3 p-3 overflow-auto z-30 invisible">
-                            <input type="text" class="drop-search focus:outline-none rounded p-2 text-gray-600" placeholder="Search.." id="myInput" onkeyup="filterDD('myDropdown','myInput')">
-                            <a href="#" class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="fa fa-user fa-fw"></i> Profile</a>
-                            <a href="#" class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="fa fa-cog fa-fw"></i> Settings</a>
-                            <div class="border border-gray-800"></div>
-                            <a href="#" class="p-2 bg-gray-800 text-white text-sm no-underline hover:no-underline block">
-                                <i class="fas fa-sign-out-alt fa-fw text-white"></i> Log Out</a>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-            @endauth
+{{--            @auth--}}
+{{--            <ul class="list-reset flex justify-between flex-1 md:flex-none items-center">--}}
+{{--                <li class="flex-1 md:flex-none md:mr-3">--}}
+{{--                    <a class="inline-block py-2 px-4 text-black no-underline" href="#">Active</a>--}}
+{{--                </li>--}}
+{{--                <li class="flex-1 md:flex-none md:mr-3">--}}
+{{--                    <a class="inline-block text-black no-underline hover:text-gray-200 hover:text-underline py-2 px-4" href="#">link</a>--}}
+{{--                </li>--}}
+{{--                <li class="flex-1 md:flex-none md:mr-3">--}}
+{{--                    <div class="relative inline-block">--}}
+{{--                        <button onclick="toggleDD('myDropdown')" class="drop-button text-black py-2 px-2">--}}
+{{--                            <span class="pr-2">--}}
+{{--                                <i class="em em-robot_face"></i>--}}
+{{--                            </span> Hi, User--}}
+{{--                            <svg class="h-3 fill-current inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">--}}
+{{--                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path>--}}
+{{--                            </svg>--}}
+{{--                        </button>--}}
+{{--                        <div id="myDropdown" class="dropdownlist absolute bg-gray-800 text-black right-0 mt-3 p-3 overflow-auto z-30 invisible">--}}
+{{--                            <input type="text" class="drop-search focus:outline-none rounded p-2 text-gray-600" placeholder="Search.." id="myInput" onkeyup="filterDD('myDropdown','myInput')">--}}
+{{--                            <a href="#" class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="fa fa-user fa-fw"></i> Profile</a>--}}
+{{--                            <a href="#" class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="fa fa-cog fa-fw"></i> Settings</a>--}}
+{{--                            <div class="border border-gray-800"></div>--}}
+{{--                            <a href="#" class="p-2 bg-gray-800 text-white text-sm no-underline hover:no-underline block">--}}
+{{--                                <i class="fas fa-sign-out-alt fa-fw text-white"></i> Log Out</a>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </li>--}}
+{{--            </ul>--}}
+{{--            @endauth--}}
         </div>
     </div>
 </nav>
