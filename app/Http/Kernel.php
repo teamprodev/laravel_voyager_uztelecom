@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\IsAdminMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -38,7 +39,6 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            IsAdminMiddleware::class,
         ],
 
         'api' => [
@@ -56,6 +56,7 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $routeMiddleware = [
+        'isAdmin' => IsAdminMiddleware::class,
         'auth'                    => \App\Http\Middleware\Authenticate::class,
         'auth.basic'              => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers'           => \Illuminate\Http\Middleware\SetCacheHeaders::class,

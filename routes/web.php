@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Site\ApplicationController;
 use App\Http\Controllers\Site\DashboardController;
-use App\Http\Controllers\VoyagerAuthController;
+use App\Http\Controllers\Admin\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,14 +17,22 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('site.applications.index');
+    return redirect()->route('site.applications.create');
 });
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group([
+    'prefix' => 'admin',
+    'middleware' => 'isAdmin'
+], function () {
     Voyager::routes();
+
+
 });
+Route::get('admin/login', [LoginController::class, 'login'])->name('voyager.login');
+Route::post('admin/login', [LoginController::class, 'postLogin'])->name('voyager.login');
 
 Auth::routes();
+
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 {
