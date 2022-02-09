@@ -19,6 +19,9 @@ class IsAdminMiddleware
     {
         return $next($request);
 
+//        if(Auth::check() && Auth::user()->role_id==1)
+//        return back();
+
 //        if(!Auth::check()){
 //            return $next($request);
 //        }

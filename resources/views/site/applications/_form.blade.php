@@ -21,7 +21,9 @@
                             Харид мазмуни (сотиб олиш учун асос)
                         </td>
                         <td class="w-50 border p-2">
-                            <textarea class="focus:outline-none border w-full" name="" id="" cols="30" rows="5"></textarea>
+                            <textarea class="focus:outline-none border w-full" name="" aria-placeholder="dasbfiaubefi"
+                                      id="" cols="30"
+                                      rows="5"></textarea>
                         </td>
                     </tr>
                     <tr>
