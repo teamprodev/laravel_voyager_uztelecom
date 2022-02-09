@@ -13,8 +13,8 @@
         <!-- Tabs -->
         <div class="mx-auto my-12 ">
             <ul id="tabs" class="nav nav-tabs flex  text-center flex-wrap list-none border-b-0 pl-0 mb-4 justify-center">
-                <li class="bg-white text-3xl px-12 text-gray-800 font-semibold hover:bg-gray-200 py-2 text-blue-600 border-b-2 border-blue-600"><a id="default-tab" href="#first">Register</a></li>
-                <li class="px-12 text-3xl text-gray-800 hover:bg-gray-200 font-semibold py-2"><a href="#second">Login</a></li>
+                <li class="bg-white text-3xl px-12 text-gray-800 font-semibold hover:bg-gray-200 py-2  {{\Route::currentRouteName()=="login" ? '' :"text-blue-600 border-b-2 border-blue-600" }}"><a id="default-tab" href="#first">Register</a></li>
+                <li class="px-12 text-3xl text-gray-800 hover:bg-gray-200 font-semibold py-2 {{\Route::currentRouteName()=="register" ? '' : "text-blue-600 border-b-2 border-blue-600" }}"><a href="#second">Login</a></li>
             </ul>
           </div>
 

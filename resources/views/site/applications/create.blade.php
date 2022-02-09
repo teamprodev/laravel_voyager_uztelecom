@@ -1,5 +1,5 @@
 @extends('site.layouts.wrapper')
 
 @section('center_content')
-    @include('site.applications._form')
+    @include('site.applications.form')
 @endsection
