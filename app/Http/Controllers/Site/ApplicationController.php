@@ -51,4 +51,8 @@ class ApplicationController extends Controller
             dd($request->all());
         return route('site.applications.form', compact($application));
     }
+    public function base(){
+
+        return view('site.applications.base');
+    }
 }
