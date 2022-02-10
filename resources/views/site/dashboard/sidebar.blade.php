@@ -15,7 +15,7 @@
 <nav aria-label="alternative nav">
     <div class="bg-gray-800 shadow-xl fixed bottom-0 md:relative md:h-screen z-10 w-full content-center">
 
-        <a href="#" class="flex items-start py-5 w-10/12 mx-auto">
+        <a href="/" class="flex items-start py-5 w-10/12 mx-auto">
             <img src="{{ asset('/images/Uztelecom_Logo.png') }}" alt="">
         </a>
         <div class="content-center md:content-start text-left justify-between">
