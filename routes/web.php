@@ -4,6 +4,7 @@ use App\Http\Controllers\Site\ApplicationController;
 use App\Http\Controllers\Site\DashboardController;
 use App\Http\Controllers\Admin\LoginController;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
 |--------------------------------------------------------------------------

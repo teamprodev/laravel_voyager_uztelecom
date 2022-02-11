@@ -6,7 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.4",
-        "asadbek/eimzo": "dev-master",
+        "asadbek/eimzo": "1.0.*",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",
@@ -61,6 +61,6 @@
         "preferred-install": "dist",
         "sort-packages": true
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }
