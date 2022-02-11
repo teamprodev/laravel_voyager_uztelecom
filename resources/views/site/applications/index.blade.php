@@ -46,7 +46,7 @@
         };
         $(document).ready(function() {
             $('#example').DataTable( {
-                "ajax": "data/arrays.txt",
+                "ajax": "{{route('site.applications.getAll')}}",
                 "deferRender": true,
                 dom: 'Bfrtip',
                 buttons: [

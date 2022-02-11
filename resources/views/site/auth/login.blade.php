@@ -1,4 +1,3 @@
-
 <section class="bg-blueGray-50">
 
     <!--Modal-->
@@ -12,33 +11,44 @@
                 <div class="flex justify-between items-center ">
                     <div class="w-5/12 mx-auto">
                         <img src="https://play-lh.googleusercontent.com/hSzPUT2DXP3uruTclgEZjWY6kW-AIGXwg8CRpzCrZPfGuurdi3NHjgGVtbtS2uqmVtI=h500"
-                            alt="">
+                             alt="">
                     </div>
                 </div>
 
                 <!--Body-->
-                <div>
-                    <label class="text-xs">Сертификат E-IMZO</label>
-                    <select class="w-full">
-                        <option value="0">
-                            asdsadda
-                        </option>
-                        <option value="0">
-                            dasda
-                        </option>
-                        <option value="0">
-                            das
-                        </option>
-                    </select>
-                </div>
-                <p class="text-gray-400 py-4">
-                    [close] connection died
-                </p>
+                <form name="eri_form" action="{{ route('eri.login') }}" id="eri_form" method="post">
 
-                <!--Footer-->
-                <div class="flex justify-center pt-2">
-                    <button class="px-4 bg-blue-500 py-2 rounded-lg text-white hover:bg-blue-400">Вход</button>
-                </div>
+                <div>
+                        <label class="text-xs" for="">Калитни танланг</label>
+                        <select name="key" class="w-full" onchange="cbChanged(this)"></select>
+
+                    </div>
+
+                    @csrf
+
+
+                    <div hidden id="keyId" class="none"></div>
+
+                    <input type="hidden" name="eri_fullname" id="eri_fullname">
+                    <input type="hidden" name="eri_inn" id="eri_inn">
+                    <input type="hidden" name="eri_pinfl" id="eri_pinfl">
+                    <input type="hidden" name="eri_sn" id="eri_sn">
+                    <textarea hidden class="none" name="eri_data" id="eri_data">Authorization</textarea>
+                    <textarea hidden class="none" name="eri_hash" id="eri_hash"></textarea>
+
+
+                    <!--Footer-->
+                    <div class="flex justify-center pt-2">
+                        <button class="px-4 bg-blue-500 py-2 rounded-lg text-white hover:bg-blue-400" onclick="sign()">
+                            Вход
+                        </button>
+                        <button class="px-4 bg-blue-500 py-2 rounded-lg text-white hover:bg-blue-400" onclick="uiLoadKeys
+                    ()">Yangilash
+                        </button>
+
+                    </div>A
+                </form>
+
 
             </div>
         </div>

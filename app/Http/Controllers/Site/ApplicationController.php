@@ -46,13 +46,12 @@ class ApplicationController extends Controller
         }
     }
 
-
+    public function getAll(){
+        $applications = Application::all();
+        return response()->json($applications);
+    }
     public function form(Application $application , Request $request){
-            dd($request->all());
         return route('site.applications.form', compact($application));
     }
-    public function base(){
 
-        return view('site.applications.base');
-    }
 }
