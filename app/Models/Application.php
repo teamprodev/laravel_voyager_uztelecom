@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Application extends Model
 {
@@ -15,6 +16,12 @@ class Application extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    public function scopeCurrentUser($query)
+    {
+        return $query->where('user_id', Auth::user()->id);
+    }
+
     public function scopeUser($query){
         $user = auth()->user();
         switch ($user->role_id) {
