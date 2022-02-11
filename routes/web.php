@@ -57,7 +57,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
                     Route::get('create', [ApplicationController::class, 'create'])->name('create');
                     Route::get('store', [ApplicationController::class, 'store'])->name('store');
                     Route::post('form', [ApplicationController::class, 'form'])->name('form');
-
+                    Route::get('base', [ApplicationController::class, 'base'])->name('base');
                 });
             Route::group(
                 [

@@ -20,13 +20,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
     <!--Regular Datatables CSS-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+
 
 </head>
 
 <body class="flex">
-
 <nav class="w-2/12 fixed">
-
     @yield('menu-left')
 </nav>
 <div class="w-10/12">
@@ -43,6 +44,12 @@
 </div>
 </body>
 <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/autofill/2.3.9/js/dataTables.autoFill.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.colVis.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
 <script>
     /*Toggle dropdown list*/
     function toggleDD(myDropMenu) {

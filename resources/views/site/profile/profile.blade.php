@@ -2,7 +2,7 @@
 @section('center_content')
 
 
-   <div class="bg-blue-50 h-screen">
+   <div class="bg-blue-50 h-screen mt-24">
        <div class="max-w-4xl flex items-center flex-col mx-auto pt-2">
 
            <div class="sm:w-2/5 w-3/5">
