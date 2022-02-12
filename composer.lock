@@ -74,16 +74,16 @@
         },
         {
             "name": "asadbek/eimzo",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Asadbekinha/eimzo.git",
-                "reference": "49cff4b372ffe255e176fe01c8969d30166cdc96"
+                "reference": "72ccfe92b5d36972c6cbe0f400bee469780ed4c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Asadbekinha/eimzo/zipball/49cff4b372ffe255e176fe01c8969d30166cdc96",
-                "reference": "49cff4b372ffe255e176fe01c8969d30166cdc96",
+                "url": "https://api.github.com/repos/Asadbekinha/eimzo/zipball/72ccfe92b5d36972c6cbe0f400bee469780ed4c3",
+                "reference": "72ccfe92b5d36972c6cbe0f400bee469780ed4c3",
                 "shasum": ""
             },
             "type": "library",
@@ -111,9 +111,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Asadbekinha/eimzo/issues",
-                "source": "https://github.com/Asadbekinha/eimzo/tree/1.0.2"
+                "source": "https://github.com/Asadbekinha/eimzo/tree/1.0.3"
             },
-            "time": "2022-02-07T06:14:12+00:00"
+            "time": "2022-02-12T05:33:48+00:00"
         },
         {
             "name": "asm89/stack-cors",
@@ -8731,5 +8731,5 @@
         "php": "^7.4"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }

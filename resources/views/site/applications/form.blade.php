@@ -1,5 +1,5 @@
 
-<form action="{{ route('site.applications.form') }}" method="post">
+<form action="{{ route('site.applications.store') }}" method="post">
     @csrf
 
 <div class="mt-6">
@@ -13,7 +13,7 @@
                             </td>
 
                             <td class="w-50 border p-2 font-semibold">
-                                <input type="text" id="name" name="name" placeholder="nomi" class="h-16 p-2 border focus:outline-none w-full">
+                                <input type="text" id="name" name="user_id" placeholder="nomi" class="h-16 p-2 border focus:outline-none w-full">
                             </td>
                         </tr>
                         <tr class="h-16">
@@ -29,7 +29,7 @@
                                 Асос (харидлар режаси, раҳбарият томонидан билдирги)
                             </td>
                             <td class="w-50 border p-2 font-semibold">
-                                <textarea class="resize-none h-16 focus:outline-none border w-full" name="" id="" cols="30" rows="5"></textarea>
+                                <textarea class="resize-none h-16 focus:outline-none border w-full" name="basis" id="" cols="30" rows="5"></textarea>
 
                             </td>
                         </tr>
@@ -38,7 +38,7 @@
                                 Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)
                             </td>
                             <td class="w-50 border p-2 font-semibold">
-                                <textarea class="resize-none h-16 focus:outline-none border w-full" name="" id="" cols="30" rows="5"></textarea>
+                                <textarea class="resize-none h-16 focus:outline-none border w-full" name="name" id="" cols="30" rows="5"></textarea>
 
                             </td>
                         </tr>
@@ -47,8 +47,7 @@
                                 Сотиб олинадиган махсулот тавсифи (техник характери)
                             </td>
                             <td class="w-50 border p-2 font-semibold">
-                                <input type="text" class="focus:outline-none  h-16 border w-full">
-
+                                <input type="text" name="specification" class="focus:outline-none  h-16 border w-full">
                             </td>
                         </tr>
                         <tr class="h-16">
@@ -56,7 +55,7 @@
                                 Махсулот келишининг муддати
                             </td>
                             <td class="w-50 border p-2 font-semibold">
-                                <input type="text" class="focus:outline-none h-16 border w-full">
+                                <input type="text" name="delivery_date" class="focus:outline-none h-16 border w-full">
 
                             </td>
                         </tr>
@@ -83,7 +82,7 @@
                                 Махсулот сифати учун кафолат муддати (иш, хизмат)
                             </td>
                             <td class="w-50 border p-2 font-semibold">
-                                <input type="text" class="focus:outline-none border h-16 w-full" value="">
+                                <input type="text" name="expire_warranty_date" class="focus:outline-none border h-16 w-full" value="">
 
                             </td>
                         </tr>
