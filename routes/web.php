@@ -52,11 +52,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
                 ],
                 function(){
                     Route::get('', [ApplicationController::class, 'index'])->name('index');
-                    Route::get('show', [ApplicationController::class, 'show'])->name('show');
-                    Route::get('edit', [ApplicationController::class, 'edit'])->name('edit');
+                    Route::get('{application}/show', [ApplicationController::class, 'show'])->name('show');
+                    Route::get('{application}/edit', [ApplicationController::class, 'edit'])->name('edit');
                     Route::post('{application}/update', [ApplicationController::class, 'update'])->name('update');
                     Route::get('create', [ApplicationController::class, 'create'])->name('create');
-                    Route::post('{application}store', [ApplicationController::class, 'store'])->name('store');
+                    Route::post('{application}/store', [ApplicationController::class, 'store'])->name('store');
                     Route::post('form', [ApplicationController::class, 'form'])->name('form');
                     Route::get('getAll', [ApplicationController::class, 'getAll'])->name('getAll');
                 });
