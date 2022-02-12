@@ -58,7 +58,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
                     Route::get('create', [ApplicationController::class, 'create'])->name('create');
                     Route::get('store', [ApplicationController::class, 'store'])->name('store');
                     Route::post('form', [ApplicationController::class, 'form'])->name('form');
-                    Route::get('base', [ApplicationController::class, 'base'])->name('base');
                     Route::get('getAll', [ApplicationController::class, 'getAll'])->name('getAll');
 
                 });
@@ -85,4 +84,10 @@ Route::get('/layout', function () {
 
 Route::get('/profile', function () {
     return view('site.profile.profile');
+});
+Route::get('/faq/index', function () {
+    return view('site.faq.index');
+});
+Route::get('/faq/show', function () {
+    return view('site.faq.show');
 });

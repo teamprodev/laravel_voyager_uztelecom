@@ -6,7 +6,7 @@
         <div class="text-lg my-4">
             Закон Республики Узбекистан «О государственных закупках»
             <a href="https://lex.uz/uz/docs/5382974"
-                class="text-blue-500 hover:text-red-500"
+               class="text-blue-500 hover:text-red-500"
             >
                 №684
             </a>
@@ -15,7 +15,7 @@
         <div class="text-lg my-4">
             Постановление Президента Республики Узбекистан «О дополнительных мерах по поддержке отечественных производителей»
             <a href="https://lex.uz/uz/docs/4964633"
-                class="text-blue-500 hover:text-red-500"
+               class="text-blue-500 hover:text-red-500"
             >
                 №ПП-4812
             </a>
@@ -24,7 +24,7 @@
         <div class="text-lg my-4">
             Постановление Президента Республики Узбекистан «О мерах по реализации закона Республики Узбекистан «О государственных закупках»
             <a href="https://lex.uz/uz/docs/5382974"
-                class="text-blue-500 hover:text-red-500"
+               class="text-blue-500 hover:text-red-500"
             >
                 №ПП-3953
             </a>
@@ -33,7 +33,7 @@
         <div class="text-lg my-4">
             Указ Президента Республики Узбекистан «О мерах по ускоренному реформированию предприятий с участием государства и приватизации государственных активов»
             <a href="https://lex.uz/uz/docs/5068824"
-                class="text-blue-500 hover:text-red-500"
+               class="text-blue-500 hover:text-red-500"
             >
                 №УП-6096
             </a>
@@ -42,7 +42,7 @@
         <div class="text-lg my-4">
             Протокол Кабинета Министров «О приоритетах трансформации акционерной компании «Узбектелеком»
             <a href="/"
-                class="text-blue-500 hover:text-red-500"
+               class="text-blue-500 hover:text-red-500"
             >
                 №45
             </a>
