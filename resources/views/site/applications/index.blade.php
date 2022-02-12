@@ -8,27 +8,31 @@
     </a>
     <div class="w-11/12 mx-auto mt-6">
 
-        <table id="example" class="display mt-8">
+        <table id="table_id" class="display">
             <thead>
             <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Extn.</th>
-                <th>Start date</th>
-                <th>Salary</th>
+                <th data-priority="1">Id</th>
+                <th data-priority="1">Ташаббускор (буюртмачи номи )</th>
+                <th data-priority="2">Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)</th>
+                <th data-priority="3">Махсулот келишининг муддати</th>
+                <th data-priority="4">Харид режаси (сумма)</th>
+                <th data-priority="6">Махсулотни келтириш учун қўйилган талаб INCOTERMS, (омбордан олиб кетиш/ харидорга етказиб бериш)</th>
+                <th data-priority="8">Дата создания</th>
             </tr>
             </thead>
-            <tfoot>
-            <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Extn.</th>
-                <th>Start date</th>
-                <th>Salary</th>
-            </tr>
-            </tfoot>
+            <tbody>
+            @foreach($applications as $application)
+                <tr class="text-center">
+                    <td>{{ $application->id }}</td>
+                    <td>{{ $application->name }}</td>
+                    <td>{{ $application->specification }}</td>
+                    <td>{{ $application->delivery_date }}</td>
+                    <td>{{ $application->amount }} {{ $application->currency }}</td>
+                    <td>{{ $application->incoterms }}</td>
+                    <td>{{ $application->created_at }}</td>
+                </tr>
+            @endforeach
+            </tbody>
         </table>
     </div>
     <script>
@@ -45,9 +49,7 @@
             }
         };
         $(document).ready(function() {
-            $('#example').DataTable( {
-                "ajax": "{{route('site.applications.getAll')}}",
-                "deferRender": true,
+            $('#table_id').DataTable( {
                 dom: 'Bfrtip',
                 buttons: [
                     $.extend( true, {}, buttonCommon, {

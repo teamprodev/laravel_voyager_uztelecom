@@ -8,7 +8,7 @@
                     <table class="table-auto">
                         <tbody>
                         <tr class="h-16">
-                            <td class="w-4/6 border p-2 font-semibold">
+                            <td class="xl:w-3/6 md:w-4/6 border p-2 font-semibold">
                                 Ташаббускор (буюртмачи номи )
                             </td>
 
@@ -129,7 +129,7 @@
 
 
 
-            <div class="w-4/12 px-4">
+            <div class="xl:w-4/12 md:w-2/12 px-4">
                 <div class="w-full">
                     <div class="relative z-10">
                         <img src="https://www.csircmc.res.in/sites/default/files/default_images/default_man_photo.jpg"
@@ -138,44 +138,40 @@
                     </div>
                     <div class="shadow-xl rounded-xl bg-gray-100 relative pt-20 -top-16 pb-6">
                         <div class="border-b border-gray-300 mx-6 p-2">
-                            Ф.И.О:
+                            <span class="text-xs text-gray-500">Ф.И.О:</span><br>
+                            asdasjdh
                         </div>
                         <div class="border-b border-gray-300 mx-6 p-2">
-                            Тел номер:
+                            <span class="text-xs text-gray-500">Тел номер:</span><br>
+                            Lorem ipsum.
                         </div>
                         <div class="border-b border-gray-300 mx-6 p-2">
-                            Отдел (управление):
+                            <span class="text-xs text-gray-500">Отдел (управление):</span><br>
+                            Lorem ipsum.
                         </div>
                         <div class="border-b border-gray-300 mx-6 p-2">
-                            Должность:
-                        </div>
-                    </div>
-                    <div class="shadow-xl rounded-xl bg-gray-100 -mt-8 mb-8 py-6">
-                        <div class="border-b border-gray-300 mx-6 p-2">
-                            Начальник отдела:
-                        </div>
-                        <div class="border-b border-gray-300 mx-6 p-2">
-                            Заместитель директора:
+                            <span class="text-xs text-gray-500">Должность:</span><br>
+                            Lorem ipsum.
                         </div>
                     </div>
                 </div>
                 <h5 class="text-center font-semibold pb-5 text-lg">Прикрепить файл</h5>
-                <div class="w-full flex ">
-                    <div class="p-2 float-left">
-                        <label class="border p-2 text-white text-xs cursor-pointer bg-blue-500 hover:bg-blue-700 transition">
+                <div class="w-full xl:flex">
+                    <div class="p-2 xl:w-1/2 mt-2 text-center bg-blue-500 hover:bg-blue-700 transition border">
+                        <label class="p-2 text-center text-white text-xs cursor-pointer">
                             <input type="file" class="hidden"/>
                             <i class="fa fa-cloud-upload"></i> Основание
                         </label>
                     </div>
-                    <div class="p-2">
-                        <label class="border p-2 text-xs cursor-pointer text-white bg-green-500 hover:bg-green-700 transition">
+                    <div class="p-2 xl:w-1/2 mt-2 bg-green-500 text-center hover:bg-green-700 transition border">
+                        <label class=" p-2   text-xs cursor-pointer text-white">
                             <input type="file" class="hidden"/>
                             <i class="fa fa-cloud-upload"></i> Техническое задание
                         </label>
                     </div>
                 </div>
-                <div class="w-full p-2">
-                    <div class="w-full border text-white p-2 text-center text-xs bg-red-500 hover:bg-red-700 transition cursor-pointer">
+                <div class="w-full">
+                    <div class="w-full my-1 border text-white p-2 text-center text-xs bg-red-500 hover:bg-red-700 transition cursor-pointer">
                         <label class="">
                             <input type="file" class="hidden"/>
                             <i class="fa fa-cloud-upload"></i> Другие документы необходимые для запуска закупочной процедуры
