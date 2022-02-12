@@ -37,11 +37,32 @@ class CreateApplicationJob implements ShouldQueue
     {
         DB::beginTransaction();
         try {
-            $application= new Application();
+            $application = new Application();
             $application->name = $this->applicationRequest->name;
+            $application->delivery_date = $this->applicationRequest->delivery_date;
+            $application->specification = $this->applicationRequest->specification;
+            $application->comment = $this->applicationRequest->comment;
+            $application->expire_warranty_date = $this->applicationRequest->expire_warranty_date;
+            $application->user_id = $this->applicationRequest->user_id;
+            $application->status = $this->applicationRequest->status;
+            $application->plan_id = $this->applicationRequest->plan_id;
+            $application->initiator = $this->applicationRequest->initiator;
+            $application->basis = $this->applicationRequest->basis;
+            $application->report = $this->applicationRequest->report;
+            $application->special_specification = $this->applicationRequest->special_specification;
+            $application->amount = $this->applicationRequest->amount;
+            $application->currency = $this->applicationRequest->currency;
+            $application->incoterms = $this->applicationRequest->incoterms;
+            $application->business_planned = $this->applicationRequest->business_planned;
+            $application->purchase_plan = $this->applicationRequest->purchase_plan;
+            $application->file_basis = $this->applicationRequest->file_basis;
+            $application->file_tech_spec = $this->applicationRequest->file_tech_spec;
+            $application->other_files = $this->applicationRequest->other_files;
+            $application->draft = $this->applicationRequest->draft;
             $application->save();
         } catch (\Exception $exception){
             DB::rollBack();
+            @dd($exception);
             throw $exception;
         }
         DB::commit();
