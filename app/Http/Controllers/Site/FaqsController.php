@@ -10,7 +10,7 @@ class FaqsController extends Controller
 {
     public function index(Request $request){
         $faqs = Faq::all();
-        return view('site.faqs.show', compact('faqs'));
+        return view('site.faqs.index', compact('faqs'));
 
     }
     public function show(Faq $faq){
