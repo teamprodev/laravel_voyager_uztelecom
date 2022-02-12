@@ -1,5 +1,8 @@
-@extends('site.applications.index')
+@extends('site.layouts.wrapper')
 
 @section('center_content')
-asdasdsa
+    <form action="{{ route('site.applications.update', $application->id) }}" method="post">
+        @csrf
+        @include('site.applications.form')
+    </form>
 @endsection

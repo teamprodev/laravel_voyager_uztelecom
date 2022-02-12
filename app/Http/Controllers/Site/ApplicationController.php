@@ -19,10 +19,10 @@ class ApplicationController extends Controller
         return view('site.applications.index', compact('applications'));
     }
     public function show(Application $application){
-        return view('site.applications.show', compact($application));
+        return view('site.applications.show', compact('application'));
     }
     public function edit(Application $application){
-        return view('site.applications.edit', compact($application));
+        return view('site.applications.edit', compact('application'));
 
     }
     public function update(Application $application, ApplicationRequest $request){
