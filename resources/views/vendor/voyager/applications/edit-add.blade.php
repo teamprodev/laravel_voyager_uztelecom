@@ -29,7 +29,7 @@
                     <form role="form"
                             class="form-edit-add"
                             action="{{ $edit ? route('voyager.'.$dataType->slug.'.update', $dataTypeContent->getKey()) : route('voyager.'.$dataType->slug.'.store') }}"
-                            method="POST" enctype="multipart/form-data">
+                            method="POST" enctype="multipart/form-data" id="form">
                         <!-- PUT Method if we are editing -->
                         @if($edit)
                             {{ method_field("PUT") }}
@@ -106,7 +106,13 @@
 
 
                             @endforeach
-
+<script>
+let for_us_id = document.querySelector('#form input[name="user_id"]');
+let par_td = for_us_id.parentElement;
+par_td.parentElement.style.display = "none";
+for_us_id.setAttribute("type", "hidden");
+for_us_id.setAttribute("value", "{{Auth::user()->id}}");
+</script>
 
             </tbody>
 
