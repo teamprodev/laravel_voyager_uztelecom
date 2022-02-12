@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Site\ApplicationController;
 use App\Http\Controllers\Site\DashboardController;
+use App\Http\Controllers\Site\ProfileController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Site\FaqsController;
 use Illuminate\Support\Facades\Route;
@@ -56,9 +57,8 @@ Route::group([
                     'prefix' => 'profile',
                 ],
                 function(){
-                    Route::get('', [ApplicationController::class, 'index'])->name('index');
-                    Route::get('{user}/edit', [ApplicationController::class, 'edit'])->name('edit');
-                    Route::post('{user}/update', [ApplicationController::class, 'update'])->name('update');
+                    Route::get('', [ProfileController::class, 'index'])->name('index');
+                    Route::put('update', [ProfileController::class, 'update'])->name('update');
                 });
             Route::group(
                 [

@@ -28,7 +28,12 @@
                         </select>
                     </li>
                 </ul>
+                @auth
+
+                    <a href="{{route('site.profile.index')}}" class="text-black hover:text-gray-500  ml-5">Profile</a>
+                @else
                 <a href="{{route('login')}}" class="text-black hover:text-gray-500  ml-5">Login</a>
+                @endauth
 {{--                <a href="{{route('register')}}" class="text-black hover:text-gray-800  mr-5">Register</a>--}}
                 @if (session('status'))
                     <div class="alert alert-success" role="alert">
