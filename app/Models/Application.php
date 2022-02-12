@@ -20,18 +20,18 @@ class Application extends Model
 
     public function scopeCurrentUser($query)
     {
-
-        if(Auth::user()->id == 2){
-            
-        return $query->where('status', "for_agreed");
-
-        }elseif(Auth::user()->id == 3){
-            
-        return $query->where('user_id', Auth::user()->id);
-
-        }elseif(Auth::user()->id == 9){
-            
-        return $query->where('status', "for_execut");
+        
+        $user = Auth::user();
+        switch ($user->id) {
+            case 2: {
+                return $query->where('status', "for_agreed");
+            } break;
+            case 3: {
+                return $query->where('user_id', Auth::user()->id);
+            } break;
+            case 9: {
+                return $query->where('status', "for_execut");
+            } break;
 
         }
 
