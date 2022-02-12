@@ -24,7 +24,7 @@ class ApplicationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name' => 'nullable',
             'delivery_date' => 'nullable',
             'specification' => 'nullable',
             'comment' => 'nullable',
