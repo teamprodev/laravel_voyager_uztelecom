@@ -59,7 +59,7 @@ Route::group([
                     Route::get('{application}/edit', [ApplicationController::class, 'edit'])->name('edit');
                     Route::post('{application}/update', [ApplicationController::class, 'update'])->name('update');
                     Route::get('create', [ApplicationController::class, 'create'])->name('create');
-                    Route::post('{application}/store', [ApplicationController::class, 'store'])->name('store');
+                    Route::post('store', [ApplicationController::class, 'store'])->name('store');
                     Route::post('form', [ApplicationController::class, 'form'])->name('form');
                     Route::get('getAll', [ApplicationController::class, 'getAll'])->name('getAll');
                 });
