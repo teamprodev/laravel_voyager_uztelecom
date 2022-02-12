@@ -17,9 +17,24 @@ class Application extends Model
         return $this->belongsTo(User::class);
     }
 
+
     public function scopeCurrentUser($query)
     {
+
+        if(Auth::user()->id == 2){
+            
+        return $query->where('status', "for_agreed");
+
+        }elseif(Auth::user()->id == 3){
+            
         return $query->where('user_id', Auth::user()->id);
+
+        }elseif(Auth::user()->id == 9){
+            
+        return $query->where('status', "for_execut");
+
+        }
+
     }
 
     public function scopeUser($query){
