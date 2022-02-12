@@ -36,19 +36,22 @@ Auth::routes();
 
 Route::post('eimzo/login', [\Asadbek\Eimzo\Http\Controllers\EimzoController::class, 'auth'])->name('eri.login');
 
-Route::group(['prefix' => LaravelLocalization::setLocale()], function()
+Route::group([
+    'prefix' => LaravelLocalization::setLocale()
+], function()
 {
     Route::group(
         [
             'as' => 'site.',
-            'prefix' => 'site'
+            'prefix' => 'site',
+            'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+
         ],
         function(){
             Route::group(
                 [
                     'as' => 'applications.',
                     'prefix' => 'applications',
-                    'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
                 ],
                 function(){
                     Route::get('', [ApplicationController::class, 'index'])->name('index');
@@ -60,7 +63,21 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
                     Route::post('form', [ApplicationController::class, 'form'])->name('form');
                     Route::get('getAll', [ApplicationController::class, 'getAll'])->name('getAll');
                 });
-
+            Route::group(
+                [
+                    'as' => 'faqs.',
+                    'prefix' => 'faqs',
+                ],
+                function(){
+                    Route::get('', [ApplicationController::class, 'index'])->name('index');
+                    Route::get('{faq}/show', [ApplicationController::class, 'show'])->name('show');
+                    Route::get('{faq}/edit', [ApplicationController::class, 'edit'])->name('edit');
+                    Route::post('{faq}/update', [ApplicationController::class, 'update'])->name('update');
+                    Route::get('create', [ApplicationController::class, 'create'])->name('create');
+                    Route::post('{application}/store', [ApplicationController::class, 'store'])->name('store');
+                    Route::post('form', [ApplicationController::class, 'form'])->name('form');
+                    Route::get('getAll', [ApplicationController::class, 'getAll'])->name('getAll');
+                });
             Route::group(
                 [
                     'as' => 'dashboard.',
