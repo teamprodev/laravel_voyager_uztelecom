@@ -1,5 +1,8 @@
 @extends('site.applications.index')
 
 @section('center_content')
-asdasdsa
+    <form action="{{ route('site.applications.update') }}" method="post">
+        @csrf
+        @include('site.applications.form')
+    </form>
 @endsection

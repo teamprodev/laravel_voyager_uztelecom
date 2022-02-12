@@ -1,5 +1,9 @@
 @extends('site.layouts.wrapper')
 
 @section('center_content')
-    @include('site.applications.form')
+    <form action="{{ route('site.applications.store') }}" method="post">
+        @csrf
+        @include('site.applications.form')
+    </form>
+
 @endsection
