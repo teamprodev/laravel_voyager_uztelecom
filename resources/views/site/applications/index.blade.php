@@ -22,6 +22,7 @@
             </tr>
             </thead>
             <tbody>
+{{--            @dd($applications)--}}
             @foreach($applications as $application)
                 <tr class="text-center hover:bg-gray-100">
                     <td class="border-b">{{ $application->id }}</td>
@@ -31,11 +32,11 @@
                     <td class="border-b">{{ $application->amount }} {{ $application->currency }}</td>
                     <td class="border-b">{{ $application->incoterms }}</td>
                     <td class="border-b">{{ $application->created_at }}</td>
-                    <td class="w-48 border-b">
-                        <a href="{{ route('site.applications.edit') }}">
+                    <td class="w-48">
+                        <a href="{{ route('site.applications.edit',$application->id) }}">
                             <button type="button" class="inline-block px-6 py-2.5 bg-blue-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-600 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-700 active:shadow-lg transition duration-150 ease-in-out">Edit</button>
                         </a>
-                        <a href="{{ route('site.applications.show') }}">
+                        <a href="{{ route('site.applications.show', $application->id) }}">
                             <button type="button" class="inline-block px-6 py-2.5 bg-yellow-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-yellow-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-800 active:shadow-lg transition duration-150 ease-in-out">Show</button>
                         </a>
                     </td>

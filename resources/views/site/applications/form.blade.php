@@ -1,6 +1,4 @@
 
-<form action="{{ route('site.applications.form') }}" method="post">
-    @csrf
 
 <div class="mt-6">
         <div class="w-full flex">
@@ -194,5 +192,4 @@
         </div>
     </div>
 
-    </form>
 

@@ -52,15 +52,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
                 ],
                 function(){
                     Route::get('', [ApplicationController::class, 'index'])->name('index');
-                    Route::get('show', [ApplicationController::class, 'show'])->name('show');
-                    Route::get('edit', [ApplicationController::class, 'edit'])->name('edit');
-                    Route::get('update', [ApplicationController::class, 'update'])->name('update');
+                    Route::get('{application}/show', [ApplicationController::class, 'show'])->name('show');
+                    Route::get('{application}/edit', [ApplicationController::class, 'edit'])->name('edit');
+                    Route::post('{application}/update', [ApplicationController::class, 'update'])->name('update');
                     Route::get('create', [ApplicationController::class, 'create'])->name('create');
-                    Route::get('store', [ApplicationController::class, 'store'])->name('store');
+                    Route::post('{application}/store', [ApplicationController::class, 'store'])->name('store');
                     Route::post('form', [ApplicationController::class, 'form'])->name('form');
-                    Route::get('base', [ApplicationController::class, 'base'])->name('base');
                     Route::get('getAll', [ApplicationController::class, 'getAll'])->name('getAll');
-
                 });
 
             Route::group(
@@ -85,4 +83,10 @@ Route::get('/layout', function () {
 
 Route::get('/profile', function () {
     return view('site.profile.profile');
+});
+Route::get('/faq/index', function () {
+    return view('site.faq.index');
+});
+Route::get('/faq/show', function () {
+    return view('site.faq.show');
 });
