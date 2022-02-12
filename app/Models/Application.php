@@ -24,13 +24,13 @@ class Application extends Model
         $user = Auth::user();
         switch ($user->id) {
             case 2: {
-                return $query->where('status', "for_agreed");
+                return $query->where('status', "На согласование")->orWhere('status', "В исплонении")->orWhere('status', "Исполнено");
             } break;
             case 3: {
                 return $query->where('user_id', Auth::user()->id);
             } break;
             case 9: {
-                return $query->where('status', "for_execut");
+                return $query->where('status', "В исплонении");
             } break;
 
         }
