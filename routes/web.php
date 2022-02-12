@@ -47,7 +47,18 @@ Route::group([
             'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
 
         ],
+
         function(){
+            Route::group(
+                [
+                    'as' => 'profile.',
+                    'prefix' => 'profile',
+                ],
+                function(){
+                    Route::get('', [ApplicationController::class, 'index'])->name('index');
+                    Route::get('{user}/edit', [ApplicationController::class, 'edit'])->name('edit');
+                    Route::post('{user}/update', [ApplicationController::class, 'update'])->name('update');
+                });
             Route::group(
                 [
                     'as' => 'applications.',
