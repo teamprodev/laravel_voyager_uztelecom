@@ -4,6 +4,7 @@ use App\Http\Controllers\Site\ApplicationController;
 use App\Http\Controllers\Site\DashboardController;
 use App\Http\Controllers\Admin\LoginController;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,7 @@ Route::post('admin/login', [LoginController::class, 'postLogin'])->name('voyager
 
 Auth::routes();
 
+Route::post('eimzo/login', [\Asadbek\Eimzo\Http\Controllers\EimzoController::class, 'auth'])->name('eri.login');
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 {
@@ -57,7 +59,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
                     Route::get('store', [ApplicationController::class, 'store'])->name('store');
                     Route::post('form', [ApplicationController::class, 'form'])->name('form');
                     Route::get('base', [ApplicationController::class, 'base'])->name('base');
+                    Route::get('getAll', [ApplicationController::class, 'getAll'])->name('getAll');
+
                 });
+
             Route::group(
                 [
                     'as' => 'dashboard.',
