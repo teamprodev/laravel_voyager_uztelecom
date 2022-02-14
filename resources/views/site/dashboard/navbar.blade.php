@@ -53,7 +53,7 @@
                             <div class="border border-gray-800"></div>
                             <form action="{{route('logout')}}" method="POST">
                                 @csrf
-                                <i class="fas fa-sign-out-alt fa-fw text-white">  <input type="submit" class="p-2 bg-gray-800 text-white text-sm no-underline hover:no-underline block text-white cursor-pointer" value="Выйти">
+                                <i class="fas fa-sign-out-alt fa-fw text-white float-left"></i><input type="submit" class="p-2 bg-gray-800 text-white text-sm no-underline hover:no-underline block text-white cursor-pointer" value="Выйти">
                             </form>
                         </div>
                     </div>
