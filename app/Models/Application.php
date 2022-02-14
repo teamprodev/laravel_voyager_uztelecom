@@ -17,9 +17,24 @@ class Application extends Model
         return $this->belongsTo(User::class);
     }
 
+
     public function scopeCurrentUser($query)
     {
-        return $query->where('user_id', Auth::user()->id);
+        
+        $user = Auth::user();
+        switch ($user->id) {
+            case 2: {
+                return $query->where('status', "На согласование")->orWhere('status', "В исплонении")->orWhere('status', "Исполнено");
+            } break;
+            case 3: {
+                return $query->where('user_id', Auth::user()->id);
+            } break;
+            case 9: {
+                return $query->where('status', "В исплонении");
+            } break;
+
+        }
+
     }
 
     public function scopeUser($query){

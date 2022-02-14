@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Site\ApplicationController;
 use App\Http\Controllers\Site\DashboardController;
+use App\Http\Controllers\Site\ProfileController;
 use App\Http\Controllers\Admin\LoginController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -55,9 +56,8 @@ Route::group([
                     'prefix' => 'profile',
                 ],
                 function(){
-                    Route::get('', [ApplicationController::class, 'index'])->name('index');
-                    Route::get('{user}/edit', [ApplicationController::class, 'edit'])->name('edit');
-                    Route::post('{user}/update', [ApplicationController::class, 'update'])->name('update');
+                    Route::get('', [ProfileController::class, 'index'])->name('index');
+                    Route::put('update', [ProfileController::class, 'update'])->name('update');
                 });
             Route::group(
                 [
@@ -104,6 +104,7 @@ Route::group([
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/test/{id}', [App\Http\Controllers\Controller::class, 'test']);
 
 Route::get('/layout', function () {
     return view('site.auth.layout');
