@@ -6,6 +6,7 @@ use App\Http\Requests\ApplicationRequest;
 use App\Jobs\CreateApplicationJob;
 use App\Jobs\UpdateApplicationJob;
 use App\Models\Application;
+use App\Models\Task;
 use App\Structures\ApplicationData;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,17 @@ class ApplicationController extends Controller
     }
     public function index(Request $request){
         $applications = Application::all();
+        return view('site.applications.index', compact('applications'));
+    }
+    public function indexAjax(Request $request){
+        $applications = Application::all();
+        if (isset($request->orderBy)) {
+            if ($request->orderBy == 'all') {
+                $tasks = Application::select('tasks.id', 'tasks.name', 'tasks.address', 'tasks.start_date', 'tasks.budget', 'tasks.category_id', 'tasks.status', 'tasks.oplata', 'tasks.coordinates', 'users.name as user_name', 'users.id as userid', 'categories.name as category_name', 'categories.ico as icon')
+                    ->get();
+            }
+
+        }
         return view('site.applications.index', compact('applications'));
     }
     public function show(Application $application){
