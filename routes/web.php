@@ -95,7 +95,7 @@ Route::group([
                     'prefix' => 'dashboard'
                 ],
                 function(){
-                    Route::get('', [DashboardController::class, 'index'])->name('index');
+                    Route::get('index', [DashboardController::class, 'index'])->name('index');
 
                 });
         }
