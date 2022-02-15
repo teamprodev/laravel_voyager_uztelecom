@@ -10,6 +10,7 @@ use App\Models\Task;
 use App\Models\User;
 use App\Structures\ApplicationData;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class ApplicationController extends Controller
 {
@@ -89,5 +90,10 @@ class ApplicationController extends Controller
     public function form(Application $application , Request $request){
         return route('site.applications.form', compact($application));
     }
+    public function vote(Application $application){
 
+    }
+    public function cancel(Application $application){
+
+    }
 }
