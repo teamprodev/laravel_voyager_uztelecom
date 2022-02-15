@@ -127,6 +127,7 @@
 
 
         <div class="xl:w-4/12 md:w-2/12 px-4">
+            @auth
             <div class="w-full">
                 <div class="relative z-10">
                     <img src="https://www.csircmc.res.in/sites/default/files/default_images/default_man_photo.jpg"
@@ -136,22 +137,23 @@
                 <div class="shadow-xl rounded-xl bg-gray-100 relative pt-20 -top-16 pb-6">
                     <div class="border-b border-gray-300 mx-6 p-2">
                         <span class="text-xs text-gray-500">Ф.И.О:</span><br>
-                        asdasjdh
+                        {{$user->name}}
                     </div>
                     <div class="border-b border-gray-300 mx-6 p-2">
                         <span class="text-xs text-gray-500">Тел номер:</span><br>
-                        Lorem ipsum.
+                        {{$user->phone}}
                     </div>
                     <div class="border-b border-gray-300 mx-6 p-2">
                         <span class="text-xs text-gray-500">Отдел (управление):</span><br>
-                        Lorem ipsum.
+                        {{$user->department->name}}
                     </div>
                     <div class="border-b border-gray-300 mx-6 p-2">
                         <span class="text-xs text-gray-500">Должность:</span><br>
-                        Lorem ipsum.
+                        {{$user->role->name}}
                     </div>
                 </div>
             </div>
+            @endauth
             <h5 class="text-center font-semibold pb-5 text-lg">Прикрепить файл</h5>
             <div class="w-full xl:flex">
                 <div class="p-2 xl:w-1/2 mt-2 text-center bg-blue-500 hover:bg-blue-700 transition border">
