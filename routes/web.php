@@ -94,7 +94,7 @@ Route::group([
                     'prefix' => 'dashboard'
                 ],
                 function(){
-                    Route::get('', [DashboardController::class, 'index'])->name('index');
+                    Route::get('index', [DashboardController::class, 'index'])->name('index');
 
                 });
         }
@@ -103,6 +103,7 @@ Route::group([
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/test/{id}', [App\Http\Controllers\Controller::class, 'test']);
 
 Route::get('/layout', function () {
     return view('site.auth.layout');

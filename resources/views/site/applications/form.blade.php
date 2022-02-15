@@ -9,7 +9,7 @@
                         </td>
 
                         <td class="w-50 border p-2 font-semibold">
-                            <input type="text" id="name" name="user_id" placeholder="nomi" class="h-16 p-2 border focus:outline-none w-full">
+                            <input required type="text" id="name" name="user_id" placeholder="nomi" class="h-16 p-2 border focus:outline-none w-full">
                         </td>
                     </tr>
                     <tr class="h-16">

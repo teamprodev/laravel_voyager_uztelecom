@@ -106,13 +106,21 @@
 
 
                             @endforeach
+@if(Auth::user()->id == 3)
 <script>
 let for_us_id = document.querySelector('#form input[name="user_id"]');
 let par_td = for_us_id.parentElement;
 par_td.parentElement.style.display = "none";
 for_us_id.setAttribute("type", "hidden");
 for_us_id.setAttribute("value", "{{Auth::user()->id}}");
+
+let for_us_id2 = document.querySelector('#form input[name="status"]');
+let par_td2 = for_us_id2.parentElement;
+par_td2.parentElement.style.display = "none";
+for_us_id2.setAttribute("type", "hidden");
+for_us_id2.setAttribute("value", "На согласование");
 </script>
+@endif
 
             </tbody>
 
