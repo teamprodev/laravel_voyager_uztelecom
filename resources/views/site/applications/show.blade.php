@@ -126,7 +126,14 @@
                     </tr>
                     </tbody>
                 </table>
+
             </div>
+        </div>
+        <div class="w-full text-right py-4 pr-10">
+            <button class="bg-green-500 hover:bg-green-700 p-2 transition duration-300 rounded-md
+            text-white">Done</button>
+            <button type="submit" class="bg-red-500 hover:bg-red-700 p-2 transition duration-300 rounded-md
+            text-white">Cancel</button>
         </div>
     </div>
 
