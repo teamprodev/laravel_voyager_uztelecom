@@ -106,7 +106,7 @@
                             Бюджетни режалаштириш бўлими - харид қилинадиган махсулотни бизнес режада мавжудлиги бўйича маълумот
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <textarea class="resize-none h-16 focus:outline-none border w-full" name="" id="" cols="30" rows="5"></textarea>
+                            <textarea class="py-4 resize-none h-16 focus:outline-none border w-full" name="" id="" cols="30" rows="5"></textarea>
 
                         </td>
                     </tr>
@@ -115,7 +115,7 @@
                             Харид килинадиган махсулотни "Харидлар режаси"да мавжудлиги буйича маълумот
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <textarea class="resize-none h-16 focus:outline-none border w-full" name="" id="" cols="30" rows="5"></textarea>
+                            <textarea class=" py-4 resize-none h-16 focus:outline-none border w-full" name="" id="" cols="30" rows="5"></textarea>
 
                         </td>
                     </tr>
