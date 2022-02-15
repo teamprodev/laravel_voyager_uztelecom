@@ -47,7 +47,8 @@ class ApplicationController extends Controller
 //        return view('site.applications.update', compact($application));
     }
     public function create(){
-        return view('site.applications.create');
+        $user = auth()->user();
+        return view('site.applications.create', compact('user'));
     }
     public function store(ApplicationRequest $request){
         try {
