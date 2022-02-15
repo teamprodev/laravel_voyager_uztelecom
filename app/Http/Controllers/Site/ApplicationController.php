@@ -29,14 +29,14 @@ class ApplicationController extends Controller
                 // Get all workers id of his department as array
 //                $user_list = User::where('department_id', $user->department_id)->pluck('id')->toArray();
 //                return $query->whereIn('user_id', $user_list);
-                $applications = Application::where('status', 0)->get();
+                // todo: more than price 250 mln HEad Office Can controller
+                // todo: Planner see only appplications of its department
+                //
+                $applications = Application::whereIn('status', [0, 1, -1])->get();
 
             } break;
             default: {
-                // Get all workers id of his department as array
-//                $user_list = User::where('department_id', $user->department_id)->pluck('id')->toArray();
-//                return $query->whereIn('user_id', $user_list);
-                $applications = Application::where('status', 0)->get();
+                $applications = Application::all();
 
             } break;
 

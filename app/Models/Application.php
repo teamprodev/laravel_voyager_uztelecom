@@ -10,7 +10,8 @@ class Application extends Model
 {
     use HasFactory;
     const NEW_APP = 0;
-    const CANCELED_APP = 0;
+    const PLANNER_AGREE = 1;
+    const CANCELED_APP = -1;
     protected $table = "applications";
     public function plan(){
         return $this->belongsTo(Plan::class);
