@@ -97,6 +97,12 @@
                 $('.nav-transform').toggleClass('open');
             }
         });
+        $('.modal-cancel').click(function () {
+                $('.modal-window').removeClass('hidden');
+        });
+        $('.closemodal').click(function () {
+                $('.modal-window').addClass('hidden');
+        });
 
     });
 </script>

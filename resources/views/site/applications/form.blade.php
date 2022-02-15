@@ -19,7 +19,7 @@
                             Харид мазмуни (сотиб олиш учун асос)
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <textarea class="resize-none focus:outline-none h-16 border w-full" name="" id="" cols="30" rows="5"></textarea>
+                            <textarea class="resize-none py-4 focus:outline-none h-16 border w-full" name="" id="" cols="30" rows="5"></textarea>
                         </td>
                     </tr>
                     <tr class="h-16">
@@ -27,7 +27,7 @@
                             Асос (харидлар режаси, раҳбарият томонидан билдирги)
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <textarea class="resize-none h-16 focus:outline-none border w-full" name="basis" id="" cols="30" rows="5"></textarea>
+                            <textarea class="resize-none py-4 h-16 focus:outline-none border w-full" name="basis" id="" cols="30" rows="5"></textarea>
 
                         </td>
                     </tr>
@@ -36,7 +36,7 @@
                             Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <textarea class="resize-none h-16 focus:outline-none border w-full" name="name" id="" cols="30" rows="5"></textarea>
+                            <textarea class="resize-none py-4 h-16 focus:outline-none border w-full" name="name" id="" cols="30" rows="5"></textarea>
 
                         </td>
                     </tr>
@@ -54,7 +54,6 @@
                         </td>
                         <td class="w-50 border p-2 font-semibold">
                             <input type="text" name="delivery_date" class="focus:outline-none h-16 border w-full">
-
                         </td>
                     </tr>
                     <tr class="h-16">
