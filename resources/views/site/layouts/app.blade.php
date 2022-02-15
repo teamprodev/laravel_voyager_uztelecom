@@ -10,9 +10,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdn.tailgrids.com/tailgrids-fallback.css" />
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css" rel="stylesheet">
     <!--Replace with your tailwind.css once created-->
-
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet"> <!--Totally optional :) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
     <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet" />
@@ -33,7 +34,7 @@
 </head>
 
 <body class="flex">
-<nav class="w-2/12 fixed">
+<nav class="w-2/12 fixed nav-transform open">
     @yield('menu-left')
 </nav>
 <div class="w-10/12">
@@ -91,5 +92,23 @@
 </script>
 <script>
     @yield('scripts')
+</script>
+<script>
+    $(function () {
+        $('.opennav').click(function () {
+            if ($('.nav-transform').hasClass('open')){
+                $('.nav-transform').removeClass('open');
+            }else{
+                $('.nav-transform').toggleClass('open');
+            }
+        });
+        $('.modal-cancel').click(function () {
+                $('.modal-window').removeClass('hidden');
+        });
+        $('.closemodal').click(function () {
+                $('.modal-window').addClass('hidden');
+        });
+
+    });
 </script>
 </html>

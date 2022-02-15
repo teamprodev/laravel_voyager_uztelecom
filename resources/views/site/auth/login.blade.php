@@ -46,7 +46,7 @@
                     ()">Yangilash
                         </button>
 
-                    </div>A
+                    </div>
                 </form>
 
 

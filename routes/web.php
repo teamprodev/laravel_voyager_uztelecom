@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\EimzoAuthController;
 use App\Http\Controllers\Site\ApplicationController;
 use App\Http\Controllers\Site\DashboardController;
 use App\Http\Controllers\Site\ProfileController;
 use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Site\FaqsController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -35,7 +37,7 @@ Route::post('admin/login', [LoginController::class, 'postLogin'])->name('voyager
 
 Auth::routes();
 
-Route::post('eimzo/login', [\Asadbek\Eimzo\Http\Controllers\EimzoController::class, 'auth'])->name('eri.login');
+Route::post('eimzo/login', [EimzoAuthController::class, 'auth'])->name('eri.login');
 
 Route::group([
     'prefix' => LaravelLocalization::setLocale()
@@ -72,7 +74,9 @@ Route::group([
                     Route::post('{application}/update', [ApplicationController::class, 'update'])->name('update');
                     Route::get('create', [ApplicationController::class, 'create'])->name('create');
                     Route::post('store', [ApplicationController::class, 'store'])->name('store');
-                    Route::post('form', [ApplicationController::class, 'form'])->name('form');
+                    Route::post('vote', [ApplicationController::class, 'vote'])->name('vote');
+                    Route::post('cancel', [ApplicationController::class, 'cancel'])->name('cancel');
+
                     Route::get('getAll', [ApplicationController::class, 'getAll'])->name('getAll');
                 });
             Route::group(
@@ -90,6 +94,7 @@ Route::group([
                     Route::post('{application}/store', [ApplicationController::class, 'store'])->name('store');
                     Route::post('form', [ApplicationController::class, 'form'])->name('form');
                     Route::get('getAll', [ApplicationController::class, 'getAll'])->name('getAll');
+
                 });
             Route::group(
                 [
@@ -121,3 +126,11 @@ Route::get('/faq/index', function () {
 Route::get('/faq/show', function () {
     return view('site.faq.show');
 });
+Route::get('/test', function () {
+    return view('site.test');
+});
+Route::get('/test/send', [\App\Http\Controllers\TestController::class, 'index']);
+//Route::get('test/send', function () {
+//    event(new App\Events\NotificationEvent('Monika'));
+//    return "Event has been sent!";
+//});

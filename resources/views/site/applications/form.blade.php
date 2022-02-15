@@ -9,7 +9,9 @@
                         </td>
 
                         <td class="w-50 border p-2 font-semibold">
-                            <input required type="text" id="name" name="user_id" placeholder="nomi" class="h-16 p-2 border focus:outline-none w-full">
+                            <input required type="text" id="name" name="initiator" placeholder="nomi" class="h-16 p-2
+                            border
+                            focus:outline-none w-full">
                         </td>
                     </tr>
                     <tr class="h-16">
@@ -17,7 +19,7 @@
                             Харид мазмуни (сотиб олиш учун асос)
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <textarea class="resize-none focus:outline-none h-16 border w-full" name="" id="" cols="30" rows="5"></textarea>
+                            <textarea class="resize-none py-4 focus:outline-none h-16 border w-full" name="" id="" cols="30" rows="5"></textarea>
                         </td>
                     </tr>
                     <tr class="h-16">
@@ -25,7 +27,7 @@
                             Асос (харидлар режаси, раҳбарият томонидан билдирги)
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <textarea class="resize-none h-16 focus:outline-none border w-full" name="basis" id="" cols="30" rows="5"></textarea>
+                            <textarea class="resize-none py-4 h-16 focus:outline-none border w-full" name="basis" id="" cols="30" rows="5"></textarea>
 
                         </td>
                     </tr>
@@ -34,7 +36,7 @@
                             Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <textarea class="resize-none h-16 focus:outline-none border w-full" name="name" id="" cols="30" rows="5"></textarea>
+                            <textarea class="resize-none py-4 h-16 focus:outline-none border w-full" name="name" id="" cols="30" rows="5"></textarea>
 
                         </td>
                     </tr>
@@ -52,7 +54,6 @@
                         </td>
                         <td class="w-50 border p-2 font-semibold">
                             <input type="text" name="delivery_date" class="focus:outline-none h-16 border w-full">
-
                         </td>
                     </tr>
                     <tr class="h-16">
@@ -96,7 +97,7 @@
                             Махсулотни келтириш учун қўйилган талаб INCOTERMS, (омбордан олиб кетиш/ харидорга етказиб бериш)
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <input type="text" class="focus:outline-none h-16 border w-full">
+                            <input type="text" name="incoterms" class="focus:outline-none h-16 border w-full">
 
                         </td>
                     </tr>
@@ -105,7 +106,7 @@
                             Бюджетни режалаштириш бўлими - харид қилинадиган махсулотни бизнес режада мавжудлиги бўйича маълумот
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <textarea class="resize-none h-16 focus:outline-none border w-full" name="" id="" cols="30" rows="5"></textarea>
+                            <textarea class="py-4 resize-none h-16 focus:outline-none border w-full" name="" id="" cols="30" rows="5"></textarea>
 
                         </td>
                     </tr>
@@ -114,7 +115,7 @@
                             Харид килинадиган махсулотни "Харидлар режаси"да мавжудлиги буйича маълумот
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <textarea class="resize-none h-16 focus:outline-none border w-full" name="" id="" cols="30" rows="5"></textarea>
+                            <textarea class=" py-4 resize-none h-16 focus:outline-none border w-full" name="" id="" cols="30" rows="5"></textarea>
 
                         </td>
                     </tr>
@@ -125,6 +126,7 @@
 
 
         <div class="xl:w-4/12 md:w-2/12 px-4">
+            @auth
             <div class="w-full">
                 <div class="relative z-10">
                     <img src="https://www.csircmc.res.in/sites/default/files/default_images/default_man_photo.jpg"
@@ -134,22 +136,23 @@
                 <div class="shadow-xl rounded-xl bg-gray-100 relative pt-20 -top-16 pb-6">
                     <div class="border-b border-gray-300 mx-6 p-2">
                         <span class="text-xs text-gray-500">Ф.И.О:</span><br>
-                        asdasjdh
+                        {{$user->name}}
                     </div>
                     <div class="border-b border-gray-300 mx-6 p-2">
                         <span class="text-xs text-gray-500">Тел номер:</span><br>
-                        Lorem ipsum.
+                        {{$user->phone}}
                     </div>
                     <div class="border-b border-gray-300 mx-6 p-2">
                         <span class="text-xs text-gray-500">Отдел (управление):</span><br>
-                        Lorem ipsum.
+                        {{$user->department->name}}
                     </div>
                     <div class="border-b border-gray-300 mx-6 p-2">
                         <span class="text-xs text-gray-500">Должность:</span><br>
-                        Lorem ipsum.
+                        {{$user->role->name}}
                     </div>
                 </div>
             </div>
+            @endauth
             <h5 class="text-center font-semibold pb-5 text-lg">Прикрепить файл</h5>
             <div class="w-full xl:flex">
                 <div class="p-2 xl:w-1/2 mt-2 text-center bg-blue-500 hover:bg-blue-700 transition border">

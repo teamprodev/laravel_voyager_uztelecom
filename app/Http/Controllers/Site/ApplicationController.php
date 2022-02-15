@@ -7,6 +7,7 @@ use App\Jobs\CreateApplicationJob;
 use App\Jobs\UpdateApplicationJob;
 use App\Models\Application;
 use App\Models\Task;
+use App\Models\User;
 use App\Structures\ApplicationData;
 use Illuminate\Http\Request;
 use DataTables;
@@ -16,9 +17,12 @@ class ApplicationController extends Controller
     public function __construct(){
 //        $this->middleware('auth');
     }
+
     public function index(){
         
         return view('site.applications.index');
+
+  
     }
 
     public function getdata(Request $request)
@@ -64,7 +68,8 @@ class ApplicationController extends Controller
 //        return view('site.applications.update', compact($application));
     }
     public function create(){
-        return view('site.applications.create');
+        $user = auth()->user();
+        return view('site.applications.create', compact('user'));
     }
     public function store(ApplicationRequest $request){
         try {
@@ -82,5 +87,10 @@ class ApplicationController extends Controller
     public function form(Application $application , Request $request){
         return route('site.applications.form', compact($application));
     }
+    public function vote(Application $application){
 
+    }
+    public function cancel(Application $application){
+
+    }
 }

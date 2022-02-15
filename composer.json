@@ -14,8 +14,10 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
         "mcamara/laravel-localization": "^1.7",
+
         "tcg/voyager": "^1.5",
         "yajra/laravel-datatables-oracle": "^9.19"
+
     },
     "require-dev": {
         "facade/ignition": "^2.5",
