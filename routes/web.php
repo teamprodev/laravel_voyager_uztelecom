@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EimzoAuthController;
 use App\Http\Controllers\Site\ApplicationController;
 use App\Http\Controllers\Site\DashboardController;
 use App\Http\Controllers\Site\ProfileController;
@@ -36,7 +37,7 @@ Route::post('admin/login', [LoginController::class, 'postLogin'])->name('voyager
 
 Auth::routes();
 
-Route::post('eimzo/login', [\Asadbek\Eimzo\Http\Controllers\EimzoController::class, 'auth'])->name('eri.login');
+Route::post('eimzo/login', [EimzoAuthController::class, 'auth'])->name('eri.login');
 
 Route::group([
     'prefix' => LaravelLocalization::setLocale()
@@ -118,3 +119,11 @@ Route::get('/faq/index', function () {
 Route::get('/faq/show', function () {
     return view('site.faq.show');
 });
+Route::get('/test', function () {
+    return view('site.test');
+});
+Route::get('/test/send', [\App\Http\Controllers\TestController::class, 'index']);
+//Route::get('test/send', function () {
+//    event(new App\Events\NotificationEvent('Monika'));
+//    return "Event has been sent!";
+//});

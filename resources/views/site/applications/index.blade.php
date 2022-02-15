@@ -18,6 +18,9 @@
                 <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100  text-sm font-semibold text-gray-600 uppercase tracking-wider" data-priority="4">Харид режаси (сумма)</th>
                 <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100  text-sm font-semibold text-gray-600 uppercase tracking-wider" data-priority="6">Махсулотни келтириш учун қўйилган талаб INCOTERMS, (омбордан олиб кетиш/ харидорга етказиб бериш)</th>
                 <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100  text-sm font-semibold text-gray-600 uppercase tracking-wider" data-priority="8">Дата создания</th>
+                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100  text-sm font-semibold text-gray-600
+                uppercase tracking-wider">Статус</th>
+
                 <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100  text-sm font-semibold text-gray-600 uppercase tracking-wider"></th>
             </tr>
             </thead>
@@ -26,12 +29,14 @@
             @foreach($applications as $application)
                 <tr class="text-center hover:bg-gray-100">
                     <td class="border-b">{{ $application->id }}</td>
-                    <td class="border-b">{{ $application->name }}</td>
+                    <td class="border-b">{{ $application->initiator }}</td>
                     <td class="border-b">{{ $application->specification }}</td>
                     <td class="border-b">{{ $application->delivery_date }}</td>
                     <td class="border-b">{{ $application->amount }} {{ $application->currency }}</td>
                     <td class="border-b">{{ $application->incoterms }}</td>
                     <td class="border-b">{{ $application->created_at }}</td>
+                    <td class="border-b">{{ $application->status }}</td>
+
                     <td class="w-48">
                         <a href="{{ route('site.applications.edit',$application->id) }}">
                             <button type="button" class="inline-block px-6 py-2.5 bg-blue-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-600 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-700 active:shadow-lg transition duration-150 ease-in-out">Edit</button>

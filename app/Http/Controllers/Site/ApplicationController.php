@@ -7,6 +7,7 @@ use App\Jobs\CreateApplicationJob;
 use App\Jobs\UpdateApplicationJob;
 use App\Models\Application;
 use App\Models\Task;
+use App\Models\User;
 use App\Structures\ApplicationData;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,29 @@ class ApplicationController extends Controller
 //        $this->middleware('auth');
     }
     public function index(Request $request){
-        $applications = Application::all();
+        $user_role = auth()->user()->role_id;
+        switch ($user_role) {
+            // APPLICATION CREATOR
+            case 1: {
+                $applications = Application::where('user_id', auth()->id())->get();
+            } break;
+            //Budget planning
+            case 4: {
+                // Get all workers id of his department as array
+//                $user_list = User::where('department_id', $user->department_id)->pluck('id')->toArray();
+//                return $query->whereIn('user_id', $user_list);
+                $applications = Application::where('status', 0)->get();
+
+            } break;
+            default: {
+                // Get all workers id of his department as array
+//                $user_list = User::where('department_id', $user->department_id)->pluck('id')->toArray();
+//                return $query->whereIn('user_id', $user_list);
+                $applications = Application::where('status', 0)->get();
+
+            } break;
+
+        }
         return view('site.applications.index', compact('applications'));
     }
     public function indexAjax(Request $request){

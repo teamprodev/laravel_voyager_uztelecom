@@ -53,4 +53,18 @@ class Application extends Model
 
         }
     }
+    public function getStatusAttribute(){
+        switch (intval($this->attributes['status'])){
+            case 0: {
+                $status = "NEW";
+            } break;
+            case 1: {
+                $status = "STEP 2";
+            } break;
+            default: {
+                $status = "UNDEFINED";
+            } break;
+        }
+        return $status;
+    }
 }
