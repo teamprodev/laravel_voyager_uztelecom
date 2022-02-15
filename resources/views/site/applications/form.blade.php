@@ -9,7 +9,9 @@
                         </td>
 
                         <td class="w-50 border p-2 font-semibold">
-                            <input required type="text" id="name" name="user_id" placeholder="nomi" class="h-16 p-2 border focus:outline-none w-full">
+                            <input required type="text" id="name" name="initiator" placeholder="nomi" class="h-16 p-2
+                            border
+                            focus:outline-none w-full">
                         </td>
                     </tr>
                     <tr class="h-16">
@@ -96,7 +98,7 @@
                             Махсулотни келтириш учун қўйилган талаб INCOTERMS, (омбордан олиб кетиш/ харидорга етказиб бериш)
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <input type="text" class="focus:outline-none h-16 border w-full">
+                            <input type="text" name="incoterms" class="focus:outline-none h-16 border w-full">
 
                         </td>
                     </tr>

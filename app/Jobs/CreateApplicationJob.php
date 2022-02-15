@@ -38,12 +38,13 @@ class CreateApplicationJob implements ShouldQueue
         DB::beginTransaction();
         try {
             $application = new Application();
-            $application->name = $this->applicationRequest->name;
+            $application->initiator = $this->applicationRequest->initiator;
+
             $application->delivery_date = $this->applicationRequest->delivery_date;
             $application->specification = $this->applicationRequest->specification;
             $application->comment = $this->applicationRequest->comment;
             $application->expire_warranty_date = $this->applicationRequest->expire_warranty_date;
-            $application->user_id = $this->applicationRequest->user_id;
+            $application->user_id = auth()->id();
             $application->status = $this->applicationRequest->status;
             $application->plan_id = $this->applicationRequest->plan_id;
             $application->initiator = $this->applicationRequest->initiator;
@@ -59,10 +60,12 @@ class CreateApplicationJob implements ShouldQueue
             $application->file_tech_spec = $this->applicationRequest->file_tech_spec;
             $application->other_files = $this->applicationRequest->other_files;
             $application->draft = $this->applicationRequest->draft;
+            $application->status = 0;
+
             $application->save();
         } catch (\Exception $exception){
             DB::rollBack();
-            @dd($exception);
+            dd($exception);
             throw $exception;
         }
         DB::commit();
