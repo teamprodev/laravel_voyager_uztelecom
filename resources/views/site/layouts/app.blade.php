@@ -90,15 +90,12 @@
 </script>
 <script>
     $(function () {
-        $('.open').on('click', function (e) {
-            $('.nav-transform').toggleClass('open');
-
-            e.stopPropagation();
-            return false;
-        });
-
-        $('*:not(.open)').on('click', function () {
-            $('.nav-transform').removeClass('open');
+        $('.opennav').click(function () {
+            if ($('.nav-transform').hasClass('open')){
+                $('.nav-transform').removeClass('open');
+            }else{
+                $('.nav-transform').toggleClass('open');
+            }
         });
 
     });

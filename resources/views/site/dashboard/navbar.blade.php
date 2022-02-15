@@ -1,7 +1,7 @@
 <nav class="bg-white fixed w-10/12 z-50 right-0 border-gray-200 sm:px-4 py-2.5 dark:bg-gray-800 border-b shadow-md topnavbar">
     <div class="flex justify-between flex-wrap items-center mx-auto">
         <div class="hidden relative w-12 mr-3 md:block">
-            <i class="fas fa-bars open cursor-pointer"></i>
+            <i class="fas fa-bars opennav cursor-pointer"></i>
         </div>
         <div class="hidden relative w-5/12 mr-3 md:block">
             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
