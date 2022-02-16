@@ -34,7 +34,7 @@
             <div class="px-5 py-4 flex justify-end">
                 <ul>
                     <li>
-                        <select name="lang" id="lang" class="text-black mr-4 border-0 focus:outline-none">
+                        <select name="lang" id="lang" class="text-black mr-4 border-0 focus:outline-none hover:text-blue-500">
                             @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                                 <option value="0" class="border-0 rounded">
                                     <a class="mr-5" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
@@ -56,7 +56,7 @@
             <ul class="list-reset flex justify-between flex-1 md:flex-none items-center">
                 <li class="flex-1 md:flex-none md:mr-3">
                     <div class="relative inline-block">
-                        <button onclick="toggleDD('myDropdown')" class="drop-button text-black py-2 px-2">
+                        <button onclick="toggleDD('myDropdown')" class="drop-button text-black py-2 px-2 focus:outline-none hover:text-blue-500">
                             <span class="pr-2">
                                 <i class="em em-robot_face"></i>
                             </span>{{auth()->user()->name}}

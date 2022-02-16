@@ -17,12 +17,13 @@
                 <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100  text-sm font-semibold text-gray-600 uppercase tracking-wider" >Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)</th>
                 <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100  text-sm font-semibold text-gray-600 uppercase tracking-wider" >Махсулот келишининг муддати</th>
                 <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100  text-sm font-semibold text-gray-600 uppercase tracking-wider" >Харид режаси (сумма)</th>
-                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100  text-sm font-semibold text-gray-600 uppercase tracking-wider" >Махсулотни келтириш учун қўйилган талаб INCOTERMS, (омбордан олиб кетиш/ харидорга етказиб бериш)</th>
+                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100  text-xs font-semibold text-gray-600 uppercase tracking-wider">Махсулотни келтириш учун қўйилган талаб INCOTERMS</th>
                 <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100  text-sm font-semibold text-gray-600 uppercase tracking-wider" >Дата создания</th>
+                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100  text-sm font-semibold text-gray-600 uppercase tracking-wider" >Статус</th>
                 <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100  text-sm font-semibold text-gray-600 uppercase tracking-wider" style="width: 150px;">Action</th>
             </tr>
             </thead>
-            <tbody class="text-center">
+            <tbody class="text-center text-sm">
 
             </tbody>
         </table>
@@ -56,6 +57,7 @@
             {data: 'incoterms', name: 'incoterms'},
 
             {data: 'created_at', name: 'created_at'},
+            {data: 'status', name: 'status'},
             {
                 data: 'action',
                 name: 'action',
