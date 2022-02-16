@@ -49,6 +49,7 @@ class ApplicationController extends Controller
                 break;
 
         }
+        return view('site.applications.index', compact('applications'));
     }
     public function getdata(Request $request)
     {
