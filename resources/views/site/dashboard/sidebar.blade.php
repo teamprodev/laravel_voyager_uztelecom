@@ -13,7 +13,7 @@
 
 
 <nav aria-label="alternative nav">
-    <div class="bg-blue-500 shadow-xl rounded-r-xl fixed bottom-0 relative h-screen z-10 w-full content-center">
+    <div class="bg-blue-500 shadow-xl fixed bottom-0 relative h-screen z-10 w-full content-center">
 
         <a href="/" class="flex items-start py-5 w-10/12 mx-auto">
             <img src="{{ asset('/images/Uztelecom_Logo.png') }}" alt="">
