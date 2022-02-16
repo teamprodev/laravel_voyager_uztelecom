@@ -68,6 +68,7 @@ Route::group([
                 ],
                 function(){
                     Route::get('', [ApplicationController::class, 'index'])->name('index');
+                    Route::get('list', [ApplicationController::class, 'getdata'])->name('list');
                     Route::get('{application}/show', [ApplicationController::class, 'show'])->name('show');
                     Route::get('{application}/edit', [ApplicationController::class, 'edit'])->name('edit');
                     Route::post('{application}/update', [ApplicationController::class, 'update'])->name('update');
@@ -84,12 +85,16 @@ Route::group([
                     'prefix' => 'faqs',
                 ],
                 function(){
-                    Route::get('', [FaqsController::class, 'index'])->name('index');
-                    Route::get('{faq}/show', [FaqsController::class, 'show'])->name('show');
-                    Route::get('{faq}/edit', [FaqsController::class, 'edit'])->name('edit');
-                    Route::post('{faq}/update', [FaqsController::class, 'update'])->name('update');
-                    Route::get('create', [FaqsController::class, 'create'])->name('create');
-                    Route::post('store', [FaqsController::class, 'store'])->name('store');
+                    Route::get('', [ApplicationController::class, 'index'])->name('index');
+                    
+                    Route::get('{faq}/show', [ApplicationController::class, 'show'])->name('show');
+                    Route::get('{faq}/edit', [ApplicationController::class, 'edit'])->name('edit');
+                    Route::post('{faq}/update', [ApplicationController::class, 'update'])->name('update');
+                    Route::get('create', [ApplicationController::class, 'create'])->name('create');
+                    Route::post('{application}/store', [ApplicationController::class, 'store'])->name('store');
+                    Route::post('form', [ApplicationController::class, 'form'])->name('form');
+                    Route::get('getAll', [ApplicationController::class, 'getAll'])->name('getAll');
+
                 });
             Route::group(
                 [

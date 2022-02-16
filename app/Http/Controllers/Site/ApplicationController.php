@@ -10,53 +10,75 @@ use App\Models\Task;
 use App\Models\User;
 use App\Structures\ApplicationData;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
+use DataTables;
 
 class ApplicationController extends Controller
 {
     public function __construct(){
-//        $this->middleware('auth');
+        $this->middleware('auth');
     }
-    public function index(Request $request){
+    public function index(Request $request)
+    {
+
         $user_role = auth()->user()->role_id;
         switch ($user_role) {
             // APPLICATION CREATOR
-            case 1: {
-                $applications = Application::where('user_id', auth()->id())->get();
-            } break;
+            case 1:
+                {
+                    $applications = Application::where('user_id', auth()->id())->get();
+                }
+                break;
             //Budget planning
-            case 4: {
-                // Get all workers id of his department as array
+            case 4:
+                {
+                    // Get all workers id of his department as array
 //                $user_list = User::where('department_id', $user->department_id)->pluck('id')->toArray();
 //                return $query->whereIn('user_id', $user_list);
-                // todo: more than price 250 mln HEad Office Can controller
-                // todo: Planner see only appplications of its department
-                //
-                $applications = Application::whereIn('status', [0, 1, -1])->get();
+                    // todo: more than price 250 mln HEad Office Can controller
+                    // todo: Planner see only appplications of its department
+                    //
+                    $applications = Application::whereIn('status', [0, 1, -1])->get();
 
-            } break;
-            default: {
-                $applications = Application::all();
+                }
+                break;
+            default:
+                {
+                    $applications = Application::all();
 
-            } break;
-
-        }
-        return view('site.applications.index', compact('applications'));
-    }
-    public function indexAjax(Request $request){
-        $applications = Application::all();
-        if (isset($request->orderBy)) {
-            if ($request->orderBy == 'all') {
-                $tasks = Application::select('tasks.id', 'tasks.name', 'tasks.address', 'tasks.start_date', 'tasks.budget', 'tasks.category_id', 'tasks.status', 'tasks.oplata', 'tasks.coordinates', 'users.name as user_name', 'users.id as userid', 'categories.name as category_name', 'categories.ico as icon')
-                    ->get();
-            }
+                }
+                break;
 
         }
-        return view('site.applications.index', compact('applications'));
     }
+    public function getdata(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Application::latest()->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $actionBtn = ' <a href="'. route("site.applications.edit", $row->id ) .'">
+                    <button type="button" class="inline-block px-6 py-2.5 bg-blue-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-600 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-700 active:shadow-lg transition duration-150 ease-in-out">Edit</button>
+                </a>
+                <a href="'. route(  "site.applications.show", $row->id ) .'">
+                    <button type="button" class="inline-block px-6 py-2.5 bg-yellow-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-yellow-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-800 active:shadow-lg transition duration-150 ease-in-out">Show</button>
+                </a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+
+        }
+    }
+
+
+   
+
+
     public function show(Application $application){
         return view('site.applications.show', compact('application'));
     }
+
     public function edit(Application $application){
         return view('site.applications.edit', compact('application'));
 
