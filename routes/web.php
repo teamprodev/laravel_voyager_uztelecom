@@ -74,8 +74,8 @@ Route::group([
                     Route::post('{application}/update', [ApplicationController::class, 'update'])->name('update');
                     Route::get('create', [ApplicationController::class, 'create'])->name('create');
                     Route::post('store', [ApplicationController::class, 'store'])->name('store');
-                    Route::post('vote', [ApplicationController::class, 'vote'])->name('vote');
-                    Route::post('cancel', [ApplicationController::class, 'cancel'])->name('cancel');
+                    Route::put('{application}/vote', [ApplicationController::class, 'vote'])->name('vote');
+//                    Route::post('cancel', [ApplicationController::class, 'cancel'])->name('cancel');
 
                     Route::get('getAll', [ApplicationController::class, 'getAll'])->name('getAll');
                 });

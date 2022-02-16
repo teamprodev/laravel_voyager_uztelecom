@@ -40,21 +40,37 @@ class Application extends Model
 
     }
 
-    public function scopeUser($query){
+    public function scopeSteps($query){
         $user = auth()->user();
         switch ($user->role_id) {
             // APPLICATION CREATOR
-            case 1: {
-                return $query->where('user_id', $user->id);
+            case 1:
+                {
+                    $result = $query->where('user_id', auth()->id());
+                }
+                break;
+            case -8: {
+                // Get all workers id of his department as array
+                // todo: more than price 250 mln HEad Office Can controller
+                // todo: Planner see only appplications of its department
+                //
+                $result = $query->whereIn('status', [0, 1, -1]);
             } break;
             //HEAD OF DEPARTMENT of user who created APPLICATION
-            case 2: {
+            case -8: {
                 // Get all workers id of his department as array
                 $user_list = User::where('department_id', $user->department_id)->pluck('id')->toArray();
-                return $query->whereIn('user_id', $user_list);
+                $result = $query->whereIn('user_id', $user_list);
             } break;
 
+            default:
+                {
+                    $result = Application::all();
+                }
+                break;
         }
+        return $result;
+
     }
     public function getStatusAttribute(){
         switch (intval($this->attributes['status'])){

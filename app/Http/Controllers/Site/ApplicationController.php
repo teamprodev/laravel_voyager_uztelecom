@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\Site;
 
 use App\Http\Requests\ApplicationRequest;
+use App\Http\Requests\VoteApplicationRequest;
 use App\Jobs\CreateApplicationJob;
 use App\Jobs\UpdateApplicationJob;
+use App\Jobs\VoteJob;
 use App\Models\Application;
-use App\Models\Task;
 use App\Models\User;
 use App\Structures\ApplicationData;
+use Exception;
 use Illuminate\Http\Request;
-use DataTables;
+use Yajra\DataTables\DataTables;
 
 class ApplicationController extends Controller
 {
@@ -19,36 +21,7 @@ class ApplicationController extends Controller
     }
     public function index(Request $request)
     {
-
-        $user_role = auth()->user()->role_id;
-        switch ($user_role) {
-            // APPLICATION CREATOR
-            case 1:
-                {
-                    $applications = Application::where('user_id', auth()->id())->get();
-                }
-                break;
-            //Budget planning
-            case 4:
-                {
-                    // Get all workers id of his department as array
-//                $user_list = User::where('department_id', $user->department_id)->pluck('id')->toArray();
-//                return $query->whereIn('user_id', $user_list);
-                    // todo: more than price 250 mln HEad Office Can controller
-                    // todo: Planner see only appplications of its department
-                    //
-                    $applications = Application::whereIn('status', [0, 1, -1])->get();
-
-                }
-                break;
-            default:
-                {
-                    $applications = Application::all();
-
-                }
-                break;
-
-        }
+        $applications = Application::steps()->get();
         return view('site.applications.index', compact('applications'));
     }
     public function getdata(Request $request)
@@ -113,10 +86,15 @@ class ApplicationController extends Controller
     public function form(Application $application , Request $request){
         return route('site.applications.form', compact($application));
     }
-    public function vote(Application $application){
+    public function vote(Application $application, VoteApplicationRequest $request){
+        try{
+            $this->dispatchNow(new VoteJob($application, $request));
+            return redirect()->route('site.applications.index')->with('success', 'Voted!');
+        } catch (Exception $exception){
+            dd($exception);
+            return redirect()->route('site.applications.index')->with('danger', 'Something went wrong!');
 
+        }
     }
-    public function cancel(Application $application){
 
-    }
 }
