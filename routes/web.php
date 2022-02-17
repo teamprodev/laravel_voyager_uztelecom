@@ -86,7 +86,7 @@ Route::group([
                 ],
                 function(){
                     Route::get('', [ApplicationController::class, 'index'])->name('index');
-                    
+
                     Route::get('{faq}/show', [ApplicationController::class, 'show'])->name('show');
                     Route::get('{faq}/edit', [ApplicationController::class, 'edit'])->name('edit');
                     Route::post('{faq}/update', [ApplicationController::class, 'update'])->name('update');
