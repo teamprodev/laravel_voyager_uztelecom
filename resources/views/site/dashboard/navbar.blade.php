@@ -1,4 +1,4 @@
-<nav class="bg-white fixed w-10/12 z-50 right-0 border-gray-200 sm:px-4 py-2.5 dark:bg-gray-800 border-b shadow-md topnavbar">
+<nav class="bg-white fixed w-10/12 z-10 right-0 border-gray-200 sm:px-4 py-2.5 dark:bg-gray-800 border-b shadow-md topnavbar">
     <div class="flex flex-wrap items-center mx-auto">
         <div class="hidden relative w-12 mr-3 md:block">
             <i class="fas fa-bars opennav cursor-pointer"></i>
@@ -30,11 +30,11 @@
                     </div>
                 </li>
             </div>
-            <div class="flex px-4">
+            <div class="flex px-4 ">
                 <div class="py-4 flex justify-end">
                     <ul>
                         <li>
-                            <select name="lang" id="lang" class="text-black border-0 focus:outline-none hover:text-blue-500">
+                            <select name="lang" id="lang" class="text-black border-0 focus:outline-none hover:text-blue-500 text-gray-600">
                                 @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                                     <option value="0" class="border-0 rounded">
                                         <a class="mr-5" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
@@ -53,10 +53,10 @@
                     @endif
                 </div>
                 @auth
-                    <ul class="list-reset flex justify-between flex-1 md:flex-none items-center">
-                        <li class="flex-1 md:flex-none md:mr-3">
-                            <div class="relative inline-block">
-                                <button onclick="toggleDD('myDropdown')" class="drop-button text-black py-2 px-2 focus:outline-none hover:text-blue-500">
+                    <ul class="list-reset flex justify-between flex-1 md:flex-none items-center ">
+                        <li class="flex-1 md:flex-none md:mr-3 ">
+                            <div class="relative inline-block ">
+                                <button onclick="toggleDD('myDropdown')" class="drop-button text-gray-600 py-2 px-2 focus:outline-none hover:text-blue-500">
                                     <span class="pr-2">
                                         <i class="em em-robot_face"></i>
                                     </span>{{auth()->user()->name}}
