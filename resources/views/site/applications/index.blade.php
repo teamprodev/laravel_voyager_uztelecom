@@ -3,7 +3,7 @@
 <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://pagecdn.io/lib/font-awesome/5.10.0-11/css/all.min.css" integrity="sha256-p9TTWD+813MlLaxMXMbTA7wN/ArzGyW/L7c5+KkjOkM=" crossorigin="anonymous">
 
-<div class="preloader w-full h-full block top-0 left-0 bg-white opacity-75 z-50">
+<div id="preloader" class="w-full h-full block top-0 left-0 bg-white opacity-75 z-50">
   <span class="text-green-500 opacity-75 top-1/3 my-0 mx-auto block relative w-0 h-0">
     <i class="fas fa-circle-notch fa-spin fa-5x"></i>
   </span>
@@ -79,7 +79,7 @@
 </script>
 <script>
     $(window).on('load', function() {
-        $('.preloader').fadeOut().end().delay(400).fadeOut('slow');
+        $('#preloader').fadeOut().end().delay(200).fadeOut('slow');
     });
 </script>
 @endsection

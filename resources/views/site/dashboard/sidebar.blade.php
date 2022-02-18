@@ -19,7 +19,7 @@
             <img src="{{ asset('/images/Uztelecom_Logo.png') }}" alt="">
         </a>
         <div class="content-center md:content-start text-left justify-between">
-            <ul class="list-reset flex flex-row md:flex-col pt-3 md:py-3 px-1 md:px-2 text-center md:text-left">
+            <ul class="list-reset flex flex-row md:flex-col pt-3 md:py-3 px-1 text-center md:text-left">
                 {{menu('site', 'site.dashboard.menu')}}
             </ul>
         </div>

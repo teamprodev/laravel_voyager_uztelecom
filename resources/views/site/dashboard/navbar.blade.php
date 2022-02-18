@@ -1,5 +1,5 @@
 <nav class="bg-white fixed w-10/12 z-50 right-0 border-gray-200 sm:px-4 py-2.5 dark:bg-gray-800 border-b shadow-md topnavbar">
-    <div class="flex justify-between flex-wrap items-center mx-auto">
+    <div class="flex flex-wrap items-center mx-auto">
         <div class="hidden relative w-12 mr-3 md:block">
             <i class="fas fa-bars opennav cursor-pointer"></i>
         </div>
@@ -16,12 +16,12 @@
                 <svg class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             </button>
         </div>
-
-        <div>
+        <div class="flex items-center justify-end w-1/2">
+            <div class="px-4">
                 <li class="flex-1 md:flex-none md:mr-3 list-none">
                     <div class="relative inline-block">
                         <button onclick="toggleDD('NotificationDropdown')" class="drop-button text-black z-50">
-                                <i class="text-xl text-gray-500 far fa-bell drop-button"></i>
+                            <i class="text-xl text-gray-500 far fa-bell drop-button"></i>
                         </button>
                         <div id="NotificationDropdown" class="dropdownlist absolute border border-gray-500 bg-white rounded-xl text-black right-0 mt-3 p-3 overflow-auto z-30 invisible">
                             <a href="" class="p-2 hover:bg-gray-500 hover:text-white text-black text-sm no-underline hover:no-underline block">Уведомление</a>
@@ -29,56 +29,59 @@
                         </div>
                     </div>
                 </li>
-        </div>
-        <div class="flex w-28">
-            <div class="px-5 py-4 flex justify-end">
-                <ul>
-                    <li>
-                        <select name="lang" id="lang" class="text-black mr-4 border-0 focus:outline-none hover:text-blue-500">
-                            @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                <option value="0" class="border-0 rounded">
-                                    <a class="mr-5" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-                                        {{ $properties['native'] }}
-                                    </a>
-                                </option>
-                            @endforeach
-                        </select>
-                    </li>
-                </ul>
-{{--                <a href="{{route('register')}}" class="text-black hover:text-gray-800  mr-5">Register</a>--}}
-                @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                @endif
             </div>
-            @auth
-            <ul class="list-reset flex justify-between flex-1 md:flex-none items-center">
-                <li class="flex-1 md:flex-none md:mr-3">
-                    <div class="relative inline-block">
-                        <button onclick="toggleDD('myDropdown')" class="drop-button text-black py-2 px-2 focus:outline-none hover:text-blue-500">
-                            <span class="pr-2">
-                                <i class="em em-robot_face"></i>
-                            </span>{{auth()->user()->name}}
-                            <svg class="h-3 fill-current inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path>
-                            </svg>
-                        </button>
-                        <div id="myDropdown" class="dropdownlist absolute bg-gray-800 text-black right-0 mt-3 p-3 overflow-auto z-30 invisible">
-                            <input type="text" class="drop-search focus:outline-none rounded p-2 text-gray-600" placeholder="Search.." id="myInput" onkeyup="filterDD('myDropdown','myInput')">
-                            <a href="{{route('site.profile.index')}}" class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="fa fa-user fa-fw"></i> Profile</a>
-                            <div class="border border-gray-800"></div>
-                            <form action="{{route('logout')}}" method="POST">
-                                @csrf
-                                <i class="fas fa-sign-out-alt fa-fw text-white float-left"></i><input type="submit" class="p-2 bg-gray-800 text-white text-sm no-underline hover:no-underline block text-white cursor-pointer" value="Выйти">
-                            </form>
+            <div class="flex px-4">
+                <div class="py-4 flex justify-end">
+                    <ul>
+                        <li>
+                            <select name="lang" id="lang" class="text-black border-0 focus:outline-none hover:text-blue-500">
+                                @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                    <option value="0" class="border-0 rounded">
+                                        <a class="mr-5" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                            {{ $properties['native'] }}
+                                        </a>
+                                    </option>
+                                @endforeach
+                            </select>
+                        </li>
+                    </ul>
+                    {{--                <a href="{{route('register')}}" class="text-black hover:text-gray-800  mr-5">Register</a>--}}
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
                         </div>
-                    </div>
-                </li>
-            </ul>
-            @else
-                <a href="{{route('login')}}" class="text-black hover:text-gray-500  ml-5">Login</a>
-            @endauth
+                    @endif
+                </div>
+                @auth
+                    <ul class="list-reset flex justify-between flex-1 md:flex-none items-center">
+                        <li class="flex-1 md:flex-none md:mr-3">
+                            <div class="relative inline-block">
+                                <button onclick="toggleDD('myDropdown')" class="drop-button text-black py-2 px-2 focus:outline-none hover:text-blue-500">
+                                    <span class="pr-2">
+                                        <i class="em em-robot_face"></i>
+                                    </span>{{auth()->user()->name}}
+                                    <svg class="h-3 fill-current inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path>
+                                    </svg>
+                                </button>
+                                <div id="myDropdown" class="dropdownlist absolute bg-gray-800 text-black right-0 mt-3 p-3 overflow-auto z-30 invisible">
+                                    <input type="text" class="drop-search focus:outline-none rounded p-2 text-gray-600" placeholder="Search.." id="myInput" onkeyup="filterDD('myDropdown','myInput')">
+                                    <a href="{{route('site.profile.index')}}" class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="fa fa-user fa-fw"></i> Profile</a>
+                                    <div class="border border-gray-800"></div>
+                                    <form action="{{route('logout')}}" method="POST">
+                                        @csrf
+                                        <div>
+                                            <i class="fas fa-sign-out-alt fa-fw text-white float-left mt-1 ml-2 mr-1"></i><input type="submit" class="bg-gray-800 text-white text-sm no-underline hover:no-underline block text-white cursor-pointer" value="Выйти">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                @else
+                    <a href="{{route('login')}}" class="text-black hover:text-gray-500  ml-5">Login</a>
+                @endauth
+            </div>
         </div>
     </div>
 </nav>
