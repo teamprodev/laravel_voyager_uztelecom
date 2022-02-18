@@ -16,15 +16,13 @@
                 </div>
 
                 <!--Body-->
-                <form name="eri_form" action="{{ route('eri.login') }}" id="eri_form" method="post">
-
+                <form name="eri_form" action="{{route('eimzo.postLogin')}}" id="eri_form" method="post">
+                @csrf
                 <div>
                         <label class="text-xs" for="">Калитни танланг</label>
                         <select name="key" class="w-full" onchange="cbChanged(this)"></select>
 
                     </div>
-
-                    @csrf
 
 
                     <div hidden id="keyId" class="none"></div>
@@ -39,10 +37,13 @@
 
                     <!--Footer-->
                     <div class="flex justify-center pt-2">
-                        <button class="px-4 bg-blue-500 py-2 rounded-lg text-white hover:bg-blue-400" onclick="sign()">
+                        <button class="px-4 bg-blue-500 py-2 rounded-lg text-white hover:bg-blue-400" id="eri_sign"
+                                onclick="sign
+                        ()">
                             Вход
                         </button>
-                        <button class="px-4 bg-blue-500 py-2 rounded-lg text-white hover:bg-blue-400" onclick="uiLoadKeys
+                        <button class="px-4 bg-blue-500 py-2 rounded-lg text-white hover:bg-blue-400" id="eri_sign"
+                                onclick="uiLoadKeys
                     ()">Yangilash
                         </button>
 

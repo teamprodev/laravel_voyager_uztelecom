@@ -129,7 +129,7 @@ Route::get('/faq/show', function () {
 Route::get('/test', function () {
     return view('site.test');
 });
-Route::get('/test/send', [\App\Http\Controllers\TestController::class, 'index']);
+//Route::get('/test/send', [\App\Http\Controllers\TestController::class, 'index']);
 //Route::get('test/send', function () {
 //    event(new App\Events\NotificationEvent('Monika'));
 //    return "Event has been sent!";

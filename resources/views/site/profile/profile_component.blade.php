@@ -15,7 +15,7 @@
             </div>
             <div class="border-b border-gray-300 mx-6 p-2">
                 <span class="text-xs text-gray-500">Отдел (управление):</span><br>
-                {{auth()->user()->department->name}}
+                {{\Arr::get(auth()->user()->department, 'name')}}
             </div>
             <div class="border-b border-gray-300 mx-6 p-2">
                 <span class="text-xs text-gray-500">Должность:</span><br>

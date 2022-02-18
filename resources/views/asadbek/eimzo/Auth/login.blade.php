@@ -50,7 +50,7 @@
                         <div class="d-flex flex-column text-center">
                             <div class="mb-2 mg-t-15" style="position: relative; z-index: 999999;">
                                 <form name="eri_form" action={{route('eimzo:postlogin')}} id="eri_form" method="post">
-                                    <input type="hidden" name="_token" value="gMNU6uPx5DoNAe5mntW8O9QPOI855WKSyTdQMybd">
+                                    @csrf
                                     <div class="form-group mb-2">
                                         <label for="">Калитни танланг</label>
                                         <select name="key" class="form-control bordered"
@@ -69,7 +69,7 @@
                                         <button class="btn btn-sm btn-primary" id="eri_sign" onclick="sign()"
                                                 type="button">Имзолаш
                                         </button>
-                                        <button class="btn btn-sm btn-info" id="eri_sign" onclick="uiLoadKeys()"
+                                        <button class="btn btn-sm btn-info" id="eri_signs" onclick="uiLoadKeys()"
                                                 type="button">Янгилаш
                                         </button>
                                     </div>

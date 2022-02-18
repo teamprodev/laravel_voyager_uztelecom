@@ -13,7 +13,7 @@ var AppLoad = function () {
         'localhost', '96D0C1491615C82B9A54D9989779DF825B690748224C2B04F500F370D51827CE2644D8D4A82C18184D73AB8530BB8ED537269603F61DB0D03D2104ABF789970B',
         '127.0.0.1', 'A7BCFA5D490B351BE0754130DF03A068F855DB4333D43921125B9CF2670EF6A40370C646B90401955E1F7BC9CDBF59CE0B2C5467D820BE189C845D0B79CFC96F',
         'null',      'E0A205EC4E7B78BBB56AFF83A733A1BB9FD39D562E67978CC5E7D73B0951DB1954595A20672A63332535E13CC6EC1E1FC8857BB09E0855D7E76E411B6FA16E9D',
-        'reestr.agro.uz', 'C55F15788BE5DD04DCC42FEEEAB06858F2E05F0CEA950A7AEBE724741B1F164D25E515CC1FC5A30596D784F6C6E205B5D224A682818D3C332EA09C4B57777792'
+        'bidding.uztelecom.uz', 'E7A1BA83E8691F5209F2523B4AF3659DB81621FF77EF0340C6BB45EDB92E08B4DFF4E9CE8029A15E1FB5A71E6F5B0A10DCA14231D6BFFA21B0253F6EAFF7CFDA'
     ];
     uiLoading();
     EIMZOClient.checkVersion(function(major, minor){
@@ -164,7 +164,7 @@ sign = function () {
                 document.getElementById('eri_hash').value = pkcs7;
                 document.getElementById('eri_sign').setAttribute('disabled', '');
                 document.getElementById('eri_sign').innerText = "Имзолаш (имзоланди)";
-                document.getElementById('eri_form').submit();
+                // document.getElementById('eri_form').submit();
             }, function(e, r){
                 if(r){
                     if (r.indexOf("BadPaddingException") != -1) {
