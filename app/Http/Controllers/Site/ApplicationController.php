@@ -11,6 +11,7 @@ use App\Models\Application;
 use App\Models\User;
 use App\Structures\ApplicationData;
 use Exception;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -88,6 +89,7 @@ class ApplicationController extends Controller
     }
     public function vote(Application $application, VoteApplicationRequest $request){
         try{
+            if(Gate::allow)
             $this->dispatchNow(new VoteJob($application, $request));
             return redirect()->route('site.applications.index')->with('success', 'Voted!');
         } catch (Exception $exception){
