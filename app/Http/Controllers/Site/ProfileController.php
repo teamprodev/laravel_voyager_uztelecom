@@ -19,8 +19,9 @@ class ProfileController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
         $departments = Department::get();
-        return view('site.profile.profile',compact('departments'));
+        return view('site.profile.profile',compact('departments', 'user'));
     }
 
     /**
