@@ -6,8 +6,10 @@ use App\Http\Controllers\Site\DashboardController;
 use App\Http\Controllers\Site\ProfileController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Site\FaqsController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use TCG\Voyager\Facades\Voyager;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +42,8 @@ Auth::routes();
 Route::post('eimzo/login', [EimzoAuthController::class, 'auth'])->name('eri.login');
 
 Route::group([
-    'prefix' => LaravelLocalization::setLocale()
+    'prefix' => LaravelLocalization::setLocale(),
+    'middleware' => 'auth'
 ], function()
 {
     Route::group(
