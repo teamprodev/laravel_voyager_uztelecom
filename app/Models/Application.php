@@ -13,6 +13,7 @@ class Application extends Model
     const PLANNER_AGREE = 1;
     const CANCELED_APP = -1;
     protected $table = "applications";
+    protected $guarded = [];
     public function plan(){
         return $this->belongsTo(Plan::class);
     }
@@ -23,7 +24,7 @@ class Application extends Model
 
     public function scopeCurrentUser($query)
     {
-        
+
         $user = Auth::user();
         switch ($user->id) {
             case 2: {

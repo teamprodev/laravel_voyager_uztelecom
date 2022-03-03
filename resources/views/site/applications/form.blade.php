@@ -9,9 +9,11 @@
                         </td>
 
                         <td class="w-50 border p-2 font-semibold">
-                            <input required type="text" id="name" name="initiator" placeholder="nomi" class="h-16 p-2
-                            border
-                            focus:outline-none w-full">
+                            {{Aire::textArea()
+                                ->name('initiator')
+                                ->rows(3)
+                                ->cols(40)
+                            }}
                         </td>
                     </tr>
                     <tr class="h-16">
@@ -19,7 +21,11 @@
                             Харид мазмуни (сотиб олиш учун асос)
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <textarea class="resize-none py-4 focus:outline-none h-16 border w-full" name="" id="" cols="30" rows="5"></textarea>
+                            {{Aire::textArea()
+                                ->name('purchase_basis')
+                                ->rows(3)
+                                ->cols(40)
+                            }}
                         </td>
                     </tr>
                     <tr class="h-16">
@@ -27,8 +33,11 @@
                             Асос (харидлар режаси, раҳбарият томонидан билдирги)
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <textarea class="resize-none py-4 h-16 focus:outline-none border w-full" name="basis" id="" cols="30" rows="5"></textarea>
-
+                            {{Aire::textArea()
+                                ->name('basis')
+                                ->rows(3)
+                                ->cols(40)
+                            }}
                         </td>
                     </tr>
                     <tr class="h-16">
@@ -36,8 +45,11 @@
                             Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <textarea class="resize-none py-4 h-16 focus:outline-none border w-full" name="name" id="" cols="30" rows="5"></textarea>
-
+                            {{Aire::textArea()
+                                ->name('name')
+                                ->rows(3)
+                                ->cols(40)
+                            }}
                         </td>
                     </tr>
                     <tr class="h-16">
@@ -45,7 +57,11 @@
                             Сотиб олинадиган махсулот тавсифи (техник характери)
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <input type="text" name="specification" class="focus:outline-none  h-16 border w-full">
+                            {{Aire::textArea()
+                                ->name('specification')
+                                ->rows(3)
+                                ->cols(40)
+                            }}
                         </td>
                     </tr>
                     <tr class="h-16">
@@ -53,16 +69,21 @@
                             Махсулот келишининг муддати
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <input type="text" name="delivery_date" class="focus:outline-none h-16 border w-full">
+                            {{Aire::dateTimeLocal()
+                                ->name('delivery_date')
+                            }}
                         </td>
                     </tr>
                     <tr class="h-16">
                         <td class="w-50 border p-2 font-semibold">
-                            Алоҳида талаблар
+                                Алоҳида талаблар
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <input type="text" class="focus:outline-none h-16 border w-full">
-
+                            {{Aire::textArea()
+                                ->name('separate_requirements')
+                                ->rows(3)
+                                ->cols(40)
+                            }}
                         </td>
                     </tr>
                     <tr class="h-16">
@@ -70,8 +91,11 @@
                             Махсулотга қўйилган бошқа талаблар (иш, хизмат)
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <input type="text" class="focus:outline-none h-16 border w-full">
-
+                            {{Aire::textArea()
+                                ->name('other_requirements')
+                                ->rows(3)
+                                ->cols(40)
+                            }}
                         </td>
                     </tr>
                     <tr class="h-16">
@@ -79,8 +103,9 @@
                             Махсулот сифати учун кафолат муддати (иш, хизмат)
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <input type="text" name="expire_warranty_date" class="focus:outline-none border h-16 w-full" value="">
-
+                            {{Aire::dateTimeLocal()
+                                ->name('expire_warranty_date')
+                            }}
                         </td>
                     </tr>
                     <tr class="h-16">
@@ -88,8 +113,11 @@
                             Харид режаси (сумма)
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <input id="amount" name="amount" type="text" class="focus:outline-none h-16 border w-full">
-
+                            {{Aire::textArea()
+                                ->name('amount')
+                                ->rows(3)
+                                ->cols(40)
+                            }}
                         </td>
                     </tr>
                     <tr class="h-16">
@@ -97,8 +125,11 @@
                             Махсулотни келтириш учун қўйилган талаб INCOTERMS, (омбордан олиб кетиш/ харидорга етказиб бериш)
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <input type="text" name="incoterms" class="focus:outline-none h-16 border w-full">
-
+                            {{Aire::textArea()
+                                ->name('incoterms')
+                                ->rows(3)
+                                ->cols(40)
+                            }}
                         </td>
                     </tr>
                     <tr class="h-16">
@@ -106,8 +137,11 @@
                             Бюджетни режалаштириш бўлими - харид қилинадиган махсулотни бизнес режада мавжудлиги бўйича маълумот
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <textarea class="py-4 resize-none h-16 focus:outline-none border w-full" name="" id="" cols="30" rows="5"></textarea>
-
+                            {{Aire::textArea()
+                                ->name('budget_planning')
+                                ->rows(3)
+                                ->cols(40)
+                            }}
                         </td>
                     </tr>
                     <tr class="h-16">
@@ -115,8 +149,11 @@
                             Харид килинадиган махсулотни "Харидлар режаси"да мавжудлиги буйича маълумот
                         </td>
                         <td class="w-50 border p-2 font-semibold">
-                            <textarea class=" py-4 resize-none h-16 focus:outline-none border w-full" name="" id="" cols="30" rows="5"></textarea>
-
+                            {{Aire::textArea()
+                                ->name('procurement_plan')
+                                ->rows(3)
+                                ->cols(40)
+                            }}
                         </td>
                     </tr>
                     </tbody>
@@ -132,36 +169,37 @@
             <h5 class="text-center font-semibold pb-5 text-lg">Прикрепить файл</h5>
             <div class="w-full xl:flex">
                 <div class="p-2 xl:w-1/2 mt-2 text-center bg-blue-500 hover:bg-blue-700 transition border">
-                    <label class="p-2 text-center text-white text-xs cursor-pointer">
-                        <input type="file" class="hidden"/>
-                        <i class="fa fa-cloud-upload"></i> Основание
-                    </label>
+                    {{Aire::file('upload', 'Основание')->name('file_basis')->class('hidden')}}
                 </div>
                 <div class="p-2 xl:w-1/2 mt-2 bg-green-500 text-center hover:bg-green-700 transition border">
-                    <label class=" p-2   text-xs cursor-pointer text-white">
-                        <input type="file" class="hidden"/>
-                        <i class="fa fa-cloud-upload"></i> Техническое задание
-                    </label>
+                    {{Aire::file('upload', 'Техническое задание')->name('file_tech_spec')->class('hidden')}}
                 </div>
             </div>
             <div class="w-full">
                 <div class="w-full my-1 border text-white p-2 text-center text-xs bg-red-500 hover:bg-red-700 transition cursor-pointer">
-                    <label class="">
-                        <input type="file" class="hidden"/>
-                        <i class="fa fa-cloud-upload"></i> Другие документы необходимые для запуска закупочной процедуры
-                    </label>
+{{--                    <label class="">--}}
+{{--                        <input type="file" class="hidden"/>--}}
+{{--                        <i class="fa fa-cloud-upload"></i> Другие документы необходимые для запуска закупочной процедуры--}}
+{{--                    </label>--}}
+                    {{Aire::file('upload', 'Другие документы необходимые для запуска закупочной процедуры')->name('other_files')->class('hidden')}}
                 </div>
             </div>
             <div class="w-full mt-4 px-2">
                 <div class="w-full">
                     <div class="">
                         <label for="exampleFormControlTextarea1">Коментарий к заявке</label>
-                        <textarea class="resize-none focus:outline-none border w-full" id="exampleFormControlTextarea1" rows="3"></textarea>
+{{--                        <textarea class="resize-none focus:outline-none border w-full" id="exampleFormControlTextarea1" rows="3"></textarea>--}}
+                        {{Aire::textArea()
+                                ->name('comment')
+                                    ->rows(3)
+                                    ->cols(40)
+                        }}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    {{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}
     <div class="w-full text-right py-4 pr-10">
         <button class="bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white">Сохранить и закрыть</button>
         <button type="submit" class="bg-green-500 hover:bg-green-700 p-2 transition duration-300 rounded-md text-white">Сохранить и отправить</button>

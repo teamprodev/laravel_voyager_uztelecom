@@ -13,6 +13,7 @@ use App\Structures\ApplicationData;
 use Exception;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
 class ApplicationController extends Controller
@@ -47,7 +48,7 @@ class ApplicationController extends Controller
     }
 
 
-   
+
 
 
     public function show(Application $application){
@@ -71,13 +72,13 @@ class ApplicationController extends Controller
         $user = auth()->user();
         return view('site.applications.create', compact('user'));
     }
-    public function store(ApplicationRequest $request){
-        try {
-            $this->dispatchNow(new CreateApplicationJob($request));
-            return redirect()->route('site.profile.profile')->with('message', trans('site.application_success'));
-        } catch (\Exception $e) {
+    public function store(ApplicationRequest $request)
+    {
+        $application = $request->validated();
+        $result = Application::create($application);
+        if(!$result)
             return redirect()->back()->with('message', trans('site.application_failed'));
-        }
+        return redirect('/ru/site/profile')->with('message', trans('site.application_success'));
     }
 
     public function getAll(){

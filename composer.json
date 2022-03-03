@@ -8,16 +8,15 @@
         "php": "^7.4",
         "asadbek/eimzo": "1.0.*",
         "fruitcake/laravel-cors": "^2.0",
+        "glhd/aire": "^2.5",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
         "mcamara/laravel-localization": "^1.7",
-
         "tcg/voyager": "^1.5",
         "yajra/laravel-datatables-oracle": "^9.19"
-
     },
     "require-dev": {
         "facade/ignition": "^2.5",

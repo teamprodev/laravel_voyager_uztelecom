@@ -1,9 +1,9 @@
 @extends('site.layouts.wrapper')
 
 @section('center_content')
-    <form action="{{ route('site.applications.store') }}" method="post">
-        @csrf
+    {{ Aire::open()
+  ->route('site.applications.store')
+  ->post() }}
         @include('site.applications.form')
-    </form>
-
+    {{ Aire::close() }}
 @endsection

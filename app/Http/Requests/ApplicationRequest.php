@@ -25,6 +25,11 @@ class ApplicationRequest extends FormRequest
     {
         return [
             'name' => 'nullable',
+            'procurement_plan' => 'nullable',
+            'other_requirements' => 'nullable',
+            'separate_requirements' => 'nullable',
+            'purchase_basis' => 'nullable',
+            'budget_planning' => 'nullable',
             'delivery_date' => 'nullable',
             'specification' => 'nullable',
             'comment' => 'nullable',
@@ -35,16 +40,11 @@ class ApplicationRequest extends FormRequest
             'initiator' => 'nullable',
             'basis' => 'nullable',
             'report' => 'nullable',
-            'special_specification' => 'nullable',
             'amount' => 'nullable',
-            'currency' => 'nullable',
             'incoterms' => 'nullable',
-            'business_planned' => 'nullable',
-            'purchase_plan' => 'nullable',
             'file_basis' => 'nullable',
             'file_tech_spec' => 'nullable',
             'other_files' => 'nullable',
-            'draft' => 'nullable',
         ];
     }
 }
