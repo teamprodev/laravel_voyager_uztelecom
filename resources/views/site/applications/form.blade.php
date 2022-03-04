@@ -169,19 +169,24 @@
             <h5 class="text-center font-semibold pb-5 text-lg">Прикрепить файл</h5>
             <div class="w-full xl:flex">
                 <div class="p-2 xl:w-1/2 mt-2 text-center bg-blue-500 hover:bg-blue-700 transition border">
-                    {{Aire::file('upload', 'Основание')->name('file_basis')->class('hidden')}}
+                    <label class="">
+                        <input type="file" name="file_basis" class="hidden"/>
+                        <i class="fa fa-cloud-upload"></i>Основание
+                    </label>
                 </div>
                 <div class="p-2 xl:w-1/2 mt-2 bg-green-500 text-center hover:bg-green-700 transition border">
-                    {{Aire::file('upload', 'Техническое задание')->name('file_tech_spec')->class('hidden')}}
+                    <label class="">
+                        <input type="file" name="file_tech_spec" class="hidden"/>
+                        <i class="fa fa-cloud-upload"></i> Техническое задание
+                    </label>
                 </div>
             </div>
             <div class="w-full">
                 <div class="w-full my-1 border text-white p-2 text-center text-xs bg-red-500 hover:bg-red-700 transition cursor-pointer">
-{{--                    <label class="">--}}
-{{--                        <input type="file" class="hidden"/>--}}
-{{--                        <i class="fa fa-cloud-upload"></i> Другие документы необходимые для запуска закупочной процедуры--}}
-{{--                    </label>--}}
-                    {{Aire::file('upload', 'Другие документы необходимые для запуска закупочной процедуры')->name('other_files')->class('hidden')}}
+                    <label class="">
+                        <input type="file" name="other_files" class="hidden"/>
+                        <i class="fa fa-cloud-upload"></i> Другие документы необходимые для запуска закупочной процедуры
+                    </label>
                 </div>
             </div>
             <div class="w-full mt-4 px-2">

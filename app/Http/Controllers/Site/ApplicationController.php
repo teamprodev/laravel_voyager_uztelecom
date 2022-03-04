@@ -75,6 +75,18 @@ class ApplicationController extends Controller
     public function store(ApplicationRequest $request)
     {
         $application = $request->validated();
+        if($filename = $request->file('file_basis')){
+            $imagename = time().'_'.$filename->getClientOriginalName();
+            $filename->move(public_path().'/storage/uploads/',$imagename);
+        }
+        if($filename = $request->file('file_tech_spec')){
+            $imagename = time().'_'.$filename->getClientOriginalName();
+            $filename->move(public_path().'/storage/uploads/',$imagename);
+        }
+        if($filename = $request->file('other_files')){
+            $imagename = time().'_'.$filename->getClientOriginalName();
+            $filename->move(public_path().'/storage/uploads/',$imagename);
+        }
         $result = Application::create($application);
         if(!$result)
             return redirect()->back()->with('message', trans('site.application_failed'));
