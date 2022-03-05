@@ -10,24 +10,22 @@
 </div>
 <div id="section" class="relative">
     <a href="{{route('site.applications.create')}}"
-       class="ml-12 bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white mb-8"
-    >
+       class="ml-12 bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white mb-8">
         Создать задания
     </a>
     <div class="w-11/12 mx-auto pt-8 pb-16">
-
-        <table   class="border-collapse border rounded-t border-slate-400 yajra-datatable">
-            <thead class="mt-8">
-            <tr class="border text-center pt-8">
-                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100  text-sm font-semibold text-gray-600" >Id</th>
-                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100  text-sm font-semibold text-gray-600" >Ташаббускор (буюртмачи номи )</th>
-                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100  text-sm font-semibold text-gray-600 uppercase tracking-wider" >Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)</th>
-                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100  text-sm font-semibold text-gray-600 uppercase tracking-wider" >Махсулот келишининг муддати</th>
-                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100  text-sm font-semibold text-gray-600 uppercase tracking-wider" >Харид режаси (сумма)</th>
-                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100  text-xs font-semibold text-gray-600 uppercase tracking-wider">Махсулотни келтириш учун қўйилган талаб INCOTERMS</th>
-                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100  text-sm font-semibold text-gray-600 uppercase tracking-wider" >Дата создания</th>
-                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100  text-sm font-semibold text-gray-600 uppercase tracking-wider" >Статус</th>
-                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100  text-sm font-semibold text-gray-600 uppercase tracking-wider" style="width: 150px;">Action</th>
+        <table id="yajra-datatable" class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Ташаббускор (буюртмачи номи )</th>
+                <th >Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)</th>
+                <th >Махсулот келишининг муддати</th>
+                <th >Харид режаси (сумма)</th>
+                <th>Махсулотни келтириш учун қўйилган талаб INCOTERMS</th>
+                <th >Дата создания</th>
+                <th >Статус</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody class="text-center text-sm">
@@ -45,7 +43,7 @@
 <script type="text/javascript">
   $(function () {
 
-    var table = $('.yajra-datatable').DataTable({
+    var table = $('#yajra-datatable').DataTable({
         processing: true,
         serverSide: true,
         ajax:

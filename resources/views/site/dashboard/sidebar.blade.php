@@ -11,21 +11,30 @@
 {{--    </div>--}}
 {{--</div>--}}
 
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="{{ asset('/images/Uztelecom_Logo.png') }}">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block">Uztelecom</a>
+            </div>
+        </div>
 
-<nav aria-label="alternative nav">
-    <div class="bg-blue-500 shadow-xl fixed bottom-0 relative h-screen z-10 w-full content-center">
-
-        <a href="/" class="flex items-start py-5 w-10/12 mx-auto">
-            <img src="{{ asset('/images/Uztelecom_Logo.png') }}" alt="">
-        </a>
-        <div class="content-center md:content-start text-left justify-between">
-            <ul class="list-reset flex flex-row md:flex-col pt-3 md:py-3 px-1 text-center md:text-left">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2 shadow-xl fixed bottom-0 relative h-screen z-10 w-full content-center">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
                 {{menu('site', 'site.dashboard.menu')}}
             </ul>
-        </div>
+        </nav>
+        <!-- /.sidebar-menu -->
     </div>
-
-</nav>
+    <!-- /.sidebar -->
+</aside>
 
 <!-- component -->
 {{--<nav class=" rounded-md w-72 h-screen flex-col justify-between">--}}

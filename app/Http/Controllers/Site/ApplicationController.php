@@ -46,11 +46,6 @@ class ApplicationController extends Controller
 
         }
     }
-
-
-
-
-
     public function show(Application $application){
         return view('site.applications.show', compact('application'));
     }
