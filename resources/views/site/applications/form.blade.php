@@ -1,163 +1,67 @@
 <div class="mt-6">
     <div class="w-full flex">
         <div class="p-6">
-                <table class="table-auto">
-                    <tbody>
-                    <tr class="h-16">
-                        <td class="xl:w-3/6 md:w-4/6 border p-2 font-semibold">
-                            Ташаббускор (буюртмачи номи )
-                        </td>
-
-                        <td class="w-50 border p-2 font-semibold">
-                            {{Aire::textArea()
+                            {{Aire::textArea('bio','Ташаббускор (буюртмачи номи )')
                                 ->name('initiator')
                                 ->rows(3)
                                 ->cols(40)
                             }}
-                        </td>
-                    </tr>
-                    <tr class="h-16">
-                        <td class="w-50 border p-2 font-semibold">
-                            Харид мазмуни (сотиб олиш учун асос)
-                        </td>
-                        <td class="w-50 border p-2 font-semibold">
-                            {{Aire::textArea()
+                            {{Aire::textArea('bio','Харид мазмуни (сотиб олиш учун асос)')
                                 ->name('purchase_basis')
                                 ->rows(3)
                                 ->cols(40)
                             }}
-                        </td>
-                    </tr>
-                    <tr class="h-16">
-                        <td class="w-50 border p-2 font-semibold">
-                            Асос (харидлар режаси, раҳбарият томонидан билдирги)
-                        </td>
-                        <td class="w-50 border p-2 font-semibold">
-                            {{Aire::textArea()
+                            {{Aire::textArea('bio','Асос (харидлар режаси, раҳбарият томонидан билдирги)')
                                 ->name('basis')
                                 ->rows(3)
                                 ->cols(40)
                             }}
-                        </td>
-                    </tr>
-                    <tr class="h-16">
-                        <td class="w-50 border p-2 font-semibold">
-                            Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)
-                        </td>
-                        <td class="w-50 border p-2 font-semibold">
-                            {{Aire::textArea()
+                            {{Aire::textArea('bio','Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)')
                                 ->name('name')
                                 ->rows(3)
                                 ->cols(40)
                             }}
-                        </td>
-                    </tr>
-                    <tr class="h-16">
-                        <td class="w-50 border p-2 font-semibold">
-                            Сотиб олинадиган махсулот тавсифи (техник характери)
-                        </td>
-                        <td class="w-50 border p-2 font-semibold">
-                            {{Aire::textArea()
+                            {{Aire::textArea('bio','Сотиб олинадиган махсулот тавсифи (техник характери)')
                                 ->name('specification')
                                 ->rows(3)
                                 ->cols(40)
                             }}
-                        </td>
-                    </tr>
-                    <tr class="h-16">
-                        <td class="w-50 border p-2 font-semibold">
-                            Махсулот келишининг муддати
-                        </td>
-                        <td class="w-50 border p-2 font-semibold">
-                            {{Aire::dateTimeLocal()
+                            {{Aire::dateTimeLocal('bio','Махсулот келишининг муддати')
                                 ->name('delivery_date')
                             }}
-                        </td>
-                    </tr>
-                    <tr class="h-16">
-                        <td class="w-50 border p-2 font-semibold">
-                                Алоҳида талаблар
-                        </td>
-                        <td class="w-50 border p-2 font-semibold">
-                            {{Aire::textArea()
+                            {{Aire::textArea('bio','Алоҳида талаблар')
                                 ->name('separate_requirements')
                                 ->rows(3)
                                 ->cols(40)
                             }}
-                        </td>
-                    </tr>
-                    <tr class="h-16">
-                        <td class="w-50 border p-2 font-semibold">
-                            Махсулотга қўйилган бошқа талаблар (иш, хизмат)
-                        </td>
-                        <td class="w-50 border p-2 font-semibold">
-                            {{Aire::textArea()
+                            {{Aire::textArea('bio','Махсулотга қўйилган бошқа талаблар (иш, хизмат)')
                                 ->name('other_requirements')
                                 ->rows(3)
                                 ->cols(40)
                             }}
-                        </td>
-                    </tr>
-                    <tr class="h-16">
-                        <td class="w-50 border p-2 font-semibold">
-                            Махсулот сифати учун кафолат муддати (иш, хизмат)
-                        </td>
-                        <td class="w-50 border p-2 font-semibold">
-                            {{Aire::dateTimeLocal()
+                            {{Aire::dateTimeLocal('bio','Махсулот сифати учун кафолат муддати (иш, хизмат)')
                                 ->name('expire_warranty_date')
                             }}
-                        </td>
-                    </tr>
-                    <tr class="h-16">
-                        <td class="w-50 border p-2 font-semibold">
-                            Харид режаси (сумма)
-                        </td>
-                        <td class="w-50 border p-2 font-semibold">
-                            {{Aire::textArea()
+                            {{Aire::textArea('bio','Харид режаси (сумма)')
                                 ->name('amount')
                                 ->rows(3)
                                 ->cols(40)
                             }}
-                        </td>
-                    </tr>
-                    <tr class="h-16">
-                        <td class="w-50 border p-2 font-semibold">
-                            Махсулотни келтириш учун қўйилган талаб INCOTERMS, (омбордан олиб кетиш/ харидорга етказиб бериш)
-                        </td>
-                        <td class="w-50 border p-2 font-semibold">
-                            {{Aire::textArea()
+                            {{Aire::textArea('bio','Махсулотни келтириш учун қўйилган талаб INCOTERMS, (омбордан олиб кетиш/ харидорга етказиб бериш)')
                                 ->name('incoterms')
                                 ->rows(3)
                                 ->cols(40)
                             }}
-                        </td>
-                    </tr>
-                    <tr class="h-16">
-                        <td class="w-50 border p-2 font-semibold">
-                            Бюджетни режалаштириш бўлими - харид қилинадиган махсулотни бизнес режада мавжудлиги бўйича маълумот
-                        </td>
-                        <td class="w-50 border p-2 font-semibold">
-                            {{Aire::textArea()
+                            {{Aire::textArea('bio','Бюджетни режалаштириш бўлими - харид қилинадиган махсулотни бизнес режада мавжудлиги бўйича маълумот')
                                 ->name('budget_planning')
                                 ->rows(3)
                                 ->cols(40)
                             }}
-                        </td>
-                    </tr>
-                    <tr class="h-16">
-                        <td class="w-50 border p-2 font-semibold">
-                            Харид килинадиган махсулотни "Харидлар режаси"да мавжудлиги буйича маълумот
-                        </td>
-                        <td class="w-50 border p-2 font-semibold">
-                            {{Aire::textArea()
+                            {{Aire::textArea('bio','Харид килинадиган махсулотни "Харидлар режаси"да мавжудлиги буйича маълумот')
                                 ->name('procurement_plan')
                                 ->rows(3)
                                 ->cols(40)
                             }}
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
         </div>
 
 
@@ -194,7 +98,7 @@
                     <div class="">
                         <label for="exampleFormControlTextarea1">Коментарий к заявке</label>
 {{--                        <textarea class="resize-none focus:outline-none border w-full" id="exampleFormControlTextarea1" rows="3"></textarea>--}}
-                        {{Aire::textArea()
+                        {{Aire::textArea('')
                                 ->name('comment')
                                     ->rows(3)
                                     ->cols(40)
@@ -210,5 +114,3 @@
         <button type="submit" class="bg-green-500 hover:bg-green-700 p-2 transition duration-300 rounded-md text-white">Сохранить и отправить</button>
     </div>
 </div>
-
-
