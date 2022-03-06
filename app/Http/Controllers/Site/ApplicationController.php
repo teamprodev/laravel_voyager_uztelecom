@@ -8,27 +8,32 @@ use App\Jobs\CreateApplicationJob;
 use App\Jobs\UpdateApplicationJob;
 use App\Jobs\VoteJob;
 use App\Models\Application;
+use App\Models\ApplicationSigners;
 use App\Models\User;
+use App\Services\AccessService;
 use App\Structures\ApplicationData;
 use Exception;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
 class ApplicationController extends Controller
 {
+    private AccessService $accessService;
     public function __construct(){
         $this->middleware('auth');
+        $this->accessService = new AccessService();
     }
     public function index(Request $request)
     {
-        $applications = Application::steps()->get();
+        $applications = Application::all();
         return view('site.applications.index', compact('applications'));
     }
     public function getdata(Request $request)
     {
-        if ($request->ajax()) {
+//        if ($request->ajax()) {
             $data = Application::latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
@@ -44,9 +49,14 @@ class ApplicationController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
 
-        }
+//        }
+
     }
     public function show(Application $application){
+
+        $allowed = $this->accessService->allowed($application);
+        if(!$allowed)
+            return redirect()->back()->with('danger', 'Not Allowed');
         return view('site.applications.show', compact('application'));
     }
 
@@ -69,6 +79,7 @@ class ApplicationController extends Controller
     }
     public function store(ApplicationRequest $request)
     {
+        dd($request);
         $application = $request->validated();
         if($filename = $request->file('file_basis')){
             $imagename = time().'_'.$filename->getClientOriginalName();
@@ -82,12 +93,34 @@ class ApplicationController extends Controller
             $imagename = time().'_'.$filename->getClientOriginalName();
             $filename->move(public_path().'/storage/uploads/',$imagename);
         }
-        $result = Application::create($application);
-        if(!$result)
+        DB::beginTransaction();
+        try {
+            $application = new Application();
+            $application->name = $request->initiator;
+            $application->delivery_date = $request->delivery_date;
+            $application->specification = $request->specification;
+            $application->incoterms = $request->incoterms;
+            $application->amount = $request->amount;
+            $application->specification = $request->specification;
+            $application->save();
+
+            foreach ($request->sign_roles as $role_id){
+                $signers = new ApplicationSigners();
+                $signers->role_id = $role_id;
+                $signers->application_id = $application->id;
+                $signers->save();
+            }
+        } catch (Exception $exception){
+            DB::rollBack();
+            dd($exception);
             return redirect()->back()->with('message', trans('site.application_failed'));
+        }
+        DB::commit();
         return redirect('/ru/site/profile')->with('message', trans('site.application_success'));
     }
-
+    public function getRoles(){
+        return DB::table('roles')->get()->pluck('name', 'id')->toArray();
+    }
     public function getAll(){
         $applications = Application::all();
         return response()->json($applications);
@@ -97,7 +130,6 @@ class ApplicationController extends Controller
     }
     public function vote(Application $application, VoteApplicationRequest $request){
         try{
-            if(Gate::allow)
             $this->dispatchNow(new VoteJob($application, $request));
             return redirect()->route('site.applications.index')->with('success', 'Voted!');
         } catch (Exception $exception){
