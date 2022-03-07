@@ -62,50 +62,12 @@
                                 ->rows(3)
                                 ->cols(40)
                             }}
+                            {{Aire::textArea('bio','Коментарий к заявке')
+                                                ->name('comment')
+                                                    ->rows(3)
+                                                    ->cols(40)
+                                        }}
         </div>
-
-
-
-        <div class="xl:w-4/12 md:w-2/12 px-4">
-            @auth
-                @include('site.profile.profile_component')
-            @endauth
-            <h5 class="text-center font-semibold pb-5 text-lg">Прикрепить файл</h5>
-            <div class="w-full xl:flex">
-                <div class="p-2 xl:w-1/2 mt-2 text-center bg-blue-500 hover:bg-blue-700 transition border">
-                    <label class="">
-                        <input type="file" name="file_basis" class="hidden"/>
-                        <i class="fa fa-cloud-upload"></i>Основание
-                    </label>
-                </div>
-                <div class="p-2 xl:w-1/2 mt-2 bg-green-500 text-center hover:bg-green-700 transition border">
-                    <label class="">
-                        <input type="file" name="file_tech_spec" class="hidden"/>
-                        <i class="fa fa-cloud-upload"></i> Техническое задание
-                    </label>
-                </div>
-            </div>
-            <div class="w-full">
-                <div class="w-full my-1 border text-white p-2 text-center text-xs bg-red-500 hover:bg-red-700 transition cursor-pointer">
-                    <label class="">
-                        <input type="file" name="other_files" class="hidden"/>
-                        <i class="fa fa-cloud-upload"></i> Другие документы необходимые для запуска закупочной процедуры
-                    </label>
-                </div>
-            </div>
-            <div class="w-full mt-4 px-2">
-                <div class="w-full">
-                    <div class="">
-                        <label for="exampleFormControlTextarea1">Коментарий к заявке</label>
-{{--                        <textarea class="resize-none focus:outline-none border w-full" id="exampleFormControlTextarea1" rows="3"></textarea>--}}
-                        {{Aire::textArea('')
-                                ->name('comment')
-                                    ->rows(3)
-                                    ->cols(40)
-                        }}
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     {{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}

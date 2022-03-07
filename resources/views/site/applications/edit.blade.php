@@ -3,6 +3,6 @@
 @section('center_content')
     <form action="{{ route('site.applications.update', $application->id) }}" method="post">
         @csrf
-        @include('site.applications.form')
+        @include('site.applications.formedit')
     </form>
 @endsection

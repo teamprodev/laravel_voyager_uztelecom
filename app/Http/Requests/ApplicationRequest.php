@@ -42,9 +42,6 @@ class ApplicationRequest extends FormRequest
             'report' => 'nullable',
             'amount' => 'nullable',
             'incoterms' => 'nullable',
-            'file_basis' => 'nullable',
-            'file_tech_spec' => 'nullable',
-            'other_files' => 'nullable',
         ];
     }
 }

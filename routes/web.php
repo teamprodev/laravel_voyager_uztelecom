@@ -25,7 +25,7 @@ use TCG\Voyager\Facades\Voyager;
 Route::get('/', function () {
     return redirect()->route('site.applications.create');
 });
-Route::post('/uploadimage', [ApplicationController::class, 'uploadImage'])->name('uploadImage');
+Route::post('/uploadimage/{application}/update', [ApplicationController::class, 'uploadImage'])->name('uploadImage');
 Route::group([
     'prefix' => 'admin',
     'middleware' => 'isAdmin'

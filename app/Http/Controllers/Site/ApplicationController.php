@@ -13,6 +13,8 @@ use App\Structures\ApplicationData;
 use Exception;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
@@ -50,18 +52,46 @@ class ApplicationController extends Controller
         return view('site.applications.show', compact('application'));
     }
 
-    public function edit(Application $application){
+    public function edit(Application $application)
+    {
         return view('site.applications.edit', compact('application'));
-
     }
     public function update(Application $application, ApplicationRequest $request){
-        try {
-            $this->dispatchNow(new UpdateApplicationJob($request));
+        $data = $request->validated();
+        $result = $application->update($data);
+        if ($result)
             return redirect()->route('site.applications.index')->with('success', trans('site.application_success'));
-        } catch (\Exception $e) {
-            return redirect()->back()->with('danger', trans('site.application_failed'));
+
+        return redirect()->back()->with('danger', trans('site.application_failed'));
+    }
+    public function uploadImage(Request $request, Application $application)
+    {
+        $file_basis = json_decode($application->file_basis);
+        $file_tech_spec = json_decode($application->file_tech_spec);
+        $other_files = json_decode($application->other_files);
+        if ($request->hasFile('file_basis')) {
+            $files = $request->file('file_basis');
+            $name = Storage::put('public/uploads', $files);
+            $name = str_replace('public/','', $name);
+            $file_basis[] = $name;
         }
-//        return view('site.applications.update', compact($application));
+        if ($request->hasFile('file_tech_spec')) {
+            $files = $request->file('file_tech_spec');
+            $name = Storage::put('public/uploads', $files);
+            $name = str_replace('public/','', $name);
+            $file_tech_spec[] = $name;
+        }
+        if ($request->hasFile('other_files')) {
+            $files = $request->file('other_files');
+            $name = Storage::put('public/uploads', $files);
+            $name = str_replace('public/','', $name);
+            $other_files[] = $name;
+        }
+
+        $application->file_basis = json_encode($file_basis);
+        $application->file_tech_spec = json_encode($file_tech_spec);
+        $application->other_files = json_encode($other_files);
+        $application->save();
     }
     public function create(){
         $user = auth()->user();
@@ -70,24 +100,15 @@ class ApplicationController extends Controller
     public function store(ApplicationRequest $request)
     {
         $application = $request->validated();
-        if($filename = $request->file('file_basis')){
-            $imagename = time().'_'.$filename->getClientOriginalName();
-            $filename->move(public_path().'/storage/uploads/',$imagename);
-        }
-        if($filename = $request->file('file_tech_spec')){
-            $imagename = time().'_'.$filename->getClientOriginalName();
-            $filename->move(public_path().'/storage/uploads/',$imagename);
-        }
-        if($filename = $request->file('other_files')){
-            $imagename = time().'_'.$filename->getClientOriginalName();
-            $filename->move(public_path().'/storage/uploads/',$imagename);
-        }
+//        $file_basis = Cache::get('file_basis');
+//        $file_tech_spec = Cache::get('file_tech_spec');
+//        $other_files = Cache::get('other_files');
+//        dd($application, $file_basis,$file_tech_spec,$other_files);
         $result = Application::create($application);
         if(!$result)
             return redirect()->back()->with('message', trans('site.application_failed'));
-        return redirect('/ru/site/profile')->with('message', trans('site.application_success'));
+        return redirect()->route('site.applications.edit', $result)->with('message', trans('site.application_success'));
     }
-
     public function getAll(){
         $applications = Application::all();
         return response()->json($applications);
