@@ -138,7 +138,7 @@
 
             </div>
         </div>
-        @if(auth()->user()->role_id == 4)
+        @if(\App\Services\AccessService::allowed($application))
 
         <div class="w-full text-right py-4 pr-10">
             <form action="{{route('site.applications.vote', ['application' => $application->id])}}"
@@ -159,7 +159,7 @@
         @endif
 
     </div>
-    @if(auth()->user()->role_id == 4)
+    @if(\App\Services\AccessService::allowed($application))
         <div id="defaultModal" aria-hidden="true"
              class="hidden modal-window mx-auto overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0"
              style="background-color:rgba(0,0,0,0.5)">
