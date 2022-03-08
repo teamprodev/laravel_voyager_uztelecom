@@ -31,7 +31,7 @@
             <tbody class="text-center text-sm">
                 @foreach($applications as $application)
                     <tr>
-                        <td>{{$application->id}}</td>r
+                        <td>{{$application->id}}</td>
                         <td>{{$application->initiator}}</td>
                         <td>{{$application->name}}</td>
                         <td>{{$application->delivery_date}}</td>
@@ -39,10 +39,10 @@
                         <td>{{$application->inconterms}}</td>
                         <td>{{$application->created_at}}</td>
                         <td>{{$application->status}}</td>
-                        <td><a class="btn btn-warning" href="{{route('site.applications.edit', $application->id)
-                        }}">Edit</a>
-                        <a class="btn btn-primary" href="{{route('site.applications.show', $application->id)
-                        }}">Show</a></td>
+                        <td><a href="{{route('site.applications.edit', $application->id)
+                        }}">{{Aire::submit('Edit')}}</a>
+                        <a href="{{route('site.applications.show', $application->id)
+                        }}">{{Aire::submit('Show')->variant()->yellow()->addClass('my-1');}}</a></td>
 
                     </tr>
                 @endforeach
