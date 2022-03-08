@@ -4,7 +4,7 @@
             <a href="{{route('site.applications.index')}}" class="nav-link">
                 <i class="nav-icon fas fa-th"></i>
                 <p>
-                    Мои сохраненные заявки
+                    Все заявки
                 </p>
             </a>
         </li>
