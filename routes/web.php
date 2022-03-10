@@ -25,6 +25,7 @@ use TCG\Voyager\Facades\Voyager;
 Route::get('/', function () {
     return redirect()->route('site.applications.create');
 });
+Route::get('/yajra', [ApplicationController::class, 'index']);
 Route::post('/uploadimage/{application}/update', [ApplicationController::class, 'uploadImage'])->name('uploadImage');
 Route::group([
     'prefix' => 'admin',
