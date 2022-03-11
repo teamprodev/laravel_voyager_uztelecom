@@ -86,6 +86,7 @@
                             }}
             </div>
         </div>
+    </div>
 {{--        @if(\App\Services\AccessService::allowed($application))--}}
 
 {{--        <div class="w-full text-right py-4 pr-10">--}}
