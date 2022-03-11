@@ -6,7 +6,7 @@
         Создать задания
     </a>
     <div class="w-11/12 mx-auto pt-8 pb-16">
-        <table id="yajra-datatable" class="table table-bordered">
+        <table id="yajra-datatable">
             <thead>
             <tr>
                 <th>Id</th>
@@ -35,8 +35,8 @@
 
         columns: [
             {data: 'id', name: 'id'},
+            {data: 'initiator', name: 'initiator'},
             {data: 'name', name: 'name'},
-            {data: 'specification', name: 'specification'},
             {data: 'delivery_date', name: 'delivery_date'},
             {
                 "data": "",
