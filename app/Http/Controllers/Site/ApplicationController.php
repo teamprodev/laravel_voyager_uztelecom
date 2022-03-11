@@ -34,8 +34,9 @@ class ApplicationController extends Controller
         return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function($row){
-                $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
-                return $actionBtn;
+                $edit = route('site.applications.edit', $row->id);
+                $show = route('site.applications.show', $row->id);
+                return "<a href='{$edit}' class='edit btn btn-success btn-sm'>Edit</a> <a href='{$show}' class='show btn btn-warning btn-sm'>Show</a>";
             })
             ->rawColumns(['action'])
             ->make(true);
