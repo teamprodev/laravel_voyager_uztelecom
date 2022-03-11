@@ -63,10 +63,10 @@
                                 ->cols(40)
                             }}
                             {{Aire::textArea('bio','Коментарий к заявке')
-                                                ->name('comment')
-                                                    ->rows(3)
-                                                    ->cols(40)
-                                        }}
+                                ->name('comment')
+                                ->rows(3)
+                                ->cols(40)
+                            }}
         </div>
         </div>
     </div>

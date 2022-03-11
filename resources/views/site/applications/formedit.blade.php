@@ -76,11 +76,11 @@
                 ->value($application->procurement_plan)
             }}
             {{Aire::textArea('bio','Коментарий к заявке')
-                                ->name('comment')
-                                    ->rows(3)
-                                    ->cols(40)
-                                    ->value($application->comment)
-                        }}
+                ->name('comment')
+                ->rows(3)
+                ->cols(40)
+                ->value($application->comment)
+            }}
             <div id="aa">
                 @if($application->file_basis == null || $application->file_tech_spec == null || $application->other_files == null)
                 <h4 class="text-center">Прикрепить файл</h4>
