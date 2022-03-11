@@ -41,6 +41,7 @@ class ApplicationRequest extends FormRequest
             'basis' => 'nullable',
             'report' => 'nullable',
             'amount' => 'nullable',
+            'filial_initiator_id' => 'nullable',
             'incoterms' => 'nullable',
         ];
     }

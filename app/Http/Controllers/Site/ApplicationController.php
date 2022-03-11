@@ -8,6 +8,7 @@ use App\Jobs\CreateApplicationJob;
 use App\Jobs\UpdateApplicationJob;
 use App\Jobs\VoteJob;
 use App\Models\Application;
+use App\Models\Branch;
 use App\Models\User;
 use App\Structures\ApplicationData;
 use Illuminate\Support\Carbon;
@@ -87,17 +88,15 @@ class ApplicationController extends Controller
         $application->other_files = json_encode($other_files);
         $application->save();
     }
-    public function create(){
+    public function create()
+    {
+        $branch = Branch::all();
         $user = auth()->user();
-        return view('site.applications.create', compact('user'));
+        return view('site.applications.create', compact('user','branch'));
     }
     public function store(ApplicationRequest $request)
     {
         $application = $request->validated();
-//        $file_basis = Cache::get('file_basis');
-//        $file_tech_spec = Cache::get('file_tech_spec');
-//        $other_files = Cache::get('other_files');
-//        dd($application, $file_basis,$file_tech_spec,$other_files);
         $result = Application::create($application);
         if(!$result)
             return redirect()->back()->with('message', trans('site.application_failed'));

@@ -67,6 +67,12 @@
                                 ->rows(3)
                                 ->cols(40)
                             }}
+                <select class="custom-select" name="filial_initiator_id" id="filial_initiator_id">
+                    @foreach($branch as $branches)
+                    <option value="{{$branches->id}}">{{$branches->name}}</option>
+                    @endforeach
+                </select>
+
         </div>
         </div>
     </div>
