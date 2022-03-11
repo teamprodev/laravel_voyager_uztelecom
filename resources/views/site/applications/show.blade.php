@@ -41,8 +41,9 @@
                     ->cols(40)
                     ->disabled()
                 }}
-                {{Aire::dateTimeLocal('bio','Махсулот келишининг муддати')
+                {{Aire::input('bio','Махсулот келишининг муддати')
                     ->name('delivery_date')
+                    ->disabled()
                     ->value($application->delivery_date)
                 }}
                 {{Aire::textArea('bio','Алоҳида талаблар')
@@ -59,8 +60,9 @@
                     ->cols(40)
                     ->disabled()
                 }}
-                {{Aire::dateTimeLocal('bio','Махсулот сифати учун кафолат муддати (иш, хизмат)')
+                {{Aire::input('bio','Махсулот сифати учун кафолат муддати (иш, хизмат)')
                     ->name('expire_warranty_date')
+                    ->disabled()
                     ->value($application->expire_warranty_date)
                 }}
                 {{Aire::textArea('bio','Харид режаси (сумма)')
