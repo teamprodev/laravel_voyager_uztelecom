@@ -16,25 +16,25 @@
                     ->name('purchase_basis')
                     ->rows(3)
                     ->cols(40)
-                    ->disabled()
+                    ->disabled()Z
                 }}
                 {{Aire::textArea('bio','Асос (харидлар режаси, раҳбарият томонидан билдирги)')
                     ->name('basis')
                     ->rows(3)
                     ->cols(40)
-                    ->disabled()
+                    ->disabled()Z
                 }}
                 {{Aire::textArea('bio','Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)')
                     ->name('name')
                     ->rows(3)
                     ->cols(40)
-                    ->disabled()
+                    ->disabled()Z
                 }}
                 {{Aire::textArea('bio','Сотиб олинадиган махсулот тавсифи (техник характери)')
                     ->name('specification')
                     ->rows(3)
                     ->cols(40)
-                    ->disabled()
+                    ->disabled()Z
                 }}
                 {{Aire::dateTimeLocal('bio','Махсулот келишининг муддати')
                     ->name('delivery_date')
@@ -43,13 +43,13 @@
                     ->name('separate_requirements')
                     ->rows(3)
                     ->cols(40)
-                    ->disabled()
+                    ->disabled()Z
                 }}
                 {{Aire::textArea('bio','Махсулотга қўйилган бошқа талаблар (иш, хизмат)')
                     ->name('other_requirements')
                     ->rows(3)
                     ->cols(40)
-                    ->disabled()
+                    ->disabled()Z
                 }}
                 {{Aire::dateTimeLocal('bio','Махсулот сифати учун кафолат муддати (иш, хизмат)')
                     ->name('expire_warranty_date')
@@ -58,25 +58,25 @@
                     ->name('amount')
                     ->rows(3)
                     ->cols(40)
-                    ->disabled()
+                    ->disabled()Z
                 }}
                 {{Aire::textArea('bio','Махсулотни келтириш учун қўйилган талаб INCOTERMS, (омбордан олиб кетиш/ харидорга етказиб бериш)')
                     ->name('incoterms')
                     ->rows(3)
                     ->cols(40)
-                    ->disabled()
+                    ->disabled()Z
                 }}
                 {{Aire::textArea('bio','Бюджетни режалаштириш бўлими - харид қилинадиган махсулотни бизнес режада мавжудлиги бўйича маълумот')
                     ->name('budget_planning')
                     ->rows(3)
                     ->cols(40)
-                    ->disabled()
+                    ->disabled()Z
                 }}
                 {{Aire::textArea('bio','Харид килинадиган махсулотни "Харидлар режаси"да мавжудлиги буйича маълумот')
                     ->name('procurement_plan')
                     ->rows(3)
                     ->cols(40)
-                    ->disabled()
+                    ->disabled()Z
                 }}
                 {{Aire::textArea('bio','Коментарий к заявке')
                                     ->name('comment')
