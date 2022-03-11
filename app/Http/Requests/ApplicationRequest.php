@@ -41,8 +41,10 @@ class ApplicationRequest extends FormRequest
             'basis' => 'nullable',
             'report' => 'nullable',
             'amount' => 'nullable',
+            'info_purchase_plan' => 'nullable',
             'filial_initiator_id' => 'nullable',
             'incoterms' => 'nullable',
+            'info_business_plan' => 'nullable',
         ];
     }
 }

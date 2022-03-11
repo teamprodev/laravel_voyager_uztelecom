@@ -53,12 +53,12 @@
                                 ->cols(40)
                             }}
                             {{Aire::textArea('bio','Бюджетни режалаштириш бўлими - харид қилинадиган махсулотни бизнес режада мавжудлиги бўйича маълумот')
-                                ->name('budget_planning')
+                                ->name('info_business_plan')
                                 ->rows(3)
                                 ->cols(40)
                             }}
                             {{Aire::textArea('bio','Харид килинадиган махсулотни "Харидлар режаси"да мавжудлиги буйича маълумот')
-                                ->name('procurement_plan')
+                                ->name('info_purchase_plan')
                                 ->rows(3)
                                 ->cols(40)
                             }}
