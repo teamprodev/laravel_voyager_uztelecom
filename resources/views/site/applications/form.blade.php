@@ -70,6 +70,7 @@
                         ->name('incoterms')
                         ->rows(3)
                         ->cols(40)
+
                     }}
                 </div>
             </div>
@@ -77,11 +78,15 @@
                 <div class="mr-4 pt-2 pb-2 w-50">
                     {{Aire::input('bio','Харид режаси (сумма)')
                         ->name('planned_price')
+                        ->id('summa')
                     }}
                     {{Aire::input()
                         ->name('more_than_limit')
                         ->value('false')
                         ->class('hidden')
+                    }}
+                    {{Aire::select(['USD' => 'USD', 'UZS' => 'UZS'], 'select', 'Select')
+                    ->id('valyuta')
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
@@ -161,7 +166,17 @@
         </div>
     {{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}
     <div class="w-full text-right py-4 pr-10">
-        <button class="bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white">Сохранить и закрыть</button>
-        <button type="submit" class="bg-green-500 hover:bg-green-700 p-2 transition duration-300 rounded-md text-white">Сохранить и отправить</button>
+        <button onclick="getValyuta()" class="bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white">Сохранить и закрыть</button>
+        <button onclick="getValyuta()" type="submit" class="bg-green-500 hover:bg-green-700 p-2 transition duration-300 rounded-md text-white">Сохранить и отправить</button>
     </div>
 </div>
+<script>
+    function getValyuta()
+    {
+        var summa = document.getElementById('summa').value.toString();
+        var valyuta = document.getElementById('valyuta').value.toString();
+        var sv = summa + valyuta;
+        document.getElementById('summa').value = sv;
+    }
+
+</script>
