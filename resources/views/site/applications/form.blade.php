@@ -101,15 +101,22 @@
                     }}
                 </div>
             </div>
-            {{ Aire::file('upload', 'Upload a File') }}
-                <select class="custom-select" name="filial_initiator_id" id="filial_initiator_id">
-                    @foreach($branch as $branches)
-                    <option value="{{$branches->id}}">{{$branches->name}}</option>
-                    @endforeach
-                </select>
-
+            <div class="flex items-baseline">
+                <div class="mr-4 pt-2 pb-2 w-50">
+                    <b>Филиални танланг</b>
+                    <select class="custom-select" name="filial_initiator_id" id="filial_initiator_id">
+                        @foreach($branch as $branches)
+                            <option value="{{$branches->id}}">{{$branches->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="pt-2 pb-2 w-50">
+                    {{Aire::checkbox('checkbox', 'QQS bilan')->name('with_nds')}}
+                </div>
+            </div>
         </div>
         </div>
+    </div>
     </div>
     {{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}
     <div class="w-full text-right py-4 pr-10">
