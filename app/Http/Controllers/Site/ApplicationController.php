@@ -9,6 +9,7 @@ use App\Jobs\UpdateApplicationJob;
 use App\Jobs\VoteJob;
 use App\Models\Application;
 use App\Models\Branch;
+use App\Models\Country;
 use App\Models\User;
 use App\Structures\ApplicationData;
 use Illuminate\Support\Carbon;
@@ -92,12 +93,16 @@ class ApplicationController extends Controller
     public function create()
     {
         $branch = Branch::all();
+        $countries = Country::all();
         $user = auth()->user();
-        return view('site.applications.create', compact('user','branch'));
+        return view('site.applications.create', compact('user','branch','countries'));
     }
     public function store(ApplicationRequest $request)
     {
         $application = $request->validated();
+        if ($request['planned_price'] >= 25000)
+            $application['more_than_limit'] = true;
+
         $result = Application::create($application);
         if(!$result)
             return redirect()->back()->with('message', trans('site.application_failed'));
