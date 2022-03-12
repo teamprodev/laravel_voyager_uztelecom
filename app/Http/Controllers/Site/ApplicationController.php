@@ -29,6 +29,7 @@ class ApplicationController extends Controller
     {
         return view('site.applications.index');
     }
+
     public function getdata(Request $request)
     {
         $data = Application::query();
