@@ -62,19 +62,20 @@
                                 ->rows(3)
                                 ->cols(40)
                             }}
+            <b>Филиални танланг</b>
+            <select class="custom-select" name="filial_initiator_id" id="filial_initiator_id">
+                @foreach($branch as $branches)
+                    <option value="{{$branches->id}}">{{$branches->name}}</option>
+                @endforeach
+            </select>
                             {{Aire::textArea('bio','Коментарий к заявке')
                                 ->name('comment')
                                 ->rows(3)
                                 ->cols(40)
                             }}
-                <select class="custom-select" name="filial_initiator_id" id="filial_initiator_id">
-                    @foreach($branch as $branches)
-                    <option value="{{$branches->id}}">{{$branches->name}}</option>
-                    @endforeach
-                </select>
-
+            {{Aire::checkbox('checkbox', 'QQS bilan')->name('with_nds')}}
         </div>
-        </div>
+    </div>
     </div>
     {{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}
     <div class="w-full text-right py-4 pr-10">

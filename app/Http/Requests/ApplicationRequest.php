@@ -45,6 +45,7 @@ class ApplicationRequest extends FormRequest
             'filial_initiator_id' => 'nullable',
             'incoterms' => 'nullable',
             'info_business_plan' => 'nullable',
+            'with_nds' => 'nullable',
         ];
     }
 }
