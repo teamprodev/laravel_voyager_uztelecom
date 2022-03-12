@@ -4,6 +4,9 @@
 
 
     <div class="mt-6">
+        <div class="w-full text-right py-4 pr-10">
+            <button class="btn btn-danger" onclick="functionBack()">Назад</button>
+        </div>
         <div class="w-full flex">
             <div class="p-6">
                 {{Aire::textArea('bio','Ташаббускор (буюртмачи номи )')
@@ -103,6 +106,12 @@
             </div>
         </div>
     </div>
+    <script>
+        function functionBack()
+        {
+            window.history.back();
+        }
+    </script>
 {{--        @if(\App\Services\AccessService::allowed($application))--}}
 
 {{--        <div class="w-full text-right py-4 pr-10">--}}
