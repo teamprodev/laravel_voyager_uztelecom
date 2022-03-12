@@ -40,12 +40,19 @@ class ApplicationRequest extends FormRequest
             'initiator' => 'nullable',
             'basis' => 'nullable',
             'report' => 'nullable',
+            'planned_price' => 'nullable',
             'amount' => 'nullable',
             'info_purchase_plan' => 'nullable',
             'filial_initiator_id' => 'nullable',
             'incoterms' => 'nullable',
             'info_business_plan' => 'nullable',
+            'type_of_purchase_id' => 'nullable',
+            'subject' => 'nullable',
             'with_nds' => 'nullable',
+            'country_produced_id' => 'nullable',
+            'more_than_limit' => 'nullable',
+            'supplier_name' => 'nullable',
+            'equal_planned_price' => 'nullable',
         ];
     }
 }
