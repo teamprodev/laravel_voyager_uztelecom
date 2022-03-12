@@ -82,18 +82,16 @@
                 ->value($application->comment)
             }}
             <div id="aa">
-                @if($application->file_basis == null || $application->file_tech_spec == null || $application->other_files == null)
                 <h4 class="text-center">Прикрепить файл</h4>
-                @endif
-            @if($application->file_basis == null)
+            @if($application->file_basis == 'null')
                 <h6>Основание</h6>
                 <div id="file_basis"></div>
                 @endif
-                @if($application->file_basis == null)
+                @if($application->file_tech_spec == 'null')
                 <h6>Техническое задание</h6>
                 <div id="file_tech_spec"></div>
                 @endif
-                @if($application->file_basis == null)
+                @if($application->other_files == 'null')
                 <h6>Другие документы необходимые для запуска закупочной процедуры</h6>
                 <div id="other_files"></div>
                 @endif

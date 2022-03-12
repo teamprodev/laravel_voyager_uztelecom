@@ -88,7 +88,7 @@ class ApplicationController extends Controller
         $application->file_basis = json_encode($file_basis);
         $application->file_tech_spec = json_encode($file_tech_spec);
         $application->other_files = json_encode($other_files);
-        $application->save();
+        $application->update();
     }
     public function create()
     {
