@@ -103,8 +103,7 @@ class ApplicationController extends Controller
         if ($request['planned_price'] >= "25000USD")
             $application['more_than_limit'] = true;
 
-        dd($application);
-//        $result = Application::create($application);
+        $result = Application::create($application);
         if(!$result)
             return redirect()->back()->with('message', trans('site.application_failed'));
         return redirect()->route('site.applications.edit', $result)->with('message', trans('site.application_success'));
