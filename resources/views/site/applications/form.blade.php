@@ -6,71 +6,36 @@
                     {{Aire::input('bio','Ташаббускор (буюртмачи номи )')
                         ->name('initiator')
                     }}
-                </div>
-                <div class="pt-2 pb-2 w-50">
-                    {{Aire::input('bio','Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)')
-                        ->name('name')
-                    }}
-                </div>
-            </div>
-            <div class="flex items-baseline">
-                <div class="mr-4 pt-2 pb-2 w-50">
                     {{Aire::textArea('bio','Харид мазмуни (сотиб олиш учун асос)')
                         ->name('purchase_basis')
                         ->rows(3)
                         ->cols(40)
                     }}
-                </div>
-                <div class="pt-2 pb-2 w-50">
-                    {{Aire::textArea('bio','Асос (харидлар режаси, раҳбарият томонидан билдирги)')
-                        ->name('basis')
-                        ->rows(3)
-                        ->cols(40)
-                    }}
-                </div>
-            </div>
-            <div class="flex items-baseline">
-                <div class="mr-4 pt-2 pb-2 w-50">
                     {{Aire::textArea('bio','Сотиб олинадиган махсулот тавсифи (техник характери)')
                         ->name('specification')
                         ->rows(3)
                         ->cols(40)
                     }}
-                </div>
-                <div class="pt-2 pb-2 w-50">
-                    {{Aire::textArea('bio','Алоҳида талаблар')
-                        ->name('separate_requirements')
-                        ->rows(3)
-                        ->cols(40)
-                    }}
-                </div>
-            </div>
-            <div class="flex items-baseline">
-                <div class="mr-4 pt-2 pb-2 w-50">
                     {{Aire::dateTimeLocal('bio','Махсулот келишининг муддати')
                         ->name('delivery_date')
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
+                    {{Aire::input('bio','Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)')
+                        ->name('name')
+                    }}
+                    {{Aire::textArea('bio','Асос (харидлар режаси, раҳбарият томонидан билдирги)')
+                        ->name('basis')
+                        ->rows(3)
+                        ->cols(40)
+                    }}
+                    {{Aire::textArea('bio','Алоҳида талаблар')
+                        ->name('separate_requirements')
+                        ->rows(3)
+                        ->cols(40)
+                    }}
                     {{Aire::dateTimeLocal('bio','Махсулот сифати учун кафолат муддати (иш, хизмат)')
                         ->name('expire_warranty_date')
-                    }}
-                </div>
-            </div>
-            <div class="flex items-baseline">
-                <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::textArea('bio','Махсулотга қўйилган бошқа талаблар (иш, хизмат)')
-                        ->name('other_requirements')
-                        ->rows(3)
-                        ->cols(40)
-                    }}
-                </div>
-                <div class="pt-2 pb-2 w-50">
-                    {{Aire::textArea('bio','Махсулотни келтириш учун қўйилган талаб INCOTERMS, (омбордан олиб кетиш/ харидорга етказиб бериш)')
-                        ->name('incoterms')
-                        ->rows(3)
-                        ->cols(40)
-
                     }}
                 </div>
             </div>
@@ -85,7 +50,7 @@
                         ->value('false')
                         ->class('hidden')
                     }}
-                    {{Aire::select(['USD' => 'USD', 'UZS' => 'UZS'], 'select', 'Select')
+                    {{Aire::select(['USD' => 'USD', 'UZS' => 'UZS'], 'select', 'Валюта')
                     ->id('valyuta')
                     }}
                 </div>
