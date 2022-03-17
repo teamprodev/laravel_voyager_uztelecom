@@ -142,7 +142,5 @@
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js'></script>
 <!-- Custom Script -->
 <script src="{{asset("assets/js/script.js")}}"></script>
-<script src="{{asset("assets/js/eimzo/e-imzo.js")}}"></script>
-<script src="{{asset("assets/js/eimzo/e-imzo-client.js")}}"></script>
-<script src="{{asset("assets/js/eimzo/imzo.js")}}"></script>
+
 </html>

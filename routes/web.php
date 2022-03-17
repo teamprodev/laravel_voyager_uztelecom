@@ -81,7 +81,9 @@ Route::group([
 //                    Route::post('cancel', [ApplicationController::class, 'cancel'])->name('cancel');
 
                     Route::get('getAll', [ApplicationController::class, 'getAll'])->name('getAll');
+                    Route::post('eimzo/sign', [\App\Http\Controllers\ImzoController::class, 'verifyPks'])->name('imzo.sign');
                 });
+
             Route::group(
                 [
                     'as' => 'faqs.',
