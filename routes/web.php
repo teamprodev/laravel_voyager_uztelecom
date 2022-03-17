@@ -140,3 +140,6 @@ Route::get('getRoles', [ApplicationController::class, '']);
 //    event(new App\Events\NotificationEvent('Monika'));
 //    return "Event has been sent!";
 //});
+Route::get('sign/index', function () {
+    return redirect()->route('site.applications.index');
+})->name('sign.index');
