@@ -100,10 +100,11 @@ class ApplicationController extends Controller
     public function store(ApplicationRequest $request)
     {
         $application = $request->validated();
-        if ($request['planned_price'] >= "25000USD")
+        if ($request['currency'] >= "USD" || $request['planned_price'] == 25000)
             $application['more_than_limit'] = true;
 
-        $result = Application::create($application);
+        dd($application);
+//        $result = Application::create($application);
         if(!$result)
             return redirect()->back()->with('message', trans('site.application_failed'));
         return redirect()->route('site.applications.edit', $result)->with('message', trans('site.application_success'));

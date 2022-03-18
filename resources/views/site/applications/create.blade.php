@@ -7,6 +7,13 @@
     {{ Aire::open()
   ->route('site.applications.store')
   ->enctype("multipart/form-data")
+  ->rules([
+    'planned_price' => 'numeric',
+    'equal_planned_price' => 'numeric',
+    ])
+    ->messages([
+    'accepted' => 'You must accept the terms',
+    ])
   ->post() }}
         @include('site.applications.form')
     {{ Aire::close() }}
