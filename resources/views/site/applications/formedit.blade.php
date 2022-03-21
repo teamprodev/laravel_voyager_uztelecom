@@ -1,103 +1,153 @@
 <div class="mt-6">
-    <div class="w-full flex">
+<div class="w-full flex">
         <div class="p-6">
-            {{Aire::textArea('bio','Ташаббускор (буюртмачи номи )')
-                ->name('initiator')
-                ->rows(3)
-                ->cols(40)
-                ->value($application->initiator)
-            }}
-            {{Aire::textArea('bio','Харид мазмуни (сотиб олиш учун асос)')
-                ->name('purchase_basis')
-                ->rows(3)
-                ->cols(40)
-                ->value($application->purchase_basis)
-            }}
-            {{Aire::textArea('bio','Асос (харидлар режаси, раҳбарият томонидан билдирги)')
-                ->name('basis')
-                ->rows(3)
-                ->cols(40)
-                ->value($application->basis)
-            }}
-            {{Aire::textArea('bio','Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)')
-                ->name('name')
-                ->rows(3)
-                ->cols(40)
-                ->value($application->name)
-            }}
-            {{Aire::textArea('bio','Сотиб олинадиган махсулот тавсифи (техник характери)')
-                ->name('specification')
-                ->rows(3)
-                ->cols(40)
-                ->value($application->specification)
-            }}
-            {{Aire::input('bio','Махсулот келишининг муддати')
-                ->name('delivery_date')
-                ->value($application->delivery_date)
-            }}
-            {{Aire::textArea('bio','Алоҳида талаблар')
-                ->name('separate_requirements')
-                ->rows(3)
-                ->cols(40)
-                ->value($application->separate_requirements)
-            }}
-            {{Aire::textArea('bio','Махсулотга қўйилган бошқа талаблар (иш, хизмат)')
-                ->name('other_requirements')
-                ->rows(3)
-                ->cols(40)
-                ->value($application->other_requirements)
-            }}
-            {{Aire::input('bio','Махсулот сифати учун кафолат муддати (иш, хизмат)')
-                ->name('expire_warranty_date')
-                ->value($application->expire_warranty_date)
-            }}
-            {{Aire::textArea('bio','Харид режаси (сумма)')
-                ->name('amount')
-                ->rows(3)
-                ->cols(40)
-                ->value($application->amount)
-            }}
-            {{Aire::textArea('bio','Махсулотни келтириш учун қўйилган талаб INCOTERMS, (омбордан олиб кетиш/ харидорга етказиб бериш)')
-                ->name('incoterms')
-                ->rows(3)
-                ->cols(40)
-                ->value($application->incoterms)
-            }}
-            {{Aire::textArea('bio','Бюджетни режалаштириш бўлими - харид қилинадиган махсулотни бизнес режада мавжудлиги бўйича маълумот')
-                ->name('budget_planning')
-                ->rows(3)
-                ->cols(40)
-                ->value($application->budget_planning)
-            }}
-            {{Aire::textArea('bio','Харид килинадиган махсулотни "Харидлар режаси"да мавжудлиги буйича маълумот')
-                ->name('procurement_plan')
-                ->rows(3)
-                ->cols(40)
-                ->value($application->procurement_plan)
-            }}
-            {{Aire::textArea('bio','Коментарий к заявке')
-                ->name('comment')
-                ->rows(3)
-                ->cols(40)
-                ->value($application->comment)
-            }}
-            <div id="aa">
-                <h4 class="text-center">Прикрепить файл</h4>
-            @if($application->file_basis == 'null')
-                <h6>Основание</h6>
-                <div id="file_basis"></div>
-                @endif
-                @if($application->file_tech_spec == 'null')
-                <h6>Техническое задание</h6>
-                <div id="file_tech_spec"></div>
-                @endif
-                @if($application->other_files == 'null')
-                <h6>Другие документы необходимые для запуска закупочной процедуры</h6>
-                <div id="other_files"></div>
-                @endif
+            <div class="flex items-baseline">
+                <div class="mr-4 pt-2 pb-2 w-50">
+                    {{Aire::input('bio','Ташаббускор (буюртмачи номи )')
+                        ->name('initiator')
+                        ->value($application->initiator)
+                    }}
+                    {{Aire::textArea('bio','Харид мазмуни (сотиб олиш учун асос)')
+                        ->name('purchase_basis')
+                        ->value($application->purchase_basis)
+                        ->rows(3)
+                        ->cols(40)
+                    }}
+                    {{Aire::textArea('bio','Сотиб олинадиган махсулот тавсифи (техник характери)')
+                        ->name('specification')
+                        ->value($application->specification)
+                        ->rows(3)
+                        ->cols(40)
+                    }}
+                    {{Aire::textArea('bio','Махсулот келишининг муддати')
+                        ->name('delivery_date')
+                        ->value($application->delivery_date)
+                    }}
+                </div>
+                <div class="pt-2 pb-2 w-50">
+                    {{Aire::input('bio','Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)')
+                        ->name('name')
+                        ->value($application->name)
+                    }}
+                    {{Aire::textArea('bio','Асос (харидлар режаси, раҳбарият томонидан билдирги)')
+                        ->name('basis')
+                        ->value($application->basis)
+                        ->rows(3)
+                        ->cols(40)
+                    }}
+                    {{Aire::textArea('bio','Алоҳида талаблар')
+                        ->name('separate_requirements')
+                        ->value($application->separate_requirements)
+                        ->rows(3)
+                        ->cols(40)
+                    }}
+                    {{Aire::textArea('bio','Махсулот сифати учун кафолат муддати (иш, хизмат)')
+                        ->name('expire_warranty_date')
+                        ->value($application->expire_warranty_date)
+                    }}
+                </div>
+            </div>
+            <div class="flex items-baseline">
+                <div class="mr-4 pt-2 pb-2 w-50">
+                    {{Aire::input('bio','Харид режаси (сумма)')
+                        ->name('planned_price')
+                        ->value($application->planned_price)
+                        ->id('summa')
+                    }}
+                    {{Aire::input()
+                        ->name('more_than_limit')
+                        ->value($application->more_than_limit)
+                        ->value('false')
+                        ->class('hidden')
+                    }}
+                    {{Aire::select(['USD' => 'USD', 'UZS' => 'UZS'], 'select', 'Валюта')
+                    ->name('currency')
+                    ->value($application->currency)
+                    ->id('valyuta')
+                    }}
+                </div>
+                <div class="pt-2 pb-2 w-50">
+                    {{Aire::input('bio','Бюджетни режалаштириш бўлими - харид қилинадиган махсулотни бизнес режада мавжудлиги бўйича маълумот')
+                        ->name('info_business_plan')
+                        ->value($application->info_business_plan)
+                    }}
+                </div>
+
+            </div>
+            <div class="flex items-baseline">
+                <div class="mr-4 pt-2 pb-2 w-50">
+                    {{Aire::input('bio','Эквивалентная Планируемая сумма')
+                        ->name('equal_planned_price')
+                        ->value($application->equal_planned_price)
+                    }}
+                </div>
+                <div class="pt-2 pb-2 w-50">
+                    {{Aire::input('bio','Наименование поставщика')
+                        ->name('supplier_name')
+                        ->value($application->supplier_name)
+                    }}
+                </div>
+            </div>
+            <div class="flex items-baseline">
+                <div class="mr-4 pt-2 pb-2 w-50">
+                    {{Aire::select([1 => 'товар', 2 => 'работа', 3 => 'услуга'], 'select', 'Предмет закупки')
+                        ->name('subject')
+                        ->value($application->subject)
+                    }}
+                </div>
+                <div class="pt-2 pb-2 w-50">
+                    {{Aire::select([1 => 'тендер', 2 => 'отбор', 3 => 'Eshop'], 'select', 'Вид закупки')
+                        ->name('type_of_purchase_id')
+                        ->value($application->type_of_purchase_id)
+                    }}
+                </div>
+            </div>
+            <div class="flex items-baseline">
+                <div class="mr-4 pt-2 pb-2 w-50">
+                    {{Aire::textArea('bio','Харид килинадиган махсулотни "Харидлар режаси"да мавжудлиги буйича маълумот')
+                        ->name('info_purchase_plan')
+                        ->value($application->info_purchase_plan)
+                        ->rows(3)
+                        ->cols(40)
+                    }}
+                </div>
+                <div class="pt-2 pb-2 w-50">
+                    {{Aire::textArea('bio','Коментарий к заявке')
+                        ->name('comment')
+                        ->value($application->comment)
+                        ->rows(3)
+                        ->cols(40)
+                    }}
+                </div>
+            </div>
+            <div class="flex items-baseline">
+                <div class="mr-4 pt-2 pb-2 w-50">
+                    <h6><b>Филиални танланг</b></h6>
+                    <select class="custom-select" name="filial_initiator_id" id="filial_initiator_id">
+                            <option value="{{$application->filial_initiator_id}}" selected>{{$branch->name}}</option>
+                            @foreach($branchAll as $branch)
+                                <option value="{{$branch->id}}">{{$branch->name}}</option>
+                            @endforeach
+                    </select>
+                </div>
+                <div class="pt-2 pb-2 w-50">
+                    <h6><b>Товар (хизмат) ишлаб чиқарилган мамлакат</b></h6>
+                    <select class="col-md-6 custom-select" name="country_produced_id" id="country_produced_id">
+                            <option value="{{$application->country_produced_id}}" selected>{{$countries->name}}</option>
+                            @foreach($countriesAll as $countries)
+                                <option value="{{$countries->id}}">{{$countries->name}}</option>
+                            @endforeach
+                    </select>
+                </div>
+            </div>
+            @if($application->with_nds == 1)
+            {{Aire::checkbox('checkbox', 'QQS bilan')->name('with_nds')->checked()}}
+            @else
+            {{Aire::checkbox('checkbox', 'QQS bilan')->name('with_nds')}}
+            @endif
             </div>
         </div>
-    </div>
+                </div>
 </div>
 {{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}
 <div class="w-full text-right py-4 pr-10">

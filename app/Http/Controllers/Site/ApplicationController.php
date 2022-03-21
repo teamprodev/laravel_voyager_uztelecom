@@ -46,12 +46,18 @@ class ApplicationController extends Controller
     }
     public function show(Application $application)
     {
-        return view('site.applications.show', compact('application'));
+        $branch = Branch::where('id', $application->filial_initiator_id)->first();
+        $countries = Country::where('id', $application->country_produced_id)->first();
+        return view('site.applications.show', compact('application','branch','countries'));
     }
 
     public function edit(Application $application)
     {
-        return view('site.applications.edit', compact('application'));
+        $branchAll = Branch::skip(1)->take(Branch::count() - 1)->get();
+        $countriesAll = Country::skip(1)->take(Country::count() - 1)->get();    
+        $branch = Branch::where('id', $application->filial_initiator_id)->first();
+        $countries = Country::where('id', $application->country_produced_id)->first();
+        return view('site.applications.edit', compact('application','branch','countries','branchAll','countriesAll'));
     }
     public function update(Application $application, ApplicationRequest $request){
         $data = $request->validated();
