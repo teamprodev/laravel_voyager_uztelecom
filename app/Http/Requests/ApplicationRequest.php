@@ -53,7 +53,7 @@ class ApplicationRequest extends FormRequest
             'more_than_limit' => 'nullable',
             'supplier_name' => 'nullable',
             'equal_planned_price' => 'nullable',
-            'valyuta' => 'nullable',
+            'currency' => 'nullable',
         ];
     }
 }

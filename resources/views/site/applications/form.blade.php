@@ -51,6 +51,7 @@
                         ->class('hidden')
                     }}
                     {{Aire::select(['USD' => 'USD', 'UZS' => 'UZS'], 'select', 'Валюта')
+                    ->name('currency')
                     ->id('valyuta')
                     }}
                 </div>
@@ -135,13 +136,3 @@
         <button onclick="getValyuta()" type="submit" class="bg-green-500 hover:bg-green-700 p-2 transition duration-300 rounded-md text-white">Сохранить и отправить</button>
     </div>
 </div>
-<script>
-    function getValyuta()
-    {
-        var summa = document.getElementById('summa').value.toString();
-        var valyuta = document.getElementById('valyuta').value.toString();
-        var sv = summa + valyuta;
-        document.getElementById('summa').value = sv;
-    }
-
-</script>

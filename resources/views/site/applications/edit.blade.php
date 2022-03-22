@@ -1,7 +1,7 @@
 @extends('site.layouts.wrapper')
 
 @section('center_content')
-    <div class="w-full text-right py-4 pr-10">
+    <div class="my-1">
         <button class="btn btn-danger" onclick="functionBack()">Назад</button>
     </div>
     <form action="{{ route('site.applications.update', $application->id) }}" method="post">
