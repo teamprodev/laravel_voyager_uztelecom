@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "38e1416200ed1c8bde323f4e657bb6d9",
+    "content-hash": "4f7c44f12ecace98fecfbeed47528279",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -114,49 +114,6 @@
                 "source": "https://github.com/arrilot/laravel-widgets/tree/3.13.1"
             },
             "time": "2020-09-20T19:56:38+00:00"
-        },
-        {
-            "name": "asadbek/eimzo",
-            "version": "1.0.8",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Asadbekinha/eimzo.git",
-                "reference": "2b041f6ce9ee6fb146a4882f9ac2de4165ba4ea0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Asadbekinha/eimzo/zipball/2b041f6ce9ee6fb146a4882f9ac2de4165ba4ea0",
-                "reference": "2b041f6ce9ee6fb146a4882f9ac2de4165ba4ea0",
-                "shasum": ""
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Asadbek\\Eimzo\\Providers\\EimzoServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Asadbek\\Eimzo\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "CC BY-NC-ND 4.0"
-            ],
-            "authors": [
-                {
-                    "name": "Asadbekinha",
-                    "email": "fayzulloevasadbek@gmail.com"
-                }
-            ],
-            "support": {
-                "issues": "https://github.com/Asadbekinha/eimzo/issues",
-                "source": "https://github.com/Asadbekinha/eimzo/tree/1.0.8"
-            },
-            "time": "2022-03-06T18:02:12+00:00"
         },
         {
             "name": "asm89/stack-cors",
@@ -6128,16 +6085,16 @@
         },
         {
             "name": "teamprodev/laravel_dst_eimzo",
-            "version": "1.3.0",
+            "version": "1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teamprodev/laravel_dst_eimzo.git",
-                "reference": "f2d70cc2177292af80afdaa558c9f60e32f83822"
+                "reference": "d5531487ad86dfffe49d0ce8ec4af551481f105a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teamprodev/laravel_dst_eimzo/zipball/f2d70cc2177292af80afdaa558c9f60e32f83822",
-                "reference": "f2d70cc2177292af80afdaa558c9f60e32f83822",
+                "url": "https://api.github.com/repos/teamprodev/laravel_dst_eimzo/zipball/d5531487ad86dfffe49d0ce8ec4af551481f105a",
+                "reference": "d5531487ad86dfffe49d0ce8ec4af551481f105a",
                 "shasum": ""
             },
             "type": "library",
@@ -6165,9 +6122,9 @@
             ],
             "support": {
                 "issues": "https://github.com/teamprodev/laravel_dst_eimzo/issues",
-                "source": "https://github.com/teamprodev/laravel_dst_eimzo/tree/1.3.0"
+                "source": "https://github.com/teamprodev/laravel_dst_eimzo/tree/1.3.1"
             },
-            "time": "2022-03-17T14:07:29+00:00"
+            "time": "2022-03-22T13:44:32+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -9037,5 +8994,5 @@
         "php": "^7.4"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }

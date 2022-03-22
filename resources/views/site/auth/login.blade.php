@@ -16,7 +16,7 @@
                 </div>
 
                 <!--Body-->
-                <form name="eri_form" action="{{route('eimzo.postLogin')}}" id="eri_form" method="post">
+                <form name="eri_form" action="{{route('eimzo.login')}}" id="eri_form" method="post">
                 @csrf
                 <div>
                         <label class="text-xs" for="">Калитни танланг</label>
@@ -38,8 +38,7 @@
                     <!--Footer-->
                     <div class="flex justify-center pt-2">
                         <button class="px-4 bg-blue-500 py-2 rounded-lg text-white hover:bg-blue-400" id="eri_sign"
-                                onclick="sign
-                        ()">
+                                onclick="sign()">
                             Вход
                         </button>
                         <button class="px-4 bg-blue-500 py-2 rounded-lg text-white hover:bg-blue-400" id="eri_sign"
