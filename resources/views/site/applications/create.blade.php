@@ -9,7 +9,8 @@
   ->enctype("multipart/form-data")
   ->rules([
     'planned_price' => 'numeric',
-    'equal_planned_price' => 'numeric',
+    'equal_planned_price' => 'numeric|required',
+    'planned_price' => 'numeric|required',
     ])
     ->messages([
     'accepted' => 'You must accept the terms',
