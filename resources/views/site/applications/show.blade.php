@@ -171,10 +171,10 @@
                         <label for="select1">Выберите ключ</label>
                         <select name="key" id="select1" onchange="cbChanged(this)"></select><br />
                     </div>
-                    <!-- <div class="form-group">
+                    <div class="form-group hidden">
                         <label for="exampleFormControlTextarea1">Текст для подписи</label>
                         <textarea class="form-control" id="eri_data" name="data" rows="3"></textarea>
-                    </div> -->
+                    </div>
                     ID ключа <label id="keyId"></label><br />
 
                     <button onclick="generatekey()" class="btn btn-success" type="button">GENERATE KEY</button><br />
