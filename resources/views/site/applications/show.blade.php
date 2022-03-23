@@ -171,13 +171,13 @@
                         <label for="select1">Выберите ключ</label>
                         <select name="key" id="select1" onchange="cbChanged(this)"></select><br />
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="exampleFormControlTextarea1">Текст для подписи</label>
                         <textarea class="form-control" id="eri_data" name="data" rows="3"></textarea>
-                    </div>
+                    </div> -->
                     ID ключа <label id="keyId"></label><br />
 
-                    <button onclick="sign()" class="btn btn-success" type="button">GENERATE KEY</button><br />
+                    <button onclick="generatekey()" class="btn btn-success" type="button">GENERATE KEY</button><br />
 
 
                     <div class="form-group">
@@ -192,6 +192,14 @@
                 </form>
     </div>
     <script>
+        function generatekey()
+        {
+            var data = {!! json_encode($application) !!}
+            document.getElementById('eri_data').value = data;
+            console.log(data);
+            sign();
+        }
+            
         function functionBack()
         {
             window.history.back();
