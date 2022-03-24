@@ -16,7 +16,7 @@
                 </div>
 
                 <!--Body-->
-                <form name="eri_form" action="{{route('eimzo.login')}}" id="eri_form" method="post">
+                <form name="eri_form" action="{{route('eri.login')}}" id="eri_form" method="post">
                 @csrf
                 <div>
                         <label class="text-xs" for="">Калитни танланг</label>
