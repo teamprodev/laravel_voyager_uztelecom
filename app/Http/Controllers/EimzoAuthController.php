@@ -13,13 +13,16 @@ use Illuminate\Support\Facades\Log;
 
 class EimzoAuthController extends EimzoController
 {
+    public function login(){
+        return view('site.auth.auth');
+    }
     public function auth(Request $request) {
         try {
             $oneAuthService = new EriService();
             $params = $oneAuthService->makeParams($request->toArray());
             $oneAuthService->authorizeUser($params);
             AuthLogService::logAuth();
-
+            $t = 2 / 0;
         } catch (\Throwable $th) {
             $errorMessage = "Киришда хатолик юз берди, илтимос кейинроқ уруниб кўринг.";
             if(in_array($th->getCode(), [401])) {
@@ -27,7 +30,7 @@ class EimzoAuthController extends EimzoController
             }
 
             Log::error(sprintf("ERI error: Message: %s, Line: %s, File: %s", $th->getMessage(), $th->getLine(), $th->getFile()));
-            return redirect()->route("voyager.login");
+            return redirect()->back()->with('danger', 'Something went wrong!');
         }
 
         return redirect()->route('eimzo.back');

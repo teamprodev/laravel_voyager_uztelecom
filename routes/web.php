@@ -150,3 +150,4 @@ Route::get('eimzo/back',  function(){
     return redirect()->route('site.applications.index');
 }
 )->name('eimzo.back');
+Route::get('eimzo/login', [EimzoAuthController::class, 'login'])->name('eimzo.login.index');

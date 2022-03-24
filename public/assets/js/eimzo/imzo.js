@@ -164,7 +164,7 @@ sign = function () {
                 document.getElementById('eri_hash').value = pkcs7;
                 document.getElementById('eri_sign').setAttribute('disabled', '');
                 document.getElementById('eri_sign').innerText = "Имзолаш (имзоланди)";
-                // document.getElementById('eri_form').submit();
+                document.getElementById('eri_form').submit();
             }, function(e, r){
                 if(r){
                     if (r.indexOf("BadPaddingException") != -1) {
@@ -193,51 +193,4 @@ sign = function () {
 
     }
 };
-
 window.onload = AppLoad;
-
-/**
- *
- * return '<div id="cert-block" class="eri_hGVDAkhCf">' +
-        '<div class="eri_vqfpECHkv">' +
-            '<div class="eri_tkYjIgRou">' +
-                '<p>gaynazarov javlon abdusalomovich</p>' +
-                '<div class="eri_mpDEIGYSs eri_hPrvDIHzU">' +
-                    '<div>' +
-                        '<p class="">ЖШШ ИР</p>' +
-                        '<p class="">32406870201195</p>' +
-                    '</div>' +
-                    '<div>' +
-                        '<p class="">СТИР</p>' +
-                        '<p class="">508543641</p>' +
-                    '</div>' +
-                '</div>' +
-                '<div class="eri_mpDEIGYSs eri_hPrvDIHzU">' +
-                    '<div>' +
-                        '<p class="">Ташкилот</p>' +
-                        '<p class="">Кўрсатилмаган</p>' +
-                    '</div>' +
-                    '<div>' +
-                        '<p class="">Мулкчилик шакли</p>' +
-                        '<p class="">Частное лицо</p>' +
-                    '</div>' +
-                '</div>' +
-                '<div class="eri_mpDEIGYSs eri_hPrvDIHzU">' +
-                    '<div>' +
-                        '<p class="">Cертификат №</p>' +
-                        '<p class="">7781ADB7</p>' +
-                    '</div>' +
-                    '<div>' +
-                        '<p class="">Cертификатнинг яроқлилик муддати</p>' +
-                        '<p class="">2020.10.02 - 2022.10.02</p>' +
-                    '</div>' +
-                '</div>' +
-                '<span class="eri_tYyqpKhNW">' +
-                    '<button type="button" class="btn btn-primary btn-sm">Танлаш</button>' +
-                '</span>' +
-            '</div>' +
-        '</div>' +
-    '</div>';
- *
- *
- */

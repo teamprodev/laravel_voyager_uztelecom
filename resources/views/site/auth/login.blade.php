@@ -37,11 +37,11 @@
 
                     <!--Footer-->
                     <div class="flex justify-center pt-2">
-                        <button class="px-4 bg-blue-500 py-2 rounded-lg text-white hover:bg-blue-400" id="eri_sign"
-                                onclick="sign()">
+                        <button type="button" class="px-4 bg-blue-500 py-2 rounded-lg text-white hover:bg-blue-400"
+                                id="eri_sign" onclick="sign()">
                             Вход
                         </button>
-                        <button class="px-4 bg-blue-500 py-2 rounded-lg text-white hover:bg-blue-400" id="eri_sign"
+                        <button type="button" class="px-4 bg-blue-500 py-2 rounded-lg text-white hover:bg-blue-400" id="eri_sign"
                                 onclick="uiLoadKeys
                     ()">Yangilash
                         </button>
