@@ -146,7 +146,6 @@ Route::get('sign/index', function () {
 Route::get('redirect', function (){
     return redirect()->route('site.applications.index');
 })->name('eimzo.auth.back');
-Route::post('eimzo/login', [\Teamprodev\Eimzo\Http\Controllers\EimzoController::class, 'auth'])->name('eimzo.login');
 Route::get('eimzo/back',  function(){
     return redirect()->route('site.applications.index');
 }
