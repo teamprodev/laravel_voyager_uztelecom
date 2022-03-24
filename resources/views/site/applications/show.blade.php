@@ -198,7 +198,7 @@
     <script>
         function generatekey()
         {
-            var data = {!! json_encode($application) !!}
+            var data = "application_{{$application->id}}"
             document.getElementById('eri_data').value = data;
             console.log(data);
             sign();
