@@ -27,7 +27,7 @@
                         ->cols(40)
                         ->disabled()
                     }}
-                    {{Aire::textArea('bio','Махсулот келишининг муддати')
+                    {{Aire::input('bio','Махсулот келишининг муддати')
                         ->name('delivery_date')
                         ->value($application->delivery_date)
                         ->disabled()
@@ -53,7 +53,7 @@
                         ->cols(40)
                         ->disabled()
                     }}
-                    {{Aire::textArea('bio','Махсулот сифати учун кафолат муддати (иш, хизмат)')
+                    {{Aire::input('bio','Махсулот сифати учун кафолат муддати (иш, хизмат)')
                         ->name('expire_warranty_date')
                         ->value($application->expire_warranty_date)
                         ->disabled()
@@ -175,19 +175,23 @@
                         <label for="exampleFormControlTextarea1">Текст для подписи</label>
                         <textarea class="form-control" id="eri_data" name="data" rows="3"></textarea>
                     </div>
+                    {{Aire::textArea('bio','Коментария')
+                        ->name('comment')
+                        ->rows(3)
+                        ->cols(40)
+                    }}
                     ID ключа <label id="keyId"></label><br />
 
-                    <button onclick="generatekey()" class="btn btn-success" type="button">GENERATE KEY</button><br />
+                    <button onclick="generatekey()" class="hidden btn btn-success" type="button">Подписаться</button><br />
 
-
-                    <div class="form-group">
+                    <div class="form-group hidden">
                         <label for="exampleFormControlTextarea3">Подписанный документ PKCS#7</label>
                         <textarea class="form-control" readonly required name="pkcs7" id="exampleFormControlTextarea3"
                                   rows="3"></textarea>
-                    </div><br />
+                    </div><br /> 
                     <div class="row ml-4">
-                        <button type="submit" class="btn btn-success col-md-2" >Sign</button>
-
+                        <button value="1" name="status" type="submit" class="btn btn-success col-md-2" >Accept</button>
+                        <button value="0" name="status" type="submit" class="btn btn-danger col-md-2" >Reject</button>
                     </div>
                 </form>
     </div>
