@@ -188,22 +188,33 @@
                         <label for="exampleFormControlTextarea3">Подписанный документ PKCS#7</label>
                         <textarea class="form-control" readonly required name="pkcs7" id="exampleFormControlTextarea3"
                                   rows="3"></textarea>
-                    </div><br /> 
+                    </div><br />
+                    <input id="status" name="status" class="hidden" type="text"> 
+                    <input value="applications" id="table_name" name="table_name" class="hidden" type="text"> 
+                    <input value="{{$application->id}}" id="column_id" name="column_id" class="hidden" type="text"> 
+                    <input value="{{auth()->user()->id}}" name="user_id" class="hidden" type="text"> 
                     <div class="row ml-4">
-                        <button value="1" name="status" type="submit" class="btn btn-success col-md-2" >Accept</button>
-                        <button value="0" name="status" type="submit" class="btn btn-danger col-md-2" >Reject</button>
+                        <button onclick="status1()" type="submit" class="btn btn-success col-md-2" >Accept</button>
+                        <button onclick="status0()" type="submit" class="btn btn-danger col-md-2" >Reject</button>
                     </div>
                 </form>
     </div>
     <script>
         function generatekey()
         {
-            var data = {!! json_encode($application) !!}
+            var data = "application_{{$application->id}}";
             document.getElementById('eri_data').value = data;
             console.log(data);
             sign();
         }
-            
+        function status1()
+        {
+            document.getElementById('status').value = 1;
+        }  
+        function status0()
+        {
+            document.getElementById('status').value = 0;
+        }  
         function functionBack()
         {
             window.history.back();

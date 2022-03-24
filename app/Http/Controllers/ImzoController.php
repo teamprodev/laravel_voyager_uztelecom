@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Teamprodev\Eimzo\Http\Controllers\EimzoSignController;
-use Teamprodev\Eimzo\Requests\SignRequest;
+use App\Http\Controllers\EimzoSignController;
+use App\Http\Requests\SignRequest;
 
 class ImzoController extends EimzoSignController
 {
