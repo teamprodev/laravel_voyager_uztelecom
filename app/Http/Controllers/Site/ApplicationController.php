@@ -13,6 +13,7 @@ use App\Models\Country;
 use App\Models\User;
 use App\Structures\ApplicationData;
 use Illuminate\Support\Carbon;
+use App\Models\SignedDocs;
 use Exception;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
@@ -48,7 +49,8 @@ class ApplicationController extends Controller
     {
         $branch = Branch::where('id', $application->filial_initiator_id)->first();
         $countries = Country::where('id', $application->country_produced_id)->first();
-        return view('site.applications.show', compact('application','branch','countries'));
+        $access = SignedDocs::where('user_id', auth()->user()->id)->where('column_id', $application->id)->first();
+        return view('site.applications.show', compact('application','branch','countries','access'));
     }
 
     public function edit(Application $application)
