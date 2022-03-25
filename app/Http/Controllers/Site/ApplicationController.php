@@ -57,6 +57,7 @@ class ApplicationController extends Controller
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('status', '@if($status == 0) Rejected @elseif($status == 1) Accepted @endif')
+            ->editColumn('user_id', " @php echo auth()->user()->name @endphp ")
             ->make(true);
     }
     public function show(Application $application)

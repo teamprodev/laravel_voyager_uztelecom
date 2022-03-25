@@ -151,8 +151,8 @@
                 <th>Id</th>
                 <th>Status</th>
                 <th>Role</th>
-                <th >Text</th>
                 <th >Comment</th>
+                <th >User</th>
                 <th>Application ID</th>
             </tr>
             </thead>
@@ -170,8 +170,8 @@
             {data: 'id', name: 'id'},
             {data: 'status', name: 'status'},
             {data: 'role_id', name: 'role_id'},
-            {data: 'text', name: 'text'},
             {data: 'comment', name: 'comment'},
+            {data: 'user_id', name: 'user_id'},
             {data: 'application_id', name: 'application_id'},
         ]
     });
