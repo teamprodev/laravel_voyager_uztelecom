@@ -57,12 +57,8 @@ class Application extends Model
                     $result = $query->where('user_id', auth()->id());
                 }
                 break;
-            case -8: {
-                // Get all workers id of his department as array
-                // todo: more than price 250 mln HEad Office Can controller
-                // todo: Planner see only appplications of its department
-                //
-                $result = $query->whereIn('status', [0, 1, -1]);
+            case 5: {
+                $result = $query->where('status', Application::ACCEPTED);
             } break;
             //HEAD OF DEPARTMENT of user who created APPLICATION
             case -8: {

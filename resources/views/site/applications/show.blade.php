@@ -187,7 +187,8 @@
         @endforelse
     <!-- Modal toggle -->
         @if(in_array(auth()->user()->role_id, json_decode($application->roles_need_sign, true)) &&
-            !in_array(auth()->id(), $same_role_user_ids) && )
+            !in_array(auth()->id(), $same_role_user_ids) && !(\App\Models\SignedDocs::where('application_id',
+            $application->id)->where('user_id', auth()->id())->first()))
             <button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     type="button" data-modal-toggle="defaultModal">
                 Imzolash
