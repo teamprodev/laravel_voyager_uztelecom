@@ -55,9 +55,7 @@
     <li class="nav-item">
         <div class="relative inline-block ">
             <button onclick="toggleDD('myDropdown')" class="drop-button text-gray-600 py-1 px-2 focus:outline-none hover:text-blue-500">
-                            <span class="pr-2">
-                                <i class="em em-robot_face"></i>
-                            </span>{{auth()->user()->name}}
+                {{auth()->user()->name}}
                 <svg class="h-3 fill-current inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path>
                 </svg>

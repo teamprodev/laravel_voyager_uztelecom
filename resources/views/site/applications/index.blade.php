@@ -1,4 +1,4 @@
-@extends('site.layouts.wrapper')
+@extends('site.layouts.app')
 @section('center_content')
 <div id="section" class="relative">
     <a href="{{route('site.applications.create')}}"

@@ -1,4 +1,4 @@
-@extends('site.layouts.wrapper')
+@extends('site.layouts.app')
 
 @section('center_content')
 <div class="p-4">
