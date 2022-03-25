@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Application;
 use Illuminate\Http\Request;
 use App\Http\Controllers\EimzoSignController;
 use App\Http\Requests\SignRequest;

@@ -18,7 +18,8 @@
         "mcamara/laravel-localization": "^1.7",
         "tcg/voyager": "^1.5",
         "teamprodev/laravel_dst_eimzo": "^1.1",
-        "yajra/laravel-datatables-oracle": "^9.19"
+        "yajra/laravel-datatables-oracle": "^9.19",
+      "ext-json": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

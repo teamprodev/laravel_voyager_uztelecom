@@ -90,9 +90,32 @@
                     }}
                 </div>
             </div>
+            <div class="flex items-baseline">
+                <div class="mr-4 pt-2 pb-2 w-50">
+                    <h6><b>Филиални танланг</b></h6>
+                    <select class="custom-select" name="filial_initiator_id" id="filial_initiator_id">
+                        @foreach($branch as $branches)
+                            <option value="{{$branches->id}}">{{$branches->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+{{--                <div class="pt-2 pb-2 w-50">--}}
+{{--                    <h6><b>Товар (хизмат) ишлаб чиқарилган мамлакат</b></h6>--}}
+{{--                    <select class="col-md-6 custom-select" name="country_produced_id" id="country_produced_id">--}}
+{{--                        @foreach($countries as $country)--}}
+{{--                            <option value="{{$country->id}}">{{$country->name}}</option>--}}
+{{--                        @endforeach--}}
+{{--                    </select>--}}
+{{--                </div>--}}
+                {{Aire::select($countries, 'country_produced_id', 'Select')
+                ->value('0')}}
+
+            </div>
             </div>
         </div>
-    {{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}
+    {{Aire::select($roles, 'roles_need_sign', 'Multi-Select')
+                    ->multiple()
+                    }}
     <div class="w-full text-right py-4 pr-10">
         <button type="submit" class="bg-green-500 hover:bg-green-700 p-2 transition duration-300 rounded-md text-white">Сохранить и отправить</button>
     </div>

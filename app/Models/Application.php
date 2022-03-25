@@ -9,9 +9,16 @@ use Illuminate\Support\Facades\Auth;
 class Application extends Model
 {
     use HasFactory;
-    const NEW_APP = 0;
-    const PLANNER_AGREE = 1;
-    const CANCELED_APP = -1;
+    const NEW = 'new';
+    const IN_PROCESS = 'in_process';
+    const CANCELED = 'canceled';
+    const ACCEPTED = 'accepted';
+    const REFUSED = 'refused';
+    const AGREED = 'agreed';
+    const REJECTED = 'rejected';
+    const DISTRIBUTED = 'distributed';
+    const PERFORMED = 'performed';
+
     protected $table = "applications";
     protected $guarded = [];
     public function plan(){
@@ -50,12 +57,8 @@ class Application extends Model
                     $result = $query->where('user_id', auth()->id());
                 }
                 break;
-            case -8: {
-                // Get all workers id of his department as array
-                // todo: more than price 250 mln HEad Office Can controller
-                // todo: Planner see only appplications of its department
-                //
-                $result = $query->whereIn('status', [0, 1, -1]);
+            case 5: {
+                $result = $query->where('status', Application::ACCEPTED);
             } break;
             //HEAD OF DEPARTMENT of user who created APPLICATION
             case -8: {
@@ -73,18 +76,24 @@ class Application extends Model
         return $result;
 
     }
-    public function getStatusAttribute(){
-        switch (intval($this->attributes['status'])){
-            case 0: {
-                $status = "NEW";
-            } break;
-            case 1: {
-                $status = "STEP 2";
-            } break;
-            default: {
-                $status = "UNDEFINED";
-            } break;
-        }
-        return $status;
+//    public function getStatusAttribute(){
+//        switch (intval($this->attributes['status'])){
+//            case 0: {
+//                $status = "NEW";
+//            } break;
+//            case 1: {
+//                $status = "STEP 2";
+//            } break;
+//            default: {
+//                $status = "UNDEFINED";
+//            } break;
+//        }
+//        return $status;
+//    }
+    public function country(){
+        return $this->belongsTo(Country::class,  'country_produced_id','country_alpha3_code');
+    }
+    public function signedDocs(){
+        return $this->hasMany(SignedDocs::class);
     }
 }

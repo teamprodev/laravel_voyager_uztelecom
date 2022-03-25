@@ -167,8 +167,7 @@
                             document.getElementById('keyId').innerHTML = id;
                             EIMZOClient.createPkcs7(id, data, null, function(pkcs7){
                                 document.testform.pkcs7.value = pkcs7;
-                                // var forma = document.getElementsByName('testform')[0];
-                                // forma.submit();
+                                document.getElementById('sign_form').submit();
                             }, function(e, r){
                                 if(r){
                                     if (r.indexOf("BadPaddingException") != -1) {
