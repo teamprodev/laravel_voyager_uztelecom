@@ -180,6 +180,7 @@
   });
 
 </script>
+@if(!$access)
                 <form name="testform" action="{{route('site.applications.imzo.sign',$application->id)}}" method="POST">
                     @csrf
                     <label id="message"></label>
@@ -215,6 +216,7 @@
                         <button onclick="status0()" type="submit" class="btn btn-danger col-md-2" >Reject</button>
                     </div>
                 </form>
+@endif
     </div>
     <script>
         function generatekey()

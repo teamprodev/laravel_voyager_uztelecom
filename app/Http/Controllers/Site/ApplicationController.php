@@ -64,12 +64,12 @@ class ApplicationController extends Controller
     {
         $branch = Branch::where('id', $application->filial_initiator_id)->first();
         $signedDocs = $application->signedDocs()->get();
-
+        $access = SignedDocs::where('role_id', auth()->user()->role_id)->where('user_id', !null)->where('application_id', $application->id)->first();
         // $same_role_user_ids = User::where('role_id', auth()->user()->role_id)->get()->pluck('id')->toArray();
         // $b1 = in_array(auth()->user()->role_id, json_decode($application->roles_need_sign, true));
         // if(!$b1)
         //     return redirect()->route('eimzo.back')->with('danger', 'Permission denied!');
-        return view('site.applications.show', compact('application','branch','signedDocs'));
+        return view('site.applications.show', compact('application','branch','signedDocs','access'));
     }
 
     public function edit(Application $application)
