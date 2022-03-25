@@ -1,7 +1,7 @@
-@extends('site.layouts.wrapper')
+@extends('site.layouts.app')
 @section('center_content')
 
-   <div class="bg-blue-50 h-screen mt-24">
+   <div class="bg-blue-50 h-screen">
        <div class="max-w-4xl flex items-center flex-col mx-auto pt-2">
 
            <div class="sm:w-2/5 w-3/5">
@@ -68,7 +68,7 @@
                            </td>
                        </tr>
                            <tr>
-                               <td class="py-2">
+                               <td class="mt-3">
                                    <button type="submit" class="float-right bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
                                        Сохранить
                                    </button>
