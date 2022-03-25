@@ -34,7 +34,7 @@ class SignDocsObserver
 
         if (!array_diff($roles_need_sign, $agreedUsers->toArray())) {
             $signedDocs->application->status = Application::ACCEPTED;
-        } elseif(array_diff($roles_need_sign, $canceledUsers->toArray())) {
+        } elseif(!array_diff($roles_need_sign, $canceledUsers->toArray())) {
             $signedDocs->application->status = Application::REJECTED;
         } else
             $signedDocs->application->status = Application::IN_PROCESS;
