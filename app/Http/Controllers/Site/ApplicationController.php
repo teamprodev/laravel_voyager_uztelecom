@@ -69,6 +69,15 @@ class ApplicationController extends Controller
             ->rawColumns(['action'])
             ->make(true);
     }
+    public function SignedDocs()
+    {
+        $data = SignedDocs::query();
+        return Datatables::of($data)
+            ->addIndexColumn()
+            ->editColumn('status', '@if($status == 0) Rejected @elseif($status == 1) Accepted @endif')
+            ->editColumn('user_id', " @php echo auth()->user()->name @endphp ")
+            ->make(true);
+    }
     public function show(Application $application)
     {
         $branch = Branch::where('id', $application->filial_initiator_id)->first();
@@ -135,7 +144,7 @@ class ApplicationController extends Controller
         $countries[] = Country::get()->pluck('country_name','country_alpha3_code')->toArray();
 
         $user = auth()->user();
-        $roles = Roles::all()->except([1, 12, 7])->pluck('display_name', 'id')->toArray();
+        $roles = Roles::all()->where('is_signer',!null)->pluck('display_name', 'id')->toArray();
         return view('site.applications.create', compact('user','branch','countries', 'roles'));
     }
     public function store(ApplicationRequest $request)

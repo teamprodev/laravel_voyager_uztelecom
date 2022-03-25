@@ -2,9 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Models\Application;
 use Teamprodev\Eimzo\Http\Classes\ImzoData;
-use App\Models\SignedDocs;
+use Teamprodev\Eimzo\Models\SignedDocs;
 use App\Http\Requests\SignRequest;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -26,12 +25,10 @@ class EriSignJob implements ShouldQueue
      */
     private SignRequest $request;
     private array $signers;
-    private Application $application;
-    public function __construct(SignRequest $request, array $signers, Application $application)
+    public function __construct(SignRequest $request, array $signers)
     {
         $this->request=$request;
         $this->signers = $signers[0];
-        $this->application = $application;
     }
 
     /**
@@ -43,24 +40,25 @@ class EriSignJob implements ShouldQueue
     {
         DB::beginTransaction();
         try{
-            $data[] = new ImzoData($this->signers['name'], $this->signers['date'], $this->signers['serialNumber'], $this->signers['stir']);
-
-            $document = SignedDocs::create([
-                'pkcs' => $this->request->pkcs7,
-                'text' => $this->request->data,
-                'comment' => $this->request->comment,
-                'status' => $this->request->status,
-                'user_id' => auth()->id(),
-                'application_id' => $this->application->id,
-                'data' => json_encode($data),
-
-            ]);
+            $document = new SignedDocs();
+            $document->pkcs = $this->request->pkcs7;
+            $document->text = $this->request->data;
+            $document->comment = $this->request->comment;
+            $document->status = $this->request->status;
+            $document->user_id = $this->request->user_id;
+            $document->role_id = $this->request->role_id;
+            $document->table_name = $this->request->table_name;
+            $document->application_id = $this->request->application_id;
+            $data[] = new ImzoData($this->signers['name'], $this->signers['date'], $this->signers['serialNumber'],
+                $this->signers['stir']);
+            $document->data = json_encode($data);
+            $document->save();
         } catch (\Exception $exception){
             dd('Ex'.$exception->getMessage());
             DB::rollBack();
             throw $exception;
         }
         DB::commit();
-        return $document;
+
     }
 }

@@ -29,7 +29,7 @@ class ApplicationRequest extends FormRequest
             'separate_requirements' => 'nullable',
             'expire_warranty_date' => 'nullable',
             'planned_price' => 'nullable',
-            'more_than_limit' => 'nullable',
+            'is_more_than_limit' => 'nullable',
             'currency' => 'nullable',
             'info_business_plan' => 'nullable',
             'equal_planned_price' => 'nullable',
@@ -41,7 +41,7 @@ class ApplicationRequest extends FormRequest
             'filial_initiator_id' => 'nullable',
             'country_produced_id' => 'nullable',
             'with_nds' => 'nullable',
-            'roles_need_sign' => 'nullable'
+            'signers' => 'nullable',
         ];
     }
 }

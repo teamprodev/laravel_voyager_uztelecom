@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Application;
 use App\Models\SignedDocs;
 use Teamprodev\Eimzo\Jobs\EriJoinSignJob;
 use App\Jobs\EriSignJob;
@@ -25,7 +24,7 @@ class EimzoSignController extends Controller
         return view('Teamprodev.eimzo.sign.master', compact('signs'));
     }
 
-    public function verifyPks(SignRequest $request, Application $application)
+    public function verifyPks(SignRequest $request)
     {
 
         try {
@@ -39,7 +38,8 @@ class EimzoSignController extends Controller
                     return redirect()->back()->with('danger', 'Fix Eimzo Service!');
                 $this->dispatchNow(new EriSignJob($request, $signers, $application));
 
-            return redirect()->route('eimzo.back')->with('success', 'Signed');
+            return redirect()->back()->with('success', 'Signed');
+
         } catch (\Exception $exception) {
             dd($exception);
             return redirect()->route('eimzo.back')->with('danger', 'Something went wrong! Contact developer!');
