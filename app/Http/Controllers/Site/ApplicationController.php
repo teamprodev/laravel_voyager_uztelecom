@@ -51,6 +51,14 @@ class ApplicationController extends Controller
             ->rawColumns(['action'])
             ->make(true);
     }
+    public function SignedDocs()
+    {
+        $data = SignedDocs::query();
+        return Datatables::of($data)
+            ->addIndexColumn()
+            ->editColumn('status', '@if($status == 0) Rejected @elseif($status == 1) Accepted @endif')
+            ->make(true);
+    }
     public function show(Application $application)
     {
         $branch = Branch::where('id', $application->filial_initiator_id)->first();

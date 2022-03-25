@@ -72,6 +72,7 @@ Route::group([
                 function(){
                     Route::get('', [ApplicationController::class, 'index'])->name('index');
                     Route::get('list', [ApplicationController::class, 'getdata'])->name('list');
+                    Route::get('list/signedocs', [ApplicationController::class, 'SignedDocs'])->name('list.signedocs');
                     Route::get('{application}/show', [ApplicationController::class, 'show'])->name('show');
                     Route::get('{application}/edit', [ApplicationController::class, 'edit'])->name('edit');
                     Route::post('{application}/update', [ApplicationController::class, 'update'])->name('update');

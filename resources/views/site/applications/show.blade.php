@@ -145,6 +145,41 @@
             </div>
             </div>
         </div>
+        <table id="yajra-datatable">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Status</th>
+                <th>Role</th>
+                <th >Text</th>
+                <th >Comment</th>
+                <th>Application ID</th>
+            </tr>
+            </thead>
+        </table>
+        <script>
+  $(function () {
+
+    var table = $('#yajra-datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax:
+             "{{ route('site.applications.list.signedocs') }}",
+
+        columns: [
+            {data: 'id', name: 'id'},
+            {data: 'status', name: 'status'},
+            {data: 'role_id', name: 'role_id'},
+            {data: 'text', name: 'text'},
+            {data: 'comment', name: 'comment'},
+            {data: 'application_id', name: 'application_id'},
+        ]
+    });
+
+
+  });
+
+</script>
                 <form name="testform" action="{{route('site.applications.imzo.sign',$application->id)}}" method="POST">
                     @csrf
                     <label id="message"></label>
