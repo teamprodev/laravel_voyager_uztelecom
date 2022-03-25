@@ -16,14 +16,5 @@ class SignedDocs extends Model
     public function application(){
         return $this->belongsTo(Application::class);
     }
-    protected $fillable = [
-        'pkcs',
-        'text',
-        'comment',
-        'status',
-        'user_id',
-        'application_id',
-        'data',
-    ];
 
 }

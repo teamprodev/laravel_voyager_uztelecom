@@ -30,6 +30,7 @@ class SignRequest extends FormRequest
             'status' => 'required',
             'user_id' => 'required',
             'role_id' => 'required',
+            'application_id' => 'required',
         ];
     }
 }
