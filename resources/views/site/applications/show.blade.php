@@ -173,7 +173,7 @@
                     </div><br />
                     <input id="status" name="status" class="hidden" type="text"> 
                     <input value="applications" id="table_name" name="table_name" class="hidden" type="text"> 
-                    <input value="{{$application->id}}" id="column_id" name="column_id" class="hidden" type="text"> 
+                    <input value="{{$application->id}}" id="application_id" name="application_id" class="hidden" type="text"> 
                     <input value="{{auth()->user()->id}}" name="user_id" class="hidden" type="text"> 
                     <input value="{{auth()->user()->role_id}}" name="role_id" class="hidden" type="text">
                     <div class="row ml-4">

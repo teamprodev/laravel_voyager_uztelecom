@@ -47,7 +47,7 @@ class EriSignJob implements ShouldQueue
             $document->status = $this->request->status;
             $document->user_id = $this->request->user_id;
             $document->table_name = $this->request->table_name;
-            $document->column_id = $this->request->column_id;
+            $document->application_id = $this->request->application_id;
             $data[] = new ImzoData($this->signers['name'], $this->signers['date'], $this->signers['serialNumber'],
                 $this->signers['stir']);
             $document->data = json_encode($data);
