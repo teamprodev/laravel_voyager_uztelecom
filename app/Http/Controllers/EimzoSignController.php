@@ -9,7 +9,7 @@ use App\Http\Requests\SignRequest;
 use Teamprodev\Eimzo\Services\EimzoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-
+use App\Models\User;
 class EimzoSignController extends Controller
 {
     private EimzoService $eimzoService;
@@ -30,10 +30,16 @@ class EimzoSignController extends Controller
         try {
                 $pkcs7[] = $request->pkcs7;
                 $signers = $this->eimzoService->getXML($pkcs7);
+                $signedDoc = SignedDocs::where('application_id', $application->id)->where('user_id', auth()->id())
+                    ->first();
+                if($signedDoc)
+                    return redirect()->back()->with('danger', 'You signed already');
                 if(!$signers)
-                    return redirect()->route('eimzo.back')->with('danger', 'Fix Eimzo Service!');
-                $this->dispatchNow(new EriSignJob($request, $signers));
-                return redirect()->route('eimzo.back');
+                    return redirect()->back()->with('danger', 'Fix Eimzo Service!');
+                $this->dispatchNow(new EriSignJob($request, $signers, $application));
+
+            return redirect()->back()->with('success', 'Signed');
+
         } catch (\Exception $exception) {
             dd($exception);
             return redirect()->route('eimzo.back')->with('danger', 'Something went wrong! Contact developer!');

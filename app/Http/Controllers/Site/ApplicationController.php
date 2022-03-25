@@ -40,8 +40,26 @@ class ApplicationController extends Controller
 
     public function getdata(Request $request)
     {
-        $data = Application::query();
-        return Datatables::of($data)
+        $user = auth()->user();
+        $query = Application::query();
+
+        switch ($user->role_id) {
+            // APPLICATION CREATOR
+            case 1:
+                {
+                    $query = $query->where('user_id', auth()->id());
+                }
+                break;
+            case 5: {
+                $query = $query->where('user_id', auth()->id())->orWhere('status', Application::ACCEPTED);
+            } break;
+            default:
+                {
+                    $query = Application::all();
+                }
+                break;
+        }
+        return Datatables::of($query)
             ->addIndexColumn()
             ->addColumn('action', function($row){
                 $edit = route('site.applications.edit', $row->id);
@@ -62,14 +80,17 @@ class ApplicationController extends Controller
     }
     public function show(Application $application)
     {
+        $access = SignedDocs::where('role_id', auth()->user()->role_id)->where('user_id', !null)->where('application_id', $application->id)->first();
         $branch = Branch::where('id', $application->filial_initiator_id)->first();
         $signedDocs = $application->signedDocs()->get();
-        $access = SignedDocs::where('role_id', auth()->user()->role_id)->where('user_id', !null)->where('application_id', $application->id)->first();
-        // $same_role_user_ids = User::where('role_id', auth()->user()->role_id)->get()->pluck('id')->toArray();
-        // $b1 = in_array(auth()->user()->role_id, json_decode($application->roles_need_sign, true));
-        // if(!$b1)
-        //     return redirect()->route('eimzo.back')->with('danger', 'Permission denied!');
-        return view('site.applications.show', compact('application','branch','signedDocs','access'));
+
+        $same_role_user_ids = User::where('role_id', auth()->user()->role_id)->get()->pluck('id')->toArray();
+//        $granted[] = json_decode($application->roles_need_sign, true);
+//        $granted[] = 5;
+//        $b1 = in_array(auth()->user()->role_id, $granted);
+//        if(!$b1)
+//            return redirect()->route('eimzo.back')->with('danger', 'Permission denied!');
+        return view('site.applications.show', compact('application','branch','signedDocs', 'same_role_user_ids','access'));
     }
 
     public function edit(Application $application)
