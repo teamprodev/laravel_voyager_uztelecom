@@ -127,6 +127,7 @@ class ApplicationController extends Controller
                 dd($exception);
                 return redirect()->back()->with('danger', trans('site.application_failed'));
             }
+
     }
     public function getAll(){
         $applications = Application::all();
