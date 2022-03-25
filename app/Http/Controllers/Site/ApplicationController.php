@@ -124,7 +124,7 @@ class ApplicationController extends Controller
         $countries[] = Country::get()->pluck('country_name','country_alpha3_code')->toArray();
 
         $user = auth()->user();
-        $roles = Roles::all()->except([1, 12, 7])->pluck('display_name', 'id')->toArray();
+        $roles = Roles::all()->where('is_signer',!null)->pluck('id')->toArray();
         return view('site.applications.create', compact('user','branch','countries', 'roles'));
     }
     public function store(ApplicationRequest $request)

@@ -30,7 +30,7 @@ class SignDocsObserver
             $role_id = $doc->user->role_id;
             return $role_id;
         });
-        $roles_need_sign = json_decode($signedDocs->application->roles_need_sign, true);
+        $roles_need_sign = json_decode($signedDocs->application->signers, true);
 
         if (!array_diff($roles_need_sign, $agreedUsers->toArray())) {
             $signedDocs->application->status = Application::ACCEPTED;

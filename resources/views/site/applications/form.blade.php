@@ -113,7 +113,7 @@
             </div>
             </div>
         </div>
-    {{Aire::select($roles, 'roles_need_sign', 'Multi-Select')
+    {{Aire::select($roles, 'signers', 'Multi-Select')
                     ->multiple()
                     }}
     <div class="w-full text-right py-4 pr-10">
