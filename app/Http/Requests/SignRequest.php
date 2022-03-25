@@ -29,6 +29,7 @@ class SignRequest extends FormRequest
             'comment' => 'required',
             'status' => 'required',
             'user_id' => 'required',
+            'role_id' => 'required',
         ];
     }
 }

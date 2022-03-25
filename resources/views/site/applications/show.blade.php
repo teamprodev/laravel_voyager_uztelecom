@@ -143,25 +143,6 @@
                     }}
                 </div>
             </div>
-            <div class="flex items-baseline">
-                <div class="mr-4 pt-2 pb-2 w-50">
-                    <h6><b>Филиални танланг</b></h6>
-                    <select class="custom-select" name="filial_initiator_id" id="filial_initiator_id">
-                            <option value="{{$application->filial_initiator_id}}" selected disabled>{{$branch->name}}</option>
-                    </select>
-                </div>
-                <div class="pt-2 pb-2 w-50">
-                    <h6><b>Товар (хизмат) ишлаб чиқарилган мамлакат</b></h6>
-                    <select class="col-md-6 custom-select" name="country_produced_id" id="country_produced_id">
-                            <option value="{{$application->country_produced_id}}" selected disabled>{{$countries->name}}</option>
-                    </select>
-                </div>
-            </div>
-            @if($application->with_nds == 1)
-            {{Aire::checkbox('checkbox', 'QQS bilan')->name('with_nds')->checked()->disabled()}}
-            @else
-            {{Aire::checkbox('checkbox', 'QQS bilan emas')->disabled()}}
-            @endif
             </div>
         </div>
         @if(!$access)
@@ -183,7 +164,7 @@
                     }}
                     ID ключа <label id="keyId"></label><br />
 
-                    <button onclick="generatekey()" class="hidden btn btn-success" type="button">Подписаться</button><br />
+                    <button onclick="generatekey()" class="hidden btn btn-success" type="button">Подписать</button><br />
 
                     <div class="form-group hidden">
                         <label for="exampleFormControlTextarea3">Подписанный документ PKCS#7</label>
@@ -194,6 +175,7 @@
                     <input value="applications" id="table_name" name="table_name" class="hidden" type="text"> 
                     <input value="{{$application->id}}" id="column_id" name="column_id" class="hidden" type="text"> 
                     <input value="{{auth()->user()->id}}" name="user_id" class="hidden" type="text"> 
+                    <input value="{{auth()->user()->role_id}}" name="role_id" class="hidden" type="text">
                     <div class="row ml-4">
                         <button onclick="status1()" type="submit" class="btn btn-success col-md-2" >Accept</button>
                         <button onclick="status0()" type="submit" class="btn btn-danger col-md-2" >Reject</button>
