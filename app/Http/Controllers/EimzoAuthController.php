@@ -22,7 +22,6 @@ class EimzoAuthController extends EimzoController
             $params = $oneAuthService->makeParams($request->toArray());
             $oneAuthService->authorizeUser($params);
             AuthLogService::logAuth();
-            $t = 2 / 0;
         } catch (\Throwable $th) {
             $errorMessage = "Киришда хатолик юз берди, илтимос кейинроқ уруниб кўринг.";
             if(in_array($th->getCode(), [401])) {

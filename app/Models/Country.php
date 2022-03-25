@@ -8,5 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Country extends Model
 {
     use HasFactory;
-    protected $table = 'countries';
+    protected $primaryKey = 'country_alpha3_code';
+
+    public $incrementing = false;
+    protected $table = 'location_info';
 }

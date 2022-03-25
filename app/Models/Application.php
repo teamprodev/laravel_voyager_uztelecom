@@ -9,9 +9,16 @@ use Illuminate\Support\Facades\Auth;
 class Application extends Model
 {
     use HasFactory;
-    const NEW_APP = 0;
-    const PLANNER_AGREE = 1;
-    const CANCELED_APP = -1;
+    const NEW = 'new';
+    const IN_PROCESS = 'in_process';
+    const CANCELED = 'canceled';
+    const ACCEPTED = 'accepted';
+    const REFUSED = 'refused';
+    const AGREED = 'agreed';
+    const REJECTED = 'rejected';
+    const DISTRIBUTED = 'distributed';
+    const PERFORMED = 'performed';
+
     protected $table = "applications";
     protected $guarded = [];
     public function plan(){
@@ -73,18 +80,24 @@ class Application extends Model
         return $result;
 
     }
-    public function getStatusAttribute(){
-        switch (intval($this->attributes['status'])){
-            case 0: {
-                $status = "NEW";
-            } break;
-            case 1: {
-                $status = "STEP 2";
-            } break;
-            default: {
-                $status = "UNDEFINED";
-            } break;
-        }
-        return $status;
+//    public function getStatusAttribute(){
+//        switch (intval($this->attributes['status'])){
+//            case 0: {
+//                $status = "NEW";
+//            } break;
+//            case 1: {
+//                $status = "STEP 2";
+//            } break;
+//            default: {
+//                $status = "UNDEFINED";
+//            } break;
+//        }
+//        return $status;
+//    }
+    public function country(){
+        return $this->belongsTo(Country::class,  'country_produced_id','country_alpha3_code');
+    }
+    public function signedDocs(){
+        return $this->hasMany(SignedDocs::class);
     }
 }

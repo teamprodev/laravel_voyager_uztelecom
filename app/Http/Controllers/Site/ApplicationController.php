@@ -10,6 +10,7 @@ use App\Jobs\VoteJob;
 use App\Models\Application;
 use App\Models\Branch;
 use App\Models\Country;
+use App\Models\Roles;
 use App\Models\User;
 use App\Structures\ApplicationData;
 use Illuminate\Support\Carbon;
@@ -19,13 +20,18 @@ use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Teamprodev\Eimzo\Services\EimzoService;
 use Yajra\DataTables\DataTables;
 
 class ApplicationController extends Controller
 {
+//    private EimzoService $eimzoService;
     public function __construct(){
         $this->middleware('auth');
+//        $this->eimzoService = new EimzoService();
+
     }
     public function index(Request $request)
     {
@@ -48,9 +54,13 @@ class ApplicationController extends Controller
     public function show(Application $application)
     {
         $branch = Branch::where('id', $application->filial_initiator_id)->first();
-        $countries = Country::where('id', $application->country_produced_id)->first();
-        $access = SignedDocs::where('user_id', auth()->user()->id)->where('column_id', $application->id)->first();
-        return view('site.applications.show', compact('application','branch','countries','access'));
+        $signedDocs = $application->signedDocs()->get();
+
+        $same_role_user_ids = User::where('role_id', auth()->user()->role_id)->get()->pluck('id')->toArray();
+        $b1 = in_array(auth()->user()->role_id, $application->roles_need_sign);
+        if(!$b1)
+            return redirect()->route('eimzo.back')->with('danger', 'Permission denied!');
+        return view('site.applications.show', compact('application','branch','signedDocs', 'same_role_user_ids'));
     }
 
     public function edit(Application $application)
@@ -101,20 +111,22 @@ class ApplicationController extends Controller
     public function create()
     {
         $branch = Branch::all();
-        $countries = Country::all();
+        $countries = ['0' => 'Select country'];
+        $countries[] = Country::get()->pluck('country_name','country_alpha3_code')->toArray();
+
         $user = auth()->user();
-        return view('site.applications.create', compact('user','branch','countries'));
+        $roles = Roles::all()->except([1, 12, 7])->pluck('display_name', 'id')->toArray();
+        return view('site.applications.create', compact('user','branch','countries', 'roles'));
     }
     public function store(ApplicationRequest $request)
     {
-        $application = $request->validated();
-        if ($request['currency'] >= "USD" || $request['planned_price'] == 25000)
-            $application['more_than_limit'] = true;
-
-        $result = Application::create($application);
-        if(!$result)
-            return redirect()->back()->with('message', trans('site.application_failed'));
-        return redirect()->route('site.applications.edit', $result)->with('message', trans('site.application_success'));
+            try{
+                $this->dispatchNow(new CreateApplicationJob($request));
+                return redirect()->route('site.applications.index')->with('success', trans('site.application_success'));
+            } catch(Exception $exception){
+                dd($exception);
+                return redirect()->back()->with('danger', trans('site.application_failed'));
+            }
     }
     public function getAll(){
         $applications = Application::all();
@@ -125,7 +137,6 @@ class ApplicationController extends Controller
     }
     public function vote(Application $application, VoteApplicationRequest $request){
         try{
-            if(Gate::allow)
             $this->dispatchNow(new VoteJob($application, $request));
             return redirect()->route('site.applications.index')->with('success', 'Voted!');
         } catch (Exception $exception){

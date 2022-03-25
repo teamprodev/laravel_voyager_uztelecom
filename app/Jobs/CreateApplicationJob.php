@@ -38,30 +38,26 @@ class CreateApplicationJob implements ShouldQueue
         DB::beginTransaction();
         try {
             $application = new Application();
-            $application->initiator = $this->applicationRequest->initiator;
-
-            $application->delivery_date = $this->applicationRequest->delivery_date;
-            $application->specification = $this->applicationRequest->specification;
-            $application->comment = $this->applicationRequest->comment;
-            $application->expire_warranty_date = $this->applicationRequest->expire_warranty_date;
             $application->user_id = auth()->id();
-            $application->status = $this->applicationRequest->status;
-            $application->plan_id = $this->applicationRequest->plan_id;
-            $application->initiator = $this->applicationRequest->initiator;
+            $application->status = Application::NEW;
+            $application->name = $this->applicationRequest->name;
             $application->basis = $this->applicationRequest->basis;
-            $application->report = $this->applicationRequest->report;
-            $application->special_specification = $this->applicationRequest->special_specification;
-            $application->amount = $this->applicationRequest->amount;
+            $application->separate_requirements = $this->applicationRequest->separate_requirements;
+            $application->expire_warranty_date = $this->applicationRequest->expire_warranty_date;
+            $application->planned_price = $this->applicationRequest->planned_price;
+            $application->more_than_limit = $this->applicationRequest->more_than_limit;
             $application->currency = $this->applicationRequest->currency;
-            $application->incoterms = $this->applicationRequest->incoterms;
-            $application->business_planned = $this->applicationRequest->business_planned;
-            $application->purchase_plan = $this->applicationRequest->purchase_plan;
-            $application->file_basis = $this->applicationRequest->file_basis;
-            $application->file_tech_spec = $this->applicationRequest->file_tech_spec;
-            $application->other_files = $this->applicationRequest->other_files;
-            $application->draft = $this->applicationRequest->draft;
-            $application->status = 0;
-
+            $application->info_business_plan = $this->applicationRequest->info_business_plan;
+            $application->equal_planned_price = $this->applicationRequest->equal_planned_price;
+            $application->supplier_name = $this->applicationRequest->supplier_name;
+            $application->subject = $this->applicationRequest->subject;
+            $application->type_of_purchase_id = $this->applicationRequest->type_of_purchase_id;
+            $application->info_purchase_plan = $this->applicationRequest->info_purchase_plan;
+            $application->comment = $this->applicationRequest->comment;
+            $application->filial_initiator_id = $this->applicationRequest->filial_initiator_id;
+            $application->country_produced_id = $this->applicationRequest->country_produced_id;
+            $application->with_nds = $this->applicationRequest->with_nds;
+            $application->roles_need_sign = json_encode($this->applicationRequest->roles_need_sign);
             $application->save();
         } catch (\Exception $exception){
             DB::rollBack();
