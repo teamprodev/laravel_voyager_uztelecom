@@ -16,7 +16,7 @@
                            @method('put')
                            @csrf
                        <tr class="hover:bg-gray-200">
-                           <td class="font-medium text-xl p-2">
+                           <td class="font-medium text-lg p-2">
                                Роль:
                            </td>
                            <td class="p-2 w-full">
@@ -24,7 +24,7 @@
                            </td>
                        </tr>
                        <tr class="hover:bg-gray-200">
-                           <td class="font-medium text-xl p-2">
+                           <td class="font-medium text-lg p-2">
                                Почта:
                            </td>
                            <td class="p-2 w-full">
@@ -32,15 +32,15 @@
                            </td>
                        </tr>
                        <tr class="hover:bg-gray-200">
-                           <td class="font-medium text-xl p-2">
+                           <td class="font-medium text-lg p-2">
                                Ф.И.О:
                            </td>
-                           <td class="py-4 px-2 w-full">
+                           <td class="p-2 w-full">
                                {{$user->name}}
                            </td>
                        </tr>
                        <tr class="hover:bg-gray-200">
-                           <td class="font-medium text-xl p-2">
+                           <td class="font-medium text-lg p-2">
                                Филиал:
                            </td>
                            <td class="p-2 w-full">
@@ -53,14 +53,14 @@
                            </td>
                        </tr>
                        <tr class="hover:bg-gray-200">
-                           <td class="font-medium text-xl p-2">
+                           <td class="font-medium text-lg p-2">
                                Должность:
                            </td>
                            <td class="p-2 w-full">
                            </td>
                        </tr>
                        <tr class="hover:bg-gray-200">
-                           <td class="font-medium text-xl p-2">
+                           <td class="font-medium text-lg p-2">
                                Тел.номер:
                            </td>
                            <td class="p-2 w-full">
@@ -68,7 +68,7 @@
                            </td>
                        </tr>
                            <tr>
-                               <td class="mt-3">
+                               <td class="pt-4">
                                    <button type="submit" class="float-right bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
                                        Сохранить
                                    </button>
