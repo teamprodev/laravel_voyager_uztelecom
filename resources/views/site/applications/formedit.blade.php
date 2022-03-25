@@ -54,17 +54,6 @@
                         ->value($application->planned_price)
                         ->id('summa')
                     }}
-                    {{Aire::input()
-                        ->name('more_than_limit')
-                        ->value($application->more_than_limit)
-                        ->value('false')
-                        ->class('hidden')
-                    }}
-                    {{Aire::select(['USD' => 'USD', 'UZS' => 'UZS'], 'select', 'Валюта')
-                    ->name('currency')
-                    ->value($application->currency)
-                    ->id('valyuta')
-                    }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
                     {{Aire::input('bio','Бюджетни режалаштириш бўлими - харид қилинадиган махсулотни бизнес режада мавжудлиги бўйича маълумот')
@@ -79,12 +68,6 @@
                     {{Aire::input('bio','Эквивалентная Планируемая сумма')
                         ->name('equal_planned_price')
                         ->value($application->equal_planned_price)
-                    }}
-                </div>
-                <div class="pt-2 pb-2 w-50">
-                    {{Aire::input('bio','Наименование поставщика')
-                        ->name('supplier_name')
-                        ->value($application->supplier_name)
                     }}
                 </div>
             </div>
@@ -120,6 +103,7 @@
                     }}
                 </div>
             </div>
+            @if(auth()->user()->role_id == 5)
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
                     <h6><b>Филиални танланг</b></h6>
@@ -144,6 +128,39 @@
             {{Aire::checkbox('checkbox', 'QQS bilan')->name('with_nds')->checked()}}
             @else
             {{Aire::checkbox('checkbox', 'QQS bilan')->name('with_nds')}}
+            @endif
+            <div class="mr-4 pt-2 pb-2 w-50">
+                    {{Aire::input()
+                        ->name('more_than_limit')
+                        ->value($application->more_than_limit)
+                        ->value('false')
+                        ->class('hidden')
+                    }}
+                    {{Aire::select(['USD' => 'USD', 'UZS' => 'UZS'], 'select', 'Валюта')
+                    ->name('currency')
+                    ->value($application->currency)
+                    ->id('valyuta')
+                    }}
+            </div>
+            <div class="pt-2 pb-2 w-50">
+                    {{Aire::input('bio','Наименование поставщика')
+                        ->name('supplier_name')
+                        ->value($application->supplier_name)
+                    }}
+            </div>
+            @if($application->file_basis == 'null' ||$application->file_basis == null)
+                <h6>Основание</h6>
+                <div id="file_basis"></div>
+                @endif
+            @if($application->file_tech_spec == 'null' ||$application->file_tech_spec == null)
+                <h6>Техническое задание</h6>
+                <div id="file_tech_spec"></div>
+                @endif
+            @if($application->other_files == 'null' ||$application->other_files == null)
+                <h6>Другие документы необходимые для запуска закупочной процедуры</h6>
+                <div id="other_files"></div>
+                @endif
+
             @endif
             </div>
         </div>

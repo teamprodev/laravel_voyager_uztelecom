@@ -49,7 +49,7 @@ class ApplicationController extends Controller
     {
         $branch = Branch::where('id', $application->filial_initiator_id)->first();
         $countries = Country::where('id', $application->country_produced_id)->first();
-        $access = SignedDocs::where('user_id', auth()->user()->id)->where('column_id', $application->id)->first();
+        $access = SignedDocs::where('role_id', auth()->user()->role_id)->where('user_id', !null)->where('column_id', $application->id)->first();
         return view('site.applications.show', compact('application','branch','countries','access'));
     }
 
@@ -108,9 +108,8 @@ class ApplicationController extends Controller
     public function store(ApplicationRequest $request)
     {
         $application = $request->validated();
-        if ($request['currency'] >= "USD" || $request['planned_price'] == 25000)
-            $application['more_than_limit'] = true;
-
+        //if ($request['currency'] == "USD" || $request['planned_price'] >= 25000)
+        //    $application['more_than_limit'] = true;
         $result = Application::create($application);
         if(!$result)
             return redirect()->back()->with('message', trans('site.application_failed'));
