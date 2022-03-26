@@ -90,25 +90,9 @@
                     }}
                 </div>
             </div>
-            <div class="flex items-baseline">
-                <div class="mr-4 pt-2 pb-2 w-50">
-                    <h6><b>Филиални танланг</b></h6>
-                    <select class="custom-select" name="filial_initiator_id" id="filial_initiator_id">
-                        @foreach($branch as $branches)
-                            <option value="{{$branches->id}}">{{$branches->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                {{Aire::select($countries, 'country_produced_id', 'Select')
-                ->value('0')}}
-
-            </div>
         </div>
     </div>
-    {{Aire::select($roles, 'signers', 'Multi-Select')
-                    ->multiple()
-                    }}
+    {{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}
     <div class="w-full text-right py-4 pr-10">
         <button type="submit" class="bg-green-500 hover:bg-green-700 p-2 transition duration-300 rounded-md text-white">Сохранить и отправить</button>
     </div>

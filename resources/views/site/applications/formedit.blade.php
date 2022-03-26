@@ -70,16 +70,29 @@
                         ->value($application->equal_planned_price)
                     }}
                 </div>
+                <div class="pt-2 pb-2 w-50">
+                    <div class="mr-4 pt-2 pb-2 w-50">
+                        <h6><b>Филиални танланг</b></h6>
+                        <select class="custom-select" name="filial_initiator_id" id="filial_initiator_id">
+                            @isset($application->filial_initiator_id)
+                                <option value="{{$application->filial_initiator_id}}" selected>{{$branch->name}}</option>
+                            @endisset
+                            @foreach($branchAll as $branch)
+                                <option value="{{$branch->id}}">{{$branch->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::select([1 => 'товар', 2 => 'работа', 3 => 'услуга'], 'select', 'Предмет закупки')
+                    {{Aire::select($purchase, 'select', 'Предмет закупки')
                         ->name('subject')
                         ->value($application->subject)
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::select([1 => 'тендер', 2 => 'отбор', 3 => 'Eshop'], 'select', 'Вид закупки')
+                    {{Aire::select($subject, 'select', 'Вид закупки')
                         ->name('type_of_purchase_id')
                         ->value($application->type_of_purchase_id)
                     }}
@@ -103,81 +116,64 @@
                     }}
                 </div>
             </div>
-            <div class="grid grid-cols-2">
-                @if($application->file_basis == 'null' ||$application->file_basis == null)
-                   <div>
-                        <h6 class="mb-3">Основание</h6>
-                        <div id="file_basis"></div>
-                   </div>
-                @endif
-                @if($application->file_tech_spec == 'null' ||$application->file_tech_spec == null)
-                   <div>
-                        <h6 class="mb-3">Техническое задание</h6>
-                        <div id="file_tech_spec"></div>
-                   </div>
-                @endif
-                @if($application->other_files == 'null' ||$application->other_files == null)
-                    <div>
-                        <h6 class="mb-3">Другие документы необходимые для запуска закупочной процедуры</h6>
-                        <div id="other_files"></div>
-                    </div>
-                @endif
-            </div>
             @if(auth()->user()->role_id == 5)
-            <div class="flex items-baseline">
-                <div class="mr-4 pt-2 pb-2 w-50">
-                    <h6><b>Филиални танланг</b></h6>
-                    <select class="custom-select" name="filial_initiator_id" id="filial_initiator_id">
-                            <option value="{{$application->filial_initiator_id}}" selected>{{$branch->name}}</option>
-                            @foreach($branchAll as $branch)
-                                <option value="{{$branch->id}}">{{$branch->name}}</option>
-                            @endforeach
-                    </select>
-                </div>
-                <div class="pt-2 pb-2 w-50">
-                    <h6><b>Товар (хизмат) ишлаб чиқарилган мамлакат</b></h6>
-                    <select class="col-md-6 custom-select" name="country_produced_id" id="country_produced_id">
-                            <option value="{{$application->country_produced_id}}" selected>{{$countries->name}}</option>
+                <div class="flex items-baseline">
+                    <div class="pt-2 pb-2 w-50">
+                        <h6><b>Товар (хизмат) ишлаб чиқарилган мамлакат</b></h6>
+                        <select class="col-md-6 custom-select" name="country_produced_id" id="country_produced_id">
+                        @isset($application->country_produced_id)
+                                <option value="{{$application->country_produced_id}}" selected>{{$countries->name}}</option>
+                            @endisset
                             @foreach($countriesAll as $countries)
                                 <option value="{{$countries->id}}">{{$countries->name}}</option>
                             @endforeach
-                    </select>
+                        </select>
+                    </div>
                 </div>
-            </div>
                 @if($application->with_nds == 1)
-                {{Aire::checkbox('checkbox', 'QQS bilan')->name('with_nds')->checked()}}
+                    {{Aire::checkbox('checkbox', 'QQS bilan')->name('with_nds')->checked()}}
                 @else
-                {{Aire::checkbox('checkbox', 'QQS bilan')->name('with_nds')}}
+                    {{Aire::checkbox('checkbox', 'QQS bilan')->name('with_nds')}}
                 @endif
-            <div class="mr-4 pt-2 pb-2 w-50">
+                <div class="mr-4 pt-2 pb-2 w-50">
                     {{Aire::input()
-                        ->name('more_than_limit')
-                        ->value($application->more_than_limit)
+                        ->name('is_more_than_limit')
+                        ->value($application->is_more_than_limit)
                         ->value('false')
                         ->class('hidden')
                     }}
                     {{Aire::select(['USD' => 'USD', 'UZS' => 'UZS'], 'select', 'Валюта')
-                        ->name('currency')
-                        ->value($application->currency)
-                        ->id('valyuta')
+                    ->name('currency')
+                    ->value($application->currency)
+                    ->id('valyuta')
                     }}
-            </div>
-            <div class="pt-2 pb-2 w-50">
+                </div>
+                <div class="pt-2 pb-2 w-50">
                     {{Aire::input('bio','Наименование поставщика')
                         ->name('supplier_name')
                         ->value($application->supplier_name)
                     }}
-            </div>
+                </div>
+                @if($application->file_basis == 'null' ||$application->file_basis == null)
+                    <h6>Основание</h6>
+                    <div id="file_basis"></div>$
+                @endif
+                @if($application->file_tech_spec == 'null' ||$application->file_tech_spec == null)
+                    <h6>Техническое задание</h6>
+                    <div id="file_tech_spec"></div>
+                @endif
+                @if($application->other_files == 'null' ||$application->other_files == null)
+                    <h6>Другие документы необходимые для запуска закупочной процедуры</h6>
+                    <div id="other_files"></div>
+                @endif
+
             @endif
         </div>
     </div>
-       <div class="pr-14">
-            {{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}
-            <div class="w-full text-right py-4 pr-10">
-                <button class="bg-blue-500 hover:bg-blue-700 p-2 mr-3 transition duration-300 rounded-md text-white">Сохранить и закрыть</button>
-                <button type="submit" class="bg-green-500 hover:bg-green-700 p-2 transition duration-300 rounded-md text-white">Сохранить и отправить</button>
-            </div>
-       </div>
+</div>
+{{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}
+<div class="w-full text-right py-4 pr-10">
+    <button class="bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white">Сохранить и закрыть</button>
 </div>
 <script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.min.js"></script>
 <script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.legacy.min.js" nomodule></script>

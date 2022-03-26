@@ -10,7 +10,9 @@ use App\Jobs\VoteJob;
 use App\Models\Application;
 use App\Models\Branch;
 use App\Models\Country;
+use App\Models\Purchase;
 use App\Models\Roles;
+use App\Models\Subject;
 use App\Models\User;
 use App\Services\ApplicationService;
 use App\Structures\ApplicationData;
@@ -85,20 +87,6 @@ class ApplicationController extends Controller
             ->make(true);
     }
 
-    public function edit(Application $application)
-    {
-        $branchAll = Branch::skip(1)->take(Branch::count() - 1)->get();
-        $countriesAll = Country::skip(1)->take(Country::count() - 1)->get();
-        return view('site.applications.edit', compact('application','branchAll','countriesAll'));
-    }
-    public function update(Application $application, ApplicationRequest $request){
-        $data = $request->validated();
-        $result = $application->update($data);
-        if ($result)
-            return redirect()->route('site.applications.index')->with('success', trans('site.application_success'));
-
-        return redirect()->back()->with('danger', trans('site.application_failed'));
-    }
     public function uploadImage(Request $request, Application $application)
     {
         $file_basis = json_decode($application->file_basis);
@@ -130,13 +118,31 @@ class ApplicationController extends Controller
     }
     public function create()
     {
+        $application = new Application();
+        $application->user_id = auth()->user()->id;
+        $result = $application->save();
+        $data = Application::latest('id')->first();
+        return redirect()->route('site.applications.edit',$data->id);
+    }
+    public function edit(Application $application)
+    {
         $branch = Branch::all();
         $countries = ['0' => 'Select country'];
         $countries[] = Country::get()->pluck('country_name','country_alpha3_code')->toArray();
-
-        $user = auth()->user();
+        $branchAll = Branch::skip(1)->take(Branch::count() - 1)->get();
+        $countriesAll = Country::skip(1)->take(Country::count() - 1)->get();
+        $purchase = Purchase::all()->pluck('name','id');
+        $subject = Subject::all()->pluck('name','id');
         $roles = Roles::all()->where('is_signer',!null)->pluck('display_name', 'id')->toArray();
-        return view('site.applications.create', compact('user','branch','countries', 'roles'));
+        return view('site.applications.edit', compact('application','purchase','subject','branch','countries','roles','branchAll','countriesAll'));
+    }
+    public function update(Application $application, ApplicationRequest $request){
+        $data = $request->validated();
+        $result = $application->update($data);
+        if ($result)
+            return redirect()->route('site.applications.index')->with('success', trans('site.application_success'));
+
+        return redirect()->back()->with('danger', trans('site.application_failed'));
     }
     public function store(ApplicationRequest $request)
     {
