@@ -39,23 +39,16 @@
                                {{$user->name}}
                            </td>
                        </tr>
+                           @isset($user->department->name)
                        <tr class="hover:bg-gray-200">
                            <td class="font-medium text-lg p-2">
                                Филиал:
                            </td>
                            <td class="p-2 w-full">
-                                   @foreach($departments as $department)
-                                     {{$department->name}}
-                                   @endforeach
+                               {{$user->department->name}}
                            </td>
                        </tr>
-                       <tr class="hover:bg-gray-200">
-                           <td class="font-medium text-lg p-2">
-                               Должность:
-                           </td>
-                           <td class="p-2 w-full">
-                           </td>
-                       </tr>
+                           @endisset
                        <tr class="hover:bg-gray-200">
                            <td class="font-medium text-lg p-2">
                                Тел.номер:
