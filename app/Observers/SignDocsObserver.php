@@ -16,7 +16,7 @@ class SignDocsObserver
      */
     public function created(SignedDocs $signedDocs)
     {
-        $signedDocs->load('application');
+        $signedDocs = SignedDocs::latest('id')->first();
         $allDocs = SignedDocs::where('application_id', $signedDocs->application->id)->get();
         $allUsers = $allDocs->map(function ($doc) {
             $role_id = $doc->user->role_id;
