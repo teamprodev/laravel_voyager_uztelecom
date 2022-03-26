@@ -18,11 +18,14 @@
   ->post() }}
         @include('site.applications.form')
     {{ Aire::close() }}
+
+    <script>
+        function functionBack()
+        {
+            window.history.back();
+        }
+    </script>
+
 @endsection
 
-<script>
-    function functionBack()
-    {
-        window.history.back();
-    }
-</script>
+

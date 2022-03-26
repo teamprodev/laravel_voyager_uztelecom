@@ -44,12 +44,9 @@
                                Филиал:
                            </td>
                            <td class="p-2 w-full">
-                               <select name="fillial" class="w-10/12 focus:outline-none bg-transparent input" value="{{$user->department_id}}">
                                    @foreach($departments as $department)
-                                   <option value="{{$department->id}}" selected>{{$department->name}}</option>
+                                     {{$department->name}}
                                    @endforeach
-                               </select>
-                               <i class="fa-solid fa-pencil cursor-pointer hover:text-blue-500 float-right mt-1 change"></i>
                            </td>
                        </tr>
                        <tr class="hover:bg-gray-200">

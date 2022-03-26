@@ -3,7 +3,7 @@
 @section('center_content')
 
 
-    <div class="mt-6">
+    <div class="pt-6">
     <div class="w-full flex">
         <div class="p-6">
             <div class="flex items-baseline">
@@ -145,18 +145,20 @@
             </div>
             </div>
         </div>
-        <table id="yajra-datatable">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Status</th>
-                <th>Role</th>
-                <th >Comment</th>
-                <th >User</th>
-                <th>Application ID</th>
-            </tr>
-            </thead>
-        </table>
+        <div class="px-6">
+            <table id="yajra-datatable">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Status</th>
+                    <th>Role</th>
+                    <th >Comment</th>
+                    <th >User</th>
+                    <th>Application ID</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
         <script>
   $(function () {
 
@@ -181,41 +183,47 @@
 console.log("{{$application->id}}");
 </script>
 @if(!$access)
-                <form name="testform" action="{{route('site.applications.imzo.sign',$application->id)}}" method="POST">
-                    @csrf
-                    <label id="message"></label>
-                    <div class="form-group">
-                        <label for="select1">Выберите ключ</label>
-                        <select name="key" id="select1" onchange="cbChanged(this)"></select><br />
-                    </div>
-                    <div class="form-group hidden">
-                        <label for="exampleFormControlTextarea1">Текст для подписи</label>
-                        <textarea class="form-control" id="eri_data" name="data" rows="3"></textarea>
-                    </div>
-                    {{Aire::textArea('bio','Коментария')
-                        ->name('comment')
-                        ->rows(3)
-                        ->cols(40)
-                    }}
-                    ID ключа <label id="keyId"></label><br />
+               <div class="px-6">
+                    <form name="testform" action="{{route('site.applications.imzo.sign',$application->id)}}" method="POST">
+                        @csrf
+                        <label id="message"></label>
+                        <div class="form-group">
+                            <label for="select1">Выберите ключ</label>
+                            <select name="key" id="select1" onchange="cbChanged(this)"></select><br />
+                        </div>
+                        <div class="form-group hidden">
+                            <label for="exampleFormControlTextarea1">Текст для подписи</label>
+                            <textarea class="form-control" id="eri_data" name="data" rows="3"></textarea>
+                        </div>
+                        <div class="mb-2 text-center mr-6">
+                            ID ключа <label id="keyId"></label><br />
 
-                    <button onclick="generatekey()" class="hidden btn btn-success" type="button">Подписать</button><br />
+                            <button onclick="generatekey()" class="hidden btn btn-success" type="button">Подписать</button><br />
+                        </div>
+                        <div class="w-1/2">
+                            {{Aire::textArea('bio','Коментария')
+                            ->name('comment')
+                            ->rows(3)
+                            ->cols(40)
+                             }}
+                        </div>
 
-                    <div class="form-group hidden">
-                        <label for="exampleFormControlTextarea3">Подписанный документ PKCS#7</label>
-                        <textarea class="form-control" readonly required name="pkcs7" id="exampleFormControlTextarea3"
-                                  rows="3"></textarea>
-                    </div><br />
-                    <input id="status" name="status" class="hidden" type="text">
-                    <input value="applications" id="table_name" name="table_name" class="hidden" type="text">
-                    <input value="{{$application->id}}" id="application_id" name="application_id" class="hidden" type="text">
-                    <input value="{{auth()->user()->id}}" name="user_id" class="hidden" type="text">
-                    <input value="{{auth()->user()->role_id}}" name="role_id" class="hidden" type="text">
-                    <div class="row ml-4">
-                        <button onclick="status1()" type="submit" class="btn btn-success col-md-2" >Accept</button>
-                        <button onclick="status0()" type="submit" class="btn btn-danger col-md-2" >Reject</button>
-                    </div>
-                </form>
+                        <div class="form-group hidden">
+                            <label for="exampleFormControlTextarea3">Подписанный документ PKCS#7</label>
+                            <textarea class="form-control" readonly required name="pkcs7" id="exampleFormControlTextarea3"
+                                    rows="3"></textarea>
+                        </div><br />
+                        <input id="status" name="status" class="hidden" type="text">
+                        <input value="applications" id="table_name" name="table_name" class="hidden" type="text">
+                        <input value="{{$application->id}}" id="application_id" name="application_id" class="hidden" type="text">
+                        <input value="{{auth()->user()->id}}" name="user_id" class="hidden" type="text">
+                        <input value="{{auth()->user()->role_id}}" name="role_id" class="hidden" type="text">
+                        <div class="row ml-4 pb-4">
+                            <button onclick="status1()" type="submit" class="btn btn-success col-md-2" >Accept</button>
+                            <button onclick="status0()" type="submit" class="btn btn-danger col-md-2 mx-2   " >Reject</button>
+                        </div>
+                    </form>
+               </div>
 @endif
     </div>
     <script>
@@ -239,8 +247,8 @@ console.log("{{$application->id}}");
             window.history.back();
         }
     </script>
-
-@endsection
     <script src="{{asset("assets/js/eimzo/e-imzo.js")}}"></script>
     <script src="{{asset("assets/js/eimzo/e-imzo-client.js")}}"></script>
     <script src="{{asset("assets/js/eimzo/eimzo.js")}}"></script>
+@endsection
+

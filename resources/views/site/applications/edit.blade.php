@@ -8,11 +8,12 @@
         @csrf
         @include('site.applications.formedit')
     </form>
+
+    <script>
+        function functionBack()
+        {
+            window.history.back();
+        }
+    </script>
 @endsection
 
-<script>
-    function functionBack()
-    {
-        window.history.back();
-    }
-</script>
