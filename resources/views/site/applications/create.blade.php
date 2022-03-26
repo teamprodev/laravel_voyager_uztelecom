@@ -1,7 +1,7 @@
 @extends('site.layouts.app')
 
 @section('center_content')
-<div class="p-4">
+    <div class="p-4">
         <button class="btn btn-danger" onclick="functionBack()">Назад</button>
     </div>
     {{ Aire::open()

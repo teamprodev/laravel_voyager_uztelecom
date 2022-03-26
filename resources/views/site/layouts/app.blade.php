@@ -44,7 +44,9 @@
             @include('site.dashboard.sidebar')
         </aside>
         <div class="content-wrapper" style="min-height: 292px;">
-            @yield('center_content')
+           <div class="content">
+                @yield('center_content')
+           </div>
         </div>
     
     

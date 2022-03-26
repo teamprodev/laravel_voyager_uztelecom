@@ -1,5 +1,5 @@
 <div class="mt-6">
-<div class="w-full flex">
+    <div class="w-full flex">
         <div class="p-6">
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
@@ -103,18 +103,26 @@
                     }}
                 </div>
             </div>
-            @if($application->file_basis == 'null' ||$application->file_basis == null)
-                <h6>Основание</h6>
-                <div id="file_basis"></div>
-            @endif
-            @if($application->file_tech_spec == 'null' ||$application->file_tech_spec == null)
-                <h6>Техническое задание</h6>
-                <div id="file_tech_spec"></div>
-            @endif
-            @if($application->other_files == 'null' ||$application->other_files == null)
-                <h6>Другие документы необходимые для запуска закупочной процедуры</h6>
-                <div id="other_files"></div>
-            @endif
+            <div class="grid grid-cols-2">
+                @if($application->file_basis == 'null' ||$application->file_basis == null)
+                   <div>
+                        <h6 class="mb-3">Основание</h6>
+                        <div id="file_basis"></div>
+                   </div>
+                @endif
+                @if($application->file_tech_spec == 'null' ||$application->file_tech_spec == null)
+                   <div>
+                        <h6 class="mb-3">Техническое задание</h6>
+                        <div id="file_tech_spec"></div>
+                   </div>
+                @endif
+                @if($application->other_files == 'null' ||$application->other_files == null)
+                    <div>
+                        <h6 class="mb-3">Другие документы необходимые для запуска закупочной процедуры</h6>
+                        <div id="other_files"></div>
+                    </div>
+                @endif
+            </div>
             @if(auth()->user()->role_id == 5)
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
@@ -136,11 +144,11 @@
                     </select>
                 </div>
             </div>
-            @if($application->with_nds == 1)
-            {{Aire::checkbox('checkbox', 'QQS bilan')->name('with_nds')->checked()}}
-            @else
-            {{Aire::checkbox('checkbox', 'QQS bilan')->name('with_nds')}}
-            @endif
+                @if($application->with_nds == 1)
+                {{Aire::checkbox('checkbox', 'QQS bilan')->name('with_nds')->checked()}}
+                @else
+                {{Aire::checkbox('checkbox', 'QQS bilan')->name('with_nds')}}
+                @endif
             <div class="mr-4 pt-2 pb-2 w-50">
                     {{Aire::input()
                         ->name('more_than_limit')
@@ -149,9 +157,9 @@
                         ->class('hidden')
                     }}
                     {{Aire::select(['USD' => 'USD', 'UZS' => 'UZS'], 'select', 'Валюта')
-                    ->name('currency')
-                    ->value($application->currency)
-                    ->id('valyuta')
+                        ->name('currency')
+                        ->value($application->currency)
+                        ->id('valyuta')
                     }}
             </div>
             <div class="pt-2 pb-2 w-50">
@@ -160,17 +168,16 @@
                         ->value($application->supplier_name)
                     }}
             </div>
-
             @endif
-            </div>
         </div>
-                </div>
-</div>
-{{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}
-<div class="w-full text-right py-4 pr-10">
-    <button class="bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white">Сохранить и закрыть</button>
-    <button type="submit" class="bg-green-500 hover:bg-green-700 p-2 transition duration-300 rounded-md text-white">Сохранить и отправить</button>
-</div>
+    </div>
+       <div class="pr-14">
+            {{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}
+            <div class="w-full text-right py-4 pr-10">
+                <button class="bg-blue-500 hover:bg-blue-700 p-2 mr-3 transition duration-300 rounded-md text-white">Сохранить и закрыть</button>
+                <button type="submit" class="bg-green-500 hover:bg-green-700 p-2 transition duration-300 rounded-md text-white">Сохранить и отправить</button>
+            </div>
+       </div>
 </div>
 <script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.min.js"></script>
 <script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.legacy.min.js" nomodule></script>

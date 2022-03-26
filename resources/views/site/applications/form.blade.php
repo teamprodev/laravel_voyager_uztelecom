@@ -99,20 +99,13 @@
                         @endforeach
                     </select>
                 </div>
-{{--                <div class="pt-2 pb-2 w-50">--}}
-{{--                    <h6><b>Товар (хизмат) ишлаб чиқарилган мамлакат</b></h6>--}}
-{{--                    <select class="col-md-6 custom-select" name="country_produced_id" id="country_produced_id">--}}
-{{--                        @foreach($countries as $country)--}}
-{{--                            <option value="{{$country->id}}">{{$country->name}}</option>--}}
-{{--                        @endforeach--}}
-{{--                    </select>--}}
-{{--                </div>--}}
+
                 {{Aire::select($countries, 'country_produced_id', 'Select')
                 ->value('0')}}
 
             </div>
-            </div>
         </div>
+    </div>
     {{Aire::select($roles, 'signers', 'Multi-Select')
                     ->multiple()
                     }}

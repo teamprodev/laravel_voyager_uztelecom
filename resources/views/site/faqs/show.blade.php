@@ -1,8 +1,8 @@
-@extends('site.layouts.wrapper')
+@extends('site.layouts.app')
 
 @section('center_content')
 
-    <div class="container mx-auto">
+    <div class="container mx-auto pt-4">
         <h1 class="text-center text-3xl font-semibold">
             {{$faq->title}}
         </h1>
