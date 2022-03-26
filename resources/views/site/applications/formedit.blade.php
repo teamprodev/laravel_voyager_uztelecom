@@ -106,19 +106,19 @@
             <div class="grid grid-cols-2">
                 @if($application->file_basis == 'null' ||$application->file_basis == null)
                    <div>
-                        <h6 class="mb-3">Основание</h6>
+                        <h6 class="my-3">Основание</h6>
                         <div id="file_basis"></div>
                    </div>
                 @endif
                 @if($application->file_tech_spec == 'null' ||$application->file_tech_spec == null)
                    <div>
-                        <h6 class="mb-3">Техническое задание</h6>
+                        <h6 class="my-3">Техническое задание</h6>
                         <div id="file_tech_spec"></div>
                    </div>
                 @endif
                 @if($application->other_files == 'null' ||$application->other_files == null)
                     <div>
-                        <h6 class="mb-3">Другие документы необходимые для запуска закупочной процедуры</h6>
+                        <h6 class="my-3">Другие документы необходимые для запуска закупочной процедуры</h6>
                         <div id="other_files"></div>
                     </div>
                 @endif
