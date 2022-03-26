@@ -239,8 +239,8 @@ console.log("{{$application->id}}");
             window.history.back();
         }
     </script>
-
-@endsection
     <script src="{{asset("assets/js/eimzo/e-imzo.js")}}"></script>
     <script src="{{asset("assets/js/eimzo/e-imzo-client.js")}}"></script>
     <script src="{{asset("assets/js/eimzo/eimzo.js")}}"></script>
+@endsection
+
