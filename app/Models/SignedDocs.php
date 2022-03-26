@@ -10,6 +10,8 @@ class SignedDocs extends Model
     use HasFactory;
     protected $with = 'application';
     public $timestamps = false;
+    protected $table = "signed_docs";
+
     public function user(){
         return $this->belongsTo(User::class);
     }

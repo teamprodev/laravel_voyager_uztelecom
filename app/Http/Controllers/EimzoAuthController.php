@@ -32,6 +32,6 @@ class EimzoAuthController extends EimzoController
             return redirect()->back()->with('danger', 'Something went wrong!');
         }
 
-        return redirect()->route('eimzo.back');
+        return redirect()->route('site.applications.index');
     }
 }

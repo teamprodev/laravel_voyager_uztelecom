@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Models\Application;
 use App\Models\SignedDocs;
 use App\Models\User;
+use Illuminate\Support\Facades\Artisan;
 
 class SignDocsObserver
 {
@@ -38,7 +39,7 @@ class SignDocsObserver
             $signedDocs->application->status = Application::REJECTED;
         } else
             $signedDocs->application->status = Application::IN_PROCESS;
-        $signedDocs->application->save();
+        return $signedDocs->application->save();
     }
 
     /**

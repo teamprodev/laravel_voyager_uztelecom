@@ -118,7 +118,7 @@ Route::group([
 
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 Route::get('/test/{id}', [App\Http\Controllers\Controller::class, 'test']);
 
 Route::get('/layout', function () {
@@ -151,6 +151,5 @@ Route::get('redirect', function (){
 })->name('eimzo.auth.back');
 Route::get('eimzo/back',  function(){
     return redirect()->route('site.applications.index');
-}
-)->name('eimzo.back');
+})->name('eimzo.back');
 Route::get('eimzo/login', [EimzoAuthController::class, 'login'])->name('eimzo.login.index');

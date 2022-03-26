@@ -41,9 +41,9 @@ class Sardor extends Command
      *
      * @return int
      */
-    public function handle(Application $application)
+    public function handle(SignedDocs $signedDocs)
     {
-        $service = new ApplicationService();
-        $service->show($application);
+        $service = new SignDocsObserver();
+        $service->created($signedDocs);
     }
 }
