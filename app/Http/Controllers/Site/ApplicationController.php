@@ -69,15 +69,6 @@ class ApplicationController extends Controller
             ->rawColumns(['action'])
             ->make(true);
     }
-    public function SignedDocs()
-    {
-        $data = SignedDocs::query();
-        return Datatables::of($data)
-            ->addIndexColumn()
-            ->editColumn('status', '@if($status == 0) Rejected @elseif($status == 1) Accepted @endif')
-            ->editColumn('user_id', " @php echo auth()->user()->name @endphp ")
-            ->make(true);
-    }
     public function show(Application $application)
     {
         $access = SignedDocs::where('role_id', auth()->user()->role_id)->where('user_id', !null)->where('application_id', $application->id)->first();
@@ -85,12 +76,22 @@ class ApplicationController extends Controller
         $signedDocs = $application->signedDocs()->get();
 
         $same_role_user_ids = User::where('role_id', auth()->user()->role_id)->get()->pluck('id')->toArray();
+        Cache::put('application_id',$application->id);
 //        $granted[] = json_decode($application->roles_need_sign, true);
 //        $granted[] = 5;
 //        $b1 = in_array(auth()->user()->role_id, $granted);
 //        if(!$b1)
 //            return redirect()->route('eimzo.back')->with('danger', 'Permission denied!');
         return view('site.applications.show', compact('application','branch','signedDocs', 'same_role_user_ids','access'));
+    }
+    public function SignedDocs()
+    {
+        $data = SignedDocs::where('application_id',Cache::get('application_id'))->get();
+        return Datatables::of($data)
+            ->addIndexColumn()
+            ->editColumn('status', '@if($status == 0) Rejected @elseif($status == 1) Accepted @endif')
+            ->editColumn('user_id', " @php echo auth()->user()->name @endphp ")
+            ->make(true);
     }
 
     public function edit(Application $application)

@@ -178,7 +178,7 @@
 
 
   });
-
+console.log("{{$application->id}}");
 </script>
 @if(!$access)
                 <form name="testform" action="{{route('site.applications.imzo.sign',$application->id)}}" method="POST">
@@ -206,10 +206,10 @@
                         <textarea class="form-control" readonly required name="pkcs7" id="exampleFormControlTextarea3"
                                   rows="3"></textarea>
                     </div><br />
-                    <input id="status" name="status" class="hidden" type="text"> 
-                    <input value="applications" id="table_name" name="table_name" class="hidden" type="text"> 
-                    <input value="{{$application->id}}" id="application_id" name="application_id" class="hidden" type="text"> 
-                    <input value="{{auth()->user()->id}}" name="user_id" class="hidden" type="text"> 
+                    <input id="status" name="status" class="hidden" type="text">
+                    <input value="applications" id="table_name" name="table_name" class="hidden" type="text">
+                    <input value="{{$application->id}}" id="application_id" name="application_id" class="hidden" type="text">
+                    <input value="{{auth()->user()->id}}" name="user_id" class="hidden" type="text">
                     <input value="{{auth()->user()->role_id}}" name="role_id" class="hidden" type="text">
                     <div class="row ml-4">
                         <button onclick="status1()" type="submit" class="btn btn-success col-md-2" >Accept</button>
@@ -229,11 +229,11 @@
         function status1()
         {
             document.getElementById('status').value = 1;
-        }  
+        }
         function status0()
         {
             document.getElementById('status').value = 0;
-        }  
+        }
         function functionBack()
         {
             window.history.back();
