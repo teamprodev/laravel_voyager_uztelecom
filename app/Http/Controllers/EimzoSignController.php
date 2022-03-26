@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Application;
 use App\Models\SignedDocs;
 use Teamprodev\Eimzo\Jobs\EriJoinSignJob;
 use App\Jobs\EriSignJob;
@@ -30,13 +31,9 @@ class EimzoSignController extends Controller
         try {
                 $pkcs7[] = $request->pkcs7;
                 $signers = $this->eimzoService->getXML($pkcs7);
-                $signedDoc = SignedDocs::where('application_id', $application->id)->where('user_id', auth()->id())
-                    ->first();
-                if($signedDoc)
-                    return redirect()->back()->with('danger', 'You signed already');
                 if(!$signers)
                     return redirect()->back()->with('danger', 'Fix Eimzo Service!');
-                $this->dispatchNow(new EriSignJob($request, $signers, $application));
+                $this->dispatchNow(new EriSignJob($request, $signers));
 
             return redirect()->back()->with('success', 'Signed');
 
