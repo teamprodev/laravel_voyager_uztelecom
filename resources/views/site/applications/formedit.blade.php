@@ -116,30 +116,41 @@
                     }}
                 </div>
             </div>
-                </div>
+            <div class="w-full">
+                @if(!isset($data['signers']))
+                {{Aire::select($roles, 'signers', 'Multi-Select')
+                                    ->multiple()
+                                    }}
+                @endif
+            </div>
         </div>
     </div>
-@if(!isset($data['signers']))
-{{Aire::select($roles, 'signers', 'Multi-Select')
-                    ->multiple()
-                    }}
-@endif
-@if($application->file_basis == 'null' ||$application->file_basis == null)
-    <h6>Основание</h6>
-    <div id="file_basis"></div>$
-@endif
-@if($application->file_tech_spec == 'null' ||$application->file_tech_spec == null)
-    <h6>Техническое задание</h6>
-    <div id="file_tech_spec"></div>
-@endif
-@if($application->other_files == 'null' ||$application->other_files == null)
-    <h6>Другие документы необходимые для запуска закупочной процедуры</h6>
-    <div id="other_files"></div>
-@endif
-{{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}
-<div class="w-full text-right py-4 pr-10">
-    <button class="bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white">Сохранить и закрыть</button>
 </div>
+   
+   <div class="grid grid-cols-2 px-6">
+        @if($application->file_basis == 'null' ||$application->file_basis == null)
+            <div>
+                <h6 class="my-3">Основание</h6>
+                <div id="file_basis"></div>
+            </div>
+        @endif
+        @if($application->file_tech_spec == 'null' ||$application->file_tech_spec == null)
+           <div>
+                <h6 class="my-3">Техническое задание</h6>
+                <div id="file_tech_spec"></div>
+           </div>
+        @endif
+        @if($application->other_files == 'null' ||$application->other_files == null)
+            <div>
+                <h6 class="my-3">Другие документы необходимые для запуска закупочной процедуры</h6>
+                <div id="other_files"></div>
+            </div>
+        @endif
+   </div>
+    {{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}
+    <div class="w-full text-center pb-8 ">
+        <button class="bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white">Сохранить и закрыть</button>
+    </div>
 <script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.min.js"></script>
 <script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.legacy.min.js" nomodule></script>
 <script src="https://releases.transloadit.com/uppy/locales/v2.0.5/ru_RU.min.js"></script>
