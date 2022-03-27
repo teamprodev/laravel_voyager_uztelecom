@@ -19,7 +19,7 @@
                         ->rows(3)
                         ->cols(40)
                     }}
-                    {{Aire::textArea('bio','Махсулот келишининг муддати')
+                    {{Aire::dateTimeLocal('bio','Махсулот келишининг муддати')
                         ->name('delivery_date')
                         ->value($application->delivery_date)
                     }}
@@ -41,7 +41,7 @@
                         ->rows(3)
                         ->cols(40)
                     }}
-                    {{Aire::textArea('bio','Махсулот сифати учун кафолат муддати (иш, хизмат)')
+                    {{Aire::dateTimeLocal('bio','Махсулот сифати учун кафолат муддати (иш, хизмат)')
                         ->name('expire_warranty_date')
                         ->value($application->expire_warranty_date)
                     }}
@@ -75,7 +75,7 @@
                         <h6><b>Филиални танланг</b></h6>
                         <select class="custom-select" name="filial_initiator_id" id="filial_initiator_id">
                             @isset($application->filial_initiator_id)
-                                <option value="{{$application->filial_initiator_id}}" selected>{{$branch->name}}</option>
+                                <option value="{{$application->filial_initiator_id}}" selected>{{$application->filial_initiator_id}}</option>
                             @endisset
                             @foreach($branchAll as $branch)
                                 <option value="{{$branch->id}}">{{$branch->name}}</option>
@@ -119,6 +119,11 @@
                 </div>
         </div>
     </div>
+@if(!isset($data['signers']))
+{{Aire::select($roles, 'signers', 'Multi-Select')
+                    ->multiple()
+                    }}
+@endif
 @if($application->file_basis == 'null' ||$application->file_basis == null)
     <h6>Основание</h6>
     <div id="file_basis"></div>$

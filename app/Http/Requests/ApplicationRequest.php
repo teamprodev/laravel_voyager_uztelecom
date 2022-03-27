@@ -24,23 +24,22 @@ class ApplicationRequest extends FormRequest
     public function rules()
     {
         return [
+            'initiator' => 'nullable',
+            'purchase_basis' => 'nullable',
+            'specification' => 'nullable',
+            'delivery_date' => 'nullable',
             'name' => 'nullable',
             'basis' => 'nullable',
             'separate_requirements' => 'nullable',
             'expire_warranty_date' => 'nullable',
             'planned_price' => 'nullable',
-            'is_more_than_limit' => 'nullable',
-            'currency' => 'nullable',
             'info_business_plan' => 'nullable',
             'equal_planned_price' => 'nullable',
-            'supplier_name' => 'nullable',
+            'filial_initiator_id' => 'nullable',
             'subject' => 'nullable',
             'type_of_purchase_id' => 'nullable',
             'info_purchase_plan' => 'nullable',
             'comment' => 'nullable',
-            'filial_initiator_id' => 'nullable',
-            'country_produced_id' => 'nullable',
-            'with_nds' => 'nullable',
             'signers' => 'nullable',
         ];
     }

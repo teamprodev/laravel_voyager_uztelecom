@@ -109,16 +109,14 @@
             </div>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::select([1 => 'товар', 2 => 'работа', 3 => 'услуга'], 'select', 'Предмет закупки')
+                    {{Aire::select($application->subject, 'select', 'Предмет закупки')
                         ->name('subject')
-                        ->value($application->subject)
                         ->disabled()
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::select([1 => 'тендер', 2 => 'отбор', 3 => 'Eshop'], 'select', 'Вид закупки')
+                    {{Aire::select($application->type_of_purchase_id, 'select', 'Вид закупки')
                         ->name('type_of_purchase_id')
-                        ->value($application->type_of_purchase_id)
                         ->disabled()
                     }}
                 </div>

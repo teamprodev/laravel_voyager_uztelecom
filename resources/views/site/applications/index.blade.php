@@ -41,7 +41,7 @@
             {
                 "data": "",
                 render: function (data, type, row) {
-                        var details = row.amount + " " + row.currency ;
+                        var details = row.planned_price + " " + row.currency ;
                             return details;
                     }
             },
