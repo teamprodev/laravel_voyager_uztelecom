@@ -29,31 +29,34 @@ class SignDocsObserver
     public function updated(SignedDocs $signedDocs)
     {
         $allDocs = SignedDocs::where('application_id', $signedDocs->application->id)->get();
-        if(isset($allDocs->user_id))
-        {
-            $allUsers = $allDocs->map(function ($doc) {
+            $allUsers = $allDocs->where('user_id', !null)->map(function ($doc) {
                 $role_id = $doc->user->role_id;
                 return $role_id;
             });
             $agreedUsers = $allDocs->where('status', 1)->map(function ($doc) {
-                $role_id = $doc->user->role_id;
-                return $role_id;
+                if (isset($doc->user->role_id))
+                {
+                    $role_id = $doc->user->role_id;
+                    return $role_id;
+                }
             });
             $canceledUsers = $allDocs->where('status', 0)->map(function ($doc) {
-                $role_id = $doc->user->role_id;
-                return $role_id;
+                if (isset($doc->user->role_id))
+                {
+                    $role_id = $doc->user->role_id;
+                    return $role_id;
+                }
             });
             $roles_need_sign = json_decode($signedDocs->application->signers, true);
-
             if (!array_diff($roles_need_sign, $agreedUsers->toArray())) {
                 $signedDocs->application->status = Application::ACCEPTED;
             } elseif(!array_diff($roles_need_sign, $canceledUsers->toArray())) {
-                $signedDocs->application->status = Application::REJECTED;
+                $signedDocs->application->status = Application::REFUSED;
+            }else{
+                $signedDocs->application->status = Application::IN_PROCESS;
             }
-        }
 
-        $signedDocs->application->status = Application::IN_PROCESS;
-        return $signedDocs->application->save();
+        return $signedDocs->application->update();
     }
 
     /**

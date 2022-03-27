@@ -117,7 +117,7 @@
                 </div>
             </div>
             <div class="w-full">
-                @if(!isset($data['signers']))
+                @if($application->signers == null)
                 {{Aire::select($roles, 'signers', 'Multi-Select')
                                     ->multiple()
                                     }}
@@ -126,7 +126,7 @@
         </div>
     </div>
 </div>
-   
+
    <div class="grid grid-cols-2 px-6">
         @if($application->file_basis == 'null' ||$application->file_basis == null)
             <div>
