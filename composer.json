@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
         "mcamara/laravel-localization": "^1.7",
+        "pusher/pusher-php-server": "^7.0",
         "spatie/laravel-permission": "^5.5",
         "tcg/voyager": "^1.5",
         "teamprodev/laravel_dst_eimzo": "^1.1",

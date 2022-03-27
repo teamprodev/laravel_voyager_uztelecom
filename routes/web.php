@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EimzoAuthController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Site\ApplicationController;
 use App\Http\Controllers\Site\DashboardController;
 use App\Http\Controllers\Site\ProfileController;
@@ -36,7 +37,8 @@ Route::group([
 });
 Route::get('admin/login', [LoginController::class, 'login'])->name('voyager.login');
 Route::post('admin/login', [LoginController::class, 'postLogin'])->name('voyager.login');
-
+Route::get('notify',[NotificationController::class, 'notify']);
+Route::view('/notification', 'notification');
 Auth::routes();
 
 Route::post('eimzo/login', [EimzoAuthController::class, 'auth'])->name('eri.login');
@@ -153,3 +155,7 @@ Route::get('eimzo/back',  function(){
     return redirect()->route('site.applications.index');
 })->name('eimzo.back');
 Route::get('eimzo/login', [EimzoAuthController::class, 'login'])->name('eimzo.login.index');
+
+
+Route::get('notify',[NotificationController::class, 'notify']);
+Route::view('/notification', 'notification');

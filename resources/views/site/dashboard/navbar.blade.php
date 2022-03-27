@@ -32,6 +32,23 @@
             <span class="badge badge-warning navbar-badge">15</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+
+            <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+            <script>
+
+                var pusher = new Pusher('{{env("MIX_PUSHER_APP_KEY")}}', {
+                    cluster: '{{env("PUSHER_APP_CLUSTER")}}',
+                    encrypted: true
+                });
+
+
+                var channel = pusher.subscribe('notification-send');
+                console.log(pusher, channel)
+                channel.bind('App\\Events\\Notify', function(data) {
+                    alert(data.message);
+                });
+            </script>
+
             <span class="dropdown-header">15 Notifications</span>
             <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item">
