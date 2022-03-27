@@ -43,23 +43,19 @@ class ApplicationController extends Controller
 
     public function getdata(Request $request)
     {
-        $user = auth()->user();
-        $query = Application::query();
+        $query = Application::all();
 
-        switch ($user->role_id) {
+        switch (auth()->user()->role_id)
+        {
             // APPLICATION CREATOR
             case 1:
-                {
                     $query = $query->where('user_id', auth()->id());
-                }
                 break;
-            case 5: {
+            case 5:
                 $query = $query->where('user_id', auth()->id())->orWhere('status', Application::ACCEPTED);
-            } break;
+                break;
             default:
-                {
-                    $query = Application::all();
-                }
+                $query = Application::all();
                 break;
         }
         return Datatables::of($query)
@@ -81,8 +77,8 @@ class ApplicationController extends Controller
         $data = SignedDocs::where('application_id',Cache::get('application_id'))->get();
         return Datatables::of($data)
             ->addIndexColumn()
-            ->editColumn('status', '@if($status == 0) Rejected @elseif($status == 1) Accepted @endif')
-            ->editColumn('user_id', " @php echo auth()->user()->name @endphp ")
+            ->editColumn('status', '@if($status == 0) Rejected @elseif($status == 1) Accepted @elseif($status == null)  @endif')
+            ->editColumn('user_id', " @php @isset($data->user_id)echo $data->user->name @endisset @endphp ")
             ->make(true);
     }
 
@@ -130,10 +126,10 @@ class ApplicationController extends Controller
     public function update(Application $application, ApplicationRequest $request){
         $data = $request->validated();
         $roles = Roles::all()->where('is_signer',!null)->pluck('id')->toArray();
-        $result = $application->update($data);
-//        if (isset($data['signers']))
-//        {
+        if (isset($data['signers']))
+        {
             $array = array_merge($roles,$data['signers']);
+            $data['signers'] = json_encode($array);
             for($i = 0; $i < count($array);$i++)
             {
                 $docs = new SignedDocs();
@@ -142,9 +138,9 @@ class ApplicationController extends Controller
                 $docs->table_name = "applications";
                 $docs->save();
             }
-            $data['signers'] = json_encode($array);
-//        }
+        }
 
+        $result = $application->update($data);
         if ($result)
             return redirect()->route('site.applications.index')->with('success', trans('site.application_success'));
 
