@@ -9,6 +9,10 @@ use App\Models\Branch;
 use App\Models\SignedDocs;
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
+use App\Models\Country;
+use App\Models\Purchase;
+use App\Models\Roles;
+use App\Models\Subject;
 
 class ApplicationService
 {
@@ -30,5 +34,17 @@ class ApplicationService
         return view('site.applications.show', compact('application','branch','signedDocs', 'same_role_user_ids','access'));
 
     }
+    public function edit($application)
+    {
+        $branch = Branch::all();
+        $countries = ['0' => 'Select country'];
+        $countries[] = Country::get()->pluck('country_name','country_alpha3_code')->toArray();
+        $branchAll = Branch::skip(1)->take(Branch::count() - 1)->get();
+        $countriesAll = Country::skip(1)->take(Country::count() - 1)->get();
+        $purchase = Purchase::all()->pluck('name','id');
+        $subject = Subject::all()->pluck('name','id');
+        $roles = Roles::all()->where('is_signer',!null)->pluck('display_name', 'id')->toArray();
+        return view('site.applications.edit', compact('application','purchase','subject','branch','countries','roles','branchAll','countriesAll'));
 
+    }
 }

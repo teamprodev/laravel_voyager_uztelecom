@@ -74,8 +74,7 @@ class ApplicationController extends Controller
     }
     public function show(Application $application)
     {
-        $service = new ApplicationService();
-        return $service->show($application);
+        return ApplicationService::show($application);
     }
     public function SignedDocs()
     {
@@ -126,15 +125,7 @@ class ApplicationController extends Controller
     }
     public function edit(Application $application)
     {
-        $branch = Branch::all();
-        $countries = ['0' => 'Select country'];
-        $countries[] = Country::get()->pluck('country_name','country_alpha3_code')->toArray();
-        $branchAll = Branch::skip(1)->take(Branch::count() - 1)->get();
-        $countriesAll = Country::skip(1)->take(Country::count() - 1)->get();
-        $purchase = Purchase::all()->pluck('name','id');
-        $subject = Subject::all()->pluck('name','id');
-        $roles = Roles::all()->where('is_signer',!null)->pluck('display_name', 'id')->toArray();
-        return view('site.applications.edit', compact('application','purchase','subject','branch','countries','roles','branchAll','countriesAll'));
+        return ApplicationService::edit($application);
     }
     public function update(Application $application, ApplicationRequest $request){
         $data = $request->validated();
