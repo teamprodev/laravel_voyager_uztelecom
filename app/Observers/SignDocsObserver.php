@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Application;
+use App\Models\Roles;
 use App\Models\SignedDocs;
 use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
@@ -47,11 +48,15 @@ class SignDocsObserver
                     return $role_id;
                 }
             });
-            $roles_need_sign = json_decode($signedDocs->application->signers, true);
-            if (!array_diff($roles_need_sign, $agreedUsers->toArray())) {
+        $roles_need_sign = json_decode($signedDocs->application->signers, true);
+        if (!array_diff($roles_need_sign, $agreedUsers->toArray(), Roles::where('id',7)->pluck('id')->toArray())) {
                 $signedDocs->application->status = Application::ACCEPTED;
             } elseif(!array_diff($roles_need_sign, $canceledUsers->toArray())) {
                 $signedDocs->application->status = Application::REFUSED;
+            }elseif(!array_diff(Roles::where('id',7)->pluck('id')->toArray(), $agreedUsers->toArray())){
+            $signedDocs->application->status = Application::AGREED;
+            }elseif(!array_diff(Roles::where('id',7)->pluck('id')->toArray(), $canceledUsers->toArray())){
+            $signedDocs->application->status = Application::REJECTED;
             }else{
                 $signedDocs->application->status = Application::IN_PROCESS;
             }

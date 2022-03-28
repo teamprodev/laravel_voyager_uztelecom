@@ -41,6 +41,7 @@ class ApplicationRequest extends FormRequest
             'info_purchase_plan' => 'nullable',
             'comment' => 'nullable',
             'signers' => 'nullable',
+            'performer_user_id' => 'nullable',
         ];
     }
 }

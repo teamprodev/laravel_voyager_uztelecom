@@ -87,7 +87,7 @@ class ApplicationController extends Controller
     }
     public function SignedDocs()
     {
-        $data = SignedDocs::where('application_id',Cache::get('application_id'))->where('user_id', !null)->get();
+        $data = SignedDocs::where('application_id',Cache::get('application_id'))->where('user_id', '!=',null)->get();
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('status', '@if($status == 0) Rejected @elseif($status == 1) Accepted @elseif($status == null)  @endif')
@@ -137,6 +137,11 @@ class ApplicationController extends Controller
     }
     public function update(Application $application, ApplicationRequest $request){
         $data = $request->validated();
+        if (isset($data['performer_user_id']))
+        {
+            $data['performer_head_of_dep_user_id'] = auth()->user()->id;
+        }
+
         if (isset($data['signers'])) {
             $this->service->sendNotifications($data['signers'], $application);
         }
@@ -187,6 +192,12 @@ class ApplicationController extends Controller
             return redirect()->route('site.applications.index')->with('danger', 'Something went wrong!');
 
         }
+    }
+    public function ajax(Request $request)
+    {
+        $application = Application::where('id', $request->application_id)->first();
+        $application->status = $request->status;
+        $application->save();
     }
 
 }

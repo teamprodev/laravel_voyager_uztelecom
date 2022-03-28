@@ -46,6 +46,7 @@ class ApplicationService
             'purchase' => Purchase::all()->pluck('name','id'),
             'subject' => Subject::all()->pluck('name','id'),
             'branch' => Branch::all(),
+            'users' => User::where('role_id', 5)->get(),
             'countries' => $countries,
             'roles' => Roles::all()->where('is_signer',!null)->pluck('display_name', 'id')->toArray(),
             'branchAll' => Branch::skip(1)->take(Branch::count() - 1)->get(),

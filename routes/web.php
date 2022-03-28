@@ -45,39 +45,56 @@ Route::post('eimzo/login', [EimzoAuthController::class, 'auth'])->name('eri.logi
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => 'auth'
-], function () {
-    Route::group([
-        'as' => 'site.', 'prefix' => 'site',
-        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
-    ],
-        function () {
-            Route::group(['as' => 'profile.', 'prefix' => 'profile'], function () {
-                Route::get('', [ProfileController::class, 'index'])->name('index');
-                Route::put('update', [ProfileController::class, 'update'])->name('update');
-            });
-            Route::group(['as' => 'applications.', 'prefix' => 'applications'], function () {
-                Route::get('', [ApplicationController::class, 'index'])->name('index');
-                Route::get('list', [ApplicationController::class, 'getdata'])->name('list');
-                Route::get('list/signedocs', [ApplicationController::class, 'SignedDocs'])->name('list.signedocs');
-                Route::get('{application}/show/{view?}', [ApplicationController::class, 'show'])->name('show');
-                Route::get('{application}/edit', [ApplicationController::class, 'edit'])->name('edit');
-                Route::post('{application}/update', [ApplicationController::class, 'update'])->name('update');
-                Route::get('create', [ApplicationController::class, 'create'])->name('create');
-                Route::post('store', [ApplicationController::class, 'store'])->name('store');
-                Route::put('{application}/vote', [ApplicationController::class, 'vote'])->name('vote');
+], function()
+{
+    Route::group(
+        [
+            'as' => 'site.',
+            'prefix' => 'site',
+            'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+
+        ],
+
+        function(){
+            Route::group(
+                [
+                    'as' => 'profile.',
+                    'prefix' => 'profile',
+                ],
+                function(){
+                    Route::get('', [ProfileController::class, 'index'])->name('index');
+                    Route::put('update', [ProfileController::class, 'update'])->name('update');
+                });
+            Route::group(
+                [
+                    'as' => 'applications.',
+                    'prefix' => 'applications',
+                ],
+                function(){
+                    Route::get('', [ApplicationController::class, 'index'])->name('index');
+                    Route::get('list', [ApplicationController::class, 'getdata'])->name('list');
+                    Route::get('list/signedocs', [ApplicationController::class, 'SignedDocs'])->name('list.signedocs');
+                    Route::get('{application}/show', [ApplicationController::class, 'show'])->name('show');
+                    Route::get('{application}/edit', [ApplicationController::class, 'edit'])->name('edit');
+                    Route::post('{application}/update', [ApplicationController::class, 'update'])->name('update');
+                    Route::get('create', [ApplicationController::class, 'create'])->name('create');
+                    Route::post('store', [ApplicationController::class, 'store'])->name('store');
+                    Route::post('ajax', [ApplicationController::class, 'ajax'])->name('ajax');
+                    Route::put('{application}/vote', [ApplicationController::class, 'vote'])->name('vote');
 //                    Route::post('cancel', [ApplicationController::class, 'cancel'])->name('cancel');
 
-                Route::get('getAll', [ApplicationController::class, 'getAll'])->name('getAll');
-                Route::post('applications/{application}/eimzo/sign', [\App\Http\Controllers\ImzoController::class, 'verifyPks'])
-                    ->name('imzo.sign');
-            });
+                    Route::get('getAll', [ApplicationController::class, 'getAll'])->name('getAll');
+                    Route::post('applications/{application}/eimzo/sign', [\App\Http\Controllers\ImzoController::class,
+                        'verifyPks'])
+                        ->name('imzo.sign');
+                });
 
             Route::group(
                 [
                     'as' => 'faqs.',
                     'prefix' => 'faqs',
                 ],
-                function () {
+                function(){
                     Route::get('', [FaqsController::class, 'index'])->name('index');
 
                     Route::get('{faq}/show', [FaqsController::class, 'show'])->name('show');
@@ -94,7 +111,7 @@ Route::group([
                     'as' => 'dashboard.',
                     'prefix' => 'dashboard'
                 ],
-                function () {
+                function(){
                     Route::get('index', [DashboardController::class, 'index'])->name('index');
 
                 });
@@ -131,10 +148,10 @@ Route::get('getRoles', [ApplicationController::class, '']);
 Route::get('sign/index', function () {
     return redirect()->route('site.applications.index');
 })->name('sign.index');
-Route::get('redirect', function () {
+Route::get('redirect', function (){
     return redirect()->route('site.applications.index');
 })->name('eimzo.auth.back');
-Route::get('eimzo/back', function () {
+Route::get('eimzo/back',  function(){
     return redirect()->route('site.applications.index');
 })->name('eimzo.back');
 Route::get('eimzo/login', [EimzoAuthController::class, 'login'])->name('eimzo.login.index');

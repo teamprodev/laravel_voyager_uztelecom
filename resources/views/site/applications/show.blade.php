@@ -180,7 +180,7 @@
   });
 console.log("{{$application->id}}");
 </script>
-@if(!$access)
+@if(auth()->user()->role_id != 5)
                <div class="px-6">
                     <form name="testform" action="{{route('site.applications.imzo.sign',$application->id)}}" method="POST">
                         @csrf
@@ -222,8 +222,53 @@ console.log("{{$application->id}}");
                         </div>
                     </form>
                </div>
+        @elseif($application->performer_user_id == auth()->user()->id && $application->status == 'agreed')
+            <div class="row ml-4 pb-4">
+                <button id="status1" value="performed" onclick="status11()" type="submit" class="btn btn-success col-md-2" >Performed</button>
+                <button id="status0" value="cancelled" onclick="status00()" type="submit" class="btn btn-danger col-md-2 mx-2   " >Cancelled</button>
+            </div>
 @endif
     </div>
+    <script>
+        function status11()
+        {
+            $.ajax({
+                url: "{{ route('site.applications.ajax') }}",
+                method: "POST",
+                data:{
+                    _token: '{{ csrf_token() }}',
+                    status: document.getElementById('status1').value,
+                    application_id: {{$application->id}}
+                },
+                success:function(response){
+                    console.log(response);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            })
+        }
+        function status00()
+        {
+            $.ajax({
+                url: "{{ route('site.applications.ajax') }}",
+                method: "POST",
+                data:{
+                    _token: '{{ csrf_token() }}',
+                    status: document.getElementById('status0').value,
+                    application_id: {{$application->id}}
+                },
+                success:function(response){
+                    console.log(response);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            })
+        }
+    </script>
     <script>
         function generatekey()
         {
