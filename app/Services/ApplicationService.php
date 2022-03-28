@@ -4,8 +4,10 @@
 namespace App\Services;
 
 
+use App\Events\Notify;
 use App\Jobs\CreateApplicationJob;
 use App\Models\Branch;
+use App\Models\Notification;
 use App\Models\SignedDocs;
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
@@ -36,15 +38,28 @@ class ApplicationService
     }
     public function edit($application)
     {
-        $branch = Branch::all();
         $countries = ['0' => 'Select country'];
         $countries[] = Country::get()->pluck('country_name','country_alpha3_code')->toArray();
-        $branchAll = Branch::skip(1)->take(Branch::count() - 1)->get();
-        $countriesAll = Country::skip(1)->take(Country::count() - 1)->get();
-        $purchase = Purchase::all()->pluck('name','id');
-        $subject = Subject::all()->pluck('name','id');
-        $roles = Roles::all()->where('is_signer',!null)->pluck('display_name', 'id')->toArray();
-        return view('site.applications.edit', compact('application','purchase','subject','branch','countries','roles','branchAll','countriesAll'));
 
+        return view('site.applications.edit', [
+            'application' => $application,
+            'purchase' => Purchase::all()->pluck('name','id'),
+            'subject' => Subject::all()->pluck('name','id'),
+            'branch' => Branch::all(),
+            'countries' => $countries,
+            'roles' => Roles::all()->where('is_signer',!null)->pluck('display_name', 'id')->toArray(),
+            'branchAll' => Branch::skip(1)->take(Branch::count() - 1)->get(),
+            'countriesAll' => Country::skip(1)->take(Country::count() - 1)->get()
+        ]);
+    }
+
+    public function sendNotifications($signers, $application)
+    {
+        $users = User::query()->whereIn('role_id', $signers)->get();
+        foreach ($users as $user) {
+            Notification::query()->create(['user_id' => $user->id, 'application_id' => $application->id]);
+            
+            broadcast(new Notify($application, $user->id))->toOthers();     // notification
+        }
     }
 }

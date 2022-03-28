@@ -29,44 +29,29 @@
     <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="far fa-bell"></i>
-            <span class="badge badge-warning navbar-badge">15</span>
+            <span class="badge badge-warning navbar-badge" id="notification_count">{{$notifications->count()}}</span>
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-
-            <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
-            <script>
-
-                var pusher = new Pusher('{{env("MIX_PUSHER_APP_KEY")}}', {
-                    cluster: '{{env("PUSHER_APP_CLUSTER")}}',
-                    encrypted: true
-                });
-
-
-                var channel = pusher.subscribe('notification-send');
-                console.log(pusher, channel)
-                channel.bind('App\\Events\\Notify', function(data) {
-                    alert(data.message);
-                });
-            </script>
-
-            <span class="dropdown-header">15 Notifications</span>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-                <i class="fas fa-envelope mr-2"></i> 4 new messages
-                <span class="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-                <i class="fas fa-users mr-2"></i> 8 friend requests
-                <span class="float-right text-muted text-sm">12 hours</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-                <i class="fas fa-file mr-2"></i> 3 new reports
-                <span class="float-right text-muted text-sm">2 days</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" id="notifications">
+            <span class="dropdown-header" id="notification_count_text">{{$notifications->count()}} Notifications</span>
+            @foreach($notifications as $notification)
+                <div class="dropdown-divider"></div>
+                <a href="{{route('site.applications.show', [$notification->id])}}" class="dropdown-item">
+                    <i class="fas fa-envelope mr-2"></i>
+                    <span class="float-right text-muted text-sm">3 mins</span>
+                </a>
+            @endforeach
+{{--            <div class="dropdown-divider"></div>--}}
+{{--            <a href="#" class="dropdown-item">--}}
+{{--                <i class="fas fa-users mr-2"></i> 8 friend requests--}}
+{{--                <span class="float-right text-muted text-sm">12 hours</span>--}}
+{{--            </a>--}}
+{{--            <div class="dropdown-divider"></div>--}}
+{{--            <a href="#" class="dropdown-item">--}}
+{{--                <i class="fas fa-file mr-2"></i> 3 new reports--}}
+{{--                <span class="float-right text-muted text-sm">2 days</span>--}}
+{{--            </a>--}}
+{{--            <div class="dropdown-divider"></div>--}}
+{{--            <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>--}}
         </div>
     </li>
     <li class="nav-item">
@@ -92,3 +77,30 @@
     </li>
 </ul>
 <!-- /.navbar -->
+
+
+@push('scripts')
+    <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+
+    <script>
+        let pusher = new Pusher('{{env("MIX_PUSHER_APP_KEY")}}', {
+            cluster: '{{env("PUSHER_APP_CLUSTER")}}',
+            encrypted: true
+        });
+        let channel = pusher.subscribe('notification-send' + {{auth()->id()}});
+        let count = parseInt($('#notification_count').text());
+        channel.bind('server-user', function(data) {
+            data =  JSON.parse(data.data)
+            console.log(data)
+            count += 1;
+            $('#notification_count').text(count);
+            $('#notification_count_text').text(count + ' Notifications');
+            $('#notifications').append(`
+                <div class="dropdown-divider"></div>
+                <a href="http://uztelecom.loc/ru/site/applications/${data['id']}/edit" class="dropdown-item" target="new">
+                    <i class="fas fa-envelope mr-2"></i> New message
+                    <span class="float-right text-muted text-sm"></span>
+                </a>`)
+        });
+    </script>
+@endpush
