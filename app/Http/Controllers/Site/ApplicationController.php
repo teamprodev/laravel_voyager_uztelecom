@@ -74,7 +74,7 @@ class ApplicationController extends Controller
     }
     public function SignedDocs()
     {
-        $data = SignedDocs::where('application_id',Cache::get('application_id'))->get();
+        $data = SignedDocs::where('application_id',Cache::get('application_id'))->where('user_id', !null)->get();
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('status', '@if($status == 0) Rejected @elseif($status == 1) Accepted @elseif($status == null)  @endif')
