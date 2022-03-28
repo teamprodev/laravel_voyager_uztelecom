@@ -10,6 +10,7 @@ use App\Jobs\VoteJob;
 use App\Models\Application;
 use App\Models\Branch;
 use App\Models\Country;
+use App\Models\Notification;
 use App\Models\Purchase;
 use App\Models\Roles;
 use App\Models\Subject;
@@ -74,8 +75,14 @@ class ApplicationController extends Controller
             ->rawColumns(['action'])
             ->make(true);
     }
-    public function show(Application $application)
+    public function show(Application $application, $view = false)
     {
+        if ($view == true) {
+            Notification::query()
+                ->where('application_id', $application->id)
+                ->where('user_id', auth()->id())
+                ->increment('is_read');
+        }
         return $this->service->show($application);
     }
     public function SignedDocs()
