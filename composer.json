@@ -8,6 +8,7 @@
         "php": "^7.4",
         "ext-json": "*",
         "almasaeed2010/adminlte": "~3.2",
+        "beyondcode/laravel-websockets": "^1.13",
         "fruitcake/laravel-cors": "^2.0",
         "glhd/aire": "^2.5",
         "guzzlehttp/guzzle": "^7.0.1",

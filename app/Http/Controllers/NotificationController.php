@@ -8,6 +8,6 @@ class NotificationController extends Controller
 {
     public function notify()
     {
-        broadcast(new Notify('12312321', 1))->toOthers();
+        broadcast(new Notify('12312321', '1', 13))->toOthers();
     }
 }

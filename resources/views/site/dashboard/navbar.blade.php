@@ -37,7 +37,9 @@
                 <div class="dropdown-divider"></div>
                 <a href="{{route('site.applications.show', ['application' => $notification->application->id, 'view' => 1])}}" class="dropdown-item" target="new">
                     <i class="fas fa-envelope mr-2"></i> New message {{$notification->application->id}}
-                    <span class="float-right text-muted text-sm">3 mins</span>
+                    <span class="float-right text-muted text-sm">
+                        {{now()->diffInMinutes($notification->application->created_at)}} mins
+                    </span>
                 </a>
             @endforeach
 {{--            <div class="dropdown-divider"></div>--}}
@@ -85,13 +87,17 @@
     <script>
         let pusher = new Pusher('{{env("MIX_PUSHER_APP_KEY")}}', {
             cluster: '{{env("PUSHER_APP_CLUSTER")}}',
-            encrypted: true
+            // encrypted: true,
+
+            wsHost: window.location.hostname,
+            wsPort: 6001,
+            forceTLS: false,
+            disableStats: true,
         });
         let channel = pusher.subscribe('notification-send' + {{auth()->id()}});
         let count = parseInt($('#notification_count').text());
         channel.bind('server-user', function(data) {
-            data =  JSON.parse(data.data)
-            console.log(data)
+            data = JSON.parse(data.data)
             count += 1;
             $('#notification_count').text(count);
             $('#notification_count_text').text(count + ' Notifications');
@@ -99,7 +105,7 @@
                 <div class="dropdown-divider"></div>
                 <a href="http://uztelecom.loc/ru/site/applications/${data['id']}/edit" class="dropdown-item" target="new">
                     <i class="fas fa-envelope mr-2"></i> New message
-                    <span class="float-right text-muted text-sm"></span>
+                    <span class="float-right text-muted text-sm">${data['time']} minutes</span>
                 </a>`)
         });
     </script>

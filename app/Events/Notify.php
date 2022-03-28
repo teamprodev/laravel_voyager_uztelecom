@@ -22,7 +22,7 @@ class Notify implements ShouldBroadcast
     public $data;
     private int $user_id;
 
-    public function __construct(string $data, int $user_id)
+    public function __construct($data, int $user_id)
     {
         $this->data = $data;
         $this->user_id = $user_id;

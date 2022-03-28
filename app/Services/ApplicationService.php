@@ -59,7 +59,11 @@ class ApplicationService
         foreach ($users as $user) {
             $notification = Notification::query()->firstOrCreate(['user_id' => $user->id, 'application_id' => $application->id]);
             if ($notification->wasRecentlyCreated) {
-                broadcast(new Notify($application, $user->id))->toOthers();     // notification
+                $data = [
+                    'id' => $application->id,
+                    'time' => now()->diffInMinutes($application->created_at)
+                ];
+                broadcast(new Notify(json_encode($data, $assoc = true), $user->id))->toOthers();     // notification
             }
         }
     }
