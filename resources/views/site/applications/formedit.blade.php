@@ -126,7 +126,6 @@
         </div>
     </div>
 </div>
-
    <div class="grid grid-cols-2 px-6">
         @if($application->file_basis == 'null' ||$application->file_basis == null)
             <div>

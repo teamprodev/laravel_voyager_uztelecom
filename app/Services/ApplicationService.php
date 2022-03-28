@@ -46,6 +46,7 @@ class ApplicationService
             'purchase' => Purchase::all()->pluck('name','id'),
             'subject' => Subject::all()->pluck('name','id'),
             'branch' => Branch::all(),
+            'users' => User::where('role_id', 5)->get(),
             'countries' => $countries,
             'roles' => Roles::all()->where('is_signer',!null)->pluck('display_name', 'id')->toArray(),
             'branchAll' => Branch::skip(1)->take(Branch::count() - 1)->get(),
@@ -58,7 +59,7 @@ class ApplicationService
         $users = User::query()->whereIn('role_id', $signers)->get();
         foreach ($users as $user) {
             Notification::query()->create(['user_id' => $user->id, 'application_id' => $application->id]);
-            
+
             broadcast(new Notify($application, $user->id))->toOthers();     // notification
         }
     }

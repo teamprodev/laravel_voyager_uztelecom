@@ -1,3 +1,7 @@
+<?php
+use App\Models\Notification;
+$notifications = Notification::where('user_id', auth()->user()->id)
+?>
 <!-- Navbar -->
 <ul class="navbar-nav">
     <li class="nav-item">
