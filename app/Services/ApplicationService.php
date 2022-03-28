@@ -58,9 +58,10 @@ class ApplicationService
     {
         $users = User::query()->whereIn('role_id', $signers)->get();
         foreach ($users as $user) {
-            Notification::query()->create(['user_id' => $user->id, 'application_id' => $application->id]);
-
-            broadcast(new Notify($application, $user->id))->toOthers();     // notification
+            $notification = Notification::query()->firstOrCreate(['user_id' => $user->id, 'application_id' => $application->id]);
+            if ($notification->wasRecentlyCreated) {
+                broadcast(new Notify($application, $user->id))->toOthers();     // notification
+            }
         }
     }
 }

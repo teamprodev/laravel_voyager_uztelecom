@@ -39,8 +39,8 @@ $notifications = Notification::where('user_id', auth()->user()->id)
             <span class="dropdown-header" id="notification_count_text">{{$notifications->count()}} Notifications</span>
             @foreach($notifications as $notification)
                 <div class="dropdown-divider"></div>
-                <a href="{{route('site.applications.show', [$notification->id])}}" class="dropdown-item">
-                    <i class="fas fa-envelope mr-2"></i>
+                <a href="{{route('site.applications.show', ['application' => $notification->application->id, 'view' => 1])}}" class="dropdown-item" target="new">
+                    <i class="fas fa-envelope mr-2"></i> New message {{$notification->application->id}}
                     <span class="float-right text-muted text-sm">3 mins</span>
                 </a>
             @endforeach

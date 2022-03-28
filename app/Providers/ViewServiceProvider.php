@@ -26,7 +26,10 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('site.dashboard.navbar', function ($view) {
-            $view->with('notifications', Notification::query()->where('user_id', auth()->id())->get());
+            $view->with('notifications', Notification::with('application')
+                ->where('user_id', auth()->id())
+                ->where('is_read', 0)
+                ->get());
         });
     }
 }
