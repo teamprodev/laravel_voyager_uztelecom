@@ -37,8 +37,7 @@ Route::group([
 });
 Route::get('admin/login', [LoginController::class, 'login'])->name('voyager.login');
 Route::post('admin/login', [LoginController::class, 'postLogin'])->name('voyager.login');
-Route::get('notify',[NotificationController::class, 'notify']);
-Route::view('/notification', 'notification');
+
 Auth::routes();
 
 Route::post('eimzo/login', [EimzoAuthController::class, 'auth'])->name('eri.login');
@@ -157,5 +156,3 @@ Route::get('eimzo/back',  function(){
 Route::get('eimzo/login', [EimzoAuthController::class, 'login'])->name('eimzo.login.index');
 
 
-Route::get('notify',[NotificationController::class, 'notify']);
-Route::view('/notification', 'notification');

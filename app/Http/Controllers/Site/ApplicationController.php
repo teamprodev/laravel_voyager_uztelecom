@@ -31,8 +31,14 @@ use Yajra\DataTables\DataTables;
 class ApplicationController extends Controller
 {
 //    private EimzoService $eimzoService;
-    public function __construct(){
+    /**
+     * @var ApplicationService
+     */
+    private ApplicationService $service;
+
+    public function __construct(ApplicationService $service){
         $this->middleware('auth');
+        $this->service = $service;
 //        $this->eimzoService = new EimzoService();
 
     }
@@ -70,11 +76,11 @@ class ApplicationController extends Controller
     }
     public function show(Application $application)
     {
-        return ApplicationService::show($application);
+        return $this->service->show($application);
     }
     public function SignedDocs()
     {
-        $data = SignedDocs::where('application_id',Cache::get('application_id'))->get();
+        $data = SignedDocs::where('application_id',Cache::get('application_id'))->where('user_id', !null)->get();
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('status', '@if($status == 0) Rejected @elseif($status == 1) Accepted @elseif($status == null)  @endif')
@@ -115,15 +121,18 @@ class ApplicationController extends Controller
         $application = new Application();
         $application->user_id = auth()->user()->id;
         $application->save();
-        $data = Application::latest('id')->first();
+        $data = Application::query()->latest('id')->first();
         return redirect()->route('site.applications.edit',$data->id);
     }
     public function edit(Application $application)
     {
-        return ApplicationService::edit($application);
+        return $this->service->edit($application);
     }
     public function update(Application $application, ApplicationRequest $request){
         $data = $request->validated();
+        if (isset($data['signers'])) {
+            $this->service->sendNotifications($data['signers'], $application);
+        }
         $roles = Roles::all()->where('is_signer',!null)->pluck('id')->toArray();
         if (isset($data['signers']))
         {
