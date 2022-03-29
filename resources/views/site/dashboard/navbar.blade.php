@@ -33,7 +33,9 @@ $notifications = Notification::where('user_id', auth()->user()->id)
     <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="far fa-bell"></i>
-            <span class="badge badge-warning navbar-badge" id="notification_count">{{$notifications->count()}}</span>
+            @if($notifications->count() !== 0)
+                <span class="badge badge-warning navbar-badge" id="notification_count">{{$notifications->count()}}</span>
+            @endif
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" id="notifications">
             <span class="dropdown-header" id="notification_count_text">{{$notifications->count()}} Notifications</span>
