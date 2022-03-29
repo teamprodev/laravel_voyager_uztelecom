@@ -60,9 +60,10 @@ class ApplicationService
         foreach ($users as $user) {
             $notification = Notification::query()->firstOrCreate(['user_id' => $user->id, 'application_id' => $application->id]);
             if ($notification->wasRecentlyCreated) {
+                $diff = now()->diffInMinutes($application->created_at);
                 $data = [
                     'id' => $application->id,
-                    'time' => now()->diffInMinutes($application->created_at)
+                    'time' => $diff == 0 ? 'recently' : $diff
                 ];
                 broadcast(new Notify(json_encode($data, $assoc = true), $user->id))->toOthers();     // notification
             }

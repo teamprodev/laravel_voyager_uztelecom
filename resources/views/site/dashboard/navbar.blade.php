@@ -1,6 +1,9 @@
 <?php
 use App\Models\Notification;
-$notifications = Notification::where('user_id', auth()->user()->id)
+$notifications = Notification::with('application:id,created_at')
+    ->where('user_id', auth()->id())
+    ->where('is_read', 0)
+    ->get();
 ?>
 <!-- Navbar -->
 <ul class="navbar-nav">
@@ -47,6 +50,7 @@ $notifications = Notification::where('user_id', auth()->user()->id)
                         {{now()->diffInMinutes($notification->application->created_at)}} mins
                     </span>
                 </a>
+{{--                @if($loop->index == 10) @break @endif--}}
             @endforeach
 {{--            <div class="dropdown-divider"></div>--}}
 {{--            <a href="#" class="dropdown-item">--}}
@@ -109,7 +113,7 @@ $notifications = Notification::where('user_id', auth()->user()->id)
             $('#notification_count_text').text(count + ' Notifications');
             $('#notifications').append(`
                 <div class="dropdown-divider"></div>
-                <a href="http://uztelecom.loc/ru/site/applications/${data['id']}/edit" class="dropdown-item" target="new">
+                <a href="http://uztelecom.loc/ru/site/applications/${data['id']}/show/1" class="dropdown-item" target="new">
                     <i class="fas fa-envelope mr-2"></i> New message
                     <span class="float-right text-muted text-sm">${data['time']} minutes</span>
                 </a>`)
