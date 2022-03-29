@@ -180,7 +180,7 @@
   });
 console.log("{{$application->id}}");
 </script>
-@if(auth()->user()->role_id != 5)
+@if($application->performer_user_id == null)
                <div class="px-6">
                     <form name="testform" action="{{route('site.applications.imzo.sign',$application->id)}}" method="POST">
                         @csrf
@@ -222,12 +222,13 @@ console.log("{{$application->id}}");
                         </div>
                     </form>
                </div>
-        @elseif($application->performer_user_id == auth()->user()->id && $application->status == 'agreed')
+        @elseif($application->performer_user_id == auth()->user()->id)
             <div class="row ml-4 pb-4">
                 <button id="status1" value="performed" onclick="status11()" type="submit" class="btn btn-success col-md-2" >Performed</button>
                 <button id="status0" value="cancelled" onclick="status00()" type="submit" class="btn btn-danger col-md-2 mx-2   " >Cancelled</button>
             </div>
 @endif
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </div>
     <script>
         function status11()
@@ -240,14 +241,21 @@ console.log("{{$application->id}}");
                     status: document.getElementById('status1').value,
                     application_id: {{$application->id}}
                 },
-                success:function(response){
-                    console.log(response);
+                success: function() {
+                    location.reload();
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
                     console.log(thrownError);
                 }
             })
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Performed',
+                    showConfirmButton: false,
+                    timer: 1000
+                })
         }
         function status00()
         {
@@ -259,13 +267,20 @@ console.log("{{$application->id}}");
                     status: document.getElementById('status0').value,
                     application_id: {{$application->id}}
                 },
-                success:function(response){
-                    console.log(response);
+                success: function() {
+                    location.reload();
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
                     console.log(thrownError);
                 }
+            })
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Cancelled',
+                showConfirmButton: false,
+                timer: 1000
             })
         }
     </script>
