@@ -222,7 +222,7 @@ console.log("{{$application->id}}");
                         </div>
                     </form>
                </div>
-        @elseif($application->performer_user_id == auth()->user()->id && $application->status == 'agreed')
+        @elseif($application->performer_user_id == auth()->user()->id)
             <div class="row ml-4 pb-4">
                 <button id="status1" value="performed" onclick="status11()" type="submit" class="btn btn-success col-md-2" >Performed</button>
                 <button id="status0" value="cancelled" onclick="status00()" type="submit" class="btn btn-danger col-md-2 mx-2   " >Cancelled</button>

@@ -141,6 +141,7 @@ class ApplicationController extends Controller
         {
             $mytime = Carbon::now();
             $data['performer_received_date'] = $mytime->toDateTimeString();
+            $data['status'] = 'distributed';
             $data['performer_head_of_dep_user_id'] = auth()->user()->id;
         }
 
