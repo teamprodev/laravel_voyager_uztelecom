@@ -52,7 +52,7 @@
                     {{Aire::input('bio','Харид режаси (сумма)')
                         ->name('planned_price')
                         ->value($application->planned_price)
-                        ->id('summa')
+                        ->id('planned_price')
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
@@ -65,17 +65,19 @@
             </div>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::input('bio','Эквивалентная Планируемая сумма')
-                        ->name('equal_planned_price')
-                        ->value($application->equal_planned_price)
+                    @if($application->currency == null)
+                    {{Aire::select(['USD' => 'USD', "SO'M" => "SO'M"], 'select', 'Предмет закупки')
+                        ->name('currency')
+                        ->id('currency')
                     }}
+                    @endif
                 </div>
                 <div class="pt-2 pb-2 w-50">
                     <div class="mr-4 pt-2 pb-2 w-50">
                         <h6><b>Филиални танланг</b></h6>
                         <select class="custom-select" name="filial_initiator_id" id="filial_initiator_id">
-                            @isset($application->filial_initiator_id)
-                                <option value="{{$application->filial_initiator_id}}" selected>{{$application->filial_initiator_id}}</option>
+                            @isset($application->branch_initiator_id)
+                                <option value="{{$application->branch_initiator_id}}" selected>{{$application->branch_initiator_id}}</option>
                             @endisset
                             @foreach($branchAll as $branch)
                                 <option value="{{$branch->id}}">{{$branch->name}}</option>
@@ -115,13 +117,6 @@
                         ->cols(40)
                     }}
                 </div>
-            </div>
-            <div class="w-full">
-                @if($application->signers == null)
-                {{Aire::select($roles, 'signers', 'Multi-Select')
-                                    ->multiple()
-                                    }}
-                @endif
             </div>
         </div>
     </div>
