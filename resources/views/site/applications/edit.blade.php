@@ -29,7 +29,12 @@
     'accepted' => 'You must accept the terms',
     ])
   ->post() }}
+    @if (auth()->user()->role_id == 14)
+        @include('site.applications.performer_edit')
+    @else
         @include('site.applications.formedit')
+    @endif
+
     {{ Aire::close() }}
     <script>
         function functionBack()

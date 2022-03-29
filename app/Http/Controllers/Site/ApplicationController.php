@@ -139,6 +139,8 @@ class ApplicationController extends Controller
         $data = $request->validated();
         if (isset($data['performer_user_id']))
         {
+            $mytime = Carbon::now();
+            $data['performer_received_date'] = $mytime->toDateTimeString();
             $data['performer_head_of_dep_user_id'] = auth()->user()->id;
         }
 
