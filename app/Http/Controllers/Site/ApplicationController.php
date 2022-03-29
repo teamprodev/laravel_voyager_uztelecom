@@ -59,7 +59,7 @@ class ApplicationController extends Controller
                     $query = $query->where('user_id', auth()->id());
                 break;
             case 5:
-                $query = $query->where('user_id', auth()->id())->orWhere('status', Application::ACCEPTED);
+                $query = $query->where('performer_user_id', auth()->user()->id);
                 break;
             default:
                 $query = Application::all();
