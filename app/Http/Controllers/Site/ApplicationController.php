@@ -251,6 +251,7 @@ class ApplicationController extends Controller
     {
         $application = Application::where('id', $request->application_id)->first();
         $application->status = $request->status;
+        $application->report_if_cancelled = $request->comment;
         $application->save();
     }
 

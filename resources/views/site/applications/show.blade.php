@@ -225,7 +225,29 @@ console.log("{{$application->id}}");
         @elseif($application->performer_user_id == $user->id)
             <div class="row ml-4 pb-4">
                 <button id="status1" value="performed" onclick="status11()" type="submit" class="btn btn-success col-md-2">Performed</button>
-                <button id="status0" value="cancelled" onclick="status00()" type="submit" class="btn btn-danger col-md-2 mx-2">Cancelled</button>
+                <button id="status0" value="cancelled" data-toggle="modal" data-target="#myModal" type="submit" class="btn btn-danger col-md-2 mx-2">Cancelled</button>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="mb-3">
+                                    <label for="message-text" class="col-form-label">Коментария:</label>
+                                    <textarea class="form-control" id="comment"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" onclick="status00()" class="btn btn-primary">Send message</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 @endif
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -265,6 +287,7 @@ console.log("{{$application->id}}");
                 data:{
                     _token: '{{ csrf_token() }}',
                     status: document.getElementById('status0').value,
+                    comment: document.getElementById('comment').value,
                     application_id: {{$application->id}}
                 },
                 success: function() {
