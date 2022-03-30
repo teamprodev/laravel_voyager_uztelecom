@@ -69,7 +69,7 @@ class ApplicationController extends Controller
         {
             $query = Application::query()->where('status', 'accepted')->where('signers','like',"%{$user->role_id}%");
         }else {
-            $query = $query->where('user_id',$user->id)->get();
+            $query = $query->where('user_id',$user->id);
         }
 
         $data = $query->get();
