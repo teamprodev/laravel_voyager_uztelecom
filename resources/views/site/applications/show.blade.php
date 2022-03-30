@@ -180,7 +180,7 @@
   });
 console.log("{{$application->id}}");
 </script>
-@if($application->performer_user_id == null)
+@if($application->performer_user_id == null && $application->user_id != auth()->id())
                <div class="px-6">
                     <form name="testform" action="{{route('site.applications.imzo.sign',$application->id)}}" method="POST">
                         @csrf
