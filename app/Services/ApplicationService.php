@@ -8,6 +8,7 @@ use App\Events\Notify;
 use App\Jobs\CreateApplicationJob;
 use App\Models\Branch;
 use App\Models\Notification;
+use App\Models\PermissionRole;
 use App\Models\SignedDocs;
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
@@ -48,21 +49,21 @@ class ApplicationService
             'branch' => Branch::all(),
             'users' => User::where('role_id', 5)->get(),
             'countries' => $countries,
-            'roles' => Roles::all()->where('is_signer',!null)->pluck('display_name', 'id')->toArray(),
             'branchAll' => Branch::skip(1)->take(Branch::count() - 1)->get(),
             'countriesAll' => Country::skip(1)->take(Country::count() - 1)->get()
         ]);
     }
 
-    public function sendNotifications($signers, $application)
+    public function sendNotifications($array, $application)
     {
-        $users = User::query()->whereIn('role_id', $signers)->get();
+        $users = User::query()->whereIn('role_id', $array)->get();
         foreach ($users as $user) {
             $notification = Notification::query()->firstOrCreate(['user_id' => $user->id, 'application_id' => $application->id]);
             if ($notification->wasRecentlyCreated) {
+                $diff = now()->diffInMinutes($application->created_at);
                 $data = [
                     'id' => $application->id,
-                    'time' => now()->diffInMinutes($application->created_at)
+                    'time' => $diff == 0 ? 'recently' : $diff
                 ];
                 broadcast(new Notify(json_encode($data, $assoc = true), $user->id))->toOthers();     // notification
             }

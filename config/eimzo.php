@@ -13,7 +13,7 @@ return [
 
     ],
     'user' => [
-        'default_role_id' => env('EIMZO_USER_ROLE_ID', '14')
+        'default_role_id' => env('EIMZO_USER_ROLE_ID', '3')
     ]
 
 ];

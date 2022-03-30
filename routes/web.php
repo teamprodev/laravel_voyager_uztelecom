@@ -77,6 +77,7 @@ Route::group([
                     Route::get('{application}/show', [ApplicationController::class, 'show'])->name('show');
                     Route::get('{application}/edit', [ApplicationController::class, 'edit'])->name('edit');
                     Route::post('{application}/update', [ApplicationController::class, 'update'])->name('update');
+                    Route::get('{application}/signers', [ApplicationController::class, 'signers'])->name('signers');
                     Route::get('create', [ApplicationController::class, 'create'])->name('create');
                     Route::post('store', [ApplicationController::class, 'store'])->name('store');
                     Route::post('ajax', [ApplicationController::class, 'ajax'])->name('ajax');

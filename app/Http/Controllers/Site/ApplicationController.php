@@ -11,6 +11,7 @@ use App\Models\Application;
 use App\Models\Branch;
 use App\Models\Country;
 use App\Models\Notification;
+use App\Models\PermissionRole;
 use App\Models\Purchase;
 use App\Models\Roles;
 use App\Models\Subject;
@@ -50,21 +51,41 @@ class ApplicationController extends Controller
 
     public function getdata(Request $request)
     {
-        $query = Application::all();
+        $query = Application::query();
+        $user = auth()->user();
 
-        switch (auth()->user()->role_id)
+        if ($user->can('Company_Performer') || $user->can('Branch_Performer'))
         {
-            // APPLICATION CREATOR
-            case 1:
-                    $query = $query->where('user_id', auth()->id());
-                break;
-            case 5:
-                $query = $query->where('performer_user_id', auth()->user()->id);
-                break;
-            default:
-                $query = Application::all();
-                break;
+            $query = $query->where('performer_user_id', $user->id);
         }
+        elseif($user->can('Company_Leader') || $user->can('Branch_Leader'))
+        {
+            $query = $query->where('performer_head_of_dep_user_id', $user->id);
+        }
+//        elseif ()
+//        {
+//
+//        }
+//        else {
+//            $query = Application::query()->where('user_id', $user->id);
+//        }
+
+        $data = $query->get();
+
+//
+//        switch ($user->role_id)
+//        {
+//            // APPLICATION CREATOR
+//            case 1: // Company_Performer
+//                    $query = $query->where('user_id', $user->id);
+//                break;
+//            case 5:
+//
+//                break;
+//            default:
+//                $query = Application::query()->where('user_id', $user->id)->get();
+//                break;
+//        }
         return Datatables::of($query)
             ->addIndexColumn()
             ->addColumn('action', function($row){
@@ -151,11 +172,19 @@ class ApplicationController extends Controller
             $data['status'] = 'distributed';
             $data['performer_head_of_dep_user_id'] = auth()->user()->id;
         }
-
-        if (isset($data['signers'])) {
-            $this->service->sendNotifications($data['signers'], $application);
+        if(isset($data['currency']))
+        {
+            if ( $data['currency'] == 'USD' && $data['planned_price'] >= 25000)
+            {
+                $data['is_more_than_limit'] = 1;
+            }else
+                $data['is_more_than_limit'] = 0;
         }
-        $roles = Roles::all()->where('is_signer',!null)->pluck('id')->toArray();
+        if ($application->is_more_than_limit != 1)
+            $roles = PermissionRole::where('permission_id',168)->pluck('role_id')->toArray();
+        else
+            $roles = PermissionRole::where('permission_id',165)->pluck('role_id')->toArray();
+
         if (isset($data['signers']))
         {
             $array = array_merge($roles,$data['signers']);
@@ -168,13 +197,26 @@ class ApplicationController extends Controller
                 $docs->table_name = "applications";
                 $docs->save();
             }
+            $this->service->sendNotifications($array, $application);
         }
 
         $result = $application->update($data);
+        if ($application->signers == null)
+            return redirect()->route('site.applications.signers', $application->id);
         if ($result)
             return redirect()->route('site.applications.index')->with('success', trans('site.application_success'));
 
         return redirect()->back()->with('danger', trans('site.application_failed'));
+    }
+    public function signers(Application $application)
+    {
+        $company_signer = PermissionRole::where('permission_id',166)->select('role_id')->get();
+        $branch_signer = PermissionRole::where('permission_id',167)->select('role_id')->get();
+        return view('site.applications.signers', [
+            'application' => $application,
+            'company_signers' => Roles::find($company_signer)->pluck('display_name','id'),
+            'branch_signers' => Roles::find($branch_signer)->pluck('display_name','id'),
+        ]);
     }
     public function store(ApplicationRequest $request)
     {

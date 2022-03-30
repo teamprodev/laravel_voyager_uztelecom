@@ -29,15 +29,11 @@
     'accepted' => 'You must accept the terms',
     ])
   ->post() }}
-    @can('Company_Leader')
+    @if (auth()->user()->role_id == 14)
         @include('site.applications.management_edit')
     @else
-        @can('Branch_Leader')
-            @include('site.applications.branch_management_edit')
-        @endcan
-    @else
         @include('site.applications.form_edit')
-    @endcan
+    @endif
 
     {{ Aire::close() }}
     <script>

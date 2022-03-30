@@ -36,7 +36,10 @@
 
 <body class="sidebar-mini" style="height: auto;">
     <div class="wrapper">
-    
+        @php
+            $auth_user = auth()->user();
+        @endphp
+
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             @include('site.dashboard.navbar')
         </nav>
@@ -48,10 +51,10 @@
                 @yield('center_content')
            </div>
         </div>
-    
-    
-    
-        
+
+
+
+
     </div>
 <!-- jQuery -->
 <script src="//code.jquery.com/jquery.js"></script>

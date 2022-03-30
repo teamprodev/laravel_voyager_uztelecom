@@ -35,13 +35,14 @@ class ApplicationRequest extends FormRequest
             'planned_price' => 'nullable',
             'info_business_plan' => 'nullable',
             'equal_planned_price' => 'nullable',
-            'filial_initiator_id' => 'nullable',
+            'branch_initiator_id' => 'nullable',
             'subject' => 'nullable',
             'type_of_purchase_id' => 'nullable',
             'info_purchase_plan' => 'nullable',
             'comment' => 'nullable',
             'signers' => 'nullable',
             'performer_user_id' => 'nullable',
+            'currency' => 'nullable',
         ];
     }
 }
