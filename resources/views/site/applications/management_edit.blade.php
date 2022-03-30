@@ -155,7 +155,7 @@
 </div>
 
 @if(!isset($application->performer_user_id))
-    @can('Branch_Leader')
+    @can('Company_Leader')
         <select class="col-md-6 custom-select" name="performer_user_id" id="performer_user_id">
             @php
                 $users = \App\Models\Permission::with('roles.users')->where('key', 'Company_Performer')->first()->roles->map->users; // company performer
