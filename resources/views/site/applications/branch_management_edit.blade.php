@@ -126,8 +126,11 @@
         </div>
     </div>
 </div>
-@if(auth()->user()->role_id == 14)
+@if($auth_user->role_id == 14)
     <select class="col-md-6 custom-select" name="performer_user_id" id="performer_user_id">
+        @php
+            $users = \App\Models\Permission::with('roles.users')->where('key', 'Branch_Performer')->first()->roles->map->users; // branch performer
+        @endphp
         @foreach($users as $user)
             <option value="{{$user->id}}">{{$user->name}}</option>
         @endforeach
