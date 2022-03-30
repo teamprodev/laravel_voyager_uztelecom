@@ -34,7 +34,8 @@ class ApplicationService
 //        $b1 = in_array(auth()->user()->role_id, $granted);
 //        if(!$b1)
 //            return redirect()->route('eimzo.back')->with('danger', 'Permission denied!');
-        return view('site.applications.show', compact('application','branch','signedDocs', 'same_role_user_ids','access'));
+        $user = auth()->user();
+        return view('site.applications.show', compact('user','application','branch','signedDocs', 'same_role_user_ids','access'));
 
     }
     public function edit($application)

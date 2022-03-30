@@ -62,13 +62,15 @@ class ApplicationController extends Controller
         {
             $query = $query->where('performer_head_of_dep_user_id', $user->id);
         }
-//        elseif ()
-//        {
-//
-//        }
-//        else {
-//            $query = Application::query()->where('user_id', $user->id);
-//        }
+        elseif ($user->can('Company_Signer') || $user->can('Add_Company_Signer')||$user->can('Branch_Signer') || $user->can('Add_Branch_Signer'))
+        {
+            $query = Application::query()->where('signers','like',"%{$user->role_id}%");
+        }elseif($user->role_id == 7)
+        {
+            $query = Application::query()->where('status', 'accepted')->where('signers','like',"%{$user->role_id}%");
+        }else {
+            $query = $query->where('user_id',$user->id)->get();
+        }
 
         $data = $query->get();
 

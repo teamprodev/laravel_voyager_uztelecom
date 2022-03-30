@@ -35,7 +35,6 @@
         @can('Branch_Leader')
             @include('site.applications.branch_management_edit')
         @endcan
-    @else
         @include('site.applications.form_edit')
     @endcan
 

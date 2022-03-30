@@ -180,7 +180,7 @@
   });
 console.log("{{$application->id}}");
 </script>
-@if($application->performer_user_id == null && $application->user_id != auth()->id())
+@if($user->can('Company_Signer') || $user->can('Add_Company_Signer')||$user->can('Branch_Signer') || $user->can('Add_Branch_Signer') || $user->role_id == 7)
                <div class="px-6">
                     <form name="testform" action="{{route('site.applications.imzo.sign',$application->id)}}" method="POST">
                         @csrf
@@ -222,7 +222,7 @@ console.log("{{$application->id}}");
                         </div>
                     </form>
                </div>
-        @elseif($application->performer_user_id == auth()->user()->id)
+        @elseif($application->performer_user_id == $user->id)
             <div class="row ml-4 pb-4">
                 <button id="status1" value="performed" onclick="status11()" type="submit" class="btn btn-success col-md-2">Performed</button>
                 <button id="status0" value="cancelled" onclick="status00()" type="submit" class="btn btn-danger col-md-2 mx-2">Cancelled</button>
