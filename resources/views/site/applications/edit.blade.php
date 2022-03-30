@@ -24,6 +24,19 @@
     'type_of_purchase_id' => 'required',
     'info_purchase_plan' => 'required',
     'comment' => 'required',
+    'filial_customer_id' => 'required',
+    'lot_number' => 'required',
+    'contract_number' => 'required',
+    'contract_date' => 'required',
+    'protocol_date' => 'required',
+    'contract_info' => 'required',
+    'with_nds' => 'required',
+    'country_produced_id' => 'required',
+    'contract_price' => 'required',
+    'supplier_name' => 'required',
+    'supplier_inn' => 'required',
+    'product_info' => 'required',
+    'protocol_number' => 'required',
     ])
     ->messages([
     'accepted' => 'You must accept the terms',
@@ -32,6 +45,9 @@
     @can('Company_Leader')
         @include('site.applications.management_edit')
     @else
+        @can('Company_Performer' || 'Branch_Performer')
+            @include('site.applications.performer')
+        @endcan
         @can('Branch_Leader')
             @include('site.applications.branch_management_edit')
         @endcan
