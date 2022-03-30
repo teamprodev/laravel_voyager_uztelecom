@@ -126,13 +126,6 @@
         </div>
     </div>
 </div>
-@if(auth()->user()->role_id == 14)
-    <select class="col-md-6 custom-select" name="performer_user_id" id="performer_user_id">
-        @foreach($users as $user)
-            <option value="{{$user->id}}">{{$user->name}}</option>
-        @endforeach
-    </select>
-@endif
 <div class="grid grid-cols-2 px-6">
     @if($application->file_basis == 'null' ||$application->file_basis == null)
         <div>

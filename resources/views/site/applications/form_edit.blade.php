@@ -143,7 +143,7 @@
    </div>
     {{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}
     <div class="w-full text-center pb-8 ">
-        <button class="bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white">Сохранить и закрыть</button>
+        <button class="bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white">Далее</button>
     </div>
 <script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.min.js"></script>
 <script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.legacy.min.js" nomodule></script>

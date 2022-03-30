@@ -54,8 +54,10 @@ class SignDocsObserver
             } elseif(!array_diff($roles_need_sign, $canceledUsers->toArray())) {
                 $signedDocs->application->status = Application::REFUSED;
             }elseif(!array_diff(Roles::where('id',7)->pluck('id')->toArray(), $agreedUsers->toArray())){
+            //Role general director
             $signedDocs->application->status = Application::AGREED;
             }elseif(!array_diff(Roles::where('id',7)->pluck('id')->toArray(), $canceledUsers->toArray())){
+            //Role general director
             $signedDocs->application->status = Application::REJECTED;
             }else{
                 $signedDocs->application->status = Application::IN_PROCESS;
