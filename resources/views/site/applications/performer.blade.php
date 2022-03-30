@@ -3,7 +3,7 @@
         <div class="p-6">
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::select([  ], 'select', 'Филиал заказчик по контракту')
+                    {{Aire::select($branch, 'select', 'Филиал заказчик по контракту')
                         ->name('filial_customer_id')
                         }}
                     {{Aire::input('bio','Номер лота')

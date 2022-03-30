@@ -42,6 +42,8 @@
     'accepted' => 'You must accept the terms',
     ])
   ->post() }}
+
+
     @can('Company_Leader')
         @include('site.applications.management_edit')
     @else

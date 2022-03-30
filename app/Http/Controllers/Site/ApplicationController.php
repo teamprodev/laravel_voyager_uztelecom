@@ -99,12 +99,6 @@ class ApplicationController extends Controller
             ->make(true);
     }
 
-    public function performer(Application $application)
-    {
-        $branch = Branch::all();
-        return view('site.applications.performer', compact('application','branch'));
-    }
-
     public function show(Application $application, $view = false)
     {
         if ($view == true) {
