@@ -51,11 +51,11 @@ class SignDocsObserver
             $signedDocs->application->status = Application::AGREED;
         } elseif (in_array(7, $canceledUsers->toArray())) {
             $signedDocs->application->status = Application::REJECTED;
-        } elseif (!array_diff($agreedUsers->toArray(), $roles_need_sign)) {
-            $signedDocs->application->status = Application::ACCEPTED;
-        } elseif (!array_diff($roles_need_sign, $canceledUsers->toArray())) {
+        } elseif ($canceledUsers->toArray() != null) {
             $signedDocs->application->status = Application::REFUSED;
-        } else {
+        }elseif (count(array_diff($roles_need_sign, $agreedUsers->toArray())) == 1) {
+            $signedDocs->application->status = Application::ACCEPTED;
+        }  else {
             $signedDocs->application->status = Application::IN_PROCESS;
         }
         return $signedDocs->application->update();
