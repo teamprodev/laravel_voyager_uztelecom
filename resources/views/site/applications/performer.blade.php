@@ -4,7 +4,7 @@
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
                     {{Aire::select($branch, 'select', 'Филиал заказчик по контракту')
-                        ->name('filial_customer_id')
+                        ->name('branch_customer_id')
                         }}
                     {{Aire::input('bio','Номер лота')
                         ->name('lot_number')
@@ -30,7 +30,7 @@
 
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::input('bio','Страна происхождения товаров (услуг)')
+                    {{Aire::select($countries,'bio','Страна происхождения товаров (услуг)')
                         ->name('country_produced_id')
                     }}
                     {{Aire::input('bio','Итоговая реальная сумма')
@@ -57,30 +57,38 @@
     </div>
 
     <div class="row ml-4 pb-4">
-        <button id="status1" value="performed" onclick="status11()" type="submit" class="btn btn-success col-md-2" >Performed</button>
-        <button id="status0" value="cancelled" onclick="status00()" type="submit" class="btn btn-danger col-md-2 mx-2   " >Cancelled</button>
+        <input class="hidden" name="status" id="status" type="text">
+        <button  onclick="status11()" type="submit" class="btn btn-success col-md-2">Performed</button>
+        <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-danger col-md-2 mx-2">Cancelled</button>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">Коментария:</label>
+                            <input class="form-control" name="report_if_cancelled" id="report_if_cancelled">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" onclick="status00()" class="btn btn-primary">Send message</button>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </div>
 <script>
     function status11()
     {
-        $.ajax({
-            url: "{{ route('site.applications.ajax') }}",
-            method: "POST",
-            data:{
-                _token: '{{ csrf_token() }}',
-                status: document.getElementById('status1').value,
-                application_id: {{$application->id}}
-            },
-            success: function() {
-                location.reload();
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console.log(xhr.status);
-                console.log(thrownError);
-            }
-        })
+        document.getElementById('status').value = 'performed';
         Swal.fire({
             position: 'center',
             icon: 'success',
@@ -91,30 +99,8 @@
     }
     function status00()
     {
-        $.ajax({
-            url: "{{ route('site.applications.ajax') }}",
-            method: "POST",
-            data:{
-                _token: '{{ csrf_token() }}',
-                status: document.getElementById('status0').value,
-                application_id: {{$application->id}}
-            },
-            success: function() {
-                location.reload();
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console.log(xhr.status);
-                console.log(thrownError);
-            }
-        })
-        Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Cancelled',
-            showConfirmButton: false,
-            timer: 1000
-        })
-    }
+         document.getElementById('status').value = 'cancelled';
+8    }
 </script>
 
 
