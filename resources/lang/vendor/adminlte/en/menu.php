@@ -1,19 +1,23 @@
 <?php
 
 return [
-
-    'main_navigation'               => 'MAIN NAVIGATION',
-    'blog'                          => 'Blog',
-    'pages'                         => 'Pages',
-    'account_settings'              => 'ACCOUNT SETTINGS',
-    'profile'                       => 'Profile',
-    'change_password'               => 'Change Password',
-    'multilevel'                    => 'Multi Level',
-    'level_one'                     => 'Level 1',
-    'level_two'                     => 'Level 2',
-    'level_three'                   => 'Level 3',
-    'labels'                        => 'LABELS',
-    'important'                     => 'Important',
-    'warning'                       => 'Warning',
-    'information'                   => 'Information',
+    "Important" => "",
+    "Information" => "",
+    "Warning" => "",
+    "account_settings" => "ACCOUNT SETTINGS",
+    "blog" => "Blog",
+    "change_password" => "Change Password",
+    "important" => "Important",
+    "information" => "Information",
+    "labels" => "LABELS",
+    "level_one" => "Level 1",
+    "level_three" => "Level 3",
+    "level_two" => "Level 2",
+    "main_navigation" => "MAIN NAVIGATION",
+    "menu" => "",
+    "multilevel" => "Multi Level",
+    "pages" => "Pages",
+    "profile" => "Profile",
+    "users" => "",
+    "warning" => "Warning"
 ];
