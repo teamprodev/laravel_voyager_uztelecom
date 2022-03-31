@@ -180,7 +180,7 @@
   });
 console.log("{{$application->id}}");
 </script>
-@if($user->can('Company_Signer') || $user->can('Add_Company_Signer')||$user->can('Branch_Signer') || $user->can('Add_Branch_Signer') || $user->role_id == 7)
+@if($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer') || $user->role_id == 7)
                <div class="px-6">
                     <form name="testform" action="{{route('site.applications.imzo.sign',$application->id)}}" method="POST">
                         @csrf

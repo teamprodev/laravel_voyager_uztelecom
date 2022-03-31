@@ -44,7 +44,7 @@
   ->post() }}
 
 
-    @can('Company_Leader')
+    @if(auth()->user()->hasPermission('Company_Leader'))
         @include('site.applications.management_edit')
     @else
         @can('Company_Performer' || 'Branch_Performer')
@@ -54,7 +54,7 @@
             @include('site.applications.branch_management_edit')
         @endcan
         @include('site.applications.form_edit')
-    @endcan
+    @endif
 
     {{ Aire::close() }}
     <script>

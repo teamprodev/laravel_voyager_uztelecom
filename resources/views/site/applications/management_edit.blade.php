@@ -126,8 +126,11 @@
         </div>
     </div>
 </div>
-@if($auth_user->role_id == 14)
+@if(!isset($application->performer_user_id))
     <select class="col-md-6 custom-select" name="performer_user_id" id="performer_user_id">
+        @php
+            $users = \App\Models\Permission::with('roles.users')->where('key', 'Company_Performer')->first()->roles->map->users; // company performer
+        @endphp
         @foreach($users as $user)
             <option value="{{$user->id}}">{{$user->name}}</option>
         @endforeach
@@ -154,19 +157,7 @@
     @endif
 </div>
 
-@if(!isset($application->performer_user_id))
-    @can('Company_Leader')
-        <select class="col-md-6 custom-select" name="performer_user_id" id="performer_user_id">
-            @php
-                $users = \App\Models\Permission::with('roles.users')->where('key', 'Company_Performer')->first()->roles->map->users; // company performer
-            @endphp
-            @foreach($users as $user)
-                <option value="{{$user->id}}">{{$user->name}}</option>
-            @endforeach
-        </select>
-    @endcan
-@endif
-{{Aire::input()->name('user_id')->value($auth_user->id)->class('hidden')}}
+{{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}
 <div class="w-full text-center pb-8 ">
     <button class="bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white">Сохранить и закрыть</button>
 </div>
