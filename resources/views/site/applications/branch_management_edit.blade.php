@@ -148,10 +148,15 @@
 </div>
 @if(!isset($application->performer_user_id))
     @can('Branch_Leader')
+        @php
+            $role_users = \App\Models\Permission::with('roles.users')->where('key', 'Branch_Performer')->first()->roles->map->users; // company performer
+            $users = [];
+            foreach ($role_users as $role_user) {
+                foreach ($role_user as $user)
+                $users[] = $user;
+            }
+        @endphp
         <select class="col-md-6 custom-select" name="performer_user_id" id="performer_user_id">
-            @php
-                $users = \App\Models\Permission::with('roles.users')->where('key', 'Branch_Performer')->first()->roles->map->users; // company performer
-            @endphp
             @foreach($users as $user)
                 <option value="{{$user->id}}">{{$user->name}}</option>
             @endforeach
