@@ -33,6 +33,9 @@ $notifications = Notification::with('application:id,created_at')
             </form>
         </div>
     </li>
+    <li class="nav-item">
+        @include('site.dashboard.language')
+    </li>
     <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="far fa-bell"></i>
@@ -75,6 +78,7 @@ $notifications = Notification::with('application:id,created_at')
                 </svg>
             </button>
             <div id="myDropdown" class="dropdownlist absolute bg-gray-800 text-black right-0 mt-3 p-3 overflow-auto z-30 invisible">
+
                 <input type="text" class="drop-search focus:outline-none rounded p-2 text-gray-600" placeholder="Search.." id="myInput" onkeyup="filterDD('myDropdown','myInput')">
                 <a href="{{route('site.profile.index')}}" class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="fa fa-user fa-fw"></i> Profile</a>
                 <div class="border border-gray-800"></div>
