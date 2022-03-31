@@ -66,17 +66,17 @@ class ApplicationController extends Controller
         {
             $query = $query->where('status', 'accepted');
         }
+        elseif($user->role_id == 7)
+        {
+            $query = Application::query()->where('status', "accepted")->where('signers','like',"%{$user->role_id}%");
+        }
         elseif ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
         {
             $query = Application::query()->where('signers','like',"%{$user->role_id}%");
-        }elseif($user->role_id == 7)
-        {
-            $query = Application::query()->where('status', 'accepted')->where('signers','like',"%{$user->role_id}%");
-        }else {
+        }
+        else {
             $query = $query->where('user_id',$user->id);
         }
-
-        $data = $query->get();
 
 //
 //        switch ($user->role_id)
