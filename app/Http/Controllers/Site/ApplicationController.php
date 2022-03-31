@@ -54,40 +54,30 @@ class ApplicationController extends Controller
         $query = Application::query();
         $user = auth()->user();
 
-        if ($user->can('Company_Performer') || $user->can('Branch_Performer'))
+        if ($user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer'))
         {
             $query = $query->where('performer_user_id', $user->id);
         }
-        elseif($user->can('Company_Leader') || $user->can('Branch_Leader'))
+        elseif($user->hasPermission('Company_Leader'))
         {
-            $query = $query->where('performer_head_of_dep_user_id', $user->id);
+            $query = $query->where('status', 'agreed');
         }
-        elseif ($user->can('Company_Signer') || $user->can('Add_Company_Signer')||$user->can('Branch_Signer') || $user->can('Add_Branch_Signer'))
+        elseif($user->hasPermission('Branch_Leader'))
+        {
+            $query = $query->where('status', 'accepted');
+        }
+        elseif($user->role_id == 7)
+        {
+            $query = Application::query()->where('status', "accepted")->where('signers','like',"%{$user->role_id}%");
+        }
+        elseif ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
         {
             $query = Application::query()->where('signers','like',"%{$user->role_id}%");
-        }elseif($user->role_id == 7)
-        {
-            $query = Application::query()->where('status', 'accepted')->where('signers','like',"%{$user->role_id}%");
-        }else {
+        }
+        else {
             $query = $query->where('user_id',$user->id);
         }
 
-        $data = $query->get();
-
-//
-//        switch ($user->role_id)
-//        {
-//            // APPLICATION CREATOR
-//            case 1: // Company_Performer
-//                    $query = $query->where('user_id', $user->id);
-//                break;
-//            case 5:
-//
-//                break;
-//            default:
-//                $query = Application::query()->where('user_id', $user->id)->get();
-//                break;
-//        }
         return Datatables::of($query)
             ->addIndexColumn()
             ->addColumn('action', function($row){
@@ -241,12 +231,4 @@ class ApplicationController extends Controller
 
         }
     }
-    public function ajax(Request $request)
-    {
-        $application = Application::where('id', $request->application_id)->first();
-        $application->status = $request->status;
-        $application->report_if_cancelled = $request->comment;
-        $application->save();
-    }
-
 }

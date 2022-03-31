@@ -30,7 +30,6 @@
     'contract_date' => 'required',
     'protocol_date' => 'required',
     'contract_info' => 'required',
-    'with_nds' => 'required',
     'country_produced_id' => 'required',
     'contract_price' => 'required',
     'supplier_name' => 'required',
@@ -44,17 +43,15 @@
   ->post() }}
 
 
-    @can('Company_Leader')
+    @if(auth()->user()->hasPermission('Company_Leader'))
         @include('site.applications.management_edit')
-    @else
-        @can('Company_Performer' || 'Branch_Performer')
+    @elseif(auth()->user()->hasPermission('Company_Performer' || 'Branch_Performer'))
             @include('site.applications.performer')
-        @endcan
-        @can('Branch_Leader')
+    @elseif('Branch_Leader')
             @include('site.applications.branch_management_edit')
-        @endcan
+    @else
         @include('site.applications.form_edit')
-    @endcan
+    @endif
 
     {{ Aire::close() }}
     <script>

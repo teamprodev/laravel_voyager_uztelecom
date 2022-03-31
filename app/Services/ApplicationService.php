@@ -23,7 +23,7 @@ class ApplicationService
     {
         if (PHP_SAPI === 'cli')
             return dd($application);
-        $access = SignedDocs::where('role_id', auth()->user()->role_id)->where('user_id', !null)->where('application_id', $application->id)->first();
+        $access = SignedDocs::where('role_id', auth()->user()->role_id)->where('user_id', null)->where('application_id', $application->id)->first();
         $branch = Branch::where('id', $application->filial_initiator_id)->first();
         $signedDocs = $application->signedDocs()->get();
 
@@ -50,8 +50,6 @@ class ApplicationService
             'branch' => Branch::all()->pluck('name', 'id'),
             'users' => User::where('role_id', 5)->get(),
             'countries' => $countries,
-            'branchAll' => Branch::skip(1)->take(Branch::count() - 1)->get(),
-            'countriesAll' => Country::skip(1)->take(Country::count() - 1)->get()
         ]);
     }
 

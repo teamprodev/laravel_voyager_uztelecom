@@ -35,27 +35,23 @@ class SignDocsObserver
                 return $role_id;
             });
             $agreedUsers = $allDocs->where('status', 1)->map(function ($doc) {
-                if (isset($doc->user->role_id))
-                {
-                    $role_id = $doc->user->role_id;
+                    $role_id = $doc->role_id;
                     return $role_id;
-                }
             });
             $canceledUsers = $allDocs->where('status', 0)->map(function ($doc) {
-                if (isset($doc->user->role_id))
+                if (isset($doc->role_id))
                 {
-                    $role_id = $doc->user->role_id;
+                    $role_id = $doc->role_id;
                     return $role_id;
                 }
             });
         $roles_need_sign = json_decode($signedDocs->application->signers, true);
-        if (!array_diff($roles_need_sign, $agreedUsers->toArray())) {
-                $signedDocs->application->status = Application::ACCEPTED;
+        if (!array_diff(Roles::where('id',7)->pluck('id')->toArray(), $agreedUsers->toArray())) {
+                $signedDocs->application->status = Application::AGREED;
             } elseif(!array_diff($roles_need_sign, $canceledUsers->toArray())) {
                 $signedDocs->application->status = Application::REFUSED;
-            }elseif(!array_diff(Roles::where('id',7)->pluck('id')->toArray(), $agreedUsers->toArray())){
-            //Role general director
-            $signedDocs->application->status = Application::AGREED;
+            }elseif(!array_diff($roles_need_sign, $agreedUsers->toArray(),Roles::where('id',7)->pluck('id')->toArray())){
+            $signedDocs->application->status = Application::ACCEPTED;
             }elseif(!array_diff(Roles::where('id',7)->pluck('id')->toArray(), $canceledUsers->toArray())){
             //Role general director
             $signedDocs->application->status = Application::REJECTED;
