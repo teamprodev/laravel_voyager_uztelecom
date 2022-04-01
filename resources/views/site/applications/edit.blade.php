@@ -30,7 +30,6 @@
     'contract_date' => 'required',
     'protocol_date' => 'required',
     'contract_info' => 'required',
-    'with_nds' => 'required',
     'country_produced_id' => 'required',
     'contract_price' => 'required',
     'supplier_name' => 'required',
@@ -44,15 +43,13 @@
   ->post() }}
 
 
-    @if(auth()->user()->hasPermission('Company_Leader'))
+    @if(auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
         @include('site.applications.management_edit')
-    @else
-        @can('Company_Performer' || 'Branch_Performer')
+    @elseif(auth()->user()->hasPermission('Company_Performer' || 'Branch_Performer')&& $application->status == 'distributed')
             @include('site.applications.performer')
-        @endcan
-        @can('Branch_Leader')
+    @elseif(auth()->user()->hasPermission('Branch_Leader'))
             @include('site.applications.branch_management_edit')
-        @endcan
+    @else
         @include('site.applications.form_edit')
     @endif
 

@@ -43,6 +43,19 @@ class ApplicationRequest extends FormRequest
             'signers' => 'nullable',
             'performer_user_id' => 'nullable',
             'currency' => 'nullable',
+            'branch_customer_id' => 'nullable',
+            'lot_number' => 'nullable',
+            'contract_number' => 'nullable',
+            'contract_date' => 'nullable',
+            'protocol_date' => 'nullable',
+            'contract_info' => 'nullable',
+            'with_nds' => 'nullable',
+            'country_produced_id' => 'nullable',
+            'contract_price' => 'nullable',
+            'supplier_name' => 'nullable',
+            'supplier_inn' => 'nullable',
+            'status' => 'nullable',
+            'report_if_cancelled' => 'nullable',
         ];
     }
 }

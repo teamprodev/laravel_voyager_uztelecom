@@ -33,6 +33,9 @@ $notifications = Notification::with('application:id,created_at')->has('applicati
             </form>
         </div>
     </li>
+    <li class="nav-item">
+        @include('site.dashboard.language')
+    </li>
     <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="far fa-bell"></i>
@@ -44,12 +47,12 @@ $notifications = Notification::with('application:id,created_at')->has('applicati
             <span class="dropdown-header" id="notification_count_text">{{$notifications->count()}} Notifications</span>
             @foreach($notifications as $notification)
                 <div class="dropdown-divider"></div>
-                <a href="{{route('site.applications.show', ['application' => $notification->application->id, 'view' => 1])}}" class="dropdown-item" target="new">
-                    <i class="fas fa-envelope mr-2"></i> New message {{$notification->application->id}}
-                    <span class="float-right text-muted text-sm">
-                        {{now()->diffInMinutes($notification->application->created_at)}} mins
-                    </span>
-                </a>
+                {{--<a href="{{route('site.applications.show', ['application' => $notification->application->id, 'view' => 1])}}" class="dropdown-item" target="new">--}}
+                {{--    <i class="fas fa-envelope mr-2"></i> New message {{$notification->application->id}}--}}
+                {{--    <span class="float-right text-muted text-sm">--}}
+                {{--        {{now()->diffInMinutes($notification->application->created_at)}} mins--}}
+                {{--    </span>--}}
+                {{--</a>--}}
 {{--                @if($loop->index == 10) @break @endif--}}
             @endforeach
 {{--            <div class="dropdown-divider"></div>--}}
@@ -75,6 +78,7 @@ $notifications = Notification::with('application:id,created_at')->has('applicati
                 </svg>
             </button>
             <div id="myDropdown" class="dropdownlist absolute bg-gray-800 text-black right-0 mt-3 p-3 overflow-auto z-30 invisible">
+
                 <input type="text" class="drop-search focus:outline-none rounded p-2 text-gray-600" placeholder="Search.." id="myInput" onkeyup="filterDD('myDropdown','myInput')">
                 <a href="{{route('site.profile.index')}}" class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="fa fa-user fa-fw"></i> Profile</a>
                 <div class="border border-gray-800"></div>

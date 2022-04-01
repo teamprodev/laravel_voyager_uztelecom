@@ -50,8 +50,6 @@ class ApplicationService
             'branch' => Branch::all()->pluck('name', 'id'),
             'users' => User::where('role_id', 5)->get(),
             'countries' => $countries,
-            'branchAll' => Branch::skip(1)->take(Branch::count() - 1)->get(),
-            'countriesAll' => Country::skip(1)->take(Country::count() - 1)->get()
         ]);
     }
 

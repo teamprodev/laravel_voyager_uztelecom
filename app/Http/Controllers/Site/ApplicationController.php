@@ -78,20 +78,6 @@ class ApplicationController extends Controller
             $query = $query->where('user_id',$user->id);
         }
 
-//
-//        switch ($user->role_id)
-//        {
-//            // APPLICATION CREATOR
-//            case 1: // Company_Performer
-//                    $query = $query->where('user_id', $user->id);
-//                break;
-//            case 5:
-//
-//                break;
-//            default:
-//                $query = Application::query()->where('user_id', $user->id)->get();
-//                break;
-//        }
         return Datatables::of($query)
             ->addIndexColumn()
             ->addColumn('action', function($row){
@@ -245,12 +231,4 @@ class ApplicationController extends Controller
 
         }
     }
-    public function ajax(Request $request)
-    {
-        $application = Application::where('id', $request->application_id)->first();
-        $application->status = $request->status;
-        $application->report_if_cancelled = $request->comment;
-        $application->save();
-    }
-
 }
