@@ -1,6 +1,6 @@
 <?php
 use App\Models\Notification;
-$notifications = Notification::with('application:id,created_at')
+$notifications = Notification::with('application:id,created_at')->has('application')
     ->where('user_id', auth()->id())
     ->where('is_read', 0)
     ->get();

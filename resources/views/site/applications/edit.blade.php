@@ -43,11 +43,11 @@
   ->post() }}
 
 
-    @if(auth()->user()->hasPermission('Company_Leader'))
+    @if(auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
         @include('site.applications.management_edit')
-    @elseif(auth()->user()->hasPermission('Company_Performer' || 'Branch_Performer'))
+    @elseif(auth()->user()->hasPermission('Company_Performer' || 'Branch_Performer')&& $application->status == 'distributed')
             @include('site.applications.performer')
-    @elseif('Branch_Leader')
+    @elseif(auth()->user()->hasPermission('Branch_Leader'))
             @include('site.applications.branch_management_edit')
     @else
         @include('site.applications.form_edit')

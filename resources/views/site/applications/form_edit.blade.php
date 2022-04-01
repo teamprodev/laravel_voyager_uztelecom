@@ -79,8 +79,8 @@
                             @isset($application->branch_initiator_id)
                                 <option value="{{$application->branch_initiator_id}}" selected>{{$application->branch_initiator_id}}</option>
                             @endisset
-                            @foreach($branch as $branch)
-                                <option value="{{$branch->id}}">{{$branch->name}}</option>
+                            @foreach($branch as $branches)
+                                <option value="{{$branches}}">{{$branches}}</option>
                             @endforeach
                         </select>
                     </div>
