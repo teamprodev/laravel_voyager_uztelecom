@@ -1,10 +1,10 @@
 <?php
 
 return [
-    "table_name_1" => "Ташаббускор (буюртмачи номи )",
-    "reset" => "Sizning parolingiz qayta tiklandi!",
-    "sent" => "Siz parolingizni tiklash havolasini elektron pochta orqali yubordik!",
+    "table_name_1" => "Tashabbuskor (buyurtmachi nomi )",
+    "password_reset" => "Sizning parolingiz qayta tiklandi!",
+    "Email_resent" => "Siz parolingizni tiklash havolasini elektron pochta orqali yubordik!",
     "throttled" => "Iltimos, qayta urinishdan oldin kuting.",
-    "token" => "Ushbu parolni tiklash token yaroqsiz.",
-    "user" => "Biz ushbu elektron pochta manziliga ega foydalanuvchi topa olmaymiz."
+    "password_invalid" => "Ushbu parolni tiklash token yaroqsiz.",
+    "Email_Uncorrect" => "Biz ushbu elektron pochta manziliga ega foydalanuvchi topa olmaymiz."
 ];
