@@ -1,6 +1,6 @@
 <?php
 use App\Models\Notification;
-$notifications = Notification::with('application:id,created_at')
+$notifications = Notification::with('application:id,created_at')->has('application')
     ->where('user_id', auth()->id())
     ->where('is_read', 0)
     ->get();
@@ -47,12 +47,12 @@ $notifications = Notification::with('application:id,created_at')
             <span class="dropdown-header" id="notification_count_text">{{$notifications->count()}} Notifications</span>
             @foreach($notifications as $notification)
                 <div class="dropdown-divider"></div>
-                {{--<a href="{{route('site.applications.show', ['application' => $notification->application->id, 'view' => 1])}}" class="dropdown-item" target="new">--}}
-                {{--    <i class="fas fa-envelope mr-2"></i> New message {{$notification->application->id}}--}}
-                {{--    <span class="float-right text-muted text-sm">--}}
-                {{--        {{now()->diffInMinutes($notification->application->created_at)}} mins--}}
-                {{--    </span>--}}
-                {{--</a>--}}
+                <a href="{{route('site.applications.show', ['application' => $notification->application->id, 'view' => 1])}}" class="dropdown-item" target="new">
+                    <i class="fas fa-envelope mr-2"></i> New message {{$notification->application->id}}
+                    <span class="float-right text-muted text-sm">
+                        {{now()->diffInMinutes($notification->application->created_at)}} mins
+                    </span>
+                </a>
 {{--                @if($loop->index == 10) @break @endif--}}
             @endforeach
 {{--            <div class="dropdown-divider"></div>--}}
