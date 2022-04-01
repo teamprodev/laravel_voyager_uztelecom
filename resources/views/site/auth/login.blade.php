@@ -19,8 +19,11 @@
                 <form name="eri_form" action="{{route('eri.login')}}" id="eri_form" method="post">
                 @csrf
                 <div>
-                        <label class="text-xs" for="">Калитни танланг</label>
-                        <select name="key" class="w-full" onchange="cbChanged(this)"></select>
+                    <label class="text-xs" for="">{{ __('lang.choose_key') }}
+                    </label>
+                    <select name="key" class="w-full" onchange="cbChanged(this)">
+
+                    </select>
 
                     </div>
 
