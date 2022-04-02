@@ -51,41 +51,42 @@
                     {{Aire::input('bio','Номер протокола')
                         ->name('protocol_number')
                     }}
+                    <input class="hidden" name="status" id="status" type="text">
+                    <select onchange="myFunction()" class="col-md-6 custom-select" name="performer_status" id="performer_status">
+                        @foreach($status_extented as $status)
+                        <option value="{{$status->name}}">{{$status->name}}</option>
+                        @endforeach
+                    </select>
+                    <div id="a" class="hidden mb-3">
+                        <label for="message-text" class="col-form-label">Коментария:</label>
+                        <input class="form-control" name="report_if_cancelled" id="report_if_cancelled">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="row ml-4 pb-4">
-        <input class="hidden" name="status" id="status" type="text">
-        <button  onclick="status11()" type="submit" class="btn btn-success col-md-2">Performed</button>
-        <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-danger col-md-2 mx-2">Cancelled</button>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="message-text" class="col-form-label">Коментария:</label>
-                            <input class="form-control" name="report_if_cancelled" id="report_if_cancelled">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" onclick="status00()" class="btn btn-primary">Send message</button>
-                </div>
-            </div>
-        </div>
+        <button type="submit" class="btn btn-success">Сохранить</button>
     </div>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </div>
 <script>
+    function myFunction()
+    {
+        if (document.getElementById('performer_status').value != 'Отменен')
+        {
+            document.getElementById('a').classList.add('hidden');
+
+        }else if(document.getElementById('performer_status').value == 'доставлен')
+        {
+            document.getElementById('status').value = 'performed';
+        }else{
+            document.getElementById('a').classList.remove('hidden');
+            document.getElementById('status').value = 'cancelled';
+    }
+
+    }
     function status11()
     {
         document.getElementById('status').value = 'performed';
@@ -97,10 +98,6 @@
             timer: 1000
         })
     }
-    function status00()
-    {
-         document.getElementById('status').value = 'cancelled';
-8    }
 </script>
 
 

@@ -56,6 +56,7 @@ class ApplicationRequest extends FormRequest
             'supplier_inn' => 'nullable',
             'status' => 'nullable',
             'report_if_cancelled' => 'nullable',
+            'performer_status' => 'nullable',
         ];
     }
 }
