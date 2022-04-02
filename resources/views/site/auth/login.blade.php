@@ -10,7 +10,7 @@
                 <!--Title-->
                 <div class="flex justify-between items-center ">
                     <div class="w-5/12 mx-auto">
-                        <img src="https://play-lh.googleusercontent.com/hSzPUT2DXP3uruTclgEZjWY6kW-AIGXwg8CRpzCrZPfGuurdi3NHjgGVtbtS2uqmVtI=h500"
+                        <img src="http://www.rtmc.uz/wp-content/uploads/2017/03/uztelecom.png"
                              alt="">
                     </div>
                 </div>
@@ -19,41 +19,35 @@
                 <form name="eri_form" action="{{route('eri.login')}}" id="eri_form" method="post">
                 @csrf
                 <div>
-                    <label class="text-xs" for="">{{ __('lang.choose_key') }}
-                    </label>
+                    <label class="text-xs" for="">Выберите ключ</label>
                     <select name="key" class="w-full" onchange="cbChanged(this)">
-
                     </select>
+                </div>
+                <div hidden id="keyId" class="none"></div>
 
-                    </div>
-
-
-                    <div hidden id="keyId" class="none"></div>
-
-                    <input type="hidden" name="eri_fullname" id="eri_fullname">
-                    <input type="hidden" name="eri_inn" id="eri_inn">
-                    <input type="hidden" name="eri_pinfl" id="eri_pinfl">
-                    <input type="hidden" name="eri_sn" id="eri_sn">
-                    <textarea hidden class="none" name="eri_data" id="eri_data">Authorization</textarea>
-                    <textarea hidden class="none" name="eri_hash" id="eri_hash"></textarea>
+                <input type="hidden" name="eri_fullname" id="eri_fullname">
+                <input type="hidden" name="eri_inn" id="eri_inn">
+                <input type="hidden" name="eri_pinfl" id="eri_pinfl">
+                <input type="hidden" name="eri_sn" id="eri_sn">
+                <textarea hidden class="none" name="eri_data" id="eri_data">Authorization</textarea>
+                <textarea hidden class="none" name="eri_hash" id="eri_hash"></textarea>
 
 
                     <!--Footer-->
                     <div class="flex justify-center pt-2">
-                        <button type="button" class="px-4 bg-green-500 py-2 rounded-lg text-white hover:bg-green-400"
-                                id="eri_sign" onclick="sign()">
+                        <button type="button"
+                            class="px-4 bg-green-500 py-2 rounded-lg text-white hover:bg-green-400"
+                            id="eri_sign" onclick="sign()">
                             Вход
                         </button>
-                        <button type="button" class="px-4 ml-1 bg-blue-500 py-2 rounded-lg text-white
-                        hover:bg-blue-400" id="eri_sign"
-                                onclick="uiLoadKeys
-                    ()">Yangilash
+                        <button type="button"
+                            class="px-4 ml-1 bg-blue-500 py-2 rounded-lg text-white
+                                hover:bg-blue-400"
+                            id="eri_sign"
+                            onclick="uiLoadKeys()"> Обновлять
                         </button>
-
                     </div>
                 </form>
-
-
             </div>
         </div>
     </div>

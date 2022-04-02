@@ -67,10 +67,10 @@
                                     <textarea hidden="" class="none" name="eri_hash" id="eri_hash"></textarea>
                                     <div class="text-center">
                                         <button class="btn btn-sm btn-primary" id="eri_sign" onclick="sign()"
-                                                type="button">Имзолаш
+                                                type="button">Подписание
                                         </button>
                                         <button class="btn btn-sm btn-info" id="eri_signs" onclick="uiLoadKeys()"
-                                                type="button">Янгилаш
+                                                type="button">Обновлять
                                         </button>
                                     </div>
                                 </form>

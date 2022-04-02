@@ -1,14 +1,32 @@
 <?php
 
 return [
-    "table_name_1" => "Tashabbuskor (buyurtmachi nomi )",
-    "password_reset" => "Sizning parolingiz qayta tiklandi!",
-    "Email_resent" => "Siz parolingizni tiklash havolasini elektron pochta orqali yubordik!",
-    "throttled" => "Iltimos, qayta urinishdan oldin kuting.",
-    "password_invalid" => "Ushbu parolni tiklash token yaroqsiz.",
-    "Email_incorrect" => "Biz ushbu elektron pochta manziliga ega foydalanuvchi topa olmaymiz.",
+    "back" => "Orqaga",
+    "save_close" => "Saqlash va yopish",
+    "create" => "Yaratish",
+    "valyuta" => "Valyuta",
 
-    //application.blade.start
+    //index.blade start
+
+    "table_1" => "Tashabbuskor (buyurtmachi nomi)",
+    "table_2" => "Sotib olinadigan mahsulot nomi (mahsulot, ish, xizmat)",
+    "table_3" => "Mahsulot kelishining muddati",
+    "table_4" => "Xarid rejasi (summa)",
+    "table_5" => "Mahsulotni keltirish uchun qo'yilgan talab (INCOTERMS)",
+    "table_6" => "Yaratilgan sana",
+    "table_7" => "Status",
+    "table_8" => "Harakat",
+    "table_9" => "Xarid mazmuni (sotib olish uchun asos)",
+    "table_10" => "Sotib olinadigan mahsulot tavsifi (texnik xarakteri)",
+    "table_11" => "Asos (xaridlar rejasi, rahbariyat tomonidan bildirgi)",
+    "table_12" => "Alohida talablar",
+    "table_13" => "Mahsulot kelishining muddati",
+    "table_14" => "Mahsulot sifati uchun kafolat muddati (ish, xizmat)",
+    "table_15" => "Budjetni rejalashtirish bo'limi - xarid qilinadigan mahsulotni biznes rejada mavjudligi bo'yicha ma'lumot",
+
+    //index.blade end
+
+    //application.blade start
 
     "application_create_task" => "Create task",
     "application_show_entries" => "show",
@@ -31,9 +49,9 @@ return [
     "application_of" => "of",
     "application_next" => "next",
 
-    //application.blade.end
+    //application.blade end
 
-    //createtask.blade.start
+    //createtask.blade start
 
     "create_back" => "Back",
     "create_Entrepreneur" => "Entrepreneur (customer name)",
