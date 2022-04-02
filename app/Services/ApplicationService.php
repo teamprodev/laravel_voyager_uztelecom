@@ -10,6 +10,7 @@ use App\Models\Branch;
 use App\Models\Notification;
 use App\Models\PermissionRole;
 use App\Models\SignedDocs;
+use App\Models\StatusExtented;
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Country;
@@ -49,6 +50,7 @@ class ApplicationService
             'subject' => Subject::all()->pluck('name','id'),
             'branch' => Branch::all()->pluck('name', 'id'),
             'users' => User::where('role_id', 5)->get(),
+            'status_extented' => StatusExtented::all(),
             'countries' => $countries,
         ]);
     }

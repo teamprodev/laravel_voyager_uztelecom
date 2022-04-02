@@ -158,14 +158,6 @@ class ApplicationController extends Controller
             $data['status'] = 'distributed';
             $data['performer_head_of_dep_user_id'] = auth()->user()->id;
         }
-        if(isset($data['currency']))
-        {
-            if ( $data['currency'] == 'USD' && $data['planned_price'] >= 25000)
-            {
-                $data['is_more_than_limit'] = 1;
-            }else
-                $data['is_more_than_limit'] = 0;
-        }
         if ($application->is_more_than_limit != 1)
             $roles = PermissionRole::where('permission_id',168)->pluck('role_id')->toArray();
         else
