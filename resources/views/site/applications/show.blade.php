@@ -8,52 +8,52 @@
         <div class="p-6">
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::input('bio','Ташаббускор (буюртмачи номи )')
+                    {{Aire::input('bio', __('lang.table_1'))
                         ->name('initiator')
                         ->value($application->initiator)
                         ->disabled()
                     }}
-                    {{Aire::textArea('bio','Харид мазмуни (сотиб олиш учун асос)')
+                    {{Aire::textArea('bio', __('lang.table_9'))
                         ->name('purchase_basis')
                         ->value($application->purchase_basis)
                         ->rows(3)
                         ->cols(40)
                         ->disabled()
                     }}
-                    {{Aire::textArea('bio','Сотиб олинадиган махсулот тавсифи (техник характери)')
+                    {{Aire::textArea('bio', __('lang.table_10'))
                         ->name('specification')
                         ->value($application->specification)
                         ->rows(3)
                         ->cols(40)
                         ->disabled()
                     }}
-                    {{Aire::input('bio','Махсулот келишининг муддати')
+                    {{Aire::input('bio', __('lang.table_13'))
                         ->name('delivery_date')
                         ->value($application->delivery_date)
                         ->disabled()
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::input('bio','Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)')
+                    {{Aire::input('bio', __('lang.table_2'))
                         ->name('name')
                         ->value($application->name)
                         ->disabled()
                     }}
-                    {{Aire::textArea('bio','Асос (харидлар режаси, раҳбарият томонидан билдирги)')
+                    {{Aire::textArea('bio', __('lang.table_11'))
                         ->name('basis')
                         ->value($application->basis)
                         ->rows(3)
                         ->cols(40)
                         ->disabled()
                     }}
-                    {{Aire::textArea('bio','Алоҳида талаблар')
+                    {{Aire::textArea('bio', __('lang.table_12'))
                         ->name('separate_requirements')
                         ->value($application->separate_requirements)
                         ->rows(3)
                         ->cols(40)
                         ->disabled()
                     }}
-                    {{Aire::input('bio','Махсулот сифати учун кафолат муддати (иш, хизмат)')
+                    {{Aire::input('bio', __('lang.table_14'))
                         ->name('expire_warranty_date')
                         ->value($application->expire_warranty_date)
                         ->disabled()
@@ -62,7 +62,7 @@
             </div>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::input('bio','Харид режаси (сумма)')
+                    {{Aire::input('bio', __('lang.table_4'))
                         ->name('planned_price')
                         ->value($application->planned_price)
                         ->id('summa')
@@ -75,7 +75,7 @@
                         ->class('hidden')
                         ->disabled()
                     }}
-                    {{Aire::select(['USD' => 'USD', 'UZS' => 'UZS'], 'select', 'Валюта')
+                    {{Aire::select(['USD' => 'USD', 'UZS' => 'UZS'], 'select', __('lang.valyuta'))
                     ->name('currency')
                     ->value($application->currency)
                     ->id('valyuta')
@@ -83,7 +83,7 @@
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::input('bio','Бюджетни режалаштириш бўлими - харид қилинадиган махсулотни бизнес режада мавжудлиги бўйича маълумот')
+                    {{Aire::input('bio', __('lang.table_15'))
                         ->name('info_business_plan')
                         ->value($application->info_business_plan)
                         ->disabled()

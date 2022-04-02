@@ -67,7 +67,7 @@
                             <form name="eri_form" action={{route('eimzo.postLogin')}} id="eri_form" method="post">
                                 <input type="hidden" name="_token" value="gMNU6uPx5DoNAe5mntW8O9QPOI855WKSyTdQMybd">
                                 <div class="form-group mb-2">
-                                    <label for="">Калитни танланг</label>
+                                    <label for="">Выберите ключ</label>
                                     <select name="key" class="form-control bordered"
                                             onchange="cbChanged(this)"></select>
                                 </div>
@@ -82,10 +82,10 @@
                                 <textarea hidden="" class="none" name="eri_hash" id="eri_hash"></textarea>
                                 <div class="text-center">
                                     <button class="btn btn-sm btn-primary" id="eri_sign" onclick="sign()"
-                                            type="button">Имзолаш
+                                            type="button">Подписание
                                     </button>
                                     <button class="btn btn-sm btn-info" id="eri_sign" onclick="uiLoadKeys()"
-                                            type="button">Янгилаш
+                                            type="button">Обновлять
                                     </button>
                                 </div>
                             </form>
