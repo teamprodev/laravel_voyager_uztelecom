@@ -116,6 +116,24 @@
                         ->rows(3)
                         ->cols(40)
                     }}
+                    @if($application->is_more_than_limit != 0)
+                        <div class="w-full">
+
+                            {{Aire::select($company_signers, 'signers', 'Multi-Select')
+                                                            ->multiple()
+                                                            ->id('signers')
+                                                            ->size(10)
+                                                            }}
+                        </div>
+                    @else
+                        <div class="w-full">
+                            {{Aire::select($branch_signers, 'signers', 'Multi-Select')
+                                                            ->multiple()
+                                                            ->id('signers')
+                                                            ->size(10)
+                                                            }}
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -148,7 +166,49 @@
 <script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.min.js"></script>
 <script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.legacy.min.js" nomodule></script>
 <script src="https://releases.transloadit.com/uppy/locales/v2.0.5/ru_RU.min.js"></script>
+@if(session('Alert'))
+<input id="is_more_than_limit" class="hidden" value="0">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    Swal.fire({
+        title: 'Do you want to save the changes?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmSubmitText: 'Confirm',
+        cancelSubmitText: 'Cancel',
+        confirmSubmitClass: 'button is-success has-right-spacing',
+        cancelSubmitClass: 'button is-danger',
+    }).then((result) => {
+        if(result.isConfirmed == true)
+        {
+            document.getElementById('is_more_than_limit').value = 1;
+            ajax();
+        } else if (result.isDenied) {
+            ajax();
+        }
+    })
 
+    function ajax()
+    {
+        $.ajax({
+            url: "{{ route('site.applications.update',$application->id) }}",
+            method: "POST",
+            data:{
+                _token: '{{ csrf_token() }}',
+                is_more_than_limit: document.getElementById('is_more_than_limit').value,
+            },
+            success: function()
+            {
+                location.reload()
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+            }
+        })
+    }
+    </script>
+@endif
 <script>
     var uppy = new Uppy.Core({
         debug: true,
