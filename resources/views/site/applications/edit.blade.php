@@ -2,7 +2,7 @@
 
 @section('center_content')
     <div class="pl-4 pt-4">
-        <button class="btn btn-danger" onclick="functionBack()">Назад</button>
+        <button class="btn btn-danger" onclick="functionBack()">{{ __('lang.back') }}</button>
     </div>
     {{ Aire::open()
   ->route('site.applications.update',$application->id)

@@ -83,7 +83,7 @@
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::input('bio','Бюджетни режалаштириш бўлими - харид қилинадиган махсулотни бизнес режада мавжудлиги бўйича маълумот')
+                    {{Aire::input('bio', __('lang.table_15'))
                         ->name('info_business_plan')
                         ->value($application->info_business_plan)
                         ->disabled()
@@ -93,14 +93,14 @@
             </div>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::input('bio','Эквивалентная Планируемая сумма')
+                    {{Aire::input('bio', __('lang.table_16'))
                         ->name('equal_planned_price')
                         ->value($application->equal_planned_price)
                         ->disabled()
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::input('bio','Наименование поставщика')
+                    {{Aire::input('bio', __('lang.table_17'))
                         ->name('supplier_name')
                         ->value($application->supplier_name)
                         ->disabled()
@@ -109,13 +109,13 @@
             </div>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::select($application->subject, 'select', 'Предмет закупки')
+                    {{Aire::select($application->subject, 'select', __('lang.table_18'))
                         ->name('subject')
                         ->disabled()
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::select($application->type_of_purchase_id, 'select', 'Вид закупки')
+                    {{Aire::select($application->type_of_purchase_id, 'select', __('lang.table_19'))
                         ->name('type_of_purchase_id')
                         ->disabled()
                     }}
@@ -123,7 +123,7 @@
             </div>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::textArea('bio','Харид килинадиган махсулотни "Харидлар режаси"да мавжудлиги буйича маълумот')
+                    {{Aire::textArea('bio', __('lang.table_20'))
                         ->name('info_purchase_plan')
                         ->value($application->info_purchase_plan)
                         ->rows(3)
@@ -132,7 +132,7 @@
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::textArea('bio','Коментарий к заявке')
+                    {{Aire::textArea('bio', __('lang.table_21'))
                         ->name('comment')
                         ->value($application->comment)
                         ->rows(3)
@@ -147,12 +147,12 @@
             <table id="yajra-datatable">
                 <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Status</th>
-                    <th>Role</th>
-                    <th >Comment</th>
-                    <th >User</th>
-                    <th>Application ID</th>
+                    <th>ID</th>
+                    <th>{{ __('lang.table_7') }}</th>
+                    <th>{{ __('lang.table_22') }}</th>
+                    <th >{{ __('lang.table_23') }}</th>
+                    <th >{{ __('lang.table_24') }}</th>
+                    <th>{{ __('lang.table_25') }}</th>
                 </tr>
                 </thead>
             </table>
@@ -186,20 +186,20 @@ console.log("{{$application->id}}");
                         @csrf
                         <label id="message"></label>
                         <div class="form-group">
-                            <label for="select1">Выберите ключ</label>
+                            <label for="select1">{{ __('lang.eimzo_key') }}</label>
                             <select name="key" id="select1" onchange="cbChanged(this)"></select><br />
                         </div>
                         <div class="form-group hidden">
-                            <label for="exampleFormControlTextarea1">Текст для подписи</label>
+                            <label for="exampleFormControlTextarea1">{{ __('lang.eimzo_title') }}</label>
                             <textarea class="form-control" id="eri_data" name="data" rows="3"></textarea>
                         </div>
                         <div class="mb-2 text-center mr-6">
-                            ID ключа <label id="keyId"></label><br />
+                            {{ __('lang.eimzo_id') }}<label id="keyId"></label><br />
 
-                            <button onclick="generatekey()" class="hidden btn btn-success" type="button">Подписать</button><br />
+                            <button onclick="generatekey()" class="hidden btn btn-success" type="button">{{ __('lang.eimzo_sign') }}</button><br />
                         </div>
                         <div class="w-1/2">
-                            {{Aire::textArea('bio','Коментария')
+                            {{Aire::textArea('bio', __('lang.table_23'))
                             ->name('comment')
                             ->rows(3)
                             ->cols(40)
@@ -217,15 +217,15 @@ console.log("{{$application->id}}");
                         <input value="{{auth()->user()->id}}" name="user_id" class="hidden" type="text">
                         <input value="{{auth()->user()->role_id}}" name="role_id" class="hidden" type="text">
                         <div class="row ml-4 pb-4">
-                            <button onclick="status1()" type="submit" class="btn btn-success col-md-2" >Accept</button>
-                            <button onclick="status0()" type="submit" class="btn btn-danger col-md-2 mx-2   " >Reject</button>
+                            <button onclick="status1()" type="submit" class="btn btn-success col-md-2" >{{ __('lang.accept') }}</button>
+                            <button onclick="status0()" type="submit" class="btn btn-danger col-md-2 mx-2   " >{{ __('lang.reject') }}</button>
                         </div>
                     </form>
                </div>
         @elseif($application->performer_user_id == auth()->user()->id)
             <div class="row ml-4 pb-4">
-                <button id="status1" value="performed" onclick="status11()" type="submit" class="btn btn-success col-md-2" >Performed</button>
-                <button id="status0" value="cancelled" onclick="status00()" type="submit" class="btn btn-danger col-md-2 mx-2   " >Cancelled</button>
+                <button id="status1" value="performed" onclick="status11()" type="submit" class="btn btn-success col-md-2" >{{ __('lang.performed') }}</button>
+                <button id="status0" value="cancelled" onclick="status00()" type="submit" class="btn btn-danger col-md-2 mx-2   " >{{ __('lang.cancelled') }}</button>
             </div>
 @endif
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
