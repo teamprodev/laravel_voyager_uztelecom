@@ -51,7 +51,7 @@ class ApplicationController extends Controller
 
     public function getdata(Request $request)
     {
-        $query = Application::query();
+        $query = Application::query()->orderBy('id', 'desc');
         $user = auth()->user();
 
         if ($user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer'))
@@ -143,7 +143,7 @@ class ApplicationController extends Controller
         $application->user_id = auth()->user()->id;
         $application->save();
         $data = Application::query()->latest('id')->first();
-        return redirect()->route('site.applications.edit',$data->id);
+        return redirect()->route('site.applications.edit',$data->id)->with('Alert','adasdas');
     }
     public function edit(Application $application)
     {
@@ -185,16 +185,6 @@ class ApplicationController extends Controller
             return redirect()->route('site.applications.index')->with('success', trans('site.application_success'));
 
         return redirect()->back()->with('danger', trans('site.application_failed'));
-    }
-    public function signers(Application $application)
-    {
-        $company_signer = PermissionRole::where('permission_id',166)->select('role_id')->get();
-        $branch_signer = PermissionRole::where('permission_id',167)->select('role_id')->get();
-        return view('site.applications.signers', [
-            'application' => $application,
-            'company_signers' => Roles::find($company_signer)->pluck('display_name','id'),
-            'branch_signers' => Roles::find($branch_signer)->pluck('display_name','id'),
-        ]);
     }
     public function store(ApplicationRequest $request)
     {

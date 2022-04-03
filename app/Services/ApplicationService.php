@@ -43,7 +43,8 @@ class ApplicationService
     {
         $countries = ['0' => 'Select country'];
         $countries[] = Country::get()->pluck('country_name','country_alpha3_code')->toArray();
-
+        $company_signer = PermissionRole::where('permission_id',166)->select('role_id')->get();
+        $branch_signer = PermissionRole::where('permission_id',167)->select('role_id')->get();
         return view('site.applications.edit', [
             'application' => $application,
             'purchase' => Purchase::all()->pluck('name','id'),
@@ -52,6 +53,8 @@ class ApplicationService
             'users' => User::where('role_id', 5)->get(),
             'status_extented' => StatusExtented::all(),
             'countries' => $countries,
+            'company_signers' => Roles::find($company_signer)->pluck('display_name','id'),
+            'branch_signers' => Roles::find($branch_signer)->pluck('display_name','id'),
         ]);
     }
 

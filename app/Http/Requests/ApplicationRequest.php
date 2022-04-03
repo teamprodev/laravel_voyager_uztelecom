@@ -57,6 +57,7 @@ class ApplicationRequest extends FormRequest
             'status' => 'nullable',
             'report_if_cancelled' => 'nullable',
             'performer_status' => 'nullable',
+            'is_more_than_limit' => 'nullable',
         ];
     }
 }
