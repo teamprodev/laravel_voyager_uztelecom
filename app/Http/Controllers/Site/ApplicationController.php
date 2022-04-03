@@ -51,7 +51,7 @@ class ApplicationController extends Controller
 
     public function getdata(Request $request)
     {
-        $query = Application::query();
+        $query = Application::query()->orderBy('id', 'desc');
         $user = auth()->user();
 
         if ($user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer'))
