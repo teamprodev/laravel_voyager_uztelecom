@@ -18,5 +18,5 @@
 </div>
 {{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}
 <div class="w-full text-center pb-8 ">
-    <button class="bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white">Сохранить и закрыть</button>
+    <button class="bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white">{{ __('lang.save_close') }}</button>
 </div>
