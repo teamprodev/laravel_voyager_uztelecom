@@ -179,8 +179,6 @@ class ApplicationController extends Controller
         }
 
         $result = $application->update($data);
-        if ($application->signers == null)
-            return redirect()->route('site.applications.signers', $application->id);
         if ($result)
             return redirect()->route('site.applications.index')->with('success', trans('site.application_success'));
 
