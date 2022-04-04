@@ -94,7 +94,14 @@
     </div>
     {{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}
     <div class="w-full text-right py-4 pr-10">
-        <button type="submit" class="bg-green-500 hover:bg-green-700 p-2 transition duration-300 rounded-md text-white">
-            {{ __('lang.save_send') }}</button>
+        <button type="submit"
+        class="bg-green-500 hover:bg-green-700 p-2 transition duration-300 rounded-md text-white">
+            {{ __('lang.save_send') }}
+        </button>
+        <button type="submit"
+                class="bg-green-500 hover:bg-green-700 p-2 transition duration-300 rounded-md text-white">
+            {{ __('lang.save_close') }}
+        </button>
+
     </div>
 </div>

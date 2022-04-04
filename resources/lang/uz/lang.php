@@ -12,6 +12,7 @@ return [
     "eimzo_key" => "Kalitni tanlang",
     "eimzo_sign" => "Imzolash",
     "eimzo_title" => "Imzo matni",
+    "signers" => "Tasdiqlovchi shaxslar (e-imzo)",
     "next" => "Keyingi",
     "performed" => "Bajarildi",
     "performer_country" => "Tovar (xizmat) ishlab chiqarilgan mamlakat",

@@ -66,7 +66,7 @@
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
                     @if($application->currency == null)
-                    {{Aire::select(['USD' => 'USD', "SO'M" => "SO'M"], 'select', 'Предмет закупки')
+                    {{Aire::select(['USD' => 'USD', "SO'M" => "SO'M"], 'select', __('lang.valyuta'))
                         ->name('currency')
                         ->id('currency')
                     }}
@@ -110,7 +110,7 @@
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::textArea('bio', __('lang.table_18'))
+                    {{Aire::textArea('bio', __('lang.table_23'))
                         ->name('comment')
                         ->value($application->comment)
                         ->rows(3)
@@ -119,7 +119,7 @@
                     @if($application->is_more_than_limit != 0)
                         <div class="w-full">
 
-                            {{Aire::select($company_signers, 'signers', 'Multi-Select')
+                            {{Aire::select($company_signers, 'signers', __('lang.signers'))
                                                             ->multiple()
                                                             ->id('signers')
                                                             ->size(10)
@@ -127,7 +127,7 @@
                         </div>
                     @else
                         <div class="w-full">
-                            {{Aire::select($branch_signers, 'signers', 'Multi-Select')
+                            {{Aire::select($branch_signers, 'signers', __('lang.signers'))
                                                             ->multiple()
                                                             ->id('signers')
                                                             ->size(10)

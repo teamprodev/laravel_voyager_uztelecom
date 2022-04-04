@@ -2,7 +2,7 @@
 
 return [
     "accept" => "Accepting",
-    "back" => "Backward",
+    "back" => "Back",
     "base" => "Base",
     "branch" => "Choose the branch",
     "cancelled" => "Canceled",
@@ -12,6 +12,7 @@ return [
     "eimzo_key" => "Select the key",
     "eimzo_sign" => "Signature",
     "eimzo_title" => "Signature text",
+    "signers" => "Confirmation persons (e-imzo)",
     "next" => "Next",
     "performed" => "Done",
     "performer_country" => "Goods (service) country of manufactured",
@@ -45,7 +46,7 @@ return [
     "table_15" => "Budget Planning Department - Information on the existence of the purchasing product in business plan",
     "table_16" => "An additional planned amount",
     "table_17" => "Supplier name",
-    "table_18" => "Purchase topic",
+    "table_18" => "Subject of purchase",
     "table_19" => "View of purchase",
     "table_2" => "Product Name (Product, Work, Service)",
     "table_20" => "Information on the purchasing product in the \"Purchasing Plan\" Information",
