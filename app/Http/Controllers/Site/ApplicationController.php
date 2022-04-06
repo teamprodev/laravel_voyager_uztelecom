@@ -49,7 +49,11 @@ class ApplicationController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Application::query()->where('draft', null)->orWhere('draft','==', 0)->orderBy('id', 'desc');
+            $query = Application::query()
+                ->where('draft', null)
+                ->orWhere('draft','==', 0)
+                ->latest('id')
+                ->get();
             $user = auth()->user();
 
             if ($user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer'))
@@ -224,7 +228,11 @@ class ApplicationController extends Controller
     {
         if ($request->ajax()) {
             $user = auth()->user();
-            $data = Application::query()->where('draft', !null)->orderBy('id', 'desc');
+            $data = Application::query()
+                ->where('user_id', $user->id)
+                ->where('draft', !null)
+                ->latest('id')
+                ->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){

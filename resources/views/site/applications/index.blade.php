@@ -27,6 +27,7 @@
 <script>
     $(function () {
         var table = $('#yajra-datatable').DataTable({
+            order: [[ 0, "desc" ]],
             processing: true,
             serverSide: true,
             ajax:
