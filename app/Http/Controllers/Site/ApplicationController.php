@@ -160,14 +160,18 @@ class ApplicationController extends Controller
 
     public function update(Application $application, ApplicationRequest $request){
         $data = $request->validated();
-        $explode = explode(',',$data['resource_id']);
-        $id = [];
-        for ($i = 0; $i < count($explode); $i++)
+        if(isset($data['resource_id']))
         {
-            $all = Resource::where('name','like',"%{$explode[$i]}%")->first();
-            $id[] = $all->id;
-            $data['resource_id'] = json_encode($id);
+            $explode = explode(',',$data['resource_id']);
+            $id = [];
+            for ($i = 0; $i < count($explode); $i++)
+            {
+                $all = Resource::where('name','like',"%{$explode[$i]}%")->first();
+                $id[] = $all->id;
+                $data['resource_id'] = json_encode($id);
+            }
         }
+
 
         if (isset($data['performer_user_id']))
         {
