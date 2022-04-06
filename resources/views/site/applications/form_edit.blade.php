@@ -329,7 +329,7 @@
             showDenyButton: true,
             showCancelButton: true,
             confirmSubmitText: 'Confirm',
-            cancelSubmitText: 'Caassncel',
+            cancelSubmitText: 'Cancel',
             confirmSubmitClass: 'button is-success has-right-spacing',
             cancelSubmitClass: 'button is-danger',
         }).then((result) => {
