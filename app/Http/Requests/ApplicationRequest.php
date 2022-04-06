@@ -60,6 +60,8 @@ class ApplicationRequest extends FormRequest
             'performer_status' => 'nullable',
             'is_more_than_limit' => 'nullable',
             'draft' => 'nullable',
+            'resource_id' => 'nullable',
+            'table' => 'nullable',
         ];
     }
 }

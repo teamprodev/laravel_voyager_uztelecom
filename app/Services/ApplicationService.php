@@ -9,6 +9,7 @@ use App\Jobs\CreateApplicationJob;
 use App\Models\Branch;
 use App\Models\Notification;
 use App\Models\PermissionRole;
+use App\Models\Resource;
 use App\Models\SignedDocs;
 use App\Models\StatusExtented;
 use App\Models\User;
@@ -43,6 +44,12 @@ class ApplicationService
     {
         $countries = ['0' => 'Select country'];
         $countries[] = Country::get()->pluck('country_name','country_alpha3_code')->toArray();
+        $products = Resource::get();
+        $select = [];
+        for($i=0;$i<count($products);$i++)
+        {
+            $select[] = $products[$i]->name;
+        }
         $company_signer = PermissionRole::where('permission_id',166)->select('role_id')->get();
         $branch_signer = PermissionRole::where('permission_id',167)->select('role_id')->get();
         return view('site.applications.edit', [
@@ -53,6 +60,7 @@ class ApplicationService
             'users' => User::where('role_id', 5)->get(),
             'status_extented' => StatusExtented::all(),
             'countries' => $countries,
+            'products' => $select,
             'company_signers' => Roles::find($company_signer)->pluck('display_name','id'),
             'branch_signers' => Roles::find($branch_signer)->pluck('display_name','id'),
         ]);

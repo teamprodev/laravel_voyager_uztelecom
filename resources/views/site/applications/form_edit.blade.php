@@ -66,10 +66,10 @@
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
                     @if($application->currency == null)
-                    {{Aire::select(['USD' => 'USD', "SO'M" => "SO'M"], 'select', __('lang.valyuta'))
-                        ->name('currency')
-                        ->id('currency')
-                    }}
+                        {{Aire::select(['USD' => 'USD', "SO'M" => "SO'M"], 'select', __('lang.valyuta'))
+                            ->name('currency')
+                            ->id('currency')
+                        }}
                     @endif
                 </div>
                 <div class="pt-2 pb-2 w-50">
@@ -77,7 +77,8 @@
                         <h6><b>{{ __('lang.branch') }}</b></h6>
                         <select class="custom-select" name="filial_initiator_id" id="filial_initiator_id">
                             @isset($application->branch_initiator_id)
-                                <option value="{{$application->branch_initiator_id}}" selected>{{$application->branch_initiator_id}}</option>
+                                <option value="{{$application->branch_initiator_id}}"
+                                        selected>{{$application->branch_initiator_id}}</option>
                             @endisset
                             @foreach($branch as $branches)
                                 <option value="{{$branches}}">{{$branches}}</option>
@@ -139,66 +140,43 @@
         </div>
     </div>
 </div>
-<table id="tblAppendGrid"></table>
-
+<input id="resource_id" name="resource_id" class="hidden" type="text">
+<table id="table"></table>
 <script src="https://unpkg.com/jquery.appendgrid@2.0.0/dist/AppendGrid.js"></script>
+{{--@dd(json_encode($products,JSON_UNESCAPED_UNICODE))--}}
 <script>
+    const resource_id = document.getElementById('resource_id').value = {};
     var myAppendGrid = new AppendGrid({
-        element: "tblAppendGrid",
+        element: "table",
         uiFramework: "bootstrap4",
         iconFramework: "fontawesome5",
         columns: [
             {
-                name: "company",
-                display: "Company"
-            },
-            {
-                name: "name",
-                display: "Contact Person"
-            },
-            {
-                name: "country",
-                display: "Country",
+                name: "resource_id",
+                display: "Product",
                 type: "select",
-                ctrlOptions: [
-                    "",
-                    "Germany",
-                    "Hong Kong",
-                    "Japan",
-                    "Malaysia",
-                    "Taiwan",
-                    "United Kingdom",
-                    "United States"
-                ]
-            },
-            {
-                name: "isNPO",
-                display: "NPO?",
-                type: "checkbox",
-                cellClass: "text-center"
-            },
-            {
-                name: "orderPlaced",
-                display: "Order Placed",
-                type: "number",
-                ctrlAttr: {
-                    min: 0,
-                    max: 10000
+                ctrlOptions: {!! json_encode($products,JSON_UNESCAPED_UNICODE)!!},
+                afterRowRemoved: function(rowIndex) {
+                    if (removeRow(rowIndex)){
+                        console.log(document.getElementById('resource_id').value)
+                        document.getElementById('resource_id').value = null
+                        console.log(document.getElementById('resource_id').value)
+                    }
+
+                },
+                events: {
+                    // Add change event
+                    change: function(e) {
+                        if (e.target.value) {
+                            e.target.style.backgroundColor = "#99FF99";
+                            resource_id[e.uniqueIndex] = e.target.value;
+                            console.log(resource_id)
+                        } else {
+                            e.target.style.backgroundColor = null;
+                        }
+                    }
                 }
             },
-            {
-                name: "memberSince",
-                display: "Member Since",
-                type: "date",
-                ctrlAttr: {
-                    maxlength: 10
-                }
-            },
-            {
-                name: "uid",
-                type: "hidden",
-                value: "0"
-            }
         ],
         // Optional CSS classes, to make table slimmer!
         sectionClasses: {
@@ -291,88 +269,96 @@
             }
         ]);
     });
-</script>
-   <div class="grid grid-cols-2 px-6">
-        @if($application->file_basis == 'null' ||$application->file_basis == null)
-            <div>
-                <h6 class="my-3">{{ __('lang.base') }}</h6>
-                <div id="file_basis"></div>
-            </div>
-        @endif
-        @if($application->file_tech_spec == 'null' ||$application->file_tech_spec == null)
-           <div>
-                <h6 class="my-3">{{ __('lang.tz') }}</h6>
-                <div id="file_tech_spec"></div>
-           </div>
-        @endif
-        @if($application->other_files == 'null' ||$application->other_files == null)
-            <div>
-                <h6 class="my-3">{{ __('lang.doc') }}</h6>
-                <div id="other_files"></div>
-            </div>
-        @endif
-   </div>
-    {{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}
-    <div class="w-full text-center pb-8 ">
-        <button class="bg-blue-500 hover:bg-blue-700 mx-4 p-2 transition duration-300 rounded-md text-white"
-            name="draft" value="1">
-            {{ __('lang.save_close') }}
-        </button>
-        <button class="bg-blue-500 hover:bg-blue-700 mx-4 p-2 transition duration-300 rounded-md text-white"
-                name="draft" value="0">
-            {{ __('lang.save_send') }}
-        </button>
-    </div>
-    <div class="w-full text-center pb-8 ">
+    function functionMy()
+    {
+        var thestring = "";
+        for (let i in resource_id) {
+            thestring += resource_id[i] + ",";
+        }
+        thestring = thestring.substring(0, thestring.length -2);
 
-    </div>
+        console.log(document.getElementById('resource_id').value = thestring);
+        console.log(typeof thestring);
+    }
+</script>
+<div class="grid grid-cols-2 px-6">
+    @if($application->file_basis == 'null' ||$application->file_basis == null)
+        <div>
+            <h6 class="my-3">{{ __('lang.base') }}</h6>
+            <div id="file_basis"></div>
+        </div>
+    @endif
+    @if($application->file_tech_spec == 'null' ||$application->file_tech_spec == null)
+        <div>
+            <h6 class="my-3">{{ __('lang.tz') }}</h6>
+            <div id="file_tech_spec"></div>
+        </div>
+    @endif
+    @if($application->other_files == 'null' ||$application->other_files == null)
+        <div>
+            <h6 class="my-3">{{ __('lang.doc') }}</h6>
+            <div id="other_files"></div>
+        </div>
+    @endif
+</div>
+{{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}
+<div class="w-full text-center pb-8 ">
+    <button class="bg-blue-500 hover:bg-blue-700 mx-4 p-2 transition duration-300 rounded-md text-white"
+            name="draft" value="1">
+        {{ __('lang.save_close') }}
+    </button>
+    <button onclick="functionMy()" class="bg-blue-500 hover:bg-blue-700 mx-4 p-2 transition duration-300 rounded-md text-white"
+            name="draft" value="0">
+        {{ __('lang.save_send') }}
+    </button>
+</div>
+<div class="w-full text-center pb-8 ">
+
+</div>
 <script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.min.js"></script>
 <script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.legacy.min.js" nomodule></script>
 <script src="https://releases.transloadit.com/uppy/locales/v2.0.5/ru_RU.min.js"></script>
 @if($application->is_more_than_limit == null)
-<input id="is_more_than_limit" class="hidden">
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    Swal.fire({
-        title: 'Do you want to save the changes?',
-        showDenyButton: true,
-        showCancelButton: true,
-        confirmSubmitText: 'Confirm',
-        cancelSubmitText: 'Cancel',
-        confirmSubmitClass: 'button is-success has-right-spacing',
-        cancelSubmitClass: 'button is-danger',
-    }).then((result) => {
-        if(result.isConfirmed == true)
-        {
-            document.getElementById('is_more_than_limit').value = 1;
-            ajax();
-        } else if (result.isDenied) {
-            document.getElementById('is_more_than_limit').value = 0;
-            ajax();
-        }
-    })
-
-    function ajax()
-    {
-        $.ajax({
-            url: "{{ route('site.applications.update', $application->id) }}",
-            method: "POST",
-            data:{
-                _token: '{{ csrf_token() }}',
-                is_more_than_limit: document.getElementById('is_more_than_limit').value,
-            },
-            success: function()
-            {
-                location.reload()
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console.log(xhr.status);
-                console.log(thrownError);
+    <input id="is_more_than_limit" class="hidden">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            title: 'Do you want to save the changes?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmSubmitText: 'Confirm',
+            cancelSubmitText: 'Cancel',
+            confirmSubmitClass: 'button is-success has-right-spacing',
+            cancelSubmitClass: 'button is-danger',
+        }).then((result) => {
+            if (result.isConfirmed == true) {
+                document.getElementById('is_more_than_limit').value = 1;
+                ajax();
+            } else if (result.isDenied) {
+                document.getElementById('is_more_than_limit').value = 0;
+                ajax();
             }
         })
-    }
 
-</script>
+        function ajax() {
+            $.ajax({
+                url: "{{ route('site.applications.update', $application->id) }}",
+                method: "POST",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    is_more_than_limit: document.getElementById('is_more_than_limit').value,
+                },
+                success: function () {
+                    location.reload()
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            })
+        }
+
+    </script>
 @endif
 <script>
     var uppy = new Uppy.Core({

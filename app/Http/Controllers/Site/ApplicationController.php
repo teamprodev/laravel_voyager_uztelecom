@@ -13,6 +13,7 @@ use App\Models\Country;
 use App\Models\Notification;
 use App\Models\PermissionRole;
 use App\Models\Purchase;
+use App\Models\Resource;
 use App\Models\Roles;
 use App\Models\Subject;
 use App\Models\User;
@@ -151,6 +152,15 @@ class ApplicationController extends Controller
     }
     public function update(Application $application, ApplicationRequest $request){
         $data = $request->validated();
+        $explode = explode(',',$data['resource_id']);
+        $id = [];
+        for ($i = 0; $i < count($explode); $i++)
+        {
+            $all = Resource::where('name','like',"%{$explode[$i]}%")->first();
+            $id[] = $all->id;
+            $data['resource_id'] = json_encode($id);
+        }
+
         if (isset($data['performer_user_id']))
         {
             $mytime = Carbon::now();
