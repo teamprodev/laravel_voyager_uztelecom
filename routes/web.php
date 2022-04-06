@@ -71,6 +71,14 @@ Route::group([
                     'prefix' => 'applications',
                 ],
                 function(){
+                    Route::group(
+                        [
+                            'as' => 'drafts',
+                            'prefix' => 'drafts',
+                        ],
+                    function (){
+                        Route::get('', [ApplicationController::class, 'show_draft']);
+                    });
                     Route::get('', [ApplicationController::class, 'index'])->name('index');
                     Route::get('list', [ApplicationController::class, 'getdata'])->name('list');
                     Route::get('list/signedocs', [ApplicationController::class, 'SignedDocs'])->name('list.signedocs');

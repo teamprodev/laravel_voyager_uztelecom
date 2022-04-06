@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Site;
 
+use App\DataTables\DraftDataTable;
 use App\Http\Requests\ApplicationRequest;
 use App\Http\Requests\VoteApplicationRequest;
 use App\Jobs\CreateApplicationJob;
@@ -10,6 +11,7 @@ use App\Jobs\VoteJob;
 use App\Models\Application;
 use App\Models\Branch;
 use App\Models\Country;
+use App\Models\Draft;
 use App\Models\Notification;
 use App\Models\PermissionRole;
 use App\Models\Purchase;
@@ -47,47 +49,49 @@ class ApplicationController extends Controller
     }
     public function index(Request $request)
     {
+        if ($request->ajax()) {
+            $query = Application::query()
+                ->where('draft', null)
+                ->orWhere('draft','==', 0)
+                ->latest('id')
+                ->get();
+            $user = auth()->user();
+
+            if ($user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer'))
+            {
+                $query = $query->where('performer_user_id', $user->id);
+            }
+            elseif($user->hasPermission('Company_Leader'))
+            {
+                $query = $query->where('status', 'agreed');
+            }
+            elseif($user->hasPermission('Branch_Leader'))
+            {
+                $query = $query->where('status', 'accepted');
+            }
+            elseif($user->role_id == 7)
+            {
+                $query = Application::query()->where('status', "accepted")->where('signers','like',"%{$user->role_id}%");
+            }
+            elseif ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
+            {
+                $query = Application::query()->where('signers','like',"%{$user->role_id}%");
+            }
+            else {
+                $query = $query->where('user_id',$user->id);
+            }
+
+            return Datatables::of($query)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $edit = route('site.applications.edit', $row->id);
+                    $show = route('site.applications.show', $row->id);
+                    return "<a href='{$edit}' class='edit btn btn-success btn-sm'>Edit</a> <a href='{$show}' class='show btn btn-warning btn-sm'>Show</a>";
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
         return view('site.applications.index');
-    }
-
-    public function getdata(Request $request)
-    {
-        $query = Application::query()->orderBy('id', 'desc');
-        $user = auth()->user();
-
-        if ($user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer'))
-        {
-            $query = $query->where('performer_user_id', $user->id);
-        }
-        elseif($user->hasPermission('Company_Leader'))
-        {
-            $query = $query->where('status', 'agreed');
-        }
-        elseif($user->hasPermission('Branch_Leader'))
-        {
-            $query = $query->where('status', 'accepted');
-        }
-        elseif($user->role_id == 7)
-        {
-            $query = Application::query()->where('status', "accepted")->where('signers','like',"%{$user->role_id}%");
-        }
-        elseif ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
-        {
-            $query = Application::query()->where('signers','like',"%{$user->role_id}%");
-        }
-        else {
-            $query = $query->where('user_id',$user->id);
-        }
-
-        return Datatables::of($query)
-            ->addIndexColumn()
-            ->addColumn('action', function($row){
-                $edit = route('site.applications.edit', $row->id);
-                $show = route('site.applications.show', $row->id);
-                return "<a href='{$edit}' class='edit btn btn-success btn-sm'>Edit</a> <a href='{$show}' class='show btn btn-warning btn-sm'>Show</a>";
-            })
-            ->rawColumns(['action'])
-            ->make(true);
     }
 
     public function show(Application $application, $view = false)
@@ -100,6 +104,7 @@ class ApplicationController extends Controller
         }
         return $this->service->show($application);
     }
+
     public function SignedDocs()
     {
         $data = SignedDocs::where('application_id',Cache::get('application_id'))->where('user_id', '!=',null)->get();
@@ -138,6 +143,7 @@ class ApplicationController extends Controller
         $application->other_files = json_encode($other_files);
         $application->update();
     }
+
     public function create()
     {
         $application = new Application();
@@ -146,10 +152,12 @@ class ApplicationController extends Controller
         $data = Application::query()->latest('id')->first();
         return redirect()->route('site.applications.edit',$data->id)->with('Alert','adasdas');
     }
+
     public function edit(Application $application)
     {
         return $this->service->edit($application);
     }
+
     public function update(Application $application, ApplicationRequest $request){
         $data = $request->validated();
         $explode = explode(',',$data['resource_id']);
@@ -194,6 +202,7 @@ class ApplicationController extends Controller
 
         return redirect()->back()->with('danger', trans('site.application_failed'));
     }
+
     public function store(ApplicationRequest $request)
     {
         try{
@@ -204,13 +213,16 @@ class ApplicationController extends Controller
             return redirect()->back()->with('danger', trans('site.application_failed'));
         }
     }
+
     public function getAll(){
         $applications = Application::all();
         return response()->json($applications);
     }
+
     public function form(Application $application , Request $request){
         return route('site.applications.form', compact($application));
     }
+
     public function vote(Application $application, VoteApplicationRequest $request){
         try{
             $this->dispatchNow(new VoteJob($application, $request));
@@ -220,5 +232,27 @@ class ApplicationController extends Controller
             return redirect()->route('site.applications.index')->with('danger', 'Something went wrong!');
 
         }
+    }
+
+    public function show_draft(Request $request)
+    {
+        if ($request->ajax()) {
+            $user = auth()->user();
+            $data = Application::query()
+                ->where('user_id', $user->id)
+                ->where('draft', !null)
+                ->latest('id')
+                ->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $edit = route('site.applications.edit', $row->id);
+                    $show = route('site.applications.show', $row->id);
+                    return "<a href='{$edit}' class='edit btn btn-success btn-sm'>Edit</a> <a href='{$show}' class='show btn btn-warning btn-sm'>Show</a>";
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('site.applications.draft');
     }
 }

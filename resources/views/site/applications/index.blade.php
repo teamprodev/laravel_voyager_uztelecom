@@ -25,38 +25,38 @@
 </div>
 @push('scripts')
 <script>
-  $(function () {
+    $(function () {
+        var table = $('#yajra-datatable').DataTable({
+            order: [[ 0, "desc" ]],
+            processing: true,
+            serverSide: true,
+            ajax:
+                 "{{ route('site.applications.index') }}",
 
-    var table = $('#yajra-datatable').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax:
-             "{{ route('site.applications.list') }}",
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'initiator', name: 'initiator'},
+                {data: 'name', name: 'name'},
+                {data: 'delivery_date', name: 'delivery_date'},
+                {
+                    "data": "",
+                    render: function (data, type, row) {
+                            var details = row.planned_price + " " + row.currency ;
+                                return details;
+                        }
+                },
+                {data: 'incoterms', name: 'incoterms'},
 
-        columns: [
-            {data: 'id', name: 'id'},
-            {data: 'initiator', name: 'initiator'},
-            {data: 'name', name: 'name'},
-            {data: 'delivery_date', name: 'delivery_date'},
-            {
-                "data": "",
-                render: function (data, type, row) {
-                        var details = row.planned_price + " " + row.currency ;
-                            return details;
-                    }
-            },
-            {data: 'incoterms', name: 'incoterms'},
-
-            {data: 'created_at', name: 'created_at'},
-            {data: 'status', name: 'status'},
-            {
-                data: 'action',
-                name: 'action',
-                orderable: true,
-                searchable: true
-            },
-        ]
-    });
+                {data: 'created_at', name: 'created_at'},
+                {data: 'status', name: 'status'},
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: true,
+                    searchable: true
+                },
+            ]
+        });
 
 
   });

@@ -1,6 +1,10 @@
 <?php
 
 return [
+    "drafts" => "Черновик",
+    "faq" => "База знаний",
+    "applications" => "Все заявки",
+    "create_application" => "Создать заявку",
     "accept" => "Принять",
     "back" => "Назад",
     "base" => "Основание",

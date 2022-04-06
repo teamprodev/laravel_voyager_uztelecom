@@ -1,6 +1,10 @@
 <?php
 
 return [
+    "drafts" => "Qoralama",
+    "faq" => "Ko'p so'raldigan savollar",
+    "applications" => "Barcha Buyurtmalar",
+    "create_application" => "Buyurtma yaratish",
     "accept" => "Qabul qilish",
     "back" => "Orqaga",
     "base" => "Asos",
