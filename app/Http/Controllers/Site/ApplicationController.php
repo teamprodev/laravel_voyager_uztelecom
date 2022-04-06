@@ -48,47 +48,45 @@ class ApplicationController extends Controller
     }
     public function index(Request $request)
     {
+        if ($request->ajax()) {
+            $query = Application::query()->where('draft', null)->orWhere('draft','==', 0)->orderBy('id', 'desc');
+            $user = auth()->user();
+
+            if ($user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer'))
+            {
+                $query = $query->where('performer_user_id', $user->id);
+            }
+            elseif($user->hasPermission('Company_Leader'))
+            {
+                $query = $query->where('status', 'agreed');
+            }
+            elseif($user->hasPermission('Branch_Leader'))
+            {
+                $query = $query->where('status', 'accepted');
+            }
+            elseif($user->role_id == 7)
+            {
+                $query = Application::query()->where('status', "accepted")->where('signers','like',"%{$user->role_id}%");
+            }
+            elseif ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
+            {
+                $query = Application::query()->where('signers','like',"%{$user->role_id}%");
+            }
+            else {
+                $query = $query->where('user_id',$user->id);
+            }
+
+            return Datatables::of($query)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $edit = route('site.applications.edit', $row->id);
+                    $show = route('site.applications.show', $row->id);
+                    return "<a href='{$edit}' class='edit btn btn-success btn-sm'>Edit</a> <a href='{$show}' class='show btn btn-warning btn-sm'>Show</a>";
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
         return view('site.applications.index');
-    }
-
-    public function getdata(Request $request)
-    {
-        $query = Application::query()->orderBy('id', 'desc');
-        $user = auth()->user();
-
-        if ($user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer'))
-        {
-            $query = $query->where('performer_user_id', $user->id);
-        }
-        elseif($user->hasPermission('Company_Leader'))
-        {
-            $query = $query->where('status', 'agreed');
-        }
-        elseif($user->hasPermission('Branch_Leader'))
-        {
-            $query = $query->where('status', 'accepted');
-        }
-        elseif($user->role_id == 7)
-        {
-            $query = Application::query()->where('status', "accepted")->where('signers','like',"%{$user->role_id}%");
-        }
-        elseif ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
-        {
-            $query = Application::query()->where('signers','like',"%{$user->role_id}%");
-        }
-        else {
-            $query = $query->where('user_id',$user->id);
-        }
-
-        return Datatables::of($query)
-            ->addIndexColumn()
-            ->addColumn('action', function($row){
-                $edit = route('site.applications.edit', $row->id);
-                $show = route('site.applications.show', $row->id);
-                return "<a href='{$edit}' class='edit btn btn-success btn-sm'>Edit</a> <a href='{$show}' class='show btn btn-warning btn-sm'>Show</a>";
-            })
-            ->rawColumns(['action'])
-            ->make(true);
     }
 
     public function show(Application $application, $view = false)
@@ -226,7 +224,7 @@ class ApplicationController extends Controller
     {
         if ($request->ajax()) {
             $user = auth()->user();
-            $data = Application::query()->where('user_id',$user->id)->where('draft','==', '1')->orderBy('id', 'desc');
+            $data = Application::query()->where('draft', !null)->orderBy('id', 'desc');
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
