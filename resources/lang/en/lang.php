@@ -1,6 +1,9 @@
 <?php
 
 return [
+    "alert" => "Where would you like to submit your application?",
+    "branch_name" => "Branch management",
+    "company" => "Company management",
     "drafts" => "Drafts",
     "faq" => "FAQ",
     "applications" => "All applications",

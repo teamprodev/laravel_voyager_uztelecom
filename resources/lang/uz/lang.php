@@ -1,6 +1,9 @@
 <?php
 
 return [
+    "alert" => "Arizangizni qayerga yubormoqchisiz?",
+    "branch_name" => "Filial rahbariyatiga",
+    "company" => "Kompaniya rahbariyatiga",
     "drafts" => "Qoralama",
     "faq" => "Ko'p so'raldigan savollar",
     "applications" => "Barcha Buyurtmalar",

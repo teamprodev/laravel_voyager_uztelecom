@@ -325,11 +325,11 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         Swal.fire({
-            title: 'Do you want to save the changes?',
+            title: 'Куда вы хотите отправить заявка?',
             showDenyButton: true,
             showCancelButton: true,
             confirmSubmitText: 'Confirm',
-            cancelSubmitText: 'Cancel',
+            cancelSubmitText: 'Caassncel',
             confirmSubmitClass: 'button is-success has-right-spacing',
             cancelSubmitClass: 'button is-danger',
         }).then((result) => {
