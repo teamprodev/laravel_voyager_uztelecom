@@ -1,6 +1,10 @@
 <?php
 
 return [
+    "drafts" => "Drafts",
+    "faq" => "FAQ",
+    "applications" => "All applications",
+    "create_application" => "Create application",
     "accept" => "Accepting",
     "back" => "Back",
     "base" => "Base",
@@ -60,7 +64,7 @@ return [
     "table_5" => "Required to bring product (Incoterms)",
     "table_6" => "Date of created date",
     "table_7" => "Status",
-    "table_8" => "Effort",
+    "table_8" => "Action",
     "table_9" => "Purchase Content (Based for Purchase)",
     "tender" => "Tender",
     "terms" => "You must accept the terms",

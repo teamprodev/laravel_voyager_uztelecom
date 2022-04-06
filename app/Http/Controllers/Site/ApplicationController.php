@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Site;
 
+use App\DataTables\DraftDataTable;
 use App\Http\Requests\ApplicationRequest;
 use App\Http\Requests\VoteApplicationRequest;
 use App\Jobs\CreateApplicationJob;
@@ -10,6 +11,7 @@ use App\Jobs\VoteJob;
 use App\Models\Application;
 use App\Models\Branch;
 use App\Models\Country;
+use App\Models\Draft;
 use App\Models\Notification;
 use App\Models\PermissionRole;
 use App\Models\Purchase;
@@ -99,6 +101,7 @@ class ApplicationController extends Controller
         }
         return $this->service->show($application);
     }
+
     public function SignedDocs()
     {
         $data = SignedDocs::where('application_id',Cache::get('application_id'))->where('user_id', '!=',null)->get();
@@ -137,6 +140,7 @@ class ApplicationController extends Controller
         $application->other_files = json_encode($other_files);
         $application->update();
     }
+
     public function create()
     {
         $application = new Application();
@@ -145,10 +149,12 @@ class ApplicationController extends Controller
         $data = Application::query()->latest('id')->first();
         return redirect()->route('site.applications.edit',$data->id)->with('Alert','adasdas');
     }
+
     public function edit(Application $application)
     {
         return $this->service->edit($application);
     }
+
     public function update(Application $application, ApplicationRequest $request){
         $data = $request->validated();
         if (isset($data['performer_user_id']))
@@ -184,6 +190,7 @@ class ApplicationController extends Controller
 
         return redirect()->back()->with('danger', trans('site.application_failed'));
     }
+
     public function store(ApplicationRequest $request)
     {
         try{
@@ -194,13 +201,16 @@ class ApplicationController extends Controller
             return redirect()->back()->with('danger', trans('site.application_failed'));
         }
     }
+
     public function getAll(){
         $applications = Application::all();
         return response()->json($applications);
     }
+
     public function form(Application $application , Request $request){
         return route('site.applications.form', compact($application));
     }
+
     public function vote(Application $application, VoteApplicationRequest $request){
         try{
             $this->dispatchNow(new VoteJob($application, $request));
@@ -210,5 +220,23 @@ class ApplicationController extends Controller
             return redirect()->route('site.applications.index')->with('danger', 'Something went wrong!');
 
         }
+    }
+
+    public function show_draft(Request $request)
+    {
+        if ($request->ajax()) {
+            $user = auth()->user();
+            $data = Application::query()->where('user_id',$user->id)->where('draft','==', '1')->orderBy('id', 'desc');
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $edit = route('site.applications.edit', $row->id);
+                    $show = route('site.applications.show', $row->id);
+                    return "<a href='{$edit}' class='edit btn btn-success btn-sm'>Edit</a> <a href='{$show}' class='show btn btn-warning btn-sm'>Show</a>";
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('site.applications.draft');
     }
 }
