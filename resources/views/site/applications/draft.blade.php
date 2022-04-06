@@ -1,10 +1,8 @@
 @extends('site.layouts.app')
 @section('center_content')
-    <div id="section" class="pt-6">
-        <a href="{{route('site.applications.create')}}"
-           class="ml-12 bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white mb-8">
-            {{ __('lang.create') }}
-        </a>
+    <h2 class="ml-5 pt-8">
+        {{ __('lang.drafts') }}
+    </h2>
         <div class="w-11/12 mx-auto pt-8 pb-16">
             <table class="data-table">
                 <thead>
