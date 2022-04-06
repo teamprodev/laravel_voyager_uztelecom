@@ -160,7 +160,7 @@ class ApplicationController extends Controller
 
     public function update(Application $application, ApplicationRequest $request){
         $data = $request->validated();
-        if($data['resource_id'] != "[object Object]"||$data['resource_id'] != null)
+        if($data['resource_id'] != null || $data['resource_id'] != "[object Object]")
         {
             $explode = explode(',',$data['resource_id']);
             $id = [];
