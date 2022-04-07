@@ -86,7 +86,18 @@ class ApplicationController extends Controller
                 ->addColumn('action', function($row){
                     $edit = route('site.applications.edit', $row->id);
                     $show = route('site.applications.show', $row->id);
-                    return "<a href='{$edit}' class='edit btn btn-success btn-sm'>Edit</a> <a href='{$show}' class='show btn btn-warning btn-sm'>Show</a>";
+                    $user = auth()->user();
+                    if($user->id == $row->user_id || $user->hasPermission('Company_Performer'||'Branch_Performer'))
+                    {
+                        return "
+                            <a href='{$edit}' class='edit btn btn-success btn-sm'>Edit</a>
+                            <a href='{$show}' class='show btn btn-warning btn-sm'>Show</a>";
+                    }else{
+                        return "
+                            <a href='{$show}' class='show btn btn-warning btn-sm'>Show</a>";
+                    }
+
+
                 })
                 ->rawColumns(['action'])
                 ->make(true);
