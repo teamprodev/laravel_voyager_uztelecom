@@ -180,7 +180,39 @@
   });
 console.log("{{$application->id}}");
 </script>
-@if($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer') || $access && $user->role_id == 7)
+@if(auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
+            @if(!isset($application->performer_user_id))
+                @php
+                    $role_users = \App\Models\Permission::with('roles.users')->where('key', 'Company_Performer')->first()->roles->map->users; // company performer
+                    $users = [];
+                    foreach ($role_users as $role_user) {
+                        foreach ($role_user as $user)
+                        $users[] = $user;
+                    }
+                @endphp
+                <select class="col-md-6 custom-select" name="performer_user_id" id="performer_user_id">
+                    @foreach($users as $user)
+                        <option value="{{$user->id}}">{{$user->name}}</option>
+                    @endforeach
+                </select>
+            @endif
+@elseif(auth()->user()->hasPermission('Branch_Leader'))
+            @if(!isset($application->performer_user_id))
+                @php
+                    $role_users = \App\Models\Permission::with('roles.users')->where('key', 'Branch_Performer')->first()->roles->map->users; // company performer
+                    $users = [];
+                    foreach ($role_users as $role_user) {
+                        foreach ($role_user as $user)
+                        $users[] = $user;
+                    }
+                @endphp
+                <select class="col-md-6 custom-select" name="performer_user_id" id="performer_user_id">
+                    @foreach($users as $user)
+                        <option value="{{$user->id}}">{{$user->name}}</option>
+                    @endforeach
+                </select>
+            @endif
+@elseif($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer') || $access && $user->role_id == 7)
                <div class="px-6">
                     <form name="testform" action="{{route('site.applications.imzo.sign',$application->id)}}" method="POST">
                         @csrf
