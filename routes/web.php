@@ -71,16 +71,22 @@ Route::group([
                     'prefix' => 'applications',
                 ],
                 function(){
+                    Route::group(
+                        [
+                            'as' => 'drafts',
+                            'prefix' => 'drafts',
+                        ],
+                    function (){
+                        Route::get('', [ApplicationController::class, 'show_draft']);
+                    });
                     Route::get('', [ApplicationController::class, 'index'])->name('index');
                     Route::get('list', [ApplicationController::class, 'getdata'])->name('list');
                     Route::get('list/signedocs', [ApplicationController::class, 'SignedDocs'])->name('list.signedocs');
                     Route::get('{application}/show', [ApplicationController::class, 'show'])->name('show');
                     Route::get('{application}/edit', [ApplicationController::class, 'edit'])->name('edit');
                     Route::post('{application}/update', [ApplicationController::class, 'update'])->name('update');
-                    Route::get('{application}/signers', [ApplicationController::class, 'signers'])->name('signers');
                     Route::get('create', [ApplicationController::class, 'create'])->name('create');
                     Route::post('store', [ApplicationController::class, 'store'])->name('store');
-                    Route::post('ajax', [ApplicationController::class, 'ajax'])->name('ajax');
                     Route::put('{application}/vote', [ApplicationController::class, 'vote'])->name('vote');
 //                    Route::post('cancel', [ApplicationController::class, 'cancel'])->name('cancel');
 

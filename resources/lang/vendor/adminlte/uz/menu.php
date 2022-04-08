@@ -1,9 +1,9 @@
 <?php
 
 return [
-    "Important" => "#VALUE!",
-    "Information" => "#VALUE!",
-    "Warning" => "#VALUE!",
+    "Important" => "",
+    "Information" => "",
+    "Warning" => "",
     "account_settings" => "PROFIL SOZLAMALARI",
     "blog" => "Blog",
     "change_password" => "Parolni o'zgartirish",
@@ -14,10 +14,10 @@ return [
     "level_three" => "3-daraja",
     "level_two" => "2-bosqich",
     "main_navigation" => "Asosiy navigatsiya",
-    "menu" => "#VALUE!",
+    "menu" => "",
     "multilevel" => "Ko'p daraja",
     "pages" => "Sahifalar",
     "profile" => "Profil",
-    "users" => "#VALUE!",
+    "users" => "",
     "warning" => "Ogohlantirish"
 ];

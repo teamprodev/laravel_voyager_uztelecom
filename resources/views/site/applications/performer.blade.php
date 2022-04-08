@@ -3,89 +3,90 @@
         <div class="p-6">
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::select($branch, 'select', 'Филиал заказчик по контракту')
+                    {{Aire::select($branch, 'select', __('lang.performer_branch'))
                         ->name('branch_customer_id')
                         }}
-                    {{Aire::input('bio','Номер лота')
+                    {{Aire::input('bio', __('lang.performer_lot'))
                         ->name('lot_number')
                     }}
-                    {{Aire::input('bio','Номер договора')
+                    {{Aire::input('bio', __('lang.performer_contract_num'))
                         ->name('contract_number')
                     }}
-                    {{Aire::dateTimeLocal('bio','Дата договора')
+                    {{Aire::dateTimeLocal('bio', __('lang.performer_contract_date'))
                         ->name('contract_date')
                     }}
-                    {{Aire::dateTimeLocal('bio','Дата протокола')
+                    {{Aire::dateTimeLocal('bio', __('lang.performer_protocol_date'))
                         ->name('protocol_date')
                     }}
 
-                    {{Aire::textArea('bio','Предмет договора (контракта) и краткая характеристика')
+                    {{Aire::textArea('bio', __('lang.performer_contract_info'))
                         ->name('contract_info')
                         ->rows(3)
                         ->cols(40)
                     }}
-                    {{Aire::checkbox('checkbox', 'С ндс')
+                    {{Aire::checkbox('checkbox', __('lang.performer_nds'))
                        ->name('with_nds')
                     }}
 
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::select($countries,'bio','Страна происхождения товаров (услуг)')
+                    {{Aire::select($countries,'bio', __('performer_country'))
                         ->name('country_produced_id')
                     }}
-                    {{Aire::input('bio','Итоговая реальная сумма')
+                    {{Aire::input('bio', __('performer_price'))
                         ->name('contract_price')
                     }}
 
-                    {{Aire::input('bio','Наименование поставщика')
+                    {{Aire::input('bio', __('performer_supplier'))
                         ->name('supplier_name')
                     }}
-                    {{Aire::input('bio','ИНН поставщика')
+                    {{Aire::input('bio', __('performer_inn'))
                         ->name('supplier_inn')
                     }}
-                    {{Aire::textArea('bio','Информация о продукте')
+                    {{Aire::textArea('bio', __('performer_info'))
                         ->name('product_info')
                         ->rows(3)
                         ->cols(40)
                     }}
-                    {{Aire::input('bio','Номер протокола')
+                    {{Aire::input('bio', __('lang.performer_protocol_num'))
                         ->name('protocol_number')
                     }}
+                    <input class="hidden" name="status" id="status" type="text">
+                    <select onchange="myFunction()" class="col-md-6 custom-select" name="performer_status" id="performer_status">
+                        @foreach($status_extented as $status)
+                        <option value="{{$status->name}}">{{$status->name}}</option>
+                        @endforeach
+                    </select>
+                    <div id="a" class="hidden mb-3">
+                        <label for="message-text" class="col-form-label">{{ __('lang.table_23') }}:</label>
+                        <input class="form-control" name="report_if_cancelled" id="report_if_cancelled">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="row ml-4 pb-4">
-        <input class="hidden" name="status" id="status" type="text">
-        <button  onclick="status11()" type="submit" class="btn btn-success col-md-2">Performed</button>
-        <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-danger col-md-2 mx-2">Cancelled</button>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="message-text" class="col-form-label">Коментария:</label>
-                            <input class="form-control" name="report_if_cancelled" id="report_if_cancelled">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" onclick="status00()" class="btn btn-primary">Send message</button>
-                </div>
-            </div>
-        </div>
+        <button type="submit" class="btn btn-success">{{ __('lang.save') }}</button>
     </div>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </div>
 <script>
+    function myFunction()
+    {
+        if (document.getElementById('performer_status').value != 'Отменен')
+        {
+            document.getElementById('a').classList.add('hidden');
+
+        }else if(document.getElementById('performer_status').value == 'доставлен')
+        {
+            document.getElementById('status').value = 'performed';
+        }else{
+            document.getElementById('a').classList.remove('hidden');
+            document.getElementById('status').value = 'cancelled';
+    }
+
+    }
     function status11()
     {
         document.getElementById('status').value = 'performed';
@@ -97,10 +98,6 @@
             timer: 1000
         })
     }
-    function status00()
-    {
-         document.getElementById('status').value = 'cancelled';
-8    }
 </script>
 
 

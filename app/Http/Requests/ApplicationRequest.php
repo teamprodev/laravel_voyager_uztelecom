@@ -24,6 +24,7 @@ class ApplicationRequest extends FormRequest
     public function rules()
     {
         return [
+            'save' => '',
             'initiator' => 'nullable',
             'purchase_basis' => 'nullable',
             'specification' => 'nullable',
@@ -56,6 +57,11 @@ class ApplicationRequest extends FormRequest
             'supplier_inn' => 'nullable',
             'status' => 'nullable',
             'report_if_cancelled' => 'nullable',
+            'performer_status' => 'nullable',
+            'is_more_than_limit' => 'nullable',
+            'draft' => 'nullable',
+            'resource_id' => 'nullable',
+            'table' => 'nullable',
         ];
     }
 }

@@ -59,6 +59,11 @@ class CreateApplicationJob implements ShouldQueue
             $application->country_produced_id = $this->applicationRequest->filial_initiator_id;
             $application->with_nds = $this->applicationRequest->with_nds;
             $application->signers = json_encode($this->applicationRequest->signers);
+            if ($this->applicationRequest->save == 1){
+                $application->draft = 1;
+            }elseif($this->applicationRequest->save == 0){
+                $application->draft = 0;
+            }
             $application->save();
         } catch (\Exception $exception){
             DB::rollBack();

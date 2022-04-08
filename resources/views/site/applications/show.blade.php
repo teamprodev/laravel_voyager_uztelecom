@@ -8,52 +8,52 @@
         <div class="p-6">
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::input('bio','Ташаббускор (буюртмачи номи )')
+                    {{Aire::input('bio', __('lang.table_1'))
                         ->name('initiator')
                         ->value($application->initiator)
                         ->disabled()
                     }}
-                    {{Aire::textArea('bio','Харид мазмуни (сотиб олиш учун асос)')
+                    {{Aire::textArea('bio', __('lang.table_9'))
                         ->name('purchase_basis')
                         ->value($application->purchase_basis)
                         ->rows(3)
                         ->cols(40)
                         ->disabled()
                     }}
-                    {{Aire::textArea('bio','Сотиб олинадиган махсулот тавсифи (техник характери)')
+                    {{Aire::textArea('bio', __('lang.table_10'))
                         ->name('specification')
                         ->value($application->specification)
                         ->rows(3)
                         ->cols(40)
                         ->disabled()
                     }}
-                    {{Aire::input('bio','Махсулот келишининг муддати')
+                    {{Aire::input('bio', __('lang.table_13'))
                         ->name('delivery_date')
                         ->value($application->delivery_date)
                         ->disabled()
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::input('bio','Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)')
+                    {{Aire::input('bio', __('lang.table_2'))
                         ->name('name')
                         ->value($application->name)
                         ->disabled()
                     }}
-                    {{Aire::textArea('bio','Асос (харидлар режаси, раҳбарият томонидан билдирги)')
+                    {{Aire::textArea('bio', __('lang.table_11'))
                         ->name('basis')
                         ->value($application->basis)
                         ->rows(3)
                         ->cols(40)
                         ->disabled()
                     }}
-                    {{Aire::textArea('bio','Алоҳида талаблар')
+                    {{Aire::textArea('bio', __('lang.table_12'))
                         ->name('separate_requirements')
                         ->value($application->separate_requirements)
                         ->rows(3)
                         ->cols(40)
                         ->disabled()
                     }}
-                    {{Aire::input('bio','Махсулот сифати учун кафолат муддати (иш, хизмат)')
+                    {{Aire::input('bio', __('lang.table_14'))
                         ->name('expire_warranty_date')
                         ->value($application->expire_warranty_date)
                         ->disabled()
@@ -62,7 +62,7 @@
             </div>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::input('bio','Харид режаси (сумма)')
+                    {{Aire::input('bio', __('lang.table_4'))
                         ->name('planned_price')
                         ->value($application->planned_price)
                         ->id('summa')
@@ -75,7 +75,7 @@
                         ->class('hidden')
                         ->disabled()
                     }}
-                    {{Aire::select(['USD' => 'USD', 'UZS' => 'UZS'], 'select', 'Валюта')
+                    {{Aire::select(['USD' => 'USD', 'UZS' => 'UZS'], 'select', __('lang.valyuta'))
                     ->name('currency')
                     ->value($application->currency)
                     ->id('valyuta')
@@ -83,7 +83,7 @@
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::input('bio','Бюджетни режалаштириш бўлими - харид қилинадиган махсулотни бизнес режада мавжудлиги бўйича маълумот')
+                    {{Aire::input('bio', __('lang.table_15'))
                         ->name('info_business_plan')
                         ->value($application->info_business_plan)
                         ->disabled()
@@ -93,14 +93,14 @@
             </div>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::input('bio','Эквивалентная Планируемая сумма')
+                    {{Aire::input('bio', __('lang.table_16'))
                         ->name('equal_planned_price')
                         ->value($application->equal_planned_price)
                         ->disabled()
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::input('bio','Наименование поставщика')
+                    {{Aire::input('bio', __('lang.table_17'))
                         ->name('supplier_name')
                         ->value($application->supplier_name)
                         ->disabled()
@@ -109,13 +109,13 @@
             </div>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::select($application->subject, 'select', 'Предмет закупки')
+                    {{Aire::select($application->subject, 'select', __('lang.table_18'))
                         ->name('subject')
                         ->disabled()
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::select($application->type_of_purchase_id, 'select', 'Вид закупки')
+                    {{Aire::select($application->type_of_purchase_id, 'select', __('lang.table_19'))
                         ->name('type_of_purchase_id')
                         ->disabled()
                     }}
@@ -123,7 +123,7 @@
             </div>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::textArea('bio','Харид килинадиган махсулотни "Харидлар режаси"да мавжудлиги буйича маълумот')
+                    {{Aire::textArea('bio', __('lang.table_20'))
                         ->name('info_purchase_plan')
                         ->value($application->info_purchase_plan)
                         ->rows(3)
@@ -132,7 +132,7 @@
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::textArea('bio','Коментарий к заявке')
+                    {{Aire::textArea('bio', __('lang.table_21'))
                         ->name('comment')
                         ->value($application->comment)
                         ->rows(3)
@@ -146,14 +146,14 @@
         <div class="px-6">
             <table id="yajra-datatable">
                 <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Status</th>
-                    <th>Role</th>
-                    <th >Comment</th>
-                    <th >User</th>
-                    <th>Application ID</th>
-                </tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>{{ __('lang.table_7') }}</th>
+                        <th>{{ __('lang.table_22') }}</th>
+                        <th >{{ __('lang.table_23') }}</th>
+                        <th >{{ __('lang.table_24') }}</th>
+                        <th>{{ __('lang.table_25') }}</th>
+                    </tr>
                 </thead>
             </table>
         </div>
@@ -180,26 +180,60 @@
   });
 console.log("{{$application->id}}");
 </script>
-@if($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer') || $user->role_id == 7)
+@if(auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
+            @if(!isset($application->performer_user_id))
+                @php
+                    $role_users = \App\Models\Permission::with('roles.users')->where('key', 'Company_Performer')->first()->roles->map->users; // company performer
+                    $users = [];
+                    foreach ($role_users as $role_user) {
+                        foreach ($role_user as $user)
+                        $users[] = $user;
+                    }
+                @endphp
+                <select class="col-md-6 custom-select" name="performer_user_id" id="performer_user_id">
+                    @foreach($users as $user)
+                        <option value="{{$user->id}}">{{$user->name}}</option>
+                    @endforeach
+                </select>
+            @endif
+@elseif(auth()->user()->hasPermission('Branch_Leader'))
+            @if(!isset($application->performer_user_id))
+                @php
+                    $role_users = \App\Models\Permission::with('roles.users')->where('key', 'Branch_Performer')->first()->roles->map->users; // company performer
+                    $users = [];
+                    foreach ($role_users as $role_user) {
+                        foreach ($role_user as $user)
+                        $users[] = $user;
+                    }
+                @endphp
+                <select class="col-md-6 custom-select" name="performer_user_id" id="performer_user_id">
+                    @foreach($users as $user)
+                        <option value="{{$user->id}}">{{$user->name}}</option>
+                    @endforeach
+                </select>
+            @endif
+@elseif($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer') || $access && $user->role_id == 7)
                <div class="px-6">
                     <form name="testform" action="{{route('site.applications.imzo.sign',$application->id)}}" method="POST">
                         @csrf
                         <label id="message"></label>
                         <div class="form-group">
-                            <label for="select1">Выберите ключ</label>
+                            <label for="select1">{{ __('lang.eimzo_key') }}</label>
                             <select name="key" id="select1" onchange="cbChanged(this)"></select><br />
                         </div>
                         <div class="form-group hidden">
-                            <label for="exampleFormControlTextarea1">Текст для подписи</label>
+                            <label for="exampleFormControlTextarea1">
+                                {{ __('lang.eimzo_title') }}
+                            </label>
                             <textarea class="form-control" id="eri_data" name="data" rows="3"></textarea>
                         </div>
                         <div class="mb-2 text-center mr-6">
-                            ID ключа <label id="keyId"></label><br />
+                            {{ __('lang.eimzo_id') }} <label id="keyId"></label><br />
 
-                            <button onclick="generatekey()" class="hidden btn btn-success" type="button">Подписать</button><br />
+                            <button onclick="generatekey()" class="hidden btn btn-success" type="button">{{ __('lang.eimzo_sign') }}</button><br />
                         </div>
                         <div class="w-1/2">
-                            {{Aire::textArea('bio','Коментария')
+                            {{Aire::textArea('bio', __('lang.table_23'))
                             ->name('comment')
                             ->rows(3)
                             ->cols(40)
@@ -217,8 +251,8 @@ console.log("{{$application->id}}");
                         <input value="{{auth()->user()->id}}" name="user_id" class="hidden" type="text">
                         <input value="{{auth()->user()->role_id}}" name="role_id" class="hidden" type="text">
                         <div class="row ml-4 pb-4">
-                            <button onclick="status1()" type="submit" class="btn btn-success col-md-2" >Accept</button>
-                            <button onclick="status0()" type="submit" class="btn btn-danger col-md-2 mx-2   " >Reject</button>
+                            <button onclick="status1()" type="submit" class="btn btn-success col-md-2" >{{ __('lang.accept') }}</button>
+                            <button onclick="status0()" type="submit" class="btn btn-danger col-md-2 mx-2   " >{{ __('lang.reject') }}</button>
                         </div>
                     </form>
                </div>

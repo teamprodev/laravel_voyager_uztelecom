@@ -1,7 +1,7 @@
 @csrf
 
 <div class="form-group mb-2">
-    <label for="">Калитни танланг</label>
+    <label for="">Выберите ключ</label>
     <select name="key" class="form-control bordered" onchange="cbChanged(this)"></select>
 </div>
 
@@ -15,6 +15,6 @@
 <textarea hidden class="none" name="eri_hash" id="eri_hash"></textarea>
 
 <div class="text-center">
-    <button class="btn btn-sm btn-primary" id="eri_sign" onclick="sign()" type="button">Имзолаш</button>
-    <button class="btn btn-sm btn-info" id="eri_sign" onclick="uiLoadKeys()" type="button">Янгилаш</button>
+        <button class="btn btn-sm btn-primary" id="eri_sign" onclick="sign()" type="button">Подписание</button>
+    <button class="btn btn-sm btn-info" id="eri_sign" onclick="uiLoadKeys()" type="button">Обновлять</button>
 </div>

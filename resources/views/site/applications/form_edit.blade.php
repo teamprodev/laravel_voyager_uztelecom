@@ -3,45 +3,45 @@
         <div class="p-6">
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::input('bio','Ташаббускор (буюртмачи номи )')
+                    {{Aire::input('bio', __('lang.table_1'))
                         ->name('initiator')
                         ->value($application->initiator)
                     }}
-                    {{Aire::textArea('bio','Харид мазмуни (сотиб олиш учун асос)')
+                    {{Aire::textArea('bio', __('lang.table_9'))
                         ->name('purchase_basis')
                         ->value($application->purchase_basis)
                         ->rows(3)
                         ->cols(40)
                     }}
-                    {{Aire::textArea('bio','Сотиб олинадиган махсулот тавсифи (техник характери)')
+                    {{Aire::textArea('bio', __('lang.table_10'))
                         ->name('specification')
                         ->value($application->specification)
                         ->rows(3)
                         ->cols(40)
                     }}
-                    {{Aire::dateTimeLocal('bio','Махсулот келишининг муддати')
+                    {{Aire::dateTimeLocal('bio', __('lang.table_3'))
                         ->name('delivery_date')
                         ->value($application->delivery_date)
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::input('bio','Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)')
+                    {{Aire::input('bio', __('lang.table_2'))
                         ->name('name')
                         ->value($application->name)
                     }}
-                    {{Aire::textArea('bio','Асос (харидлар режаси, раҳбарият томонидан билдирги)')
+                    {{Aire::textArea('bio', __('lang.table_11'))
                         ->name('basis')
                         ->value($application->basis)
                         ->rows(3)
                         ->cols(40)
                     }}
-                    {{Aire::textArea('bio','Алоҳида талаблар')
+                    {{Aire::textArea('bio', __('lang.table_12'))
                         ->name('separate_requirements')
                         ->value($application->separate_requirements)
                         ->rows(3)
                         ->cols(40)
                     }}
-                    {{Aire::dateTimeLocal('bio','Махсулот сифати учун кафолат муддати (иш, хизмат)')
+                    {{Aire::dateTimeLocal('bio', __('lang.table_14'))
                         ->name('expire_warranty_date')
                         ->value($application->expire_warranty_date)
                     }}
@@ -49,14 +49,14 @@
             </div>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::input('bio','Харид режаси (сумма)')
+                    {{Aire::input('bio', __('lang.table_4'))
                         ->name('planned_price')
                         ->value($application->planned_price)
                         ->id('planned_price')
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::input('bio','Бюджетни режалаштириш бўлими - харид қилинадиган махсулотни бизнес режада мавжудлиги бўйича маълумот')
+                    {{Aire::input('bio', __('lang.table_15'))
                         ->name('info_business_plan')
                         ->value($application->info_business_plan)
                     }}
@@ -66,18 +66,19 @@
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
                     @if($application->currency == null)
-                    {{Aire::select(['USD' => 'USD', "SO'M" => "SO'M"], 'select', 'Предмет закупки')
-                        ->name('currency')
-                        ->id('currency')
-                    }}
+                        {{Aire::select(['USD' => 'USD', "SO'M" => "SO'M"], 'select', __('lang.valyuta'))
+                            ->name('currency')
+                            ->id('currency')
+                        }}
                     @endif
                 </div>
                 <div class="pt-2 pb-2 w-50">
                     <div class="mr-4 pt-2 pb-2 w-50">
-                        <h6><b>Филиални танланг</b></h6>
+                        <h6><b>{{ __('lang.branch') }}</b></h6>
                         <select class="custom-select" name="filial_initiator_id" id="filial_initiator_id">
                             @isset($application->branch_initiator_id)
-                                <option value="{{$application->branch_initiator_id}}" selected>{{$application->branch_initiator_id}}</option>
+                                <option value="{{$application->branch_initiator_id}}"
+                                        selected>{{$application->branch_initiator_id}}</option>
                             @endisset
                             @foreach($branch as $branches)
                                 <option value="{{$branches}}">{{$branches}}</option>
@@ -88,13 +89,13 @@
             </div>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::select($purchase, 'select', 'Предмет закупки')
+                    {{Aire::select($purchase, 'select', __('lang.table_18'))
                         ->name('subject')
                         ->value($application->subject)
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::select($subject, 'select', 'Вид закупки')
+                    {{Aire::select($subject, 'select', __('lang.table_19'))
                         ->name('type_of_purchase_id')
                         ->value($application->type_of_purchase_id)
                     }}
@@ -102,7 +103,7 @@
             </div>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::textArea('bio','Харид килинадиган махсулотни "Харидлар режаси"да мавжудлиги буйича маълумот')
+                    {{Aire::textArea('bio', __('lang.table_20'))
                         ->name('info_purchase_plan')
                         ->value($application->info_purchase_plan)
                         ->rows(3)
@@ -110,45 +111,261 @@
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::textArea('bio','Коментарий к заявке')
+                    {{Aire::textArea('bio', __('lang.table_23'))
                         ->name('comment')
                         ->value($application->comment)
                         ->rows(3)
                         ->cols(40)
                     }}
+                    @if($application->is_more_than_limit != 0)
+                        <div class="w-full">
+
+                            {{Aire::select($company_signers, 'signers', __('lang.signers'))
+                                                            ->multiple()
+                                                            ->id('signers')
+                                                            ->size(10)
+                                                            }}
+                        </div>
+                    @else
+                        <div class="w-full">
+                            {{Aire::select($branch_signers, 'signers', __('lang.signers'))
+                                                            ->multiple()
+                                                            ->id('signers')
+                                                            ->size(10)
+                                                            }}
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
 </div>
-   <div class="grid grid-cols-2 px-6">
-        @if($application->file_basis == 'null' ||$application->file_basis == null)
-            <div>
-                <h6 class="my-3">Основание</h6>
-                <div id="file_basis"></div>
-            </div>
-        @endif
-        @if($application->file_tech_spec == 'null' ||$application->file_tech_spec == null)
-           <div>
-                <h6 class="my-3">Техническое задание</h6>
-                <div id="file_tech_spec"></div>
-           </div>
-        @endif
-        @if($application->other_files == 'null' ||$application->other_files == null)
-            <div>
-                <h6 class="my-3">Другие документы необходимые для запуска закупочной процедуры</h6>
-                <div id="other_files"></div>
-            </div>
-        @endif
-   </div>
-    {{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}
-    <div class="w-full text-center pb-8 ">
-        <button class="bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white">Далее</button>
-    </div>
+<input id="resource_id" name="resource_id" value=null class="hidden" type="text">
+@if($application->resource_id == null)
+<table id="table"></table>
+@endif
+<script src="https://unpkg.com/jquery.appendgrid@2.0.0/dist/AppendGrid.js"></script>
+{{--@dd(json_encode($products,JSON_UNESCAPED_UNICODE))--}}
+<script>
+    const resource_id = document.getElementById('resource_id').value = {};
+    var myAppendGrid = new AppendGrid({
+        element: "table",
+        uiFramework: "bootstrap4",
+        iconFramework: "fontawesome5",
+        columns: [
+            {
+                name: "resource_id",
+                display: "Product",
+                type: "select",
+                ctrlOptions: {!! json_encode($products,JSON_UNESCAPED_UNICODE)!!},
+                afterRowRemoved: function(rowIndex) {
+                    if (removeRow(rowIndex)){
+                        console.log(document.getElementById('resource_id').value)
+                        document.getElementById('resource_id').value = null
+                        console.log(document.getElementById('resource_id').value)
+                    }
+
+                },
+                events: {
+                    // Add change event
+                    change: function(e) {
+                        if (e.target.value) {
+                            e.target.style.backgroundColor = "#99FF99";
+                            resource_id[e.uniqueIndex] = e.target.value;
+                            console.log(resource_id)
+                        } else {
+                            e.target.style.backgroundColor = null;
+                        }
+                    }
+                }
+            },
+        ],
+        // Optional CSS classes, to make table slimmer!
+        sectionClasses: {
+            table: "table-sm",
+            control: "form-control-sm",
+            buttonGroup: "btn-group-sm"
+        }
+    });
+    $("#load").on("click", function () {
+        myAppendGrid.load([
+            {
+                uid: "d4c74a61-a24e-429f-9db0-3cf3aaa22425",
+                name: "Monique Zebedee",
+                company: "Welch LLC",
+                country: "Japan",
+                memberSince: "2012-02-18",
+                orderPlaced: 111,
+                level: "Bronze",
+                isNPO: true
+            },
+            {
+                uid: "afdf285d-da5c-4fa8-9225-201c858a173d",
+                name: "Daryle McLaren",
+                company: "Bogisich Group",
+                country: "United States",
+                memberSince: "2016-10-08",
+                orderPlaced: 261,
+                level: "Diamond",
+                isNPO: false
+            },
+            {
+                uid: "202a8afb-130b-476b-b415-c659f21a73e7",
+                name: "Glori Spellecy",
+                company: "Grady and Sons",
+                country: "Germany",
+                memberSince: "2014-07-28",
+                orderPlaced: 282,
+                level: "Gold",
+                isNPO: false
+            },
+            {
+                uid: "08c9adee-abdd-43d5-866d-ce540be19be8",
+                name: "Blondy Boggis",
+                company: "Eichmann, Parker and Herzog",
+                country: "Malaysia",
+                memberSince: "2010-08-17",
+                orderPlaced: 308,
+                level: "Platinum",
+                isNPO: true
+            },
+            {
+                uid: "57644023-cd0c-47ec-a556-fd8d4e21a4e7",
+                name: "Batholomew Zecchii",
+                company: "Corwin-Fahey",
+                country: "Malaysia",
+                memberSince: "2016-09-20",
+                orderPlaced: 881,
+                level: "Gold",
+                isNPO: true
+            },
+            {
+                uid: "38e08e8a-c7eb-41eb-9191-6bb2df1fd39b",
+                name: "Paulie Poel",
+                company: "MacGyver, Rohan and West",
+                country: "United Kingdom",
+                memberSince: "2016-12-26",
+                orderPlaced: 387,
+                level: "Silver",
+                isNPO: false
+            },
+            {
+                uid: "d7bf56d4-f955-4dca-b3db-b30eab590028",
+                name: "Jessica Levett",
+                company: "Lind, O'Kon and Hamill",
+                country: "United States",
+                memberSince: "2015-04-26",
+                orderPlaced: 984,
+                level: "Gold",
+                isNPO: false
+            },
+            {
+                uid: "b9075764-5228-4ca7-9435-7c362ce097e5",
+                name: "Fonsie Spring",
+                company: "McKenzie, Block and Wiegand",
+                country: "Japan",
+                memberSince: "2013-11-08",
+                orderPlaced: 875,
+                level: "Silver",
+                isNPO: false
+            }
+        ]);
+    });
+    function functionMy()
+    {
+        if (document.getElementById('resource_id').value != 'null')
+        {
+            var thestring = "";
+            for (let i in resource_id) {
+                thestring += resource_id[i] + ",";
+            }
+            thestring = thestring.substring(0, thestring.length -2);
+
+            console.log(document.getElementById('resource_id').value = thestring);
+            console.log(typeof thestring);
+        }
+
+    }
+</script>
+<div class="grid grid-cols-2 px-6">
+    @if($application->file_basis == 'null' ||$application->file_basis == null)
+        <div>
+            <h6 class="my-3">{{ __('lang.base') }}</h6>
+            <div id="file_basis"></div>
+        </div>
+    @endif
+    @if($application->file_tech_spec == 'null' ||$application->file_tech_spec == null)
+        <div>
+            <h6 class="my-3">{{ __('lang.tz') }}</h6>
+            <div id="file_tech_spec"></div>
+        </div>
+    @endif
+    @if($application->other_files == 'null' ||$application->other_files == null)
+        <div>
+            <h6 class="my-3">{{ __('lang.doc') }}</h6>
+            <div id="other_files"></div>
+        </div>
+    @endif
+</div>
+{{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}
+<div class="w-full text-center pb-8 ">
+    <button class="bg-blue-500 hover:bg-blue-700 mx-4 p-2 transition duration-300 rounded-md text-white"
+            name="draft" value="1">
+        {{ __('lang.save_close') }}
+    </button>
+    <button onclick="functionMy()" class="bg-blue-500 hover:bg-blue-700 mx-4 p-2 transition duration-300 rounded-md text-white"
+            name="draft" value="0">
+        {{ __('lang.save_send') }}
+    </button>
+</div>
+<div class="w-full text-center pb-8 ">
+
+</div>
 <script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.min.js"></script>
 <script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.legacy.min.js" nomodule></script>
 <script src="https://releases.transloadit.com/uppy/locales/v2.0.5/ru_RU.min.js"></script>
+@if($application->is_more_than_limit == null)
+    <input id="is_more_than_limit" class="hidden">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            title: 'Куда вы хотите отправить заявка?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmSubmitText: 'Confirm',
+            cancelSubmitText: 'Cancel',
+            confirmSubmitClass: 'button is-success has-right-spacing',
+            cancelSubmitClass: 'button is-danger',
+        }).then((result) => {
+            if (result.isConfirmed == true) {
+                document.getElementById('is_more_than_limit').value = 1;
+                ajax();
+            } else if (result.isDenied) {
+                document.getElementById('is_more_than_limit').value = 0;
+                ajax();
+            }
+        })
 
+        function ajax() {
+            $.ajax({
+                url: "{{ route('site.applications.update', $application->id) }}",
+                method: "POST",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    is_more_than_limit: document.getElementById('is_more_than_limit').value,
+                },
+                success: function () {
+                    location.reload()
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            })
+        }
+
+    </script>
+@endif
 <script>
     var uppy = new Uppy.Core({
         debug: true,
