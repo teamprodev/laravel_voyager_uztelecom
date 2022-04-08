@@ -103,15 +103,17 @@ $notifications = Notification::with('application:id,created_at')->has('applicati
             cluster: '{{env("PUSHER_APP_CLUSTER")}}',
             // encrypted: true,
 
-            wsHost: window.location.hostname,
+            wsHost:  'ws.smarts.uz',
             wsPort: 6001,
             forceTLS: false,
             disableStats: true,
         });
-        let channel = pusher.subscribe('notification-send' + {{auth()->id()}});
+        console.log(window.location.hostname)
+        let channel = pusher.subscribe('uztelecom-notification-send-' + {{auth()->id()}});
         let count = parseInt($('#notification_count').text());
         channel.bind('server-user', function(data) {
             data = JSON.parse(data.data)
+            console.log(data)
             count += 1;
             $('#notification_count').text(count);
             $('#notification_count_text').text(count + ' Notifications');
