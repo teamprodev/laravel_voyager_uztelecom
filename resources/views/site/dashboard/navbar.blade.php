@@ -99,6 +99,7 @@ $notifications = Notification::with('application:id,created_at')->has('applicati
     <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
 
     <script>
+        // Pusher.logToConsole = true;
         let pusher = new Pusher('{{env("MIX_PUSHER_APP_KEY")}}', {
             cluster: '{{env("PUSHER_APP_CLUSTER")}}',
             // encrypted: true,

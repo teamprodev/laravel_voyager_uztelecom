@@ -87,7 +87,7 @@ class ApplicationService
 
         Http::post('ws.smarts.uz/api/send-notification', [
             'user_ids' => $user_ids,
-            'project' => 'user',
+            'project' => 'uztelecom',
             'data' => ['id' => $application->id, 'time' => 'recently']
         ]);
     }
