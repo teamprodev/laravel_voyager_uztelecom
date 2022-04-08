@@ -47,7 +47,7 @@ class ApplicationController extends Controller
 //        $this->eimzoService = new EimzoService();
 
     }
-    public function index(Request $request)
+    public function index(User $user, Request $request)
     {
         if ($request->ajax()) {
             $query = Application::query()
@@ -160,7 +160,7 @@ class ApplicationController extends Controller
 
     public function update(Application $application, ApplicationRequest $request){
         $data = $request->validated();
-        if($data['resource_id'] != null || $data['resource_id'] != "[object Object]")
+        if($data['resource_id'] != null && $data['resource_id'] != "[object Object]")
         {
             $explode = explode(',',$data['resource_id']);
             $id = [];

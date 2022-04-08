@@ -44,6 +44,7 @@ return [
     "save_send" => "Saqlash va yuborish",
     "selection" => "Tanlov",
     "service" => "Xizmat",
+    "table_0" => "FIO",
     "table_1" => "Tashabbuskor (buyurtmachi nomi)",
     "table_10" => "Xarid qilinadigan maxsulotning tavsifi (texnik xarakteri)",
     "table_11" => "Asos (xaridlar rejasi, rahbariyat tomonidan bildirgi)",
