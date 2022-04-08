@@ -140,7 +140,7 @@
         </div>
     </div>
 </div>
-<input id="resource_id" name="resource_id" class="hidden" type="text">
+<input id="resource_id" name="resource_id" value=null class="hidden" type="text">
 @if($application->resource_id == null)
 <table id="table"></table>
 @endif
@@ -273,14 +273,18 @@
     });
     function functionMy()
     {
-        var thestring = "";
-        for (let i in resource_id) {
-            thestring += resource_id[i] + ",";
-        }
-        thestring = thestring.substring(0, thestring.length -2);
+        if (document.getElementById('resource_id').value != 'null')
+        {
+            var thestring = "";
+            for (let i in resource_id) {
+                thestring += resource_id[i] + ",";
+            }
+            thestring = thestring.substring(0, thestring.length -2);
 
-        console.log(document.getElementById('resource_id').value = thestring);
-        console.log(typeof thestring);
+            console.log(document.getElementById('resource_id').value = thestring);
+            console.log(typeof thestring);
+        }
+
     }
 </script>
 <div class="grid grid-cols-2 px-6">

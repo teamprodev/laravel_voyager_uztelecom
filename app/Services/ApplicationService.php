@@ -13,11 +13,13 @@ use App\Models\Resource;
 use App\Models\SignedDocs;
 use App\Models\StatusExtented;
 use App\Models\User;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Country;
 use App\Models\Purchase;
 use App\Models\Roles;
 use App\Models\Subject;
+use Illuminate\Support\Facades\Http;
 
 class ApplicationService
 {
@@ -68,17 +70,25 @@ class ApplicationService
 
     public function sendNotifications($array, $application)
     {
-        $users = User::query()->whereIn('role_id', $array)->get();
-        foreach ($users as $user) {
-            $notification = Notification::query()->firstOrCreate(['user_id' => $user->id, 'application_id' => $application->id]);
+
+        $user_ids = User::query()->whereIn('role_id', $array)->pluck('id')->toArray();
+        foreach ($user_ids as $user_id) {
+            $notification = Notification::query()->firstOrCreate(['user_id' => $user_id, 'application_id' => $application->id]);
             if ($notification->wasRecentlyCreated) {
-                $diff = now()->diffInMinutes($application->created_at);
-                $data = [
-                    'id' => $application->id,
-                    'time' => $diff == 0 ? 'recently' : $diff
-                ];
-                broadcast(new Notify(json_encode($data, $assoc = true), $user->id))->toOthers();     // notification
+//                $diff = now()->diffInMinutes($application->created_at);
+//                $data = [
+//                    'id' => $application->id,
+//                    'time' => $diff == 0 ? 'recently' : $diff
+//                ];
+
+//                broadcast(new Notify(json_encode($data, $assoc = true), $user->id))->toOthers();     // notification
             }
         }
+
+        Http::post('ws.smarts.uz/api/send-notification', [
+            'user_ids' => $user_ids,
+            'project' => 'uztelecom',
+            'data' => ['id' => $application->id, 'time' => 'recently']
+        ]);
     }
 }
