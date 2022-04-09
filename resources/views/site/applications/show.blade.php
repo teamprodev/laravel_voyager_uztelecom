@@ -182,6 +182,10 @@ console.log("{{$application->id}}");
 </script>
 @if(auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
             @if(!isset($application->performer_user_id))
+                {{ Aire::open()
+  ->route('site.applications.update',$application->id)
+  ->enctype("multipart/form-data")
+  ->post() }}
                 @php
                     $role_users = \App\Models\Permission::with('roles.users')->where('key', 'Company_Performer')->first()->roles->map->users; // company performer
                     $users = [];
@@ -195,9 +199,20 @@ console.log("{{$application->id}}");
                         <option value="{{$user->id}}">{{$user->name}}</option>
                     @endforeach
                 </select>
+                {{Aire::textArea('bio', 'Comment Performer Leader')
+                        ->name('performer_leader_comment')
+                        ->rows(3)
+                        ->cols(40)
+                    }}
+                <button type="submit" class="btn btn-success col-md-2" >Отправить</button>
+                {{ Aire::close() }}
             @endif
 @elseif(auth()->user()->hasPermission('Branch_Leader'))
             @if(!isset($application->performer_user_id))
+                {{ Aire::open()
+  ->route('site.applications.update',$application->id)
+  ->enctype("multipart/form-data")
+  ->post() }}
                 @php
                     $role_users = \App\Models\Permission::with('roles.users')->where('key', 'Branch_Performer')->first()->roles->map->users; // company performer
                     $users = [];
@@ -211,6 +226,14 @@ console.log("{{$application->id}}");
                         <option value="{{$user->id}}">{{$user->name}}</option>
                     @endforeach
                 </select>
+                {{Aire::textArea('bio', 'Comment Performer Leader')
+                            ->name('performer_leader_comment')
+                            ->rows(3)
+                            ->cols(40)
+                        }}
+                <button type="submit" class="btn btn-success col-md-2" >Отправить</button>
+
+                {{ Aire::close() }}
             @endif
 @elseif($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer') || $access && $user->role_id == 7)
                <div class="px-6">

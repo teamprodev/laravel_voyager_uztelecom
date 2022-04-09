@@ -62,6 +62,7 @@ class ApplicationRequest extends FormRequest
             'draft' => 'nullable',
             'resource_id' => 'nullable',
             'table' => 'nullable',
+            'performer_leader_comment' => 'nullable',
         ];
     }
 }
