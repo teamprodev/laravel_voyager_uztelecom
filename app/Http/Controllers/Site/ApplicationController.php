@@ -47,7 +47,7 @@ class ApplicationController extends Controller
 //        $this->eimzoService = new EimzoService();
 
     }
-    public function index(Request $request)
+    public function index(User $user, Request $request)
     {
         if ($request->ajax()) {
             $query = Application::query()
@@ -86,18 +86,7 @@ class ApplicationController extends Controller
                 ->addColumn('action', function($row){
                     $edit = route('site.applications.edit', $row->id);
                     $show = route('site.applications.show', $row->id);
-                    $user = auth()->user();
-                    if($user->id == $row->user_id || $user->hasPermission('Company_Performer'||'Branch_Performer'))
-                    {
-                        return "
-                            <a href='{$edit}' class='edit btn btn-success btn-sm'>Edit</a>
-                            <a href='{$show}' class='show btn btn-warning btn-sm'>Show</a>";
-                    }else{
-                        return "
-                            <a href='{$show}' class='show btn btn-warning btn-sm'>Show</a>";
-                    }
-
-
+                    return "<a href='{$edit}' class='edit btn btn-success btn-sm'>Edit</a> <a href='{$show}' class='show btn btn-warning btn-sm'>Show</a>";
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -171,7 +160,7 @@ class ApplicationController extends Controller
 
     public function update(Application $application, ApplicationRequest $request){
         $data = $request->validated();
-        if(isset($data['resource_id']))
+        if($data['resource_id'] != null && $data['resource_id'] != "[object Object]")
         {
             $explode = explode(',',$data['resource_id']);
             $id = [];

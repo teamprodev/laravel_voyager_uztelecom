@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Site;
 
-use App\Models\Application;
 use App\Models\Faq;
-use Illuminate\Http\Request;
 
 class FaqsController extends Controller
 {
-    public function index(Request $request){
+    public function index(){
         $faqs = Faq::all();
         return view('site.faqs.index', compact('faqs'));
 

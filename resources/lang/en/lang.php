@@ -44,6 +44,7 @@ return [
     "save_send" => "Storage and sending",
     "selection" => "Choice",
     "service" => "Service",
+    "table_0" => "Full Name",
     "table_1" => "Entrepreneurship (Customer Name)",
     "table_10" => "Description of the purchased product (Technical character)",
     "table_11" => "Basics (Procurement Plan, Display by Management)",
