@@ -110,6 +110,9 @@ class ApplicationController extends Controller
         $data = SignedDocs::where('application_id',Cache::get('application_id'))->get();
         return Datatables::of($data)
             ->addIndexColumn()
+            ->editColumn('user_id', function($docs) {
+                return $docs->user ? $docs->user->name:"";
+            })
             ->editColumn('status',
                 '
                 @if($status == "1")
