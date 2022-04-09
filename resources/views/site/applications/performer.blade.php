@@ -51,6 +51,13 @@
                     {{Aire::input('bio', __('lang.performer_protocol_num'))
                         ->name('protocol_number')
                     }}
+                    {{Aire::textArea('bio', 'Comment Performer Leader')
+                        ->name('performer_leader_comment')
+                        ->value($application->performer_leader_comment)
+                        ->rows(3)
+                        ->cols(40)
+                        ->disabled()
+                    }}
                     <input class="hidden" name="status" id="status" type="text">
                     <select onchange="myFunction()" class="col-md-6 custom-select" name="performer_status" id="performer_status">
                         @foreach($status_extented as $status)
