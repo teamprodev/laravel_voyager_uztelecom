@@ -52,7 +52,6 @@
                         ->name('protocol_number')
                     }}
                     {{Aire::textArea('bio', 'Comment Performer Leader')
-                        ->name('performer_leader_comment')
                         ->value($application->performer_leader_comment)
                         ->rows(3)
                         ->cols(40)
