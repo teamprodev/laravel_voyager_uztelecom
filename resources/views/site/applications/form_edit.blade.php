@@ -339,8 +339,9 @@
         }).then((result) => {
             if (result.isConfirmed == true) {
                 document.getElementById('is_more_than_limit').value = 1;
+                console.log(document.getElementById('is_more_than_limit').value)
                 ajax();
-            } else if (result.isDenied) {
+            } else if (result.isDenied == true) {
                 document.getElementById('is_more_than_limit').value = 0;
                 ajax();
             }
