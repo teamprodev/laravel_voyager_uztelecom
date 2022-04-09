@@ -107,10 +107,19 @@ class ApplicationController extends Controller
 
     public function SignedDocs()
     {
-        $data = SignedDocs::where('application_id',Cache::get('application_id'))->where('user_id', '!=',null)->get();
+        $data = SignedDocs::where('application_id',Cache::get('application_id'))->get();
         return Datatables::of($data)
             ->addIndexColumn()
-            ->editColumn('status', '@if($status == 0) Rejected @elseif($status == 1) Accepted @elseif($status == null)  @endif')
+            ->editColumn('status',
+                '
+                @if($status == "1")
+                Accepted
+                @elseif($status == "0")
+                Rejected
+                @else
+                NotSign
+                @endif
+                ')
             ->make(true);
     }
 
