@@ -329,7 +329,7 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         Swal.fire({
-            title: 'Куда вы хотите отправить заявка?',
+            title: 'Визирование заявки через компанию',
             showDenyButton: true,
             showCancelButton: true,
             confirmSubmitText: 'Confirm',
