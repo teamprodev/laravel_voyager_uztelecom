@@ -152,7 +152,7 @@
                         <th>{{ __('lang.table_22') }}</th>
                         <th >{{ __('lang.table_23') }}</th>
                         <th >{{ __('lang.table_24') }}</th>
-                        <th>{{ __('lang.table_25') }}</th>
+{{--                        <th>{{ __('lang.table_25') }}</th>--}}
                     </tr>
                 </thead>
             </table>
@@ -172,7 +172,7 @@
             {data: 'role_id', name: 'role_id'},
             {data: 'comment', name: 'comment'},
             {data: 'user_id', name: 'user_id'},
-            {data: 'application_id', name: 'application_id'},
+            // {data: 'application_id', name: 'application_id'},
         ]
     });
 
