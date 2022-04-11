@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Models\Role;
 
 class SignedDocs extends Model
 {
@@ -18,6 +19,10 @@ class SignedDocs extends Model
     public function application()
     {
         return $this->belongsTo(Application::class);
+    }
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 
 }

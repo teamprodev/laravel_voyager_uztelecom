@@ -113,6 +113,9 @@ class ApplicationController extends Controller
             ->editColumn('user_id', function($docs) {
                 return $docs->user ? $docs->user->name:"";
             })
+            ->editColumn('role_id', function($docs) {
+                return $docs->role ? $docs->role->display_name:"";
+            })
             ->editColumn('status',
                 '
                 @if($status == "1")
