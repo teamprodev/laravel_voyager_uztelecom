@@ -6,6 +6,7 @@
     <div class="pt-6">
     <div class="w-full flex">
         <div class="p-6">
+            <h5>Автор заявки: {{$application->user->name}}</h5>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
                     {{Aire::input('bio', __('lang.table_1'))
@@ -167,7 +168,6 @@
             @endforeach
         </div>
         @endif
-
         <div class="px-6">
             <table id="yajra-datatable">
                 <thead>
