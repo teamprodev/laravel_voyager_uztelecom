@@ -143,6 +143,31 @@
             </div>
             </div>
         </div>
+        @if($file_basis != 'null' && $file_basis != null)
+        <div>
+            <h1 class="text-center">{{ __('lang.base') }}</h1>
+            @foreach($file_basis as $file)
+                <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
+            @endforeach
+        </div>
+        @endif
+        @if($file_tech_spec != 'null' && $file_tech_spec != null)
+        <div>
+            <h1 class="text-center">{{ __('lang.tz') }}</h1>
+            @foreach($file_tech_spec as $file)
+                <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
+            @endforeach
+        </div>
+        @endif
+        @if($other_files != 'null' && $other_files != null)
+        <div>
+            <h1 class="text-center">{{ __('lang.doc') }}</h1>
+            @foreach($other_files as $file)
+                <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
+            @endforeach
+        </div>
+        @endif
+
         <div class="px-6">
             <table id="yajra-datatable">
                 <thead>

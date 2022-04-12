@@ -31,6 +31,9 @@ class ApplicationService
         $branch = Branch::where('id', $application->filial_initiator_id)->first();
         $signedDocs = $application->signedDocs()->get();
 
+        $file_basis = json_decode($application->file_basis);
+        $file_tech_spec = json_decode($application->file_tech_spec);
+        $other_files = json_decode($application->other_files);
         $same_role_user_ids = User::where('role_id', auth()->user()->role_id)->get()->pluck('id')->toArray();
         Cache::put('application_id',$application->id);
 //        $granted[] = json_decode($application->roles_need_sign, true);
@@ -39,7 +42,7 @@ class ApplicationService
 //        if(!$b1)
 //            return redirect()->route('eimzo.back')->with('danger', 'Permission denied!');
         $user = auth()->user();
-        return view('site.applications.show', compact('user','application','branch','signedDocs', 'same_role_user_ids','access'));
+        return view('site.applications.show', compact('file_basis','file_tech_spec','other_files','user','application','branch','signedDocs', 'same_role_user_ids','access'));
 
     }
     public function edit($application)
