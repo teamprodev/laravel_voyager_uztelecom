@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Application;
 use App\Models\SignedDocs;
+use App\Observers\ApplicationObserver;
 use App\Observers\SignDocsObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -30,5 +32,6 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         SignedDocs::observe(SignDocsObserver::class);
+        Application::observe(ApplicationObserver::class);
     }
 }

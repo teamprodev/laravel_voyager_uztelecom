@@ -63,6 +63,8 @@ class ApplicationRequest extends FormRequest
             'resource_id' => 'nullable',
             'table' => 'nullable',
             'performer_leader_comment' => 'nullable',
+            'performer_role_id' => 'nullable',
+            'performer_leader_user_id' => 'nullable',
         ];
     }
 }

@@ -24,18 +24,6 @@
     'type_of_purchase_id' => 'required',
     'info_purchase_plan' => 'required',
     'comment' => 'required',
-    'filial_customer_id' => 'required',
-    'lot_number' => 'required',
-    'contract_number' => 'required',
-    'contract_date' => 'required',
-    'protocol_date' => 'required',
-    'contract_info' => 'required',
-    'country_produced_id' => 'required',
-    'contract_price' => 'required',
-    'supplier_name' => 'required',
-    'supplier_inn' => 'required',
-    'product_info' => 'required',
-    'protocol_number' => 'required',
     ])
     ->messages([
     'accepted' => 'You must accept the terms',
@@ -43,7 +31,7 @@
   ->post() }}
 
 
-    @if(auth()->user()->hasPermission('Company_Performer' || 'Branch_Performer') && $application->performer_user_id == auth()->user()->id)
+    @if(auth()->user()->hasPermission('Company_Performer' || 'Branch_Performer') && $application->performer_role_id == auth()->user()->role_id)
             @include('site.applications.performer')
     @else
         @include('site.applications.form_edit')

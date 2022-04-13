@@ -140,6 +140,17 @@
                         ->cols(40)
                         ->disabled()
                     }}
+                    @if(isset($application->performer_leader_comment))
+                        @php
+                            $comment = \App\Models\User::find($application->performer_leader_user_id)->name;
+                        @endphp
+                        {{Aire::textArea('bio', "Comment: {$comment}")
+                            ->value($application->performer_leader_comment)
+                            ->rows(3)
+                            ->cols(40)
+                            ->disabled()
+                        }}
+                    @endif
                 </div>
             </div>
             </div>
@@ -211,25 +222,20 @@ console.log("{{$application->id}}");
   ->route('site.applications.update',$application->id)
   ->enctype("multipart/form-data")
   ->post() }}
-                @php
-                    $role_users = \App\Models\Permission::with('roles.users')->where('key', 'Company_Performer')->first()->roles->map->users; // company performer
-                    $users = [];
-                    foreach ($role_users as $role_user) {
-                        foreach ($role_user as $user)
-                        $users[] = $user;
-                    }
-                @endphp
-                <select class="col-md-6 custom-select" name="performer_user_id" id="performer_user_id">
-                    @foreach($users as $user)
-                        <option value="{{$user->id}}">{{$user->name}}</option>
+{{--                @php--}}
+{{--                    $role_users = \App\Models\Permission::with('roles.users')->where('key', 'Company_Performer')->first()->roles->map->users; // company performer--}}
+{{--                    $users = [];--}}
+{{--                    foreach ($role_users as $role_user) {--}}
+{{--                        foreach ($role_user as $user)--}}
+{{--                        $users[] = $user;--}}
+{{--                    }--}}
+{{--                @endphp--}}
+                <select class="col-md-6 custom-select" name="performer_role_id" id="performer_role_id">
+                    @foreach($performers_company as $performer)
+                        <option value="{{$performer->id}}">{{$performer->display_name}}</option>
                     @endforeach
                 </select>
-                {{Aire::textArea('bio', 'Comment Performer Leader')
-                        ->name('performer_leader_comment')
-                        ->rows(3)
-                        ->cols(40)
-                    }}
-                <button type="submit" class="btn btn-success col-md-2" >Отправить</button>
+                            <button type="submit" class="btn btn-success col-md-2" >Отправить</button>
                 {{ Aire::close() }}
             @endif
 @elseif(auth()->user()->hasPermission('Branch_Leader'))
@@ -238,29 +244,38 @@ console.log("{{$application->id}}");
   ->route('site.applications.update',$application->id)
   ->enctype("multipart/form-data")
   ->post() }}
-                @php
-                    $role_users = \App\Models\Permission::with('roles.users')->where('key', 'Branch_Performer')->first()->roles->map->users; // company performer
-                    $users = [];
-                    foreach ($role_users as $role_user) {
-                        foreach ($role_user as $user)
-                        $users[] = $user;
-                    }
-                @endphp
-                <select class="col-md-6 custom-select" name="performer_user_id" id="performer_user_id">
-                    @foreach($users as $user)
-                        <option value="{{$user->id}}">{{$user->name}}</option>
+                {{--                @php--}}
+                {{--                    $role_users = \App\Models\Permission::with('roles.users')->where('key', 'Company_Performer')->first()->roles->map->users; // company performer--}}
+                {{--                    $users = [];--}}
+                {{--                    foreach ($role_users as $role_user) {--}}
+                {{--                        foreach ($role_user as $user)--}}
+                {{--                        $users[] = $user;--}}
+                {{--                    }--}}
+                {{--                @endphp--}}
+                <select class="col-md-6 custom-select" name="performer_role_id" id="performer_role_id">
+                    @foreach($performers_branch as $performer)
+                        <option value="{{$performer->id}}">{{$performer->display_name}}</option>
                     @endforeach
                 </select>
-                {{Aire::textArea('bio', 'Comment Performer Leader')
-                            ->name('performer_leader_comment')
-                            ->rows(3)
-                            ->cols(40)
-                        }}
                 <button type="submit" class="btn btn-success col-md-2" >Отправить</button>
-
                 {{ Aire::close() }}
             @endif
-@elseif($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer') || $access && $user->role_id == 7)
+@elseif($application->performer_role_id == $user->role_id && $application->performer_leader_comment == null)
+            {{ Aire::open()
+  ->route('site.applications.update',$application->id)
+  ->enctype("multipart/form-data")
+  ->post() }}
+            {{Aire::textArea('bio', __('lang.table_23'))
+                                ->name('performer_leader_comment')
+                                ->rows(3)
+                                ->cols(40)
+                                 }}
+            <input class="hidden" name="performer_leader_user_id" value="{{auth()->user()->id}}" type="text">
+            <div class="mt-4">
+                <button type="submit" class="btn btn-success col-md-2" >Отправить</button>
+            </div>
+    {{ Aire::close() }}
+        @elseif($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer'||'Company_Performer'||'Branch_Performer') || $access && $user->role_id == 7)
                <div class="px-6">
                     <form name="testform" action="{{route('site.applications.imzo.sign',$application->id)}}" method="POST">
                         @csrf

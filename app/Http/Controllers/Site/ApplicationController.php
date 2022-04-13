@@ -77,13 +77,17 @@ class ApplicationController extends Controller
                 ->get();
             $user = auth()->user();
 
-            if ($user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer'))
+        if ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
             {
-                $query = $query->where('performer_user_id', $user->id);
+            $query = Application::query()->where('signers','like',"%{$user->role_id}%");
+        }
+        elseif ($user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer'))
+            {
+                $query = $query->where('performer_role_id', $user->role->id);
             }
             elseif($user->hasPermission('Company_Leader'))
             {
-                $query = $query->where('status', 'agreed');
+                $query = $query->where('status','agreed'||'distributed');
             }
             elseif($user->hasPermission('Branch_Leader'))
             {
@@ -92,10 +96,6 @@ class ApplicationController extends Controller
             elseif($user->role_id == 7)
             {
                 $query = Application::query()->where('status', "accepted")->where('signers','like',"%{$user->role_id}%");
-            }
-            elseif ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
-            {
-                $query = Application::query()->where('signers','like',"%{$user->role_id}%");
             }
             else {
                 $query = $query->where('user_id',$user->id);
@@ -195,7 +195,6 @@ class ApplicationController extends Controller
 
     public function update(Application $application, ApplicationRequest $request){
         $data = $request->validated();
-
         if(isset($data['resource_id']) && $data['resource_id'] != "[object Object]")
         {
             $explode = explode(',',$data['resource_id']);
@@ -209,12 +208,12 @@ class ApplicationController extends Controller
         }
 
 
-        if (isset($data['performer_user_id']))
+        if (isset($data['performer_role_id']))
         {
             $mytime = Carbon::now();
             $data['performer_received_date'] = $mytime->toDateTimeString();
             $data['status'] = 'distributed';
-            $data['performer_head_of_dep_user_id'] = auth()->user()->id;
+//            $data['performer_head_of_dep_user_id'] = auth()->user()->id;
         }
         if ($application->is_more_than_limit != 1)
             $roles = PermissionRole::where('permission_id',168)->pluck('role_id')->toArray();
@@ -235,7 +234,6 @@ class ApplicationController extends Controller
             }
             $this->service->sendNotifications($array, $application);
         }
-
         $result = $application->update($data);
         if ($result)
             return redirect()->route('site.applications.index')->with('success', trans('site.application_success'));

@@ -27,7 +27,6 @@
                     {{Aire::checkbox('checkbox', __('lang.performer_nds'))
                        ->name('with_nds')
                     }}
-
                 </div>
                 <div class="pt-2 pb-2 w-50">
                     {{Aire::select($countries,'bio', __('performer_country'))
@@ -50,12 +49,6 @@
                     }}
                     {{Aire::input('bio', __('lang.performer_protocol_num'))
                         ->name('protocol_number')
-                    }}
-                    {{Aire::textArea('bio', 'Comment Performer Leader')
-                        ->value($application->performer_leader_comment)
-                        ->rows(3)
-                        ->cols(40)
-                        ->disabled()
                     }}
                     <input class="hidden" name="status" id="status" type="text">
                     <select onchange="myFunction()" class="col-md-6 custom-select" name="performer_status" id="performer_status">
