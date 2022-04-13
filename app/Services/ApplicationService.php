@@ -64,6 +64,7 @@ class ApplicationService
             'status_extented' => StatusExtented::all(),
             'countries' => $countries,
             'products' => $select,
+            'user' => auth()->user(),
             'company_signers' => Roles::find($company_signer)->pluck('display_name','id'),
             'branch_signers' => Roles::find($branch_signer)->pluck('display_name','id'),
         ]);

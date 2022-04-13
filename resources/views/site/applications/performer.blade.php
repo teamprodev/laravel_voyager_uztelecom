@@ -69,22 +69,22 @@
         <button type="submit" class="btn btn-success">{{ __('lang.save') }}</button>
     </div>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <input class="hidden" name="performer_user_id" id="performer_user_id" value="{{$user->id}}" type="text">
 </div>
 <script>
     function myFunction()
     {
-        if (document.getElementById('performer_status').value != 'Отменен')
+        if (document.getElementById('performer_status').value === 'Отменен')
         {
-            document.getElementById('a').classList.add('hidden');
-
-        }else if(document.getElementById('performer_status').value == 'доставлен')
-        {
-            document.getElementById('status').value = 'performed';
-        }else{
             document.getElementById('a').classList.remove('hidden');
             document.getElementById('status').value = 'cancelled';
-    }
-
+        }else if (document.getElementById('performer_status').value === 'доставлен')
+        {
+            document.getElementById('status').value = 'performed';
+        }else if(document.getElementById('performer_status').value !== 'cancelled'){
+            document.getElementById('a').classList.add('hidden');
+            document.getElementById('status').value = {{$application->status}};
+        }
     }
     function status11()
     {
