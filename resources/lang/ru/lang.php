@@ -1,7 +1,8 @@
 <?php
 
 return [
-
+    "send" => "Отправить",
+    "author" => "Автор заявки:",
     "alert" => "Куда вы хотите отправить заявка?",
     "branch_name" => "Руководство филиалом",
     "company" => "Руководство фирмы",
@@ -22,7 +23,16 @@ return [
     "eimzo_title" => "Подпись текста",
     "signers" => "Подтверждающие лица (e-imzo)",
     "next" => "Далее",
-    "performed" => "Сделанный",
+    "status" => "Статусы",
+    "status_new" => "Новая",
+    "status_in_process" => "На рассмотрении",
+    "status_accepted" => "Принята",
+    "status_refused" => "Отказана",
+    "status_agreed" => "Согласована",
+    "status_rejected" => "Отклонена",
+    "status_distributed" => "Распределен",
+    "status_cancelled" => "Отменен",
+    "performed" => "Исполнена",
     "performer_country" => "Товары (обслуживание) страна изготовленной",
     "performer_info" => "Информация о товаре",
 

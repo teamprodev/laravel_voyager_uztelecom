@@ -1,6 +1,8 @@
 <?php
 
 return [
+    "send" => "Yuborish",
+    "author" => "Buyurtma muallifi:",
     "alert" => "Arizangizni qayerga yubormoqchisiz?",
     "branch_name" => "Filial rahbariyatiga",
     "company" => "Kompaniya rahbariyatiga",
@@ -21,7 +23,16 @@ return [
     "eimzo_title" => "Imzo matni",
     "signers" => "Tasdiqlovchi shaxslar (e-imzo)",
     "next" => "Keyingi",
-    "performed" => "Bajarildi",
+    "status" => "Statuslar",
+    "status_new" => "Yangi",
+    "status_in_process" => "Jarayonda",
+    "status_accepted" => "Qabul qilingan",
+    "status_refused" => "To'xtatilgan",
+    "status_agreed" => "Rozi bo'lgan",
+    "status_rejected" => "Rad qilgan",
+    "status_distributed" => "Taqsimlangan",
+    "status_cancelled" => "Tugatilgan",
+    "performed" => "Bajarilgan",
     "performer_country" => "Tovar (xizmat) ishlab chiqarilgan mamlakat",
     "performer_info" => "Mahsulot haqida ma'lumot",
 

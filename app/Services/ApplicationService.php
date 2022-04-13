@@ -8,6 +8,7 @@ use App\Events\Notify;
 use App\Jobs\CreateApplicationJob;
 use App\Models\Branch;
 use App\Models\Notification;
+use App\Models\Permission;
 use App\Models\PermissionRole;
 use App\Models\Resource;
 use App\Models\SignedDocs;
@@ -31,15 +32,15 @@ class ApplicationService
         $branch = Branch::where('id', $application->filial_initiator_id)->first();
         $signedDocs = $application->signedDocs()->get();
 
+        $file_basis = json_decode($application->file_basis);
+        $file_tech_spec = json_decode($application->file_tech_spec);
+        $other_files = json_decode($application->other_files);
         $same_role_user_ids = User::where('role_id', auth()->user()->role_id)->get()->pluck('id')->toArray();
         Cache::put('application_id',$application->id);
-//        $granted[] = json_decode($application->roles_need_sign, true);
-//        $granted[] = 5;
-//        $b1 = in_array(auth()->user()->role_id, $granted);
-//        if(!$b1)
-//            return redirect()->route('eimzo.back')->with('danger', 'Permission denied!');
+        $performers_company = Permission::with('roles')->where('key', 'Company_Performer')->first()->roles;
+        $performers_branch = Permission::with('roles')->where('key', 'Branch_Performer')->first()->roles;
         $user = auth()->user();
-        return view('site.applications.show', compact('user','application','branch','signedDocs', 'same_role_user_ids','access'));
+        return view('site.applications.show', compact('performers_company','performers_branch','file_basis','file_tech_spec','other_files','user','application','branch','signedDocs', 'same_role_user_ids','access'));
 
     }
     public function edit($application)
@@ -63,6 +64,7 @@ class ApplicationService
             'status_extented' => StatusExtented::all(),
             'countries' => $countries,
             'products' => $select,
+            'user' => auth()->user(),
             'company_signers' => Roles::find($company_signer)->pluck('display_name','id'),
             'branch_signers' => Roles::find($branch_signer)->pluck('display_name','id'),
         ]);

@@ -6,6 +6,7 @@
     <div class="pt-6">
     <div class="w-full flex">
         <div class="p-6">
+            <h5>{{ __('lang.author') }} {{$application->user->name}}</h5>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
                     {{Aire::input('bio', __('lang.table_1'))
@@ -139,10 +140,45 @@
                         ->cols(40)
                         ->disabled()
                     }}
+                    @if(isset($application->performer_leader_comment))
+                        @php
+                            $comment = \App\Models\User::find($application->performer_leader_user_id)->name;
+                        @endphp
+                        {{Aire::textArea('bio', "Comment: {$comment}")
+                            ->value($application->performer_leader_comment)
+                            ->rows(3)
+                            ->cols(40)
+                            ->disabled()
+                        }}
+                    @endif
                 </div>
             </div>
             </div>
         </div>
+        @if($file_basis != 'null' && $file_basis != null)
+        <div>
+            <h1 class="text-center">{{ __('lang.base') }}</h1>
+            @foreach($file_basis as $file)
+                <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
+            @endforeach
+        </div>
+        @endif
+        @if($file_tech_spec != 'null' && $file_tech_spec != null)
+        <div>
+            <h1 class="text-center">{{ __('lang.tz') }}</h1>
+            @foreach($file_tech_spec as $file)
+                <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
+            @endforeach
+        </div>
+        @endif
+        @if($other_files != 'null' && $other_files != null)
+        <div>
+            <h1 class="text-center">{{ __('lang.doc') }}</h1>
+            @foreach($other_files as $file)
+                <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
+            @endforeach
+        </div>
+        @endif
         <div class="px-6">
             <table id="yajra-datatable">
                 <thead>
@@ -150,137 +186,135 @@
                         <th>ID</th>
                         <th>{{ __('lang.table_7') }}</th>
                         <th>{{ __('lang.table_22') }}</th>
-                        <th >{{ __('lang.table_23') }}</th>
-                        <th >{{ __('lang.table_24') }}</th>
-{{--                        <th>{{ __('lang.table_25') }}</th>--}}
+                        <th>{{ __('lang.table_23') }}</th>
+                        <th>{{ __('lang.table_24') }}</th>
                     </tr>
                 </thead>
             </table>
         </div>
+
         <script>
-  $(function () {
-
-    var table = $('#yajra-datatable').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax:
-             "{{ route('site.applications.list.signedocs') }}",
-
-        columns: [
-            {data: 'id', name: 'id'},
-            {data: 'status', name: 'status'},
-            {data: 'role_id', name: 'role_id'},
-            {data: 'comment', name: 'comment'},
-            {data: 'user_id', name: 'user_id'},
-            // {data: 'application_id', name: 'application_id'},
-        ]
-    });
-
-
-  });
-console.log("{{$application->id}}");
-</script>
-@if(auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
+            $(function () {
+                var table = $('#yajra-datatable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: "{{ route('site.applications.list.signedocs') }}",
+                    columns: [
+                        {data: 'id', name: 'id'},
+                        {data: 'status', name: 'status'},
+                        {data: 'role_id', name: 'role_id'},
+                        {data: 'comment', name: 'comment'},
+                        {data: 'user_id', name: 'user_id'},
+                    ]
+                });
+            });
+            console.log("{{$application->id}}");
+        </script>
+        <div style="height: 50px"></div>
+        @if(auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
             @if(!isset($application->performer_user_id))
                 {{ Aire::open()
-  ->route('site.applications.update',$application->id)
-  ->enctype("multipart/form-data")
-  ->post() }}
-                @php
-                    $role_users = \App\Models\Permission::with('roles.users')->where('key', 'Company_Performer')->first()->roles->map->users; // company performer
-                    $users = [];
-                    foreach ($role_users as $role_user) {
-                        foreach ($role_user as $user)
-                        $users[] = $user;
-                    }
-                @endphp
-                <select class="col-md-6 custom-select" name="performer_user_id" id="performer_user_id">
-                    @foreach($users as $user)
-                        <option value="{{$user->id}}">{{$user->name}}</option>
+                    ->route('site.applications.update',$application->id)
+                    ->enctype("multipart/form-data")
+                    ->post()
+                }}
+
+                <select class="col-md-6 custom-select" name="performer_role_id" id="performer_role_id">
+                    @foreach($performers_company as $performer)
+                        <option value="{{$performer->id}}">{{$performer->display_name}}</option>
                     @endforeach
                 </select>
-                {{Aire::textArea('bio', 'Comment Performer Leader')
-                        ->name('performer_leader_comment')
+                <button type="submit" class="btn btn-success col-md-2" >Отправить</button>
+                {{ Aire::close() }}
+            @endif
+        @elseif(auth()->user()->hasPermission('Branch_Leader'))
+            @if(!isset($application->performer_user_id))
+                {{ Aire::open()
+                    ->route('site.applications.update',$application->id)
+                    ->enctype("multipart/form-data")
+                    ->post()
+                }}
+                <select class="col-md-6 custom-select" name="performer_role_id" id="performer_role_id">
+                    @foreach($performers_branch as $performer)
+                        <option value="{{$performer->id}}">{{$performer->display_name}}</option>
+                    @endforeach
+                </select>
+                <button type="submit" class="btn btn-success col-md-2" >Отправить</button>
+                {{ Aire::close() }}
+            @endif
+        @elseif($application->performer_role_id == $user->role_id && $application->performer_leader_comment == null)
+            {{ Aire::open()
+                ->route('site.applications.update',$application->id)
+                ->enctype("multipart/form-data")
+                ->post()
+            }}
+            {{Aire::textArea('bio', __('lang.table_23'))
+                ->name('performer_leader_comment')
+                ->rows(3)
+                ->cols(40)
+             }}
+            <input  class="hidden"
+                    name="performer_leader_user_id"
+                    value="{{auth()->user()->id}}"
+                    type="text">
+            <div class="mt-4">
+                <button type="submit" class="btn btn-success col-md-2" >{{ __('lang.send') }}</button>
+            </div>
+            {{ Aire::close() }}
+        @elseif($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer'||'Company_Performer'||'Branch_Performer') || $access && $user->role_id == 7)
+            <div class="px-6">
+                <form name="testform" action="{{route('site.applications.imzo.sign',$application->id)}}"        method="POST">
+                    @csrf
+                    <label id="message"></label>
+                    <div class="form-group">
+                        <label for="select1">
+                            {{ __('lang.eimzo_key') }}
+                        </label>
+                        <select name="key" id="select1" onchange="cbChanged(this)"></select> <br />
+                    </div>
+                    <div class="form-group hidden">
+                        <label for="exampleFormControlTextarea1">
+                            {{ __('lang.eimzo_title') }}
+                        </label>
+                        <textarea class="form-control" id="eri_data" name="data" rows="3"></textarea>
+                    </div>
+                    <div class="mb-2 text-center mr-6">
+                        {{ __('lang.eimzo_id') }} <label id="keyId"></label><br />
+
+                        <button onclick="generatekey()" class="hidden btn btn-success" type="button">{{ __('lang.eimzo_sign') }}</button><br />
+                    </div>
+                    <div class="w-1/2">
+                        {{Aire::textArea('bio', __('lang.table_23'))
+                        ->name('comment')
                         ->rows(3)
                         ->cols(40)
-                    }}
-                <button type="submit" class="btn btn-success col-md-2" >Отправить</button>
-                {{ Aire::close() }}
-            @endif
-@elseif(auth()->user()->hasPermission('Branch_Leader'))
-            @if(!isset($application->performer_user_id))
-                {{ Aire::open()
-  ->route('site.applications.update',$application->id)
-  ->enctype("multipart/form-data")
-  ->post() }}
-                @php
-                    $role_users = \App\Models\Permission::with('roles.users')->where('key', 'Branch_Performer')->first()->roles->map->users; // company performer
-                    $users = [];
-                    foreach ($role_users as $role_user) {
-                        foreach ($role_user as $user)
-                        $users[] = $user;
-                    }
-                @endphp
-                <select class="col-md-6 custom-select" name="performer_user_id" id="performer_user_id">
-                    @foreach($users as $user)
-                        <option value="{{$user->id}}">{{$user->name}}</option>
-                    @endforeach
-                </select>
-                {{Aire::textArea('bio', 'Comment Performer Leader')
-                            ->name('performer_leader_comment')
-                            ->rows(3)
-                            ->cols(40)
-                        }}
-                <button type="submit" class="btn btn-success col-md-2" >Отправить</button>
-
-                {{ Aire::close() }}
-            @endif
-@elseif($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer') || $access && $user->role_id == 7)
-               <div class="px-6">
-                    <form name="testform" action="{{route('site.applications.imzo.sign',$application->id)}}" method="POST">
-                        @csrf
-                        <label id="message"></label>
-                        <div class="form-group">
-                            <label for="select1">{{ __('lang.eimzo_key') }}</label>
-                            <select name="key" id="select1" onchange="cbChanged(this)"></select><br />
-                        </div>
-                        <div class="form-group hidden">
-                            <label for="exampleFormControlTextarea1">
-                                {{ __('lang.eimzo_title') }}
-                            </label>
-                            <textarea class="form-control" id="eri_data" name="data" rows="3"></textarea>
-                        </div>
-                        <div class="mb-2 text-center mr-6">
-                            {{ __('lang.eimzo_id') }} <label id="keyId"></label><br />
-
-                            <button onclick="generatekey()" class="hidden btn btn-success" type="button">{{ __('lang.eimzo_sign') }}</button><br />
-                        </div>
-                        <div class="w-1/2">
-                            {{Aire::textArea('bio', __('lang.table_23'))
-                            ->name('comment')
-                            ->rows(3)
-                            ->cols(40)
-                             }}
-                        </div>
-
-                        <div class="form-group hidden">
-                            <label for="exampleFormControlTextarea3">Подписанный документ PKCS#7</label>
-                            <textarea class="form-control" readonly required name="pkcs7" id="exampleFormControlTextarea3"
+                         }}
+                    </div>
+                    <div class="form-group hidden">
+                        <label for="exampleFormControlTextarea3">
+                            Подписанный документ PKCS#7
+                        </label>
+                        <textarea   class="form-control" readonly required
+                                    name="pkcs7" id="exampleFormControlTextarea3"
                                     rows="3"></textarea>
-                        </div><br />
-                        <input id="status" name="status" class="hidden" type="text">
-                        <input value="applications" id="table_name" name="table_name" class="hidden" type="text">
-                        <input value="{{$application->id}}" id="application_id" name="application_id" class="hidden" type="text">
-                        <input value="{{auth()->user()->id}}" name="user_id" class="hidden" type="text">
-                        <input value="{{auth()->user()->role_id}}" name="role_id" class="hidden" type="text">
-                        <div class="row ml-4 pb-4">
-                            <button onclick="status1()" type="submit" class="btn btn-success col-md-2" >{{ __('lang.accept') }}</button>
-                            <button onclick="status0()" type="submit" class="btn btn-danger col-md-2 mx-2   " >{{ __('lang.reject') }}</button>
-                        </div>
-                    </form>
+                    </div> <br />
+                    <input id="status" name="status" class="hidden" type="text">
+                    <input value="applications" id="table_name" name="table_name" class="hidden" type="text">
+                    <input value="{{$application->id}}" id="application_id" name="application_id" class="hidden" type="text">
+                    <input value="{{auth()->user()->id}}" name="user_id" class="hidden" type="text">
+                    <input value="{{auth()->user()->role_id}}" name="role_id" class="hidden" type="text">
+                    <div class="row ml-4 pb-4">
+                        <button onclick="status1()" type="submit" class="btn btn-success col-md-2" >
+                            {{ __('lang.accept') }}
+                        </button>
+                        <button onclick="status0()" type="submit" class="btn btn-danger col-md-2 mx-2   " >
+                            {{ __('lang.reject') }}
+                        </button>
+                    </div>
+                </form>
                </div>
-@endif
-    </div>
+            </div>
+        @endif
     <script>
         function generatekey()
         {

@@ -1,6 +1,8 @@
 <?php
 
 return [
+    "send" => "Send",
+    "author" => "Application author:",
     "alert" => "Where would you like to submit your application?",
     "branch_name" => "Branch management",
     "company" => "Company management",
@@ -21,6 +23,15 @@ return [
     "eimzo_title" => "Signature text",
     "signers" => "Confirmation persons (e-imzo)",
     "next" => "Next",
+    "status" => "Statuses",
+    "status_new" => "New",
+    "status_in_process" => "In process",
+    "status_accepted" => "Accepted",
+    "status_refused" => "Refused",
+    "status_agreed" => "Agreed",
+    "status_rejected" => "Rejected",
+    "status_distributed" => "Distributed",
+    "status_cancelled" => "Cancelled",
     "performed" => "Done",
     "performer_country" => "Goods (service) country of manufactured",
     "performer_info" => "Product information",
