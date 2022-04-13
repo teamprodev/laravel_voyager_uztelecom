@@ -146,11 +146,11 @@ class ApplicationController extends Controller
             ->editColumn('status',
                 '
                 @if($status == "1")
-                Accepted
+                Согласован
                 @elseif($status == "0")
-                Rejected
+                Отказан
                 @else
-                NotSign
+                Не подписан
                 @endif
                 ')
             ->make(true);
