@@ -141,15 +141,15 @@
                         ->disabled()
                     }}
                     @if(isset($application->performer_leader_comment))
-                    {{Aire::textArea('bio', "Comment: {$comment}")
-                        ->value($application->performer_leader_comment)
-                        ->rows(3)
-                        ->cols(40)
-                        ->disabled()
-                    }}
-                    @php
-                        $comment = \App\Models\User::find($application->performer_leader_user_id)->name;
-                    @endphp
+                        @php
+                            $comment = \App\Models\User::find($application->performer_leader_user_id)->name;
+                        @endphp
+                        {{Aire::textArea('bio', "Comment: {$comment}")
+                            ->value($application->performer_leader_comment)
+                            ->rows(3)
+                            ->cols(40)
+                            ->disabled()
+                        }}
                     @endif
                 </div>
             </div>
