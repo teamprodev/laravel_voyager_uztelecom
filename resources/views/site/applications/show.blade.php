@@ -132,9 +132,6 @@
                         ->disabled()
                     }}
                 </div>
-                @php
-                    $comment = \App\Models\User::find($application->performer_leader_user_id)->name;
-                @endphp
                 <div class="pt-2 pb-2 w-50">
                     {{Aire::textArea('bio', __('lang.table_21'))
                         ->name('comment')
@@ -143,12 +140,17 @@
                         ->cols(40)
                         ->disabled()
                     }}
+                    @if(isset($application->performer_leader_comment))
                     {{Aire::textArea('bio', "Comment: {$comment}")
                         ->value($application->performer_leader_comment)
                         ->rows(3)
                         ->cols(40)
                         ->disabled()
                     }}
+                    @php
+                        $comment = \App\Models\User::find($application->performer_leader_user_id)->name;
+                    @endphp
+                    @endif
                 </div>
             </div>
             </div>
