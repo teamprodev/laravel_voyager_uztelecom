@@ -80,6 +80,8 @@ Route::group([
                         Route::get('', [ApplicationController::class, 'show_draft']);
                     });
                     Route::get('', [ApplicationController::class, 'index'])->name('index');
+                    Route::get('{status}/show', [ApplicationController::class, 'status'])->name('status');
+                    Route::get('status_table/show', [ApplicationController::class, 'status_table'])->name('status_table');
                     Route::get('list', [ApplicationController::class, 'getdata'])->name('list');
                     Route::get('list/signedocs', [ApplicationController::class, 'SignedDocs'])->name('list.signedocs');
                     Route::get('{application}/show/{view?}', [ApplicationController::class, 'show'])->name('show');

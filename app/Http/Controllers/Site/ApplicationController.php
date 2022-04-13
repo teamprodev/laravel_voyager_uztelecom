@@ -47,6 +47,26 @@ class ApplicationController extends Controller
 //        $this->eimzoService = new EimzoService();
 
     }
+
+    public function status($status)
+    {
+        Cache::put('status', $status);
+        return view('site.applications.status');
+    }
+
+    public function status_table()
+    {
+        $data = Application::where('status', Cache::get('status'))->get();
+        return Datatables::of($data)
+            ->addIndexColumn()
+            ->editColumn('user_id', function($docs) {
+                return $docs->user ? $docs->user->name:"";
+            })
+            ->editColumn('role_id', function($docs) {
+                return $docs->role ? $docs->role->display_name:"";
+            })
+            ->make(true);
+    }
     public function index(User $user, Request $request)
     {
         if ($request->ajax()) {

@@ -175,8 +175,8 @@
                         <th>ID</th>
                         <th>{{ __('lang.table_7') }}</th>
                         <th>{{ __('lang.table_22') }}</th>
-                        <th >{{ __('lang.table_23') }}</th>
-                        <th >{{ __('lang.table_24') }}</th>
+                        <th>{{ __('lang.table_23') }}</th>
+                        <th>{{ __('lang.table_24') }}</th>
 {{--                        <th>{{ __('lang.table_25') }}</th>--}}
                     </tr>
                 </thead>
