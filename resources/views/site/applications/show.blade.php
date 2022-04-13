@@ -157,17 +157,27 @@
         </div>
         @if($file_basis != 'null' && $file_basis != null)
         <div>
-            <h1 class="text-center">{{ __('lang.base') }}</h1>
+            @if(Str::contains($file_basis,'xlsx'||'pdf'||'docx'))
+                <h1 class="text-center">{{ __('lang.base') }}</h1>
             @foreach($file_basis as $file)
-                <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
-            @endforeach
+                    <a href="/storage/{{$file}}" width="500" height="500" alt="not found">Get File</a>
+                @endforeach
+            @else
+                @foreach($file_basis as $file)
+                    <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
+                @endforeach
+            @endif
         </div>
         @endif
         @if($file_tech_spec != 'null' && $file_tech_spec != null)
         <div>
             <h1 class="text-center">{{ __('lang.tz') }}</h1>
-            @foreach($file_tech_spec as $file)
-                <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
+        @foreach($file_tech_spec as $file)
+            @if(\Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
+                    <a href="/storage/{{$file}}">Get File</a>
+            @else
+                    <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
+                @endif
             @endforeach
         </div>
         @endif
@@ -242,7 +252,7 @@
                 <button type="submit" class="btn btn-success col-md-2" >Отправить</button>
                 {{ Aire::close() }}
             @endif
-        @elseif($application->performer_role_id == $user->role_id && $application->performer_leader_comment == null)
+        @elseif($application->performer_role_id == $user->role_id && $access_comment->leader == 1)
             {{ Aire::open()
                 ->route('site.applications.update',$application->id)
                 ->enctype("multipart/form-data")

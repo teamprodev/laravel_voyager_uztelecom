@@ -5,22 +5,28 @@
                 <div class="mr-4 pt-2 pb-2 w-50">
                     {{Aire::select($branch, 'select', __('lang.performer_branch'))
                         ->name('branch_customer_id')
+                        ->value($application->branch_customer_id)
                         }}
                     {{Aire::input('bio', __('lang.performer_lot'))
                         ->name('lot_number')
+                        ->value($application->lot_number)
                     }}
                     {{Aire::input('bio', __('lang.performer_contract_num'))
                         ->name('contract_number')
+                        ->value($application->contract_number)
                     }}
                     {{Aire::dateTimeLocal('bio', __('lang.performer_contract_date'))
                         ->name('contract_date')
+                        ->value($application->contract_date)
                     }}
                     {{Aire::dateTimeLocal('bio', __('lang.performer_protocol_date'))
                         ->name('protocol_date')
+                        ->value($application->protocol_date)
                     }}
 
                     {{Aire::textArea('bio', __('lang.performer_contract_info'))
                         ->name('contract_info')
+                        ->value($application->contract_info)
                         ->rows(3)
                         ->cols(40)
                     }}
@@ -31,24 +37,34 @@
                 <div class="pt-2 pb-2 w-50">
                     {{Aire::select($countries,'bio', __('performer_country'))
                         ->name('country_produced_id')
+                        ->value($application->country_produced_id)
                     }}
                     {{Aire::input('bio', __('performer_price'))
                         ->name('contract_price')
+                        ->value($application->contract_price)
                     }}
 
                     {{Aire::input('bio', __('performer_supplier'))
                         ->name('supplier_name')
+                        ->value($application->supplier_name)
                     }}
                     {{Aire::input('bio', __('performer_inn'))
                         ->name('supplier_inn')
+                        ->value($application->supplier_inn)
                     }}
                     {{Aire::textArea('bio', __('performer_info'))
                         ->name('product_info')
+                        ->value($application->product_info)
                         ->rows(3)
                         ->cols(40)
                     }}
                     {{Aire::input('bio', __('lang.performer_protocol_num'))
                         ->name('protocol_number')
+                        ->value($application->protocol_number)
+                    }}
+                    {{Aire::input('bio', __('lang.performer_comment'))
+                        ->name('performer_comment')
+                        ->value($application->performer_comment)
                     }}
                     <input class="hidden" name="status" id="status" type="text">
                     <select onchange="change()" class="col-md-6 custom-select" name="performer_status" id="performer_status">
@@ -84,6 +100,11 @@
             document.getElementById('status').value = 'performed';
         }else if(status !== 'cancelled'){
             document.getElementById('a').classList.add('hidden');
+            if({{isset($application->status)}})
+            {
+                document.getElementById('status').value = "{{$application->status}}";
+            }
+
         }
     }
     function status11()

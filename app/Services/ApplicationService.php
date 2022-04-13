@@ -10,6 +10,7 @@ use App\Models\Branch;
 use App\Models\Notification;
 use App\Models\Permission;
 use App\Models\PermissionRole;
+use App\Models\Position;
 use App\Models\Resource;
 use App\Models\SignedDocs;
 use App\Models\StatusExtented;
@@ -40,7 +41,8 @@ class ApplicationService
         $performers_company = Permission::with('roles')->where('key', 'Company_Performer')->first()->roles;
         $performers_branch = Permission::with('roles')->where('key', 'Branch_Performer')->first()->roles;
         $user = auth()->user();
-        return view('site.applications.show', compact('performers_company','performers_branch','file_basis','file_tech_spec','other_files','user','application','branch','signedDocs', 'same_role_user_ids','access'));
+        $access_comment = Position::find($user->position_id);
+        return view('site.applications.show', compact('access_comment','performers_company','performers_branch','file_basis','file_tech_spec','other_files','user','application','branch','signedDocs', 'same_role_user_ids','access'));
 
     }
     public function edit($application)

@@ -202,6 +202,10 @@ class ApplicationController extends Controller
 
     public function update(Application $application, ApplicationRequest $request){
         $data = $request->validated();
+        if(isset($data['performer_leader_user_id']))
+        {
+            $data['performer_leader_date'] = Carbon::now()->toDateTimeString();
+        }
         if(isset($data['resource_id']) && $data['resource_id'] != "[object Object]")
         {
             $explode = explode(',',$data['resource_id']);
