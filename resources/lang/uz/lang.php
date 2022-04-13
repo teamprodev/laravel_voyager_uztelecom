@@ -1,6 +1,8 @@
 <?php
 
 return [
+    "send" => "Yuborish",
+    "author" => "Buyurtma muallifi:",
     "alert" => "Arizangizni qayerga yubormoqchisiz?",
     "branch_name" => "Filial rahbariyatiga",
     "company" => "Kompaniya rahbariyatiga",

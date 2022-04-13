@@ -1,6 +1,8 @@
 <?php
 
 return [
+    "send" => "Send",
+    "author" => "Application author:",
     "alert" => "Where would you like to submit your application?",
     "branch_name" => "Branch management",
     "company" => "Company management",
