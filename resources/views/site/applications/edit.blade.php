@@ -43,7 +43,7 @@
   ->post() }}
 
 
-    @if(auth()->user()->hasPermission('Company_Performer' || 'Branch_Performer') && $application->performer_user_id == auth()->user()->id)
+    @if(auth()->user()->hasPermission('Company_Performer' || 'Branch_Performer') || $application->performer_user_id == auth()->user()->id)
             @include('site.applications.performer')
     @else
         @include('site.applications.form_edit')
