@@ -16,39 +16,39 @@
                         {{ __('lang.status') }}
                     </div>
                     <div class="d-flex align-items-start flex-column">
-                        <a href="{{route('site.applications.status', 'new')}}" id="demo" class="collapse">
+                        <a href="{{route('site.applications.show_status', 'new')}}" id="demo" class="collapse">
                               <i class="nav-icon fas fa-chevron-right"></i>
                               <p>{{ __('lang.status_new') }}</p>
                           </a>
-                        <a href="{{route('site.applications.status', 'process')}}" id="demo" class="collapse">
+                        <a href="{{route('site.applications.show_status', 'process')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>{{ __('lang.status_in_process') }}</p>
                         </a>
-                        <a href="{{route('site.applications.status', 'accepted')}}" id="demo" class="collapse">
+                        <a href="{{route('site.applications.show_status', 'accepted')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>{{ __('lang.status_accepted') }}</p>
                         </a>
-                        <a href="{{route('site.applications.status', 'refused')}}" id="demo" class="collapse">
+                        <a href="{{route('site.applications.show_status', 'refused')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>{{ __('lang.status_refused') }}</p>
                         </a>
-                        <a href="{{route('site.applications.status', 'agreed')}}" id="demo" class="collapse">
+                        <a href="{{route('site.applications.show_status', 'agreed')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>{{ __('lang.status_agreed') }}</p>
                         </a>
-                        <a href="{{route('site.applications.status', 'rejected')}}" id="demo" class="collapse">
+                        <a href="{{route('site.applications.show_status', 'rejected')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>{{ __('lang.status_rejected') }}</p>
                         </a>
-                        <a href="{{route('site.applications.status', 'distributed')}}" id="demo" class="collapse">
+                        <a href="{{route('site.applications.show_status', 'distributed')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>{{ __('lang.status_distributed') }}</p>
                         </a>
-                        <a href="{{route('site.applications.status','cancelled')}}" id="demo" class="collapse">
+                        <a href="{{route('site.applications.show_status','cancelled')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>{{ __('lang.status_cancelled') }}</p>
                         </a>
-                        <a href="{{route('site.applications.status', 'performed')}}" id="demo" class="collapse">
+                        <a href="{{route('site.applications.show_status', 'performed')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>{{ __('lang.performed') }}</p>
                         </a>

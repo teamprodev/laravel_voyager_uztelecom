@@ -48,7 +48,7 @@ class ApplicationController extends Controller
 
     }
 
-    public function status($status)
+    public function show_status($status)
     {
         Cache::put('status', $status);
         return view('site.applications.status');
@@ -65,6 +65,13 @@ class ApplicationController extends Controller
             ->editColumn('role_id', function($docs) {
                 return $docs->role ? $docs->role->display_name:"";
             })
+
+            ->addColumn('action', function($row){
+                $edit = route('site.applications.edit', $row->id);
+                $show = route('site.applications.show', $row->id);
+                return "<a href='{$edit}' class='edit btn btn-success btn-sm'>Edit</a> <a href='{$show}' class='show btn btn-warning btn-sm'>Show</a>";
+            })
+            ->rawColumns(['action'])
             ->make(true);
     }
     public function index(User $user, Request $request)
