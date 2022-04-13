@@ -51,7 +51,7 @@
                         ->name('protocol_number')
                     }}
                     <input class="hidden" name="status" id="status" type="text">
-                    <select onchange="myFunction()" class="col-md-6 custom-select" name="performer_status" id="performer_status">
+                    <select onchange="change()" class="col-md-6 custom-select" name="performer_status" id="performer_status">
                         @foreach($status_extented as $status)
                         <option value="{{$status->name}}">{{$status->name}}</option>
                         @endforeach
@@ -72,18 +72,18 @@
     <input class="hidden" name="performer_user_id" id="performer_user_id" value="{{$user->id}}" type="text">
 </div>
 <script>
-    function myFunction()
+    function change()
     {
-        if (document.getElementById('performer_status').value === 'Отменен')
+        var status = document.getElementById('performer_status').value;
+        if (status === 'Отменен')
         {
             document.getElementById('a').classList.remove('hidden');
             document.getElementById('status').value = 'cancelled';
-        }else if (document.getElementById('performer_status').value === 'доставлен')
+        }else if (status === 'доставлен')
         {
             document.getElementById('status').value = 'performed';
-        }else if(document.getElementById('performer_status').value !== 'cancelled'){
+        }else if(status !== 'cancelled'){
             document.getElementById('a').classList.add('hidden');
-            document.getElementById('status').value = {{$application->status}};
         }
     }
     function status11()
