@@ -5,6 +5,8 @@ namespace App\Observers;
 use App\Models\Application;
 use App\Models\Roles;
 use App\Models\User;
+use DateTime;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Artisan;
 
 class ApplicationObserver
@@ -31,8 +33,26 @@ class ApplicationObserver
         if($application->performer_leader_comment == null && $application->performer_status != null)
         {
             $application->performer_user_id = auth()->user()->id;
-            $application->save();
         }
+        $app_time = strtotime($application->created_at->toDateTimeString());
+        $overdue_time = setting('admin.overdue_time');
+        if(strlen($overdue_time) == 1)
+            $voyager_time = strtotime(now()->format("Y-m-0{$overdue_time} H:i:s"));
+        else
+            $voyager_time = strtotime(now()->format("Y-m-{$overdue_time} H:i:s"));
+
+        $now = Carbon::now()->toDateTimeString();
+
+        $diff = $app_time - $voyager_time;
+        $dt1 = new DateTime("@0");
+        $result = abs($diff);
+        $dt2 = new DateTime("@{$result}");
+        $day = $dt1->diff($dt2)->format('%a');
+        if($day >= $overdue_time)
+            $application->status = 'Overdue';
+
+        $application->save();
+
     }
 
     /**
