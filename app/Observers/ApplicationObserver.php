@@ -33,8 +33,8 @@ class ApplicationObserver
         if($application->performer_leader_comment == null && $application->performer_status != null)
         {
             $application->performer_user_id = auth()->user()->id;
-        }
-        if($application->performer_role_id == null && $application->status != Application::AGREED)
+            $application->save();
+        }elseif($application->performer_role_id == null && $application->status != Application::AGREED)
         {
             $app_time = strtotime($application->created_at->toDateTimeString());
             $overdue_time = setting('admin.overdue_time');
@@ -48,9 +48,8 @@ class ApplicationObserver
             $day = $dt1->diff($dt2)->format('%a');
             if($day >= $overdue_time)
                 $application->status = 'Overdue';
+            $application->save();
         }
-
-        $application->save();
 
     }
 
