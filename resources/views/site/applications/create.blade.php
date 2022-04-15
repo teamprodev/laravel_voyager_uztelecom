@@ -28,17 +28,4 @@
 
 @endsection
 
-{{--$application->status = 1;--}}
-{{--$application->role_id = $clone->role_id;--}}
-{{--$application->user_id = $clone->user_id;--}}
-{{--$application->pkcs = $clone->pkcs;--}}
-{{--$application->text = $clone->text;--}}
-{{--$application->table_name = $clone->table_name;--}}
-{{--$application->application_id = $clone->application_id;--}}
-{{--$application->data = $clone->data;--}}
-{{--$application->comment = $clone->comment;--}}
-
-{{--$application->save();--}}
-return redirect()->back();
-
 
