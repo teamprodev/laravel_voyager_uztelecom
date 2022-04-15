@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Site;
 
 use App\DataTables\DraftDataTable;
+use Illuminate\Support\Facades\Schema;
 use App\Http\Requests\ApplicationRequest;
 use App\Http\Requests\VoteApplicationRequest;
 use App\Jobs\CreateApplicationJob;
@@ -69,7 +70,11 @@ class ApplicationController extends Controller
             ->addColumn('action', function($row){
                 $edit = route('site.applications.edit', $row->id);
                 $show = route('site.applications.show', $row->id);
-                return "<a href='{$edit}' class='edit btn btn-success btn-sm'>Edit</a> <a href='{$show}' class='show btn btn-warning btn-sm'>Show</a>";
+                $clone = route('site.applications.clone', $row->id);
+                return "
+                        <a href='{$edit}' class='edit btn btn-success btn-sm'>Edit</a> 
+                        <a href='{$show}' class='show btn btn-warning btn-sm'>Show</a>
+                        <a href='{$clone}' class='show btn btn-primary btn-sm'>Clone</a>";
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -113,12 +118,23 @@ class ApplicationController extends Controller
                 ->addColumn('action', function($row){
                     $edit = route('site.applications.edit', $row->id);
                     $show = route('site.applications.show', $row->id);
-                    return "<a href='{$edit}' class='edit btn btn-success btn-sm'>Edit</a> <a href='{$show}' class='show btn btn-warning btn-sm'>Show</a>";
+                    $clone = route('site.applications.clone', $row->id);
+                    return "
+                        <a href='{$edit}' class='edit btn btn-success btn-sm'><i class='fas fa-edit'></i></a> 
+                        <a href='{$show}' class='show btn btn-warning btn-sm'><i class='fa-solid fa-eye'></i></a>
+                        <a href='{$clone}' class='show btn btn-primary btn-sm'><i class='fa-solid fa-copy'></i></a>";
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
         return view('site.applications.index');
+    }
+
+    public function clone($id){
+        $clone = Application::find($id);
+        $application = $clone->replicate();
+        $application->save();
+        return redirect()->back();
     }
 
     public function show(Application $application, $view = false)

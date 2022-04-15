@@ -9,7 +9,7 @@
         <table id="yajra-datatable">
             <thead>
             <tr>
-                <th>{{ __('lang.table_0') }}</th>
+                <th>ID</th>
                 <th>{{ __('lang.table_1') }}</th>
                 <th>{{ __('lang.table_2') }}</th>
                 <th>{{ __('lang.table_3') }}</th>

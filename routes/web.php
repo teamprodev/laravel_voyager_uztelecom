@@ -86,6 +86,7 @@ Route::group([
                     Route::get('list/signedocs', [ApplicationController::class, 'SignedDocs'])->name('list.signedocs');
                     Route::get('{application}/show/{view?}', [ApplicationController::class, 'show'])->name('show');
                     Route::get('{application}/edit', [ApplicationController::class, 'edit'])->name('edit');
+                    Route::get('{application}/clone', [ApplicationController::class, 'clone'])->name('clone');
                     Route::post('{application}/update', [ApplicationController::class, 'update'])->name('update');
                     Route::get('create', [ApplicationController::class, 'create'])->name('create');
                     Route::post('store', [ApplicationController::class, 'store'])->name('store');
