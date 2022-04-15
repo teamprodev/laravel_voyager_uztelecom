@@ -339,11 +339,9 @@
         }).then((result) => {
             if (result.isConfirmed == true) {
                 document.getElementById('is_more_than_limit').value = 1;
-                console.log(document.getElementById('is_more_than_limit').value)
                 ajax();
             } else if (result.isDenied == true) {
                 document.getElementById('is_more_than_limit').value = 0;
-                console.log(document.getElementById('is_more_than_limit').value)
                 ajax();
             }
         })
@@ -357,13 +355,13 @@
                     is_more_than_limit: document.getElementById('is_more_than_limit').value,
                 },
                 success: function () {
-                    location.reload()
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
                     console.log(thrownError);
                 }
             })
+            location.reload();
         }
 
     </script>
