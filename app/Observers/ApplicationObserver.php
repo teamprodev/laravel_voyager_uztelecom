@@ -34,22 +34,21 @@ class ApplicationObserver
         {
             $application->performer_user_id = auth()->user()->id;
         }
-        $app_time = strtotime($application->created_at->toDateTimeString());
-        $overdue_time = setting('admin.overdue_time');
-        if(strlen($overdue_time) == 1)
-            $voyager_time = strtotime(now()->format("Y-m-0{$overdue_time} H:i:s"));
-        else
-            $voyager_time = strtotime(now()->format("Y-m-{$overdue_time} H:i:s"));
+        if($application->performer_role_id == null && $application->status != Application::AGREED)
+        {
+            $app_time = strtotime($application->created_at->toDateTimeString());
+            $overdue_time = setting('admin.overdue_time');
 
-        $now = Carbon::now()->toDateTimeString();
+            $now = strtotime(Carbon::now()->toDateTimeString());
 
-        $diff = $app_time - $voyager_time;
-        $dt1 = new DateTime("@0");
-        $result = abs($diff);
-        $dt2 = new DateTime("@{$result}");
-        $day = $dt1->diff($dt2)->format('%a');
-        if($day >= $overdue_time)
-            $application->status = 'Overdue';
+            $diff = $app_time - $now;
+            $dt1 = new DateTime("@0");
+            $result = abs($diff);
+            $dt2 = new DateTime("@{$result}");
+            $day = $dt1->diff($dt2)->format('%a');
+            if($day >= $overdue_time)
+                $application->status = 'Overdue';
+        }
 
         $application->save();
 
