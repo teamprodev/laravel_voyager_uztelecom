@@ -72,7 +72,7 @@ class ApplicationController extends Controller
                 $show = route('site.applications.show', $row->id);
                 $clone = route('site.applications.clone', $row->id);
                 return "
-                        <a href='{$edit}' class='edit btn btn-success btn-sm'>Edit</a> 
+                        <a href='{$edit}' class='edit btn btn-success btn-sm'>Edit</a>
                         <a href='{$show}' class='show btn btn-warning btn-sm'>Show</a>
                         <a href='{$clone}' class='show btn btn-primary btn-sm'>Clone</a>";
             })
@@ -120,7 +120,7 @@ class ApplicationController extends Controller
                     $show = route('site.applications.show', $row->id);
                     $clone = route('site.applications.clone', $row->id);
                     return "
-                        <a href='{$edit}' class='edit btn btn-success btn-sm'><i class='fas fa-edit'></i></a> 
+                        <a href='{$edit}' class='edit btn btn-success btn-sm'><i class='fas fa-edit'></i></a>
                         <a href='{$show}' class='show btn btn-warning btn-sm'><i class='fa-solid fa-eye'></i></a>
                         <a href='{$clone}' class='show btn btn-primary btn-sm'><i class='fa-solid fa-copy'></i></a>";
                 })
@@ -216,56 +216,10 @@ class ApplicationController extends Controller
         return $this->service->edit($application);
     }
 
-    public function update(Application $application, ApplicationRequest $request){
+    public function update(Application $application, ApplicationRequest $request)
+    {
         $data = $request->validated();
-        if(isset($data['performer_leader_user_id']))
-        {
-            $data['performer_leader_date'] = Carbon::now()->toDateTimeString();
-        }
-        if(isset($data['resource_id']) && $data['resource_id'] != "[object Object]")
-        {
-            $explode = explode(',',$data['resource_id']);
-            $id = [];
-            for ($i = 0; $i < count($explode); $i++)
-            {
-                $all = Resource::where('name','like',"%{$explode[$i]}%")->first();
-                $id[] = $all->id;
-                $data['resource_id'] = json_encode($id);
-            }
-        }
-
-
-        if (isset($data['performer_role_id']))
-        {
-            $mytime = Carbon::now();
-            $data['performer_received_date'] = $mytime->toDateTimeString();
-            $data['status'] = 'distributed';
-//            $data['performer_head_of_dep_user_id'] = auth()->user()->id;
-        }
-        if ($application->is_more_than_limit != 1)
-            $roles = PermissionRole::where('permission_id',168)->pluck('role_id')->toArray();
-        else
-            $roles = PermissionRole::where('permission_id',165)->pluck('role_id')->toArray();
-
-        if (isset($data['signers']))
-        {
-            $array = array_merge($roles,$data['signers']);
-            $data['signers'] = json_encode($array);
-            for($i = 0; $i < count($array);$i++)
-            {
-                $docs = new SignedDocs();
-                $docs->role_id = $array[$i];
-                $docs->application_id = $application->id;
-                $docs->table_name = "applications";
-                $docs->save();
-            }
-            $this->service->sendNotifications($array, $application);
-        }
-        $result = $application->update($data);
-        if ($result)
-            return redirect()->route('site.applications.index')->with('success', trans('site.application_success'));
-
-        return redirect()->back()->with('danger', trans('site.application_failed'));
+        return $this->service->update($application,$data);
     }
 
     public function store(ApplicationRequest $request)
