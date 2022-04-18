@@ -19,11 +19,18 @@
                         ->name('contract_date')
                         ->value($application->contract_date)
                     }}
+                    {{Aire::input()
+                        ->value($application->contract_date)
+                        ->disabled()
+                    }}
                     {{Aire::dateTimeLocal('bio', __('lang.performer_protocol_date'))
                         ->name('protocol_date')
                         ->value($application->protocol_date)
                     }}
-
+                    {{Aire::input()
+                        ->value($application->protocol_date)
+                        ->disabled()
+                    }}
                     {{Aire::textArea('bio', __('lang.performer_contract_info'))
                         ->name('contract_info')
                         ->value($application->contract_info)
@@ -98,13 +105,10 @@
         }else if (status === 'доставлен')
         {
             document.getElementById('status').value = 'performed';
+            console.log(document.getElementById('status').value);
         }else if(status !== 'cancelled'){
             document.getElementById('a').classList.add('hidden');
-            if({{isset($application->status)}})
-            {
-                document.getElementById('status').value = "{{$application->status}}";
-            }
-
+            document.getElementById('status').value = "{{$application->status}}";
         }
     }
     function status11()

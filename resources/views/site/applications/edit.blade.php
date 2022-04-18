@@ -33,6 +33,8 @@
 
     @if($application->user_id != auth()->user()->id && auth()->user()->hasPermission('Company_Performer' || 'Branch_Performer') || $application->performer_role_id == auth()->user()->role_id )
             @include('site.applications.performer')
+    @elseif(auth()->user()->hasPermission('Plan_Business'||'Plan_Budget'))
+        @include('site.applications.plan')
     @else
         @include('site.applications.form_edit')
     @endif

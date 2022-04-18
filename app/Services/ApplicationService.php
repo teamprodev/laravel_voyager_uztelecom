@@ -73,57 +73,6 @@ class ApplicationService
             'branch_signers' => Roles::find($branch_signer)->pluck('display_name','id'),
         ]);
     }
-    public function update($application,$data)
-    {
-        if(isset($data['performer_leader_user_id']))
-        {
-            $data['performer_leader_date'] = Carbon::now()->toDateTimeString();
-        }
-        if(isset($data['resource_id']) && $data['resource_id'] != "[object Object]")
-        {
-            $explode = explode(',',$data['resource_id']);
-            $id = [];
-            for ($i = 0; $i < count($explode); $i++)
-            {
-                $all = Resource::where('name','like',"%{$explode[$i]}%")->first();
-                $id[] = $all->id;
-                $data['resource_id'] = json_encode($id);
-            }
-        }
-
-
-        if (isset($data['performer_role_id']))
-        {
-            $mytime = Carbon::now();
-            $data['performer_received_date'] = $mytime->toDateTimeString();
-            $data['status'] = 'distributed';
-//            $data['performer_head_of_dep_user_id'] = auth()->user()->id;
-        }
-        if ($application->is_more_than_limit != 1)
-            $roles = PermissionRole::where('permission_id',168)->pluck('role_id')->toArray();
-        else
-            $roles = PermissionRole::where('permission_id',165)->pluck('role_id')->toArray();
-
-        if (isset($data['signers']))
-        {
-            $array = array_merge($roles,$data['signers']);
-            $data['signers'] = json_encode($array);
-            for($i = 0; $i < count($array);$i++)
-            {
-                $docs = new SignedDocs();
-                $docs->role_id = $array[$i];
-                $docs->application_id = $application->id;
-                $docs->table_name = "applications";
-                $docs->save();
-            }
-            $this->sendNotifications($array, $application);
-        }
-        $result = $application->update($data);
-        if ($result)
-            return redirect()->route('site.applications.index')->with('success', trans('site.application_success'));
-
-        return redirect()->back()->with('danger', trans('site.application_failed'));
-    }
 
     public function sendNotifications($array, $application)
     {

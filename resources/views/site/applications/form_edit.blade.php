@@ -102,14 +102,6 @@
                 </div>
             </div>
             <div class="flex items-baseline">
-                <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::textArea('bio', __('lang.table_20'))
-                        ->name('info_purchase_plan')
-                        ->value($application->info_purchase_plan)
-                        ->rows(3)
-                        ->cols(40)
-                    }}
-                </div>
                 <div class="pt-2 pb-2 w-50">
                     {{Aire::textArea('bio', __('lang.table_23'))
                         ->name('comment')
