@@ -37,7 +37,6 @@
     @else
         @include('site.applications.form_edit')
     @endif
-
     {{ Aire::close() }}
     <script>
         function functionBack()
