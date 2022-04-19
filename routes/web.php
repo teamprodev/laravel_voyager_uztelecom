@@ -88,6 +88,7 @@ Route::group([
                     Route::get('{application}/edit', [ApplicationController::class, 'edit'])->name('edit');
                     Route::get('{application}/clone', [ApplicationController::class, 'clone'])->name('clone');
                     Route::post('{application}/update', [ApplicationController::class, 'update'])->name('update');
+                    Route::get('{application}/destroy', [ApplicationController::class, 'destroy'])->name('destroy');
                     Route::get('create', [ApplicationController::class, 'create'])->name('create');
                     Route::post('store', [ApplicationController::class, 'store'])->name('store');
                     Route::put('{application}/vote', [ApplicationController::class, 'vote'])->name('vote');

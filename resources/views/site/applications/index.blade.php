@@ -17,7 +17,7 @@
                 <th>{{ __('lang.table_5') }}</th>
                 <th>{{ __('lang.table_6') }}</th>
                 <th>{{ __('lang.table_7') }}</th>
-                <th>{{ __('lang.table_8') }}</th>
+                <th class="w-100">{{ __('lang.table_8') }}</th>
             </tr>
             </thead>
         </table>

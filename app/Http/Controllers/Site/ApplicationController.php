@@ -71,10 +71,12 @@ class ApplicationController extends Controller
                 $edit = route('site.applications.edit', $row->id);
                 $show = route('site.applications.show', $row->id);
                 $clone = route('site.applications.clone', $row->id);
-                return "
-                        <a href='{$edit}' class='edit btn btn-success btn-sm'>Edit</a>
-                        <a href='{$show}' class='show btn btn-warning btn-sm'>Show</a>
-                        <a href='{$clone}' class='show btn btn-primary btn-sm'>Clone</a>";
+                $destroy = route('site.applications.destroy', $row->id);
+                return "<div class='row'>
+                        <a href='{$edit}' class='m-1 col edit btn btn-success btn-sm'><i class='fas fa-edit fa-xm'></i></a> 
+                        <a href='{$show}' class='m-1 col show btn btn-warning btn-sm'><i class='fa-solid fa-eye fa-xm'></i></a>
+                        <a href='{$clone}' class='m-1 col show btn btn-primary btn-sm'><i class='fa-solid fa-clone fa-xm'></i></a>
+                        <a href='{$destroy}' class='m-1 col show btn btn-danger btn-sm'><i class='fa-solid fa-trash fa-xm'></i></a></div>";
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -119,10 +121,12 @@ class ApplicationController extends Controller
                     $edit = route('site.applications.edit', $row->id);
                     $show = route('site.applications.show', $row->id);
                     $clone = route('site.applications.clone', $row->id);
-                    return "
-                        <a href='{$edit}' class='edit btn btn-success btn-sm'><i class='fas fa-edit'></i></a>
-                        <a href='{$show}' class='show btn btn-warning btn-sm'><i class='fa-solid fa-eye'></i></a>
-                        <a href='{$clone}' class='show btn btn-primary btn-sm'><i class='fa-solid fa-copy'></i></a>";
+                    $destroy = route('site.applications.destroy', $row->id);
+                    return "<div class='row'>
+                        <a href='{$edit}' class='m-1 col edit btn btn-success btn-sm'><i class='fas fa-edit fa-xm'></i></a> 
+                        <a href='{$show}' class='m-1 col show btn btn-warning btn-sm'><i class='fa-solid fa-eye fa-xm'></i></a>
+                        <a href='{$clone}' class='m-1 col show btn btn-primary btn-sm'><i class='fa-solid fa-clone fa-xm'></i></a>
+                        <a href='{$destroy}' class='m-1 col show btn btn-danger btn-sm'><i class='fa-solid fa-trash fa-xm'></i></a></div>";
                 })
                 ->rawColumns(['action'])
                 ->make(true);
