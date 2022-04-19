@@ -260,7 +260,7 @@ class ApplicationController extends Controller
                 $docs->table_name = "applications";
                 $docs->save();
             }
-            $this->sendNotifications($array, $application);
+            $this->service->sendNotifications($array, $application);
         }
         $result = $application->update($data);
         if ($result)
