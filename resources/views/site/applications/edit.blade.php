@@ -30,9 +30,9 @@
     ])
   ->post() }}
 
-    @if($user->hasPermission('Branch_Performer') || $user->hasPermission('Company_Performer') && $application->user_id != $user->id || $application->performer_role_id == $user->role_id )
+    @if($user->hasPermission('Branch_Performer') && $application->user_id != $user->id || $user->hasPermission('Company_Performer') && $application->user_id != $user->id || $application->performer_role_id == $user->role_id )
             @include('site.applications.performer')
-    @elseif($user->hasPermission('Plan_Budget'))
+    @elseif($user->hasPermission('Plan_Budget') || $user->hasPermission('Plan_Business'))
         @include('site.applications.plan')
     @else
         @include('site.applications.form_edit')

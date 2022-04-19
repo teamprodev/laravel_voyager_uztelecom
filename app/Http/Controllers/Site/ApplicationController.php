@@ -133,6 +133,16 @@ class ApplicationController extends Controller
     public function clone($id){
         $clone = Application::find($id);
         $application = $clone->replicate();
+        $signers = json_decode($application->signers);
+        for($i = 0; $i < count($signers);$i++)
+        {
+            $docs = new SignedDocs();
+            $docs->role_id = $signers[$i];
+            $docs->application_id = Application::latest()->first()->id + 1;
+            $docs->table_name = "applications";
+            $docs->save();
+        }
+        $application->status = null;
         $application->save();
         return redirect()->back();
     }
