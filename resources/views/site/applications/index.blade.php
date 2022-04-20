@@ -9,7 +9,7 @@
         <table id="yajra-datatable">
             <thead>
             <tr>
-                <th>ID</th>
+                <th>№</th>
                 <th>{{ __('lang.table_1') }}</th>
                 <th>{{ __('lang.table_2') }}</th>
                 <th>{{ __('lang.table_3') }}</th>
@@ -34,7 +34,7 @@
                  "{{ route('site.applications.index') }}",
 
             columns: [
-                {data: 'id', name: 'id'},
+                {data: 'number', name: 'number'},
                 {data: 'initiator', name: 'initiator'},
                 {data: 'name', name: 'name'},
                 {data: 'delivery_date', name: 'delivery_date'},

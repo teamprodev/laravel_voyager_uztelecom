@@ -137,8 +137,12 @@ class ApplicationController extends Controller
     public function clone($id){
         $clone = Application::find($id);
         $application = $clone->replicate();
-        $signers = json_decode($application->signers);
-        for($i = 0; $i < count($signers);$i++)
+        if($application->signers !== Null) {
+            $signers = json_decode($application->signers);
+        }else{
+            $signers = [];
+        }
+        for($i = 0; $i < count($signers); $i++)
         {
             $docs = new SignedDocs();
             $docs->role_id = $signers[$i];
@@ -218,8 +222,10 @@ class ApplicationController extends Controller
 
     public function create()
     {
+        $latest = Application::latest('id')->first();
         $application = new Application();
         $application->user_id = auth()->user()->id;
+        $application->number = $latest->id + 1;
         $application->save();
         $data = Application::query()->latest('id')->first();
         return redirect()->route('site.applications.edit',$data->id)->with('Alert','adasdas');
@@ -334,5 +340,41 @@ class ApplicationController extends Controller
                 ->make(true);
         }
         return view('site.applications.draft');
+    }
+
+    /**
+     * soft delete post
+     *
+     * @return void
+     */
+    public function destroy($application)
+    {
+        Application::find($application)->delete();
+
+        return redirect()->back();
+    }
+
+    /**
+     * restore specific post
+     *
+     * @return void
+     */
+    public function restore($id)
+    {
+//        Application::withTrashed()->find($id)->restore();
+//
+//        return redirect()->back();
+    }
+
+    /**
+     * restore all post
+     *
+     * @return response()
+     */
+    public function restoreAll()
+    {
+//        Application::onlyTrashed()->restore();
+//
+//        return redirect()->back();
     }
 }
