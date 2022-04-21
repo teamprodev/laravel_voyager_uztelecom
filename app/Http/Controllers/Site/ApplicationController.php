@@ -105,7 +105,7 @@ class ApplicationController extends Controller
             }
             elseif($user->hasPermission('Company_Leader'))
             {
-                $query = $query->where('status','agreed'||'distributed');
+                $query = $query->where('status','agreed');
             }
             elseif($user->hasPermission('Branch_Leader'))
             {
