@@ -73,7 +73,7 @@ class ApplicationController extends Controller
                 $clone = route('site.applications.clone', $row->id);
                 $destroy = route('site.applications.destroy', $row->id);
                 return "<div class='row'>
-                        <a href='{$edit}' class='m-1 col edit btn btn-success btn-sm'><i class='fas fa-edit fa-xm'></i></a> 
+                        <a href='{$edit}' class='m-1 col edit btn btn-success btn-sm'><i class='fas fa-edit fa-xm'></i></a>
                         <a href='{$show}' class='m-1 col show btn btn-warning btn-sm'><i class='fa-solid fa-eye fa-xm'></i></a>
                         <a href='{$clone}' class='m-1 col show btn btn-primary btn-sm'><i class='fa-solid fa-clone fa-xm'></i></a>
                         <a href='{$destroy}' class='m-1 col show btn btn-danger btn-sm'><i class='fa-solid fa-trash fa-xm'></i></a></div>";
@@ -91,7 +91,11 @@ class ApplicationController extends Controller
                 ->get();
             $user = auth()->user();
 
-        if ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
+        if($user->role_id == 7)
+            {
+            $query = Application::query()->where('status', "accepted");
+        }
+        elseif ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
             {
             $query = Application::query()->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id);
         }
@@ -107,10 +111,7 @@ class ApplicationController extends Controller
             {
                 $query = $query->where('status', 'accepted');
             }
-            elseif($user->role_id == 7)
-            {
-                $query = Application::query()->where('status', "accepted")->where('signers','like',"%{$user->role_id}%");
-            }
+
             else {
                 $query = $query->where('user_id',$user->id);
             }
@@ -123,7 +124,7 @@ class ApplicationController extends Controller
                     $clone = route('site.applications.clone', $row->id);
                     $destroy = route('site.applications.destroy', $row->id);
                     return "<div class='row'>
-                        <a href='{$edit}' class='m-1 col edit btn btn-success btn-sm'><i class='fas fa-edit fa-xm'></i></a> 
+                        <a href='{$edit}' class='m-1 col edit btn btn-success btn-sm'><i class='fas fa-edit fa-xm'></i></a>
                         <a href='{$show}' class='m-1 col show btn btn-warning btn-sm'><i class='fa-solid fa-eye fa-xm'></i></a>
                         <a href='{$clone}' class='m-1 col show btn btn-primary btn-sm'><i class='fa-solid fa-clone fa-xm'></i></a>
                         <a href='{$destroy}' class='m-1 col show btn btn-danger btn-sm'><i class='fa-solid fa-trash fa-xm'></i></a></div>";
