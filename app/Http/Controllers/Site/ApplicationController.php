@@ -76,7 +76,7 @@ class ApplicationController extends Controller
                 $edit = route('site.applications.edit', $row->id);
                 $show = route('site.applications.show', $row->id);
                 $destroy = route('site.applications.destroy', $row->id);
-                if($row->status == 'acepted' || $row->status =='refused')
+                if($row->status == 'accepted' || $row->status =='refused')
                 {
                     $clone = route('site.applications.clone', $row->id);
                 }else{
@@ -138,7 +138,7 @@ class ApplicationController extends Controller
                     $edit = route('site.applications.edit', $row->id);
                     $show = route('site.applications.show', $row->id);
                     $destroy = route('site.applications.destroy', $row->id);
-                    if($row->status == 'acepted' || $row->status =='refused')
+                    if($row->status == 'accepted' || $row->status =='refused')
                     {
                         $clone = route('site.applications.clone', $row->id);
                     }else{
@@ -361,7 +361,7 @@ class ApplicationController extends Controller
                     $edit = route('site.applications.edit', $row->id);
                     $show = route('site.applications.show', $row->id);
                     $destroy = route('site.applications.destroy', $row->id);
-                    if($row->status == 'acepted' || $row->status =='refused')
+                    if($row->status == 'accepted' || $row->status =='refused')
                     {
                         $clone = route('site.applications.clone', $row->id);
                     }else{
