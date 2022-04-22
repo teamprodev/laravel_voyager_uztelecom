@@ -16,8 +16,9 @@
                 <th>{{ __('lang.table_4') }}</th>
                 <th>{{ __('lang.table_5') }}</th>
                 <th>{{ __('lang.table_6') }}</th>
+                <th>{{ __('lang.table_61') }}</th>
                 <th>{{ __('lang.table_7') }}</th>
-                <th style="width: 100px">{{ __('lang.table_8') }}</th>
+                <th>{{ __('lang.table_8') }}</th>
             </tr>
             </thead>
         </table>
@@ -48,6 +49,7 @@
                 {data: 'incoterms', name: 'incoterms'},
 
                 {data: 'created_at', name: 'created_at'},
+                {data: 'updated_at', name: 'updated_at'},
                 {data: 'status', name: 'status'},
                 {
                     data: 'action',

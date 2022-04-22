@@ -66,12 +66,22 @@ class ApplicationController extends Controller
             ->editColumn('role_id', function($docs) {
                 return $docs->role ? $docs->role->display_name:"";
             })
-
+            ->editColumn('created_at', function ($data) {
+                return $data->created_at ? with(new Carbon($data->created_at))->format('m/d/Y') : '';
+            })
+            ->editColumn('updated_at', function ($data) {
+                return $data->updated_at ? with(new Carbon($data->updated_at))->format('Y/m/d') : '';
+            })
             ->addColumn('action', function($row){
                 $edit = route('site.applications.edit', $row->id);
                 $show = route('site.applications.show', $row->id);
-                $clone = route('site.applications.clone', $row->id);
                 $destroy = route('site.applications.destroy', $row->id);
+                if($row->status == 'acepted' || $row->status =='refused')
+                {
+                    $clone = route('site.applications.clone', $row->id);
+                }else{
+                    $clone = '#';
+                }
                 return "<div class='row'>
                         <a href='{$edit}' class='m-1 col edit btn btn-success btn-sm'><i class='fas fa-edit fa-xm'></i></a> 
                         <a href='{$show}' class='m-1 col show btn btn-warning btn-sm'><i class='fa-solid fa-eye fa-xm'></i></a>
@@ -116,12 +126,24 @@ class ApplicationController extends Controller
             }
 
             return Datatables::of($query)
+                ->editColumn('created_at', function ($query) {
+                    return $query->created_at ? with(new Carbon($query->created_at))->format('m/d/Y') : '';
+                })
+                ->editColumn('updated_at', function ($query) {
+                    return $query->updated_at ? with(new Carbon($query->updated_at))->format('Y/m/d') : '';;
+                })
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
                     $edit = route('site.applications.edit', $row->id);
                     $show = route('site.applications.show', $row->id);
-                    $clone = route('site.applications.clone', $row->id);
                     $destroy = route('site.applications.destroy', $row->id);
+                    if($row->status == 'acepted' || $row->status =='refused')
+                    {
+                        $clone = route('site.applications.clone', $row->id);
+                    }else{
+                        $clone = '#';
+                    }
+
                     return "<div class='row'>
                         <a href='{$edit}' class='m-1 col edit btn btn-success btn-sm'><i class='fas fa-edit fa-xm'></i></a> 
                         <a href='{$show}' class='m-1 col show btn btn-warning btn-sm'><i class='fa-solid fa-eye fa-xm'></i></a>
@@ -137,18 +159,15 @@ class ApplicationController extends Controller
     public function clone($id){
         $clone = Application::find($id);
         $application = $clone->replicate();
-        if($application->signers !== Null) {
+        if($application->signers != null) {
             $signers = json_decode($application->signers);
-        }else{
-            $signers = [];
-        }
-        for($i = 0; $i < count($signers); $i++)
-        {
-            $docs = new SignedDocs();
-            $docs->role_id = $signers[$i];
-            $docs->application_id = Application::latest()->first()->id + 1;
-            $docs->table_name = "applications";
-            $docs->save();
+            for ($i = 0; $i < count($signers); $i++) {
+                $docs = new SignedDocs();
+                $docs->role_id = $signers[$i];
+                $docs->application_id = Application::latest()->first()->id + 1;
+                $docs->table_name = "applications";
+                $docs->save();
+            }
         }
         $application->status = null;
         $application->save();
@@ -331,10 +350,28 @@ class ApplicationController extends Controller
                 ->get();
             return Datatables::of($data)
                 ->addIndexColumn()
+                ->editColumn('created_at', function ($data) {
+                    return $data->created_at ? with(new Carbon($data->created_at))->format('m/d/Y') : '';
+                })
+                ->editColumn('updated_at', function ($data) {
+                    return $data->updated_at ? with(new Carbon($data->updated_at))->format('Y/m/d') : '';;
+                })
                 ->addColumn('action', function($row){
                     $edit = route('site.applications.edit', $row->id);
                     $show = route('site.applications.show', $row->id);
-                    return "<a href='{$edit}' class='edit btn btn-success btn-sm'>Edit</a> <a href='{$show}' class='show btn btn-warning btn-sm'>Show</a>";
+                    $destroy = route('site.applications.destroy', $row->id);
+                    if($row->status == 'acepted' || $row->status =='refused')
+                    {
+                        $clone = route('site.applications.clone', $row->id);
+                    }else{
+                        $clone = '#';
+                    }
+
+                    return "<div class='row'>
+                        <a href='{$edit}' class='m-1 col edit btn btn-success btn-sm'><i class='fas fa-edit fa-xm'></i></a> 
+                        <a href='{$show}' class='m-1 col show btn btn-warning btn-sm'><i class='fa-solid fa-eye fa-xm'></i></a>
+                        <a href='{$clone}' class='m-1 col show btn btn-primary btn-sm'><i class='fa-solid fa-clone fa-xm'></i></a>
+                        <a href='{$destroy}' class='m-1 col show btn btn-danger btn-sm'><i class='fa-solid fa-trash fa-xm'></i></a></div>";
                 })
                 ->rawColumns(['action'])
                 ->make(true);

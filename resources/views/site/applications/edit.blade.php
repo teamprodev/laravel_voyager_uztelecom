@@ -2,7 +2,7 @@
 
 @section('center_content')
     <div class="pl-4 pt-4">
-        <button class="btn btn-danger" onclick="functionBack()">{{ __('lang.back') }}</button>
+        <a href="/" class="btn btn-danger">{{ __('lang.back') }}</a>
     </div>
     {{ Aire::open()
   ->route('site.applications.update',$application->id)
@@ -38,11 +38,5 @@
         @include('site.applications.form_edit')
     @endif
     {{ Aire::close() }}
-    <script>
-        function functionBack()
-        {
-            window.history.back();
-        }
-    </script>
 @endsection
 

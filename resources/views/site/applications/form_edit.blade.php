@@ -6,44 +6,52 @@
                     {{Aire::input('bio', __('lang.table_1'))
                         ->name('initiator')
                         ->value($application->initiator)
+                        ->required()
                     }}
                     {{Aire::textArea('bio', __('lang.table_9'))
                         ->name('purchase_basis')
                         ->value($application->purchase_basis)
                         ->rows(3)
                         ->cols(40)
+                        ->required()
                     }}
                     {{Aire::textArea('bio', __('lang.table_10'))
                         ->name('specification')
                         ->value($application->specification)
                         ->rows(3)
                         ->cols(40)
+                        ->required()
                     }}
                     {{Aire::dateTimeLocal('bio', __('lang.table_3'))
                         ->name('delivery_date')
                         ->value($application->delivery_date)
+                        ->required()
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
                     {{Aire::input('bio', __('lang.table_2'))
                         ->name('name')
                         ->value($application->name)
+                        ->required()
                     }}
                     {{Aire::textArea('bio', __('lang.table_11'))
                         ->name('basis')
                         ->value($application->basis)
                         ->rows(3)
                         ->cols(40)
+                        ->required()
                     }}
                     {{Aire::textArea('bio', __('lang.table_12'))
                         ->name('separate_requirements')
                         ->value($application->separate_requirements)
                         ->rows(3)
                         ->cols(40)
+                        ->required()
                     }}
                     {{Aire::dateTimeLocal('bio', __('lang.table_14'))
                         ->name('expire_warranty_date')
                         ->value($application->expire_warranty_date)
+                        ->required()
                     }}
                 </div>
             </div>
@@ -53,12 +61,14 @@
                         ->name('planned_price')
                         ->value($application->planned_price)
                         ->id('planned_price')
+                        ->required()
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
                     {{Aire::input('bio', __('lang.table_15'))
                         ->name('info_business_plan')
                         ->value($application->info_business_plan)
+                        ->required()
                     }}
                 </div>
 
@@ -108,23 +118,24 @@
                         ->value($application->comment)
                         ->rows(3)
                         ->cols(40)
+                        ->required()
                     }}
                     @if($application->is_more_than_limit != 0)
                         <div class="w-full">
 
                             {{Aire::select($company_signers, 'signers', __('lang.signers'))
-                                                            ->multiple()
-                                                            ->id('signers')
-                                                            ->size(10)
-                                                            }}
+                                ->multiple()
+                                ->id('signers')
+                                ->size(10)
+                            }}
                         </div>
                     @else
                         <div class="w-full">
                             {{Aire::select($branch_signers, 'signers', __('lang.signers'))
-                                                            ->multiple()
-                                                            ->id('signers')
-                                                            ->size(10)
-                                                            }}
+                                ->multiple()
+                                ->id('signers')
+                                ->size(10)
+                            }}
                         </div>
                     @endif
                 </div>
@@ -259,6 +270,7 @@
                     is_more_than_limit: document.getElementById('is_more_than_limit').value,
                 },
                 success: function () {
+                    location.reload();
                 },
 
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -266,7 +278,6 @@
                     console.log(thrownError);
                 }
             })
-            location.reload();
         }
     </script>
 @endif

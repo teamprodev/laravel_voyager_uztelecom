@@ -78,6 +78,7 @@ return [
     "table_4" => "Xarid rejasi (summa)",
     "table_5" => "Mahsulotni keltirish uchun qo'yilgan talab (INCOTERMS)",
     "table_6" => "Yaratilgan sana",
+    "table_61" => "Yangilangan sana",
     "table_7" => "Status",
     "table_8" => "Harakat",
     "table_9" => "Xarid mazmuni (sotib olish uchun asos)",
