@@ -96,20 +96,6 @@
                 </div>
             </div>
             <div class="flex items-baseline">
-                <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::select($purchase, 'select', __('lang.table_18'))
-                        ->name('subject')
-                        ->value($application->subject)
-                    }}
-                </div>
-                <div class="pt-2 pb-2 w-50">
-                    {{Aire::select($subject, 'select', __('lang.table_19'))
-                        ->name('type_of_purchase_id')
-                        ->value($application->type_of_purchase_id)
-                    }}
-                </div>
-            </div>
-            <div class="flex items-baseline">
                 <div class="pt-2 pb-2 w-50">
                     {{Aire::textArea('bio', __('lang.table_23'))
                         ->name('comment')

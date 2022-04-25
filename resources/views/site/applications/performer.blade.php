@@ -40,10 +40,6 @@
                     {{Aire::checkbox('checkbox', __('lang.performer_nds'))
                        ->name('with_nds')
                     }}
-                    {{Aire::select([1 => __('lang.tender'), 2 => __('lang.selection'), 3 => 'Eshop'], 'select', __('lang.table_19'))
-                     ->value(1)
-                     ->name('type_of_purchase_id')
-                    }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
                     {{Aire::select($countries,'bio', __('performer_country'))
@@ -77,10 +73,18 @@
                         ->name('performer_comment')
                         ->value($application->performer_comment)
                     }}
-                    {{Aire::select([1 => __('lang.product'), 2 => __('lang.work'), 3 => __('lang.service')], 'select', __('lang.table_18'))
-                     ->value(1)
-                     ->name('subject')
-                    }}
+                    <div class="mr-4 pt-2 pb-2 w-50">
+                        {{Aire::select($purchase, 'select', __('lang.table_18'))
+                            ->name('subject')
+                            ->value($application->subject)
+                        }}
+                    </div>
+                    <div class="pt-2 pb-2 w-50">
+                        {{Aire::select($subject, 'select', __('lang.table_19'))
+                            ->name('type_of_purchase_id')
+                            ->value($application->type_of_purchase_id)
+                        }}
+                    </div>
                     <input class="hidden" name="status" id="status" type="text">
                     <select class="col-md-6 custom-select" name="status" id="status">
                         @foreach($status_extented as $status)
