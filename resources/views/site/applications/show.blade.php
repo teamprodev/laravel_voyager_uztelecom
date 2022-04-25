@@ -159,6 +159,14 @@
                             ->disabled()
                         }}
                     @endif
+                    @if(isset($application->branch_leader_comment))
+                        {{Aire::textArea('bio', "Comment ЦУЗ")
+                        ->name('branch_leader_comment')
+                        ->rows(3)
+                        ->cols(40)
+                        ->disabled()
+                         }}
+                    @endif
                 </div>
             </div>
             </div>
@@ -334,6 +342,12 @@
                 </form>
                </div>
             </div>
+        @elseif($user->hasPermission('Company_Leader') || $user->hasPermission('Branch_Leader'))
+            {{Aire::textArea('bio', "Comment ЦУЗ")
+                        ->name('branch_leader_comment')
+                        ->rows(3)
+                        ->cols(40)
+                         }}
         @endif
     <script>
         function generatekey()
