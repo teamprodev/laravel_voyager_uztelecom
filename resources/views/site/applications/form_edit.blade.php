@@ -66,7 +66,6 @@
                     {{Aire::input('bio', __('lang.table_15'))
                         ->name('info_business_plan')
                         ->value($application->info_business_plan)
-                        ->required()
                     }}
                 </div>
 
