@@ -151,6 +151,14 @@
                             ->disabled()
                         }}
                     @endif
+                    @if(isset($application->performer_role_id))
+                        {{Aire::textArea('bio')
+                            ->value(\App\Models\User::find($application->performer_role_id)->role->name)
+                            ->rows(3)
+                            ->cols(40)
+                            ->disabled()
+                        }}
+                    @endif
                 </div>
             </div>
             </div>
