@@ -25,7 +25,6 @@
                     {{Aire::dateTimeLocal('bio', __('lang.table_3'))
                         ->name('delivery_date')
                         ->value($application->delivery_date)
-                        ->required()
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
@@ -51,7 +50,6 @@
                     {{Aire::dateTimeLocal('bio', __('lang.table_14'))
                         ->name('expire_warranty_date')
                         ->value($application->expire_warranty_date)
-                        ->required()
                     }}
                 </div>
             </div>
