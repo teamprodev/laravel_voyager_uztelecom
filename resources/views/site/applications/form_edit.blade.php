@@ -118,7 +118,7 @@
                         ->cols(40)
                         ->required()
                     }}
-                    @if($application->is_more_than_limit != 0)
+                    @if($application->is_more_than_limit != 0 && $application->signers == null)
                         <div class="w-full">
 
                             {{Aire::select($company_signers, 'signers', __('lang.signers'))
@@ -127,7 +127,7 @@
                                 ->size(10)
                             }}
                         </div>
-                    @else
+                    @elseif($application->is_more_than_limit == 0 && $application->signers == null)
                         <div class="w-full">
                             {{Aire::select($branch_signers, 'signers', __('lang.signers'))
                                 ->multiple()
