@@ -74,7 +74,7 @@
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
                     @if($application->currency == null)
-                        {{Aire::select(['USD' => 'USD', "SO'M" => "SO'M"], 'select', __('lang.valyuta'))
+                        {{Aire::select(["SO'M" => "SO'M", 'USD' => 'USD'], 'select', __('lang.valyuta'))
                             ->name('currency')
                             ->id('currency')
                         }}
