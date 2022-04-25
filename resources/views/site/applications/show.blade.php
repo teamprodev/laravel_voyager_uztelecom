@@ -157,16 +157,14 @@
         </div>
         @if($file_basis != 'null' && $file_basis != null)
         <div>
-            @if(Str::contains($file_basis,'xlsx'||'pdf'||'docx'))
                 <h1 class="text-center">{{ __('lang.base') }}</h1>
             @foreach($file_basis as $file)
-                    <a href="/storage/{{$file}}" width="500" height="500" alt="not found">Get File</a>
-                @endforeach
-            @else
-                @foreach($file_basis as $file)
-                    <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
-                @endforeach
-            @endif
+                @if(\Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
+                <a href="/storage/{{$file}}" width="500" height="500" alt="not found">Get File</a>
+                @else
+                        <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
+                @endif
+            @endforeach
         </div>
         @endif
         @if($file_tech_spec != 'null' && $file_tech_spec != null)
@@ -185,7 +183,11 @@
         <div>
             <h1 class="text-center">{{ __('lang.doc') }}</h1>
             @foreach($other_files as $file)
-                <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
+                @if(\Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
+                    <a href="/storage/{{$file}}">Get File</a>
+                @else
+                    <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
+                @endif
             @endforeach
         </div>
         @endif
