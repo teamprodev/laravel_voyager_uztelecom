@@ -44,7 +44,7 @@ class ApplicationService
         $performers_branch = Permission::with('roles')->where('key', 'Branch_Performer')->first()->roles;
         $user = auth()->user();
         $access_comment = Position::find($user->position_id);
-        return view('site.applications.show', compact('recource_name','access_comment','performers_company','performers_branch','file_basis','file_tech_spec','other_files','user','application','branch','signedDocs', 'same_role_user_ids','access'));
+        return view('site.applications.show', compact('access_comment','performers_company','performers_branch','file_basis','file_tech_spec','other_files','user','application','branch','signedDocs', 'same_role_user_ids','access'));
 
     }
     public function edit($application)
