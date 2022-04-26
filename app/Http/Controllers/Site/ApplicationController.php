@@ -251,7 +251,6 @@ class ApplicationController extends Controller
         $latest = Application::latest('id')->first();
         $application = new Application();
         $application->user_id = auth()->user()->id;
-        $application->number = $latest->id + 1;
         $application->save();
         $data = Application::query()->latest('id')->first();
         return redirect()->route('site.applications.edit',$data->id)->with('Alert','adasdas');
