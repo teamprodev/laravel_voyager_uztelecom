@@ -244,10 +244,12 @@
         <div style="height: 50px"></div>
         @if(auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
             @if(!isset($application->performer_user_id))
+                <div class="pb-5">
                 {{ Aire::open()
                     ->route('site.applications.update',$application->id)
                     ->enctype("multipart/form-data")
                     ->post()
+                    ->class('pb-5')
                 }}
                 {{Aire::textArea('bio', "Comment ЦУЗ")
                         ->name('branch_leader_comment')
@@ -259,11 +261,13 @@
                         <option value="{{$performer->id}}">{{$performer->display_name}}</option>
                     @endforeach
                 </select>
-                <button type="submit" class="btn btn-success col-md-2" >Отправить</button>
+                <button type="submit" class="btn btn-success col-md-2" >{{ __('lang.send') }}</button>
                 {{ Aire::close() }}
+                </div>
             @endif
         @elseif(auth()->user()->hasPermission('Branch_Leader'))
             @if(!isset($application->performer_user_id))
+            <div class="pb-5">
                 {{ Aire::open()
                     ->route('site.applications.update',$application->id)
                     ->enctype("multipart/form-data")
@@ -274,8 +278,9 @@
                         <option value="{{$performer->id}}">{{$performer->display_name}}</option>
                     @endforeach
                 </select>
-                <button type="submit" class="btn btn-success col-md-2" >Отправить</button>
+                <button type="submit" class="btn btn-success col-md-2" >{{ __('lang.send') }}</button>
                 {{ Aire::close() }}
+            </div>
             @endif
         @elseif($application->performer_role_id == $user->role_id && $access_comment->leader == 1)
             {{ Aire::open()
