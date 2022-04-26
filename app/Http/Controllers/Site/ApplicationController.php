@@ -139,7 +139,7 @@ class ApplicationController extends Controller
                     $clone_e = route('site.applications.clone', $row->id);
                     $show_e = route('site.applications.show', $row->id);
                     $destroy_e = route('site.applications.destroy', $row->id);
-                    if($row->user_id == auth()->user()->id||auth()->user()->hasPermission('Branch_Performer')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Plan_Budget')||auth()->user()->hasPermission('Plan_Business')||auth()->user()->hasPermission('Plan_Business'))
+                    if($row->user_id == auth()->user()->id||auth()->user()->hasPermission('Branch_Performer')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Plan_Budget')||auth()->user()->hasPermission('Plan_Business')||auth()->user()->hasPermission('Number_Change'))
                     {
                         $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-success btn-sm'><i class='fas fa-edit fa-xm'></i></a>";
                     }else{
