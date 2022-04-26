@@ -174,7 +174,7 @@
             <h1 class="text-center">{{ __('lang.tz') }}</h1>
         @foreach($file_tech_spec as $file)
             @if(\Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
-                    <a href="/storage/{{$file}}">Get File</a>
+                <button type="button" class="btn btn-primary"><a href="/storage/{{$file}}">Get File</a></button>
             @else
                     <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
                 @endif
