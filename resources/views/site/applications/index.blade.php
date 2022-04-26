@@ -9,7 +9,6 @@
         <table id="yajra-datatable">
             <thead>
             <tr>
-                <th>ID</th>
                 <th>№</th>
                 <th>{{ __('lang.table_1') }}</th>
                 <th>{{ __('lang.table_2') }}</th>
@@ -29,13 +28,13 @@
 <script>
     $(function () {
         var table = $('#yajra-datatable').DataTable({
+            order: [[ 0, "asc" ]],
             processing: true,
             serverSide: true,
             ajax:
                  "{{ route('site.applications.index') }}",
 
             columns: [
-                {data: 'id', name: 'id'},
                 {data: 'number', name: 'number'},
                 {data: 'initiator', name: 'initiator'},
                 {data: 'name', name: 'name'},
