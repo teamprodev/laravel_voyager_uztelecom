@@ -38,11 +38,6 @@ class ApplicationService
         $file_basis = json_decode($application->file_basis);
         $file_tech_spec = json_decode($application->file_tech_spec);
         $other_files = json_decode($application->other_files);
-        for ($i = 0; $i<count(json_decode($application->resource_id)); $i++)
-        {
-            echo $a = Resource::find(1)->name;
-            $recource_name = $a;
-        }
         $same_role_user_ids = User::where('role_id', auth()->user()->role_id)->get()->pluck('id')->toArray();
         Cache::put('application_id',$application->id);
         $performers_company = Permission::with('roles')->where('key', 'Company_Performer')->first()->roles;
