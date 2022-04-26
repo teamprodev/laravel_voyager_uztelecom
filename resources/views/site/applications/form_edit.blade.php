@@ -126,9 +126,9 @@
         </div>
     </div>
 </div>
-<input id="resource_id" name="resource_id" value=null class="hidden" type="text">
 @if($application->resource_id == null)
-<table id="table"></table>
+    <input id="resource_id" name="resource_id" value=null class="hidden" type="text">
+    <table id="table"></table>
 @endif
 <script src="https://unpkg.com/jquery.appendgrid@2.0.0/dist/AppendGrid.js"></script>
 {{--@dd(json_encode($products,JSON_UNESCAPED_UNICODE))--}}
