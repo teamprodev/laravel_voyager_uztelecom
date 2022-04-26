@@ -151,30 +151,44 @@
                             ->disabled()
                         }}
                     @endif
+                    @if(isset($application->performer_role_id))
+                        {{Aire::textArea('bio')
+                            ->value(\App\Models\Roles::find($application->performer_role_id)->display_name)
+                            ->rows(3)
+                            ->cols(40)
+                            ->disabled()
+                        }}
+                    @endif
+                    @if(isset($application->branch_leader_comment))
+                        {{Aire::textArea('bio', "Comment ЦУЗ")
+                        ->name('branch_leader_comment')
+                        ->rows(3)
+                        ->cols(40)
+                        ->disabled()
+                         }}
+                    @endif
                 </div>
             </div>
             </div>
         </div>
         @if($file_basis != 'null' && $file_basis != null)
         <div>
-            @if(Str::contains($file_basis,'xlsx'||'pdf'||'docx'))
                 <h1 class="text-center">{{ __('lang.base') }}</h1>
             @foreach($file_basis as $file)
-                    <a href="/storage/{{$file}}" width="500" height="500" alt="not found">Get File</a>
-                @endforeach
-            @else
-                @foreach($file_basis as $file)
-                    <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
-                @endforeach
-            @endif
+                @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
+                <button><a href="/storage/{{$file}}" width="500" height="500" alt="not found">Get File</a></button>
+                @else
+                        <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
+                @endif
+            @endforeach
         </div>
         @endif
         @if($file_tech_spec != 'null' && $file_tech_spec != null)
         <div>
             <h1 class="text-center">{{ __('lang.tz') }}</h1>
         @foreach($file_tech_spec as $file)
-            @if(\Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
-                <button type="button" class="btn btn-primary"><a href="/storage/{{$file}}">Get File</a></button>
+            @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
+                    <a href="/storage/{{$file}}">Get File</a>
             @else
                     <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
                 @endif
@@ -185,7 +199,11 @@
         <div>
             <h1 class="text-center">{{ __('lang.doc') }}</h1>
             @foreach($other_files as $file)
-                <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
+                @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
+                    <a href="/storage/{{$file}}">Get File</a>
+                @else
+                    <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
+                @endif
             @endforeach
         </div>
         @endif
@@ -324,6 +342,12 @@
                 </form>
                </div>
             </div>
+        @elseif($user->hasPermission('Company_Leader') || $user->hasPermission('Branch_Leader'))
+            {{Aire::textArea('bio', "Comment ЦУЗ")
+                        ->name('branch_leader_comment')
+                        ->rows(3)
+                        ->cols(40)
+                         }}
         @endif
     <script>
         function generatekey()

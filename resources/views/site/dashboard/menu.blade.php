@@ -20,7 +20,7 @@
                               <i class="nav-icon fas fa-chevron-right"></i>
                               <p>{{ __('lang.status_new') }}</p>
                           </a>
-                        <a href="{{route('site.applications.show_status', 'process')}}" id="demo" class="collapse">
+                        <a href="{{route('site.applications.show_status', 'in_process')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>{{ __('lang.status_in_process') }}</p>
                         </a>

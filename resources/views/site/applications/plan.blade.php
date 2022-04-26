@@ -9,6 +9,13 @@
                         ->rows(3)
                         ->cols(40)
                     }}
+                    @if($user->hasPermission('Number_Change'))
+                    {{Aire::number('num', "Number Application")
+                        ->name('number')
+                        ->rows(3)
+                        ->cols(40)
+                         }}
+                    @endif
                 </div>
                 <div class="pt-2 pb-2 w-50">
                     {{Aire::textArea('bio', 'Бюджетни режалаштириш бўлими - харид қилинадиган махсулотни бизнес режада мавжудлиги бўйича маълумот')

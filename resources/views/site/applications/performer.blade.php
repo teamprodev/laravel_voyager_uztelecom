@@ -40,30 +40,26 @@
                     {{Aire::checkbox('checkbox', __('lang.performer_nds'))
                        ->name('with_nds')
                     }}
-                    {{Aire::select([1 => __('lang.tender'), 2 => __('lang.selection'), 3 => 'Eshop'], 'select', __('lang.table_19'))
-                     ->value(1)
-                     ->name('type_of_purchase_id')
-                    }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::select($countries,'bio', __('performer_country'))
+                    {{Aire::select($countries,'bio', __('lang.performer_country'))
                         ->name('country_produced_id')
                         ->value($application->country_produced_id)
                     }}
-                    {{Aire::input('bio', __('performer_price'))
+                    {{Aire::input('bio', __('lang.performer_price'))
                         ->name('contract_price')
                         ->value($application->contract_price)
                     }}
 
-                    {{Aire::input('bio', __('performer_supplier'))
+                    {{Aire::input('bio', __('lang.performer_supplier'))
                         ->name('supplier_name')
                         ->value($application->supplier_name)
                     }}
-                    {{Aire::input('bio', __('performer_inn'))
+                    {{Aire::input('bio', __('lang.performer_inn'))
                         ->name('supplier_inn')
                         ->value($application->supplier_inn)
                     }}
-                    {{Aire::textArea('bio', __('performer_info'))
+                    {{Aire::textArea('bio', __('lang.performer_info'))
                         ->name('product_info')
                         ->value($application->product_info)
                         ->rows(3)
@@ -77,10 +73,18 @@
                         ->name('performer_comment')
                         ->value($application->performer_comment)
                     }}
-                    {{Aire::select([1 => __('lang.product'), 2 => __('lang.work'), 3 => __('lang.service')], 'select', __('lang.table_18'))
-                     ->value(1)
-                     ->name('subject')
-                    }}
+                    <div class="mr-4 pt-2 pb-2 w-50">
+                        {{Aire::select($purchase, 'select', __('lang.table_18'))
+                            ->name('subject')
+                            ->value($application->subject)
+                        }}
+                    </div>
+                    <div class="pt-2 pb-2 w-50">
+                        {{Aire::select($subject, 'select', __('lang.table_19'))
+                            ->name('type_of_purchase_id')
+                            ->value($application->type_of_purchase_id)
+                        }}
+                    </div>
                     <input class="hidden" name="status" id="status" type="text">
                     <select class="col-md-6 custom-select" name="status" id="status">
                         @foreach($status_extented as $status)

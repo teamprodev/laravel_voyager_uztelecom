@@ -67,6 +67,8 @@ class ApplicationRequest extends FormRequest
             'performer_leader_user_id' => 'nullable',
             'performer_comment' => 'nullable',
             'budget_planning' => 'nullable',
+            'branch_leader_comment' => 'nullable',
+            'number' => 'nullable',
         ];
     }
 }
