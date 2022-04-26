@@ -175,7 +175,7 @@
         <div>
                 <h1 class="text-center">{{ __('lang.base') }}</h1>
             @foreach($file_basis as $file)
-                @if(\Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
+                @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
                 <a href="/storage/{{$file}}" width="500" height="500" alt="not found">Get File</a>
                 @else
                         <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
@@ -187,7 +187,7 @@
         <div>
             <h1 class="text-center">{{ __('lang.tz') }}</h1>
         @foreach($file_tech_spec as $file)
-            @if(\Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
+            @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
                     <a href="/storage/{{$file}}">Get File</a>
             @else
                     <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
@@ -199,7 +199,7 @@
         <div>
             <h1 class="text-center">{{ __('lang.doc') }}</h1>
             @foreach($other_files as $file)
-                @if(\Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
+                @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
                     <a href="/storage/{{$file}}">Get File</a>
                 @else
                     <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
