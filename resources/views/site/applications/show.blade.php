@@ -153,7 +153,7 @@
                     @endif
                     @if(isset($application->performer_role_id))
                         {{Aire::textArea('bio')
-                            ->value(\App\Models\Roles::find($application->performer_role_id)->name)
+                            ->value(\App\Models\Roles::find($application->performer_role_id)->display_name)
                             ->rows(3)
                             ->cols(40)
                             ->disabled()
