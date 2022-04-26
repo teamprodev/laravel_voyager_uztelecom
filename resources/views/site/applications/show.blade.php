@@ -186,10 +186,10 @@
         @if($file_tech_spec != 'null' && $file_tech_spec != null)
         <div>
             <h1 class="text-center">{{ __('lang.tz') }}</h1>
-        @foreach($file_tech_spec as $file)
-            @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
+            @foreach($file_tech_spec as $file)
+                @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
                     <a href="/storage/{{$file}}">Get File</a>
-            @else
+                @else
                     <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
                 @endif
             @endforeach
@@ -238,7 +238,8 @@
             });
             console.log("{{$application->id}}");
         </script>
-        <div style="height: 50px"></div>
+        <div style="height: 50px" ></div>
+        <div class="pb-5">
         @if(auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
             @if(!isset($application->performer_user_id))
                 {{ Aire::open()
@@ -252,7 +253,7 @@
                         <option value="{{$performer->id}}">{{$performer->display_name}}</option>
                     @endforeach
                 </select>
-                <button type="submit" class="btn btn-success col-md-2" >Отправить</button>
+                <button type="submit" class="btn btn-success col-md-2" >{{ __('lang.send') }}</button>
                 {{ Aire::close() }}
             @endif
         @elseif(auth()->user()->hasPermission('Branch_Leader'))
@@ -267,7 +268,7 @@
                         <option value="{{$performer->id}}">{{$performer->display_name}}</option>
                     @endforeach
                 </select>
-                <button type="submit" class="btn btn-success col-md-2" >Отправить</button>
+                <button type="submit" class="btn btn-success col-md-2" >{{ __('lang.send') }}</button>
                 {{ Aire::close() }}
             @endif
         @elseif($application->performer_role_id == $user->role_id && $access_comment->leader == 1)
@@ -349,6 +350,7 @@
                         ->cols(40)
                          }}
         @endif
+        </div>
     <script>
         function generatekey()
         {
