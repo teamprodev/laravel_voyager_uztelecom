@@ -139,7 +139,7 @@ class ApplicationController extends Controller
                     $clone_e = route('site.applications.clone', $row->id);
                     $show_e = route('site.applications.show', $row->id);
                     $destroy_e = route('site.applications.destroy', $row->id);
-                    if($row->user_id == auth()->user()->id||auth()->user()->hasPermission('Branch_Performer')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Plan_Budget')||auth()->user()->hasPermission('Plan_Business')->hasPermission('Plan_Business'))
+                    if($row->user_id == auth()->user()->id||auth()->user()->hasPermission('Branch_Performer')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Plan_Budget')||auth()->user()->hasPermission('Plan_Business')||auth()->user()->hasPermission('Plan_Business'))
                     {
                         $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-success btn-sm'><i class='fas fa-edit fa-xm'></i></a>";
                     }else{
@@ -152,7 +152,7 @@ class ApplicationController extends Controller
                     }else{
                         $destroy = "";
                     }
-                    if($row->user_id == auth()->user()->id && $row->status == 'accepted' || $row->user_id == auth()->user()->id && $row->status =='refused')
+                    if($row->user_id == auth()->user()->id && $row->status == 'cancelled' || $row->user_id == auth()->user()->id && $row->status == 'refused')
                     {
                         $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'><i class='fa-solid fa-clone fa-xm'></i></a>";
                     }else{
