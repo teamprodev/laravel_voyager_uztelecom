@@ -29,11 +29,12 @@
     'accepted' => 'You must accept the terms',
     ])
   ->post() }}
-
     @if($user->hasPermission('Branch_Performer') && $application->user_id != $user->id || $user->hasPermission('Company_Performer') && $application->user_id != $user->id || $application->performer_role_id == $user->role_id )
             @include('site.applications.performer')
     @elseif($user->hasPermission('Plan_Budget') || $user->hasPermission('Plan_Business'))
         @include('site.applications.plan')
+    @elseif($user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business'))
+        @include('site.applications.number_edit')
     @else
         @include('site.applications.form_edit')
     @endif

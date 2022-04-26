@@ -348,12 +348,6 @@
                         ->rows(3)
                         ->cols(40)
                          }}
-        @elseif($user->hasPermission('Number_Change'))
-            {{Aire::number('num', "Number Application")
-                        ->name('number')
-                        ->rows(3)
-                        ->cols(40)
-                         }}
         @endif
     <script>
         function generatekey()
