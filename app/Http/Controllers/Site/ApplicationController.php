@@ -141,20 +141,20 @@ class ApplicationController extends Controller
                     $destroy_e = route('site.applications.destroy', $row->id);
                     if($row->user_id == auth()->user()->id||auth()->user()->hasPermission('Branch_Performer')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Plan_Budget')||auth()->user()->hasPermission('Plan_Business')||auth()->user()->hasPermission('Number_Change'))
                     {
-                        $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-success btn-sm'>Edit</a>";
+                        $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-success btn-sm'><i class='fas fa-edit fa-xm'></i></a>";
                     }else{
                         $edit = "";
                     }
-                    $show = "<a href='{$show_e}' class='m-1 col show btn btn-warning btn-sm'>Show</a>";
+                    $show = "<a href='{$show_e}' class='m-1 col show btn btn-warning btn-sm'><i class='fa-solid fa-eye fa-xm'></i></a>";
                     if($row->user_id == auth()->user()->id)
                     {
-                        $destroy = "<a href='{$destroy_e}' class='m-1 col show btn btn-danger btn-sm'>Delete</a>";
+                        $destroy = "<a href='{$destroy_e}' class='m-1 col show btn btn-danger btn-sm'><i class='fa-solid fa-trash fa-xm'></i></a>";
                     }else{
                         $destroy = "";
                     }
                     if($row->user_id == auth()->user()->id && $row->status == 'cancelled' || $row->user_id == auth()->user()->id && $row->status == 'refused')
                     {
-                        $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>Clone</a>";
+                        $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'><i class='fa-solid fa-clone fa-xm'></i></a>";
                     }else{
                         $clone = "";
                     }

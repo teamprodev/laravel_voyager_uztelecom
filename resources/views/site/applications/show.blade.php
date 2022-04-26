@@ -131,9 +131,6 @@
                         ->cols(40)
                         ->disabled()
                     }}
-                    {{Aire::textArea('bio', "Resource")
-                        ->disabled()
-                         }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
                     {{Aire::textArea('bio', __('lang.table_21'))
@@ -179,7 +176,7 @@
                 <h1 class="text-center">{{ __('lang.base') }}</h1>
             @foreach($file_basis as $file)
                 @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
-                    <button style="margin: 20px;" type="button" class="btn btn-primary"><a style="color: white;" href="/storage/{{$file}}" width="500" height="500" alt="not found">Get File</a></button>
+                <a href="/storage/{{$file}}" width="500" height="500" alt="not found">Get File</a>
                 @else
                         <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
                 @endif
@@ -189,10 +186,10 @@
         @if($file_tech_spec != 'null' && $file_tech_spec != null)
         <div>
             <h1 class="text-center">{{ __('lang.tz') }}</h1>
-        @foreach($file_tech_spec as $file)
-            @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
-                    <button style="margin: 20px;" type="button" class="btn btn-primary"><a style="color: white;" href="/storage/{{$file}}">Get File</a></button>
-            @else
+            @foreach($file_tech_spec as $file)
+                @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
+                    <a href="/storage/{{$file}}">Get File</a>
+                @else
                     <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
                 @endif
             @endforeach
@@ -203,7 +200,7 @@
             <h1 class="text-center">{{ __('lang.doc') }}</h1>
             @foreach($other_files as $file)
                 @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
-                    <button style="margin: 20px;" type="button" class="btn btn-primary"><a style="color: white;" href="/storage/{{$file}}">Get File</a></button>
+                    <a href="/storage/{{$file}}">Get File</a>
                 @else
                     <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
                 @endif
@@ -241,7 +238,8 @@
             });
             console.log("{{$application->id}}");
         </script>
-        <div style="height: 50px"></div>
+        <div style="height: 50px" ></div>
+        <div class="pb-5">
         @if(auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
             @if(!isset($application->performer_user_id))
                 {{ Aire::open()
@@ -249,17 +247,13 @@
                     ->enctype("multipart/form-data")
                     ->post()
                 }}
-                {{Aire::textArea('bio', "Comment ЦУЗ")
-                        ->name('branch_leader_comment')
-                        ->rows(3)
-                        ->cols(40)
-                         }}
+
                 <select class="col-md-6 custom-select" name="performer_role_id" id="performer_role_id">
                     @foreach($performers_company as $performer)
                         <option value="{{$performer->id}}">{{$performer->display_name}}</option>
                     @endforeach
                 </select>
-                <button type="submit" class="btn btn-success col-md-2" >Отправить</button>
+                <button type="submit" class="btn btn-success col-md-2" >{{ __('lang.send') }}</button>
                 {{ Aire::close() }}
             @endif
         @elseif(auth()->user()->hasPermission('Branch_Leader'))
@@ -274,7 +268,7 @@
                         <option value="{{$performer->id}}">{{$performer->display_name}}</option>
                     @endforeach
                 </select>
-                <button type="submit" class="btn btn-success col-md-2" >Отправить</button>
+                <button type="submit" class="btn btn-success col-md-2" >{{ __('lang.send') }}</button>
                 {{ Aire::close() }}
             @endif
         @elseif($application->performer_role_id == $user->role_id && $access_comment->leader == 1)
@@ -349,7 +343,14 @@
                 </form>
                </div>
             </div>
+        @elseif($user->hasPermission('Company_Leader') || $user->hasPermission('Branch_Leader'))
+            {{Aire::textArea('bio', "Comment ЦУЗ")
+                        ->name('branch_leader_comment')
+                        ->rows(3)
+                        ->cols(40)
+                         }}
         @endif
+        </div>
     <script>
         function generatekey()
         {
