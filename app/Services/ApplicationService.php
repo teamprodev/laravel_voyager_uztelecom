@@ -38,13 +38,18 @@ class ApplicationService
         $file_basis = json_decode($application->file_basis);
         $file_tech_spec = json_decode($application->file_tech_spec);
         $other_files = json_decode($application->other_files);
+        for ($i = 0; $i<count(json_decode($application->resource_id)); $i++)
+        {
+            echo $a = Resource::find(1)->name;
+            $recource_name = $a;
+        }
         $same_role_user_ids = User::where('role_id', auth()->user()->role_id)->get()->pluck('id')->toArray();
         Cache::put('application_id',$application->id);
         $performers_company = Permission::with('roles')->where('key', 'Company_Performer')->first()->roles;
         $performers_branch = Permission::with('roles')->where('key', 'Branch_Performer')->first()->roles;
         $user = auth()->user();
         $access_comment = Position::find($user->position_id);
-        return view('site.applications.show', compact('access_comment','performers_company','performers_branch','file_basis','file_tech_spec','other_files','user','application','branch','signedDocs', 'same_role_user_ids','access'));
+        return view('site.applications.show', compact('recource_name','access_comment','performers_company','performers_branch','file_basis','file_tech_spec','other_files','user','application','branch','signedDocs', 'same_role_user_ids','access'));
 
     }
     public function edit($application)

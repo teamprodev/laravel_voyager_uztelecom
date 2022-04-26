@@ -131,6 +131,9 @@
                         ->cols(40)
                         ->disabled()
                     }}
+                    {{Aire::textArea('bio', "Resource")
+                        ->disabled()
+                         }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
                     {{Aire::textArea('bio', __('lang.table_21'))
@@ -246,7 +249,11 @@
                     ->enctype("multipart/form-data")
                     ->post()
                 }}
-
+                {{Aire::textArea('bio', "Comment ЦУЗ")
+                        ->name('branch_leader_comment')
+                        ->rows(3)
+                        ->cols(40)
+                         }}
                 <select class="col-md-6 custom-select" name="performer_role_id" id="performer_role_id">
                     @foreach($performers_company as $performer)
                         <option value="{{$performer->id}}">{{$performer->display_name}}</option>
@@ -342,12 +349,6 @@
                 </form>
                </div>
             </div>
-        @elseif($user->hasPermission('Company_Leader') || $user->hasPermission('Branch_Leader'))
-            {{Aire::textArea('bio', "Comment ЦУЗ")
-                        ->name('branch_leader_comment')
-                        ->rows(3)
-                        ->cols(40)
-                         }}
         @endif
     <script>
         function generatekey()
