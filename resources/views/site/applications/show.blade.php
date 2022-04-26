@@ -176,7 +176,7 @@
                 <h1 class="text-center">{{ __('lang.base') }}</h1>
             @foreach($file_basis as $file)
                 @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
-                <button><a href="/storage/{{$file}}" width="500" height="500" alt="not found">Get File</a></button>
+                    <button style="margin: 20px;" type="button" class="btn btn-primary"><a style="color: white;" href="/storage/{{$file}}" width="500" height="500" alt="not found">Get File</a></button>
                 @else
                         <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
                 @endif
@@ -188,7 +188,7 @@
             <h1 class="text-center">{{ __('lang.tz') }}</h1>
         @foreach($file_tech_spec as $file)
             @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
-                    <a href="/storage/{{$file}}">Get File</a>
+                    <button style="margin: 20px;" type="button" class="btn btn-primary"><a style="color: white;" href="/storage/{{$file}}">Get File</a></button>
             @else
                     <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
                 @endif
@@ -200,7 +200,7 @@
             <h1 class="text-center">{{ __('lang.doc') }}</h1>
             @foreach($other_files as $file)
                 @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
-                    <a href="/storage/{{$file}}">Get File</a>
+                    <button style="margin: 20px;" type="button" class="btn btn-primary"><a style="color: white;" href="/storage/{{$file}}">Get File</a></button>
                 @else
                     <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
                 @endif
