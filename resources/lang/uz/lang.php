@@ -2,6 +2,7 @@
 
 return [
     "send" => "Yuborish",
+    "resource" => "Resurs",
     "author" => "Buyurtma muallifi:",
     "alert" => "Arizangizni qayerga yubormoqchisiz?",
     "branch_name" => "Filial rahbariyatiga",
@@ -33,6 +34,7 @@ return [
     "status_distributed" => "Taqsimlangan",
     "status_cancelled" => "Tugatilgan",
     "performed" => "Bajarilgan",
+    "performer" => "Ijrochi",
     "performer_country" => "Tovar (xizmat) ishlab chiqarilgan mamlakat",
     "performer_info" => "Mahsulot haqida ma'lumot",
 

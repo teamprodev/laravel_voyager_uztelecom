@@ -2,6 +2,7 @@
 
 return [
     "send" => "Отправить",
+    "resource" => "Ресурс",
     "author" => "Автор заявки:",
     "alert" => "Куда вы хотите отправить заявка?",
     "branch_name" => "Руководство филиалом",
@@ -33,6 +34,7 @@ return [
     "status_distributed" => "Распределен",
     "status_cancelled" => "Отменен",
     "performed" => "Исполнена",
+    "performer" => "Исполнитель",
     "performer_country" => "Товары (обслуживание) страна изготовленной",
     "performer_info" => "Информация о товаре",
 

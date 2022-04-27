@@ -110,16 +110,28 @@
             </div>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::select($application->subject, 'select', __('lang.table_18'))
-                        ->name('subject')
-                        ->disabled()
-                    }}
+                    <h6><b>{{ __('lang.table_18') }}</b></h6>
+                    <select class="custom-select" name="subject" disabled>
+                        @foreach($subjects as $subject)
+                            @if($application->subject == $subject->id)
+                                <option value="{{ $subject->id }}" selected>
+                                    {{ $subject->name }}
+                                </option>
+                            @endif
+                        @endforeach
+                    </select>
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::select($application->type_of_purchase_id, 'select', __('lang.table_19'))
-                        ->name('type_of_purchase_id')
-                        ->disabled()
-                    }}
+                    <h6><b>{{ __('lang.table_19') }}</b></h6>
+                    <select class="custom-select" name="subject" disabled>
+                        @foreach($purchases as $purchase)
+                            @if($application->type_of_purchase_id == $purchase->id)
+                                <option value="{{ $purchase->id }}" selected>
+                                    {{ $purchase->name }}
+                                </option>
+                            @endif
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <div class="flex items-baseline">
@@ -131,7 +143,7 @@
                         ->cols(40)
                         ->disabled()
                     }}
-                    {{Aire::textArea('bio', "Resource")
+                    {{Aire::textArea('bio', __('lang.resource'))
                         ->disabled()
                          }}
                 </div>
@@ -146,8 +158,9 @@
                     @if(isset($application->performer_leader_comment))
                         @php
                             $comment = \App\Models\User::find($application->performer_leader_user_id)->name;
+                            $lang = __('lang.table_23')
                         @endphp
-                        {{Aire::textArea('bio', "Comment: {$comment}")
+                        {{Aire::textArea('bio', "{$lang}: {$comment}")
                             ->value($application->performer_leader_comment)
                             ->rows(3)
                             ->cols(40)
@@ -155,7 +168,7 @@
                         }}
                     @endif
                     @if(isset($application->performer_role_id))
-                        {{Aire::textArea('bio')
+                        {{Aire::textArea('bio', __('lang.performer'))
                             ->value(\App\Models\Roles::find($application->performer_role_id)->display_name)
                             ->rows(3)
                             ->cols(40)

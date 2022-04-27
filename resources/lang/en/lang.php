@@ -2,6 +2,7 @@
 
 return [
     "send" => "Send",
+    "resource" => "Resource",
     "author" => "Application author:",
     "alert" => "Where would you like to submit your application?",
     "branch_name" => "Branch management",
@@ -33,6 +34,7 @@ return [
     "status_distributed" => "Distributed",
     "status_cancelled" => "Cancelled",
     "performed" => "Done",
+    "performer" => "Performer",
     "performer_country" => "Goods (service) country of manufactured",
     "performer_info" => "Product information",
 
