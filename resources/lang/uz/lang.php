@@ -6,7 +6,7 @@ return [
     "clone" => "Nusxalash",
     "delete" => "O'chirish",
     "send" => "Yuborish",
-    "resource" => "Resurs",
+    "resource" => "Mahsulot",
     "author" => "Buyurtma muallifi:",
     "alert" => "Arizangizni qayerga yubormoqchisiz?",
     "branch_name" => "Filial rahbariyatiga",
