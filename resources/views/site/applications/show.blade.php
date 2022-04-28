@@ -76,7 +76,7 @@
                         ->class('hidden')
                         ->disabled()
                     }}
-                    {{Aire::select(['UZS' => 'UZS', 'USD' => 'USD'], 'select', __('lang.valyuta'))
+                    {{Aire::select([' UZS ' => ' UZS ', ' USD ' => ' USD '], 'select', __('lang.valyuta'))
                     ->name('currency')
                     ->value($application->currency)
                     ->id('valyuta')
