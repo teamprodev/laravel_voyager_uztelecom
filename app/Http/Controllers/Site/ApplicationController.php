@@ -147,17 +147,17 @@ class ApplicationController extends Controller
                     $status_distributed = __('lang.status_distributed');
                     $status_cancelled = __('lang.status_cancelled');
                     $status_performed = __('lang.performed');
-                    if($query->status === "new") {
+                    if($query->status === 'new') {
                         return $status_new;
-                    }elseif($query->status === "in_process"){
+                    }elseif($query->status === 'in_process'){
                         return $status_in_process;
-                    }elseif($query->status === "accepted"){
+                    }elseif($query->status === 'accepted'){
                         return $status_accepted;
-                    }elseif($query->status === "refused"){
+                    }elseif($query->status === 'refused'){
                         return $status_refused;
-                    }elseif($query->status === "agreed"){
+                    }elseif($query->status === 'agreed'){
                         return $status_agreed;
-                    }elseif($query->status === "rejected"){
+                    }elseif($query->status === 'rejected'){
                         return $status_rejected;
                     }elseif($query->status === 'distributed'){
                         return $status_distributed;
