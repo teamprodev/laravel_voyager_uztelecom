@@ -95,7 +95,7 @@ class ApplicationController extends Controller
             ->rawColumns(['action'])
             ->make(true);
     }
-    public function index(User $user, Request $request)
+    public function index(Request $request)
     {
         if ($request->ajax()) {
             $query = Application::query()
@@ -136,6 +136,38 @@ class ApplicationController extends Controller
                 })
                 ->editColumn('updated_at', function ($query) {
                     return $query->updated_at ? with(new Carbon($query->updated_at))->format('Y/m/d') : '';;
+                })
+                ->editColumn('status', function ($query){
+                    $status_new = __('lang.status_new');
+                    $status_in_process = __('lang.status_in_process');
+                    $status_accepted = __('lang.status_accepted');
+                    $status_refused = __('lang.status_refused');
+                    $status_agreed = __('lang.status_agreed');
+                    $status_rejected = __('lang.status_rejected');
+                    $status_distributed = __('lang.status_distributed');
+                    $status_cancelled = __('lang.status_cancelled');
+                    $status_performed = __('lang.performed');
+                    if($query->status === 'new') {
+                        return $status_new;
+                    }elseif($query->status === 'in_process'){
+                        return $status_in_process;
+                    }elseif($query->status === 'accepted'){
+                        return $status_accepted;
+                    }elseif($query->status === 'refused'){
+                        return $status_refused;
+                    }elseif($query->status === 'agreed'){
+                        return $status_agreed;
+                    }elseif($query->status === 'rejected'){
+                        return $status_rejected;
+                    }elseif($query->status === 'distributed'){
+                        return $status_distributed;
+                    }elseif($query->status === 'canceled'){
+                        return $status_cancelled;
+                    }elseif($query->status === 'performed'){
+                        return $status_performed;
+                    }else{
+                        return $query->status;
+                    }
                 })
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
@@ -377,6 +409,10 @@ class ApplicationController extends Controller
                     $edit = route('site.applications.edit', $row->id);
                     $show = route('site.applications.show', $row->id);
                     $destroy = route('site.applications.destroy', $row->id);
+                    $app_edit = __('lang.edit');
+                    $app_show = __('lang.show');;
+                    $app_clone = __('lang.clone');;
+                    $app_delete = __('lang.delete');;
                     if($row->status == 'accepted' || $row->status =='refused')
                     {
                         $clone = route('site.applications.clone', $row->id);
@@ -385,10 +421,10 @@ class ApplicationController extends Controller
                     }
 
                     return "<div class='row'>
-                        <a href='{$edit}' class='m-1 col edit btn btn-success btn-sm'><i class='fas fa-edit fa-xm'></i></a>
-                        <a href='{$show}' class='m-1 col show btn btn-warning btn-sm'><i class='fa-solid fa-eye fa-xm'></i></a>
-                        <a href='{$clone}' class='m-1 col show btn btn-primary btn-sm'><i class='fa-solid fa-clone fa-xm'></i></a>
-                        <a href='{$destroy}' class='m-1 col show btn btn-danger btn-sm'><i class='fa-solid fa-trash fa-xm'></i></a></div>";
+                        <a href='{$edit}' class='m-1 col edit btn btn-success btn-sm'>$app_edit</a>
+                        <a href='{$show}' class='m-1 col show btn btn-warning btn-sm'>$app_show</a>
+                        <a href='{$clone}' class='m-1 col show btn btn-primary btn-sm'>$app_clone</a>
+                        <a href='{$destroy}' class='m-1 col show btn btn-danger btn-sm'>$app_delete</a></div>";
                 })
                 ->rawColumns(['action'])
                 ->make(true);

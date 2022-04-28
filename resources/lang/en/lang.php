@@ -6,7 +6,7 @@ return [
     "clone" => "Copy",
     "delete" => "Delete",
     "send" => "Send",
-    "resource" => "Resource",
+    "resource" => "Product",
     "author" => "Application author:",
     "alert" => "Where would you like to submit your application?",
     "branch_name" => "Branch management",
