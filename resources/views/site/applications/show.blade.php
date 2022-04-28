@@ -178,6 +178,7 @@
                     @if(isset($application->branch_leader_comment))
                         {{Aire::textArea('bio', "Comment ЦУЗ")
                         ->name('branch_leader_comment')
+                        -value($application->branch_leader_comment)
                         ->rows(3)
                         ->cols(40)
                         ->disabled()
