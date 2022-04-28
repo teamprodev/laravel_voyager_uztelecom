@@ -1,6 +1,10 @@
 <?php
 
 return [
+    "show" => "Ko'rsatish",
+    "edit" => "O'zgartirish",
+    "clone" => "Nusxalash",
+    "delete" => "O'chirish",
     "send" => "Yuborish",
     "resource" => "Resurs",
     "author" => "Buyurtma muallifi:",
