@@ -73,36 +73,24 @@ class ApplicationController extends Controller
                 return $data->updated_at ? with(new Carbon($data->updated_at))->format('Y/m/d') : '';
             })
             ->addColumn('action', function($row){
-                $edit_e = route('site.applications.edit', $row->id);
-                $clone_e = route('site.applications.clone', $row->id);
-                $show_e = route('site.applications.show', $row->id);
-                $destroy_e = route('site.applications.destroy', $row->id);
-                if($row->user_id == auth()->user()->id||auth()->user()->hasPermission('Branch_Performer')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Plan_Budget')||auth()->user()->hasPermission('Plan_Business')||auth()->user()->hasPermission('Number_Change'))
+                $edit = route('site.applications.edit', $row->id);
+                $show = route('site.applications.show', $row->id);
+                $destroy = route('site.applications.destroy', $row->id);
+                $app_edit = __('lang.edit');
+                $app_show= __('lang.show');;
+                $app_clone= __('lang.clone');;
+                $app_delete= __('lang.delete');;
+                if($row->status == 'accepted' || $row->status =='refused')
                 {
-                    $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-success btn-sm'>Edit</a>";
+                    $clone = route('site.applications.clone', $row->id);
                 }else{
-                    $edit = "";
+                    $clone = '#';
                 }
-                $show = "<a href='{$show_e}' class='m-1 col show btn btn-warning btn-sm'>Show</a>";
-                if($row->user_id == auth()->user()->id)
-                {
-                    $destroy = "<a href='{$destroy_e}' class='m-1 col show btn btn-danger btn-sm'>Delete</a>";
-                }else{
-                    $destroy = "";
-                }
-                if($row->user_id == auth()->user()->id && $row->status == 'cancelled' || $row->user_id == auth()->user()->id && $row->status == 'refused')
-                {
-                    $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>Clone</a>";
-                }else{
-                    $clone = "";
-                }
-
                 return "<div class='row'>
-                        {$edit}
-                        {$show}
-                        {$clone}
-                        {$destroy}
-                        </div>";
+                        <a href='{$edit}' class='m-1 col edit btn btn-success btn-sm'> $app_edit </a>
+                        <a href='{$show}' class='m-1 col show btn btn-warning btn-sm'> $app_show </a>
+                        <a href='{$clone}' class='m-1 col show btn btn-primary btn-sm'> $app_clone </a>
+                        <a href='{$destroy}' class='m-1 col show btn btn-danger btn-sm'> $app_delete </a></div>";
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -155,22 +143,27 @@ class ApplicationController extends Controller
                     $clone_e = route('site.applications.clone', $row->id);
                     $show_e = route('site.applications.show', $row->id);
                     $destroy_e = route('site.applications.destroy', $row->id);
+                    $app_edit = __('lang.edit');
+                    $app_show= __('lang.show');;
+                    $app_clone= __('lang.clone');;
+                    $app_delete= __('lang.delete');;
+
                     if($row->user_id == auth()->user()->id||auth()->user()->hasPermission('Branch_Performer')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Plan_Budget')||auth()->user()->hasPermission('Plan_Business')||auth()->user()->hasPermission('Number_Change'))
                     {
-                        $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-success btn-sm'>Edit</a>";
+                        $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-success btn-sm'>$app_edit</a>";
                     }else{
                         $edit = "";
                     }
-                    $show = "<a href='{$show_e}' class='m-1 col show btn btn-warning btn-sm'>Show</a>";
+                    $show = "<a href='{$show_e}' class='m-1 col show btn btn-warning btn-sm'>$app_show</a>";
                     if($row->user_id == auth()->user()->id)
                     {
-                        $destroy = "<a href='{$destroy_e}' class='m-1 col show btn btn-danger btn-sm'>Delete</a>";
+                        $destroy = "<a href='{$destroy_e}' class='m-1 col show btn btn-danger btn-sm'>$app_delete</a>";
                     }else{
                         $destroy = "";
                     }
                     if($row->user_id == auth()->user()->id && $row->status == 'cancelled' || $row->user_id == auth()->user()->id && $row->status == 'refused')
                     {
-                        $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>Clone</a>";
+                        $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>$app_clone</a>";
                     }else{
                         $clone = "";
                     }
@@ -219,16 +212,18 @@ class ApplicationController extends Controller
             ->editColumn('role_id', function($docs) {
                 return $docs->role ? $docs->role->display_name:"";
             })
-            ->editColumn('status',
-                '
-                @if($status == "1")
-                Согласован
-                @elseif($status == "0")
-                Отказан
-                @else
-                Не подписан
-                @endif
-                ')
+            ->editColumn('status', function ($status){
+                $status_agreed = __('lang.status_agreed');
+                $status_refused = __('lang.status_refused');
+                $status_not_signed = __('lang.status_not_signed');
+                if($status == "1"){
+                    return $status_agreed;
+                }elseif($status == "0"){
+                    return $status_refused;
+                }else{
+                    return $status_not_signed;
+                }
+            })
             ->make(true);
     }
 

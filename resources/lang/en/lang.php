@@ -1,6 +1,10 @@
 <?php
 
 return [
+    "show" => "Show",
+    "edit" => "Edit",
+    "clone" => "Copy",
+    "delete" => "Delete",
     "send" => "Send",
     "resource" => "Resource",
     "author" => "Application author:",
@@ -33,6 +37,7 @@ return [
     "status_rejected" => "Rejected",
     "status_distributed" => "Distributed",
     "status_cancelled" => "Cancelled",
+    "status_not_signed" => "Not signed",
     "performed" => "Done",
     "performer" => "Performer",
     "performer_country" => "Goods (service) country of manufactured",

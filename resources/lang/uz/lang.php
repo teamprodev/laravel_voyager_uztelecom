@@ -1,6 +1,10 @@
 <?php
 
 return [
+    "show" => "Ko'rsatish",
+    "edit" => "O'zgartirish",
+    "clone" => "Nusxalash",
+    "delete" => "O'chirish",
     "send" => "Yuborish",
     "resource" => "Resurs",
     "author" => "Buyurtma muallifi:",
@@ -33,6 +37,7 @@ return [
     "status_rejected" => "Rad qilgan",
     "status_distributed" => "Taqsimlangan",
     "status_cancelled" => "Tugatilgan",
+    "status_not_signed" => "Imzolanmagan",
     "performed" => "Bajarilgan",
     "performer" => "Ijrochi",
     "performer_country" => "Tovar (xizmat) ishlab chiqarilgan mamlakat",
