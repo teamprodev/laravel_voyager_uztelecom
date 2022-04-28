@@ -7,7 +7,7 @@
     </a>
     <div class="w-11/12 mx-auto pt-8 pb-16">
         <table id="yajra-datatable">
-            <thead>
+            <thead  class="text-center">
             <tr>
                 <th>№</th>
                 <th>{{ __('lang.table_1') }}</th>

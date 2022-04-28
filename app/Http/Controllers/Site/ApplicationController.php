@@ -203,9 +203,6 @@ class ApplicationController extends Controller
 
     public function SignedDocs()
     {
-        $status_agreed = __('lang.status_agreed');
-        $status_refused = __('lang.status_refused');
-        $status_not_signed = __('lang.status_not_signed');
         $data = SignedDocs::where('application_id',Cache::get('application_id'))->get();
         return Datatables::of($data)
             ->addIndexColumn()
@@ -215,16 +212,18 @@ class ApplicationController extends Controller
             ->editColumn('role_id', function($docs) {
                 return $docs->role ? $docs->role->display_name:"";
             })
-            ->editColumn('status',
-                '
-                @if($status == "1")
-                $status_agreed
-                @elseif($status == "0")
-                $status_refused
-                @else
-                $status_not_signed
-                @endif
-                ')
+            ->editColumn('status', function ($status){
+                $status_agreed = __('lang.status_agreed');
+                $status_refused = __('lang.status_refused');
+                $status_not_signed = __('lang.status_not_signed');
+                if($status == "1"){
+                    return $status_agreed;
+                }elseif($status == "0"){
+                    return $status_refused;
+                }else{
+                    return $status_not_signed;
+                }
+            })
             ->make(true);
     }
 
