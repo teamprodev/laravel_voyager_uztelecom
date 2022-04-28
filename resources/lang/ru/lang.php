@@ -33,6 +33,7 @@ return [
     "status_rejected" => "Отклонена",
     "status_distributed" => "Распределен",
     "status_cancelled" => "Отменен",
+    "status_not_signed" => "Не подписан",
     "performed" => "Исполнена",
     "performer" => "Исполнитель",
     "performer_country" => "Товары (обслуживание) страна изготовленной",

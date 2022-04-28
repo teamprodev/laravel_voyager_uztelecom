@@ -194,6 +194,9 @@ class ApplicationController extends Controller
 
     public function SignedDocs()
     {
+        $status_agreed = __('lang.status_agreed');
+        $status_refused = __('lang.status_refused');
+        $status_not_signed = __('lang.status_not_signed');
         $data = SignedDocs::where('application_id',Cache::get('application_id'))->get();
         return Datatables::of($data)
             ->addIndexColumn()
@@ -206,11 +209,11 @@ class ApplicationController extends Controller
             ->editColumn('status',
                 '
                 @if($status == "1")
-                Согласован
+                $status_agreed
                 @elseif($status == "0")
-                Отказан
+                $status_refused
                 @else
-                Не подписан
+                $status_not_signed
                 @endif
                 ')
             ->make(true);
