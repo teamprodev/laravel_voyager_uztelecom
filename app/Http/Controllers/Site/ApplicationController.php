@@ -76,17 +76,25 @@ class ApplicationController extends Controller
                 $edit = route('site.applications.edit', $row->id);
                 $show = route('site.applications.show', $row->id);
                 $destroy = route('site.applications.destroy', $row->id);
+                $app_edit = __('lang.edit');
+                $app_show= __('lang.show');;
+                $app_clone= __('lang.clone');;
+                $app_delete= __('lang.delete');;
+
                 if($row->status == 'accepted' || $row->status =='refused')
                 {
                     $clone = route('site.applications.clone', $row->id);
                 }else{
                     $clone = '#';
                 }
+
                 return "<div class='row'>
-                        <a href='{$edit}' class='m-1 col edit btn btn-success btn-sm'><i class='fas fa-edit fa-xm'></i></a>
-                        <a href='{$show}' class='m-1 col show btn btn-warning btn-sm'><i class='fa-solid fa-eye fa-xm'></i></a>
-                        <a href='{$clone}' class='m-1 col show btn btn-primary btn-sm'><i class='fa-solid fa-clone fa-xm'></i></a>
-                        <a href='{$destroy}' class='m-1 col show btn btn-danger btn-sm'><i class='fa-solid fa-trash fa-xm'></i></a></div>";
+
+                        <a href='{$edit}' class='m-1 col edit btn btn-success btn-sm'>{$app_edit}</a>
+                        <a href='{$show}' class='m-1 col show btn btn-warning btn-sm'>{$app_show}</a>
+                        <a href='{$clone}' class='m-1 col show btn btn-primary btn-sm'>{$app_clone}</a>
+
+                        <a href='{$destroy}' class='m-1 col show btn btn-danger btn-sm'>{$app_delete}</a></div>";
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -141,20 +149,24 @@ class ApplicationController extends Controller
                     $destroy_e = route('site.applications.destroy', $row->id);
                     if($row->user_id == auth()->user()->id||auth()->user()->hasPermission('Branch_Performer')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Plan_Budget')||auth()->user()->hasPermission('Plan_Business')||auth()->user()->hasPermission('Number_Change'))
                     {
-                        $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-success btn-sm'>Edit</a>";
+                        $app_edit = __('lang.edit');
+                        $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-success btn-sm'>{$app_edit}</a>";
                     }else{
                         $edit = "";
                     }
-                    $show = "<a href='{$show_e}' class='m-1 col show btn btn-warning btn-sm'>Show</a>";
+                    $app_show = __('lang.show');
+                    $show = "<a href='{$show_e}' class='m-1 col show btn btn-warning btn-sm'>{$app_show}</a>";
                     if($row->user_id == auth()->user()->id)
                     {
-                        $destroy = "<a href='{$destroy_e}' class='m-1 col show btn btn-danger btn-sm'>Delete</a>";
+                        $app_delete = __('lang.delete');
+                        $destroy = "<a href='{$destroy_e}' class='m-1 col show btn btn-danger btn-sm'>{$app_delete}</a>";
                     }else{
                         $destroy = "";
                     }
                     if($row->user_id == auth()->user()->id && $row->status == 'cancelled' || $row->user_id == auth()->user()->id && $row->status == 'refused')
                     {
-                        $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>Clone</a>";
+                        $app_clone = __('lang.clone');
+                        $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>{$app_clone}</a>";
                     }else{
                         $clone = "";
                     }

@@ -1,6 +1,10 @@
 <?php
 
 return [
+    "show" => "Show",
+    "edit" => "Edit",
+    "clone" => "Copy",
+    "delete" => "Delete",
     "send" => "Send",
     "resource" => "Resource",
     "author" => "Application author:",
