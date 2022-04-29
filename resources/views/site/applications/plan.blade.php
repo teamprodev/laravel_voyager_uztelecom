@@ -12,8 +12,6 @@
                     @if($user->hasPermission('Number_Change'))
                     {{Aire::number('num', "Number Application")
                         ->name('number')
-                        ->rows(3)
-                        ->cols(40)
                          }}
                     @endif
                 </div>
