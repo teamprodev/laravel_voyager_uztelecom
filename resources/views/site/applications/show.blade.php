@@ -192,7 +192,7 @@
         </div>
         @if($file_basis != 'null' && $file_basis != null)
         <div>
-                <h1 class="text-center">{{ __('lang.base') }}</h1>
+                <h2 class="text-center">{{ __('lang.base') }}</h2>
             @foreach($file_basis as $file)
                 @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
                     <button style="margin: 20px;" type="button" class="btn btn-primary"><a style="color: white;" href="/storage/{{$file}}" width="500" height="500" alt="not found">Get File</a></button>
@@ -204,7 +204,7 @@
         @endif
         @if($file_tech_spec != 'null' && $file_tech_spec != null)
         <div>
-            <h1 class="text-center">{{ __('lang.tz') }}</h1>
+            <h2 class="text-center">{{ __('lang.tz') }}</h2>
         @foreach($file_tech_spec as $file)
             @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
                     <button style="margin: 20px;" type="button" class="btn btn-primary"><a style="color: white;" href="/storage/{{$file}}">Get File</a></button>
@@ -216,7 +216,7 @@
         @endif
         @if($other_files != 'null' && $other_files != null)
         <div>
-            <h1 class="text-center">{{ __('lang.doc') }}</h1>
+            <h2 class="text-center">{{ __('lang.doc') }}</h2>
             @foreach($other_files as $file)
                 @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
                     <button style="margin: 20px;" type="button" class="btn btn-primary"><a style="color: white;" href="/storage/{{$file}}">Get File</a></button>
