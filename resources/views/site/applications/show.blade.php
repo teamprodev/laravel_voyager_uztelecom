@@ -258,7 +258,7 @@
             console.log("{{$application->id}}");
         </script>
         <div style="height: 50px"></div>
-        @if(auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
+        @if(auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed'||auth()->user()->hasPermission('Branch_Leader') && $application->status == 'agreed')
             @if(!isset($application->performer_user_id))
                 <div class="pb-5">
                 {{ Aire::open()

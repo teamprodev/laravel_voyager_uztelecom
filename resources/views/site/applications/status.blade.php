@@ -60,7 +60,11 @@
 
 
             });
-
+            if(document.getElementById('status').value === 'Исполнена')
+            {
+                document.getElementById('status').style.backgroundColor = green;
+            }
+            console.log(document.getElementById('status'))
         </script>
     @endpush
 @endsection
