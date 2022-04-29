@@ -147,7 +147,7 @@ class ApplicationController extends Controller
                     $status_distributed = __('lang.status_distributed');
                     $status_cancelled = __('lang.status_cancelled');
                     $status_performed = __('lang.performed');
-                    if($query->status === 'new') {
+                    if($query->status === 'new'){
                         return $status_new;
                     }elseif($query->status === 'in_process'){
                         return $status_in_process;
