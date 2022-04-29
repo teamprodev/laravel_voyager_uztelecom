@@ -6,7 +6,10 @@
     <div class="pt-6">
     <div class="w-full flex">
         <div class="p-6">
-            <h5>{{ __('lang.author') }} {{$application->user->name}}</h5>
+            <h5><strong>{{ __('lang.author') }}</strong> {{$application->user->name}} ( {{ $application->user->role->name }} )</h5>
+            <h5><strong>{{ __('lang.author_filial') }}</strong> {{ $branch_name->name }}</h5>
+            <h5><strong>{{ __('lang.number') }} : </strong> {{$application->number}} </h5>
+            <h5><strong>{{ __('lang.table_6') }} : </strong> {{$application->created_at}} </h5> <br>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
                     {{Aire::input('bio', __('lang.table_1'))

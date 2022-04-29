@@ -46,7 +46,8 @@ class ApplicationService
         $access_comment = Position::find($user->position_id);
         $subjects = Subject::all();
         $purchases = Purchase::all();
-        return view('site.applications.show', compact('access_comment','performers_company','performers_branch','file_basis','file_tech_spec','other_files','user','application','branch','signedDocs', 'same_role_user_ids','access','subjects','purchases'));
+        $branch_name = Branch::find($application->user->branch_id, 'name');
+        return view('site.applications.show', compact('access_comment','performers_company','performers_branch','file_basis','file_tech_spec','other_files','user','application','branch','signedDocs', 'same_role_user_ids','access','subjects','purchases','branch_name'));
 
     }
     public function edit($application)
