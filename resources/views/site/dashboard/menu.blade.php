@@ -52,6 +52,10 @@
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>{{ __('lang.performed') }}</p>
                         </a>
+                        <a href="{{route('site.applications.show_status', 'overdue')}}" id="demo" class="collapse">
+                            <i class="nav-icon fas fa-chevron-right"></i>
+                            <p>{{ __('lang.overdue') }}</p>
+                        </a>
                     </div>
                 </div>
             </button>
