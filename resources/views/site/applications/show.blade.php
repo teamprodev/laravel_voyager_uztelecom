@@ -146,9 +146,12 @@
                         ->cols(40)
                         ->disabled()
                     }}
-                    {{Aire::textArea('bio', __('lang.resource'))
-                        ->disabled()
-                         }}
+                    @if(isset($application->resource_id))
+                        <b>{{ __('lang.resource')}}</b>:
+                    @foreach(json_decode($application->resource_id) as $product)
+                            <br> {{\App\Models\Resource::find($product)->name}}
+                    @endforeach
+                    @endif
                 </div>
                 <div class="pt-2 pb-2 w-50">
                     {{Aire::textArea('bio', __('lang.table_21'))
