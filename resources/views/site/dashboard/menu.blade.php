@@ -13,7 +13,7 @@
                 <div class="float-left">
                     <div>
                         <i class="nav-icon fas fa-sort float-left"></i>
-                        {{ __('lang.status') }}
+                        <p>{{ __('lang.status') }}</p>
                     </div>
                     <div class="d-flex align-items-start flex-column">
                         <a href="{{route('site.applications.show_status', 'new')}}" id="demo" class="collapse">
@@ -51,6 +51,10 @@
                         <a href="{{route('site.applications.show_status', 'performed')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>{{ __('lang.performed') }}</p>
+                        </a>
+                        <a href="{{route('site.applications.show_status', 'overdue')}}" id="demo" class="collapse">
+                            <i class="nav-icon fas fa-chevron-right"></i>
+                            <p>{{ __('lang.overdue') }}</p>
                         </a>
                     </div>
                 </div>

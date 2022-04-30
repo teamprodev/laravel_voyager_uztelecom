@@ -4,7 +4,7 @@
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <a href="#" class="brand-link">
-            <img src="{{asset('images/imagen-my-uztelecom-0big.png')}}" alt="Uztelecom Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <img src="{{asset('images/imagen-my-uztelecom-0big.png')}}" style="margin-left: 1px" alt="Uztelecom Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
             <span class="brand-text font-weight-light">Uztelecom</span>
         </a>
         <!-- Sidebar Menu -->

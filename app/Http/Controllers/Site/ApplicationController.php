@@ -72,27 +72,79 @@ class ApplicationController extends Controller
             ->editColumn('updated_at', function ($data) {
                 return $data->updated_at ? with(new Carbon($data->updated_at))->format('Y/m/d') : '';
             })
+            ->editColumn('status', function ($query){
+                $status_new = __('lang.status_new');
+                $status_in_process = __('lang.status_in_process');
+                $status_accepted = __('lang.status_accepted');
+                $status_refused = __('lang.status_refused');
+                $status_agreed = __('lang.status_agreed');
+                $status_rejected = __('lang.status_rejected');
+                $status_distributed = __('lang.status_distributed');
+                $status_cancelled = __('lang.status_cancelled');
+                $status_performed = __('lang.performed');
+                $status_overdue = __('lang.overdue');
+                if($query->status === 'new'){
+                    return $status_new;
+                }elseif($query->status === 'in_process'){
+                    return $status_in_process;
+                }elseif($query->status === 'Overdue'){
+                    return "<input value='{$status_overdue}' class='text-center m-1 col edit bg-danger btn-sm' disabled>";
+                }elseif($query->status === 'accepted'){
+                    return $status_accepted;
+                }elseif($query->status === 'refused'){
+                    return $status_refused;
+                }elseif($query->status === 'agreed'){
+                    return $status_agreed;
+                }elseif($query->status === 'rejected'){
+                    return $status_rejected;
+                }elseif($query->status === 'distributed'){
+                    return $status_distributed;
+                }elseif($query->status === 'canceled'){
+                    return $status_cancelled;
+                }elseif($query->status === 'performed'){
+                    return "<input value='{$status_performed}' class='text-center m-1 col edit bg-green btn-sm' disabled>";
+                }else{
+                    return $query->status;
+                }
+            })
             ->addColumn('action', function($row){
-                $edit = route('site.applications.edit', $row->id);
-                $show = route('site.applications.show', $row->id);
-                $destroy = route('site.applications.destroy', $row->id);
+                $edit_e = route('site.applications.edit', $row->id);
+                $clone_e = route('site.applications.clone', $row->id);
+                $show_e = route('site.applications.show', $row->id);
+                $destroy_e = route('site.applications.destroy', $row->id);
                 $app_edit = __('lang.edit');
                 $app_show= __('lang.show');;
                 $app_clone= __('lang.clone');;
                 $app_delete= __('lang.delete');;
-                if($row->status == 'accepted' || $row->status =='refused')
+
+                if($row->user_id == auth()->user()->id||auth()->user()->hasPermission('Branch_Performer')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Plan_Budget')||auth()->user()->hasPermission('Plan_Business')||auth()->user()->hasPermission('Number_Change'))
                 {
-                    $clone = route('site.applications.clone', $row->id);
+                    $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-success btn-sm'>$app_edit</a>";
                 }else{
-                    $clone = '#';
+                    $edit = "";
                 }
+                $show = "<a href='{$show_e}' class='m-1 col show btn btn-warning btn-sm'>$app_show</a>";
+                if($row->user_id == auth()->user()->id)
+                {
+                    $destroy = "<a href='{$destroy_e}' class='m-1 col show btn btn-danger btn-sm'>$app_delete</a>";
+                }else{
+                    $destroy = "";
+                }
+                if($row->user_id == auth()->user()->id && $row->status == 'cancelled' || $row->user_id == auth()->user()->id && $row->status == 'refused')
+                {
+                    $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>$app_clone</a>";
+                }else{
+                    $clone = "";
+                }
+
                 return "<div class='row'>
-                        <a href='{$edit}' class='m-1 col edit btn btn-success btn-sm'> $app_edit </a>
-                        <a href='{$show}' class='m-1 col show btn btn-warning btn-sm'> $app_show </a>
-                        <a href='{$clone}' class='m-1 col show btn btn-primary btn-sm'> $app_clone </a>
-                        <a href='{$destroy}' class='m-1 col show btn btn-danger btn-sm'> $app_delete </a></div>";
+                        {$edit}
+                        {$show}
+                        {$clone}
+                        {$destroy}
+                        </div>";
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action','status'])
             ->make(true);
     }
     public function index(Request $request)
@@ -147,10 +199,13 @@ class ApplicationController extends Controller
                     $status_distributed = __('lang.status_distributed');
                     $status_cancelled = __('lang.status_cancelled');
                     $status_performed = __('lang.performed');
+                    $status_overdue = __('lang.overdue');
                     if($query->status === 'new'){
                         return $status_new;
                     }elseif($query->status === 'in_process'){
                         return $status_in_process;
+                    }elseif($query->status === 'overdue'){
+                        return $status_overdue;
                     }elseif($query->status === 'accepted'){
                         return $status_accepted;
                     }elseif($query->status === 'refused'){
@@ -164,7 +219,9 @@ class ApplicationController extends Controller
                     }elseif($query->status === 'canceled'){
                         return $status_cancelled;
                     }elseif($query->status === 'performed'){
-                        return $status_performed;
+                        return "<div class='row'>
+                        <input type='text' value='{$status_performed}' style='background-color: red'>
+                        </div>";
                     }else{
                         return $query->status;
                     }
