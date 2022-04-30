@@ -1,128 +1,130 @@
 <div class="mt-6">
     <div class="w-full flex">
         <div class="p-6">
-            <div class="flex items-baseline">
-                <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::input('bio', __('lang.table_1'))
-                        ->name('initiator')
-                        ->value($application->initiator)
-                        ->required()
-                    }}
-                    {{Aire::textArea('bio', __('lang.table_9'))
-                        ->name('purchase_basis')
-                        ->value($application->purchase_basis)
-                        ->rows(3)
-                        ->cols(40)
-                        ->required()
-                    }}
-                    {{Aire::textArea('bio', __('lang.table_10'))
-                        ->name('specification')
-                        ->value($application->specification)
-                        ->rows(3)
-                        ->cols(40)
-                        ->required()
-                    }}
-                    {{Aire::dateTimeLocal('bio', __('lang.table_3'))
-                        ->name('delivery_date')
-                        ->value($application->delivery_date)
-                    }}
-                </div>
-                <div class="pt-2 pb-2 w-50">
-                    {{Aire::input('bio', __('lang.table_2'))
-                        ->name('name')
-                        ->value($application->name)
-                        ->required()
-                    }}
-                    {{Aire::textArea('bio', __('lang.table_11'))
-                        ->name('basis')
-                        ->value($application->basis)
-                        ->rows(3)
-                        ->cols(40)
-                        ->required()
-                    }}
-                    {{Aire::textArea('bio', __('lang.table_12'))
-                        ->name('separate_requirements')
-                        ->value($application->separate_requirements)
-                        ->rows(3)
-                        ->cols(40)
-                        ->required()
-                    }}
-                    {{Aire::dateTimeLocal('bio', __('lang.table_14'))
-                        ->name('expire_warranty_date')
-                        ->value($application->expire_warranty_date)
-                    }}
+            <div class="mb-3 row">
+                <label class="col-sm-6" for="initiator" class="col-sm-2 col-form-label">{{ __('lang.table_1') }}</label>
+                <div class="col-sm-6">
+                    <input name="initiator" class="form-control" value="{{ $application->initiator }}" required>
                 </div>
             </div>
-            <div class="flex items-baseline">
-                <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::input('bio', __('lang.table_4'))
-                        ->name('planned_price')
-                        ->value($application->planned_price)
-                        ->id('planned_price')
-                        ->required()
-                    }}
-                </div>
-                <div class="pt-2 pb-2 w-50">
-                    {{Aire::input('bio', __('lang.table_15'))
-                        ->name('info_business_plan')
-                        ->value($application->info_business_plan)
-                    }}
-                </div>
 
-            </div>
-            <div class="flex items-baseline">
-                <div class="mr-4 pt-2 pb-2 w-50">
-                    @if($application->currency == null)
-                        {{Aire::select(['UZS' => 'UZS', 'USD' => 'USD'], 'select', __('lang.valyuta'))
-                            ->name('currency')
-                            ->id('currency')
-                        }}
-                    @endif
-                </div>
-                <div class="pt-2 pb-2 w-50">
-                    <div class="mr-4 pt-2 pb-2 w-50">
-                        <h6><b>{{ __('lang.branch') }}</b></h6>
-                        <select class="custom-select" name="filial_initiator_id" id="filial_initiator_id">
-                            @isset($application->branch_initiator_id)
-                                <option value="{{$application->branch_initiator_id}}"
-                                        selected>{{$application->branch_initiator_id}}</option>
-                            @endisset
-                            @foreach($branch as $branches)
-                                <option value="{{$branches}}">{{$branches}}</option>
-                            @endforeach
-                        </select>
-                    </div>
+            <div class="mb-3 row">
+                <label class="col-sm-6" for="name" class="col-sm-2 col-form-label">{{ __('lang.table_2') }}</label>
+                <div class="col-sm-6">
+                    <input class="form-control" name="name" value="{{$application->name}}" type="text"/>
                 </div>
             </div>
-            <div class="flex items-baseline">
-                <div class="pt-2 pb-2 w-50">
-                    {{Aire::textArea('bio', __('lang.table_23'))
-                        ->name('comment')
-                        ->value($application->comment)
-                        ->rows(3)
-                        ->cols(40)
-                        ->required()
-                    }}
-                    @if($application->is_more_than_limit != 0 && $application->signers == null)
-                        <div class="w-full">
 
-                            {{Aire::select($company_signers, 'signers', __('lang.signers'))
-                                ->multiple()
-                                ->id('signers')
-                                ->size(10)
-                            }}
-                        </div>
-                    @elseif($application->is_more_than_limit == 0 && $application->signers == null)
-                        <div class="w-full">
-                            {{Aire::select($branch_signers, 'signers', __('lang.signers'))
-                                ->multiple()
-                                ->id('signers')
-                                ->size(10)
-                            }}
-                        </div>
-                    @endif
+            <div class="mb-3 row">
+                <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">{{ __('lang.table_3') }}</label>
+                <div class="col-sm-6">
+                    <input class="form-control" id="date" name="delivery_date" type="date"/>
                 </div>
             </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-6" for="planned_price" class="col-sm-2 col-form-label">{{ __('lang.table_4') }}</label>
+                <div class="col-sm-6">
+                    <input name="planned_price" id="planned_price" class="form-control" value="{{ $application->planned_price }}" required>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-6" for="purchase_basis" class="col-sm-2 col-form-label">{{ __('lang.table_9') }}</label>
+                <div class="col-sm-6">
+                    <textarea name="purchase_basis" class="form-control" value="{{ $application->purchase_basis }}" required cols="40" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-6" for="specification" class="col-sm-2 col-form-label">{{ __('lang.table_10') }}</label>
+                <div class="col-sm-6">
+                    <textarea name="specification" class="form-control" value="{{ $application->specification }}" required cols="40" rows="3"></textarea>
+                </div>
+            </div>
+
+
+
+
+            <div class="mb-3 row">
+                <label class="col-sm-6" for="basis" class="col-sm-2 col-form-label">{{ __('lang.table_11') }}</label>
+                <div class="col-sm-6">
+                    <textarea name="basis" class="form-control" value="{{ $application->specification }}" required cols="40" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-6" for="separate_requirements" class="col-sm-2 col-form-label">{{ __('lang.table_12') }}</label>
+                <div class="col-sm-6">
+                    <textarea name="separate_requirements" class="form-control" value="{{ $application->separate_requirements }}" required cols="40" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">{{ __('lang.table_14') }}</label>
+                <div class="col-sm-6">
+                    <input class="form-control" id="date" name="expire_warranty_date" value="{{$application->expire_warranty_date}}" type="date"/>
+                </div>
+            </div>
+
+
+
+            <div class="mb-3 row">
+                <label class="col-sm-6" for="info_business_plan" class="col-sm-2 col-form-label">{{ __('lang.table_15') }}</label>
+                <div class="col-sm-6">
+                    <input name="info_business_plan" class="form-control" value="{{ $application->info_business_plan }}">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-6" for="comment" class="col-sm-2 col-form-label">{{ __('lang.table_23') }}</label>
+                <div class="col-sm-6">
+                    <textarea name="comment" class="form-control" value="{{ $application->comment }}" required cols="40" rows="3"></textarea>
+                </div>
+            </div>
+
+            @if($application->currency == null)
+                <div class="mb-3 row">
+                    <label for="currency" class="col-sm-6 col-form-label">{{ __('lang.valyuta') }}</label>
+                    <select class="form-control col-sm-6" name="currency" id="currency">
+                        <option value="UZS">UZS</option>
+                        <option value="USD">USD</option>
+                    </select>
+                </div>
+            @endif
+
+            <div class="mb-3 row">
+                <label for="currency" class="col-sm-6 col-form-label">{{ __('lang.branch') }}</label>
+                <select class="custom-select col-sm-6" name="filial_initiator_id" id="filial_initiator_id">
+                    @isset($application->branch_initiator_id)
+                        <option value="{{$application->branch_initiator_id}}"
+                                selected>{{$application->branch_initiator_id}}</option>
+                    @endisset
+                    @foreach($branch as $branches)
+                        <option value="{{$branches}}">{{$branches}}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            @if($application->is_more_than_limit != 0 && $application->signers == null)
+                <div class="mb-3 row">
+                    <label for="signers" class="col-sm-6 col-form-label">{{ __('lang.signers') }}</label>
+                    <select class="form-control col-sm-6" name="signers" id="signers" multiple size="10">
+                        @foreach($company_signers as $company_signer)
+                            <option>{{ $company_signer }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            @elseif($application->is_more_than_limit == 0 && $application->signers == null)
+                <div class="mb-3 row">
+                    <label for="signers" class="col-sm-6 col-form-label">{{ __('lang.signers') }}</label>
+                    <select class="form-control col-sm-6" name="signers" id="signers" multiple size="10">
+                        @foreach($branch_signers as $branch_signer)
+                            <option>{{ $branch_signer }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            @endif
         </div>
     </div>
 </div>
