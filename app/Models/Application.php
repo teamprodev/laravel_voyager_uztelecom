@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use phpDocumentor\Reflection\Types\Resource_;
 
 class Application extends Model
 {
@@ -118,5 +119,9 @@ class Application extends Model
     public function signedDocs()
     {
         return $this->hasMany(SignedDocs::class);
+    }
+    public function resource()
+    {
+        return $this->hasMany(Resource::class);
     }
 }
