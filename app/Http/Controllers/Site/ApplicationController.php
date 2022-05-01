@@ -157,7 +157,11 @@ class ApplicationController extends Controller
                 ->get();
             $user = auth()->user();
 
-        if($user->role_id == 7)
+            if($user->hasPermission('Add_Company_Signer') && $user->hasPermission('Add_Branch_Signer'))
+            {
+                $query = Application::query()->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id);
+            }
+        elseif($user->role_id == 7)
             {
             $query = Application::query()->where('status', "accepted");
         }
@@ -175,7 +179,7 @@ class ApplicationController extends Controller
             }
             elseif($user->hasPermission('Branch_Leader'))
             {
-                $query = $query->where('status', 'accepted');
+                $query = $query->where('is_more_than_limit', 1)->where('status', 'accepted');
             }
 
             else {
