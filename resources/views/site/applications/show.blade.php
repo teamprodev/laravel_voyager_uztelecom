@@ -102,6 +102,9 @@
                         ->value($application->equal_planned_price)
                         ->disabled()
                     }}
+                    {{Aire::input('bio', "Number Application")
+                            ->value($application->number)
+                             }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
                     {{Aire::input('bio', __('lang.table_17'))
@@ -109,6 +112,12 @@
                         ->value($application->supplier_name)
                         ->disabled()
                     }}
+                             <div class="mb-3 row">
+                                <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">Date</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control" id="date" name="date" value="{{$application->date}}"/>
+                                </div>
+                            </div>
                 </div>
             </div>
             <div class="flex items-baseline">
