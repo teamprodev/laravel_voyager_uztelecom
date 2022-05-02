@@ -182,7 +182,7 @@
                         }}
                     @endif
                     @if(isset($application->branch_leader_comment))
-                        {{Aire::textArea('bio', "Comment ЦУЗ")
+                        {{Aire::textArea('bio', "Comment ЦУЗ : {$application->branch_leader_user_id}")
                         ->value($application->branch_leader_comment)
                         ->rows(3)
                         ->cols(40)
@@ -261,7 +261,7 @@
             console.log("{{$application->id}}");
         </script>
         <div style="height: 50px"></div>
-        @if(auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed'||auth()->user()->hasPermission('Branch_Leader') && $application->status == 'agreed')
+        @if(auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
             @if(!isset($application->performer_user_id))
                 <div class="pb-5">
                 {{ Aire::open()
@@ -270,6 +270,7 @@
                     ->post()
                     ->class('pb-5')
                 }}
+                <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
                 {{Aire::textArea('bio', "Comment ЦУЗ")
                         ->name('branch_leader_comment')
                         ->rows(3)
@@ -284,7 +285,7 @@
                 {{ Aire::close() }}
                 </div>
             @endif
-        @elseif(auth()->user()->hasPermission('Branch_Leader'))
+        @elseif(auth()->user()->hasPermission('Branch_Leader') && $application->status == 'accepted')
             @if(!isset($application->performer_user_id))
             <div class="pb-5">
                 {{ Aire::open()
@@ -292,6 +293,12 @@
                     ->enctype("multipart/form-data")
                     ->post()
                 }}
+                <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
+                {{Aire::textArea('bio', "Comment ЦУЗ")
+                        ->name('branch_leader_comment')
+                        ->rows(3)
+                        ->cols(40)
+                         }}
                 <select class="col-md-6 custom-select" name="performer_role_id" id="performer_role_id">
                     @foreach($performers_branch as $performer)
                         <option value="{{$performer->id}}">{{$performer->display_name}}</option>
