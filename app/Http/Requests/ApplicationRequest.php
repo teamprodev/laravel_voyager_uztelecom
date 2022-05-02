@@ -70,6 +70,7 @@ class ApplicationRequest extends FormRequest
             'branch_leader_comment' => 'nullable',
             'number' => 'nullable',
             'branch_leader_user_id' => 'nullable',
+            'date' => 'nullable',
         ];
     }
 }
