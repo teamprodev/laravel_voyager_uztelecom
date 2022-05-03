@@ -112,12 +112,10 @@
                         ->value($application->supplier_name)
                         ->disabled()
                     }}
-                             <div class="mb-3 row">
-                                <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">Date</label>
-                                <div class="col-sm-6">
-                                    <input class="form-control" id="date" name="date" value="{{$application->date}}"/>
-                                </div>
-                            </div>
+                    {{Aire::input('bio', 'Date')
+                        ->value($application->date)
+                        ->disabled()
+                    }}
                 </div>
             </div>
             <div class="flex items-baseline">

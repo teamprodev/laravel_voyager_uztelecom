@@ -107,23 +107,15 @@
             </div>
 
             @if($application->is_more_than_limit != 0 && $application->signers == null)
-                <div class="mb-3 row">
-                    <label for="signers" class="col-sm-6 col-form-label">{{ __('lang.signers') }}</label>
-                    <select class="form-control col-sm-6" name="signers" id="signers" multiple size="10">
-                        @foreach($company_signers as $company_signer)
-                            <option>{{ $company_signer }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                {{Aire::select($company_signers, 'select2', __('lang.signers'))
+                    ->name('signers')
+                    ->multiple()
+                }}
             @elseif($application->is_more_than_limit == 0 && $application->signers == null)
-                <div class="mb-3 row">
-                    <label for="signers" class="col-sm-6 col-form-label">{{ __('lang.signers') }}</label>
-                    <select class="form-control col-sm-6" name="signers" id="signers" multiple size="10">
-                        @foreach($branch_signers as $branch_signer)
-                            <option>{{ $branch_signer }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                {{Aire::select($branch_signers, 'select2', __('lang.signers'))
+                    ->name('signers')
+                    ->multiple()
+                }}
             @endif
         </div>
     </div>
