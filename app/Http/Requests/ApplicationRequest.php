@@ -71,6 +71,8 @@ class ApplicationRequest extends FormRequest
             'number' => 'nullable',
             'branch_leader_user_id' => 'nullable',
             'date' => 'nullable',
+            'product_info' => 'nullable',
+            'protocol_number' => 'nullable',
         ];
     }
 }

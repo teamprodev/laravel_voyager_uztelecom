@@ -19,17 +19,9 @@
                         ->name('contract_date')
                         ->value($application->contract_date)
                     }}
-                    {{Aire::input()
-                        ->value($application->contract_date)
-                        ->disabled()
-                    }}
                     {{Aire::dateTimeLocal('bio', __('lang.performer_protocol_date'))
                         ->name('protocol_date')
                         ->value($application->protocol_date)
-                    }}
-                    {{Aire::input()
-                        ->value($application->protocol_date)
-                        ->disabled()
                     }}
                     {{Aire::textArea('bio', __('lang.performer_contract_info'))
                         ->name('contract_info')
@@ -85,12 +77,10 @@
                             ->value($application->type_of_purchase_id)
                         }}
                     </div>
-                    <input class="hidden" name="status" id="status" type="text">
-                    <select class="col-md-6 custom-select" name="status" id="status">
-                        @foreach($status_extented as $status)
-                        <option value="{{$status->name}}">{{$status->name}}</option>
-                        @endforeach
-                    </select>
+                    {{Aire::select($status_extented, 'select')
+                        ->name('status')
+                        ->value($application->status)
+                        }}
                     <div id="a" class="hidden mb-3">
                         <label for="message-text" class="col-form-label">{{ __('lang.table_23') }}:</label>
                         <input class="form-control" name="report_if_cancelled" id="report_if_cancelled">

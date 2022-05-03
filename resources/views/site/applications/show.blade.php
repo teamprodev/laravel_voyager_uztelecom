@@ -31,7 +31,7 @@
                         ->cols(40)
                         ->disabled()
                     }}
-                    {{Aire::input('bio', __('lang.table_13'))
+                    {{Aire::datetimelocal('bio', __('lang.table_13'))
                         ->name('delivery_date')
                         ->value($application->delivery_date)
                         ->disabled()
@@ -57,7 +57,7 @@
                         ->cols(40)
                         ->disabled()
                     }}
-                    {{Aire::input('bio', __('lang.table_14'))
+                    {{Aire::datetimelocal('bio', __('lang.table_14'))
                         ->name('expire_warranty_date')
                         ->value($application->expire_warranty_date)
                         ->disabled()
@@ -112,7 +112,7 @@
                         ->value($application->supplier_name)
                         ->disabled()
                     }}
-                    {{Aire::input('bio', 'Date')
+                    {{Aire::datetimelocal('bio', 'Date')
                         ->value($application->date)
                         ->disabled()
                     }}
@@ -189,7 +189,10 @@
                         }}
                     @endif
                     @if(isset($application->branch_leader_comment))
-                        {{Aire::textArea('bio', "Comment ЦУЗ : {$application->branch_leader_user_id}")
+                        @php
+                            $comment = \App\Models\User::find($application->branch_leader_user_id)->name;
+                        @endphp
+                        {{Aire::textArea('bio', "Comment ЦУЗ : {$comment}")
                         ->value($application->branch_leader_comment)
                         ->rows(3)
                         ->cols(40)

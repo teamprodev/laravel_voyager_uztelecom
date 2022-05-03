@@ -161,6 +161,10 @@ class ApplicationController extends Controller
             {
                 $query = Application::query()->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id);
             }
+            elseif($user->hasPermission('Company_Leader') && $user->hasPermission('Branch_Leader'))
+            {
+                $query = Application::query()->where('is_more_than_limit',1)->where('status','agreed')->orWhere('is_more_than_limit', 0)->where('status','accepted');
+            }
         elseif($user->role_id == 7)
             {
             $query = Application::query()->where('status', "accepted");
@@ -179,7 +183,7 @@ class ApplicationController extends Controller
             }
             elseif($user->hasPermission('Branch_Leader'))
             {
-                $query = $query->where('is_more_than_limit', 1)->where('status', 'accepted');
+                $query = $query->where('is_more_than_limit', 0)->where('status', 'accepted');
             }
 
             else {
@@ -268,7 +272,7 @@ class ApplicationController extends Controller
                         {$destroy}
                         </div>";
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action','status'])
                 ->make(true);
         }
         return view('site.applications.index');

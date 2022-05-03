@@ -68,7 +68,7 @@ class ApplicationService
             'subject' => Subject::all()->pluck('name','id'),
             'branch' => Branch::all()->pluck('name', 'id'),
             'users' => User::where('role_id', 5)->get(),
-            'status_extented' => StatusExtented::all(),
+            'status_extented' => StatusExtented::all()->pluck('name','name'),
             'countries' => $countries,
             'products' => $select,
             'user' => auth()->user(),
