@@ -179,21 +179,21 @@
             console.log(typeof thestring);
     }
 </script>
-<div class="grid grid-cols-2 px-6">
+<div class="flex-direction: row">
     @if($application->file_basis == 'null' ||$application->file_basis == null)
-        <div>
+        <div class="mx-1">
             <h6 class="my-3">{{ __('lang.base') }}</h6>
             <div id="file_basis"></div>
         </div>
     @endif
     @if($application->file_tech_spec == 'null' ||$application->file_tech_spec == null)
-        <div>
+        <div class="mx-1">
             <h6 class="my-3">{{ __('lang.tz') }}</h6>
             <div id="file_tech_spec"></div>
         </div>
     @endif
     @if($application->other_files == 'null' ||$application->other_files == null)
-        <div>
+        <div class="mx-1">
             <h6 class="my-3">{{ __('lang.doc') }}</h6>
             <div id="other_files"></div>
         </div>
@@ -286,8 +286,8 @@
             target: '#file_basis',
             showProgressDetails: true,
             note: 'Все типы файлов, до 10 МБ',
-            width: 400,
-            height: 200,
+            width: 300,
+            height: 150,
             metaFields: [
                 {id: 'name', name: 'Name', placeholder: 'file name'},
                 {id: 'caption', name: 'Caption', placeholder: 'describe what the image is about'}
@@ -346,8 +346,8 @@
             target: '#file_tech_spec',
             showProgressDetails: true,
             note: 'Все типы файлов, до 10 МБ',
-            width: 400,
-            height: 200,
+            width: 300,
+            height: 150,
             metaFields: [
                 {id: 'name', name: 'Name', placeholder: 'file name'},
                 {id: 'caption', name: 'Caption', placeholder: 'describe what the image is about'}
@@ -406,8 +406,8 @@
             target: '#other_files',
             showProgressDetails: true,
             note: 'Все типы файлов, до 10 МБ',
-            width: 400,
-            height: 200,
+            width: 300,
+            height: 150,
             metaFields: [
                 {id: 'name', name: 'Name', placeholder: 'file name'},
                 {id: 'caption', name: 'Caption', placeholder: 'describe what the image is about'}
