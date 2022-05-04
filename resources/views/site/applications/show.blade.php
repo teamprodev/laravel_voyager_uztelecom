@@ -31,7 +31,7 @@
                         ->cols(40)
                         ->disabled()
                     }}
-                    {{Aire::datetimelocal('bio', __('lang.table_13'))
+                    {{Aire::input('bio', __('lang.table_13'))
                         ->name('delivery_date')
                         ->value($application->delivery_date)
                         ->disabled()
@@ -57,7 +57,7 @@
                         ->cols(40)
                         ->disabled()
                     }}
-                    {{Aire::datetimelocal('bio', __('lang.table_14'))
+                    {{Aire::input('bio', __('lang.table_14'))
                         ->name('expire_warranty_date')
                         ->value($application->expire_warranty_date)
                         ->disabled()
