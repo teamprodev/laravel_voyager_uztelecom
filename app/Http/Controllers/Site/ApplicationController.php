@@ -374,7 +374,11 @@ class ApplicationController extends Controller
         $data = $request->validated();
         if(isset($data['performer_leader_user_id']))
         {
-            $data['performer_leader_date'] = Carbon::now()->toDateTimeString();
+            $data['performer_leader_comment_date'] = Carbon::now()->toDateTimeString();
+        }
+        if(isset($data['performer_comment']))
+        {
+            $data['performer_comment_date'] = Carbon::now()->toDateTimeString();
         }
         if(isset($data['resource_id']) && $data['resource_id'] != "[object Object]")
         {

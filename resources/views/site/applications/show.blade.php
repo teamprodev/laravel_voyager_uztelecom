@@ -173,6 +173,17 @@
                             ->disabled()
                         }}
                     @endif
+                    @if(isset($application->performer_comment))
+                        @php
+                            $comment = \App\Models\User::find($application->performer_user_id)->name;
+                        @endphp
+                        {{Aire::textArea('bio', "Performer Comment: {$comment}")
+                            ->value($application->performer_comment)
+                            ->rows(3)
+                            ->cols(40)
+                            ->disabled()
+                        }}
+                    @endif
                     @if(isset($application->performer_role_id))
                         {{Aire::textArea('bio', __('lang.performer'))
                             ->value(\App\Models\Roles::find($application->performer_role_id)->display_name)
@@ -311,7 +322,7 @@
                 {{ Aire::close() }}
             </div>
             @endif
-        @elseif($application->performer_role_id == $user->role_id && $access_comment->leader == 1)
+        @elseif($application->performer_role_id == $user->role_id && $user->leader == 1)
             {{ Aire::open()
                 ->route('site.applications.update',$application->id)
                 ->enctype("multipart/form-data")
@@ -319,11 +330,32 @@
             }}
             {{Aire::textArea('bio', __('lang.table_23'))
                 ->name('performer_leader_comment')
+                ->value($application->performer_leader_comment)
                 ->rows(3)
                 ->cols(40)
              }}
             <input  class="hidden"
                     name="performer_leader_user_id"
+                    value="{{auth()->user()->id}}"
+                    type="text">
+            <div class="mt-4">
+                <button type="submit" class="btn btn-success col-md-2" >{{ __('lang.send') }}</button>
+            </div>
+            {{ Aire::close() }}
+            @elseif($application->performer_role_id == $user->role_id && $user->leader == 0)
+            {{ Aire::open()
+                ->route('site.applications.update',$application->id)
+                ->enctype("multipart/form-data")
+                ->post()
+            }}
+            {{Aire::textArea('bio', __('lang.table_23'))
+                ->name('performer_comment')
+                ->value($application->performer_comment)
+                ->rows(3)
+                ->cols(40)
+             }}
+            <input  class="hidden"
+                    name="performer_user_id"
                     value="{{auth()->user()->id}}"
                     type="text">
             <div class="mt-4">

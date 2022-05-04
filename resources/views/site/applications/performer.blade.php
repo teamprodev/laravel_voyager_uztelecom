@@ -61,10 +61,6 @@
                         ->name('protocol_number')
                         ->value($application->protocol_number)
                     }}
-                    {{Aire::input('bio', __('lang.performer_comment'))
-                        ->name('performer_comment')
-                        ->value($application->performer_comment)
-                    }}
                     <div class="mr-4 pt-2 pb-2 w-50">
                         {{Aire::select($purchase, 'select', __('lang.table_18'))
                             ->name('subject')
