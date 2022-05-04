@@ -9,7 +9,7 @@
             <h5><strong>{{ __('lang.author') }}</strong> {{$application->user->name}} ( {{ $application->user->role->name }} )</h5>
             <h5><strong>{{ __('lang.author_filial') }}</strong> {{ $branch_name->name }}</h5>
             <h5><strong>{{ __('lang.number') }} : </strong> {{$application->number}} </h5>
-            <h5><strong>{{ __('lang.table_6') }} : </strong> {{$application->created_at}} </h5> <br>
+            <h5><strong>Date : </strong> {{$application->date}} </h5> <br>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
                     {{Aire::input('bio', __('lang.table_1'))
@@ -102,18 +102,11 @@
                         ->value($application->equal_planned_price)
                         ->disabled()
                     }}
-                    {{Aire::input('bio', "Number Application")
-                            ->value($application->number)
-                             }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
                     {{Aire::input('bio', __('lang.table_17'))
                         ->name('supplier_name')
                         ->value($application->supplier_name)
-                        ->disabled()
-                    }}
-                    {{Aire::datetimelocal('bio', 'Date')
-                        ->value($application->date)
                         ->disabled()
                     }}
                 </div>
