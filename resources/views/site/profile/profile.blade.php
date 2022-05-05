@@ -45,6 +45,7 @@
                            </td>
                            {{Aire::select($fillial, 'select', 'Filial')->name('fillial')}}
                        </tr>
+                       @isset($user->branch_id)
                        <tr class="hover:bg-gray-200">
                            <td class="font-medium text-lg p-2">
                                Филиал:
@@ -53,6 +54,7 @@
                            {{$user->branch->name}}
                            </td>
                        </tr>
+                       @endisset
                         <tr class="hover:bg-gray-200">
                            <td class="font-medium text-lg p-2">
                                Тел.номер:
