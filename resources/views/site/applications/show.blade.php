@@ -275,6 +275,55 @@
             console.log("{{$application->id}}");
         </script>
         <div style="height: 50px"></div>
+        @if($user->hasPermission('Plan_Budget') || $user->hasPermission('Plan_Business'))
+        {{ Aire::open()
+                    ->route('site.applications.update',$application->id)
+                    ->enctype("multipart/form-data")
+                    ->post()
+                    ->class('pb-5')
+                }}
+        {{Aire::textArea('bio', __('lang.table_20'))
+                        ->name('info_purchase_plan')
+                        ->value($application->info_purchase_plan)
+                        ->rows(3)
+                        ->cols(40)
+                    }}
+                    @if($user->hasPermission('Number_Change'))
+                    {{Aire::number('num', "Number Application")
+                        ->name('number')
+                         }}
+                         <div class="mb-3 row">
+                                <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">Date</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control" id="date" name="date" type="date" value="{{$application->date}}"/>
+                                </div>
+                            </div> 
+                    @endif
+        {{Aire::textArea('bio', 'Бюджетни режалаштириш бўлими - харид қилинадиган махсулотни бизнес режада мавжудлиги бўйича маълумот')
+                        ->name('budget_planning')
+                        ->value($application->budget_planning)
+                        ->rows(3)
+                        ->cols(40)
+                    }}
+        {{ Aire::close() }}
+        @elseif($user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business'))
+        {{ Aire::open()
+                    ->route('site.applications.update',$application->id)
+                    ->enctype("multipart/form-data")
+                    ->post()
+                    ->class('pb-5')
+                }}
+        {{Aire::number('num', "Number Application")
+                            ->name('number')
+                             }}
+                             <div class="mb-3 row">
+                                <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">Date</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control" id="date" name="date" type="date" value="{{$application->date}}"/>
+                                </div>
+                            </div>
+        {{ Aire::close() }}                    
+        @endif
         @if(auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
             @if(!isset($application->performer_user_id))
                 <div class="pb-5">
