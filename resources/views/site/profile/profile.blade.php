@@ -39,17 +39,21 @@
                                {{$user->name}}
                            </td>
                        </tr>
-                           @isset($user->department->name)
+                       <tr class="hover:bg-gray-200">
+                           <td class="font-medium text-lg p-2">
+                               Филиал танлаш:
+                           </td>
+                           {{Aire::select($fillial, 'select', 'Filial')->name('fillial')}}
+                       </tr>
                        <tr class="hover:bg-gray-200">
                            <td class="font-medium text-lg p-2">
                                Филиал:
                            </td>
                            <td class="p-2 w-full">
-                               {{$user->department->name}}
+                           {{$user->branch->name}}
                            </td>
                        </tr>
-                           @endisset
-                       <tr class="hover:bg-gray-200">
+                        <tr class="hover:bg-gray-200">
                            <td class="font-medium text-lg p-2">
                                Тел.номер:
                            </td>

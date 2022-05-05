@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileRequest;
 use App\Jobs\CreateApplicationJob;
 use App\Jobs\UpdateProfileJob;
-use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Branch;
 
 class ProfileController extends Controller
 {
@@ -20,7 +20,8 @@ class ProfileController extends Controller
     public function index()
     {
         $user = auth()->user();
-        return view('site.profile.profile',compact( 'user'));
+        $fillial = Branch::all()->pluck('name','id');
+        return view('site.profile.profile',compact( 'user','fillial'));
     }
 
     /**

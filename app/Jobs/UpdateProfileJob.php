@@ -39,7 +39,7 @@ class UpdateProfileJob implements ShouldQueue
         DB::beginTransaction();
         try {
             $user = User::find(Auth::id());
-            $user->department_id = $this->profileRequest->fillial;
+            $user->branch_id = $this->profileRequest->fillial;
             $user->phone = $this->profileRequest->phone;
             $user->save();
         } catch (\Exception $exception) {

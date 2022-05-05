@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use TCG\Voyager\Models\Role;
+use App\Models\Branch;
 
 class User extends \TCG\Voyager\Models\User
 {
@@ -50,9 +51,8 @@ class User extends \TCG\Voyager\Models\User
     {
         return $this->belongsTo(Role::class);
     }
-
-    public function department()
+    public function branch()
     {
-        return $this->belongsTo(Department::class);
+        return $this->belongsTo(Branch::class);
     }
 }
