@@ -27,7 +27,7 @@
     </div>
 </div>
 @else
-<h1 style="color: red;">Вы не выбрали ваш Филиал<br>Вы можете выбрать от профиля</h1>
+<h1 style="color: red; text-align:center;">Вы не выбрали ваш Филиал<br>Вы можете выбрать от профиля</h1>
 @endif
 @push('scripts')
 <script>
