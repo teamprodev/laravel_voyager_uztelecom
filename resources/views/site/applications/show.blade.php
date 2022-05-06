@@ -79,12 +79,12 @@
                         ->class('hidden')
                         ->disabled()
                     }}
-                    {{Aire::select([' UZS ' => ' UZS ', ' USD ' => ' USD '], 'select', __('lang.valyuta'))
-                    ->name('currency')
-                    ->value($application->currency)
-                    ->id('valyuta')
-                    ->disabled()
-                    }}
+
+                    <label for="currency" class="col-form-label">{{ __('lang.valyuta') }}</label>
+                    <select class="form-control" name="currency" id="currency" disabled>
+                        <option value="UZS" @if($application->currency === "UZS") selected @endif>UZS</option>
+                        <option value="USD" @if($application->currency === "USD") selected @endif>USD</option>
+                    </select>
                 </div>
                 <div class="pt-2 pb-2 w-50">
                     {{Aire::input('bio', __('lang.table_15'))
