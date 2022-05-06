@@ -208,7 +208,7 @@ class ApplicationController extends Controller
                     $status_cancelled = __('lang.status_cancelled');
                     $status_performed = __('lang.performed');
                     $status_overdue = __('lang.overdue');
-                    if($query->status === 'new'){
+                    if($query->status === null){
                         return $status_new;
                     }elseif($query->status === 'in_process'){
                         return $status_in_process;
