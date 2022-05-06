@@ -6,7 +6,6 @@ use App\DataTables\DraftDataTable;
 use Illuminate\Support\Facades\Schema;
 use App\Http\Requests\ApplicationRequest;
 use App\Http\Requests\VoteApplicationRequest;
-use App\Jobs\CreateApplicationJob;
 use App\Jobs\UpdateApplicationJob;
 use App\Jobs\VoteJob;
 use App\Models\Application;
@@ -434,13 +433,7 @@ class ApplicationController extends Controller
 
     public function store(ApplicationRequest $request)
     {
-        try{
-            $this->dispatchNow(new CreateApplicationJob($request));
-            return redirect()->route('site.applications.index')->with('success', trans('site.application_success'));
-        } catch(Exception $exception){
-            dd($exception);
-            return redirect()->back()->with('danger', trans('site.application_failed'));
-        }
+        
     }
 
     public function getAll(){
