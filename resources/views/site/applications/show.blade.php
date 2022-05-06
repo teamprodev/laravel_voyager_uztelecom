@@ -305,6 +305,7 @@
                         ->rows(3)
                         ->cols(40)
                     }}
+                    {{Aire::submit('Save')}}
         {{ Aire::close() }}
         @elseif($user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business'))
         {{ Aire::open()
@@ -322,6 +323,7 @@
                                     <input class="form-control" id="date" name="date" type="date" value="{{$application->date}}"/>
                                 </div>
                             </div>
+                            {{Aire::submit('Save')}}
         {{ Aire::close() }}                    
         @endif
         @if(auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
