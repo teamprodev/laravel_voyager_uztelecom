@@ -67,10 +67,6 @@
 
 
   });
-    if(document.getElementById('status').value === '{{__('lang.performed')}}')
-    {
-        document.getElementById('status').style.backgroundColor = green;
-    }
 </script>
 @endpush
 @endsection
