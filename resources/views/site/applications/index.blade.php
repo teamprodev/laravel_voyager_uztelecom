@@ -11,7 +11,7 @@
             <thead  class="text-center">
             <tr>
                 <th>ID</th>
-                <th>№</th>
+                <th>№ заявки</th>
                 <th>{{ __('lang.table_1') }}</th>
                 <th>{{ __('lang.table_2') }}</th>
                 <th>{{ __('lang.table_3') }}</th>

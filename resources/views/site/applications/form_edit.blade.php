@@ -88,7 +88,7 @@
             <div class="mb-3 row">
                 <label class="col-sm-6" for="info_purchase_plan" class="col-sm-2 col-form-label">{{ __('lang.table_20') }}</label>
                 <div class="col-sm-6">
-                    <textarea name="info_purchase_plan" class="form-control" value="{{ $application->info_purchase_plan }}" required cols="40" rows="3"></textarea>
+                    <textarea name="info_purchase_plan" class="form-control" value="{{ $application->info_purchase_plan }}" cols="40" rows="3"></textarea>
                 </div>
             </div>
 
