@@ -390,8 +390,10 @@ class ApplicationController extends Controller
                 $id[] = $all->id;
                 $data['resource_id'] = json_encode($id);
             }
+        }elseif($data['resource_id'] == "[object Object]")
+        {
+            $data['resource_id'] = null;
         }
-
 
         if (isset($data['performer_role_id']))
         {
