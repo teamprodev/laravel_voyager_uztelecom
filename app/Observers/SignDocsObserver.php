@@ -45,17 +45,6 @@ class SignDocsObserver
             $role_id = $doc->role_id;
             return $role_id;
         });
-        $app_time = strtotime($application->created_at->toDateTimeString());
-        $overdue_time = setting('admin.overdue_time');
-
-        $now = strtotime(Carbon::now()->toDateTimeString());
-
-        $diff = $app_time - $now;
-        $dt1 = new DateTime("@0");
-        $result = abs($diff);
-        $dt2 = new DateTime("@{$result}");
-        $day = $dt1->diff($dt2)->format('%a');
-
         $roles_need_sign = json_decode($signedDocs->application->signers, true);
         if (in_array(7, $agreedUsers->toArray())) {
             $signedDocs->application->status = Application::AGREED;
@@ -67,10 +56,7 @@ class SignDocsObserver
             $signedDocs->application->status = Application::ACCEPTED;
         }elseif(count(array_diff($roles_need_sign, $agreedUsers->toArray())) == 0 && $signedDocs->application->is_more_than_limit != 1){
             $signedDocs->application->status = Application::ACCEPTED;
-        }elseif($day >= $overdue_time)
-        {
-            $signedDocs->application->status = 'Overdue';
-        }  else {
+        }else {
             $signedDocs->application->status = Application::IN_PROCESS;
         }
         return $signedDocs->application->update();
