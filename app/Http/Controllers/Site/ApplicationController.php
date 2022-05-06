@@ -163,7 +163,7 @@ class ApplicationController extends Controller
             }
             elseif($user->hasPermission('Company_Leader') && $user->hasPermission('Branch_Leader'))
             {
-                $query = Application::query()->where('is_more_than_limit',1)->where('status','agreed')->orWhere('is_more_than_limit', 0)->where('status','accepted');
+                $query = Application::query()->where('is_more_than_limit',1)->where('status','agreed')->orWhere('is_more_than_limit', 0)->where('status','accepted')->orWhere('status','distributed');
             }
         elseif($user->role_id == 7)
             {
@@ -179,11 +179,11 @@ class ApplicationController extends Controller
             }
             elseif($user->hasPermission('Company_Leader'))
             {
-                $query = $query->where('status','agreed');
+                $query =  Application::query()->where('status','agreed')->orWhere('status','distributed');
             }
             elseif($user->hasPermission('Branch_Leader'))
             {
-                $query = $query->where('is_more_than_limit', 0)->where('status', 'accepted');
+                $query = Application::query()->where('is_more_than_limit', 0)->where('status', 'accepted')->orWhere('is_more_than_limit', 0)->where('status', 'distributed');
             }
 
             else {
