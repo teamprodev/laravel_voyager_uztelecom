@@ -292,7 +292,12 @@
         onBeforeFileAdded: (currentFile, files) => currentFile,
         onBeforeUpload: (files) => {
         },
-        locale: {},
+        locale: {
+            strings: {
+                browseFiles: 'прикрепить файл',
+                dropPasteFiles: '%{browseFiles}',
+}
+        },
         store: new Uppy.DefaultStore(),
         logger: Uppy.justErrorsLogger,
         infoTimeout: 5000,
@@ -352,7 +357,12 @@
         onBeforeFileAdded: (currentFile, files) => currentFile,
         onBeforeUpload: (files) => {
         },
-        locale: {},
+        locale: {
+            strings: {
+                browseFiles: 'прикрепить файл',
+                dropPasteFiles: '%{browseFiles}',
+}
+        },
         store: new Uppy.DefaultStore(),
         logger: Uppy.justErrorsLogger,
         infoTimeout: 5000,
@@ -412,7 +422,12 @@
         onBeforeFileAdded: (currentFile, files) => currentFile,
         onBeforeUpload: (files) => {
         },
-        locale: {},
+        locale: {
+            strings: {
+                browseFiles: 'прикрепить файл',
+                dropPasteFiles: '%{browseFiles}',
+}
+        },
         store: new Uppy.DefaultStore(),
         logger: Uppy.justErrorsLogger,
         infoTimeout: 5000,
