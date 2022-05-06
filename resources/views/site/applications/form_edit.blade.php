@@ -4,56 +4,101 @@
             <div class="mb-3 row">
                 <label class="col-sm-6" for="initiator" class="col-sm-2 col-form-label">{{ __('lang.table_1') }}</label>
                 <div class="col-sm-6">
-                    <input name="initiator" class="form-control" value="{{ $application->initiator }}" required>
+                    {{Aire::input()
+                        ->name("initiator")
+                        ->value($application->initiator)
+                        ->class("form-control")
+                        ->required()
+                    }}
                 </div>
             </div>
 
             <div class="mb-3 row">
                 <label class="col-sm-6" for="purchase_basis" class="col-sm-2 col-form-label">{{ __('lang.table_9') }}</label>
                 <div class="col-sm-6">
-                    <textarea name="purchase_basis" class="form-control" value="{{ $application->purchase_basis }}" required cols="40" rows="3"></textarea>
+                    {{Aire::textArea()
+                        ->rows(3)
+                        ->name("purchase_basis")
+                        ->value($application->purchase_basis)
+                        ->cols(40)
+                        ->class("form-control")
+                        ->required()
+                    }}
                 </div>
             </div>
 
             <div class="mb-3 row">
                 <label class="col-sm-6" for="basis" class="col-sm-2 col-form-label">{{ __('lang.table_11') }}</label>
                 <div class="col-sm-6">
-                    <textarea name="basis" class="form-control" value="{{ $application->specification }}" required cols="40" rows="3"></textarea>
+                    {{Aire::textArea()
+                        ->rows(3)
+                        ->name("basis")
+                        ->value($application->basis)
+                        ->cols(40)
+                        ->class("form-control")
+                        ->required()
+                    }}
                 </div>
             </div>
 
             <div class="mb-3 row">
                 <label class="col-sm-6" for="name" class="col-sm-2 col-form-label">{{ __('lang.table_2') }}</label>
                 <div class="col-sm-6">
-                    <input class="form-control" name="name" value="{{$application->name}}" type="text"/>
+                    {{Aire::input()
+                        ->name("name")
+                        ->value($application->name)
+                        ->class("form-control")
+                        ->required()
+                    }}
                 </div>
             </div>
 
             <div class="mb-3 row">
                 <label class="col-sm-6" for="specification" class="col-sm-2 col-form-label">{{ __('lang.table_10') }}</label>
                 <div class="col-sm-6">
-                    <textarea name="specification" class="form-control" value="{{ $application->specification }}" required cols="40" rows="3"></textarea>
+                    {{Aire::textArea()
+                        ->rows(3)
+                        ->name("specification")
+                        ->value($application->specification)
+                        ->cols(40)
+                        ->class("form-control")
+                        ->required()
+                    }}
                 </div>
             </div>
 
             <div class="mb-3 row">
                 <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">{{ __('lang.table_3') }}</label>
                 <div class="col-sm-6">
-                    <input class="form-control" id="date" name="delivery_date" type="date"/>
+                    <input class="form-control" id="date" name="delivery_date" value="{{ $application->delivery_date }}" type="date"/>
                 </div>
             </div>
 
             <div class="mb-3 row">
                 <label class="col-sm-6" for="separate_requirements" class="col-sm-2 col-form-label">{{ __('lang.table_12') }}</label>
                 <div class="col-sm-6">
-                    <textarea name="separate_requirements" class="form-control" value="{{ $application->separate_requirements }}" required cols="40" rows="3"></textarea>
+                    {{Aire::textArea()
+                        ->rows(3)
+                        ->name("separate_requirements")
+                        ->value($application->separate_requirements)
+                        ->cols(40)
+                        ->class("form-control")
+                        ->required()
+                    }}
                 </div>
             </div>
 
             <div class="mb-3 row">
                 <label class="col-sm-6" for="other_requirements" class="col-sm-2 col-form-label">{{ __('lang.other') }}</label>
                 <div class="col-sm-6">
-                    <textarea name="other_requirements" class="form-control" value="{{ $application->other_requirements }}" required cols="40" rows="3"></textarea>
+                    {{Aire::textArea()
+                        ->rows(3)
+                        ->name("other_requirements")
+                        ->value($application->other_requirements)
+                        ->cols(40)
+                        ->class("form-control")
+                        ->required()
+                    }}
                 </div>
             </div>
 
@@ -67,47 +112,77 @@
             <div class="mb-3 row">
                 <label class="col-sm-6" for="planned_price" class="col-sm-2 col-form-label">{{ __('lang.table_4') }}</label>
                 <div class="col-sm-6">
-                    <input name="planned_price" id="planned_price" class="form-control" value="{{ $application->planned_price }}" required>
+                    {{Aire::input()
+                        ->name("planned_price")
+                        ->id("planned_price")
+                        ->value($application->planned_price)
+                        ->class("form-control")
+                        ->required()
+                    }}
                 </div>
             </div>
 
             <div class="mb-3 row">
                 <label class="col-sm-6" for="incoterms" class="col-sm-2 col-form-label">{{ __('lang.table_5') }}</label>
                 <div class="col-sm-6">
-                    <textarea name="incoterms" class="form-control" value="{{ $application->incoterms }}" required cols="40" rows="3"></textarea>
+                    {{Aire::textArea()
+                        ->rows(3)
+                        ->name("incoterms")
+                        ->value($application->incoterms)
+                        ->cols(40)
+                        ->class("form-control")
+                        ->required()
+                    }}
                 </div>
             </div>
 
             <div class="mb-3 row">
                 <label class="col-sm-6" for="info_business_plan" class="col-sm-2 col-form-label">{{ __('lang.table_15') }}</label>
                 <div class="col-sm-6">
-                    <input name="info_business_plan" class="form-control" value="{{ $application->info_business_plan }}">
+                    {{Aire::input()
+                        ->name("info_business_plan")
+                        ->value($application->info_business_plan)
+                        ->class("form-control")
+                        ->required()
+                    }}
                 </div>
             </div>
 
             <div class="mb-3 row">
                 <label class="col-sm-6" for="info_purchase_plan" class="col-sm-2 col-form-label">{{ __('lang.table_20') }}</label>
                 <div class="col-sm-6">
-                    <textarea name="info_purchase_plan" class="form-control" value="{{ $application->info_purchase_plan }}" cols="40" rows="3"></textarea>
+                    {{Aire::textArea()
+                        ->rows(3)
+                        ->name("info_purchase_plan")
+                        ->value($application->info_purchase_plan)
+                        ->cols(40)
+                        ->class("form-control")
+                        ->required()
+                    }}
                 </div>
             </div>
 
             <div class="mb-3 row">
                 <label class="col-sm-6" for="comment" class="col-sm-2 col-form-label">{{ __('lang.table_23') }}</label>
                 <div class="col-sm-6">
-                    <textarea name="comment" class="form-control" value="{{ $application->comment }}" required cols="40" rows="3"></textarea>
+                    {{Aire::textArea()
+                        ->rows(3)
+                        ->name("comment")
+                        ->value($application->comment)
+                        ->cols(40)
+                        ->class("form-control")
+                        ->required()
+                    }}
                 </div>
             </div>
 
-            @if($application->currency == null)
-                <div class="mb-3 row">
-                    <label for="currency" class="col-sm-6 col-form-label">{{ __('lang.valyuta') }}</label>
-                    <select class="form-control col-sm-6" name="currency" id="currency">
-                        <option value="UZS">UZS</option>
-                        <option value="USD">USD</option>
-                    </select>
-                </div>
-            @endif
+            <div class="mb-3 row">
+                <label for="currency" class="col-sm-6 col-form-label">{{ __('lang.valyuta') }}</label>
+                <select class="form-control col-sm-6" name="currency" id="currency">
+                    <option value="UZS" @if($application->currency === "UZS") selected @endif>UZS</option>
+                    <option value="USD" @if($application->currency === "USD") selected @endif>USD</option>
+                </select>
+            </div>
 
             <div class="mb-3 row">
                 <label for="currency" class="col-sm-6 col-form-label">{{ __('lang.branch') }}</label>
@@ -117,17 +192,17 @@
                                 selected>{{$application->branch_initiator_id}}</option>
                     @endisset
                     @foreach($branch as $branches)
-                        <option value="{{$branches}}">{{$branches}}</option>
+                        <option value="{{$branches}}" >{{$branches}}</option>
                     @endforeach
                 </select>
             </div>
 
-            @if($application->is_more_than_limit != 0 && $application->signers == null)
+            @if($application->is_more_than_limit !== 0 && $application->signers === null)
                 {{Aire::select($company_signers, 'select2', __('lang.signers'))
                     ->name('signers')
                     ->multiple()
                 }}
-            @elseif($application->is_more_than_limit == 0 && $application->signers == null)
+            @elseif($application->is_more_than_limit === 0 && $application->signers === null)
                 {{Aire::select($branch_signers, 'select2', __('lang.signers'))
                     ->name('signers')
                     ->multiple()
@@ -135,19 +210,19 @@
             @endif
         </div>
         <div class="flex-direction: column">
-            @if($application->file_basis == 'null' ||$application->file_basis == null)
+            @if($application->file_basis === 'null' ||$application->file_basis === null)
                 <div class="mx-1">
                     <h6 class="my-3">{{ __('lang.base') }}</h6>
                     <div id="file_basis"></div>
                 </div>
             @endif
-            @if($application->file_tech_spec == 'null' ||$application->file_tech_spec == null)
+            @if($application->file_tech_spec === 'null' ||$application->file_tech_spec === null)
                 <div class="mx-1">
                     <h6 class="my-3">{{ __('lang.tz') }}</h6>
                     <div id="file_tech_spec"></div>
                 </div>
             @endif
-            @if($application->other_files == 'null' ||$application->other_files == null)
+            @if($application->other_files === 'null' ||$application->other_files === null)
                 <div class="mx-1">
                     <h6 class="my-3">{{ __('lang.doc') }}</h6>
                     <div id="other_files"></div>
@@ -156,7 +231,7 @@
         </div>
     </div>
 </div>
-@if($application->resource_id == null)
+@if($application->resource_id === null)
     <input id="resource_id" name="resource_id" value=null class="hidden" type="text">
     <table id="table"></table>
 @endif
