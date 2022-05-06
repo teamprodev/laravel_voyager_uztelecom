@@ -104,8 +104,8 @@ $notifications = Notification::with('application:id,created_at')->has('applicati
             cluster: '{{env("PUSHER_APP_CLUSTER")}}',
             // encrypted: true,
 
-            wsHost:  'ws.smarts.uz',
-            wsPort: 6001,
+            wsHost:  '{{env('LARAVEL_WEBSOCKETS_HOST')}}',
+            wsPort: '{{env('LARAVEL_WEBSOCKETS_PORT')}}',
             forceTLS: false,
             disableStats: true,
         });

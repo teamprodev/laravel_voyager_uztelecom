@@ -60,6 +60,7 @@
                 </div>
             </button>
         </li>
+        @if(auth()->user()->branch_id != null)
         <li class="nav-item">
             <a href="{{route('site.applications.create')}}" class="nav-link">
                 <i class="nav-icon fas fa-plus-square"></i>
@@ -68,6 +69,7 @@
                 </p>
             </a>
         </li>
+        @endif
         <li class="nav-item">
             <a href="{{route('site.applications.drafts')}}" class="nav-link">
                 <i class="nav-icon fas fa-file-text"></i>

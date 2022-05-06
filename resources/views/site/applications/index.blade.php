@@ -16,7 +16,7 @@
                 <th>{{ __('lang.table_2') }}</th>
                 <th>{{ __('lang.table_3') }}</th>
                 <th>{{ __('lang.table_4') }}</th>
-                <th>{{ __('lang.table_5') }}</th>
+                <th>{{ __('lang.table_50') }}</th>
                 <th>{{ __('lang.table_6') }}</th>
                 <th>{{ __('lang.table_61') }}</th>
                 <th>{{ __('lang.table_7') }}</th>
@@ -27,7 +27,7 @@
     </div>
 </div>
 @else
-<h1 style="color: red;">Вы не выбрали ваш Филиал<br>Вы можете выбрать от профиля</h1>
+<h1 style="color: red; text-align:center;">Вы не выбрали ваш Филиал<br>Вы можете выбрать от профиля</h1>
 @endif
 @push('scripts')
 <script>
@@ -53,7 +53,6 @@
                         }
                 },
                 {data: 'incoterms', name: 'incoterms'},
-
                 {data: 'created_at', name: 'created_at'},
                 {data: 'updated_at', name: 'updated_at'},
                 {data: 'status', name: 'status'},

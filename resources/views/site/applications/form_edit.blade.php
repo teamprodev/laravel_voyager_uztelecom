@@ -9,9 +9,30 @@
             </div>
 
             <div class="mb-3 row">
+                <label class="col-sm-6" for="purchase_basis" class="col-sm-2 col-form-label">{{ __('lang.table_9') }}</label>
+                <div class="col-sm-6">
+                    <textarea name="purchase_basis" class="form-control" value="{{ $application->purchase_basis }}" required cols="40" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-6" for="basis" class="col-sm-2 col-form-label">{{ __('lang.table_11') }}</label>
+                <div class="col-sm-6">
+                    <textarea name="basis" class="form-control" value="{{ $application->specification }}" required cols="40" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
                 <label class="col-sm-6" for="name" class="col-sm-2 col-form-label">{{ __('lang.table_2') }}</label>
                 <div class="col-sm-6">
                     <input class="form-control" name="name" value="{{$application->name}}" type="text"/>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-6" for="specification" class="col-sm-2 col-form-label">{{ __('lang.table_10') }}</label>
+                <div class="col-sm-6">
+                    <textarea name="specification" class="form-control" value="{{ $application->specification }}" required cols="40" rows="3"></textarea>
                 </div>
             </div>
 
@@ -23,40 +44,16 @@
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-6" for="planned_price" class="col-sm-2 col-form-label">{{ __('lang.table_4') }}</label>
-                <div class="col-sm-6">
-                    <input name="planned_price" id="planned_price" class="form-control" value="{{ $application->planned_price }}" required>
-                </div>
-            </div>
-
-            <div class="mb-3 row">
-                <label class="col-sm-6" for="purchase_basis" class="col-sm-2 col-form-label">{{ __('lang.table_9') }}</label>
-                <div class="col-sm-6">
-                    <textarea name="purchase_basis" class="form-control" value="{{ $application->purchase_basis }}" required cols="40" rows="3"></textarea>
-                </div>
-            </div>
-
-            <div class="mb-3 row">
-                <label class="col-sm-6" for="specification" class="col-sm-2 col-form-label">{{ __('lang.table_10') }}</label>
-                <div class="col-sm-6">
-                    <textarea name="specification" class="form-control" value="{{ $application->specification }}" required cols="40" rows="3"></textarea>
-                </div>
-            </div>
-
-
-
-
-            <div class="mb-3 row">
-                <label class="col-sm-6" for="basis" class="col-sm-2 col-form-label">{{ __('lang.table_11') }}</label>
-                <div class="col-sm-6">
-                    <textarea name="basis" class="form-control" value="{{ $application->specification }}" required cols="40" rows="3"></textarea>
-                </div>
-            </div>
-
-            <div class="mb-3 row">
                 <label class="col-sm-6" for="separate_requirements" class="col-sm-2 col-form-label">{{ __('lang.table_12') }}</label>
                 <div class="col-sm-6">
                     <textarea name="separate_requirements" class="form-control" value="{{ $application->separate_requirements }}" required cols="40" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-6" for="other_requirements" class="col-sm-2 col-form-label">{{ __('lang.other') }}</label>
+                <div class="col-sm-6">
+                    <textarea name="other_requirements" class="form-control" value="{{ $application->other_requirements }}" required cols="40" rows="3"></textarea>
                 </div>
             </div>
 
@@ -67,12 +64,31 @@
                 </div>
             </div>
 
+            <div class="mb-3 row">
+                <label class="col-sm-6" for="planned_price" class="col-sm-2 col-form-label">{{ __('lang.table_4') }}</label>
+                <div class="col-sm-6">
+                    <input name="planned_price" id="planned_price" class="form-control" value="{{ $application->planned_price }}" required>
+                </div>
+            </div>
 
+            <div class="mb-3 row">
+                <label class="col-sm-6" for="incoterms" class="col-sm-2 col-form-label">{{ __('lang.table_5') }}</label>
+                <div class="col-sm-6">
+                    <textarea name="incoterms" class="form-control" value="{{ $application->incoterms }}" required cols="40" rows="3"></textarea>
+                </div>
+            </div>
 
             <div class="mb-3 row">
                 <label class="col-sm-6" for="info_business_plan" class="col-sm-2 col-form-label">{{ __('lang.table_15') }}</label>
                 <div class="col-sm-6">
                     <input name="info_business_plan" class="form-control" value="{{ $application->info_business_plan }}">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-6" for="info_purchase_plan" class="col-sm-2 col-form-label">{{ __('lang.table_20') }}</label>
+                <div class="col-sm-6">
+                    <textarea name="info_purchase_plan" class="form-control" value="{{ $application->info_purchase_plan }}" required cols="40" rows="3"></textarea>
                 </div>
             </div>
 
@@ -116,6 +132,26 @@
                     ->name('signers')
                     ->multiple()
                 }}
+            @endif
+        </div>
+        <div class="flex-direction: column">
+            @if($application->file_basis == 'null' ||$application->file_basis == null)
+                <div class="mx-1">
+                    <h6 class="my-3">{{ __('lang.base') }}</h6>
+                    <div id="file_basis"></div>
+                </div>
+            @endif
+            @if($application->file_tech_spec == 'null' ||$application->file_tech_spec == null)
+                <div class="mx-1">
+                    <h6 class="my-3">{{ __('lang.tz') }}</h6>
+                    <div id="file_tech_spec"></div>
+                </div>
+            @endif
+            @if($application->other_files == 'null' ||$application->other_files == null)
+                <div class="mx-1">
+                    <h6 class="my-3">{{ __('lang.doc') }}</h6>
+                    <div id="other_files"></div>
+                </div>
             @endif
         </div>
     </div>
@@ -179,26 +215,7 @@
             console.log(typeof thestring);
     }
 </script>
-<div class="flex-direction: row">
-    @if($application->file_basis == 'null' ||$application->file_basis == null)
-        <div class="mx-1">
-            <h6 class="my-3">{{ __('lang.base') }}</h6>
-            <div id="file_basis"></div>
-        </div>
-    @endif
-    @if($application->file_tech_spec == 'null' ||$application->file_tech_spec == null)
-        <div class="mx-1">
-            <h6 class="my-3">{{ __('lang.tz') }}</h6>
-            <div id="file_tech_spec"></div>
-        </div>
-    @endif
-    @if($application->other_files == 'null' ||$application->other_files == null)
-        <div class="mx-1">
-            <h6 class="my-3">{{ __('lang.doc') }}</h6>
-            <div id="other_files"></div>
-        </div>
-    @endif
-</div>
+
 {{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}
 <div class="w-full text-center pb-8 ">
     <button class="bg-blue-500 hover:bg-blue-700 mx-4 p-2 transition duration-300 rounded-md text-white"
@@ -287,7 +304,7 @@
             showProgressDetails: true,
             note: 'Все типы файлов, до 10 МБ',
             width: 300,
-            height: 150,
+            height: 200,
             metaFields: [
                 {id: 'name', name: 'Name', placeholder: 'file name'},
                 {id: 'caption', name: 'Caption', placeholder: 'describe what the image is about'}
@@ -347,7 +364,7 @@
             showProgressDetails: true,
             note: 'Все типы файлов, до 10 МБ',
             width: 300,
-            height: 150,
+            height: 200,
             metaFields: [
                 {id: 'name', name: 'Name', placeholder: 'file name'},
                 {id: 'caption', name: 'Caption', placeholder: 'describe what the image is about'}
@@ -407,7 +424,7 @@
             showProgressDetails: true,
             note: 'Все типы файлов, до 10 МБ',
             width: 300,
-            height: 150,
+            height: 200,
             metaFields: [
                 {id: 'name', name: 'Name', placeholder: 'file name'},
                 {id: 'caption', name: 'Caption', placeholder: 'describe what the image is about'}
