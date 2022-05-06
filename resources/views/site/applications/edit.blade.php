@@ -34,9 +34,6 @@
     @else
         @include('site.applications.form_edit')
     @endif
-    <div class="pl-4 pt-4">
-        <a href="/" class="btn btn-danger">{{ __('lang.back') }}</a>
-    </div>
     {{ Aire::close() }}
 @endsection
 
