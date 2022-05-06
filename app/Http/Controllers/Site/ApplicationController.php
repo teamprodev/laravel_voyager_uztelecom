@@ -380,19 +380,22 @@ class ApplicationController extends Controller
         {
             $data['performer_comment_date'] = Carbon::now()->toDateTimeString();
         }
-        if(isset($data['resource_id']) && $data['resource_id'] != "[object Object]")
+        if(isset($data['resource_id']))
         {
-            $explode = explode(',',$data['resource_id']);
+            if($data['resource_id'] == "[object Object]")
+            {
+            $data['resource_id'] = null;
+            }else{
+               $explode = explode(',',$data['resource_id']);
             $id = [];
             for ($i = 0; $i < count($explode); $i++)
             {
                 $all = Resource::where('name','like',"%{$explode[$i]}%")->first();
                 $id[] = $all->id;
                 $data['resource_id'] = json_encode($id);
+            } 
             }
-        }elseif($data['resource_id'] == "[object Object]")
-        {
-            $data['resource_id'] = null;
+            
         }
 
         if (isset($data['performer_role_id']))
