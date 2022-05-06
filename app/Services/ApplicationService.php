@@ -5,7 +5,6 @@ namespace App\Services;
 
 
 use App\Events\Notify;
-use App\Jobs\CreateApplicationJob;
 use App\Models\Branch;
 use App\Models\Notification;
 use App\Models\Permission;

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileRequest;
-use App\Jobs\CreateApplicationJob;
 use App\Jobs\UpdateProfileJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
