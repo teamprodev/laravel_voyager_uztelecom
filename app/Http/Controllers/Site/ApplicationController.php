@@ -208,7 +208,7 @@ class ApplicationController extends Controller
                     $status_cancelled = __('lang.status_cancelled');
                     $status_performed = __('lang.performed');
                     $status_overdue = __('lang.overdue');
-                    if($query->status === null){
+                    if($query->status === 'new'){
                         return $status_new;
                     }elseif($query->status === 'in_process'){
                         return $status_in_process;
@@ -359,9 +359,10 @@ class ApplicationController extends Controller
         $latest = Application::latest('id')->first();
         $application = new Application();
         $application->user_id = auth()->user()->id;
+        $application->status = Application::NEW;
         $application->save();
         $data = Application::query()->latest('id')->first();
-        return redirect()->route('site.applications.edit',$data->id)->with('Alert','adasdas');
+        return redirect()->route('site.applications.edit',$data->id);
     }
 
     public function edit(Application $application)
