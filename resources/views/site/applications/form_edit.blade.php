@@ -143,7 +143,6 @@
                         ->name("info_business_plan")
                         ->value($application->info_business_plan)
                         ->class("form-control")
-                        ->required()
                     }}
                 </div>
             </div>
