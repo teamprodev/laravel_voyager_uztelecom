@@ -278,24 +278,26 @@
                         <th>{{ __('lang.table_22') }}</th>
                         <th>{{ __('lang.table_23') }}</th>
                         <th>{{ __('lang.table_24') }}</th>
+                        <th>Дата подписи</th>
                     </tr>
-                    </thead>
-                </table>
-            </div>
-            <script>
-                $(function () {
-                    var table = $('#yajra-datatable').DataTable({
-                        processing: true,
-                        serverSide: true,
-                        ajax: "{{ route('site.applications.list.signedocs') }}",
-                        columns: [
-                            {data: 'id', name: 'id'},
-                            {data: 'status', name: 'status'},
-                            {data: 'role_id', name: 'role_id'},
-                            {data: 'comment', name: 'comment'},
-                            {data: 'user_id', name: 'user_id'},
-                        ]
-                    });
+                </thead>
+            </table>
+        </div>
+
+        <script>
+            $(function () {
+                var table = $('#yajra-datatable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: "{{ route('site.applications.list.signedocs') }}",
+                    columns: [
+                        {data: 'id', name: 'id'},
+                        {data: 'status', name: 'status'},
+                        {data: 'role_id', name: 'role_id'},
+                        {data: 'comment', name: 'comment'},
+                        {data: 'user_id', name: 'user_id'},
+                        {data: 'updated_at', name: 'updated_at'},
+                    ]
                 });
                 console.log("{{$application->id}}");
             </script>
