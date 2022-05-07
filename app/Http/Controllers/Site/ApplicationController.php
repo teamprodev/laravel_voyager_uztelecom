@@ -308,6 +308,9 @@ class ApplicationController extends Controller
             ->editColumn('role_id', function($docs) {
                 return $docs->role ? $docs->role->display_name:"";
             })
+            ->editColumn('updated_at', function ($query) {
+                    return $query->updated_at ? with(new Carbon($query->updated_at))->format('Y/m/d') : '';;
+                })
             ->editColumn('status', function ($status){
                 $status_agreed = __('lang.status_agreed');
                 $status_refused = __('lang.status_refused');
