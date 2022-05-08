@@ -185,9 +185,8 @@
                             @if(isset($application->performer_leader_comment))
                                 @php
                                     $comment = \App\Models\User::find($application->performer_leader_user_id)->name;
-                                    $lang = __('lang.table_23')
                                 @endphp
-                                {{Aire::textArea('bio', "{$lang}: {$comment}")
+                                {{Aire::textArea('bio', "Performer Leader Comment}: {$comment}")
                                     ->value($application->performer_leader_comment)
                                     ->rows(3)
                                     ->cols(40)
@@ -406,7 +405,7 @@
                     ->enctype("multipart/form-data")
                     ->post()
                 }}
-                {{Aire::textArea('bio', __('lang.table_23'))
+                {{Aire::textArea('bio', 'Performer Leader Comment')
                     ->name('performer_leader_comment')
                     ->value($application->performer_leader_comment)
                     ->rows(3)
