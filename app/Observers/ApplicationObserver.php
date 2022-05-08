@@ -46,7 +46,7 @@ class ApplicationObserver
         {
             $application->performer_user_id = auth()->user()->id;
             $result = $application->save();
-        }elseif($day >= $overdue_time)
+        }elseif($day >= $overdue_time && $application->status != 'Overdue')
         {
             $application->status = 'Overdue';
             $result = $application->save();

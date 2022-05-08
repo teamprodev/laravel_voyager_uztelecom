@@ -369,7 +369,7 @@ class ApplicationController extends Controller
 
     public function edit(Application $application)
     {
-        return $this->service->edit($application);
+            return $this->service->edit($application);
     }
 
     public function update(Application $application, ApplicationRequest $request)
@@ -429,7 +429,7 @@ class ApplicationController extends Controller
         }
         $result = $application->update($data);
         if ($result)
-            return redirect()->route('site.applications.index')->with('success', trans('site.application_success'));
+            return back();
 
         return redirect()->back()->with('danger', trans('site.application_failed'));
     }

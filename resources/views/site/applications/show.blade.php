@@ -186,7 +186,7 @@
                                 @php
                                     $comment = \App\Models\User::find($application->performer_leader_user_id)->name;
                                 @endphp
-                                {{Aire::textArea('bio', "Performer Leader Comment}: {$comment}")
+                                {{Aire::textArea('bio', "Performer Leader Comment: {$comment}")
                                     ->value($application->performer_leader_comment)
                                     ->rows(3)
                                     ->cols(40)
