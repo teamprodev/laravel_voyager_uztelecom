@@ -33,12 +33,10 @@ class ApplicationService
         $access = SignedDocs::where('role_id', auth()->user()->role_id)->where('user_id', null)->where('application_id', $application->id)->first();
         $branch = Branch::where('id', $application->filial_initiator_id)->first();
         $signedDocs = $application->signedDocs()->get();
-
         $file_basis = json_decode($application->file_basis);
         $file_tech_spec = json_decode($application->file_tech_spec);
         $other_files = json_decode($application->other_files);
         $same_role_user_ids = User::where('role_id', auth()->user()->role_id)->get()->pluck('id')->toArray();
-        Cache::put('application_id',$application->id);
         $performers_company = Permission::with('roles')->where('key', 'Company_Performer')->first()->roles;
         $performers_branch = Permission::with('roles')->where('key', 'Branch_Performer')->first()->roles;
         $user = auth()->user();
@@ -46,7 +44,8 @@ class ApplicationService
         $subjects = Subject::all();
         $purchases = Purchase::all();
         $branch_name = Branch::find($application->user->branch_id, 'name');
-        return view('site.applications.show', compact('access_comment','performers_company','performers_branch','file_basis','file_tech_spec','other_files','user','application','branch','signedDocs', 'same_role_user_ids','access','subjects','purchases','branch_name'));
+        $branch = Branch::all()->pluck('name', 'id');
+        return view('site.applications.show', compact('branch','access_comment','performers_company','performers_branch','file_basis','file_tech_spec','other_files','user','application','branch','signedDocs', 'same_role_user_ids','access','subjects','purchases','branch_name'));
 
     }
     public function edit($application)

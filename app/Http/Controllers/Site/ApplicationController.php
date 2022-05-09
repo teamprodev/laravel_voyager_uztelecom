@@ -297,9 +297,9 @@ class ApplicationController extends Controller
         return $this->service->show($application);
     }
 
-    public function SignedDocs()
+    public function SignedDocs($application)
     {
-        $data = SignedDocs::where('application_id',Cache::get('application_id'))->get();
+        $data = SignedDocs::where('application_id',$application)->get();
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('user_id', function($docs) {
@@ -396,9 +396,9 @@ class ApplicationController extends Controller
                 $all = Resource::where('name','like',"%{$explode[$i]}%")->first();
                 $id[] = $all->id;
                 $data['resource_id'] = json_encode($id);
-            } 
             }
-            
+            }
+
         }
 
         if (isset($data['performer_role_id']))
@@ -436,7 +436,7 @@ class ApplicationController extends Controller
 
     public function store(ApplicationRequest $request)
     {
-        
+
     }
 
     public function getAll(){
