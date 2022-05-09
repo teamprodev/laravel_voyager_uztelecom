@@ -166,7 +166,6 @@
                                 ->value($application->info_purchase_plan)
                                 ->cols(40)
                                 ->class("form-control")
-                                ->required()
                             }}
                         </div>
                     </div>
