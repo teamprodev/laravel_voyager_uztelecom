@@ -115,7 +115,10 @@ class Application extends Model
     {
         return $this->belongsTo(Country::class, 'country_produced_id', 'country_alpha3_code');
     }
-
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class, 'branch_initiator_id', 'id');
+    }
     public function signedDocs()
     {
         return $this->hasMany(SignedDocs::class);

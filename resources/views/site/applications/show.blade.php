@@ -195,16 +195,54 @@
 
                     <div class="mb-3 row">
                         <label for="currency" class="col-sm-6 col-form-label">{{ __('lang.branch') }}</label>
-                        <select class="custom-select col-sm-6" name="filial_initiator_id" id="filial_initiator_id">
+                        <select class="custom-select col-sm-6" name="branch_initiator_id" id="branch_initiator_id">
                             @isset($application->branch_initiator_id)
                                 <option value="{{$application->branch_initiator_id}}"
-                                        selected>{{$application->branch_initiator_id}}</option>
+                                        selected>{{$application->branch->name}}</option>
                             @endisset
-                            @foreach($branch as $branches)
-                                <option value="{{$branches}}" >{{$branches}}</option>
-                            @endforeach
                         </select>
                     </div>
+                    @if(isset($application->performer_leader_comment))
+                                @php
+                                    $comment = \App\Models\User::find($application->performer_leader_user_id)->name;
+                                @endphp
+                                {{Aire::textArea('bio', "Performer Leader Comment: {$comment}")
+                                    ->value($application->performer_leader_comment)
+                                    ->rows(3)
+                                    ->cols(40)
+                                    ->disabled()
+                                }}
+                            @endif
+                            @if(isset($application->performer_comment))
+                                @php
+                                    $comment = \App\Models\User::find($application->performer_user_id)->name;
+                                @endphp
+                                {{Aire::textArea('bio', "Performer Comment: {$comment}")
+                                    ->value($application->performer_comment)
+                                    ->rows(3)
+                                    ->cols(40)
+                                    ->disabled()
+                                }}
+                            @endif
+                            @if(isset($application->performer_role_id))
+                                {{Aire::textArea('bio', __('lang.performer'))
+                                    ->value(\App\Models\Roles::find($application->performer_role_id)->display_name)
+                                    ->rows(3)
+                                    ->cols(40)
+                                    ->disabled()
+                                }}
+                            @endif
+                            @if(isset($application->branch_leader_comment))
+                                @php
+                                    $comment = \App\Models\User::find($application->branch_leader_user_id)->name;
+                                @endphp
+                                {{Aire::textArea('bio', "Comment ЦУЗ : {$comment}")
+                                ->value($application->branch_leader_comment)
+                                ->rows(3)
+                                ->cols(40)
+                                ->disabled()
+                                 }}
+                            @endif
                     </div>
                     </div>
                 </div>
