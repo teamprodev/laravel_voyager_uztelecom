@@ -185,14 +185,10 @@
 
             <div class="mb-3 row">
                 <label for="currency" class="col-sm-6 col-form-label">{{ __('lang.branch') }}</label>
-                <select class="custom-select col-sm-6" name="filial_initiator_id" id="filial_initiator_id">
-                    @isset($application->branch_initiator_id)
-                        <option value="{{$application->branch_initiator_id}}"
-                                selected>{{$application->branch_initiator_id}}</option>
-                    @endisset
-                    @foreach($branch as $branches)
-                        <option value="{{$branches}}" >{{$branches}}</option>
-                    @endforeach
+                    {{Aire::select($branch, 'select')
+                    ->name('branch_initiator_id')
+                    ->value('branch_initiator_id')
+                }}
                 </select>
             </div>
 

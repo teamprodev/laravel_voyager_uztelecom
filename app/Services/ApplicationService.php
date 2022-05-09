@@ -31,7 +31,7 @@ class ApplicationService
         if (PHP_SAPI === 'cli')
             return dd($application);
         $access = SignedDocs::where('role_id', auth()->user()->role_id)->where('user_id', null)->where('application_id', $application->id)->first();
-        $branch = Branch::where('id', $application->filial_initiator_id)->first();
+        $branch = Branch::where('id', $application->branch_initiator_id)->first();
         $signedDocs = $application->signedDocs()->get();
         $file_basis = json_decode($application->file_basis);
         $file_tech_spec = json_decode($application->file_tech_spec);
