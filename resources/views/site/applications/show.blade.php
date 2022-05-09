@@ -214,7 +214,7 @@
                             <h5 class="text-left">{{ __('lang.base') }}</h5>
                             @foreach($file_basis as $file)
                                 @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
-                                    <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/{{$file}}">Get File</a></button>
+                                    <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/{{$file}}">Скачать файл</a></button>
                                     <p class="my-2">{{$file}}</p>
                                 @else
                                     <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
@@ -227,7 +227,7 @@
                             <h5 class="text-left">{{ __('lang.tz') }}</h5>
                             @foreach($file_tech_spec as $file)
                                 @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
-                                    <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/{{$file}}">Get File</a></button>
+                                    <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/{{$file}}">Скачать файл</a></button>
                                     <p class="my-2">{{$file}}</p>
                                 @else
                                     <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
@@ -240,7 +240,7 @@
                             <h5 class="text-left">{{ __('lang.doc') }}</h5>
                             @foreach($other_files as $file)
                                 @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
-                                    <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/{{$file}}">Get File</a></button>
+                                    <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/{{$file}}">Скачать файл</a></button>
                                     <p class="my-2">{{$file}}</p>
                                 @else
                                     <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
