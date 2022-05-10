@@ -60,6 +60,22 @@
                 </div>
             </button>
         </li>
+        <li class="nav-item">
+            <button data-toggle="collapse" data-target="#report" class="nav-link">
+                <div class="float-left">
+                    <div>
+                        <i class="nav-icon fas fa-sort float-left"></i>
+                        <p>Отчеты</p>
+                    </div>
+                    <div class="d-flex align-items-start flex-column">
+                        <a href="{{route('site.report.index', '1')}}" id="report" class="collapse">
+                              <i class="nav-icon fas fa-chevron-right"></i>
+                              <p>1 отчет</p>
+                          </a>
+                    </div>
+                </div>
+            </button>
+        </li>
         @if(auth()->user()->branch_id != null)
         <li class="nav-item">
             <a href="{{route('site.applications.create')}}" class="nav-link">

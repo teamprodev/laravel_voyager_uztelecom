@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EimzoAuthController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\Site\ApplicationController;
 use App\Http\Controllers\Site\DashboardController;
 use App\Http\Controllers\Site\ProfileController;
@@ -22,6 +23,7 @@ use TCG\Voyager\Facades\Voyager;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/report_1',[ReportController::class,'report_1'])->name('report_1');
 
 Route::get('/', function () {
     return redirect()->route('site.applications.index');
@@ -65,6 +67,14 @@ Route::group([
                     Route::get('', [ProfileController::class, 'index'])->name('index');
                     Route::put('update', [ProfileController::class, 'update'])->name('update');
                 });
+                Route::group(
+                    [
+                        'as' => 'report.',
+                        'prefix' => 'report',
+                    ],
+                    function(){
+                        Route::get('/{id}',[ReportController::class,'index'])->name('index');
+                    });
             Route::group(
                 [
                     'as' => 'applications.',
