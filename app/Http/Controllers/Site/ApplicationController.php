@@ -315,9 +315,9 @@ class ApplicationController extends Controller
                 $status_agreed = __('lang.status_agreed');
                 $status_refused = __('lang.status_refused');
                 $status_not_signed = __('lang.status_not_signed');
-                if($status == "1"){
+                if($status->status == "1"){
                     return $status_agreed;
-                }elseif($status == "0"){
+                }elseif($status->status == "0"){
                     return $status_refused;
                 }else{
                     return $status_not_signed;
