@@ -339,9 +339,7 @@
                          }}
                     <div class="mb-3 row">
                         <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">Date</label>
-                        <div class="col-sm-6">
-                            <input class="form-control" id="date" name="date" type="date" value="{{$application->date}}"/>
-                        </div>
+                        <input class="form-control" id="date" name="date" type="date" value="{{$application->date}}"/>
                     </div>
                 @endif
                 {{Aire::textArea('bio', 'Бюджетни режалаштириш бўлими - харид қилинадиган махсулотни бизнес режада мавжудлиги бўйича маълумот')

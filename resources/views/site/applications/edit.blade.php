@@ -17,12 +17,10 @@
     'separate_requirements' => 'required',
     'expire_warranty_date' => 'required',
     'planned_price' => 'numeric|required',
-    'info_business_plan' => 'required',
     'equal_planned_price' => 'numeric|required',
     'filial_initiator_id' => 'required',
     'subject' => 'required',
     'type_of_purchase_id' => 'required',
-    'info_purchase_plan' => 'required',
     'comment' => 'required',
     ])
     ->messages([
