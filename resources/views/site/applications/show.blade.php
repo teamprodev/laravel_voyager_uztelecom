@@ -201,6 +201,17 @@
                             @endisset
                         </select>
                     </div>
+                    @if(isset($application->branch_leader_comment))
+                        @php
+                            $comment = \App\Models\User::find($application->branch_leader_user_id)->name;
+                        @endphp
+                        {{Aire::textArea('bio', "Comment ЦУЗ : {$comment}")
+                        ->value($application->branch_leader_comment)
+                        ->rows(3)
+                        ->cols(40)
+                        ->disabled()
+                         }}
+                    @endif
                     @if(isset($application->performer_leader_comment))
                                 @php
                                     $comment = \App\Models\User::find($application->performer_leader_user_id)->name;
@@ -230,17 +241,6 @@
                                     ->cols(40)
                                     ->disabled()
                                 }}
-                            @endif
-                            @if(isset($application->branch_leader_comment))
-                                @php
-                                    $comment = \App\Models\User::find($application->branch_leader_user_id)->name;
-                                @endphp
-                                {{Aire::textArea('bio', "Comment ЦУЗ : {$comment}")
-                                ->value($application->branch_leader_comment)
-                                ->rows(3)
-                                ->cols(40)
-                                ->disabled()
-                                 }}
                             @endif
                     </div>
                     </div>

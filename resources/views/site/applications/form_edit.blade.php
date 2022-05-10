@@ -172,10 +172,20 @@
                         ->required()
                     }}
                 </div>
-            </div>
+                @if($application->with_nds == 1)
+                {{Aire::checkbox('checkbox', __('lang.performer_nds'))
+                            ->checked()
+                       ->name('with_nds')
+                    }}
+                @else
+                {{Aire::checkbox('checkbox', __('lang.performer_nds'))
+                   ->name('with_nds')
+                   }}
+                  @endif
+        </div>
 
-            <div class="mb-3 row">
-                <label for="currency" class="col-sm-6 col-form-label">{{ __('lang.valyuta') }}</label>
+        <div class="mb-3 row">
+            <label for="currency" class="col-sm-6 col-form-label">{{ __('lang.valyuta') }}</label>
                 <select class="form-control col-sm-6" name="currency" id="currency">
                     <option value="UZS" @if($application->currency === "UZS") selected @endif>UZS</option>
                     <option value="USD" @if($application->currency === "USD") selected @endif>USD</option>
