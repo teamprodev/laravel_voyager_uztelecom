@@ -3,6 +3,7 @@
 use App\Http\Controllers\EimzoAuthController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\Site\ApplicationController;
 use App\Http\Controllers\Site\DashboardController;
 use App\Http\Controllers\Site\ProfileController;
@@ -24,6 +25,8 @@ use TCG\Voyager\Facades\Voyager;
 |
 */
 Route::get('/report_1',[ReportController::class,'report_1'])->name('report_1');
+
+Route::get('/user/{user}',[UserController::class,'changeLeader'])->name('users.leader');
 
 Route::get('/', function () {
     return redirect()->route('site.applications.index');
