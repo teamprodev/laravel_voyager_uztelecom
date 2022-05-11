@@ -80,6 +80,10 @@
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>2 отчет квартальный плановый</p>
                         </a>
+                        <a href="{{route('site.report.index', '3')}}" id="report" class="collapse">
+                            <i class="nav-icon fas fa-chevron-right"></i>
+                            <p>3-отчет за год</p>
+                        </a>
                     </div>
                 </div>
             </button>
