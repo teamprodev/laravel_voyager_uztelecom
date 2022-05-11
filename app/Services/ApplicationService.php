@@ -58,6 +58,7 @@ class ApplicationService
         {
             $select[] = $products[$i]->name;
         }
+        $performer_file = json_decode($application->performer_file);
         $company_signer = PermissionRole::where('permission_id',166)->select('role_id')->get();
         $branch_signer = PermissionRole::where('permission_id',167)->select('role_id')->get();
         return view('site.applications.edit', [
@@ -69,6 +70,7 @@ class ApplicationService
             'status_extented' => StatusExtented::all()->pluck('name','name'),
             'countries' => $countries,
             'products' => $select,
+            'performer_file' => $performer_file,
             'user' => auth()->user(),
             'company_signers' => Roles::find($company_signer)->pluck('display_name','id'),
             'branch_signers' => Roles::find($branch_signer)->pluck('display_name','id'),

@@ -250,11 +250,11 @@
                         <div class="my-5">
                             <h5 class="text-left">{{ __('lang.base') }}</h5>
                             @foreach($file_basis as $file)
-                                @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
-                                    <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/{{$file}}">Скачать файл</a></button>
-                                    <p class="my-2">{{$file}}</p>
+                                @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
+                                    <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
                                 @else
-                                    <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
+                                    <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
+                                    <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
                                 @endif
                             @endforeach
                         </div>
@@ -263,11 +263,11 @@
                         <div class="mb-5">
                             <h5 class="text-left">{{ __('lang.tz') }}</h5>
                             @foreach($file_tech_spec as $file)
-                                @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
-                                    <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/{{$file}}">Скачать файл</a></button>
-                                    <p class="my-2">{{$file}}</p>
+                                @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
+                                    <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
                                 @else
-                                    <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
+                                    <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
+                                    <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
                                 @endif
                             @endforeach
                         </div>
@@ -276,11 +276,11 @@
                         <div class="mb-5" style="width: 80%">
                             <h5 class="text-left">{{ __('lang.doc') }}</h5>
                             @foreach($other_files as $file)
-                                @if(\Illuminate\Support\Str::contains($file,'doc') || \Illuminate\Support\Str::contains($file,'xlsx')||\Illuminate\Support\Str::contains($file,'docx')||\Illuminate\Support\Str::contains($file,'pdf'))
-                                    <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/{{$file}}">Скачать файл</a></button>
-                                    <p class="my-2">{{$file}}</p>
+                                @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
+                                    <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
                                 @else
-                                    <img src="/storage/{{$file}}" width="500" height="500" alt="not found">
+                                    <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
+                                    <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
                                 @endif
                             @endforeach
                         </div>

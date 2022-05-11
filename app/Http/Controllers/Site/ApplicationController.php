@@ -331,26 +331,38 @@ class ApplicationController extends Controller
         $file_basis = json_decode($application->file_basis);
         $file_tech_spec = json_decode($application->file_tech_spec);
         $other_files = json_decode($application->other_files);
+        $performer_file = json_decode($application->performer_file);
         if ($request->hasFile('file_basis')) {
-            $files = $request->file('file_basis');
-            $name = Storage::put('public/uploads', $files);
-            $name = str_replace('public/','', $name);
-            $file_basis[] = $name;
+            $fileName = time() . '_' .$request->file_basis->getClientOriginalName();
+            $filePath = $request->file('file_basis')
+                ->move(public_path("storage/uploads/"), $fileName);
+
+            $file_basis[] = $fileName;
         }
         if ($request->hasFile('file_tech_spec')) {
-            $files = $request->file('file_tech_spec');
-            $name = Storage::put('public/uploads', $files);
-            $name = str_replace('public/','', $name);
-            $file_tech_spec[] = $name;
+            $fileName = time() . '_' .$request->file_tech_spec->getClientOriginalName();
+            $filePath = $request->file('file_tech_spec')
+                ->move(public_path("storage/uploads/"), $fileName);
+
+            $file_tech_spec[] = $fileName;
         }
         if ($request->hasFile('other_files')) {
-            $files = $request->file('other_files');
-            $name = Storage::put('public/uploads', $files);
-            $name = str_replace('public/','', $name);
-            $other_files[] = $name;
+            $fileName = time() . '_' .$request->other_files->getClientOriginalName();
+            $filePath = $request->file('other_files')
+                ->move(public_path("storage/uploads/"), $fileName);
+
+            $other_files[] = $fileName;
+        }
+        if ($request->hasFile('performer_file')) {
+            $fileName = time() . '_' .$request->performer_file->getClientOriginalName();
+            $filePath = $request->file('performer_file')
+                ->move(public_path("storage/uploads/"), $fileName);
+
+            $performer_file[] = $fileName;
         }
 
         $application->file_basis = json_encode($file_basis);
+        $application->performer_file = json_encode($performer_file);
         $application->file_tech_spec = json_encode($file_tech_spec);
         $application->other_files = json_encode($other_files);
         $application->update();
