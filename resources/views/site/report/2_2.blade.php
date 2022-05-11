@@ -105,7 +105,7 @@
                 // dom: 'PQlfrtip',
                 dom: 'Qlfrtip',
                 ajax:
-                    "{{ route('report_2_2') }}",
+                    "{{ route('report','22') }}",
 
                 columns: [
                     {data: "id", name: 'id'},

@@ -24,9 +24,8 @@ use TCG\Voyager\Facades\Voyager;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/report_1',[ReportController::class,'report_1'])->name('report_1');
-Route::get('/report_2',[ReportController::class,'report_2'])->name('report_2');
-Route::get('/report_2_2',[ReportController::class,'report_2_2'])->name('report_2_2');
+Route::get('/report/request/{id}',[ReportController::class,'report'])->name('report');
+
 Route::post('/request',[ReportController::class,'request'])->name('request');
 
 Route::get('/user/{user}',[UserController::class,'changeLeader'])->name('users.leader');

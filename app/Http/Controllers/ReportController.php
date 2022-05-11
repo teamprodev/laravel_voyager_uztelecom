@@ -27,6 +27,15 @@ class ReportController extends Controller
         if($id == 22)
             return view('site.report.2_2');
     }
+    public function report($id)
+    {
+        if($id == 1)
+            return $this->report_1();
+        elseif($id == 2)
+            return $this->report_2();
+        elseif($id == 22)
+            return $this->report_2_2();
+    }
     public function report_1()
     {
         $query = Branch::query();
