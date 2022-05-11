@@ -72,6 +72,10 @@
                               <i class="nav-icon fas fa-chevron-right"></i>
                               <p>1 отчет</p>
                           </a>
+                          <a href="{{route('site.report.index', '2')}}" id="report" class="collapse">
+                              <i class="nav-icon fas fa-chevron-right"></i>
+                              <p>2 отчет квартальный итоговый</p>
+                          </a>
                     </div>
                 </div>
             </button>
