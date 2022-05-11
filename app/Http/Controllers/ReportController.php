@@ -7,10 +7,16 @@ use App\Models\Application;
 use App\Models\Branch;
 use App\Models\Subject;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Yajra\DataTables\DataTables;
 
 class ReportController extends Controller
 {
+    public function request(Request $request)
+    {
+        Cache::put('date',$request->date);
+        return redirect()->route('site.report.index','2');
+    }
     public function index($id)
     {
         if($id == 1)
@@ -53,110 +59,122 @@ class ReportController extends Controller
         $query = Branch::query();
         return Datatables::of($query)
         ->addColumn('tovar_1', function($branch){
-            $start_date = Carbon::parse('2022-01-01')
+            $date = Cache::get('date');
+            $start_date = Carbon::parse("{$date}-01-01")
                              ->toDateTimeString();
 
-            $end_date = Carbon::parse('2022-03-31')
+            $end_date = Carbon::parse("{$date}-03-31")
                              ->toDateTimeString();
             $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->pluck('planned_price')->toArray();
             return array_sum($applications);
         })
         ->addColumn('rabota_1', function($branch){
-            $start_date = Carbon::parse('2022-01-01')
-                             ->toDateTimeString();
+            $date = Cache::get('date');
+            $start_date = Carbon::parse("{$date}-01-01")
+                ->toDateTimeString();
 
-            $end_date = Carbon::parse('2022-03-31')
-                             ->toDateTimeString();
+            $end_date = Carbon::parse("{$date}-03-31")
+                ->toDateTimeString();
             $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->pluck('planned_price')->toArray();
             return array_sum($applications);
         })
         ->addColumn('usluga_1', function($branch){
-            $start_date = Carbon::parse('2022-01-01')
-                             ->toDateTimeString();
+            $date = Cache::get('date');
+            $start_date = Carbon::parse("{$date}-01-01")
+                ->toDateTimeString();
 
-            $end_date = Carbon::parse('2022-03-31')
-                             ->toDateTimeString();
+            $end_date = Carbon::parse("{$date}-03-31")
+                ->toDateTimeString();
             $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->pluck('planned_price')->toArray();
             return array_sum($applications);
         })
         ->addColumn('tovar_2', function($branch){
-            $start_date = Carbon::parse('2022-04-01')
-                             ->toDateTimeString();
+            $date = Cache::get('date');
+            $start_date = Carbon::parse("{$date}-04-01")
+                ->toDateTimeString();
 
-            $end_date = Carbon::parse('2022-06-31')
-                             ->toDateTimeString();
+            $end_date = Carbon::parse("{$date}-06-31")
+                ->toDateTimeString();
             $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->pluck('planned_price')->toArray();
             return array_sum($applications);
         })
         ->addColumn('rabota_2', function($branch){
-            $start_date = Carbon::parse('2022-04-01')
-                             ->toDateTimeString();
+            $date = Cache::get('date');
+            $start_date = Carbon::parse("{$date}-04-01")
+                ->toDateTimeString();
 
-            $end_date = Carbon::parse('2022-06-31')
-                             ->toDateTimeString();
+            $end_date = Carbon::parse("{$date}-06-31")
+                ->toDateTimeString();
             $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->pluck('planned_price')->toArray();
             return array_sum($applications);
         })
         ->addColumn('usluga_2', function($branch){
-            $start_date = Carbon::parse('2022-04-01')
-                             ->toDateTimeString();
+            $date = Cache::get('date');
+            $start_date = Carbon::parse("{$date}-04-01")
+                ->toDateTimeString();
 
-            $end_date = Carbon::parse('2022-06-31')
-                             ->toDateTimeString();
+            $end_date = Carbon::parse("{$date}-06-31")
+                ->toDateTimeString();
             $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->pluck('planned_price')->toArray();
             return array_sum($applications);
         })
         ->addColumn('tovar_3', function($branch){
-            $start_date = Carbon::parse('2022-07-01')
-                             ->toDateTimeString();
+            $date = Cache::get('date');
+            $start_date = Carbon::parse("{$date}-07-01")
+                ->toDateTimeString();
 
-            $end_date = Carbon::parse('2022-09-31')
-                             ->toDateTimeString();
+            $end_date = Carbon::parse("{$date}-09-31")
+                ->toDateTimeString();
             $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->pluck('planned_price')->toArray();
             return array_sum($applications);
         })
         ->addColumn('rabota_3', function($branch){
-            $start_date = Carbon::parse('2022-07-01')
-                             ->toDateTimeString();
+            $date = Cache::get('date');
+            $start_date = Carbon::parse("{$date}-07-01")
+                ->toDateTimeString();
 
-            $end_date = Carbon::parse('2022-09-31')
-                             ->toDateTimeString();
+            $end_date = Carbon::parse("{$date}-09-31")
+                ->toDateTimeString();
             $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->pluck('planned_price')->toArray();
             return array_sum($applications);
         })
         ->addColumn('usluga_3', function($branch){
-            $start_date = Carbon::parse('2022-07-01')
-                             ->toDateTimeString();
+            $date = Cache::get('date');
+            $start_date = Carbon::parse("{$date}-07-01")
+                ->toDateTimeString();
 
-            $end_date = Carbon::parse('2022-09-31')
-                             ->toDateTimeString();
+            $end_date = Carbon::parse("{$date}-09-31")
+                ->toDateTimeString();
             $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->pluck('planned_price')->toArray();
             return array_sum($applications);
         })
         ->addColumn('tovar_4', function($branch){
-            $start_date = Carbon::parse('2022-10-01')
-                             ->toDateTimeString();
+            $date = Cache::get('date');
+            $start_date = Carbon::parse("{$date}-10-01")
+                ->toDateTimeString();
 
-            $end_date = Carbon::parse('2022-12-31')
-                             ->toDateTimeString();
+            $end_date = Carbon::parse("{$date}-12-31")
+                ->toDateTimeString();
             $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->pluck('planned_price')->toArray();
             return array_sum($applications);
         })
         ->addColumn('rabota_4', function($branch){
-            $start_date = Carbon::parse('2022-10-01')
-                             ->toDateTimeString();
+            $date = Cache::get('date');
+            $start_date = Carbon::parse("{$date}-10-01")
+                ->toDateTimeString();
 
-            $end_date = Carbon::parse('2022-12-31')
-                             ->toDateTimeString();
+            $end_date = Carbon::parse("{$date}-12-31")
+                ->toDateTimeString();
             $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->pluck('planned_price')->toArray();
             return array_sum($applications);
         })
         ->addColumn('usluga_4', function($branch){
-            $start_date = Carbon::parse('2022-10-01')
-                             ->toDateTimeString();
+            $date = Cache::get('date');
+            $start_date = Carbon::parse("{$date}-10-01")
+                ->toDateTimeString();
 
-            $end_date = Carbon::parse('2022-12-31')
-                             ->toDateTimeString();
+            $end_date = Carbon::parse("{$date}-12-31")
+                ->toDateTimeString();
             $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->pluck('planned_price')->toArray();
             return array_sum($applications);
         })

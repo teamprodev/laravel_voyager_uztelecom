@@ -18,10 +18,20 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.4/css/select.dataTables.min.css"/>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css"/>
 </head>
+{{ Aire::open()
+  ->route('request')
+  ->enctype("multipart/form-data")
+  ->post() }}
+<div style="text-align: end;margin-right: 100px">
+    {{Aire::select([2021 => '2021', 2022 => '2022', 2023 => '2023',2024 => '2024'], 'select', 'Год')->value(Illuminate\Support\Facades\Cache::get('date'))->name('date')}}
+    <button type="submit" class="btn btn-success">Менять</button>
+</div>
+{{ Aire::close() }}
+@if(Illuminate\Support\Facades\Cache::get('date') != null)
 <table id="example" class="display nowrap">
         <thead>
         <tr style="text-align: center;">
-            <td colspan="5"><b style="margin-left: 720px;">1 kvartal</b></td>|<td style="text-align: center;" colspan="3"><b>2 kvartal</b></td>|<td style="text-align: center;" colspan="3"><b>3 kvartal</b></td>|<td style="text-align: center;" colspan="3"><b>4 kvartal</b></td>
+            <td colspan="5"><b style="margin-left: 720px;">1 kvartal</b></td><td style="text-align: center;" colspan="3"><b>2 kvartal</b></td><td style="text-align: center;" colspan="3"><b>3 kvartal</b></td><td style="text-align: center;" colspan="3"><b>4 kvartal</b></td>
         </tr>
             <tr>
                 <th>№</th>
@@ -80,6 +90,7 @@
     });
 });
 </script>
+@endif
 <div class="pl-4 pt-4">
         <a href="/" class="btn btn-danger">{{ __('lang.back') }}</a>
     </div>
