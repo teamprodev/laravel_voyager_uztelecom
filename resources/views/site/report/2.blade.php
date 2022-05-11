@@ -31,7 +31,10 @@
 <table id="example" class="display nowrap">
         <thead>
         <tr style="text-align: center;">
-            <td colspan="5"><b style="margin-left: 720px;">1 kvartal</b></td><td style="text-align: center;" colspan="3"><b>2 kvartal</b></td><td style="text-align: center;" colspan="3"><b>3 kvartal</b></td><td style="text-align: center;" colspan="3"><b>4 kvartal</b></td>
+            <td colspan="5" style="background-color: #2cb74c"><b style="margin-left: 720px;">1 kvartal</b></td>
+            <td style="text-align: center;background-color: #2cb74c" colspan="3"><b>2 kvartal</b></td>
+            <td style="text-align: center;background-color: #2cb74c" colspan="3"><b>3 kvartal</b>
+            </td><td style="text-align: center;background-color: #2cb74c" colspan="3"><b>4 kvartal</b></td>
         </tr>
             <tr>
                 <th>№</th>

@@ -26,6 +26,7 @@ use TCG\Voyager\Facades\Voyager;
 */
 Route::get('/report_1',[ReportController::class,'report_1'])->name('report_1');
 Route::get('/report_2',[ReportController::class,'report_2'])->name('report_2');
+Route::get('/report_2_2',[ReportController::class,'report_2_2'])->name('report_2_2');
 Route::post('/request',[ReportController::class,'request'])->name('request');
 
 Route::get('/user/{user}',[UserController::class,'changeLeader'])->name('users.leader');
