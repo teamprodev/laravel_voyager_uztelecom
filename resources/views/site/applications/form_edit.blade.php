@@ -313,17 +313,14 @@
 <script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.legacy.min.js" nomodule></script>
 <script src="https://releases.transloadit.com/uppy/locales/v2.0.5/ru_RU.min.js"></script>
 @if($application->is_more_than_limit != '1' && $application->is_more_than_limit != '0')
-    <input id="is_more_than_limit" class="hidden">
+    <input id="is_more_than_limit" value="0" class="hidden">
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         Swal.fire({
             title: 'Визирование заявки через компанию',
             showDenyButton: true,
-            showCancelButton: true,
             confirmSubmitText: 'Confirm',
-            cancelSubmitText: 'Cancel',
             confirmSubmitClass: 'button is-success has-right-spacing',
-            cancelSubmitClass: 'button is-danger',
         }).then((result) => {
             if (result.isConfirmed == true) {
                 document.getElementById('is_more_than_limit').value = 1;
