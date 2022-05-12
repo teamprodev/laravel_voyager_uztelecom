@@ -387,8 +387,9 @@ class ApplicationController extends Controller
     public function update(Application $application, ApplicationRequest $request)
     {
         $data = $request->validated();
-        if($data['draft'] == 1)
-            $data['status'] = 'draft';
+        if(isset($data['draft']))
+            if($data['draft'] == 1)
+                $data['status'] = 'draft';
         if(isset($data['performer_leader_user_id']))
         {
             $data['performer_leader_comment_date'] = Carbon::now()->toDateTimeString();
