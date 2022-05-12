@@ -29,6 +29,10 @@ class  ActiveAction extends AbstractAction {
 
         return route('users.leader', ['user' => $this->data->id]);
     }
+    public function shouldActionDisplayOnDataType()
+    {
+        return $this->dataType->slug == 'users';
+    }
     public function shouldActionDisplayOnRow($row){
         return true;
     }

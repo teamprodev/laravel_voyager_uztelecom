@@ -147,11 +147,11 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-6" for="info_business_plan" class="col-sm-2 col-form-label">{{ __('lang.table_15') }}</label>
+                        <label class="col-sm-6" for="budget_planning" class="col-sm-2 col-form-label">{{ __('lang.table_15') }}</label>
                         <div class="col-sm-6">
                             {{Aire::input()
-                                ->name("info_business_plan")
-                                ->value($application->info_business_plan)
+                                ->name("budget_planning")
+                                ->value($application->budget_planning)
                                 ->class("form-control")
                             }}
                         </div>
