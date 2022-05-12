@@ -5,10 +5,13 @@ namespace App\Console\Commands;
 use App\Http\Requests\ApplicationRequest;
 use App\Models\Application;
 use App\Models\SignedDocs;
+use App\Observers\ApplicationObserver;
 use App\Observers\SignDocsObserver;
 use App\Services\ApplicationService;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
+use DateTime;
+use Illuminate\Support\Carbon;
 
 class Sardor extends Command
 {
@@ -17,14 +20,14 @@ class Sardor extends Command
      *
      * @var string
      */
-    protected $signature = 'sardor:app';
+    protected $signature = 'overdue:time';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Sardor';
+    protected $description = 'Overdue Time in Application';
 
     /**
      * Create a new command instance.
@@ -41,9 +44,24 @@ class Sardor extends Command
      *
      * @return int
      */
-    public function handle(SignedDocs $signedDocs)
+    public function handle()
     {
-        $service = new SignDocsObserver();
-        $service->created($signedDocs);
+        $now = strtotime(Carbon::now()->toDateTimeString());
+        $app_1 = Application::all();
+        foreach ($app_1 as $application)
+        {
+            $app_time = strtotime($application->created_at->toDateTimeString());
+            $overdue_time = setting('admin.overdue_time');
+            $diff = $app_time - $now;
+            $dt1 = new DateTime("@0");
+            $result = abs($diff);
+            $dt2 = new DateTime("@{$result}");
+            $day = $dt1->diff($dt2)->format('%a');
+            if($day >= $overdue_time)
+            {
+                $application->status = 'Overdue';
+                $application->save();
+            }
+        }
     }
 }
