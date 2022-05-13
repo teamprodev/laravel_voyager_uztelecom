@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\StatusExtented;
 use App\Services\ApplicationService;
 use App\Services\ReportService;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ class ReportController extends Controller
     {
         Cache::put('date',$request->date);
         Cache::put('date_2',$request->date_2);
+        Cache::put('date_10',$request->date_10);
         Cache::put('date_3_month',$request->date_3_month);
         return redirect()->back();
     }
@@ -31,6 +33,8 @@ class ReportController extends Controller
             return view('site.report.2_2');
         if($id == 3)
             return view('site.report.3');
+        if($id == 10)
+            return view('site.report.10');
     }
     public function report($id)
     {
@@ -43,5 +47,7 @@ class ReportController extends Controller
             return $new->report_2_2();
         elseif($id == 3)
             return $new->report_3();
+        elseif($id == 10)
+            return $new->report_10();
     }
 }
