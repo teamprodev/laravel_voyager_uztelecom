@@ -499,6 +499,24 @@ class ReportService
             })
             ->make(true);
     }
+
+    public function report_4()
+    {
+        $query = Application::query();
+        return Datatables::of($query)
+            ->addColumn('tovar_1', function($branch){
+                $date = Cache::get('date_3_month');
+                $start_date = Carbon::parse("{$date}-01")
+                    ->toDateTimeString();
+
+                $end_date = Carbon::parse("{$date}-31")
+                    ->toDateTimeString();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','=',null)->pluck('planned_price')->toArray();
+                return array_sum($applications);
+            })
+            ->make(true);
+    }
+
     public function report_10()
     {
         $status = StatusExtented::query();

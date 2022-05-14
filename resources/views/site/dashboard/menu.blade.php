@@ -69,13 +69,13 @@
                     </div>
                     <div class="d-flex align-items-start flex-column">
                         <a href="{{route('site.report.index', '1')}}" id="report" class="collapse">
-                              <i class="nav-icon fas fa-chevron-right"></i>
-                              <p>1 отчет</p>
-                          </a>
-                          <a href="{{route('site.report.index', '2')}}" id="report" class="collapse">
-                              <i class="nav-icon fas fa-chevron-right"></i>
-                              <p>2 отчет квартальный итоговый</p>
-                          </a>
+                            <i class="nav-icon fas fa-chevron-right"></i>
+                            <p>1 отчет</p>
+                        </a>
+                        <a href="{{route('site.report.index', '2')}}" id="report" class="collapse">
+                          <i class="nav-icon fas fa-chevron-right"></i>
+                          <p>2 отчет квартальный итоговый</p>
+                        </a>
                         <a href="{{route('site.report.index', '22')}}" id="report" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>2 отчет квартальный плановый</p>
@@ -83,6 +83,14 @@
                         <a href="{{route('site.report.index', '3')}}" id="report" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>3-отчет за год</p>
+                        </a>
+                        <a href="{{route('site.report.index', '4')}}" id="report" class="collapse">
+                            <i class="nav-icon fas fa-chevron-right"></i>
+                            <p>4-отчет за год</p>
+                        </a>
+                        <a href="{{route('site.report.index', '10')}}" id="report" class="collapse">
+                            <i class="nav-icon fas fa-chevron-right"></i>
+                            <p>10-отчет за год</p>
                         </a>
                     </div>
                 </div>
