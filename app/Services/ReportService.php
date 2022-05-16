@@ -499,7 +499,92 @@ class ReportService
             })
             ->make(true);
     }
+    public function report_5()
+    {
+        $query = Branch::query();
+        return Datatables::of($query)
+            ->addColumn('count', function($branch){
+                $date = Cache::get('date_5');
+                $start_date = \Carbon\Carbon::parse("{$date}-01")
+                    ->toDateTimeString();
 
+                $end_date = Carbon::parse("{$date}-31")
+                    ->toDateTimeString();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->get();
+                return count($applications);
+            })
+            ->addColumn('summa', function($branch){
+                $date = Cache::get('date_5');
+                $start_date = \Carbon\Carbon::parse("{$date}-01")
+                    ->toDateTimeString();
+
+                $end_date = Carbon::parse("{$date}-31")
+                    ->toDateTimeString();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('count_1', function($branch){
+                $date = Cache::get('date_5');
+                $start_date = \Carbon\Carbon::parse("{$date}-01")
+                    ->toDateTimeString();
+
+                $end_date = Carbon::parse("{$date}-31")
+                    ->toDateTimeString();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->where('subject',1)->get();
+                return count($applications);
+            })
+            ->addColumn('summa_1', function($branch){
+                $date = Cache::get('date_5');
+                $start_date = \Carbon\Carbon::parse("{$date}-01")
+                    ->toDateTimeString();
+
+                $end_date = Carbon::parse("{$date}-31")
+                    ->toDateTimeString();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->where('subject',1)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('count_2', function($branch){
+                $date = Cache::get('date_5');
+                $start_date = \Carbon\Carbon::parse("{$date}-01")
+                    ->toDateTimeString();
+
+                $end_date = Carbon::parse("{$date}-31")
+                    ->toDateTimeString();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->where('subject',2)->get();
+                return count($applications);
+            })
+            ->addColumn('summa_2', function($branch){
+                $date = Cache::get('date_5');
+                $start_date = \Carbon\Carbon::parse("{$date}-01")
+                    ->toDateTimeString();
+
+                $end_date = Carbon::parse("{$date}-31")
+                    ->toDateTimeString();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->where('subject',2)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('count_3', function($branch){
+                $date = Cache::get('date_5');
+                $start_date = \Carbon\Carbon::parse("{$date}-01")
+                    ->toDateTimeString();
+
+                $end_date = Carbon::parse("{$date}-31")
+                    ->toDateTimeString();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->where('subject',3)->get();
+                return count($applications);
+            })
+            ->addColumn('summa_3', function($branch){
+                $date = Cache::get('date_5');
+                $start_date = \Carbon\Carbon::parse("{$date}-01")
+                    ->toDateTimeString();
+
+                $end_date = Carbon::parse("{$date}-31")
+                    ->toDateTimeString();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->where('subject',3)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->make(true);
+    }
     public function report_4()
     {
         $query = Application::query();
@@ -516,7 +601,6 @@ class ReportService
             })
             ->make(true);
     }
-
     public function report_10()
     {
         $status = StatusExtented::query();
