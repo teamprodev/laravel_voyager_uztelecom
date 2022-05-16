@@ -88,6 +88,10 @@
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>4-отчет за год</p>
                         </a>
+                        <a href="{{route('site.report.index', '4')}}" id="report" class="collapse">
+                            <i class="nav-icon fas fa-chevron-right"></i>
+                            <p>5 отчет свод  общий</p>
+                        </a>
                         <a href="{{route('site.report.index', '10')}}" id="report" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>10-отчет за год</p>
