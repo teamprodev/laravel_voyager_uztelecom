@@ -147,24 +147,6 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-6" for="budget_planning" class="col-sm-2 col-form-label">{{ __('lang.table_15') }}</label>
-                        <div class="col-sm-6">
-                            {{Aire::input()
-                                ->name("budget_planning")
-                                ->value($application->budget_planning)
-                                ->class("form-control")
-                            }}
-                        </div>
-                    </div>
-
-
-
-
-
-
-
-
-                    <div class="mb-3 row">
                         <label class="col-sm-6" for="info_purchase_plan" class="col-sm-2 col-form-label">{{ __('lang.table_20') }}</label>
                         <div class="col-sm-6">
                             {{Aire::textArea()
@@ -172,6 +154,17 @@
                                 ->name("info_purchase_plan")
                                 ->value($application->info_purchase_plan)
                                 ->cols(40)
+                                ->class("form-control")
+                            }}
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label class="col-sm-6" for="info_business_plan" class="col-sm-2 col-form-label">{{ __('lang.table_15') }}</label>
+                        <div class="col-sm-6">
+                            {{Aire::input()
+                                ->name("info_business_plan")
+                                ->value($application->info_business_plan)
                                 ->class("form-control")
                             }}
                         </div>
@@ -329,21 +322,30 @@
             <div style="height: 50px"></div>
             @if($user->hasPermission('Plan_Budget') || $user->hasPermission('Plan_Business'))
                 {{ Aire::open()
-                            ->route('site.applications.update',$application->id)
-                            ->enctype("multipart/form-data")
-                            ->post()
-                            ->class('pb-5')
-                        }}
+                    ->route('site.applications.update',$application->id)
+                    ->enctype("multipart/form-data")
+                    ->post()
+                    ->class('pb-5')
+                }}
                 {{Aire::textArea('bio', __('lang.table_20'))
-                                ->name('info_purchase_plan')
-                                ->value($application->info_purchase_plan)
-                                ->rows(3)
-                                ->cols(40)
-                            }}
+                    ->name('info_purchase_plan')
+                    ->value($application->info_purchase_plan)
+                    ->rows(3)
+                    ->cols(40)
+                }}
+                {{Aire::textArea('bio', __('lang.table_15'))
+                    ->name('info_business_plan')
+                    ->value($application->info_business_plan)
+                    ->rows(3)
+                    ->cols(40)
+                }}
+                {{Aire::submit('Save')}}
+                {{ Aire::close() }}
+
                 @if($user->hasPermission('Number_Change'))
                     {{Aire::number('num', __('lang.number'))
                         ->name('number')
-                         }}
+                    }}
                     <div class="mb-3 row w-50">
                         <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">
                             {{__('lang.date')}}
@@ -351,24 +353,17 @@
                         <input class="form-control" id="date" name="date" type="date" value="{{$application->date}}"/>
                     </div>
                 @endif
-                {{Aire::textArea('bio', __('lang.table_15'))
-                                ->name('budget_planning')
-                                ->value($application->budget_planning)
-                                ->rows(3)
-                                ->cols(40)
-                            }}
-                {{Aire::submit('Save')}}
-                {{ Aire::close() }}
+
             @elseif($user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business'))
                 {{ Aire::open()
-                            ->route('site.applications.update',$application->id)
-                            ->enctype("multipart/form-data")
-                            ->post()
-                            ->class('pb-5')
-                        }}
+                    ->route('site.applications.update',$application->id)
+                    ->enctype("multipart/form-data")
+                    ->post()
+                    ->class('pb-5')
+                }}
                 {{Aire::number('num', __('lang.number'))
-                                    ->name('number')
-                                     }}
+                    ->name('number')
+                }}
                 <div class="mb-3 row w-50">
                     <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">
                     {{__('lang.date')}}

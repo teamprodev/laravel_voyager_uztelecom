@@ -79,7 +79,7 @@ return [
     "table_18" => "Xarid mavzusi",
     "table_19" => "Xarid ko'rinishi",
     "table_2" => "Xarid qilinadigan mahsulot nomi (mahsulot, ish, xizmat)",
-    "table_20" => "Budjetni rejalashtirish bo‘limi - xarid qilinadigan maxsulotni biznes rejada mavjudligi bo‘yicha ma’lumot",
+    "table_20" => "Xarid qilinadigan mahsulotning «Xaridlar rejasi»da mavjudligi bo‘yicha ma’lumot",
     "table_21" => "Buyurtmaga izoh",
     "table_22" => "Rol",
     "table_23" => "Izoh",
