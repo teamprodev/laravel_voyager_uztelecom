@@ -150,8 +150,8 @@ class ApplicationController extends Controller
     {
         if ($request->ajax()) {
             $query = Application::query()
-                ->where('draft', null)
-                ->orWhere('draft','==', 0)
+                ->where('draft', '!=',null)
+                ->orWhere('draft','!=', 0)
                 ->latest('id')
                 ->get();
             $user = auth()->user();
