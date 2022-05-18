@@ -205,7 +205,7 @@
                         @php
                             $comment = \App\Models\User::find($application->branch_leader_user_id)->name;
                         @endphp
-                        {{Aire::textArea('bio', "Comment ЦУЗ : {$comment}")
+                        {{Aire::textArea('bio', __('lang.comment_suz') . ": {$comment}")
                         ->value($application->branch_leader_comment)
                         ->rows(3)
                         ->cols(40)
@@ -216,7 +216,7 @@
                                 @php
                                     $comment = \App\Models\User::find($application->performer_leader_user_id)->name;
                                 @endphp
-                                {{Aire::textArea('bio', "Performer Leader Comment: {$comment}")
+                                {{Aire::textArea('bio', __('lang.comment_per') . ": {$comment}")
                                     ->value($application->performer_leader_comment)
                                     ->rows(3)
                                     ->cols(40)
@@ -227,7 +227,7 @@
                                 @php
                                     $comment = \App\Models\User::find($application->performer_user_id)->name;
                                 @endphp
-                                {{Aire::textArea('bio', "Performer Comment: {$comment}")
+                                {{Aire::textArea('bio', __('lang.comment_p') . ": {$comment}")
                                     ->value($application->performer_comment)
                                     ->rows(3)
                                     ->cols(40)
