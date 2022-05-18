@@ -211,10 +211,8 @@ class ApplicationController extends Controller
                         return $status_new;
                     }elseif($query->status === 'in_process'){
                         return $status_in_process;
-                    }elseif($query->status === 'overdue'){
-                        return "<div class='row'>
-                        <input type='text' value='{$status_overdue}' style='background-color: red'>
-                        </div>";
+                    }elseif($query->status === 'overdue'||$query->status === 'Overdue'){
+                        return "<input value='{$status_overdue}' class='text-center m-1 col edit bg-danger btn-sm' disabled>";
                     }elseif($query->status === 'accepted'){
                         return $status_accepted;
                     }elseif($query->status === 'refused'){
