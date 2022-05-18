@@ -81,7 +81,7 @@ class ApplicationController extends Controller
                 $status_distributed = __('lang.status_distributed');
                 $status_cancelled = __('lang.status_cancelled');
                 $status_performed = __('lang.performed');
-                $status_overdue = __('lang.overdue');
+                $status_overdue = 'просрочен';
                 if($query->status === 'new'){
                     return $status_new;
                 }elseif($query->status === 'in_process'){
@@ -206,13 +206,15 @@ class ApplicationController extends Controller
                     $status_distributed = __('lang.status_distributed');
                     $status_cancelled = __('lang.status_cancelled');
                     $status_performed = __('lang.performed');
-                    $status_overdue = __('lang.overdue');
+                    $status_overdue = 'просрочен';
                     if($query->status === 'new'){
                         return $status_new;
                     }elseif($query->status === 'in_process'){
                         return $status_in_process;
                     }elseif($query->status === 'overdue'){
-                        return $status_overdue;
+                        return "<div class='row'>
+                        <input type='text' value='{$status_overdue}' style='background-color: red'>
+                        </div>";
                     }elseif($query->status === 'accepted'){
                         return $status_accepted;
                     }elseif($query->status === 'refused'){
@@ -227,7 +229,7 @@ class ApplicationController extends Controller
                         return $status_cancelled;
                     }elseif($query->status === 'performed'){
                         return "<div class='row'>
-                        <input type='text' value='{$status_performed}' style='background-color: red'>
+                        <input type='text' value='{$status_performed}' style='background-color: green'>
                         </div>";
                     }else{
                         return $query->status;
