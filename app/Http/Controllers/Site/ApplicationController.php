@@ -192,7 +192,7 @@ class ApplicationController extends Controller
             }
 
             else {
-                $query = $query->where('user_id',$user->id);
+                $query = Application::query()->where('draft','!=',1)->where('user_id',$user->id);
             }
 
             return Datatables::of($query)
