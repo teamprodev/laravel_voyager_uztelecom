@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Site;
 
 use App\DataTables\DraftDataTable;
+use App\Models\StatusExtented;
 use Illuminate\Support\Facades\Schema;
 use App\Http\Requests\ApplicationRequest;
 use App\Http\Requests\VoteApplicationRequest;
@@ -160,6 +161,11 @@ class ApplicationController extends Controller
             {
                 $query = Application::query()->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->orWhere('user_id',auth()->user()->id);
             }
+            elseif($user->hasPermission('Warehouse'))
+            {
+                $status = 'товар доставлен';
+                $query = Application::query()->where('status','like',"%{$status}%")->orWhere('user_id',auth()->user()->id);
+            }
             elseif($user->hasPermission('Company_Leader') && $user->hasPermission('Branch_Leader'))
             {
                 $query = Application::query()->where('is_more_than_limit',1)->where('status','agreed')->orWhere('is_more_than_limit', 0)->where('status','accepted')->orWhere('status','distributed')->orWhere('user_id',auth()->user()->id);
@@ -244,7 +250,7 @@ class ApplicationController extends Controller
                     $app_clone= __('lang.clone');;
                     $app_delete= __('lang.delete');;
 
-                    if($row->user_id == auth()->user()->id||auth()->user()->hasPermission('Branch_Performer')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Plan_Budget')||auth()->user()->hasPermission('Plan_Business')||auth()->user()->hasPermission('Number_Change'))
+                    if(auth()->user()->hasPermission('Warehouse') || $row->user_id == auth()->user()->id||auth()->user()->hasPermission('Branch_Performer')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Plan_Budget')||auth()->user()->hasPermission('Plan_Business')||auth()->user()->hasPermission('Number_Change'))
                     {
                         $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-success btn-sm'>$app_edit</a>";
                     }else{

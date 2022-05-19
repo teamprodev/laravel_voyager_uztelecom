@@ -2,6 +2,12 @@
     <div class="w-full flex">
         <div class="p-6">
             <div class="mb-3 row">
+                @if(isset($application->resource_id))
+                    <b>{{ __('lang.resource')}}</b>:
+                    @foreach(json_decode($application->resource_id) as $product)
+                        <br> {{\App\Models\Resource::find($product)->name}}
+                    @endforeach
+                @endif
                 <label class="col-sm-6" for="initiator" class="col-sm-2 col-form-label">{{ __('lang.table_1') }}</label>
                 <div class="col-sm-6">
                     {{Aire::input()

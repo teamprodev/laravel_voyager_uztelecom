@@ -29,9 +29,12 @@
   ->post() }}
     @if($user->hasPermission('Branch_Performer') && $application->user_id != $user->id || $user->hasPermission('Company_Performer') && $application->user_id != $user->id || $application->performer_role_id == $user->role_id )
             @include('site.applications.performer')
-    @else
+    @elseif($application->user_id == auth()->user()->id)
         @include('site.applications.form_edit')
     @endif
     {{ Aire::close() }}
+    @if($user->hasPermission('Warehouse'))
+        @include('site.applications.warehouse')
+    @endif
 @endsection
 
