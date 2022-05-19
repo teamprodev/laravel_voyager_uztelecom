@@ -47,7 +47,7 @@ class Sardor extends Command
     public function handle()
     {
         $now = strtotime(Carbon::now()->toDateTimeString());
-        $app_1 = Application::all();
+        $app_1 = Application::where('status','in_process')->orWhere('status','new')->get();
         foreach ($app_1 as $application)
         {
             $app_time = strtotime($application->created_at->toDateTimeString());
