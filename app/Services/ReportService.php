@@ -589,18 +589,14 @@ class ReportService
 
     public function report_6()
     {
-        $query = Branch::query();
+        $query = Application::query();
         return Datatables::of($query)
-            ->addColumn('count', function($branch){
-                $date = Cache::get('date_6');
-                $start_date = \Carbon\Carbon::parse("{$date}-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-31")
-                    ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->get();
-                return count($applications);
+            ->addColumn('name', function($branch){
+                $applications = Branch::where('id', $branch->branch_initiator_id)->get()->pluck('name');
+                $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+                return trim($json, '[], "');
             })
+            ->make(true);
 
 
     }
