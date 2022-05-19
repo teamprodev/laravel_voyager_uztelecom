@@ -94,15 +94,13 @@
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>5 отчет свод  общий</p>
                         </a>
-<<<<<<< HEAD
                         <a href="{{route('site.report.index', '6')}}" id="report" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>6 отчет свод  общий</p>
-=======
+
                         <a href="{{route('site.report.index', '7')}}" id="report" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>7 отчет плановый</p>
->>>>>>> 49b8526624266c2479edcf001bceb73fedcdff1a
                         </a>
                         <a href="{{route('site.report.index', '10')}}" id="report" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
