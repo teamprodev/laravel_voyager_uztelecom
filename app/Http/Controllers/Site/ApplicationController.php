@@ -159,7 +159,7 @@ class ApplicationController extends Controller
 
             if($user->hasPermission('Add_Company_Signer') && $user->hasPermission('Add_Branch_Signer'))
             {
-                $query = Application::query()->where('draft','!=',1)->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->orWhere('user_id',auth()->user()->id);
+                $query = Application::query()->where('draft','!=',1)->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
             }
             elseif($user->hasPermission('Warehouse'))
             {
