@@ -14,6 +14,7 @@ use App\Models\Resource;
 use App\Models\SignedDocs;
 use App\Models\StatusExtented;
 use App\Models\User;
+use App\Models\Warehouse;
 use DateTime;
 use GuzzleHttp\Client;
 use Illuminate\Support\Carbon;
@@ -70,6 +71,7 @@ class ApplicationService
             'status_extented' => StatusExtented::all()->pluck('name','name'),
             'countries' => $countries,
             'products' => $select,
+            'warehouse' => Warehouse::where('application_id',$application->id)->first(),
             'performer_file' => $performer_file,
             'user' => auth()->user(),
             'company_signers' => Roles::find($company_signer)->pluck('display_name','id'),
