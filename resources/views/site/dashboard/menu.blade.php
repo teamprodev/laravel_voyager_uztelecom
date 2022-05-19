@@ -16,6 +16,7 @@
                         <p>{{ __('lang.status') }}</p>
                     </div>
                     <div class="d-flex align-items-start flex-column">
+                        @if(auth()->user()->role_id != 7)
                         <a href="{{route('site.applications.show_status', 'new')}}" id="demo" class="collapse">
                               <i class="nav-icon fas fa-chevron-right"></i>
                               <p>{{ __('lang.status_new') }}</p>
@@ -32,6 +33,7 @@
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>{{ __('lang.status_refused') }}</p>
                         </a>
+                        @endif
                         <a href="{{route('site.applications.show_status', 'agreed')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>{{ __('lang.status_agreed') }}</p>
