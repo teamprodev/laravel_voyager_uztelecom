@@ -201,6 +201,14 @@
                             @endisset
                         </select>
                     </div>
+
+                    @if(isset($application->resource_id))
+                        <b>{{ __('lang.resource')}}</b>:
+                        @foreach(json_decode($application->resource_id) as $product)
+                            <br> {{\App\Models\Resource::find($product)->name}}
+                        @endforeach
+                    @endif
+
                     @if(isset($application->branch_leader_comment))
                         @php
                             $comment = \App\Models\User::find($application->branch_leader_user_id)->name;

@@ -25,6 +25,7 @@ use App\Models\Purchase;
 use App\Models\Roles;
 use App\Models\Subject;
 use Illuminate\Support\Facades\Http;
+use Psy\Util\Json;
 use Yajra\DataTables\DataTables;
 
 class ReportService
@@ -620,6 +621,18 @@ class ReportService
             })
             ->make(true);
     }
+
+    public function report_7(){
+        $query = Application::query();
+        return Datatables::of($query)
+            ->addColumn('name', function($branch){
+                $applications = Branch::where('id', $branch->branch_initiator_id)->get()->pluck('name');
+                $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+                return trim($json, '[], "');
+            })
+            ->make(true);
+    }
+
     public function report_10()
     {
         $status = StatusExtented::query();
