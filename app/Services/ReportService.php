@@ -585,6 +585,25 @@ class ReportService
             })
             ->make(true);
     }
+
+    public function report_6()
+    {
+        $query = Branch::query();
+        return Datatables::of($query)
+            ->addColumn('count', function($branch){
+                $date = Cache::get('date_6');
+                $start_date = \Carbon\Carbon::parse("{$date}-01")
+                    ->toDateTimeString();
+
+                $end_date = Carbon::parse("{$date}-31")
+                    ->toDateTimeString();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->get();
+                return count($applications);
+            })
+
+
+    }
+
     public function report_4()
     {
         $query = Application::query();
