@@ -85,6 +85,7 @@ return [
     "table_23" => "Izoh",
     "comment_suz" => "Sotuv bo'limi izohi",
     "comment_per" => "Bosh Ijrochi izohi",
+    "comment_p" => "Ijrochining izohi",
     "table_24" => "Foydalanuvchi",
     "table_25" => "Buyurtma IDsi",
     "table_3" => "Mahsulot kelishining muddati",

@@ -85,6 +85,7 @@ return [
     "table_23" => "Comment",
     "comment_suz" => "Comment Purchasing Control Center",
     "comment_per" => "Main Performer Comment ",
+    "comment_p" => "Comment performer",
     "table_24" => "User",
     "table_25" => "Order id",
     "table_3" => "Product Corression Deadline",
