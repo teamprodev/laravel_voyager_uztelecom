@@ -68,7 +68,6 @@ class ApplicationRequest extends FormRequest
             'performer_role_id' => 'nullable',
             'performer_leader_user_id' => 'nullable',
             'performer_comment' => 'nullable',
-            'budget_planning' => 'nullable',
             'branch_leader_comment' => 'nullable',
             'number' => 'nullable',
             'branch_leader_user_id' => 'nullable',

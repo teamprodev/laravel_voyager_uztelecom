@@ -21,6 +21,8 @@ class ReportController extends Controller
         Cache::put('date_2',$request->date_2);
         Cache::put('date_10',$request->date_10);
         Cache::put('date_5',$request->date_5);
+        Cache::put('date_6',$request->date_6);
+        Cache::put('date_9',$request->date_9);
         Cache::put('date_3_month',$request->date_3_month);
         Cache::put('date_4',$request->date_4);
         return redirect()->back();
@@ -39,6 +41,13 @@ class ReportController extends Controller
             return view('site.report.4');
         if($id == 5)
             return view('site.report.5');
+        if($id == 6)
+            return view('site.report.6');
+
+        if($id == 7)
+            return view('site.report.7');
+        if($id == 9)
+            return view('site.report.9');
         if($id == 10)
             return view('site.report.10');
     }
@@ -57,6 +66,15 @@ class ReportController extends Controller
             return $new->report_4();
         elseif($id == 5)
             return $new->report_5();
+
+        elseif($id == 6)
+            return $new->report_6();
+
+        elseif($id == 7)
+            return $new->report_7();
+        elseif($id == 9)
+            return $new->report_9();
+
         elseif($id == 10)
             return $new->report_10();
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Site;
 
 use App\DataTables\DraftDataTable;
+use App\Models\StatusExtented;
 use Illuminate\Support\Facades\Schema;
 use App\Http\Requests\ApplicationRequest;
 use App\Http\Requests\VoteApplicationRequest;
@@ -81,7 +82,7 @@ class ApplicationController extends Controller
                 $status_distributed = __('lang.status_distributed');
                 $status_cancelled = __('lang.status_cancelled');
                 $status_performed = __('lang.performed');
-                $status_overdue = __('lang.overdue');
+                $status_overdue = 'просрочен';
                 if($query->status === 'new'){
                     return $status_new;
                 }elseif($query->status === 'in_process'){
@@ -150,43 +151,48 @@ class ApplicationController extends Controller
     {
         if ($request->ajax()) {
             $query = Application::query()
-                ->where('draft', null)
-                ->orWhere('draft','==', 0)
+                ->where('draft', '!=',null)
+                ->orWhere('draft','!=', 0)
                 ->latest('id')
                 ->get();
             $user = auth()->user();
 
             if($user->hasPermission('Add_Company_Signer') && $user->hasPermission('Add_Branch_Signer'))
             {
-                $query = Application::query()->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->orWhere('user_id',auth()->user()->id);
+                $query = Application::query()->where('draft','!=',1)->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
+            }
+            elseif($user->hasPermission('Warehouse'))
+            {
+                $status = 'товар доставлен';
+                $query = Application::query()->where('draft','!=',1)->where('status','like',"%{$status}%")->orWhere('user_id',auth()->user()->id);
             }
             elseif($user->hasPermission('Company_Leader') && $user->hasPermission('Branch_Leader'))
             {
-                $query = Application::query()->where('is_more_than_limit',1)->where('status','agreed')->orWhere('is_more_than_limit', 0)->where('status','accepted')->orWhere('status','distributed')->orWhere('user_id',auth()->user()->id);
+                $query = Application::query()->where('draft','!=',1)->where('is_more_than_limit',1)->where('status','agreed')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->where('status','accepted')->orWhere('status','distributed')->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
             }
         elseif($user->role_id == 7)
             {
-            $query = Application::query()->where('status', "accepted");
+            $query = Application::query()->where('draft','!=',1)->where('status', "accepted")->orWhere('status','overdue');
         }
         elseif ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
             {
-            $query = Application::query()->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->orWhere('user_id',auth()->user()->id);
+            $query = Application::query()->where('draft','!=',1)->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
         }
         elseif ($user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer'))
             {
-                $query = Application::query()->where('performer_role_id', $user->role->id)->orWhere('user_id',auth()->user()->id);
+                $query = Application::query()->where('draft','!=',1)->where('performer_role_id', $user->role->id)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
             }
             elseif($user->hasPermission('Company_Leader'))
             {
-                $query =  Application::query()->where('status','agreed')->orWhere('status','distributed')->orWhere('user_id',auth()->user()->id);
+                $query =  Application::query()->where('draft','!=',1)->where('status','agreed')->orWhere('status','distributed')->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
             }
             elseif($user->hasPermission('Branch_Leader'))
             {
-                $query = Application::query()->where('is_more_than_limit', 0)->where('status', 'accepted')->orWhere('is_more_than_limit', 0)->where('status', 'distributed')->orWhere('user_id',auth()->user()->id);
+                $query = Application::query()->where('draft','!=',1)->where('is_more_than_limit', 0)->where('status', 'accepted')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->where('status', 'distributed')->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
             }
 
             else {
-                $query = $query->where('user_id',$user->id);
+                $query = Application::query()->where('draft','!=',1)->where('user_id',$user->id);
             }
 
             return Datatables::of($query)
@@ -206,13 +212,13 @@ class ApplicationController extends Controller
                     $status_distributed = __('lang.status_distributed');
                     $status_cancelled = __('lang.status_cancelled');
                     $status_performed = __('lang.performed');
-                    $status_overdue = __('lang.overdue');
+                    $status_overdue = 'просрочен';
                     if($query->status === 'new'){
                         return $status_new;
                     }elseif($query->status === 'in_process'){
                         return $status_in_process;
-                    }elseif($query->status === 'overdue'){
-                        return $status_overdue;
+                    }elseif($query->status === 'overdue'||$query->status === 'Overdue'){
+                        return "<input value='{$status_overdue}' class='text-center m-1 col edit bg-danger btn-sm' disabled>";
                     }elseif($query->status === 'accepted'){
                         return $status_accepted;
                     }elseif($query->status === 'refused'){
@@ -227,7 +233,7 @@ class ApplicationController extends Controller
                         return $status_cancelled;
                     }elseif($query->status === 'performed'){
                         return "<div class='row'>
-                        <input type='text' value='{$status_performed}' style='background-color: red'>
+                        <input type='text' value='{$status_performed}' style='background-color: green'>
                         </div>";
                     }else{
                         return $query->status;
@@ -244,7 +250,7 @@ class ApplicationController extends Controller
                     $app_clone= __('lang.clone');;
                     $app_delete= __('lang.delete');;
 
-                    if($row->user_id == auth()->user()->id||auth()->user()->hasPermission('Branch_Performer')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Plan_Budget')||auth()->user()->hasPermission('Plan_Business')||auth()->user()->hasPermission('Number_Change'))
+                    if(auth()->user()->hasPermission('Warehouse') || $row->user_id == auth()->user()->id||auth()->user()->hasPermission('Branch_Performer')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Plan_Budget')||auth()->user()->hasPermission('Plan_Business')||auth()->user()->hasPermission('Number_Change'))
                     {
                         $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-success btn-sm'>$app_edit</a>";
                     }else{
@@ -257,7 +263,7 @@ class ApplicationController extends Controller
                     }else{
                         $destroy = "";
                     }
-                    if($row->user_id == auth()->user()->id && $row->status == 'cancelled' || $row->user_id == auth()->user()->id && $row->status == 'refused')
+                    if($row->user_id == auth()->user()->id && $row->status == 'cancelled' || $row->user_id == auth()->user()->id && $row->status == 'refused'||$row->user_id == auth()->user()->id && $row->status == 'rejected')
                     {
                         $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>$app_clone</a>";
                     }else{
@@ -440,7 +446,7 @@ class ApplicationController extends Controller
                 $docs->table_name = "applications";
                 $docs->save();
             }
-            $this->service->sendNotifications($array, $application);
+            $this->service->sendNotifications($array, $application,null);
         }
         $result = $application->update($data);
         if ($result)

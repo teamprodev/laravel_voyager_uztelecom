@@ -6,6 +6,13 @@
         <h5><strong>{{ __('lang.author_filial') }}</strong> {{ $branch_name->name }}</h5>
         <h5><strong>{{ __('lang.number') }} : </strong> {{$application->number}} </h5>
         <h5><strong>Date : </strong> {{$application->date}} </h5> <br>
+        <h5><strong>Визирование заявки через : </strong>
+            @if($application->is_more_than_limit == 1)
+                Компанию
+            @else
+                Филиала
+            @endif
+        </h5> <br>
     </div>
     <div class="flex items-baseline">
         <div class="pt-2 w-100">
@@ -77,7 +84,7 @@
                         </div>
                     </div>
 
-                    <div class="mb-3 row">
+                    <div class="mb-3 row w-50">
                         <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">{{ __('lang.table_3') }}</label>
                         <div class="col-sm-6">
                             <input class="form-control" id="date" name="delivery_date" value="{{ $application->delivery_date }}" type="date"/>
@@ -112,7 +119,7 @@
                         </div>
                     </div>
 
-                    <div class="mb-3 row">
+                    <div class="mb-3 row w-50">
                         <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">{{ __('lang.table_14') }}</label>
                         <div class="col-sm-6">
                             <input class="form-control" id="date" name="expire_warranty_date" value="{{$application->expire_warranty_date}}" type="date"/>
@@ -147,17 +154,6 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-6" for="budget_planning" class="col-sm-2 col-form-label">{{ __('lang.table_15') }}</label>
-                        <div class="col-sm-6">
-                            {{Aire::input()
-                                ->name("budget_planning")
-                                ->value($application->budget_planning)
-                                ->class("form-control")
-                            }}
-                        </div>
-                    </div>
-
-                    <div class="mb-3 row">
                         <label class="col-sm-6" for="info_purchase_plan" class="col-sm-2 col-form-label">{{ __('lang.table_20') }}</label>
                         <div class="col-sm-6">
                             {{Aire::textArea()
@@ -165,6 +161,17 @@
                                 ->name("info_purchase_plan")
                                 ->value($application->info_purchase_plan)
                                 ->cols(40)
+                                ->class("form-control")
+                            }}
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label class="col-sm-6" for="info_business_plan" class="col-sm-2 col-form-label">{{ __('lang.table_15') }}</label>
+                        <div class="col-sm-6">
+                            {{Aire::input()
+                                ->name("info_business_plan")
+                                ->value($application->info_business_plan)
                                 ->class("form-control")
                             }}
                         </div>
@@ -201,11 +208,19 @@
                             @endisset
                         </select>
                     </div>
+
+                    @if(isset($application->resource_id))
+                        <b>{{ __('lang.resource')}}</b>:
+                        @foreach(json_decode($application->resource_id) as $product)
+                            <br> {{\App\Models\Resource::find($product)->name}}
+                        @endforeach
+                    @endif
+
                     @if(isset($application->branch_leader_comment))
                         @php
                             $comment = \App\Models\User::find($application->branch_leader_user_id)->name;
                         @endphp
-                        {{Aire::textArea('bio', "Comment ЦУЗ : {$comment}")
+                        {{Aire::textArea('bio', __('lang.comment_suz') . ": {$comment}")
                         ->value($application->branch_leader_comment)
                         ->rows(3)
                         ->cols(40)
@@ -216,7 +231,7 @@
                                 @php
                                     $comment = \App\Models\User::find($application->performer_leader_user_id)->name;
                                 @endphp
-                                {{Aire::textArea('bio', "Performer Leader Comment: {$comment}")
+                                {{Aire::textArea('bio', __('lang.comment_per') . ": {$comment}")
                                     ->value($application->performer_leader_comment)
                                     ->rows(3)
                                     ->cols(40)
@@ -227,7 +242,7 @@
                                 @php
                                     $comment = \App\Models\User::find($application->performer_user_id)->name;
                                 @endphp
-                                {{Aire::textArea('bio', "Performer Comment: {$comment}")
+                                {{Aire::textArea('bio', __('lang.comment_p') . ": {$comment}")
                                     ->value($application->performer_comment)
                                     ->rows(3)
                                     ->cols(40)
@@ -322,46 +337,52 @@
             <div style="height: 50px"></div>
             @if($user->hasPermission('Plan_Budget') || $user->hasPermission('Plan_Business'))
                 {{ Aire::open()
-                            ->route('site.applications.update',$application->id)
-                            ->enctype("multipart/form-data")
-                            ->post()
-                            ->class('pb-5')
-                        }}
+                    ->route('site.applications.update',$application->id)
+                    ->enctype("multipart/form-data")
+                    ->post()
+                    ->class('pb-5')
+                }}
                 {{Aire::textArea('bio', __('lang.table_20'))
-                                ->name('info_purchase_plan')
-                                ->value($application->info_purchase_plan)
-                                ->rows(3)
-                                ->cols(40)
-                            }}
+                    ->name('info_purchase_plan')
+                    ->value($application->info_purchase_plan)
+                    ->rows(3)
+                    ->cols(40)
+                }}
+                {{Aire::textArea('bio', __('lang.table_15'))
+                    ->name('info_business_plan')
+                    ->value($application->info_business_plan)
+                    ->rows(3)
+                    ->cols(40)
+                }}
+                {{Aire::submit('Save')}}
+                {{ Aire::close() }}
+
                 @if($user->hasPermission('Number_Change'))
-                    {{Aire::number('num', "Number Application")
+                    {{Aire::number('num', __('lang.number'))
                         ->name('number')
-                         }}
-                    <div class="mb-3 row">
-                        <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">Date</label>
+                    }}
+                    <div class="mb-3 row w-50">
+                        <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">
+                            {{__('lang.date')}}
+                        </label>
                         <input class="form-control" id="date" name="date" type="date" value="{{$application->date}}"/>
                     </div>
                 @endif
-                {{Aire::textArea('bio', 'Бюджетни режалаштириш бўлими - харид қилинадиган махсулотни бизнес режада мавжудлиги бўйича маълумот')
-                                ->name('budget_planning')
-                                ->value($application->budget_planning)
-                                ->rows(3)
-                                ->cols(40)
-                            }}
-                {{Aire::submit('Save')}}
-                {{ Aire::close() }}
+
             @elseif($user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business'))
                 {{ Aire::open()
-                            ->route('site.applications.update',$application->id)
-                            ->enctype("multipart/form-data")
-                            ->post()
-                            ->class('pb-5')
-                        }}
-                {{Aire::number('num', "Number Application")
-                                    ->name('number')
-                                     }}
-                <div class="mb-3 row">
-                    <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">Date</label>
+                    ->route('site.applications.update',$application->id)
+                    ->enctype("multipart/form-data")
+                    ->post()
+                    ->class('pb-5')
+                }}
+                {{Aire::number('num', __('lang.number'))
+                    ->name('number')
+                }}
+                <div class="mb-3 row w-50">
+                    <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">
+                    {{__('lang.date')}}
+                    </label>
                     <div class="col-sm-6">
                         <input class="form-control" id="date" name="date" type="date" value="{{$application->date}}"/>
                     </div>
@@ -379,7 +400,7 @@
                             ->class('pb-5')
                         }}
                         <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
-                        {{Aire::textArea('bio', "Comment ЦУЗ")
+                        {{Aire::textArea('bio', __('lang.comment_suz'))
                                 ->name('branch_leader_comment')
                                 ->rows(3)
                                 ->cols(40)
@@ -402,7 +423,7 @@
                             ->post()
                         }}
                         <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
-                        {{Aire::textArea('bio', "Comment ЦУЗ")
+                        {{Aire::textArea('bio', __('lang.comment_suz'))
                                 ->name('branch_leader_comment')
                                 ->rows(3)
                                 ->cols(40)
@@ -422,7 +443,7 @@
                     ->enctype("multipart/form-data")
                     ->post()
                 }}
-                {{Aire::textArea('bio', 'Performer Leader Comment')
+                {{Aire::textArea('bio', __('lang.comment_per'))
                     ->name('performer_leader_comment')
                     ->value($application->performer_leader_comment)
                     ->rows(3)
