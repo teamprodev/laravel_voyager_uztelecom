@@ -446,7 +446,7 @@ class ApplicationController extends Controller
                 $docs->table_name = "applications";
                 $docs->save();
             }
-            $this->service->sendNotifications($array, $application);
+            $this->service->sendNotifications($array, $application,null);
         }
         $result = $application->update($data);
         if ($result)
