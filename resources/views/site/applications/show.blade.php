@@ -6,6 +6,13 @@
         <h5><strong>{{ __('lang.author_filial') }}</strong> {{ $branch_name->name }}</h5>
         <h5><strong>{{ __('lang.number') }} : </strong> {{$application->number}} </h5>
         <h5><strong>Date : </strong> {{$application->date}} </h5> <br>
+        <h5><strong>Визирование заявки через : </strong>
+            @if($application->is_more_than_limit == 1)
+                Компанию
+            @else
+                Филиала
+            @endif
+        </h5> <br>
     </div>
     <div class="flex items-baseline">
         <div class="pt-2 w-100">

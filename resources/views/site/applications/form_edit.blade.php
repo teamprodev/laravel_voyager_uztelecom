@@ -1,6 +1,13 @@
 <div class="mt-6">
     <div class="w-full flex">
         <div class="p-6">
+            <h5><strong>Визирование заявки через : </strong>
+                @if($application->is_more_than_limit == 1)
+                    Компанию
+                @elseif($application->is_more_than_limit == '0')
+                    Филиала
+                @endif
+            </h5> <br>
             <div class="mb-3 row">
                 @if(isset($application->resource_id))
                     <b>{{ __('lang.resource')}}</b>:
