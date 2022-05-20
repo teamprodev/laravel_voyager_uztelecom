@@ -3,7 +3,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<link href="https://releases.transloadit.com/uppy/v2.4.1/uppy.min.css" rel="stylesheet">
+    <link href="https://releases.transloadit.com/uppy/v2.4.1/uppy.min.css" rel="stylesheet">
     <!--Regular Datatables CSS-->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
@@ -19,7 +19,6 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/searchpanes/2.0.0/css/searchPanes.dataTables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.4/css/select.dataTables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css"/>
-
 </head>
 
     <div id="section" class="pt-6">
@@ -30,7 +29,7 @@
                 <tr>
                     <th>№</th>
                     <th>Филиал</th>
-                    <!-- <th>"Контрагент (предприятия поставляющий товаров. работ. услуг)"</th> -->
+                    <th>"Контрагент (предприятия поставляющий товаров. работ. услуг)"</th>
                     <th>Договор (контракт)</th>
                     <th>Предмет закупки (товар,работа,услуга)</th>
                     <th>номер заявки</th>
@@ -58,6 +57,7 @@
                     columns: [
                         {data: "id", name: 'id'},
                         {data: 'name', name: 'name'},
+                        {data: 'supplier_name', name: 'supplier_name'},
                         {data: 'performer_contract_num', name: 'performer_contract_num'},
                         {data: 'table_18', name: 'table_18'},
                         {data: 'number', name: 'number'},
