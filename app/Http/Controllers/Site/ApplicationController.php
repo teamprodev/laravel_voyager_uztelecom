@@ -438,13 +438,18 @@ class ApplicationController extends Controller
         {
             $array = array_merge($roles,$data['signers']);
             $data['signers'] = json_encode($array);
-            for($i = 0; $i < count($array);$i++)
+            foreach ($array as $signers)
             {
-                $docs = new SignedDocs();
-                $docs->role_id = $array[$i];
-                $docs->application_id = $application->id;
-                $docs->table_name = "applications";
-                $docs->save();
+                $signer = SignedDocs::where('application_id',$application->id)->where('role_id',$signers)->first();
+                if($signer == null)
+                {
+                    $docs = new SignedDocs();
+                    $docs->role_id = $signers;
+                    $docs->application_id = $application->id;
+                    $docs->table_name = "applications";
+                    $docs->save();
+                }
+
             }
             $this->service->sendNotifications($array, $application,null);
         }

@@ -214,14 +214,16 @@
                 </select>
             </div>
 
-            @if($application->is_more_than_limit !== 0 && $application->signers === null)
+            @if($application->is_more_than_limit !== 0)
                 {{Aire::checkboxGroup($company_signers, 'radio', __('lang.signers'))
                     ->name('signers[]')
+                    ->value(json_decode($application->signers))
                     ->multiple()
                 }}
-            @elseif($application->is_more_than_limit === 0 && $application->signers === null)
+            @elseif($application->is_more_than_limit === 0 )
                 {{Aire::checkboxGroup($branch_signers, 'radio', __('lang.signers'))
                     ->name('signers[]')
+                    ->value(json_decode($application->signers))
                     ->multiple()
                 }}
             @endif
