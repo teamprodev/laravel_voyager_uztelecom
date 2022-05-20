@@ -36,16 +36,17 @@
                     {{Aire::checkbox('checkbox', __('lang.performer_nds'))
                        ->name('with_nds')
                     }}
+                    {{Aire::input('bio', __('lang.performer_price'))
+                        ->name('contract_price')
+                        ->value($application->contract_price)
+                    }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
                     {{Aire::select($countries,'bio', __('lang.performer_country'))
                         ->name('country_produced_id')
                         ->value($application->country_produced_id)
                     }}
-                    {{Aire::input('bio', __('lang.performer_price'))
-                        ->name('contract_price')
-                        ->value($application->contract_price)
-                    }}
+
 
                     {{Aire::input('bio', __('lang.performer_supplier'))
                         ->name('supplier_name')
