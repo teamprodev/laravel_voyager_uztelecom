@@ -172,7 +172,7 @@ class ApplicationController extends Controller
             }
         elseif($user->role_id == 7)
             {
-            $query = Application::query()->where('draft','!=',1)->where('status', "accepted");
+            $query = Application::query()->where('draft','!=',1)->where('status', "accepted")->orWhere('status','overdue');
         }
         elseif ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
             {
