@@ -59,7 +59,11 @@ class Sardor extends Command
             $day = $dt1->diff($dt2)->format('%a');
             if($day >= $overdue_time)
             {
-                $application->status = 'Overdue';
+                $application->status = 'overdue';
+                $array = json_decode($application->signers);
+                $message = 'Status Changed to Overdue';
+                $service   = new ApplicationService();
+                $service->sendNotifications($array, $application,$message);
                 $application->save();
             }
         }
