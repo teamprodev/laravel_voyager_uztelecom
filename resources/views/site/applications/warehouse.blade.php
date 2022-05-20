@@ -8,9 +8,9 @@
             <div class="mb-3 row">
                 <label class="col-sm-6" for="count" class="col-sm-2 col-form-label">Count</label>
                 <div class="col-sm-6">
-                    {{Aire::number()
+                        {{Aire::number()
                         ->name("count")
-                        ->value($warehouse->count)
+                        ->value(isset($warehouse->count))
                         ->class("form-control")
                         ->required()
                     }}
@@ -21,7 +21,7 @@
                 <label class="col-sm-6" for="purchase_basis" class="col-sm-2 col-form-label">Filial</label>
                 <div class="col-sm-6">
                     {{Aire::select($branch, 'select2')
-                    ->value($warehouse->branch_id)
+                    ->value(isset($warehouse->branch_id))
                     ->name('branch_id')
                 }}
                 </div>
