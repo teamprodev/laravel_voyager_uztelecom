@@ -8,22 +8,36 @@
             <div class="mb-3 row">
                 <label class="col-sm-6" for="count" class="col-sm-2 col-form-label">Count</label>
                 <div class="col-sm-6">
-                        {{Aire::number()
+                    @if($warehouse == null)
+                    {{Aire::number()
                         ->name("count")
-                        ->value(isset($warehouse->count))
                         ->class("form-control")
                         ->required()
                     }}
+                    @else
+                        {{Aire::number()
+                        ->name("count")
+                        ->value($warehouse->count)
+                        ->class("form-control")
+                        ->required()
+                    }}
+                    @endif
                 </div>
             </div>
 
             <div class="mb-3 row">
                 <label class="col-sm-6" for="purchase_basis" class="col-sm-2 col-form-label">Filial</label>
                 <div class="col-sm-6">
+                    @if($warehouse == null)
                     {{Aire::select($branch, 'select2')
-                    ->value(isset($warehouse->branch_id))
                     ->name('branch_id')
                 }}
+                    @else
+                        {{Aire::select($branch, 'select2')
+                    ->value($warehouse->branch_id)
+                    ->name('branch_id')
+                }}
+                    @endif
                 </div>
             </div>
             <input type="text" class="hidden" value="{{$application->id}}" name="application_id">
