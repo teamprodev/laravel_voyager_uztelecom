@@ -42,6 +42,7 @@
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>{{ __('lang.status_rejected') }}</p>
                         </a>
+
                         <a href="{{route('site.applications.show_status', 'distributed')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>{{ __('lang.status_distributed') }}</p>
@@ -101,6 +102,10 @@
                         <a href="{{route('site.report.index', '7')}}" id="report" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>7 отчет плановый</p>
+                        </a>
+                        <a href="{{route('site.report.index', '8')}}" id="report" class="collapse">
+                            <i class="nav-icon fas fa-chevron-right"></i>
+                            <p>8 отчет свод  общий</p>
                         </a>
                         <a href="{{route('site.report.index', '9')}}" id="report" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
