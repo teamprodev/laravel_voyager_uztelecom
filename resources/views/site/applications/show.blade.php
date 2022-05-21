@@ -6,6 +6,13 @@
         <h5><strong>{{ __('lang.author_filial') }}</strong> {{ $branch_name->name }}</h5>
         <h5><strong>{{ __('lang.number') }} : </strong> {{$application->number}} </h5>
         <h5><strong>Date : </strong> {{$application->date}} </h5> <br>
+        <h5><strong>Визирование заявки через : </strong>
+            @if($application->is_more_than_limit == 1)
+                Компанию
+            @else
+                Филиала
+            @endif
+        </h5> <br>
     </div>
     <div class="flex items-baseline">
         <div class="pt-2 w-100">
@@ -201,6 +208,14 @@
                             @endisset
                         </select>
                     </div>
+
+                    @if(isset($application->resource_id))
+                        <b>{{ __('lang.resource')}}</b>:
+                        @foreach(json_decode($application->resource_id) as $product)
+                            <br> {{\App\Models\Resource::find($product)->name}}
+                        @endforeach
+                    @endif
+
                     @if(isset($application->branch_leader_comment))
                         @php
                             $comment = \App\Models\User::find($application->branch_leader_user_id)->name;

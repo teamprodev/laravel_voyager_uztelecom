@@ -16,6 +16,7 @@
                         <p>{{ __('lang.status') }}</p>
                     </div>
                     <div class="d-flex align-items-start flex-column">
+                        @if(auth()->user()->role_id != 7)
                         <a href="{{route('site.applications.show_status', 'new')}}" id="demo" class="collapse">
                               <i class="nav-icon fas fa-chevron-right"></i>
                               <p>{{ __('lang.status_new') }}</p>
@@ -32,6 +33,7 @@
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>{{ __('lang.status_refused') }}</p>
                         </a>
+                        @endif
                         <a href="{{route('site.applications.show_status', 'agreed')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>{{ __('lang.status_agreed') }}</p>
@@ -93,10 +95,19 @@
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>5 отчет свод  общий</p>
                         </a>
-                        <a href="{{route('site.report.index', '8')}}" id="report" class="collapse">
+                        <a href="{{route('site.report.index', '6')}}" id="report" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>8 отчет свод  общий</p>
+                            <p>6 отчет свод  общий</p>
+
+                        <a href="{{route('site.report.index', '7')}}" id="report" class="collapse">
+                            <i class="nav-icon fas fa-chevron-right"></i>
+                            <p>7 отчет плановый</p>
                         </a>
+                        <a href="{{route('site.report.index', '9')}}" id="report" class="collapse">
+                            <i class="nav-icon fas fa-chevron-right"></i>
+                            <p>9 отчет плановый</p>
+                        </a>
+>>>>>>> .theirs
                         <a href="{{route('site.report.index', '10')}}" id="report" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>10-отчет за год</p>

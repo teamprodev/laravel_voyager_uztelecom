@@ -14,6 +14,7 @@ use App\Models\Resource;
 use App\Models\SignedDocs;
 use App\Models\StatusExtented;
 use App\Models\User;
+use App\Models\Warehouse;
 use DateTime;
 use GuzzleHttp\Client;
 use Illuminate\Support\Carbon;
@@ -70,34 +71,119 @@ class ApplicationService
             'status_extented' => StatusExtented::all()->pluck('name','name'),
             'countries' => $countries,
             'products' => $select,
+            'warehouse' => Warehouse::where('application_id',$application->id)->first(),
             'performer_file' => $performer_file,
             'user' => auth()->user(),
             'company_signers' => Roles::find($company_signer)->pluck('display_name','id'),
             'branch_signers' => Roles::find($branch_signer)->pluck('display_name','id'),
         ]);
     }
-
-    public function sendNotifications($array, $application)
+    public function update($application,$request)
     {
-
-        $user_ids = User::query()->whereIn('role_id', $array)->pluck('id')->toArray();
-        foreach ($user_ids as $user_id) {
-            $notification = Notification::query()->firstOrCreate(['user_id' => $user_id, 'application_id' => $application->id]);
-            if ($notification->wasRecentlyCreated) {
-//                $diff = now()->diffInMinutes($application->created_at);
-//                $data = [
-//                    'id' => $application->id,
-//                    'time' => $diff == 0 ? 'recently' : $diff
-//                ];
-
-//                broadcast(new Notify(json_encode($data, $assoc = true), $user->id))->toOthers();     // notification
+        $data = $request->validated();
+        if(isset($data['draft']))
+            if($data['draft'] == 1)
+                $data['status'] = 'draft';
+        if(isset($data['performer_leader_user_id']))
+        {
+            $data['performer_leader_comment_date'] = Carbon::now()->toDateTimeString();
+        }
+        if(isset($data['performer_comment']))
+        {
+            $data['performer_comment_date'] = Carbon::now()->toDateTimeString();
+        }
+        if(isset($data['resource_id']))
+        {
+            if($data['resource_id'] == "[object Object]")
+            {
+                $data['resource_id'] = null;
+            }else{
+                $explode = explode(',',$data['resource_id']);
+                $id = [];
+                for ($i = 0; $i < count($explode); $i++)
+                {
+                    $all = Resource::where('name','like',"%{$explode[$i]}%")->first();
+                    $id[] = $all->id;
+                    $data['resource_id'] = json_encode($id);
+                }
             }
+
         }
 
-        Http::post('ws.smarts.uz/api/send-notification', [
-            'user_ids' => $user_ids,
-            'project' => 'uztelecom',
-            'data' => ['id' => $application->id, 'time' => 'recently']
-        ]);
+        if (isset($data['performer_role_id']))
+        {
+            $mytime = Carbon::now();
+            $data['performer_received_date'] = $mytime->toDateTimeString();
+            $data['status'] = 'distributed';
+//            $data['performer_head_of_dep_user_id'] = auth()->user()->id;
+        }
+        if ($application->is_more_than_limit != 1)
+            $roles = PermissionRole::where('permission_id',168)->pluck('role_id')->toArray();
+        else
+            $roles = PermissionRole::where('permission_id',165)->pluck('role_id')->toArray();
+
+        if (isset($data['signers']))
+        {
+            $array = array_merge($roles,$data['signers']);
+            $data['signers'] = json_encode($array);
+            foreach ($array as $signers)
+            {
+                $signer = SignedDocs::where('application_id',$application->id)->where('role_id',$signers)->first();
+                if($signer == null)
+                {
+                    $docs = new SignedDocs();
+                    $docs->role_id = $signers;
+                    $docs->application_id = $application->id;
+                    $docs->table_name = "applications";
+                    $docs->save();
+                }else{
+                    $signer->comment = null;
+                    $signer->status = null;
+                    $signer->pkcs = null;
+                    $signer->text = null;
+                    $signer->data = null;
+                }
+
+            }
+            $signers = json_decode($application->signers);
+            $signedDocs = SignedDocs::where('application_id',$application->id)->pluck('role_id')->toArray();
+            $not_signer = array_diff($signedDocs,$signers);
+            foreach($not_signer as $delete)
+            {
+                SignedDocs::where('application_id',$application->id)->where('role_id',$delete)->delete();
+            }
+            $this->sendNotifications($array, $application,null);
+        }
+        $result = $application->update($data);
+        if ($result)
+            return back();
+
+        return redirect()->back()->with('danger', trans('site.application_failed'));
+    }
+    public function sendNotifications($array, $application, $message)
+    {
+        if($array != null)
+        {
+            $user_ids = User::query()->whereIn('role_id', $array)->pluck('id')->toArray();
+            foreach ($user_ids as $user_id) {
+                $notification = Notification::query()->firstOrCreate(['user_id' => $user_id, 'application_id' => $application->id,'message' => $message]);
+                if ($notification->wasRecentlyCreated) {
+//                    $diff = now()->diffInMinutes($application->created_at);
+//                    $data = [
+//                        'id' => $application->id,
+//                        'time' => $diff == 0 ? 'recently' : $diff
+//                    ];
+
+//                    broadcast(new Notify(json_encode($data, $assoc = true), $user->id))->toOthers();     // notification
+                }
+            }
+
+            Http::post('ws.smarts.uz/api/send-notification', [
+                'user_ids' => $user_ids,
+                'project' => 'uztelecom',
+                'data' => ['id' => $application->id, 'time' => 'recently']
+            ]);
+        }
+
     }
 }

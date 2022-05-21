@@ -1,6 +1,8 @@
 <?php
 
 return [
+    "Company" =>"Kompaniya",
+    "filial" => "Filial",
     "show" => "Ko'rish",
     "edit" => "O'zgartirish",
     "clone" => "Nusxalash",

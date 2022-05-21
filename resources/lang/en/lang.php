@@ -1,6 +1,8 @@
 <?php
 
 return [
+    "Company" =>"Company",
+    "filial" => "filial",
     "show" => "Show",
     "edit" => "Edit",
     "clone" => "Copy",

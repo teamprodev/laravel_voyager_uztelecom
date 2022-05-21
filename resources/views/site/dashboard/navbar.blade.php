@@ -48,9 +48,9 @@ $notifications = Notification::with('application:id,created_at')->has('applicati
             @foreach($notifications as $notification)
                 <div class="dropdown-divider"></div>
                 <a href="{{route('site.applications.show', ['application' => $notification->application->id, 'view' => 1])}}" class="dropdown-item" target="new">
-                    <i class="fas fa-envelope mr-2"></i> New message {{$notification->application->id}}
+                    <i class="fas fa-envelope mr-2"></i>{{$notification->message}}
                     <span class="float-right text-muted text-sm">
-                        {{now()->diffInMinutes($notification->application->created_at)}} mins
+                        {{now()->diffInMinutes($notification->created_at)}} mins
                     </span>
                 </a>
 {{--                @if($loop->index == 10) @break @endif--}}

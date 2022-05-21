@@ -1,7 +1,30 @@
+
 <div class="mt-6">
     <div class="w-full flex">
         <div class="p-6">
+            <h5><strong>Визирование заявки через : </strong>
+                @if($application->is_more_than_limit == 1)
+                    Компанию
+                @elseif($application->is_more_than_limit == '0')
+                    Филиала
+                @endif
+            </h5>
+
+            <div class="container">
+                {{ Aire::submit(__("Company"))->variant()->green()->name('is_more_than_limit')->value('1'); }}
+                {{ Aire::submit(__("Filial"))->variant()->red()->name('is_more_than_limit')->value('0'); }}
+            </div>
+
+
+
+
             <div class="mb-3 row">
+                @if(isset($application->resource_id))
+                    <b>{{ __('lang.resource')}}</b>:
+                    @foreach(json_decode($application->resource_id) as $product)
+                        <br> {{\App\Models\Resource::find($product)->name}}
+                    @endforeach
+                @endif
                 <label class="col-sm-6" for="initiator" class="col-sm-2 col-form-label">{{ __('lang.table_1') }}</label>
                 <div class="col-sm-6">
                     {{Aire::input()
@@ -201,14 +224,16 @@
                 </select>
             </div>
 
-            @if($application->is_more_than_limit !== 0 && $application->signers === null)
-                {{Aire::select($company_signers, 'select2', __('lang.signers'))
-                    ->name('signers')
+            @if($application->is_more_than_limit !== 0)
+                {{Aire::checkboxGroup($company_signers, 'radio', __('lang.signers'))
+                    ->name('signers[]')
+                    ->value(json_decode($application->signers))
                     ->multiple()
                 }}
-            @elseif($application->is_more_than_limit === 0 && $application->signers === null)
-                {{Aire::select($branch_signers, 'select2', __('lang.signers'))
-                    ->name('signers')
+            @elseif($application->is_more_than_limit === 0 )
+                {{Aire::checkboxGroup($branch_signers, 'radio', __('lang.signers'))
+                    ->name('signers[]')
+                    ->value(json_decode($application->signers))
                     ->multiple()
                 }}
             @endif
