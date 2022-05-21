@@ -2,7 +2,7 @@
 
 
 namespace App\Services;
-use function PHPUnit\Framework\returnSelf;
+use function PHPUnit\Framework\returnSelf;   
 
 use App\Events\Notify;
 use App\Http\Controllers\ReportController;
@@ -628,27 +628,7 @@ class ReportService
             })
             ->make(true);
     }
-    public function report_8()
-    {
-        $query = Application::query();
-        return Datatables::of($query)
-            ->addColumn('filial', function($application){
-                $applications = Branch::where('id', $application->branch_initiator_id)->pluck('name')->toArray();
-                return $applications;
-            })
-            ->addColumn('product', function($application){
-                $product = json_decode($application->resource_id,true);
-                $names = collect($product);
-                $ucnames = $names->map(function($item, $key) {
-                  return Resource::find($item)->name;
-                });
-                return json_decode($ucnames);
-            })
-            ->editColumn('performer_user_id', function($application){
-                return $application->performer_user_id ?$application->performer->name:'';
-            })
-            ->make(true);
-    }
+
     public function report_10()
     {
         $status = StatusExtented::query();
@@ -786,3 +766,17 @@ class ReportService
             ->make(true);
     }
 }
+
+        public function report_9()
+    {
+        $query = Application::query();
+        return Datatables::of($query)
+            ->addColumn('name', function($branch){
+                $applications = Branch::where('id', $branch->branch_initiator_id)->get()->pluck('name');
+                
+                return trim($json, '[], "');
+            })
+            ->make(true);
+
+
+    }
