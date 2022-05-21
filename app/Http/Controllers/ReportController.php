@@ -43,9 +43,10 @@ class ReportController extends Controller
             return view('site.report.5');
         if($id == 6)
             return view('site.report.6');
-
         if($id == 7)
             return view('site.report.7');
+        if($id == 8)
+            return view('site.report.8');
         if($id == 9)
             return view('site.report.9');
         if($id == 10)
@@ -72,6 +73,9 @@ class ReportController extends Controller
 
         elseif($id == 7)
             return $new->report_7();
+        elseif($id == 8)
+            return $new->report_8();
+
         elseif($id == 9)
             return $new->report_9();
 

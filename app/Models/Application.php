@@ -34,6 +34,11 @@ class Application extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function performer()
+    {
+        return $this->belongsTo(User::class,'performer_user_id','id');
+    }
+
     public function notifications()
     {
         return $this->hasMany(Notification::class);
