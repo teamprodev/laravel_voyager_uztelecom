@@ -773,7 +773,7 @@ class ReportService
         return Datatables::of($query)
             ->addColumn('name', function($branch){
                 $applications = Branch::where('id', $branch->branch_initiator_id)->get()->pluck('name');
-                
+                $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
                 return trim($json, '[], "');
             })
             ->make(true);

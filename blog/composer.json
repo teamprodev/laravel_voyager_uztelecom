@@ -5,32 +5,18 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^7.4",
-        "ext-json": "*",
-        "almasaeed2010/adminlte": "~3.2",
-        "beyondcode/laravel-websockets": "^1.13",
+        "php": "^7.3|^8.0",
         "fruitcake/laravel-cors": "^2.0",
-        "glhd/aire": "^2.5",
         "guzzlehttp/guzzle": "^7.0.1",
-        "jeroennoten/laravel-adminlte": "^3.8",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
-        "laravel/tinker": "^2.5",
-        "laravel/ui": "^3.4",
-        "mcamara/laravel-localization": "^1.7",
-        "pusher/pusher-php-server": "^7.0",
-        "spatie/laravel-permission": "^5.5",
-        "tcg/voyager": "^1.5",
-        "teamprodev/laravel_dst_eimzo": "^1.1",
-        "yajra/laravel-datatables-buttons": "^4.13",
-        "yajra/laravel-datatables-oracle": "^9.20"
+        "laravel/tinker": "^2.5"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
-        "nikaia/translation-sheet": "^1.5",
         "nunomaduro/collision": "^5.10",
         "phpunit/phpunit": "^9.5.10"
     },
@@ -71,6 +57,6 @@
         "preferred-install": "dist",
         "sort-packages": true
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }

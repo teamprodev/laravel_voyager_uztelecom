@@ -42,19 +42,24 @@
             </table>
         </div>
     </div>
+                                    <script>
+    $(document).ready(function() {
+        var buttonCommon = {
+            extend: 'excel',
+            title: 'Report 1',
+            text: '<i title="export to excel" class="fa fa-file-text-o">Exsel</i><br>',
+            exportOptions: {
+                columns: ':visible:Not(.not-exported)',
+                rows: ':visible'
+            },
+        };
+        
+        
+        $('#yajra-datatable').DataTable( {
+        ajax:
+                 "{{ route('report','6') }}",
 
-      
-    
-
-        <script>
-            $(document).ready(function() {
-                $('#yajra-datatable').DataTable( {
-                    // dom: 'PQlfrtip',
-                    dom: 'Qlfrtip',
-                    ajax:
-                        "{{ route('report','6') }}",
-
-                    columns: [
+            columns: [
                         {data: "id", name: 'id'},
                         {data: 'name', name: 'name'},
                         {data: 'supplier_name', name: 'supplier_name'},
@@ -64,10 +69,20 @@
                         {data: 'planned_price', name: 'planned_price'},
                         {data: 'performer_contract_info', name: 'performer_contract_info'},
                         {data: 'contract_price', name: 'contract_price'},
+            ],
+        
+        
+        dom: 'PQlfrtip' + 'Bfrtip',
+        buttons: [
+            $.extend( true, {}, buttonCommon, {
+                extend: 'excelHtml5'
+            } )
+        ],
+    });
+});
+</script>
+            <div class="pl-4 pt-4">
+                <a href="/" class="btn btn-danger">{{ __('lang.back') }}</a>
+            </div>
 
-
-                    ]
-                });
-            });
-        </script>
-    @endsection
+@endsection
