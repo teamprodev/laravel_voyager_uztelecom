@@ -146,6 +146,8 @@ Route::group([
 
 });
 
+
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 Route::get('/test/{id}', [App\Http\Controllers\Controller::class, 'test']);
 
