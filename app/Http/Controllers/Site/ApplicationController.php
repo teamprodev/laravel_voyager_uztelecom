@@ -392,72 +392,7 @@ class ApplicationController extends Controller
 
     public function update(Application $application, ApplicationRequest $request)
     {
-        $data = $request->validated();
-        if(isset($data['draft']))
-            if($data['draft'] == 1)
-                $data['status'] = 'draft';
-        if(isset($data['performer_leader_user_id']))
-        {
-            $data['performer_leader_comment_date'] = Carbon::now()->toDateTimeString();
-        }
-        if(isset($data['performer_comment']))
-        {
-            $data['performer_comment_date'] = Carbon::now()->toDateTimeString();
-        }
-        if(isset($data['resource_id']))
-        {
-            if($data['resource_id'] == "[object Object]")
-            {
-            $data['resource_id'] = null;
-            }else{
-               $explode = explode(',',$data['resource_id']);
-            $id = [];
-            for ($i = 0; $i < count($explode); $i++)
-            {
-                $all = Resource::where('name','like',"%{$explode[$i]}%")->first();
-                $id[] = $all->id;
-                $data['resource_id'] = json_encode($id);
-            }
-            }
-
-        }
-
-        if (isset($data['performer_role_id']))
-        {
-            $mytime = Carbon::now();
-            $data['performer_received_date'] = $mytime->toDateTimeString();
-            $data['status'] = 'distributed';
-//            $data['performer_head_of_dep_user_id'] = auth()->user()->id;
-        }
-        if ($application->is_more_than_limit != 1)
-            $roles = PermissionRole::where('permission_id',168)->pluck('role_id')->toArray();
-        else
-            $roles = PermissionRole::where('permission_id',165)->pluck('role_id')->toArray();
-
-        if (isset($data['signers']))
-        {
-            $array = array_merge($roles,$data['signers']);
-            $data['signers'] = json_encode($array);
-            foreach ($array as $signers)
-            {
-                $signer = SignedDocs::where('application_id',$application->id)->where('role_id',$signers)->first();
-                if($signer == null)
-                {
-                    $docs = new SignedDocs();
-                    $docs->role_id = $signers;
-                    $docs->application_id = $application->id;
-                    $docs->table_name = "applications";
-                    $docs->save();
-                }
-
-            }
-            $this->service->sendNotifications($array, $application,null);
-        }
-        $result = $application->update($data);
-        if ($result)
-            return back();
-
-        return redirect()->back()->with('danger', trans('site.application_failed'));
+        return $this->service->update($application,$request);
     }
 
     public function store(ApplicationRequest $request)
