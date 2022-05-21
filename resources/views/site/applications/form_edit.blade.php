@@ -1,3 +1,4 @@
+
 <div class="mt-6">
     <div class="w-full flex">
         <div class="p-6">
@@ -7,7 +8,16 @@
                 @elseif($application->is_more_than_limit == '0')
                     Филиала
                 @endif
-            </h5> <br>
+            </h5>
+
+            <div class="container">
+                {{ Aire::submit(__("Company"))->variant()->green()->name('is_more_than_limit')->value('1'); }}
+                {{ Aire::submit(__("Filial"))->variant()->red()->name('is_more_than_limit')->value('0'); }}
+            </div>
+
+
+
+
             <div class="mb-3 row">
                 @if(isset($application->resource_id))
                     <b>{{ __('lang.resource')}}</b>:
