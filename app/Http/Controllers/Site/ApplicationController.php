@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Site;
 
 use App\DataTables\DraftDataTable;
+use App\Models\StatusExtented;
 use Illuminate\Support\Facades\Schema;
 use App\Http\Requests\ApplicationRequest;
 use App\Http\Requests\VoteApplicationRequest;
@@ -158,35 +159,40 @@ class ApplicationController extends Controller
 
             if($user->hasPermission('Add_Company_Signer') && $user->hasPermission('Add_Branch_Signer'))
             {
-                $query = Application::query()->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->orWhere('user_id',auth()->user()->id);
+                $query = Application::query()->where('draft','!=',1)->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
+            }
+            elseif($user->hasPermission('Warehouse'))
+            {
+                $status = 'товар доставлен';
+                $query = Application::query()->where('draft','!=',1)->where('status','like',"%{$status}%")->orWhere('user_id',auth()->user()->id);
             }
             elseif($user->hasPermission('Company_Leader') && $user->hasPermission('Branch_Leader'))
             {
-                $query = Application::query()->where('is_more_than_limit',1)->where('status','agreed')->orWhere('is_more_than_limit', 0)->where('status','accepted')->orWhere('status','distributed')->orWhere('user_id',auth()->user()->id);
+                $query = Application::query()->where('draft','!=',1)->where('is_more_than_limit',1)->where('status','agreed')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->where('status','accepted')->orWhere('status','distributed')->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
             }
         elseif($user->role_id == 7)
             {
-            $query = Application::query()->where('status', "accepted");
+            $query = Application::query()->where('draft','!=',1)->where('status', "accepted")->orWhere('status','overdue');
         }
         elseif ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
             {
-            $query = Application::query()->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->orWhere('user_id',auth()->user()->id);
+            $query = Application::query()->where('draft','!=',1)->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
         }
         elseif ($user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer'))
             {
-                $query = Application::query()->where('performer_role_id', $user->role->id)->orWhere('user_id',auth()->user()->id);
+                $query = Application::query()->where('draft','!=',1)->where('performer_role_id', $user->role->id)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
             }
             elseif($user->hasPermission('Company_Leader'))
             {
-                $query =  Application::query()->where('status','agreed')->orWhere('status','distributed')->orWhere('user_id',auth()->user()->id);
+                $query =  Application::query()->where('draft','!=',1)->where('status','agreed')->orWhere('status','distributed')->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
             }
             elseif($user->hasPermission('Branch_Leader'))
             {
-                $query = Application::query()->where('is_more_than_limit', 0)->where('status', 'accepted')->orWhere('is_more_than_limit', 0)->where('status', 'distributed')->orWhere('user_id',auth()->user()->id);
+                $query = Application::query()->where('draft','!=',1)->where('is_more_than_limit', 0)->where('status', 'accepted')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->where('status', 'distributed')->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
             }
 
             else {
-                $query = $query->where('user_id',$user->id);
+                $query = Application::query()->where('draft','!=',1)->where('user_id',$user->id);
             }
 
             return Datatables::of($query)
@@ -244,7 +250,7 @@ class ApplicationController extends Controller
                     $app_clone= __('lang.clone');;
                     $app_delete= __('lang.delete');;
 
-                    if($row->user_id == auth()->user()->id||auth()->user()->hasPermission('Branch_Performer')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Plan_Budget')||auth()->user()->hasPermission('Plan_Business')||auth()->user()->hasPermission('Number_Change'))
+                    if(auth()->user()->hasPermission('Warehouse') || $row->user_id == auth()->user()->id||auth()->user()->hasPermission('Branch_Performer')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Plan_Budget')||auth()->user()->hasPermission('Plan_Business')||auth()->user()->hasPermission('Number_Change'))
                     {
                         $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-success btn-sm'>$app_edit</a>";
                     }else{
@@ -257,7 +263,7 @@ class ApplicationController extends Controller
                     }else{
                         $destroy = "";
                     }
-                    if($row->user_id == auth()->user()->id && $row->status == 'cancelled' || $row->user_id == auth()->user()->id && $row->status == 'refused')
+                    if($row->user_id == auth()->user()->id && $row->status == 'cancelled' || $row->user_id == auth()->user()->id && $row->status == 'refused'||$row->user_id == auth()->user()->id && $row->status == 'rejected')
                     {
                         $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>$app_clone</a>";
                     }else{
@@ -432,15 +438,20 @@ class ApplicationController extends Controller
         {
             $array = array_merge($roles,$data['signers']);
             $data['signers'] = json_encode($array);
-            for($i = 0; $i < count($array);$i++)
+            foreach ($array as $signers)
             {
-                $docs = new SignedDocs();
-                $docs->role_id = $array[$i];
-                $docs->application_id = $application->id;
-                $docs->table_name = "applications";
-                $docs->save();
+                $signer = SignedDocs::where('application_id',$application->id)->where('role_id',$signers)->first();
+                if($signer == null)
+                {
+                    $docs = new SignedDocs();
+                    $docs->role_id = $signers;
+                    $docs->application_id = $application->id;
+                    $docs->table_name = "applications";
+                    $docs->save();
+                }
+
             }
-            $this->service->sendNotifications($array, $application);
+            $this->service->sendNotifications($array, $application,null);
         }
         $result = $application->update($data);
         if ($result)

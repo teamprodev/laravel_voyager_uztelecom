@@ -9,6 +9,7 @@ use App\Http\Controllers\Site\DashboardController;
 use App\Http\Controllers\Site\ProfileController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Site\FaqsController;
+use App\Http\Controllers\WarehouseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -24,9 +25,11 @@ use TCG\Voyager\Facades\Voyager;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/report/request/{id}',[ReportController::class,'report'])->name('report');
 
 Route::post('/request',[ReportController::class,'request'])->name('request');
+Route::post('/warehouse',[WarehouseController::class,'create'])->name('warehouse.create');
 
 Route::get('/user/{user}',[UserController::class,'changeLeader'])->name('users.leader');
 

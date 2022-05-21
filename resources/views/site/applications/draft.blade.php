@@ -7,6 +7,7 @@
             <table class="data-table">
                 <thead>
                 <tr>
+                    <th>id</th>
                     <th>№</th>
                     <th>{{ __('lang.table_1') }}</th>
                     <th>{{ __('lang.table_2') }}</th>
@@ -32,6 +33,7 @@
                     ajax:
                         "{{ route('site.applications.drafts') }}",
                     columns: [
+                        {data: 'id', name: 'id'},
                         {data: 'number', name: 'number'},
                         {data: 'initiator', name: 'initiator'},
                         {data: 'name', name: 'name'},
