@@ -42,7 +42,9 @@
             </table>
         </div>
     </div>
-                                    <script>
+    
+    
+    <script>
     $(document).ready(function() {
         var buttonCommon = {
             extend: 'excel',

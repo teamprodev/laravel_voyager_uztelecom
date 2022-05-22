@@ -776,6 +776,50 @@ class ReportService
                 $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
                 return trim($json, '[], "');
             })
+            ->addColumn('shartnomalar', function($application){
+                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 1,2,3,4,5,6,7,8,9,10)->get();
+                return count($applications)
+            })
+            ->addColumn('tender', function($application){
+                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 1)->get();
+                return count($applications)
+            })
+            ->addColumn('Otbor', function($application){
+                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 2)->get();
+                return count($applications)
+            })
+            ->addColumn('Eshop', function($application){
+                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 3)->get();
+                return count($applications)
+            })
+            ->addColumn('Elektron_auksiyon', function($application){
+                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 4)->get();
+                return count($applications)
+            })
+            ->addColumn('кооперационный_портал', function($application){
+                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 5)->get();
+                return count($applications)
+            })
+            ->addColumn('Konkrus', function($application){
+                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 6)->get();
+                return count($applications)
+            })
+            ->addColumn('электронный_магазин(E-Shop)', function($application){
+                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 7)->get();
+                return count($applications)
+            })
+            ->addColumn('тендер', function($application){
+                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 8)->get();
+                return count($applications)
+            })
+            ->addColumn('госзакупок_в_сфере_строительства', function($application){
+                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 9)->get();
+                return count($applications)
+            })
+            ->addColumn('через_электронные_биржевые_торги_на_специальных_торговых_площадках', function($application){
+                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 10)->get();
+                return count($applications)
+            })
             ->make(true);
 
 

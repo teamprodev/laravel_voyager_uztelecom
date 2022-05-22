@@ -26,30 +26,60 @@
     <div id="section" class="pt-6">
         <a href="/" class="ml-12 btn btn-danger">{{ __('lang.back') }}</a>
         <div class="w-11/12 mx-auto pt-8 pb-16">
-            <table id="yajra-datatable" class="table table-bordered" border="2">
+            <table id="yajra-datatable" class="table table-bordered" border="5">
                 <thead>
                      <tr>
-                        <th style="text-align: center;"  rowspan="2">№</th>
-                        <th style="text-align: center;"  rowspan="2">Имя Клиента</th>
-                        <th style="text-align: center;"  rowspan="2">STIR</th>
+                        <th style="text-align: center;"  rowspan="3">№</th>
+                        <th style="text-align: center;"  rowspan="17">Имя Клиента</th>
+                        <th style="text-align: center;"  rowspan="18">STIR</th>
                         <th style="text-align: center;"  colspan="2">Соглашения</th>
-                        <th style="text-align: center;"  colspan="11">Затем:</th>
+                        <th style="text-align: center;"  colspan="24">Затем:</th>
                      </tr>
+                     
                      <tr>
+                        <th rowspan="2">количество</th>
+                        <th rowspan="2">количество (сум)</th> 
+                        <th rowspan="1" colspan="2">тендер</th> 
+                        <th rowspan="1" colspan="2">отбор</th>
+                        <th rowspan="1" colspan="2">Eshop</th>  
+                        <th rowspan="1" colspan="2">электронный аукцион</th>  
+                        <th rowspan="1" colspan="2">кооперационный портал</th>  
+                        <th rowspan="1" colspan="2">конкурс</th>  
+                        <th rowspan="1" colspan="2">национальный электронный магазин</th>  
+                        <th rowspan="1" colspan="2">электронный магазин(E-Shop)</th>  
+                        <th rowspan="1" colspan="2">через элетронную тендерную платформу проведения госзакупок в сфере строительства</th> 
+                        <th rowspan="1" colspan="2">через электронные биржевые торги на специальных торговых площадках</th>                             
+                    </tr>
+                    
+                    <tr>
                         <th>количество</th>
-                        <th>количество (сум)</th> 
-                        <th>тендер</th> 
-                        <th>отбор</th>
-                        <th>Eshop</th>  
-                        <th>электронный аукцион</th>  
-                        <th>кооперационный портал</th>  
-                        <th>конкурс</th>  
-                        <th>национальный электронный магазин</th>  
-                        <th>электронный магазин(E-Shop)</th>  
-                        <th>через элетронную тендерную платформу проведения госзакупок в сфере строительства</th> 
-                        <th>через электронные биржевые торги на специальных торговых площадках</th>                                     
-                    </tr>    
+                        <th>количество (сум)</th>
+                        <th>количество</th>
+                        <th>количество (сум)</th>
+                        <th>количество</th>
+                        <th>количество (сум)</th>
+                        <th>количество</th>
+                        <th>количество (сум)</th>
+                        <th>количество</th>
+                        <th>количество (сум)</th>
+                        <th>количество</th>
+                        <th>количество (сум)</th>
+                        <th>количество</th>
+                        <th>количество (сум)</th>
+                        <th>количество</th>
+                        <th>количество (сум)</th>
+                        <th>количество</th>
+                        <th>количество (сум)</th>
+                        <th>количество</th>
+                        <th>количество (сум)</th>
+                        <th></th>
+                    </tr>
+                      
              </thead>
+        </table>
+
+        
+           
         </table>
        </div>
     </div>
@@ -67,9 +97,17 @@
                     columns: [
                         {data: "id", name: 'id'},
                         {data: 'name', name: 'name'},
-                        
-
-
+                        {data: 'shartnomalar', name: 'shartnomalar'},
+                        {data: 'tender', name: 'tender'},
+                        {data: 'Otbor', name: 'Otbor'},
+                        {data: 'Eshop', name: 'Eshop'},
+                        {data: 'Elektron_auksiyon', name: 'Elektron_auksiyon'},
+                        {data: 'кооперационный_портал', name: 'кооперационный_портал'},
+                        {data: 'Konkrus', name: 'Konkrus'},
+                        {data: 'электронный_магазин(E-Shop)', name: 'электронный_магазин(E-Shop)'},
+                        {data: 'тендер', name: 'тендер'},
+                        {data: 'госзакупок_в_сфере_строительства', name: 'госзакупок_в_сфере_строительства'},
+                        {data: 'через_электронные_биржевые_торги_на_специальных_торговых_площадках', name: 'через_электронные_биржевые_торги_на_специальных_торговых_площадках'},
                     ]
                 });
             });
