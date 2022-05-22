@@ -3,6 +3,7 @@
 use App\Http\Controllers\EimzoAuthController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\TypeOfPurchase;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Site\ApplicationController;
 use App\Http\Controllers\Site\DashboardController;
@@ -42,6 +43,8 @@ Route::group([
     'middleware' => 'isAdmin'
 ], function () {
     Voyager::routes();
+    Route::get('type-of-purchase/{id}/edit',[TypeOfPurchase::class,'edit'])->name('voyager.type-of-purchase.edit');
+    Route::post('type-of-purchase/update',[TypeOfPurchase::class,'update'])->name('type-of-purchase.update');
 
 
 });
