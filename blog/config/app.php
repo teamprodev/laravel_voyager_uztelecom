@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'ru',
+    'locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -93,22 +93,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'ru',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Available locales
-    |--------------------------------------------------------------------------
-    |
-    | List all locales that your application works with
-    |
-    */
-
-    'available_locales' => [
-        'Russian' => 'ru',
-        'English' => 'en',
-        'Uzbek' => 'uz',
-    ],
+    'fallback_locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -121,7 +106,7 @@ return [
     |
     */
 
-//    'faker_locale' => 'ru_RU',
+    'faker_locale' => 'en_US',
 
     /*
     |--------------------------------------------------------------------------
@@ -188,13 +173,10 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-         App\Providers\BroadcastServiceProvider::class,
+        // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\ViewServiceProvider::class,
 
-        Yajra\DataTables\DataTablesServiceProvider::class,
-        Spatie\Permission\PermissionServiceProvider::class,
     ],
 
     /*
@@ -249,7 +231,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,  
 
     ],
 
