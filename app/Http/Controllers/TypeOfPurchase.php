@@ -22,7 +22,7 @@ class TypeOfPurchase extends Controller
                 ->setTranslation('name', 'uz', "{$request->nameUz}")
                 ->setTranslation('name', 'ru', "{$request->nameRu}")
                 ->save();
-            return redirect()->back();
+            return redirect('admin/type-of-purchase');
         }else{
             $update = Purchase::find($request->purchase_id);
             $update->setTranslation('name', 'en', "{$request->nameEn}")
