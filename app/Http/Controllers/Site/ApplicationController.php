@@ -171,8 +171,7 @@ class ApplicationController extends Controller
             {
 
                 $query = Application::query()
-                    ->where($a,$operator,$b)
-                    ->where('draft','!=',1)->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
+                    ->where('draft','!=',1)->where($a,$operator,$b)->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
             }
             elseif($user->hasPermission('Warehouse'))
             {
@@ -190,8 +189,8 @@ class ApplicationController extends Controller
         elseif ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
             {
             $query = Application::query()
-                ->where($a,$operator,$b)
                 ->where('draft','!=',1)
+                ->where($a,$operator,$b)
                 ->where('signers','like',"%{$user->role_id}%")
                 ->orWhere('performer_role_id', $user->role->id)
                 ->where('draft','!=',1)

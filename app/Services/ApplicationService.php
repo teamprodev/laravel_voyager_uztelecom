@@ -145,13 +145,17 @@ class ApplicationService
                 }
 
             }
-            $signers = json_decode($application->signers);
-            $signedDocs = SignedDocs::where('application_id',$application->id)->pluck('role_id')->toArray();
-            $not_signer = array_diff($signedDocs,$signers);
-            foreach($not_signer as $delete)
+            if($application->signers != null)
             {
-                SignedDocs::where('application_id',$application->id)->where('role_id',$delete)->delete();
+                $signers = json_decode($application->signers);
+                $signedDocs = SignedDocs::where('application_id',$application->id)->pluck('role_id')->toArray();
+                $not_signer = array_diff($signedDocs,$signers);
+                foreach($not_signer as $delete)
+                {
+                    SignedDocs::where('application_id',$application->id)->where('role_id',$delete)->delete();
+                }
             }
+
             $this->sendNotifications($array, $application,null);
         }
         $result = $application->update($data);
