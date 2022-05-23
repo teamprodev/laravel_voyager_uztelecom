@@ -2,7 +2,7 @@
 
 
 namespace App\Services;
-use function PHPUnit\Framework\returnSelf;   
+use function PHPUnit\Framework\returnSelf;
 
 use App\Events\Notify;
 use App\Http\Controllers\ReportController;
@@ -32,7 +32,13 @@ class ReportService
 {
     public function report_1()
     {
-        $query = Branch::query();
+        if(auth()->user()->hasPermission('ЦУЗ'))
+        {
+            $query = Branch::query();
+        }
+        else{
+            $query = Branch::where('id',auth()->user()->branch_id)->get();
+        }
         return Datatables::of($query)
             ->addColumn('count', function($branch){
                 $applications = Application::where('branch_initiator_id', $branch->id)->get();
@@ -62,7 +68,13 @@ class ReportService
     }
     public function report_2()
     {
-        $query = Branch::query();
+        if(auth()->user()->hasPermission('ЦУЗ'))
+        {
+            $query = Branch::query();
+        }
+        else{
+            $query = Branch::where('id',auth()->user()->branch_id)->get();
+        }
         return Datatables::of($query)
             ->addColumn('tovar_1', function($branch){
                 $date = Cache::get('date');
@@ -188,7 +200,13 @@ class ReportService
     }
     public function report_2_2()
     {
-        $query = Branch::query();
+        if(auth()->user()->hasPermission('ЦУЗ'))
+        {
+            $query = Branch::query();
+        }
+        else{
+            $query = Branch::where('id',auth()->user()->branch_id)->get();
+        }
         return Datatables::of($query)
             ->addColumn('tovar_1', function($branch){
                 $date = Cache::get('date_2');
@@ -435,7 +453,13 @@ class ReportService
     }
     public function report_3()
     {
-        $query = Branch::query();
+        if(auth()->user()->hasPermission('ЦУЗ'))
+        {
+            $query = Branch::query();
+        }
+        else{
+            $query = Branch::where('id',auth()->user()->branch_id)->get();
+        }
         return Datatables::of($query)
             ->addColumn('tovar_1', function($branch){
                 $date = Cache::get('date_3_month');
@@ -502,7 +526,13 @@ class ReportService
     }
     public function report_5()
     {
-        $query = Branch::query();
+        if(auth()->user()->hasPermission('ЦУЗ'))
+        {
+            $query = Branch::query();
+        }
+        else{
+            $query = Branch::where('id',auth()->user()->branch_id)->get();
+        }
         return Datatables::of($query)
             ->addColumn('count', function($branch){
                 $date = Cache::get('date_5');
@@ -628,7 +658,27 @@ class ReportService
             })
             ->make(true);
     }
-
+    public function report_8()
+    {
+        $query = Application::query();
+        return Datatables::of($query)
+            ->addColumn('filial', function($application){
+                $applications = Branch::where('id', $application->branch_initiator_id)->pluck('name')->toArray();
+                return $applications;
+            })
+            ->addColumn('product', function($application){
+                $product = json_decode($application->resource_id,true);
+                $names = collect($product);
+                $ucnames = $names->map(function($item, $key) {
+                    return Resource::find($item)->name;
+                });
+                return json_decode($ucnames);
+            })
+            ->editColumn('performer_user_id', function($application){
+                return $application->performer_user_id ?$application->performer->name:'';
+            })
+            ->make(true);
+    }
     public function report_10()
     {
         $status = StatusExtented::query();
@@ -765,62 +815,62 @@ class ReportService
             })
             ->make(true);
     }
+//    public function report_9()
+//    {
+//        $query = Application::query();
+//        return Datatables::of($query)
+//            ->addColumn('name', function($branch){
+//                $applications = Branch::where('id', $branch->branch_initiator_id)->get()->pluck('name');
+//                $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+//                return trim($json, '[], "');
+//            })
+//            ->addColumn('shartnomalar', function($application){
+//                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 1,2,3,4,5,6,7,8,9,10)->get();
+//                return count($applications)
+//            })
+//            ->addColumn('tender', function($application){
+//                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 1)->get();
+//                return count($applications)
+//            })
+//            ->addColumn('Otbor', function($application){
+//                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 2)->get();
+//                return count($applications)
+//            })
+//            ->addColumn('Eshop', function($application){
+//                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 3)->get();
+//                return count($applications)
+//            })
+//            ->addColumn('Elektron_auksiyon', function($application){
+//                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 4)->get();
+//                return count($applications)
+//            })
+//            ->addColumn('кооперационный_портал', function($application){
+//                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 5)->get();
+//                return count($applications)
+//            })
+//            ->addColumn('Konkrus', function($application){
+//                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 6)->get();
+//                return count($applications)
+//            })
+//            ->addColumn('электронный_магазин(E-Shop)', function($application){
+//                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 7)->get();
+//                return count($applications)
+//            })
+//            ->addColumn('тендер', function($application){
+//                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 8)->get();
+//                return count($applications)
+//            })
+//            ->addColumn('госзакупок_в_сфере_строительства', function($application){
+//                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 9)->get();
+//                return count($applications)
+//            })
+//            ->addColumn('через_электронные_биржевые_торги_на_специальных_торговых_площадках', function($application){
+//                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 10)->get();
+//                return count($applications)
+//            })
+//            ->make(true);
+//
+//
+//    }
 }
 
-        public function report_9()
-    {
-        $query = Application::query();
-        return Datatables::of($query)
-            ->addColumn('name', function($branch){
-                $applications = Branch::where('id', $branch->branch_initiator_id)->get()->pluck('name');
-                $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
-                return trim($json, '[], "');
-            })
-            ->addColumn('shartnomalar', function($application){
-                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 1,2,3,4,5,6,7,8,9,10)->get();
-                return count($applications)
-            })
-            ->addColumn('tender', function($application){
-                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 1)->get();
-                return count($applications)
-            })
-            ->addColumn('Otbor', function($application){
-                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 2)->get();
-                return count($applications)
-            })
-            ->addColumn('Eshop', function($application){
-                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 3)->get();
-                return count($applications)
-            })
-            ->addColumn('Elektron_auksiyon', function($application){
-                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 4)->get();
-                return count($applications)
-            })
-            ->addColumn('кооперационный_портал', function($application){
-                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 5)->get();
-                return count($applications)
-            })
-            ->addColumn('Konkrus', function($application){
-                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 6)->get();
-                return count($applications)
-            })
-            ->addColumn('электронный_магазин(E-Shop)', function($application){
-                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 7)->get();
-                return count($applications)
-            })
-            ->addColumn('тендер', function($application){
-                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 8)->get();
-                return count($applications)
-            })
-            ->addColumn('госзакупок_в_сфере_строительства', function($application){
-                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 9)->get();
-                return count($applications)
-            })
-            ->addColumn('через_электронные_биржевые_торги_на_специальных_торговых_площадках', function($application){
-                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 10)->get();
-                return count($applications)
-            })
-            ->make(true);
-
-
-    }
