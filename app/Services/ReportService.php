@@ -524,6 +524,24 @@ class ReportService
             })
             ->make(true);
     }
+
+    public function report_4()
+    {
+        $query = Application::query();
+        return Datatables::of($query)
+            ->addColumn('tovar_1', function($branch){
+                $date = Cache::get('date_3_month');
+                $start_date = Carbon::parse("{$date}-01")
+                    ->toDateTimeString();
+
+                $end_date = Carbon::parse("{$date}-31")
+                    ->toDateTimeString();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','=',null)->pluck('planned_price')->toArray();
+                return array_sum($applications);
+            })
+            ->make(true);
+    }
+
     public function report_5()
     {
         if(auth()->user()->hasPermission('ЦУЗ'))
@@ -617,8 +635,7 @@ class ReportService
             ->make(true);
     }
 
-    public function report_6()
-    {
+    public function report_6(){
         $query = Application::query();
         return Datatables::of($query)
             ->addColumn('name', function($branch){
@@ -628,24 +645,6 @@ class ReportService
             })
             ->make(true);
 
-
-    }
-
-    public function report_4()
-    {
-        $query = Application::query();
-        return Datatables::of($query)
-            ->addColumn('tovar_1', function($branch){
-                $date = Cache::get('date_3_month');
-                $start_date = Carbon::parse("{$date}-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-31")
-                    ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
-            })
-            ->make(true);
     }
 
     public function report_7(){
@@ -658,13 +657,13 @@ class ReportService
             })
             ->make(true);
     }
-    public function report_8()
-    {
+    public function report_8(){
         $query = Application::query();
         return Datatables::of($query)
-            ->addColumn('filial', function($application){
-                $applications = Branch::where('id', $application->branch_initiator_id)->pluck('name')->toArray();
-                return $applications;
+            ->addColumn('filial', function($branch){
+                $applications = Branch::where('id', $branch->branch_initiator_id)->get()->pluck('name');
+                $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+                return trim($json, '[], "');
             })
             ->addColumn('product', function($application){
                 $product = json_decode($application->resource_id,true);

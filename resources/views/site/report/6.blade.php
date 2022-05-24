@@ -1,5 +1,3 @@
-@extends('site.layouts.app')
-@section('center_content')
 <!doctype html>
 <html lang="en">
 <head>
@@ -19,12 +17,16 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/searchpanes/2.0.0/css/searchPanes.dataTables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.4/css/select.dataTables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css"/>
+    <style>
+        #example_filter{
+            display: none;
+        }
+    </style>
 </head>
 
     <div id="section" class="pt-6">
-        <a href="/" class="ml-12 btn btn-danger">{{ __('lang.back') }}</a>
         <div class="w-11/12 mx-auto pt-8 pb-16">
-            <table id="table-9">
+            <table id="example">
                 <thead>
                 <tr>
                     <th>№</th>
@@ -53,18 +55,18 @@
     $(document).ready(function() {
         var buttonCommon = {
             extend: 'excel',
-            title: 'Report 6',
-            text: '<i title="export to excel" class="fa fa-file-text-o">Exsel</i><br>',
+            title: '6 отчет свод',
+            text: '<i title="export to excel" class="fa fa-file-text-o">Excel</i><br>',
             exportOptions: {
                 columns: ':visible:Not(.not-exported)',
                 rows: ':visible'
             },
         };
-        
-        
-        $('#table-9').DataTable( {
+
+
+        $('#example').DataTable( {
              // dom: 'PQlfrtip',
-             dom: 'Qlfrtip',
+            dom: 'PQlfrtip' + 'Bfrtip',
             ajax:
                  "{{ route('report','6') }}",
 
@@ -72,19 +74,18 @@
                         {data: "id", name: 'id'},
                         {data: 'name', name: 'name'},
                         {data: 'supplier_name', name: 'supplier_name'},
-                        {data: 'performer_contract_num', name: 'performer_contract_num'},
-                        {data: 'table_18', name: 'table_18'},
+                        {data: 'contract_number', name: 'contract_number    '},
+                        {data: 'subject', name: 'subject'},
                         {data: 'number', name: 'number'},
                         {data: 'planned_price', name: 'planned_price'},
-                        {data: 'performer_contract_info', name: 'performer_contract_info'},
+                        {data: 'contract_info', name: 'contract_info'},
                         {data: 'contract_price', name: 'contract_price'},
             ],
-            dom: 'PQlfrtip' + 'Bfrtip',
             buttons: [
-            $.extend( true, {}, buttonCommon, {
-                extend: 'excelHtml5'
-            })
-        ],
+                $.extend( true, {}, buttonCommon, {
+                    extend: 'excelHtml5'
+                } )
+            ],
     });
 });
 
@@ -92,6 +93,3 @@
 <div class="pl-4 pt-4">
         <a href="/" class="btn btn-danger">{{ __('lang.back') }}</a>
     </div>
-         
-
-@endsection

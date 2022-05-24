@@ -19,7 +19,11 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.4/css/select.dataTables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.0/datatables.min.css"/>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.0/datatables.min.js"></script>
+    <style>
+        #example_filter{
+            display: none;
+        }
+    </style>
 </head>
 <table id="example" class="display nowrap" style="width:100%">
     <thead>
@@ -49,11 +53,29 @@
 <script type="text/javascript" src="https://cdn.datatables.net/select/1.3.4/js/dataTables.select.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.0/datatables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+
 <script>
     $(document).ready(function() {
+        var buttonCommon = {
+            extend: 'excel',
+            title: '7-плановый',
+            text: '<i title="export to excel" class="fa fa-file-text-o">Excel</i><br>',
+            exportOptions: {
+                columns: ':visible:Not(.not-exported)',
+                rows: ':visible'
+            },
+        };
         $('#example').DataTable( {
             // dom: 'PQlfrtip',
-            dom: 'Qlfrtip',
+            dom: 'Qlfrtip' + 'Bfrtip',
+
             ajax:
                 "{{ route('report','7') }}",
 
@@ -71,7 +93,12 @@
                 {data: 'contract_info', name: 'contract_info'},
                 {data: 'country_produced_id', name: 'country_produced_id'},
                 {data: 'purchase_basis', name: 'purchase_basis'},
-            ]
+            ],
+            buttons: [
+                $.extend( true, {}, buttonCommon, {
+                    extend: 'excelHtml5'
+                } )
+            ],
         });
     });
 </script>

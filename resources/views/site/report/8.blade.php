@@ -17,6 +17,13 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/searchpanes/2.0.0/css/searchPanes.dataTables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.4/css/select.dataTables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css"/>
+    <style>
+        #example_filter{
+            display: none;
+        }
+    </style>
 </head>
 
     <table id="example" class="display nowrap" border="1">
@@ -31,7 +38,7 @@
             </tr>
             <tr>
                 <th>Номер и дата заявки</th>
-                <th>Планируеюмый буджет запуски (сум)</th> 
+                <th>Планируеюмый буджет запуски (сум)</th>
                 <th>Дата получения отделом</th>
                 <th>Инициатор</th>
                 <th>Номер договора</th>
@@ -48,18 +55,52 @@
     <script type="text/javascript" src="https://cdn.datatables.net/searchpanes/2.0.0/js/dataTables.searchPanes.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/select/1.3.4/js/dataTables.select.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
     <script>
         $(document).ready(function() {
+            var buttonCommon = {
+                extend: 'excel',
+                title: '8-отчет eshop',
+                text: '<i title="export to excel" class="fa fa-file-text-o">Excel</i><br>',
+                exportOptions: {
+                    columns: ':visible:Not(.not-exported)',
+                    rows: ':visible',
+                    // format: {
+                    //     header: function ( data, columnIdx ) {
+                    //         if(columnIdx==2 || columnIdx==3){
+                    //             return 'Заключенные договора ' + data;
+                    //         }
+                    //         if(columnIdx==4 || columnIdx==5){
+                    //             return 'Товар ' + data;
+                    //         }
+                    //         if(columnIdx==6 || columnIdx==7){
+                    //             return 'Работа ' + data;
+                    //         }
+                    //         if(columnIdx==8 || columnIdx==9){
+                    //             return 'Услуга ' + data;
+                    //         }
+                    //         else{
+                    //             return data;
+                    //         }
+                    //     }
+                    // }
+                },
+            };
             $('#example').DataTable( {
                 // dom: 'PQlfrtip',
-                dom: 'Qlfrtip',
+                    dom: 'Qlfrtip' + 'Bfrtip',
+
                 ajax:
                     "{{ route('report','8') }}",
 
                 columns: [
                     {data: "id", name: 'id'},
                     {data: 'filial', name: 'filial'},
-
                     {
                         "data": "",
                         render: function (data, type, row) {
@@ -75,7 +116,12 @@
                     {data: 'supplier_name', name: 'supplier_name'},
                     {data: 'contract_price', name: 'contract_price'},
                     {data: 'performer_user_id', name: 'performer_user_id'},
-                ]
+                ],
+                buttons: [
+                    $.extend( true, {}, buttonCommon, {
+                        extend: 'excelHtml5'
+                    } )
+                ],
             });
         });
     </script>
