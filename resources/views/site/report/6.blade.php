@@ -60,8 +60,8 @@
                 rows: ':visible'
             },
         };
-        
-        
+
+
         $('#table-9').DataTable( {
              // dom: 'PQlfrtip',
              dom: 'Qlfrtip',
@@ -72,8 +72,8 @@
                         {data: "id", name: 'id'},
                         {data: 'name', name: 'name'},
                         {data: 'supplier_name', name: 'supplier_name'},
-                        {data: 'performer_contract_num', name: 'performer_contract_num'},
-                        {data: 'table_18', name: 'table_18'},
+                        {data: 'contract_number', name: 'contract_number'},
+                        {data: 'subject', name: 'subject'},
                         {data: 'number', name: 'number'},
                         {data: 'planned_price', name: 'planned_price'},
                         {data: 'performer_contract_info', name: 'performer_contract_info'},
@@ -92,6 +92,6 @@
 <div class="pl-4 pt-4">
         <a href="/" class="btn btn-danger">{{ __('lang.back') }}</a>
     </div>
-         
+
 
 @endsection
