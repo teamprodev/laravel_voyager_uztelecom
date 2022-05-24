@@ -36,56 +36,52 @@ class ReportController extends Controller
     }
     public function index($id)
     {
-        if($id == 1)
-            return view('site.report.1');
-        if($id == 2)
-            return view('site.report.2');
-        if($id == 22)
-            return view('site.report.2_2');
-        if($id == 3)
-            return view('site.report.3');
-        if($id == 4)
-            return view('site.report.4');
-        if($id == 5)
-            return view('site.report.5');
-        if($id == 6)
-            return view('site.report.6');
-        if($id == 7)
-            return view('site.report.7');
-        if($id == 8)
-            return view('site.report.8');
-        if($id == 9)
-            return view('site.report.9');
-        if($id == 10)
-            return view('site.report.10');
+            if($id <= 10)
+                return view("site.report.{$id}");
+            return view("site.report.10");
     }
     public function report($id)
     {
-        if($id == 1)
+        switch ($id)
+        {
+            case 1:
             return $this->service->report_1();
-        elseif($id == 2)
+            break;
+            case 2:
             return $this->service->report_2();
-        elseif($id == 22)
+            break;
+            case 22:
             return $this->service->report_2_2();
-        elseif($id == 3)
+            break;
+            case 3:
             return $this->service->report_3();
-        elseif($id == 4)
+            break;
+            case 4:
             return $this->service->report_4();
-        elseif($id == 5)
+            break;
+            case 5:
             return $this->service->report_5();
+            break;
 
-        elseif($id == 6)
+            case 6:
             return $this->service->report_6();
+            break;
 
-        elseif($id == 7)
+            case 7:
             return $this->service->report_7();
-        elseif($id == 8)
+            break;
+            case 8:
             return $this->service->report_8();
+            break;
 
-        elseif($id == 9)
+            case 9:
             return $this->service->report_9();
+            break;
 
-        elseif($id == 10)
+            default:
             return $this->service->report_10();
+        }
+
+
     }
 }
