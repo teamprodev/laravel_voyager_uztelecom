@@ -17,6 +17,11 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/searchpanes/2.0.0/css/searchPanes.dataTables.min.css"/>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.4/css/select.dataTables.min.css"/>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css"/>
+    <style>
+        #example_filter{
+            display: none;
+        }
+    </style>
 </head>
 <table id="example" class="display nowrap" style="width:100%">
         <thead>
@@ -43,8 +48,8 @@
     $(document).ready(function() {
         var buttonCommon = {
             extend: 'excel',
-            title: 'Report 1',
-            text: '<i title="export to excel" class="fa fa-file-text-o">Exsel</i><br>',
+            title: '1-отчет общий',
+            text: '<i title="export to excel" class="fa fa-file-text-o">Excel</i><br>',
             exportOptions: {
                 columns: ':visible:Not(.not-exported)',
                 rows: ':visible'

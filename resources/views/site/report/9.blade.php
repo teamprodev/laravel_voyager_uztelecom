@@ -18,7 +18,14 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.4/css/select.dataTables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.0/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css"/>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.0/datatables.min.js"></script>
+    <style>
+        #example_filter{
+            display: none;
+        }
+    </style>
 </head>
 <table id="example" class="display nowrap" style="width:100%">
     <thead>
@@ -76,11 +83,27 @@
 <script type="text/javascript" src="https://cdn.datatables.net/select/1.3.4/js/dataTables.select.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
 <script>
     $(document).ready(function() {
+        var buttonCommon = {
+            extend: 'excel',
+            title: '9-ойлик харидлар илова плановый',
+            text: '<i title="export to excel" class="fa fa-file-text-o">Excel</i><br>',
+            exportOptions: {
+                columns: ':visible:Not(.not-exported)',
+                rows: ':visible'
+            },
+        };
         $('#example').DataTable( {
-            // dom: 'PQlfrtip',
-            dom: 'Qlfrtip',
+
+        // dom: 'PQlfrtip',
+              dom: 'Qlfrtip' + 'Bfrtip',
             ajax:
                 "{{ route('report','9') }}",
 
@@ -88,31 +111,48 @@
                 {data: "id", name: 'id'},
                 {data: "name", name: 'name'},
                 {data: "supplier_inn", name: 'supplier_inn'},
+
                 {data: "contract_count", name: 'contract_count'},
                 {data: "contract_sum", name: 'contract_sum'},
+
                 {data: "eshop_count", name: 'eshop_count'},
                 {data: "eshop_sum", name: 'eshop_sum'},
+
                 {data: "nat_eshop_count", name: 'nat_eshop_count'},
                 {data: "nat_eshop_sum", name: 'nat_eshop_sum'},
+
                 {data: "auction_count", name: 'auction_count'},
                 {data: "auction_sum", name: 'auction_sum'},
+
                 {data: "coop_portal_count", name: 'coop_portal_count'},
                 {data: "coop_portal_sum", name: 'coop_portal_sum'},
+
                 {data: "tender_platform_count", name: 'tender_platform_count'},
                 {data: "tender_platform_sum", name: 'tender_platform_sum'},
+
                 {data: "exchange_count", name: 'exchange_count'},
                 {data: "exchange_sum", name: 'exchange_sum'},
+
                 {data: "konkurs_count", name: 'konkurs_count'},
                 {data: "konkurs_sum", name: 'konkurs_sum'},
+
                 {data: "tender_count", name: 'tender_count'},
                 {data: "tender_sum", name: 'tender_sum'},
+
                 {data: "otbor_count", name: 'otbor_count'},
                 {data: "otbor_sum", name: 'otbor_sum'},
+
                 {data: "sole_supplier_count", name: 'sole_supplier_count'},
                 {data: "sole_supplier_sum", name: 'sole_supplier_sum'},
+
                 {data: "direct_count", name: 'direct_count'},
                 {data: "direct_sum", name: 'direct_sum'},
-            ]
+            ],
+            buttons: [
+                $.extend( true, {}, buttonCommon, {
+                    extend: 'excelHtml5'
+                } )
+            ],
         });
     });
 </script>
