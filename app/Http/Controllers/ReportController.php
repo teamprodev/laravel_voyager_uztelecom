@@ -36,7 +36,7 @@ class ReportController extends Controller
     }
     public function index($id)
     {
-            if($id <= 10)
+            if($id <= 10 && $id != 22)
                 return view("site.report.{$id}");
             return view("site.report.10");
     }
