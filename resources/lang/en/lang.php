@@ -48,8 +48,9 @@ return [
     "performer_country" => "Goods (service) country of manufactured",
     "performer_info" => "Product information",
 
-    "performer_branch" => "Branch customer under contract",
+
     "performer_lot" => "Lot number",
+    "performer_branch" => "Branch customer under contract",
     "performer_contract_num" => "Number of contract",
     "performer_contract_date" => "Contract date",
     "performer_protocol_date" => "Protocol date",
