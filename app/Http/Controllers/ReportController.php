@@ -15,6 +15,13 @@ use Yajra\DataTables\DataTables;
 
 class ReportController extends Controller
 {
+    private ReportService $service;
+
+    public function __construct(ReportService $service)
+    {
+        $this->middleware('auth');
+        $this->service = $service;
+    }
     public function request(Request $request)
     {
         Cache::put('date',$request->date);
@@ -54,32 +61,31 @@ class ReportController extends Controller
     }
     public function report($id)
     {
-        $new = new ReportService();
         if($id == 1)
-            return $new->report_1();
+            return $this->service->report_1();
         elseif($id == 2)
-            return $new->report_2();
+            return $this->service->report_2();
         elseif($id == 22)
-            return $new->report_2_2();
+            return $this->service->report_2_2();
         elseif($id == 3)
-            return $new->report_3();
+            return $this->service->report_3();
         elseif($id == 4)
-            return $new->report_4();
+            return $this->service->report_4();
         elseif($id == 5)
-            return $new->report_5();
+            return $this->service->report_5();
 
         elseif($id == 6)
-            return $new->report_6();
+            return $this->service->report_6();
 
         elseif($id == 7)
-            return $new->report_7();
+            return $this->service->report_7();
         elseif($id == 8)
-            return $new->report_8();
+            return $this->service->report_8();
 
         elseif($id == 9)
-            return $new->report_9();
+            return $this->service->report_9();
 
         elseif($id == 10)
-            return $new->report_10();
+            return $this->service->report_10();
     }
 }
