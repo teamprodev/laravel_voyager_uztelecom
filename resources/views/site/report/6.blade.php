@@ -76,7 +76,7 @@
                         {data: 'subject', name: 'subject'},
                         {data: 'number', name: 'number'},
                         {data: 'planned_price', name: 'planned_price'},
-                        {data: 'performer_contract_info', name: 'performer_contract_info'},
+                        {data: 'contract_info', name: ' contract_info'},
                         {data: 'contract_price', name: 'contract_price'},
             ],
             dom: 'PQlfrtip' + 'Bfrtip',
