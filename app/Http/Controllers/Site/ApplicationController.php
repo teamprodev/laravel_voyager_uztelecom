@@ -518,4 +518,11 @@ class ApplicationController extends Controller
 //
 //        return redirect()->back();
     }
+    public function is_more_than_limit(Application $application,Request $request)
+    {
+        $application->is_more_than_limit = $request->is_more_than_limit;
+        $application->signers = null;
+        $application->save();
+        return redirect()->back();
+    }
 }

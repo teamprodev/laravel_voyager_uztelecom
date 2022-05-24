@@ -113,6 +113,7 @@ Route::group([
                     Route::get('create', [ApplicationController::class, 'create'])->name('create');
                     Route::post('store', [ApplicationController::class, 'store'])->name('store');
                     Route::put('{application}/vote', [ApplicationController::class, 'vote'])->name('vote');
+                    Route::post('{application}/is_more_than_limit', [ApplicationController::class, 'is_more_than_limit'])->name('is_more_than_limit');
 //                    Route::post('cancel', [ApplicationController::class, 'cancel'])->name('cancel');
 
                     Route::get('getAll', [ApplicationController::class, 'getAll'])->name('getAll');
