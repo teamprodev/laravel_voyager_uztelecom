@@ -36,45 +36,9 @@ class ReportController extends Controller
     }
     public function index($id)
     {
-        switch ($id)
-        {
-            case 1:
-                return view('site.report.1');
-                break;
-            case 2:
-                return view('site.report.2');
-                break;
-            case 22:
-                 return view('site.report.2_2');
-                break;
-            case 3:
-                return view('site.report.3');
-                break;
-            case 4:
-                return view('site.report.4');
-                break;
-            case 5:
-                return view('site.report.5');
-                break;
-
-            case 6:
-                return view('site.report.6');
-                break;
-
-            case 7:
-                return view('site.report.7');
-                break;
-            case 8:
-                return view('site.report.8');
-                break;
-
-            case 9:
-                return view('site.report.9');
-                break;
-
-            default:
-                 return view('site.report.10');
-        }
+            if($id <= 10)
+                return view("site.report.{$id}");
+            return view("site.report.10");
     }
     public function report($id)
     {
