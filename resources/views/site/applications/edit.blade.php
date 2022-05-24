@@ -39,11 +39,8 @@
     ->route('site.applications.update',$application->id)
     ->enctype("multipart/form-data")
     ->post() }}
-    @if($user->hasPermission('Branch_Performer') && $application->user_id != $user->id || $user->hasPermission('Company_Performer') && $application->user_id != $user->id || $application->performer_role_id == $user->role_id )
-            @include('site.applications.performer')
-    @elseif($application->user_id == auth()->user()->id)
-        @include('site.applications.form_edit')
-    @endif
+    @includeWhen($application->user_id == auth()->user()->id,'site.applications.form_edit')
+    @includeWhen($user->hasPermission('Branch_Performer') && $application->user_id != $user->id || $user->hasPermission('Company_Performer') && $application->user_id != $user->id || $application->performer_role_id == $user->role_id ,'site.applications.performer')
     {{ Aire::close() }}
     @if($user->hasPermission('Warehouse'))
         @include('site.applications.warehouse')
