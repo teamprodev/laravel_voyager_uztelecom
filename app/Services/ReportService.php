@@ -2,7 +2,7 @@
 
 
 namespace App\Services;
-
+use function PHPUnit\Framework\returnSelf;
 
 use App\Events\Notify;
 use App\Http\Controllers\ReportController;
@@ -32,7 +32,13 @@ class ReportService
 {
     public function report_1()
     {
-        $query = Branch::query();
+        if(auth()->user()->hasPermission('ЦУЗ'))
+        {
+            $query = Branch::query();
+        }
+        else{
+            $query = Branch::where('id',auth()->user()->branch_id)->get();
+        }
         return Datatables::of($query)
             ->addColumn('count', function($branch){
                 $applications = Application::where('branch_initiator_id', $branch->id)->get();
@@ -62,7 +68,13 @@ class ReportService
     }
     public function report_2()
     {
-        $query = Branch::query();
+        if(auth()->user()->hasPermission('ЦУЗ'))
+        {
+            $query = Branch::query();
+        }
+        else{
+            $query = Branch::where('id',auth()->user()->branch_id)->get();
+        }
         return Datatables::of($query)
             ->addColumn('tovar_1', function($branch){
                 $date = Cache::get('date');
@@ -188,7 +200,13 @@ class ReportService
     }
     public function report_2_2()
     {
-        $query = Branch::query();
+        if(auth()->user()->hasPermission('ЦУЗ'))
+        {
+            $query = Branch::query();
+        }
+        else{
+            $query = Branch::where('id',auth()->user()->branch_id)->get();
+        }
         return Datatables::of($query)
             ->addColumn('tovar_1', function($branch){
                 $date = Cache::get('date_2');
@@ -435,7 +453,13 @@ class ReportService
     }
     public function report_3()
     {
-        $query = Branch::query();
+        if(auth()->user()->hasPermission('ЦУЗ'))
+        {
+            $query = Branch::query();
+        }
+        else{
+            $query = Branch::where('id',auth()->user()->branch_id)->get();
+        }
         return Datatables::of($query)
             ->addColumn('tovar_1', function($branch){
                 $date = Cache::get('date_3_month');
@@ -502,7 +526,13 @@ class ReportService
     }
     public function report_5()
     {
-        $query = Branch::query();
+        if(auth()->user()->hasPermission('ЦУЗ'))
+        {
+            $query = Branch::query();
+        }
+        else{
+            $query = Branch::where('id',auth()->user()->branch_id)->get();
+        }
         return Datatables::of($query)
             ->addColumn('count', function($branch){
                 $date = Cache::get('date_5');
@@ -625,6 +655,133 @@ class ReportService
                 $applications = Branch::where('id', $branch->branch_initiator_id)->get()->pluck('name');
                 $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
                 return trim($json, '[], "');
+            })
+            ->make(true);
+    }
+    public function report_8()
+    {
+        $query = Application::query();
+        return Datatables::of($query)
+            ->addColumn('filial', function($application){
+                $applications = Branch::where('id', $application->branch_initiator_id)->pluck('name')->toArray();
+                return $applications;
+            })
+            ->addColumn('product', function($application){
+                $product = json_decode($application->resource_id,true);
+                $names = collect($product);
+                $ucnames = $names->map(function($item, $key) {
+                    return Resource::find($item)->name;
+                });
+                return json_decode($ucnames);
+            })
+            ->editColumn('performer_user_id', function($application){
+                return $application->performer_user_id ?$application->performer->name:'';
+            })
+            ->make(true);
+    }
+
+    public function report_9(){
+        $query = Branch::query();
+
+        return Datatables::of($query)
+            ->addColumn('supplier_inn', function($branch){
+                return Application::where('branch_initiator_id', $branch->id)->get()->pluck('supplier_inn')->toArray();
+            })
+            ->addColumn('contract_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('contract_price','!=', null)->get();
+                return count($applications);
+            })
+            ->addColumn('contract_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('eshop_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 3)->get();
+                return count($applications);
+            })
+            ->addColumn('eshop_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 3)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('nat_eshop_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 7)->get();
+                return count($applications);
+            })
+            ->addColumn('nat_eshop_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 7)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('auction_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 4)->get();
+                return count($applications);
+            })
+            ->addColumn('auction_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 4)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('coop_portal_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 5)->get();
+                return count($applications);
+            })
+            ->addColumn('coop_portal_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 5)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('tender_platform_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 10)->get();
+                return count($applications);
+            })
+            ->addColumn('tender_platform_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 10)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('exchange_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 11)->get();
+                return count($applications);
+            })
+            ->addColumn('exchange_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 11)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('konkurs_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 6)->get();
+                return count($applications);
+            })
+            ->addColumn('konkurs_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 6)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('tender_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 1)->get();
+                return count($applications);
+            })
+            ->addColumn('tender_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 1)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('otbor_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 2)->get();
+                return count($applications);
+            })
+            ->addColumn('otbor_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 2)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('sole_supplier_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 14)->get();
+                return count($applications);
+            })
+            ->addColumn('sole_supplier_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 14)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('direct_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 16)->get();
+                return count($applications);
+            })
+            ->addColumn('direct_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 16)->pluck('contract_price')->toArray();
+                return array_sum($applications);
             })
             ->make(true);
     }
@@ -765,4 +922,62 @@ class ReportService
             })
             ->make(true);
     }
+//    public function report_9()
+//    {
+//        $query = Application::query();
+//        return Datatables::of($query)
+//            ->addColumn('name', function($branch){
+//                $applications = Branch::where('id', $branch->branch_initiator_id)->get()->pluck('name');
+//                $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+//                return trim($json, '[], "');
+//            })
+//            ->addColumn('shartnomalar', function($application){
+//                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 1,2,3,4,5,6,7,8,9,10)->get();
+//                return count($applications)
+//            })
+//            ->addColumn('tender', function($application){
+//                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 1)->get();
+//                return count($applications)
+//            })
+//            ->addColumn('Otbor', function($application){
+//                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 2)->get();
+//                return count($applications)
+//            })
+//            ->addColumn('Eshop', function($application){
+//                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 3)->get();
+//                return count($applications)
+//            })
+//            ->addColumn('Elektron_auksiyon', function($application){
+//                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 4)->get();
+//                return count($applications)
+//            })
+//            ->addColumn('кооперационный_портал', function($application){
+//                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 5)->get();
+//                return count($applications)
+//            })
+//            ->addColumn('Konkrus', function($application){
+//                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 6)->get();
+//                return count($applications)
+//            })
+//            ->addColumn('электронный_магазин(E-Shop)', function($application){
+//                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 7)->get();
+//                return count($applications)
+//            })
+//            ->addColumn('тендер', function($application){
+//                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 8)->get();
+//                return count($applications)
+//            })
+//            ->addColumn('госзакупок_в_сфере_строительства', function($application){
+//                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 9)->get();
+//                return count($applications)
+//            })
+//            ->addColumn('через_электронные_биржевые_торги_на_специальных_торговых_площадках', function($application){
+//                $applications = type_of_purchase::where('id', $applications->type_of_purchase_id)-where('type_of_purchase_id', 10)->get();
+//                return count($applications)
+//            })
+//            ->make(true);
+//
+//
+//    }
 }
+

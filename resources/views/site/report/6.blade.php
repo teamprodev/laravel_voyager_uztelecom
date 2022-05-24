@@ -24,7 +24,7 @@
     <div id="section" class="pt-6">
         <a href="/" class="ml-12 btn btn-danger">{{ __('lang.back') }}</a>
         <div class="w-11/12 mx-auto pt-8 pb-16">
-            <table id="yajra-datatable">
+            <table id="table-9">
                 <thead>
                 <tr>
                     <th>№</th>
@@ -42,19 +42,33 @@
             </table>
         </div>
     </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var buttonCommon = {
+            extend: 'excel',
+            title: 'Report 6',
+            text: '<i title="export to excel" class="fa fa-file-text-o">Exsel</i><br>',
+            exportOptions: {
+                columns: ':visible:Not(.not-exported)',
+                rows: ':visible'
+            },
+        };
+        
+        
+        $('#table-9').DataTable( {
+             // dom: 'PQlfrtip',
+             dom: 'Qlfrtip',
+            ajax:
+                 "{{ route('report','6') }}",
 
-      
-    
-
-        <script>
-            $(document).ready(function() {
-                $('#yajra-datatable').DataTable( {
-                    // dom: 'PQlfrtip',
-                    dom: 'Qlfrtip',
-                    ajax:
-                        "{{ route('report','6') }}",
-
-                    columns: [
+            columns: [
                         {data: "id", name: 'id'},
                         {data: 'name', name: 'name'},
                         {data: 'supplier_name', name: 'supplier_name'},
@@ -64,10 +78,20 @@
                         {data: 'planned_price', name: 'planned_price'},
                         {data: 'performer_contract_info', name: 'performer_contract_info'},
                         {data: 'contract_price', name: 'contract_price'},
+            ],
+            dom: 'PQlfrtip' + 'Bfrtip',
+            buttons: [
+            $.extend( true, {}, buttonCommon, {
+                extend: 'excelHtml5'
+            })
+        ],
+    });
+});
 
+</script>
+<div class="pl-4 pt-4">
+        <a href="/" class="btn btn-danger">{{ __('lang.back') }}</a>
+    </div>
+         
 
-                    ]
-                });
-            });
-        </script>
-    @endsection
+@endsection
