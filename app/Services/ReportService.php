@@ -679,6 +679,113 @@ class ReportService
             })
             ->make(true);
     }
+
+    public function report_9(){
+        $query = Branch::query();
+
+        return Datatables::of($query)
+            ->addColumn('supplier_inn', function($branch){
+                return Application::where('branch_initiator_id', $branch->id)->get()->pluck('supplier_inn')->toArray();
+            })
+            ->addColumn('contract_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('contract_price','!=', null)->get();
+                return count($applications);
+            })
+            ->addColumn('contract_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('eshop_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 3)->get();
+                return count($applications);
+            })
+            ->addColumn('eshop_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 3)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('nat_eshop_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 7)->get();
+                return count($applications);
+            })
+            ->addColumn('nat_eshop_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 7)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('auction_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 4)->get();
+                return count($applications);
+            })
+            ->addColumn('auction_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 4)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('coop_portal_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 5)->get();
+                return count($applications);
+            })
+            ->addColumn('coop_portal_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 5)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('tender_platform_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 10)->get();
+                return count($applications);
+            })
+            ->addColumn('tender_platform_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 10)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('exchange_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 11)->get();
+                return count($applications);
+            })
+            ->addColumn('exchange_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 11)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('konkurs_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 6)->get();
+                return count($applications);
+            })
+            ->addColumn('konkurs_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 6)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('tender_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 1)->get();
+                return count($applications);
+            })
+            ->addColumn('tender_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 1)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('otbor_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 2)->get();
+                return count($applications);
+            })
+            ->addColumn('otbor_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 2)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('sole_supplier_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 14)->get();
+                return count($applications);
+            })
+            ->addColumn('sole_supplier_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 14)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->addColumn('direct_count', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 16)->get();
+                return count($applications);
+            })
+            ->addColumn('direct_sum', function($branch){
+                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 16)->pluck('contract_price')->toArray();
+                return array_sum($applications);
+            })
+            ->make(true);
+    }
+
     public function report_10()
     {
         $status = StatusExtented::query();

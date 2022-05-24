@@ -1,7 +1,3 @@
-
-
-@extends('site.layouts.app')
-@section('center_content')
 <!doctype html>
 <html lang="en">
 <head>
@@ -21,95 +17,107 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/searchpanes/2.0.0/css/searchPanes.dataTables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.4/css/select.dataTables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.0/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.0/datatables.min.js"></script>
 </head>
+<table id="example" class="display nowrap" style="width:100%">
+    <thead>
+    <tr>
+        <th rowspan="2">№</th>
+        <th rowspan="2">Буюртмачи номи</th>
+        <th rowspan="2">СТИР</th>
+        <th colspan="2" style="text-align: center">Шартномалар</th>
+        <th colspan="2" style="text-align: center">Электрон дўкон орқали (E-shop))</th>
+        <th colspan="2" style="text-align: center">Миллий дўкон орқали</th>
+        <th colspan="2" style="text-align: center">Электрон аукцион орқали</th>
+        <th colspan="2" style="text-align: center">Кооперация портали орқали</th>
+        <th colspan="2" style="text-align: center">Шаффоф қурилиш платформаси орқали</th>
+        <th colspan="2" style="text-align: center">Махсус савдо майдончаларидаги электрон биржа савдолари орқали</th>
+        <th colspan="2" style="text-align: center">конкурс (танлов орқали)</th>
+        <th colspan="2" style="text-align: center">Тендер орқали</th>
+        <th colspan="2" style="text-align: center">Энг мақбул таклифларни танлаб олиш йули билан</th>
+        <th colspan="2" style="text-align: center">Ягона етказиб берувчилар билан </th>
+        <th colspan="2" style="text-align: center">Тўғридан-тўғри (ПП-3988, ва бошқалар ПП,УП,РП)</th>
+    </tr>
+    <tr>
+        <th>Сони</th>
+        <th>Суммаси</th>
+        <th>Сони</th>
+        <th>Суммаси</th>
+        <th>Сони</th>
+        <th>Суммаси</th>
+        <th>Сони</th>
+        <th>Суммаси</th>
+        <th>Сони</th>
+        <th>Суммаси</th>
+        <th>Сони</th>
+        <th>Суммаси</th>
+        <th>Сони</th>
+        <th>Суммаси</th>
+        <th>Сони</th>
+        <th>Суммаси</th>
+        <th>Сони</th>
+        <th>Суммаси</th>
+        <th>Сони</th>
+        <th>Суммаси</th>
+        <th>Сони</th>
+        <th>Суммаси</th>
+        <th>Сони</th>
+        <th>Суммаси</th>
+    </tr>
+    </thead>
+</table>
 
-    <div id="section" class="pt-6">
-        <a href="/" class="ml-12 btn btn-danger">{{ __('lang.back') }}</a>
-        <div class="w-11/12 mx-auto pt-8 pb-16">
-            <table id="yajra-datatable" class="table table-bordered" border="5">
-                <thead>
-                     <tr>
-                        <th style="text-align: center;"  rowspan="3">№</th>
-                        <th style="text-align: center;"  rowspan="17">Имя Клиента</th>
-                        <th style="text-align: center;"  rowspan="18">STIR</th>
-                        <th style="text-align: center;"  colspan="2">Соглашения</th>
-                        <th style="text-align: center;"  colspan="24">Затем:</th>
-                     </tr>
-                     
-                     <tr>
-                        <th rowspan="2">количество</th>
-                        <th rowspan="2">количество (сум)</th> 
-                        <th rowspan="1" colspan="2">тендер</th> 
-                        <th rowspan="1" colspan="2">отбор</th>
-                        <th rowspan="1" colspan="2">Eshop</th>  
-                        <th rowspan="1" colspan="2">электронный аукцион</th>  
-                        <th rowspan="1" colspan="2">кооперационный портал</th>  
-                        <th rowspan="1" colspan="2">конкурс</th>  
-                        <th rowspan="1" colspan="2">национальный электронный магазин</th>  
-                        <th rowspan="1" colspan="2">электронный магазин(E-Shop)</th>  
-                        <th rowspan="1" colspan="2">через элетронную тендерную платформу проведения госзакупок в сфере строительства</th> 
-                        <th rowspan="1" colspan="2">через электронные биржевые торги на специальных торговых площадках</th>                             
-                    </tr>
-                    
-                    <tr>
-                        <th>количество</th>
-                        <th>количество (сум)</th>
-                        <th>количество</th>
-                        <th>количество (сум)</th>
-                        <th>количество</th>
-                        <th>количество (сум)</th>
-                        <th>количество</th>
-                        <th>количество (сум)</th>
-                        <th>количество</th>
-                        <th>количество (сум)</th>
-                        <th>количество</th>
-                        <th>количество (сум)</th>
-                        <th>количество</th>
-                        <th>количество (сум)</th>
-                        <th>количество</th>
-                        <th>количество (сум)</th>
-                        <th>количество</th>
-                        <th>количество (сум)</th>
-                        <th>количество</th>
-                        <th>количество (сум)</th>
-                        <th></th>
-                    </tr>
-                      
-             </thead>
-        </table>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/datetime-moment.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/searchbuilder/1.3.2/js/dataTables.searchBuilder.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/searchpanes/2.0.0/js/dataTables.searchPanes.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/select/1.3.4/js/dataTables.select.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable( {
+            // dom: 'PQlfrtip',
+            dom: 'Qlfrtip',
+            ajax:
+                "{{ route('report','9') }}",
 
-        
-           
-        </table>
-       </div>
-    </div>
+            columns: [
+                {data: "id", name: 'id'},
+                {data: "name", name: 'name'},
+                {data: "supplier_inn", name: 'supplier_inn'},
+                {data: "contract_count", name: 'contract_count'},
+                {data: "contract_sum", name: 'contract_sum'},
+                {data: "eshop_count", name: 'eshop_count'},
+                {data: "eshop_sum", name: 'eshop_sum'},
+                {data: "nat_eshop_count", name: 'nat_eshop_count'},
+                {data: "nat_eshop_sum", name: 'nat_eshop_sum'},
+                {data: "auction_count", name: 'auction_count'},
+                {data: "auction_sum", name: 'auction_sum'},
+                {data: "coop_portal_count", name: 'coop_portal_count'},
+                {data: "coop_portal_sum", name: 'coop_portal_sum'},
+                {data: "tender_platform_count", name: 'tender_platform_count'},
+                {data: "tender_platform_sum", name: 'tender_platform_sum'},
+                {data: "exchange_count", name: 'exchange_count'},
+                {data: "exchange_sum", name: 'exchange_sum'},
+                {data: "konkurs_count", name: 'konkurs_count'},
+                {data: "konkurs_sum", name: 'konkurs_sum'},
+                {data: "tender_count", name: 'tender_count'},
+                {data: "tender_sum", name: 'tender_sum'},
+                {data: "otbor_count", name: 'otbor_count'},
+                {data: "otbor_sum", name: 'otbor_sum'},
+                {data: "sole_supplier_count", name: 'sole_supplier_count'},
+                {data: "sole_supplier_sum", name: 'sole_supplier_sum'},
+                {data: "direct_count", name: 'direct_count'},
+                {data: "direct_sum", name: 'direct_sum'},
+            ]
+        });
+    });
+</script>
+<div class="pl-4 pt-4">
+    <a href="/" class="btn btn-danger">{{ __('lang.back') }}</a>
+</div>
 
-      
-   
-        <script>
-            $(document).ready(function() {
-                $('#yajra-datatable').DataTable( {
-                    // dom: 'PQlfrtip',
-                    dom: 'Qlfrtip',
-                    ajax:
-                        "{{ route('report','9') }}",
 
-                    columns: [
-                        {data: "id", name: 'id'},
-                        {data: 'name', name: 'name'},
-                        {data: 'shartnomalar', name: 'shartnomalar'},
-                        {data: 'tender', name: 'tender'},
-                        {data: 'Otbor', name: 'Otbor'},
-                        {data: 'Eshop', name: 'Eshop'},
-                        {data: 'Elektron_auksiyon', name: 'Elektron_auksiyon'},
-                        {data: 'кооперационный_портал', name: 'кооперационный_портал'},
-                        {data: 'Konkrus', name: 'Konkrus'},
-                        {data: 'электронный_магазин(E-Shop)', name: 'электронный_магазин(E-Shop)'},
-                        {data: 'тендер', name: 'тендер'},
-                        {data: 'госзакупок_в_сфере_строительства', name: 'госзакупок_в_сфере_строительства'},
-                        {data: 'через_электронные_биржевые_торги_на_специальных_торговых_площадках', name: 'через_электронные_биржевые_торги_на_специальных_торговых_площадках'},
-                    ]
-                });
-            });
-        </script>
-    @endsection
