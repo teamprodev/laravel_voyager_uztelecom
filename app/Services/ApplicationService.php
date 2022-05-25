@@ -134,7 +134,7 @@ class ApplicationService
                         return $status_cancelled;
                     }elseif($query->status === 'товар доставлен'){
                         return "<div class='row'>
-                        <input type='text' type='button' value='{$status_performed}' class='text-center m-1 col edit bg-success btn-sm' disabled>
+                        <input type='text' type='button' value='{$status_performed}' class='text-center display wrap edit bg-success btn-sm' disabled>
                         </div>";
                     }else{
                         return $query->status;
