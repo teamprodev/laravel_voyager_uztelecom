@@ -66,7 +66,7 @@ class ApplicationService
             }
             elseif($user->role_id == 7)
             {
-                $query = Application::query()->where('branch_initiator_id',auth()->user()->branch_id)->where('draft','!=',1)->where('status', "accepted")->orWhere('status','overdue');
+                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1);
             }
             elseif ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
             {

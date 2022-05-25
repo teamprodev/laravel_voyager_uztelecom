@@ -477,7 +477,7 @@
                     <button type="submit" class="btn btn-success col-md-2" >{{ __('lang.send') }}</button>
                 </div>
                 {{ Aire::close() }}
-            @elseif($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer'||'Company_Performer'||'Branch_Performer') || $access && $user->role_id == 7)
+            @elseif($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer'||'Company_Performer'||'Branch_Performer') || $access && $user->role_id == 7 && $application->status == 'accepted')
                 <div class="px-6">
                     <form name="testform" action="{{route('site.applications.imzo.sign',$application->id)}}"        method="POST">
                         @csrf
