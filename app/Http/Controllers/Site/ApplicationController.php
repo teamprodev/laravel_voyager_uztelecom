@@ -36,7 +36,7 @@ class ApplicationController extends Controller
 
     public function status_table()
     {
-        $this->service->status_table();
+        return $this->service->status_table();
     }
     public function index(Request $request)
     {
@@ -85,7 +85,7 @@ class ApplicationController extends Controller
     }
     public function show_draft(Request $request)
     {
-        $this->service->show_draft($request);
+        return $this->service->show_draft($request);
     }
 
     /**
