@@ -19,7 +19,7 @@
             </div>
             <div class="border-b border-gray-300 mx-6 p-2">
                 <span class="text-xs text-gray-500">Должность:</span><br>
-                {{auth()->user()->role->name}}
+                {{auth()->user()->role->display_name}}
             </div>
         </div>
 </div>
