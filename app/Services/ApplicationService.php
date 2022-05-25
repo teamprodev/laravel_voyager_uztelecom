@@ -119,7 +119,7 @@ class ApplicationService
                     }elseif($query->status === 'in_process'){
                         return $status_in_process;
                     }elseif($query->status === 'overdue'||$query->status === 'Overdue'){
-                        return "<input value='{$status_overdue}' class='text-center m-1 col edit bg-danger btn-sm' disabled>";
+                        return "<input value='{$status_overdue}' type='button' class='text-center m-1 col edit bg-danger btn-sm' disabled>";
                     }elseif($query->status === 'accepted'){
                         return $status_accepted;
                     }elseif($query->status === 'refused'){
@@ -134,7 +134,7 @@ class ApplicationService
                         return $status_cancelled;
                     }elseif($query->status === 'товар доставлен'){
                         return "<div class='row'>
-                        <input type='text' value='{$status_performed}' style='background-color: green'>
+                        <input type='text' type='button' value='{$status_performed}' class='text-center m-1 col edit bg-success btn-sm' disabled>
                         </div>";
                     }else{
                         return $query->status;
@@ -216,7 +216,7 @@ class ApplicationService
                 }elseif($query->status === 'in_process'){
                     return $status_in_process;
                 }elseif($query->status === 'Overdue'){
-                    return "<input value='{$status_overdue}' class='text-center m-1 col edit bg-danger btn-sm' disabled>";
+                    return "<input value='{$status_overdue}' type='button' class='text-center m-1 col edit bg-danger btn-sm' disabled>";
                 }elseif($query->status === 'accepted'){
                     return $status_accepted;
                 }elseif($query->status === 'refused'){
@@ -229,8 +229,10 @@ class ApplicationService
                     return $status_distributed;
                 }elseif($query->status === 'canceled'){
                     return $status_cancelled;
-                }elseif($query->status === 'performed'){
-                    return "<input value='{$status_performed}' class='text-center m-1 col edit bg-green btn-sm' disabled>";
+                }elseif($query->status === 'товар доставлен') {
+                    return "<div class='row'>
+                        <input type='text' type='button' value='{$status_performed}' class='text-center m-1 col edit bg-success btn-sm' disabled>
+                        </div>";
                 }else{
                     return $query->status;
                 }

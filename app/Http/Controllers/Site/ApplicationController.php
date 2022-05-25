@@ -30,6 +30,8 @@ class ApplicationController extends Controller
 
     public function show_status($status)
     {
+        if($status == 'performed')
+            $status = 'товар доставлен';
         Cache::put('status', $status);
         return view('site.applications.status');
     }
