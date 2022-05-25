@@ -358,7 +358,7 @@
                 {{ Aire::close() }}
 
                 @if($user->hasPermission('Number_Change'))
-                    {{Aire::number('num', __('lang.number'))
+                    {{Aire::text('num', __('lang.number'))
                         ->name('number')
                     }}
                     <div class="mb-3 row w-50">
@@ -376,7 +376,7 @@
                     ->post()
                     ->class('pb-5')
                 }}
-                {{Aire::number('num', __('lang.number'))
+                {{Aire::textArea('bio', __('lang.number'))
                     ->name('number')
                 }}
                 <div class="mb-3 row w-50">
