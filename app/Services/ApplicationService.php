@@ -53,20 +53,20 @@ class ApplicationService
             {
 
                 $query = Application::query()
-                    ->where('draft','!=',1)->where($a,$operator,$b)->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
+                    ->where('draft','!=',1)->where($a,$operator,$b)->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             elseif($user->hasPermission('Warehouse'))
             {
                 $status = 'товар доставлен';
-                $query = Application::query()->where('draft','!=',1)->where('status','like',"%{$status}%")->orWhere('user_id',auth()->user()->id);
+                $query = Application::query()->where('draft','!=',1)->where('status','like',"%{$status}%")->orWhere('user_id',auth()->user()->id)->get();
             }
             elseif($user->hasPermission('Company_Leader') && $user->hasPermission('Branch_Leader'))
             {
-                $query = Application::query()->where('draft','!=',1)->where('is_more_than_limit',1)->where('status','agreed')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->where('status','accepted')->orWhere('status','distributed')->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
+                $query = Application::query()->where('draft','!=',1)->where('is_more_than_limit',1)->where('status','agreed')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->where('status','accepted')->orWhere('status','distributed')->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             elseif($user->role_id == 7)
             {
-                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1);
+                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->get();
             }
             elseif ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
             {
@@ -77,23 +77,23 @@ class ApplicationService
                     ->orWhere('performer_role_id', $user->role->id)
                     ->where('draft','!=',1)
                     ->orWhere('user_id',auth()->user()->id)
-                    ->where('draft','!=',1);
+                    ->where('draft','!=',1)->get();
             }
             elseif ($user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer'))
             {
-                $query = Application::query()->where('draft','!=',1)->where('performer_role_id', $user->role->id)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
+                $query = Application::query()->where('draft','!=',1)->where('performer_role_id', $user->role->id)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             elseif($user->hasPermission('Company_Leader'))
             {
-                $query =  Application::query()->where('draft','!=',1)->where('status','agreed')->orWhere('status','distributed')->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
+                $query =  Application::query()->where('draft','!=',1)->where('status','agreed')->orWhere('status','distributed')->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             elseif($user->hasPermission('Branch_Leader'))
             {
-                $query = Application::query()->where('draft','!=',1)->where('is_more_than_limit', 0)->where('status', 'accepted')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->where('status', 'distributed')->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
+                $query = Application::query()->where('draft','!=',1)->where('is_more_than_limit', 0)->where('status', 'accepted')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->where('status', 'distributed')->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
 
             else {
-                $query = Application::query()->where('draft','!=',1)->where('user_id',$user->id);
+                $query = Application::query()->where('draft','!=',1)->where('user_id',$user->id)->get();
             }
 
             return Datatables::of($query)
