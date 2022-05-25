@@ -112,7 +112,7 @@ class ApplicationService
                     $status_rejected = __('lang.status_rejected');
                     $status_distributed = __('lang.status_distributed');
                     $status_cancelled = __('lang.status_cancelled');
-                    $status_performed = __('lang.performed');
+                    $status_performed = 'товар доставлен';
                     $status_overdue = 'просрочен';
                     if($query->status === 'new'){
                         return $status_new;
@@ -132,7 +132,7 @@ class ApplicationService
                         return $status_distributed;
                     }elseif($query->status === 'canceled'){
                         return $status_cancelled;
-                    }elseif($query->status === 'performed'){
+                    }elseif($query->status === 'товар доставлен'){
                         return "<div class='row'>
                         <input type='text' value='{$status_performed}' style='background-color: green'>
                         </div>";
