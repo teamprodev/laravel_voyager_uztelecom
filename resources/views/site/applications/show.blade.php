@@ -358,7 +358,7 @@
                 {{ Aire::close() }}
 
                 @if($user->hasPermission('Number_Change'))
-                    {{Aire::text('num', __('lang.number'))
+                    {{Aire::textArea('num', __('lang.number'))
                         ->name('number')
                     }}
                     <div class="mb-3 row w-50">
