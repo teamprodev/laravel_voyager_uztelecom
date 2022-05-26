@@ -201,7 +201,7 @@
 
             });
             var divTitle = ''
-                + '<div class="col-12 text-center text-md-left mt-4 mb-4 display-2" style="text-align: center !important;">'
+                + '<div class="col-12 text-center text-md-left pt-4 pb-4 display-2" style="text-align: center !important;">'
                 + '<h1 class="text-dark">' + tableTitle + '</h1>'
                 + '</div>';
 
