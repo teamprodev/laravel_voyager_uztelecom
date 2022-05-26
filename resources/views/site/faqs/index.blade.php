@@ -2,7 +2,7 @@
 
 @section('center_content')
 
-   <div class="mr-auto grid grid-cols-3 w-12/12">
+   <div class="mr-auto grid grid-cols-3 w-10/12">
        @foreach($faqs as $faq)
             <div class="p-6 m-4 max-w-sm bg-white rounded-lg border w-full border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                 <h5 class="mb-2 text-2xl h-16 font-bold tracking-tight text-gray-900 dark:text-white overflow-hidden">{{$faq->title}}</h5>
