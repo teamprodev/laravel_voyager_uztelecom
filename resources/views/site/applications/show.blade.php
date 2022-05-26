@@ -2,7 +2,7 @@
 
 @section('center_content')
     <div class="px-6 pb-0 pt-6">
-        <h5><strong>{{ __('lang.author') }}</strong> {{$application->user->name}} ( {{ $application->user->role->name }} )</h5>
+        <h5><strong>{{ __('lang.author') }}</strong> {{$application->user->name}} ( {{ $application->user->role->display_name }} )</h5>
         <h5><strong>{{ __('lang.author_filial') }}</strong> {{ $branch_name->name }}</h5>
         <h5><strong>{{ __('lang.number') }} : </strong> {{$application->number}} </h5>
         <h5><strong>Date : </strong> {{$application->date}} </h5> <br>
@@ -358,7 +358,7 @@
                 {{ Aire::close() }}
 
                 @if($user->hasPermission('Number_Change'))
-                    {{Aire::number('num', __('lang.number'))
+                    {{Aire::textArea('num', __('lang.number'))
                         ->name('number')
                     }}
                     <div class="mb-3 row w-50">
@@ -376,7 +376,7 @@
                     ->post()
                     ->class('pb-5')
                 }}
-                {{Aire::number('num', __('lang.number'))
+                {{Aire::textArea('bio', __('lang.number'))
                     ->name('number')
                 }}
                 <div class="mb-3 row w-50">
@@ -477,7 +477,7 @@
                     <button type="submit" class="btn btn-success col-md-2" >{{ __('lang.send') }}</button>
                 </div>
                 {{ Aire::close() }}
-            @elseif($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer'||'Company_Performer'||'Branch_Performer') || $access && $user->role_id == 7)
+            @elseif($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer'||'Company_Performer'||'Branch_Performer') || $access && $user->role_id == 7 && $application->status == 'accepted')
                 <div class="px-6">
                     <form name="testform" action="{{route('site.applications.imzo.sign',$application->id)}}"        method="POST">
                         @csrf

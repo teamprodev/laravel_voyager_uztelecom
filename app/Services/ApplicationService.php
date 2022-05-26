@@ -53,20 +53,20 @@ class ApplicationService
             {
 
                 $query = Application::query()
-                    ->where('draft','!=',1)->where($a,$operator,$b)->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
+                    ->where('draft','!=',1)->where($a,$operator,$b)->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             elseif($user->hasPermission('Warehouse'))
             {
                 $status = 'товар доставлен';
-                $query = Application::query()->where('draft','!=',1)->where('status','like',"%{$status}%")->orWhere('user_id',auth()->user()->id);
+                $query = Application::query()->where('draft','!=',1)->where('status','like',"%{$status}%")->orWhere('user_id',auth()->user()->id)->get();
             }
             elseif($user->hasPermission('Company_Leader') && $user->hasPermission('Branch_Leader'))
             {
-                $query = Application::query()->where('draft','!=',1)->where('is_more_than_limit',1)->where('status','agreed')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->where('status','accepted')->orWhere('status','distributed')->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
+                $query = Application::query()->where('draft','!=',1)->where('is_more_than_limit',1)->where('status','agreed')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->where('status','accepted')->orWhere('status','distributed')->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             elseif($user->role_id == 7)
             {
-                $query = Application::query()->where('branch_initiator_id',auth()->user()->branch_id)->where('draft','!=',1)->where('status', "accepted")->orWhere('status','overdue');
+                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->get();
             }
             elseif ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
             {
@@ -77,23 +77,23 @@ class ApplicationService
                     ->orWhere('performer_role_id', $user->role->id)
                     ->where('draft','!=',1)
                     ->orWhere('user_id',auth()->user()->id)
-                    ->where('draft','!=',1);
+                    ->where('draft','!=',1)->get();
             }
             elseif ($user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer'))
             {
-                $query = Application::query()->where('draft','!=',1)->where('performer_role_id', $user->role->id)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
+                $query = Application::query()->where('draft','!=',1)->where('performer_role_id', $user->role->id)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             elseif($user->hasPermission('Company_Leader'))
             {
-                $query =  Application::query()->where('draft','!=',1)->where('status','agreed')->orWhere('status','distributed')->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
+                $query =  Application::query()->where('draft','!=',1)->where('status','agreed')->orWhere('status','distributed')->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             elseif($user->hasPermission('Branch_Leader'))
             {
-                $query = Application::query()->where('draft','!=',1)->where('is_more_than_limit', 0)->where('status', 'accepted')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->where('status', 'distributed')->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
+                $query = Application::query()->where('draft','!=',1)->where('is_more_than_limit', 0)->where('status', 'accepted')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->where('status', 'distributed')->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
 
             else {
-                $query = Application::query()->where('draft','!=',1)->where('user_id',$user->id);
+                $query = Application::query()->where('draft','!=',1)->where('user_id',$user->id)->get();
             }
 
             return Datatables::of($query)
@@ -112,14 +112,14 @@ class ApplicationService
                     $status_rejected = __('lang.status_rejected');
                     $status_distributed = __('lang.status_distributed');
                     $status_cancelled = __('lang.status_cancelled');
-                    $status_performed = __('lang.performed');
+                    $status_performed = 'товар доставлен';
                     $status_overdue = 'просрочен';
                     if($query->status === 'new'){
                         return $status_new;
                     }elseif($query->status === 'in_process'){
                         return $status_in_process;
                     }elseif($query->status === 'overdue'||$query->status === 'Overdue'){
-                        return "<input value='{$status_overdue}' class='text-center m-1 col edit bg-danger btn-sm' disabled>";
+                        return "<input value='{$status_overdue}' type='button' class='text-center m-1 col edit bg-danger btn-sm' disabled>";
                     }elseif($query->status === 'accepted'){
                         return $status_accepted;
                     }elseif($query->status === 'refused'){
@@ -132,9 +132,9 @@ class ApplicationService
                         return $status_distributed;
                     }elseif($query->status === 'canceled'){
                         return $status_cancelled;
-                    }elseif($query->status === 'performed'){
+                    }elseif($query->status === 'товар доставлен'){
                         return "<div class='row'>
-                        <input type='text' value='{$status_performed}' style='background-color: green'>
+                        <input type='text' type='button' value='{$status_performed}' class='text-center display wrap edit bg-success btn-sm' disabled>
                         </div>";
                     }else{
                         return $query->status;
@@ -216,7 +216,7 @@ class ApplicationService
                 }elseif($query->status === 'in_process'){
                     return $status_in_process;
                 }elseif($query->status === 'Overdue'){
-                    return "<input value='{$status_overdue}' class='text-center m-1 col edit bg-danger btn-sm' disabled>";
+                    return "<input value='{$status_overdue}' type='button' class='text-center m-1 col edit bg-danger btn-sm' disabled>";
                 }elseif($query->status === 'accepted'){
                     return $status_accepted;
                 }elseif($query->status === 'refused'){
@@ -229,8 +229,10 @@ class ApplicationService
                     return $status_distributed;
                 }elseif($query->status === 'canceled'){
                     return $status_cancelled;
-                }elseif($query->status === 'performed'){
-                    return "<input value='{$status_performed}' class='text-center m-1 col edit bg-green btn-sm' disabled>";
+                }elseif($query->status === 'товар доставлен') {
+                    return "<div class='row'>
+                        <input type='text' type='button' value='{$status_performed}' class='text-center m-1 col edit bg-success btn-sm' disabled>
+                        </div>";
                 }else{
                     return $query->status;
                 }

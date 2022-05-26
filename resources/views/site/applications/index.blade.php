@@ -7,7 +7,7 @@
         {{ __('lang.create') }}
     </a>
     <div class="w-11/12 mx-auto pt-8 pb-16">
-        <table id="yajra-datatable">
+        <table id="yajra-datatable" class="display wrap">
             <thead  class="text-center">
             <tr>
                 <th>ID</th>
@@ -61,8 +61,6 @@
                 {
                     data: 'action',
                     name: 'action',
-                    orderable: true,
-                    searchable: true
                 },
             ]
         });

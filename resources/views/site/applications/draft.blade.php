@@ -4,7 +4,7 @@
         {{ __('lang.drafts') }}
     </h2>
         <div class="w-11/12 mx-auto pt-8 pb-16">
-            <table class="data-table">
+            <table class="data-table display wrap">
                 <thead>
                 <tr>
                     <th>id</th>

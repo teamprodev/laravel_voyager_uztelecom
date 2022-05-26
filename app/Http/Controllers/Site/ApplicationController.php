@@ -30,13 +30,15 @@ class ApplicationController extends Controller
 
     public function show_status($status)
     {
+        if($status == 'performed')
+            $status = 'товар доставлен';
         Cache::put('status', $status);
         return view('site.applications.status');
     }
 
     public function status_table()
     {
-        $this->service->status_table();
+        return $this->service->status_table();
     }
     public function index(Request $request)
     {
@@ -85,7 +87,7 @@ class ApplicationController extends Controller
     }
     public function show_draft(Request $request)
     {
-        $this->service->show_draft($request);
+        return $this->service->show_draft($request);
     }
 
     /**
@@ -103,6 +105,7 @@ class ApplicationController extends Controller
     {
         $application->is_more_than_limit = $request->is_more_than_limit;
         $application->signers = null;
+        $application->status = 'new';
         $application->save();
         return redirect()->back();
     }
