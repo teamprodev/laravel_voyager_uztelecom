@@ -1,6 +1,6 @@
 @extends('site.layouts.app')
 @section('center_content')
-<!doctype html>
+    <!doctype html>
 <html lang="en">
 <head>
     <link href="https://releases.transloadit.com/uppy/v2.4.1/uppy.min.css" rel="stylesheet">
@@ -19,51 +19,71 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/searchpanes/2.0.0/css/searchPanes.dataTables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.4/css/select.dataTables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.0/datatables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css"/>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.0/datatables.min.js"></script>
+
+    {{--    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/af-2.3.2/b-1.5.4/b-colvis-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/cr-1.5.0/fc-3.2.5/fh-3.1.4/kt-2.5.0/r-2.2.2/rg-1.1.0/rr-1.2.4/sc-1.5.0/sl-1.2.6/datatables.min.css"/>--}}
+
     <style>
         #example_filter{
             display: none;
         }
+        #example_paginate{
+            display: none;
+        }
+        #example_info{
+            display: none;
+        }
+        .dt-buttons{
+            width: 60%;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .dataTables_length{
+            width: 20%;
+            margin-bottom: 15px;
+        }
+        .dataTables_filter{
+            width: 20%;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
-    <div id="section" class="pt-6">
-        <div class="w-11/12 mx-auto pt-8 pb-16">
-            <table id="example">
-                <thead>
-                <tr>
-                    <th>№</th>
-                    <th>Филиал</th>
-                    <th>номер заявки</th>
-                    <th>дата заявки</th>
-                    <th>ФИО инициатора</th>
-                    <th>Контактный телефон инициатора</th>
-                    <th>отдел инициатора</th>
-                    <th>вид закупки </th>
-                    <th>Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)</th>
-                    <th>Предмет закупки (товар,работа,услуга)</th>
-                    <th>кол-во закупаемого (товара,работа,услуги)</th>
-                    <th>период</th>
-                    <th>сумма заявки</th>
-                    <th>С НДС?</th>
-                    <th>{{__('lang.valyuta')}}</th>
-                    <th>Наименование поставщика</th>
-                    <th>сумма договора</th>
-                    <th>Махсулот келишининг муддати</th>
-                    <th>Статус</th>
-                    <th>Начальник Исполнителя заявки</th>
-                    <th>Исполнитель заявки</th>
-                    <th>Бюджетни режалаштириш булими. Маълумот</th>
-                    <th>Харидлар режасида мавжудлиги буича маълумот</th>
-                    <th>{{ __('lang.table_18') }}</th>
-                    <th>{{ __('lang.table_11') }}</th>
-                </tr>
-                </thead>
-            </table>
-        </div>
-    </div>
+
+<div id="fortext"></div>
+
+<table id="example" class="display wrap table-bordered dt-responsive" style="border-collapse: collapse; width: 100%; padding-top: 10px">
+    <thead class="border border-dark">
+    <tr class="border border-dark">
+        <th style="text-align: center;" class="border border-dark">ID</th>
+        <th style="text-align: center;" class="border border-dark">Филиал</th>
+        <th style="text-align: center;" class="border border-dark">номер заявки</th>
+        <th style="text-align: center;" class="border border-dark">дата заявки</th>
+        <th style="text-align: center;" class="border border-dark">ФИО инициатора</th>
+        <th style="text-align: center;" class="border border-dark">Контактный телефон инициатора</th>
+        <th style="text-align: center;" class="border border-dark">отдел инициатора</th>
+        <th style="text-align: center;" class="border border-dark">вид закупки </th>
+        <th style="text-align: center;" class="border border-dark">Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)</th>
+        <th style="text-align: center;" class="border border-dark">Предмет закупки (товар,работа,услуга)</th>
+        <th style="text-align: center;" class="border border-dark">кол-во закупаемого (товара,работа,услуги)</th>
+        <th style="text-align: center;" class="border border-dark">период</th>
+        <th style="text-align: center;" class="border border-dark">сумма заявки</th>
+        <th style="text-align: center;" class="border border-dark">С НДС?</th>
+        <th style="text-align: center;" class="border border-dark">{{__('lang.valyuta')}}</th>
+        <th style="text-align: center;" class="border border-dark">Наименование поставщика</th>
+        <th style="text-align: center;" class="border border-dark">сумма договора</th>
+        <th style="text-align: center;" class="border border-dark">Махсулот келишининг муддати</th>
+        <th style="text-align: center;" class="border border-dark">Статус</th>
+        <th style="text-align: center;" class="border border-dark">Начальник Исполнителя заявки</th>
+        <th style="text-align: center;" class="border border-dark">Исполнитель заявки</th>
+        <th style="text-align: center;" class="border border-dark">Бюджетни режалаштириш булими. Маълумот</th>
+        <th style="text-align: center;" class="border border-dark">Харидлар режасида мавжудлиги буича маълумот</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('lang.table_18') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('lang.table_11') }}</th>
+    </tr>
+    </thead>
+</table>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/datetime-moment.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -71,68 +91,130 @@
 <script type="text/javascript" src="https://cdn.datatables.net/searchpanes/2.0.0/js/dataTables.searchPanes.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/select/1.3.4/js/dataTables.select.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            var buttonCommon = {
-                extend: 'excel',
-                title: '4 отчет заявки по статусам',
-                text: '<i title="export to excel" class="fa fa-file-text-o">Excel</i><br>',
-                exportOptions: {
-                    columns: ':visible:Not(.not-exported)',
-                    rows: ':visible'
-                },
-            };
-            $('#example').DataTable( {
-                // dom: 'PQlfrtip',
-                dom: 'Qlfrtip' + 'Bfrtip',
+<script defer src="https://use.fontawesome.com/releases/v5.4.1/js/all.js" integrity="sha384-L469/ELG4Bg9sDQbl0hvjMq8pOcqFgkSpwhwnslzvVVGpDjYJ6wJJyYjvG3u8XW7" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/af-2.3.2/b-1.5.4/b-colvis-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/cr-1.5.0/fc-3.2.5/fh-3.1.4/kt-2.5.0/r-2.2.2/rg-1.1.0/rr-1.2.4/sc-1.5.0/sl-1.2.6/datatables.min.js"></script>
 
-                ajax:
-                    "{{ route('report','4') }}",
 
-                columns: [
-                    {data: "id", name: 'id'},
-                    {data: 'branch_initiator_id', name: 'branch_initiator_id'},
-                    {data: 'number', name: 'number'},
-                    {data: 'date', name: 'date'},
-                    {data: 'initiator', name: 'initiator'},
-                    {data: 'initiator', name: 'initiator'},
-                    {data: 'branch_initiator_id', name: 'branch_initiator_id'},
-                    {data: 'type_of_purchase_id', name: 'type_of_purchase_id'},
-                    {data: 'name', name: 'name'},
-                    {data: 'subject', name: 'subject'},
-                    {data: 'amount', name: 'amount'},
-                    {data: 'expire_warranty_date', name: 'expire_warranty_date'},
-                    {data: 'planned_price', name: 'planned_price'},
-                    {data: 'with_nds', name: 'with_nds'},
-                    {data: 'currency', name: 'currency'},
-                    {data: 'supplier_name', name: 'supplier_name'},
-                    {data: 'contract_price', name: 'contract_price'},
-                    {data: 'delivery_date', name: 'delivery_date'},
-                    {data: 'status', name: 'status'},
-                    {data: 'id', name: 'id'},
-                    {data: 'performer_user_id', name: 'performer_user_id'},
-                    {data: 'info_business_plan', name: 'info_business_plan'},
-                    {data: 'info_purchase_plan', name: 'info_purchase_plan'},
-                    {data: 'purchase_basis', name: 'purchase_basis'},
-                    {data: 'basis', name: 'basis'},
-                ],
+<script>
+    $(document).ready(function() {
+        var tableTitle = '4 отчет заявки по статусам';
+
+        $('#example').DataTable( {
+            "language": {
+                "lengthMenu": "Показать _MENU_ записей",
+                "info":      'Показаны записи в диапазоне от _START_ до _END_ (В общем _TOTAL_)',
+                "search":  'Поиск',
+                "paginate": {
+                    "previous": "Назад",
+                    "next": "Дальше"
+                }
+
+            },
+            "processing": true,
+            pageLength: 10,
+            // dom: 'PQlfrtip',
+            dom: 'Qlfrtip' + 'Bfrtip',
+
+            ajax:
+                "{{ route('report','4') }}",
+
+            columns: [
+                {data: "id", name: 'id'},
+                {data: 'name', name: 'name'},
+                {data: 'number', name: 'number'},
+                {data: 'date', name: 'date'},
+                {data: 'initiator', name: 'initiator'},
+                {data: 'initiator', name: 'initiator'},
+                {data: 'branch_initiator_id', name: 'branch_initiator_id'},
+                {data: 'type_of_purchase_id', name: 'type_of_purchase_id'},
+                {data: 'name', name: 'name'},
+                {data: 'subject', name: 'subject'},
+                {data: 'amount', name: 'amount'},
+                {data: 'expire_warranty_date', name: 'expire_warranty_date'},
+                {data: 'planned_price', name: 'planned_price'},
+                {data: 'with_nds', name: 'with_nds'},
+                {data: 'currency', name: 'currency'},
+                {data: 'supplier_name', name: 'supplier_name'},
+                {data: 'contract_price', name: 'contract_price'},
+                {data: 'delivery_date', name: 'delivery_date'},
+                {data: 'status', name: 'status'},
+                {data: 'id', name: 'id'},
+                {data: 'performer_user_id', name: 'performer_user_id'},
+                {data: 'info_business_plan', name: 'info_business_plan'},
+                {data: 'info_purchase_plan', name: 'info_purchase_plan'},
+                {data: 'purchase_basis', name: 'purchase_basis'},
+                {data: 'basis', name: 'basis'},
+            ],
+            buttons: {
                 buttons: [
-                    $.extend( true, {}, buttonCommon, {
-                        extend: 'excelHtml5'
-                    } )
+                    { extend: 'copyHtml5',
+                        text: '<i class="fas fa-copy"></i>',
+                        title: tableTitle,
+                        titleAttr: 'Copy to Clipboard',
+                        exportOptions: {
+                            columns: ':visible:Not(.not-exported)',
+                            rows: ':visible',
+                        },
+                    },
+                    { extend: 'excelHtml5',
+                        text: '<i class="fas fa-file-excel"></i>',
+                        title: tableTitle,
+                        titleAttr: 'Export to Excel',
+                        exportOptions: {
+                            columns: ':visible:Not(.not-exported)',
+                            rows: ':visible',
+                        },
+                    },
+                    { extend: 'pdfHtml5',
+                        text: '<i class="fas fa-file-pdf"></i>',
+                        title: tableTitle,
+                        titleAttr: 'Export to PDF',
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL',
+                        exportOptions: {
+                            columns: ':visible:Not(.not-exported)',
+                            rows: ':visible',
+                        },
+                    },
+                    { extend: 'print',
+                        text: '<i class="fas fa-print"></i>',
+                        title: tableTitle,
+                        titleAttr: 'Print Table',
+                        exportOptions: {
+                            columns: ':visible:Not(.not-exported)',
+                            rows: ':visible',
+                        },
+                    },
+                    { extend: 'colvis',
+                        text: '<i class="fas fa-eye"></i>',
+                        titleAttr: 'Show/Hide Columns',
+                        exportOptions: {
+                            columns: ':visible:Not(.not-exported)',
+                            rows: ':visible',
+                        },
+                    }
                 ],
-            });
-        });
-    </script>
+                dom: {
+                    button: {
+                        className: 'dt-button'
+                    }
+                }
+            },
 
-<div class="pl-4 pt-4">
-    <a href="/" class="btn btn-danger">{{ __('lang.back') }}</a>
-</div>
+        });
+        var divTitle = ''
+            + '<div class="col-12 text-center text-md-left pt-4 pb-4 display-2" style="text-align: center !important;">'
+            + '<h1 class="text-dark">' + tableTitle + '</h1>'
+            + '</div>';
+
+        $("#fortext").append(divTitle);
+
+    });
+</script>
 @endsection

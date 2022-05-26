@@ -46,7 +46,7 @@
             </td><td style="text-align: center;background-color: #2cb74c" colspan="3"><b>4 kvartal</b></td>
         </tr>
             <tr>
-                <th>№</th>
+                <th>ID</th>
                 <th>Филиал</th>
                 <th>товар</th>
                 <th>работа</th>

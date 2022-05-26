@@ -49,7 +49,7 @@
             <td colspan="2"><b>работа</b></td>
             <td colspan="2"><b>услуга</b></td>
         <tr>
-            <th>№</th>
+            <th>ID</th>
             <th>Филиал</th>
             <th>кол-во</th>
             <th>сумма</th>

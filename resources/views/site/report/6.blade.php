@@ -55,7 +55,7 @@
 <table id="example" class="display wrap table-bordered dt-responsive" style="border-collapse: collapse; width: 100%; padding-top: 10px">
     <thead class="border border-dark">
         <tr class="border border-dark">
-            <th style="text-align: center;" class="border border-dark">№</th>
+            <th style="text-align: center;" class="border border-dark">ID</th>
             <th style="text-align: center;" class="border border-dark">Филиал</th>
             <th style="text-align: center;" class="border border-dark">Контрагент (предприятия поставляющий товаров. работ. услуг)</th>
             <th style="text-align: center;" class="border border-dark">Договор (контракт)</th>

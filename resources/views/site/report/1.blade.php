@@ -28,7 +28,7 @@
 <table id="example" class="display nowrap" style="width:100%">
         <thead>
             <tr>
-                <th>№</th>
+                <th>ID</th>
                 <th>Филиал</th>
                 <th>Количество заявок</th>
                 <th>товар</th>

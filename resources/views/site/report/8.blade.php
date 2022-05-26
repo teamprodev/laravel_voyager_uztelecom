@@ -55,20 +55,21 @@
     <table id="example" class="display wrap table-bordered dt-responsive" style="border-collapse: collapse; width: 100%; padding-top: 10px">
         <thead class="border border-dark">
             <tr class="border border-dark">
-                <th style="text-align: center;" class="border border-dark" rowspan="2">№</th>
+                <th style="text-align: center;" class="border border-dark" rowspan="2">ID</th>
                 <th style="text-align: center;" class="border border-dark" rowspan="2">Филиал</th>
                 <th style="text-align: center;" class="border border-dark" colspan="4">Информация о заявке</th>
                 <th style="text-align: center;" class="border border-dark" rowspan="2">Наименование товара</th>
+                <th style="text-align: center;" class="border border-dark" rowspan="2">Вид закупки</th>
                 <th style="text-align: center;" class="border border-dark" colspan="3">Договор</th>
                 <th style="text-align: center;" class="border border-dark" rowspan="2">Исполнитель</th>
             </tr>
             <tr>
                 <th class="border border-dark">Номер и дата заявки</th>
-                <th class="border border-dark">Планируеюмый буджет запуски (сум)</th>
+                <th class="border border-dark">Планируемый вид закупки (сум)</th>
                 <th class="border border-dark">Дата получения отделом</th>
                 <th class="border border-dark">Инициатор</th>
                 <th class="border border-dark">Номер договора</th>
-                <th class="border border-dark">Подставщик</th>
+                <th class="border border-dark">Поставщик</th>
                 <th class="border border-dark">Сумма</th>
             </tr>
         </thead>
@@ -93,7 +94,7 @@
 
     <script>
         $(document).ready(function() {
-            var tableTitle = '8 - Отчет eshop';
+            var tableTitle = '8 - Отчет по видам закупки';
             var buttonCommon = {
                 extend: 'excel',
                 title: '8-отчет eshop',
@@ -138,6 +139,7 @@
                     {data: 'performer_received_date', name: 'performer_received_date'},
                     {data: 'initiator', name: 'initiator'},
                     {data: 'product', name: 'product'},
+                    {data: 'type_of_purchase', name: 'type_of_purchase'},
                     {data: 'contract_number', name: 'contract_number'},
                     {data: 'supplier_name', name: 'supplier_name'},
                     {data: 'contract_price', name: 'contract_price'},

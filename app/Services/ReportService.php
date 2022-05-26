@@ -529,6 +529,11 @@ class ReportService
     {
         $query = Application::query();
         return Datatables::of($query)
+            ->addColumn('name', function($branch){
+                $applications = Branch::where('id', $branch->branch_initiator_id)->get()->pluck('name');
+                $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+                return trim($json, '[], "');
+            })
             ->addColumn('tovar_1', function($branch){
                 $date = Cache::get('date_3_month');
                 $start_date = Carbon::parse("{$date}-01")
@@ -662,6 +667,11 @@ class ReportService
         return Datatables::of($query)
             ->addColumn('filial', function($branch){
                 $applications = Branch::where('id', $branch->branch_initiator_id)->get()->pluck('name');
+                $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+                return trim($json, '[], "');
+            })
+            ->addColumn('type_of_purchase', function($branch){
+                $applications = Purchase::where('id', $branch->type_of_purchase_id)->get()->pluck('name');
                 $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
                 return trim($json, '[], "');
             })
