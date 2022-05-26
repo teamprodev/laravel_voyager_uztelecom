@@ -101,7 +101,7 @@ class ApplicationService
                     return $query->created_at ? with(new Carbon($query->created_at))->format('m/d/Y') : '';
                 })
                 ->editColumn('updated_at', function ($query) {
-                    return $query->updated_at ? with(new Carbon($query->updated_at))->format('Y/m/d') : '';;
+                    return $query->updated_at ? with(new Carbon($query->updated_at))->format('m/d/Y') : '';;
                 })
                 ->editColumn('status', function ($query){
                     $status_new = __('lang.status_new');
