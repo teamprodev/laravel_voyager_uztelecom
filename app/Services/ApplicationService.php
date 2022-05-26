@@ -466,7 +466,7 @@ class ApplicationService
             if($data['draft'] == 1)
                 $data['status'] = 'draft';
 
-        if($data['performer_status'])
+        if(isset($data['performer_status']))
         {
             $application->performer_user_id = Auth()::id();
             $application->status = $data['performer_status'];
