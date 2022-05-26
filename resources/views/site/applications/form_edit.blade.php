@@ -212,7 +212,6 @@
                     ->name('branch_initiator_id')
                     ->value('branch_initiator_id')
                 }}
-                </select>
             </div>
 
             @if($application->is_more_than_limit !== '0')
