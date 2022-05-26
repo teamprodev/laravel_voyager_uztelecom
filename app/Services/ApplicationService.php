@@ -62,7 +62,7 @@ class ApplicationService
             }
             elseif($user->hasPermission('Company_Leader') && $user->hasPermission('Branch_Leader'))
             {
-                $query = Application::query()->where('draft','!=',1)->where('is_more_than_limit',1)->where('status','agreed')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->where('status','accepted')->orWhere('status','distributed')->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
+                $query = Application::query()->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             elseif($user->role_id == 7)
             {
