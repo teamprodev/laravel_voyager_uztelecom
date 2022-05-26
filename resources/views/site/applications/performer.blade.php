@@ -89,7 +89,7 @@
                         }}
                     </div>
                     {{Aire::select($status_extented, 'select')
-                        ->name('status')
+                        ->name('performer_status')
                         ->value($application->status)
                         }}
                     <div id="file"></div>
@@ -109,7 +109,6 @@
     <script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.legacy.min.js" nomodule></script>
     <script src="https://releases.transloadit.com/uppy/locales/v2.0.5/ru_RU.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <input class="hidden" name="performer_user_id" id="performer_user_id" value="{{$user->id}}" type="text">
     <script>
         var uppy = new Uppy.Core({
             debug: true,
