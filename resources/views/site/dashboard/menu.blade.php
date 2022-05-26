@@ -105,7 +105,7 @@
                         </a>
                         <a href="{{route('site.report.index', '8')}}" id="report" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>8 отчет свод  общий</p>
+                            <p>8 отчет по видам закупки</p>
                         </a>
                         <a href="{{route('site.report.index', '9')}}" id="report" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
