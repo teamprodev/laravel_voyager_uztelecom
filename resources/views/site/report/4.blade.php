@@ -1,3 +1,5 @@
+@extends('site.layouts.app')
+@section('center_content')
 <!doctype html>
 <html lang="en">
 <head>
@@ -133,3 +135,4 @@
 <div class="pl-4 pt-4">
     <a href="/" class="btn btn-danger">{{ __('lang.back') }}</a>
 </div>
+@endsection

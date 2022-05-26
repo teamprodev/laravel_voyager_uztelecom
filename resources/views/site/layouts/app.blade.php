@@ -47,13 +47,10 @@
             @include('site.dashboard.sidebar')
         </aside>
         <div class="content-wrapper" style="min-height: 292px;">
-           <div class="content">
+           <div class="content" style="padding: 0.2rem">
                 @yield('center_content')
            </div>
         </div>
-
-
-
 
     </div>
 <!-- jQuery -->
@@ -72,6 +69,7 @@
 <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.colVis.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js" integrity="sha512-ubuT8Z88WxezgSqf3RLuNi5lmjstiJcyezx34yIU2gAHonIi27Na7atqzUZCOoY4CExaoFumzOsFQ2Ch+I/HCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
