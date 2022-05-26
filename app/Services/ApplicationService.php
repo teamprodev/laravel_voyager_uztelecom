@@ -66,7 +66,7 @@ class ApplicationService
             }
             elseif($user->role_id == 7)
             {
-                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->get();
+                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('status','new')->get();
             }
             elseif ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
             {
@@ -465,6 +465,12 @@ class ApplicationService
         if(isset($data['draft']))
             if($data['draft'] == 1)
                 $data['status'] = 'draft';
+
+        if($data['performer_status'])
+        {
+            $application->performer_user_id = Auth()::id();
+            $application->status = $data['performer_status'];
+        }
         if(isset($data['performer_leader_user_id']))
         {
             $data['performer_leader_comment_date'] = Carbon::now()->toDateTimeString();
@@ -487,6 +493,7 @@ class ApplicationService
                     $id[] = $all->id;
                     $data['resource_id'] = json_encode($id);
                 }
+                $application->status = 'new';
             }
 
         }
@@ -536,7 +543,7 @@ class ApplicationService
                     SignedDocs::where('application_id',$application->id)->where('role_id',$delete)->delete();
                 }
             }
-
+            $application->status = 'new';
             $this->sendNotifications($array, $application,null);
         }
         $result = $application->update($data);

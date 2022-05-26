@@ -25,7 +25,7 @@
                                 ->name("initiator")
                                 ->value($application->initiator)
                                 ->class("form-control")
-                                ->required()
+                                ->disabled()
                             }}
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                                 ->value($application->purchase_basis)
                                 ->cols(40)
                                 ->class("form-control")
-                                ->required()
+                                ->disabled()
                             }}
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                                 ->value($application->basis)
                                 ->cols(40)
                                 ->class("form-control")
-                                ->required()
+                                ->disabled()
                             }}
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                                 ->name("name")
                                 ->value($application->name)
                                 ->class("form-control")
-                                ->required()
+                                ->disabled()
                             }}
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                                 ->value($application->specification)
                                 ->cols(40)
                                 ->class("form-control")
-                                ->required()
+                                ->disabled()
                             }}
                         </div>
                     </div>
@@ -100,7 +100,7 @@
                                 ->value($application->separate_requirements)
                                 ->cols(40)
                                 ->class("form-control")
-                                ->required()
+                                ->disabled()
                             }}
                         </div>
                     </div>
@@ -114,7 +114,7 @@
                                 ->value($application->other_requirements)
                                 ->cols(40)
                                 ->class("form-control")
-                                ->required()
+                                ->disabled()
                             }}
                         </div>
                     </div>
@@ -133,8 +133,7 @@
                                 ->name("planned_price")
                                 ->id("planned_price")
                                 ->value($application->planned_price)
-                                ->class("form-control")
-                                ->required()
+                                ->class("form-control")->disabled()
                             }}
                         </div>
                     </div>
@@ -147,8 +146,7 @@
                                 ->name("incoterms")
                                 ->value($application->incoterms)
                                 ->cols(40)
-                                ->class("form-control")
-                                ->required()
+                                ->class("form-control")->disabled()
                             }}
                         </div>
                     </div>
@@ -161,7 +159,7 @@
                                 ->name("info_purchase_plan")
                                 ->value($application->info_purchase_plan)
                                 ->cols(40)
-                                ->class("form-control")
+                                ->class("form-control")->disabled()
                             }}
                         </div>
                     </div>
@@ -172,7 +170,7 @@
                             {{Aire::input()
                                 ->name("info_business_plan")
                                 ->value($application->info_business_plan)
-                                ->class("form-control")
+                                ->class("form-control")->disabled()
                             }}
                         </div>
                     </div>
@@ -186,7 +184,7 @@
                                 ->value($application->comment)
                                 ->cols(40)
                                 ->class("form-control")
-                                ->required()
+                                ->disabled()
                             }}
                         </div>
                     </div>
@@ -335,13 +333,11 @@
             })
             </script>
             <div style="height: 50px"></div>
+    {{ Aire::open()
+    ->route('site.applications.update',$application->id)
+    ->enctype("multipart/form-data")
+    ->post() }}
             @if($user->hasPermission('Plan_Budget') || $user->hasPermission('Plan_Business'))
-                {{ Aire::open()
-                    ->route('site.applications.update',$application->id)
-                    ->enctype("multipart/form-data")
-                    ->post()
-                    ->class('pb-5')
-                }}
                 {{Aire::textArea('bio', __('lang.table_20'))
                     ->name('info_purchase_plan')
                     ->value($application->info_purchase_plan)
@@ -354,11 +350,9 @@
                     ->rows(3)
                     ->cols(40)
                 }}
-                {{Aire::submit('Save')}}
-                {{ Aire::close() }}
 
                 @if($user->hasPermission('Number_Change'))
-                    {{Aire::textArea('num', __('lang.number'))
+                    {{Aire::textArea('bio', __('lang.number'))
                         ->name('number')
                     }}
                     <div class="mb-3 row w-50">
@@ -368,14 +362,9 @@
                         <input class="form-control" id="date" name="date" type="date" value="{{$application->date}}"/>
                     </div>
                 @endif
+                {{Aire::submit('Save')}}
 
             @elseif($user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business'))
-                {{ Aire::open()
-                    ->route('site.applications.update',$application->id)
-                    ->enctype("multipart/form-data")
-                    ->post()
-                    ->class('pb-5')
-                }}
                 {{Aire::textArea('bio', __('lang.number'))
                     ->name('number')
                 }}
@@ -388,17 +377,10 @@
                     </div>
                 </div>
                 {{Aire::submit('Save')}}
-                {{ Aire::close() }}
             @endif
             @if($application->is_more_than_limit = 1 && auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
                 @if(!isset($application->performer_user_id))
                     <div class="pb-5">
-                        {{ Aire::open()
-                            ->route('site.applications.update',$application->id)
-                            ->enctype("multipart/form-data")
-                            ->post()
-                            ->class('pb-5')
-                        }}
                         <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
                         {{Aire::textArea('bio', __('lang.comment_suz'))
                                 ->name('branch_leader_comment')
@@ -411,7 +393,6 @@
                             @endforeach
                         </select>
                         <button type="submit" class="btn btn-success col-md-2" >{{ __('lang.send') }}</button>
-                        {{ Aire::close() }}
                     </div>
                 @endif
             @elseif($application->is_more_than_limit = 0 && auth()->user()->hasPermission('Branch_Leader') && $application->status == 'accepted')
@@ -530,6 +511,7 @@
                     </form>
                 </div>
             @endif
+                {{ Aire::close() }}
         </div>
     </div>
 
