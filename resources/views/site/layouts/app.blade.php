@@ -35,7 +35,7 @@
 </head>
 
 <body class="sidebar-mini" style="height: auto;">
-    <div class="wrapper">
+    <div class="wrapper" style="min-width: fit-content">
         @php
             $auth_user = auth()->user();
         @endphp
