@@ -40,10 +40,7 @@
                            </td>
                        </tr>
                        <tr class="hover:bg-gray-200">
-                           <td class="font-medium text-lg p-2">
-                               Филиал танлаш:
-                           </td>
-                           {{Aire::select($fillial, 'select', 'Filial')->name('fillial')}}
+                           {{Aire::select($fillial, 'select', 'Filial')->name('fillial')->value($user->branch_id)}}
                        </tr>
                        @isset($user->branch_id)
                        <tr class="hover:bg-gray-200">
