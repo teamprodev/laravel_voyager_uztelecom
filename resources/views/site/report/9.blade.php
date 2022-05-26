@@ -55,7 +55,7 @@
 <table id="example" class="display wrap table-bordered dt-responsive" style="border-collapse: collapse; width: 100%; padding-top: 10px">
     <thead class="border border-dark">
     <tr class="border border-dark">
-        <th style="text-align: center;" class="border border-dark" rowspan="2">№</th>
+        <th style="text-align: center;" class="border border-dark" rowspan="2">ID</th>
         <th style="text-align: center;" class="border border-dark" rowspan="2">Буюртмачи номи</th>
         <th style="text-align: center;" class="border border-dark" rowspan="2">СТИР</th>
         <th style="text-align: center;" class="border border-dark" colspan="2">Шартномалара</th>
