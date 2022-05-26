@@ -529,8 +529,8 @@ class ReportService
     {
         $query = Application::query();
         return Datatables::of($query)
-            ->addColumn('name', function($branch){
-                $applications = Branch::where('id', $branch->branch_initiator_id)->get()->pluck('name');
+            ->addColumn('type_of_purchase', function($branch){
+                $applications = Purchase::where('id', $branch->type_of_purchase_id)->get()->pluck('name');
                 $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
                 return trim($json, '[], "');
             })

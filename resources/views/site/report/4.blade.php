@@ -132,7 +132,7 @@
                 {data: 'initiator', name: 'initiator'},
                 {data: 'initiator', name: 'initiator'},
                 {data: 'branch_initiator_id', name: 'branch_initiator_id'},
-                {data: 'type_of_purchase_id', name: 'type_of_purchase_id'},
+                {data: 'type_of_purchase', name: 'type_of_purchase'},
                 {data: 'name', name: 'name'},
                 {data: 'subject', name: 'subject'},
                 {data: 'amount', name: 'amount'},
