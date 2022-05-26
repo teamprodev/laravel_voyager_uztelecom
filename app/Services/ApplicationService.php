@@ -151,7 +151,7 @@ class ApplicationService
                     $app_clone= __('lang.clone');;
                     $app_delete= __('lang.delete');;
 
-                    if(auth()->user()->hasPermission('Warehouse') || $row->user_id == auth()->user()->id||auth()->user()->hasPermission('Branch_Performer')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Plan_Budget')||auth()->user()->hasPermission('Plan_Business')||auth()->user()->hasPermission('Number_Change'))
+                    if(auth()->user()->hasPermission('Warehouse'))
                     {
                         $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-success btn-sm'>$app_edit</a>";
                     }else{
