@@ -1,4 +1,5 @@
-
+@extends('site.layouts.app')
+@section('center_content')
 <!doctype html>
 <html lang="en">
 <head>
@@ -25,7 +26,7 @@
         }
     </style>
 </head>
-<table id="example" class="display nowrap" style="width:100%">
+<table id="example" class="display nowrap" style="width:100%"  border="1">
     <thead>
     <tr>
         <th>№</th>
@@ -105,5 +106,6 @@
 <div class="pl-4 pt-4">
     <a href="/" class="btn btn-danger">{{ __('lang.back') }}</a>
 </div>
+@endsection
 
 
