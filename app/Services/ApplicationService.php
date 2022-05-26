@@ -487,6 +487,7 @@ class ApplicationService
                     $id[] = $all->id;
                     $data['resource_id'] = json_encode($id);
                 }
+                $application->status = 'new';
             }
 
         }
@@ -536,7 +537,7 @@ class ApplicationService
                     SignedDocs::where('application_id',$application->id)->where('role_id',$delete)->delete();
                 }
             }
-
+            $application->status = 'new';
             $this->sendNotifications($array, $application,null);
         }
         $result = $application->update($data);
