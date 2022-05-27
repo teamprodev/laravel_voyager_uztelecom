@@ -31,11 +31,7 @@ class ApplicationObserver
      */
     public function updated(Application $application)
     {
-        if($application->performer_status != null && $application->performer_leader_comment == null)
-        {
-            $application->performer_user_id = auth()->user()->id;
-            $result = $application->save();
-        }
+
     }
 
     /**

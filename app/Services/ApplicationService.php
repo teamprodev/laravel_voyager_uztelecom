@@ -19,6 +19,7 @@ use App\Models\Warehouse;
 use DateTime;
 use GuzzleHttp\Client;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Country;
 use App\Models\Purchase;
@@ -151,7 +152,7 @@ class ApplicationService
                     $app_clone= __('lang.clone');;
                     $app_delete= __('lang.delete');;
 
-                    if(auth()->user()->hasPermission('Warehouse'))
+                    if(auth()->user()->hasPermission('Warehouse')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Branch_Performer'))
                     {
                         $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-success btn-sm'>$app_edit</a>";
                     }else{
@@ -432,6 +433,9 @@ class ApplicationService
     }
     public function edit($application)
     {
+        $status_extented = StatusExtented::all()->pluck('name','name')->toArray();
+        if($application->status != 'distributed' && in_array($application->status,$status_extented) == false)
+            return redirect()->route('site.applications.index');
         $countries = ['0' => 'Select country'];
         $countries[] = Country::get()->pluck('country_name','country_alpha3_code')->toArray();
         $products = Resource::get();
@@ -449,7 +453,7 @@ class ApplicationService
             'subject' => Subject::all()->pluck('name','id'),
             'branch' => Branch::all()->pluck('name', 'id'),
             'users' => User::where('role_id', 5)->get(),
-            'status_extented' => StatusExtented::all()->pluck('name','name'),
+            'status_extented' => $status_extented,
             'countries' => $countries,
             'products' => $select,
             'warehouse' => Warehouse::where('application_id',$application->id)->first(),
@@ -463,12 +467,13 @@ class ApplicationService
     {
         $data = $request->validated();
         if(isset($data['draft']))
+        {
             if($data['draft'] == 1)
                 $data['status'] = 'draft';
-
-        if(isset($data['performer_status']))
+        }
+        if($application->performer_status != null)
         {
-            $application->performer_user_id = Auth()::id();
+            $application->performer_user_id = auth()->user()->id;
             $application->status = $data['performer_status'];
         }
         if(isset($data['performer_leader_user_id']))
