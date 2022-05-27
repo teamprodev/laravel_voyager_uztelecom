@@ -440,59 +440,6 @@
                 <div class="mt-4">
                     <button type="submit" class="btn btn-success col-md-2" >{{ __('lang.send') }}</button>
                 </div>
-                {{ Aire::close() }}
-            @elseif($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer'||'Company_Performer'||'Branch_Performer') || $access && $user->role_id == 7 && $application->status == 'accepted')
-                <div class="px-6">
-                    <form name="testform" action="{{route('site.applications.imzo.sign',$application->id)}}"        method="POST">
-                        @csrf
-                        <label id="message"></label>
-                        <div class="form-group">
-                            <label for="select1">
-                                {{ __('lang.eimzo_key') }}
-                            </label>
-                            <select name="key" id="select1" onchange="cbChanged(this)"></select> <br />
-                        </div>
-                        <div class="form-group hidden">
-                            <label for="exampleFormControlTextarea1">
-                                {{ __('lang.eimzo_title') }}
-                            </label>
-                            <textarea class="form-control" id="eri_data" name="data" rows="3"></textarea>
-                        </div>
-                        <div class="mb-2 text-center mr-6">
-                            {{ __('lang.eimzo_id') }} <label id="keyId"></label><br />
-
-                            <button onclick="generatekey()" class="hidden btn btn-success" type="button">{{ __('lang.eimzo_sign') }}</button><br />
-                        </div>
-                        <div class="w-1/2">
-                            {{Aire::textArea('bio', __('lang.table_23'))
-                            ->name('comment')
-                            ->rows(3)
-                            ->cols(40)
-                             }}
-                        </div>
-                        <div class="form-group hidden">
-                            <label for="exampleFormControlTextarea3">
-                                Подписанный документ PKCS#7
-                            </label>
-                            <textarea   class="form-control" readonly required
-                                        name="pkcs7" id="exampleFormControlTextarea3"
-                                        rows="3"></textarea>
-                        </div> <br />
-                        <input id="status" name="status" class="hidden" type="text">
-                        <input value="applications" id="table_name" name="table_name" class="hidden" type="text">
-                        <input value="{{$application->id}}" id="application_id" name="application_id" class="hidden" type="text">
-                        <input value="{{auth()->user()->id}}" name="user_id" class="hidden" type="text">
-                        <input value="{{auth()->user()->role_id}}" name="role_id" class="hidden" type="text">
-                        <div class="row ml-4 pb-4">
-                            <button onclick="status1()" type="submit" class="btn btn-success col-md-2" >
-                                {{ __('lang.accept') }}
-                            </button>
-                            <button onclick="status0()" type="submit" class="btn btn-danger col-md-2 mx-2   " >
-                                {{ __('lang.reject') }}
-                            </button>
-                        </div>
-                    </form>
-                </div>
             @endif
     {{Aire::close()}}
     @if($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer'||'Company_Performer'||'Branch_Performer') || $access && $user->role_id == 7 && $application->status == 'accepted')
