@@ -333,11 +333,11 @@
             })
             </script>
             <div style="height: 50px"></div>
-    {{ Aire::open()
+            @if($user->hasPermission('Plan_Budget') || $user->hasPermission('Plan_Business'))
+                {{ Aire::open()
     ->route('site.applications.update',$application->id)
     ->enctype("multipart/form-data")
     ->post() }}
-            @if($user->hasPermission('Plan_Budget') || $user->hasPermission('Plan_Business'))
                 {{Aire::textArea('bio', __('lang.table_20'))
                     ->name('info_purchase_plan')
                     ->value($application->info_purchase_plan)
@@ -398,11 +398,6 @@
             @elseif($application->is_more_than_limit = 0 && auth()->user()->hasPermission('Branch_Leader') && $application->status == 'accepted')
                 @if(!isset($application->performer_user_id))
                     <div class="pb-5">
-                        {{ Aire::open()
-                            ->route('site.applications.update',$application->id)
-                            ->enctype("multipart/form-data")
-                            ->post()
-                        }}
                         <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
                         {{Aire::textArea('bio', __('lang.comment_suz'))
                                 ->name('branch_leader_comment')
@@ -415,15 +410,9 @@
                             @endforeach
                         </select>
                         <button type="submit" class="btn btn-success col-md-2" >{{ __('lang.send') }}</button>
-                        {{ Aire::close() }}
                     </div>
                 @endif
             @elseif($application->performer_role_id == $user->role_id && $user->leader == 1)
-                {{ Aire::open()
-                    ->route('site.applications.update',$application->id)
-                    ->enctype("multipart/form-data")
-                    ->post()
-                }}
                 {{Aire::textArea('bio', __('lang.comment_per'))
                     ->name('performer_leader_comment')
                     ->value($application->performer_leader_comment)
@@ -437,13 +426,7 @@
                 <div class="mt-4">
                     <button type="submit" class="btn btn-success col-md-2" >{{ __('lang.send') }}</button>
                 </div>
-                {{ Aire::close() }}
             @elseif($application->performer_role_id == $user->role_id && $user->leader == 0)
-                {{ Aire::open()
-                    ->route('site.applications.update',$application->id)
-                    ->enctype("multipart/form-data")
-                    ->post()
-                }}
                 {{Aire::textArea('bio', __('lang.table_23'))
                     ->name('performer_comment')
                     ->value($application->performer_comment)
@@ -458,6 +441,7 @@
                     <button type="submit" class="btn btn-success col-md-2" >{{ __('lang.send') }}</button>
                 </div>
                 {{ Aire::close() }}
+
             @elseif($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer'||'Company_Performer'||'Branch_Performer') || $access && $user->role_id == 7 && $application->status == 'accepted')
                 <div class="px-6">
                     <form name="testform" action="{{route('site.applications.imzo.sign',$application->id)}}"        method="POST">
@@ -510,10 +494,7 @@
                         </div>
                     </form>
                 </div>
-            @endif
-                {{ Aire::close() }}
-        </div>
-    </div>
+                @endif
 
     <script>
         function generatekey()
