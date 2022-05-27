@@ -66,14 +66,14 @@
         <thead class="border border-dark">
 
             <tr class="border border-dark">
-                <th colspan="4"><b style="margin-left: 940px;">Заключенные договора</b></th>
-                <th colspan="2"><b>товар</b></th>
-                <th colspan="2"><b>работа</b></th>
-                <th colspan="2"><b>услуга</b></th>
+                <th style="text-align: center;" class="border border-dark" rowspan="2"> ID</th>
+                <th style="text-align: center;" class="border border-dark" rowspan="2">Филиал</th>
+                <th style="text-align: center;" class="border border-dark" colspan="2">Заключенные договора</th>
+                <th style="text-align: center;" class="border border-dark" colspan="2"><b>товар</b></th>
+                <th style="text-align: center;" class="border border-dark" colspan="2"><b>работа</b></th>
+                <th style="text-align: center;" class="border border-dark" colspan="2"><b>услуга</b></th>
             </tr>
             <tr class="border border-dark">
-                <th style="text-align: center;" class="border border-dark"> ID</th>
-                <th style="text-align: center;" class="border border-dark">Филиал</th>
                 <th style="text-align: center;" class="border border-dark">кол-во</th>
                 <th style="text-align: center;" class="border border-dark">сумма</th>
                 <th style="text-align: center;" class="border border-dark">кол-во</th>
@@ -106,7 +106,7 @@
 
     <script>
         $(document).ready(function() {
-            var tableTitle = '5 отчет свод  общий';
+            var tableTitle = '5 - Отчет свод  общий';
 
             $('#example').DataTable( {
                 "language": {
@@ -150,6 +150,26 @@
                             exportOptions: {
                                 columns: ':visible:Not(.not-exported)',
                                 rows: ':visible',
+                                format: {
+                                    header: function ( data, columnIdx ) {
+                                        switch (columnIdx) {
+                                            case 2:
+                                            case 3:
+                                                return 'Заключенные договора ' + data;
+                                            case 4:
+                                            case 5:
+                                                return 'Товар ' + data;
+                                            case 6:
+                                            case 7:
+                                                return 'Работа ' + data;
+                                            case 8:
+                                            case 9:
+                                                return 'Услуга ' + data;
+                                            default:
+                                                return data;
+                                        }
+                                    }
+                                }
                             },
                         },
                         { extend: 'excelHtml5',
@@ -161,20 +181,21 @@
                                 rows: ':visible',
                                 format: {
                                     header: function ( data, columnIdx ) {
-                                        if(columnIdx==2 || columnIdx==3){
-                                            return 'Заключенные договора ' + data;
-                                        }
-                                        if(columnIdx==4 || columnIdx==5){
-                                            return 'Товар ' + data;
-                                        }
-                                        if(columnIdx==6 || columnIdx==7){
-                                            return 'Работа ' + data;
-                                        }
-                                        if(columnIdx==8 || columnIdx==9){
-                                            return 'Услуга ' + data;
-                                        }
-                                        else{
-                                            return data;
+                                        switch (columnIdx) {
+                                            case 2:
+                                            case 3:
+                                                return 'Заключенные договора ' + data;
+                                            case 4:
+                                            case 5:
+                                                return 'Товар ' + data;
+                                            case 6:
+                                            case 7:
+                                                return 'Работа ' + data;
+                                            case 8:
+                                            case 9:
+                                                return 'Услуга ' + data;
+                                            default:
+                                                return data;
                                         }
                                     }
                                 }
@@ -189,6 +210,26 @@
                             exportOptions: {
                                 columns: ':visible:Not(.not-exported)',
                                 rows: ':visible',
+                                format: {
+                                    header: function ( data, columnIdx ) {
+                                        switch (columnIdx) {
+                                            case 2:
+                                            case 3:
+                                                return 'Заключенные договора ' + data;
+                                            case 4:
+                                            case 5:
+                                                return 'Товар ' + data;
+                                            case 6:
+                                            case 7:
+                                                return 'Работа ' + data;
+                                            case 8:
+                                            case 9:
+                                                return 'Услуга ' + data;
+                                            default:
+                                                return data;
+                                        }
+                                    }
+                                }
                             },
                         },
                         { extend: 'print',
@@ -198,6 +239,26 @@
                             exportOptions: {
                                 columns: ':visible:Not(.not-exported)',
                                 rows: ':visible',
+                                format: {
+                                    header: function ( data, columnIdx ) {
+                                        switch (columnIdx) {
+                                            case 2:
+                                            case 3:
+                                                return 'Заключенные договора ' + data;
+                                            case 4:
+                                            case 5:
+                                                return 'Товар ' + data;
+                                            case 6:
+                                            case 7:
+                                                return 'Работа ' + data;
+                                            case 8:
+                                            case 9:
+                                                return 'Услуга ' + data;
+                                            default:
+                                                return data;
+                                        }
+                                    }
+                                }
                             },
                         },
                         { extend: 'colvis',

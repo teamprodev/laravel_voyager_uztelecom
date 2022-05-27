@@ -104,7 +104,7 @@
 
 <script>
     $(document).ready(function() {
-        var tableTitle = '2-отчет квартальный итоговый';
+        var tableTitle = '2 - Отчет квартальный итоговый';
 
         $('#example').DataTable( {
             "language": {

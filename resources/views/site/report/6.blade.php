@@ -89,7 +89,7 @@
 
 <script>
     $(document).ready(function() {
-        var tableTitle = '6 отчет свод';
+        var tableTitle = '6 - Отчет свод';
 
         $('#example').DataTable( {
             "language": {

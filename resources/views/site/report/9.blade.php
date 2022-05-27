@@ -119,7 +119,7 @@
 
 <script>
     $(document).ready(function() {
-        var tableTitle = '9-ойлик харидлар илова плановый';
+        var tableTitle = '9 - Ойлик харидлар илова плановый';
 
         $('#example').DataTable( {
             "language": {
