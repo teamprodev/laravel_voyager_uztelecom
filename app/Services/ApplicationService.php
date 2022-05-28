@@ -434,7 +434,7 @@ class ApplicationService
     public function edit($application)
     {
         $status_extented = StatusExtented::all()->pluck('name','name')->toArray();
-        if($application->status != 'new' && $application->status != 'distributed' && in_array($application->status,$status_extented) == false)
+        if($application->status != 'draft' && $application->status != 'new' && $application->status != 'distributed' && in_array($application->status,$status_extented) == false)
             return redirect()->route('site.applications.index');
         $countries = ['0' => 'Select country'];
         $countries[] = Country::get()->pluck('country_name','country_alpha3_code')->toArray();
