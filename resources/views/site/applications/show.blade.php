@@ -400,7 +400,7 @@
                         <button type="submit" class="btn btn-success col-md-2" >{{ __('lang.send') }}</button>
                     </div>
                 @endif
-            @elseif($application->is_more_than_limit = 0 && auth()->user()->hasPermission('Branch_Leader') && $application->status == 'accepted')
+            @elseif($application->is_more_than_limit != 1 && auth()->user()->hasPermission('Branch_Leader') && $application->status == 'accepted')
                 @if(!isset($application->performer_user_id))
                     <div class="pb-5">
                         <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
