@@ -67,7 +67,7 @@ class ApplicationService
             }
             elseif($user->role_id == 7)
             {
-                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('status','new')->get();
+                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('status','new')->orWhere('draft','!=',1)->where('status','accepted')->get();
             }
             elseif ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
             {
