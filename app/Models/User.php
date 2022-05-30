@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use TCG\Voyager\Models\Role;
 use App\Models\Branch;
+use App\Models\Position;
 
 class User extends \TCG\Voyager\Models\User
 {
@@ -53,6 +54,10 @@ class User extends \TCG\Voyager\Models\User
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+    public function position()
+    {
+        return $this->belongsTo(Position::class);
     }
     public function branch()
     {
