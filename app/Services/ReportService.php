@@ -648,7 +648,15 @@ class ReportService
                 $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
                 return trim($json, '[], "');
             })
-            ->make(true);
+
+            ->addColumn('product', function($application){
+                $product = json_decode($application->resource_id,true);
+                $names = collect($product);
+                $ucnames = $names->map(function($item, $key) {
+                    return Resource::find($item)->name;
+                });
+                return json_decode($ucnames);
+            })->make(true);
 
     }
 
