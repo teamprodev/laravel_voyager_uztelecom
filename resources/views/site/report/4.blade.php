@@ -130,7 +130,7 @@
                 {data: 'number', name: 'number'},
                 {data: 'date', name: 'date'},
                 {data: 'initiator', name: 'initiator'},
-                {data: 'initiator', name: 'initiator'},
+                {data: 'phone', name: 'phone'},
                 {data: 'branch_initiator_id', name: 'branch_initiator_id'},
                 {data: 'type_of_purchase', name: 'type_of_purchase'},
                 {data: 'name', name: 'name'},
