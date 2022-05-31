@@ -122,7 +122,7 @@
                 {data: 'contract_price', name: 'contract_price'},
                 {data: 'currency', name: 'currency'},
                 {data: 'lot_number', name: 'lot_number'},
-                {data: 'type_of_purchase_id', name: 'type_of_purchase_id'},
+                {data: 'type_of_purchase', name: 'type_of_purchase'},
                 {data: 'contract_info', name: 'contract_info'},
                 {data: 'country_produced_id', name: 'country_produced_id'},
                 {data: 'purchase_basis', name: 'purchase_basis'},

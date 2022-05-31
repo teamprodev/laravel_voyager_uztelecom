@@ -47,7 +47,8 @@ return [
     "performer" => "Performer",
     "performer_country" => "Goods (service) country of manufactured",
     "performer_info" => "Product information",
-
+    "count"=>"count",
+    "sum"=>"sum",
 
     "performer_lot" => "Lot number",
     "performer_branch" => "Branch customer under contract",
