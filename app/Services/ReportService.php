@@ -538,6 +538,9 @@ class ReportService
             ->editColumn('branch_initiator_id', function($application){
                 return $application->branch ? $application->branch->name:"";
             })
+            ->addColumn('phone', function($application){
+                return $application->user->phone ? $application->user->phone:"Not Phone Number";
+            })
             ->addColumn('type_of_purchase', function($branch){
                 $applications = Purchase::where('id', $branch->type_of_purchase_id)->get()->pluck('name');
                 $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
