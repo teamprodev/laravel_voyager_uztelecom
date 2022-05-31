@@ -4,7 +4,6 @@
 namespace App\Services;
 
 
-use App\Events\Notify;
 use App\Models\Application;
 use App\Models\Branch;
 use App\Models\Notification;
@@ -16,10 +15,8 @@ use App\Models\SignedDocs;
 use App\Models\StatusExtented;
 use App\Models\User;
 use App\Models\Warehouse;
-use DateTime;
-use GuzzleHttp\Client;
+use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Country;
 use App\Models\Purchase;
@@ -28,16 +25,51 @@ use App\Models\Subject;
 use Illuminate\Support\Facades\Http;
 use Yajra\DataTables\DataTables;
 
+/**
+ * @property array|\Illuminate\Contracts\Foundation\Application|Translator|string|null status_new
+ * @property array|\Illuminate\Contracts\Foundation\Application|Translator|string|null status_in_process
+ * @property array|\Illuminate\Contracts\Foundation\Application|Translator|string|null status_accepted
+ * @property array|\Illuminate\Contracts\Foundation\Application|Translator|string|null status_refused
+ * @property array|\Illuminate\Contracts\Foundation\Application|Translator|string|null status_agreed
+ * @property array|\Illuminate\Contracts\Foundation\Application|Translator|string|null status_rejected
+ * @property array|\Illuminate\Contracts\Foundation\Application|Translator|string|null status_distributed
+ * @property array|\Illuminate\Contracts\Foundation\Application|Translator|string|null status_cancelled
+ * @property array|\Illuminate\Contracts\Foundation\Application|Translator|string|null status_performed
+ * @property array|\Illuminate\Contracts\Foundation\Application|Translator|string|null status_overdue
+ */
 class ApplicationService
 {
+    /**
+     * @var array|\Illuminate\Contracts\Foundation\Application|Translator|string|null
+     */
+
+    public function __construct()
+    {
+        $status_new = __('lang.status_new');
+        $status_in_process = __('lang.status_in_process');
+        $status_accepted = __('lang.status_accepted');
+        $status_refused = __('lang.status_refused');
+        $status_agreed = __('lang.status_agreed');
+        $status_rejected = __('lang.status_rejected');
+        $status_distributed = __('lang.status_distributed');
+        $status_cancelled = __('lang.status_cancelled');
+        $status_performed = 'товар доставлен';
+        $status_overdue = 'просрочен';
+        $this->status_new = $status_new;
+        $this->status_in_process = $status_in_process;
+        $this->status_accepted = $status_accepted;
+        $this->status_refused = $status_refused;
+        $this->status_agreed = $status_agreed;
+        $this->status_rejected = $status_rejected;
+        $this->status_distributed = $status_distributed;
+        $this->status_cancelled = $status_cancelled;
+        $this->status_performed = $status_performed;
+        $this->status_overdue = $status_overdue;
+    }
+
     public function index($request)
     {
         if ($request->ajax()) {
-            $query = Application::query()
-                ->where('draft', '!=',null)
-                ->orWhere('draft','!=', 0)
-                ->latest('id')
-                ->get();
             $user = auth()->user();
 
             if($user->hasPermission('ЦУЗ'))
@@ -102,40 +134,30 @@ class ApplicationService
                     return $query->created_at ? with(new Carbon($query->created_at))->format('m/d/Y') : '';
                 })
                 ->editColumn('updated_at', function ($query) {
-                    return $query->updated_at ? with(new Carbon($query->updated_at))->format('m/d/Y') : '';;
+                    return $query->updated_at ? with(new Carbon($query->updated_at))->format('m/d/Y') : '';
                 })
                 ->editColumn('status', function ($query){
-                    $status_new = __('lang.status_new');
-                    $status_in_process = __('lang.status_in_process');
-                    $status_accepted = __('lang.status_accepted');
-                    $status_refused = __('lang.status_refused');
-                    $status_agreed = __('lang.status_agreed');
-                    $status_rejected = __('lang.status_rejected');
-                    $status_distributed = __('lang.status_distributed');
-                    $status_cancelled = __('lang.status_cancelled');
-                    $status_performed = 'товар доставлен';
-                    $status_overdue = 'просрочен';
                     if($query->status === 'new'){
-                        return $status_new;
+                        return $this->status_new;
                     }elseif($query->status === 'in_process'){
-                        return $status_in_process;
+                        return $this->status_in_process;
                     }elseif($query->status === 'overdue'||$query->status === 'Overdue'){
-                        return "<input value='{$status_overdue}' type='button' class='text-center m-1 col edit bg-danger btn-sm' disabled>";
+                        return "<input value='{$this->status_overdue}' type='button' class='text-center m-1 col edit bg-danger btn-sm' disabled>";
                     }elseif($query->status === 'accepted'){
-                        return $status_accepted;
+                        return $this->status_accepted;
                     }elseif($query->status === 'refused'){
-                        return $status_refused;
+                        return $this->status_refused;
                     }elseif($query->status === 'agreed'){
-                        return $status_agreed;
+                        return $this->status_agreed;
                     }elseif($query->status === 'rejected'){
-                        return $status_rejected;
+                        return $this->status_rejected;
                     }elseif($query->status === 'distributed'){
-                        return $status_distributed;
+                        return $this->status_distributed;
                     }elseif($query->status === 'canceled'){
-                        return $status_cancelled;
+                        return $this->status_cancelled;
                     }elseif($query->status === 'товар доставлен'){
                         return "<div class='row'>
-                        <input type='text' type='button' value='{$status_performed}' class='text-center display wrap edit bg-success btn-sm' disabled>
+                        <input type='text' type='button' value='{$this->status_performed}' class='text-center display wrap edit bg-success btn-sm' disabled>
                         </div>";
                     }else{
                         return $query->status;
@@ -202,37 +224,27 @@ class ApplicationService
                 return $data->updated_at ? with(new Carbon($data->updated_at))->format('Y/m/d') : '';
             })
             ->editColumn('status', function ($query){
-                $status_new = __('lang.status_new');
-                $status_in_process = __('lang.status_in_process');
-                $status_accepted = __('lang.status_accepted');
-                $status_refused = __('lang.status_refused');
-                $status_agreed = __('lang.status_agreed');
-                $status_rejected = __('lang.status_rejected');
-                $status_distributed = __('lang.status_distributed');
-                $status_cancelled = __('lang.status_cancelled');
-                $status_performed = __('lang.performed');
-                $status_overdue = 'просрочен';
                 if($query->status === 'new'){
-                    return $status_new;
+                    return $this->status_new;
                 }elseif($query->status === 'in_process'){
-                    return $status_in_process;
-                }elseif($query->status === 'Overdue'){
-                    return "<input value='{$status_overdue}' type='button' class='text-center m-1 col edit bg-danger btn-sm' disabled>";
+                    return $this->status_in_process;
+                }elseif($query->status === 'overdue'||$query->status === 'Overdue'){
+                    return "<input value='{$this->status_overdue}' type='button' class='text-center m-1 col edit bg-danger btn-sm' disabled>";
                 }elseif($query->status === 'accepted'){
-                    return $status_accepted;
+                    return $this->status_accepted;
                 }elseif($query->status === 'refused'){
-                    return $status_refused;
+                    return $this->status_refused;
                 }elseif($query->status === 'agreed'){
-                    return $status_agreed;
+                    return $this->status_agreed;
                 }elseif($query->status === 'rejected'){
-                    return $status_rejected;
+                    return $this->status_rejected;
                 }elseif($query->status === 'distributed'){
-                    return $status_distributed;
+                    return $this->status_distributed;
                 }elseif($query->status === 'canceled'){
-                    return $status_cancelled;
-                }elseif($query->status === 'товар доставлен') {
+                    return $this->status_cancelled;
+                }elseif($query->status === 'товар доставлен'){
                     return "<div class='row'>
-                        <input type='text' type='button' value='{$status_performed}' class='text-center m-1 col edit bg-success btn-sm' disabled>
+                        <input type='text' type='button' value='{$this->status_performed}' class='text-center display wrap edit bg-success btn-sm' disabled>
                         </div>";
                 }else{
                     return $query->status;
@@ -340,16 +352,16 @@ class ApplicationService
                     return $data->created_at ? with(new Carbon($data->created_at))->format('m/d/Y') : '';
                 })
                 ->editColumn('updated_at', function ($data) {
-                    return $data->updated_at ? with(new Carbon($data->updated_at))->format('Y/m/d') : '';;
+                    return $data->updated_at ? with(new Carbon($data->updated_at))->format('m/d/Y') : '';
                 })
                 ->addColumn('action', function($row){
                     $edit = route('site.applications.edit', $row->id);
                     $show = route('site.applications.show', $row->id);
                     $destroy = route('site.applications.destroy', $row->id);
                     $app_edit = __('lang.edit');
-                    $app_show = __('lang.show');;
-                    $app_clone = __('lang.clone');;
-                    $app_delete = __('lang.delete');;
+                    $app_show = __('lang.show');
+                    $app_clone = __('lang.clone');
+                    $app_delete = __('lang.delete');
                     if($row->status == 'accepted' || $row->status =='refused')
                     {
                         $clone = route('site.applications.clone', $row->id);
@@ -505,8 +517,8 @@ class ApplicationService
 
         if (isset($data['performer_role_id']))
         {
-            $mytime = Carbon::now();
-            $data['performer_received_date'] = $mytime->toDateTimeString();
+            $now = Carbon::now();
+            $data['performer_received_date'] = $now->toDateTimeString();
             $data['status'] = 'distributed';
 //            $data['performer_head_of_dep_user_id'] = auth()->user()->id;
         }
@@ -564,7 +576,7 @@ class ApplicationService
             $user_ids = User::query()->whereIn('role_id', $array)->pluck('id')->toArray();
             foreach ($user_ids as $user_id) {
                 $notification = Notification::query()->firstOrCreate(['user_id' => $user_id, 'application_id' => $application->id,'message' => $message]);
-                if ($notification->wasRecentlyCreated) {
+//                if($notification->wasRecentlyCreated) {
 //                    $diff = now()->diffInMinutes($application->created_at);
 //                    $data = [
 //                        'id' => $application->id,
@@ -572,7 +584,7 @@ class ApplicationService
 //                    ];
 
 //                    broadcast(new Notify(json_encode($data, $assoc = true), $user->id))->toOthers();     // notification
-                }
+//                }
             }
 
             Http::post('ws.smarts.uz/api/send-notification', [
