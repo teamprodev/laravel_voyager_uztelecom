@@ -65,7 +65,7 @@
             </tr>
             <tr>
                 <th class="border border-dark">Номер и дата заявки</th>
-                <th class="border border-dark">Планируемый вид закупки (сум)</th>
+                <th class="border border-dark">Планируемый бюджет закупки (сум)</th>
                 <th class="border border-dark">Дата получения отделом</th>
                 <th class="border border-dark">Инициатор</th>
                 <th class="border border-dark">Номер договора</th>
@@ -117,7 +117,7 @@
                     }
 
                 },
-                "processing": true,
+                "processing": false,
                 pageLength: 10,
                 // dom: 'PQlfrtip',
                     dom: 'Qlfrtip' + 'Bfrtip',

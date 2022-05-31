@@ -47,7 +47,8 @@ return [
     "performer" => "Ijrochi",
     "performer_country" => "Tovar (xizmat) ishlab chiqarilgan mamlakat",
     "performer_info" => "Mahsulot haqida ma'lumot",
-
+    "count"=>"Soni",
+    "sum"=>"sum",
     "performer_branch" => "Shartnoma bo'yicha buyurtmachi filiali",
     "performer_lot" => "LOT raqami",
     "performer_contract_num" => "Shartnoma raqami",
