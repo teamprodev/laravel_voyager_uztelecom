@@ -105,10 +105,10 @@ class ApplicationService
                     return $query->updated_at ? with(new Carbon($query->updated_at))->format('d/m/Y') : '';
                 })
                 ->editColumn('date', function ($query) {
-                    return $query->updated_at ? with(new Carbon($query->updated_at))->format('d/m/Y') : '';
+                    return $query->updated_at ? with(new Carbon($query->date))->format('d/m/Y') : '';
                 })
                 ->editColumn('delivery_date', function ($query) {
-                    return $query->updated_at ? with(new Carbon($query->updated_at))->format('d/m/Y') : '';
+                    return $query->updated_at ? with(new Carbon($query->delivery_date))->format('d/m/Y') : '';
                 })
                 ->editColumn('status', function ($query){
                     $status_new = __('Новая');
