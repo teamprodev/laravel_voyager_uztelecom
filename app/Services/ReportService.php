@@ -652,8 +652,15 @@ class ReportService
             ->make(true);
     }
 
-    public function report_6(){
-        $query = Application::query();
+    public function report_6()
+    {
+        if(auth()->user()->hasPermission('ЦУЗ'))
+        {
+
+            $query = Application::query();
+        }else{
+            $query = Application::where('branch_initiator_id',auth()->user()->branch_id)->get();
+        }
         return Datatables::of($query)
             ->addColumn('name', function($branch){
                 $applications = Branch::where('id', $branch->branch_initiator_id)->get()->pluck('name');
@@ -673,7 +680,13 @@ class ReportService
     }
 
     public function report_7(){
-        $query = Application::query();
+        if(auth()->user()->hasPermission('ЦУЗ'))
+        {
+
+            $query = Application::query();
+        }else{
+            $query = Application::where('branch_initiator_id',auth()->user()->branch_id)->get();
+        }
         return Datatables::of($query)
             ->addColumn('name', function($branch){
                 $applications = Branch::where('id', $branch->branch_initiator_id)->get()->pluck('name');
@@ -689,7 +702,13 @@ class ReportService
             ->make(true);
     }
     public function report_8(){
-        $query = Application::query();
+        if(auth()->user()->hasPermission('ЦУЗ'))
+        {
+
+            $query = Application::query();
+        }else{
+            $query = Application::where('branch_initiator_id',auth()->user()->branch_id)->get();
+        }
         return Datatables::of($query)
             ->addColumn('filial', function($branch){
                 $applications = Branch::where('id', $branch->branch_initiator_id)->get()->pluck('name');
@@ -715,8 +734,15 @@ class ReportService
             ->make(true);
     }
 
-    public function report_9(){
-        $query = Branch::query();
+    public function report_9()
+    {
+        if(auth()->user()->hasPermission('ЦУЗ'))
+        {
+            $query = Branch::query();
+        }
+        else{
+            $query = Branch::where('id',auth()->user()->branch_id)->get();
+        }
 
         return Datatables::of($query)
             ->addColumn('supplier_inn', function($branch){
@@ -823,6 +849,20 @@ class ReportService
 
     public function report_10()
     {
+        $user = auth()->user();
+        if($user->hasPermission('ЦУЗ'))
+        {
+            $a = 'branch_initiator_id';
+            $operator = '!=';
+            $b = null;
+        }else{
+            $a = 'branch_initiator_id';
+            $operator = '=';
+            $b = $user->branch_id;
+        }
+        $this->a = $a;
+        $this->operator = $operator;
+        $this->b = $b;
         $status = StatusExtented::query();
         return Datatables::of($status)
             ->addColumn('january', function($status){
@@ -832,7 +872,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-01-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('status', $status->name)->get();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('february', function($status){
@@ -842,7 +882,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-02-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('status', $status->name)->get();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('march', function($status){
@@ -852,7 +892,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-03-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('status', $status->name)->get();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('april', function($status){
@@ -862,7 +902,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-04-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('status', $status->name)->get();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('may', function($status){
@@ -872,7 +912,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-05-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('status', $status->name)->get();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('june', function($status){
@@ -882,7 +922,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-06-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('status', $status->name)->get();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('july', function($status){
@@ -892,7 +932,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-07-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('status', $status->name)->get();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('august', function($status){
@@ -902,7 +942,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-08-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('status', $status->name)->get();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('september', function($status){
@@ -912,7 +952,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-09-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('status', $status->name)->get();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('october', function($status){
@@ -922,7 +962,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-10-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('status', $status->name)->get();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('november', function($status){
@@ -932,7 +972,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-11-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('status', $status->name)->get();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('december', function($status){
@@ -942,7 +982,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-12-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('status', $status->name)->get();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('all', function($status){
@@ -952,7 +992,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-12-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('status', $status->name)->get();
+                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->make(true);
