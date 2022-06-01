@@ -54,7 +54,7 @@ class SignDocsObserver
             $signedDocs->application->status = Application::REFUSED;
         }elseif (count(array_diff($roles_need_sign, $agreedUsers->toArray())) == 1) {
             $signedDocs->application->status = Application::ACCEPTED;
-        }elseif(count(array_diff($roles_need_sign, $agreedUsers->toArray())) == 0 && $signedDocs->application->is_more_than_limit != 1){
+        }elseif(array_diff($roles_need_sign, $agreedUsers->toArray()) == null && $signedDocs->application->is_more_than_limit != 1){
             $signedDocs->application->status = Application::ACCEPTED;
         }else {
             $signedDocs->application->status = Application::IN_PROCESS;
