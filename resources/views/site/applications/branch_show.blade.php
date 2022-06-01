@@ -8,52 +8,52 @@
         <div class="p-6">
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::input('bio', __('lang.table_1'))
+                    {{Aire::input('bio', __('Инициатор (наименование подразделения заказчика)'))
                         ->name('initiator')
                         ->value($application->initiator)
                         ->disabled()
                     }}
-                    {{Aire::textArea('bio', __('lang.table_9'))
+                    {{Aire::textArea('bio', __('Цель / содержание закупки (обоснование необходимости закупки)'))
                         ->name('purchase_basis')
                         ->value($application->purchase_basis)
                         ->rows(3)
                         ->cols(40)
                         ->disabled()
                     }}
-                    {{Aire::textArea('bio', __('lang.table_9'))
+                    {{Aire::textArea('bio', __('Цель / содержание закупки (обоснование необходимости закупки)'))
                         ->name('specification')
                         ->value($application->specification)
                         ->rows(3)
                         ->cols(40)
                         ->disabled()
                     }}
-                    {{Aire::input('bio', __('lang.table_3'))
+                    {{Aire::input('bio', __('Ожидаемый срок поставки'))
                         ->name('delivery_date')
                         ->value($application->delivery_date)
                         ->disabled()
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::input('bio', __('lang.table_2'))
+                    {{Aire::input('bio', __('Наименование предмета закупки(товар, работа, услуги)'))
                         ->name('name')
                         ->value($application->name)
                         ->disabled()
                     }}
-                    {{Aire::textArea('bio', __('lang.table_11'))
+                    {{Aire::textArea('bio', __('Основания (план закупок, рапорт,распоряжение руководства)'))
                         ->name('basis')
                         ->value($application->basis)
                         ->rows(3)
                         ->cols(40)
                         ->disabled()
                     }}
-                    {{Aire::textArea('bio', __('lang.table_12'))
+                    {{Aire::textArea('bio', __('Особые требования'))
                         ->name('separate_requirements')
                         ->value($application->separate_requirements)
                         ->rows(3)
                         ->cols(40)
                         ->disabled()
                     }}
-                    {{Aire::input('bio', __('lang.table_14'))
+                    {{Aire::input('bio', __('Гарантийный срок качества товара (работ, услуг)'))
                         ->name('expire_warranty_date')
                         ->value($application->expire_warranty_date)
                         ->disabled()
@@ -62,7 +62,7 @@
             </div>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::input('bio', __('lang.table_4'))
+                    {{Aire::input('bio', __('Планируемый бюджет закупки (сумма)'))
                         ->name('planned_price')
                         ->value($application->planned_price)
                         ->id('summa')
@@ -75,7 +75,7 @@
                         ->class('hidden')
                         ->disabled()
                     }}
-                    {{Aire::select(['UZS' => 'UZS', 'USD' => 'USD'], 'select', __('lang.valyuta'))
+                    {{Aire::select(['UZS' => 'UZS', 'USD' => 'USD'], 'select', __('Валюта'))
                     ->name('currency')
                     ->value($application->currency)
                     ->id('valyuta')
@@ -83,7 +83,7 @@
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::input('bio', __('lang.table_15'))
+                    {{Aire::input('bio', __('Департамент по планированию бюджета - информация о существовании товара закупок в бизнес-плане'))
                         ->name('info_business_plan')
                         ->value($application->info_business_plan)
                         ->disabled()
@@ -93,14 +93,14 @@
             </div>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::input('bio', __('lang.table_16'))
+                    {{Aire::input('bio', __('Эквивалентная Планируемая сумма'))
                         ->name('equal_planned_price')
                         ->value($application->equal_planned_price)
                         ->disabled()
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::input('bio', __('lang.table_17'))
+                    {{Aire::input('bio', __('Наименование поставщика'))
                         ->name('supplier_name')
                         ->value($application->supplier_name)
                         ->disabled()
@@ -109,13 +109,13 @@
             </div>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::select($application->subject, 'select', __('lang.table_18'))
+                    {{Aire::select($application->subject, 'select', __('Предмет закупки'))
                         ->name('subject')
                         ->disabled()
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::select($application->type_of_purchase_id, 'select', __('lang.table_19'))
+                    {{Aire::select($application->type_of_purchase_id, 'select', __('Вид закупки'))
                         ->name('type_of_purchase_id')
                         ->disabled()
                     }}
@@ -123,7 +123,7 @@
             </div>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::textArea('bio', __('lang.table_20'))
+                    {{Aire::textArea('bio', __('Информация о наличии в «Плане закупок» приобретаемых товаров'))
                         ->name('info_purchase_plan')
                         ->value($application->info_purchase_plan)
                         ->rows(3)
@@ -132,7 +132,7 @@
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::textArea('bio', __('lang.table_21'))
+                    {{Aire::textArea('bio', __('Примечание для заказа'))
                         ->name('comment')
                         ->value($application->comment)
                         ->rows(3)
@@ -148,11 +148,11 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>{{ __('lang.table_7') }}</th>
-                    <th>{{ __('lang.table_22') }}</th>
-                    <th >{{ __('lang.table_23') }}</th>
-                    <th >{{ __('lang.table_24') }}</th>
-                    <th>{{ __('lang.table_25') }}</th>
+                    <th>{{ __('Статус заявки') }}</th>
+                    <th>{{ __('Роль') }}</th>
+                    <th >{{ __('Комментарий') }}</th>
+                    <th >{{ __('Пользователь') }}</th>
+                    <th>{{ __('Номер заказа') }}</th>
                 </tr>
                 </thead>
             </table>
@@ -199,7 +199,7 @@ console.log("{{$application->id}}");
                             <button onclick="generatekey()" class="hidden btn btn-success" type="button">{{ __('lang.eimzo_sign') }}</button><br />
                         </div>
                         <div class="w-1/2">
-                            {{Aire::textArea('bio', __('lang.table_23'))
+                            {{Aire::textArea('bio', __('Комментарий'))
                             ->name('comment')
                             ->rows(3)
                             ->cols(40)

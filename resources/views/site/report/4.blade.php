@@ -69,7 +69,7 @@
         <th style="text-align: center;" class="border border-dark">период</th>
         <th style="text-align: center;" class="border border-dark">сумма заявки</th>
         <th style="text-align: center;" class="border border-dark">С НДС?</th>
-        <th style="text-align: center;" class="border border-dark">{{__('lang.valyuta')}}</th>
+        <th style="text-align: center;" class="border border-dark">{{__('Валюта')}}</th>
         <th style="text-align: center;" class="border border-dark">Наименование поставщика</th>
         <th style="text-align: center;" class="border border-dark">сумма договора</th>
         <th style="text-align: center;" class="border border-dark">Махсулот келишининг муддати</th>
@@ -78,8 +78,8 @@
         <th style="text-align: center;" class="border border-dark">Исполнитель заявки</th>
         <th style="text-align: center;" class="border border-dark">Бюджетни режалаштириш булими. Маълумот</th>
         <th style="text-align: center;" class="border border-dark">Харидлар режасида мавжудлиги буича маълумот</th>
-        <th style="text-align: center;" class="border border-dark">{{ __('lang.table_18') }}</th>
-        <th style="text-align: center;" class="border border-dark">{{ __('lang.table_11') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('Предмет закупки') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('Основания (план закупок, рапорт,распоряжение руководства)') }}</th>
     </tr>
     </thead>
 </table>

@@ -7,9 +7,7 @@
     <div class="px-6 pb-0 pt-6">
         <h5><strong>{{ __('lang.author') }}</strong> {{$application->user->name}} ( {{ $application->user->role->display_name }} )</h5>
         <h5><strong>{{ __('lang.author_filial') }}</strong> {{ $branch_name->name }}</h5>
-        @if(isset(auth()->user()->position_id))
         <h5><strong>Должность :</strong> {{ auth()->user()->position->name }}</h5>
-        @endif
         <h5><strong>{{ __('lang.number') }} : </strong> {{$application->number}} </h5>
         <h5><strong>Date : </strong> {{$application->date}} </h5> <br>
         <h5><strong>Визирование заявки через : </strong>
@@ -126,14 +124,14 @@
                     </div>
 
                     <div class="mb-3 row w-50">
-                        <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">{{ __('lang.table_14') }}</label>
+                        <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">{{ __('Гарантийный срок качества товара (работ, услуг)') }}</label>
                         <div class="col-sm-6">
                             <input class="form-control" id="date" name="expire_warranty_date" value="{{$application->expire_warranty_date}}" type="date"/>
                         </div>
                     </div>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-6" for="planned_price" class="col-sm-2 col-form-label">{{ __('lang.table_4') }}</label>
+                        <label class="col-sm-6" for="planned_price" class="col-sm-2 col-form-label">{{ __('Планируемый бюджет закупки (сумма)') }}</label>
                         <div class="col-sm-6">
                             {{Aire::input()
                                 ->name("planned_price")
@@ -158,7 +156,7 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-6" for="info_purchase_plan" class="col-sm-2 col-form-label">{{ __('lang.table_20') }}</label>
+                        <label class="col-sm-6" for="info_purchase_plan" class="col-sm-2 col-form-label">{{ __('Информация о наличии в «Плане закупок» приобретаемых товаров') }}</label>
                         <div class="col-sm-6">
                             {{Aire::textArea()
                                 ->rows(3)
@@ -171,7 +169,7 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-6" for="info_business_plan" class="col-sm-2 col-form-label">{{ __('lang.table_15') }}</label>
+                        <label class="col-sm-6" for="info_business_plan" class="col-sm-2 col-form-label">{{ __('Департамент по планированию бюджета - информация о существовании товара закупок в бизнес-плане') }}</label>
                         <div class="col-sm-6">
                             {{Aire::input()
                                 ->name("info_business_plan")
@@ -182,7 +180,7 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-6" for="comment" class="col-sm-2 col-form-label">{{ __('lang.table_23') }}</label>
+                        <label class="col-sm-6" for="comment" class="col-sm-2 col-form-label">{{ __('Комментарий') }}</label>
                         <div class="col-sm-6">
                             {{Aire::textArea()
                                 ->rows(3)
@@ -206,10 +204,10 @@
                     <div class="mb-3 row">
                         <label for="currency" class="col-sm-6 col-form-label">{{ __('lang.branch') }}</label>
                         <select class="custom-select col-sm-6" name="branch_initiator_id" id="branch_initiator_id">
-                            @if(isset($application->branch_initiator_id))
+                            @isset($application->branch_initiator_id)
                                 <option value="{{$application->branch_initiator_id}}"
                                         selected>{{$application->branch->name}}</option>
-                            @endif
+                            @endisset
                         </select>
                     </div>
 
@@ -313,9 +311,9 @@
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>{{ __('lang.table_7') }}</th>
-                        <th>{{ __('lang.table_22') }}</th>
-                        <th>{{ __('lang.table_23') }}</th>
+                        <th>{{ __('Статус заявки') }}</th>
+                        <th>{{ __('Роль') }}</th>
+                        <th>{{ __('Комментарий') }}</th>
                         <th>{{ __('lang.table_24') }}</th>
                         <th>Дата подписи</th>
                     </tr>
@@ -346,13 +344,13 @@
     ->enctype("multipart/form-data")
     ->post() }}
             @if($user->hasPermission('Plan_Budget') || $user->hasPermission('Plan_Business'))
-                {{Aire::textArea('bio', __('lang.table_20'))
+                {{Aire::textArea('bio', __('Информация о наличии в «Плане закупок» приобретаемых товаров'))
                     ->name('info_purchase_plan')
                     ->value($application->info_purchase_plan)
                     ->rows(3)
                     ->cols(40)
                 }}
-                {{Aire::textArea('bio', __('lang.table_15'))
+                {{Aire::textArea('bio', __('Департамент по планированию бюджета - информация о существовании товара закупок в бизнес-плане'))
                     ->name('info_business_plan')
                     ->value($application->info_business_plan)
                     ->rows(3)
@@ -435,7 +433,7 @@
                     <button type="submit" class="btn btn-success col-md-2" >{{ __('lang.send') }}</button>
                 </div>
             @elseif($application->performer_role_id == $user->role_id && $user->leader == 0)
-                {{Aire::textArea('bio', __('lang.table_23'))
+                {{Aire::textArea('bio', __('Комментарий'))
                     ->name('performer_comment')
                     ->value($application->performer_comment)
                     ->rows(3)
@@ -473,7 +471,7 @@
                     <button onclick="generatekey()" class="hidden btn btn-success" type="button">{{ __('lang.eimzo_sign') }}</button><br />
                 </div>
                 <div class="w-1/2">
-                    {{Aire::textArea('bio', __('lang.table_23'))
+                    {{Aire::textArea('bio', __('Комментарий'))
                     ->name('comment')
                     ->rows(3)
                     ->cols(40)
