@@ -94,7 +94,7 @@ class ApplicationService
             }
 
             else {
-                $query = Application::query()->where('draft','!=',1)->where('user_id',$user->id)->get();
+                $query = Application::query()->where('draft','!=',1)->get();
             }
 
             return Datatables::of($query)
