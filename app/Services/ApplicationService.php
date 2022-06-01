@@ -50,7 +50,7 @@ class ApplicationService
         $status_accepted = __('lang.status_accepted');
         $status_refused = __('lang.status_refused');
         $status_agreed = __('lang.status_agreed');
-        $status_rejected = __('lang.status_rejected');
+        $status_rejected = __('Rejected');
         $status_distributed = __('lang.status_distributed');
         $status_cancelled = __('lang.status_cancelled');
         $status_performed = 'товар доставлен';

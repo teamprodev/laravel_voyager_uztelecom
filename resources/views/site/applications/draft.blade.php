@@ -11,7 +11,7 @@
                     <th>№</th>
                     <th>{{ __('lang.table_1') }}</th>
                     <th>{{ __('lang.table_2') }}</th>
-                    <th>{{ __('lang.table_3') }}</th>
+                    <th>{{ __('Product Corression Deadline') }}</th>
                     <th>{{ __('lang.table_4') }}</th>
                     <th>{{ __('lang.table_50') }}</th>
                     <th>{{ __('lang.table_6') }}</th>

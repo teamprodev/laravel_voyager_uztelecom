@@ -16,7 +16,7 @@
                         ->rows(3)
                         ->cols(40)
                     }}
-                    {{Aire::dateTimeLocal('bio', __('lang.table_3'))
+                    {{Aire::dateTimeLocal('bio', __('Product Corression Deadline'))
                         ->name('delivery_date')
                     }}
                 </div>

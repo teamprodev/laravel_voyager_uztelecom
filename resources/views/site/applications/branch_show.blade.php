@@ -27,7 +27,7 @@
                         ->cols(40)
                         ->disabled()
                     }}
-                    {{Aire::input('bio', __('lang.table_3'))
+                    {{Aire::input('bio', __('Product Corression Deadline'))
                         ->name('delivery_date')
                         ->value($application->delivery_date)
                         ->disabled()
@@ -151,7 +151,7 @@
                     <th>{{ __('lang.table_7') }}</th>
                     <th>{{ __('lang.table_22') }}</th>
                     <th >{{ __('lang.table_23') }}</th>
-                    <th >{{ __('lang.table_24') }}</th>
+                    <th >{{ __('User') }}</th>
                     <th>{{ __('lang.table_25') }}</th>
                 </tr>
                 </thead>

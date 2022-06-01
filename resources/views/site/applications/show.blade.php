@@ -91,7 +91,7 @@
                     </div>
 
                     <div class="mb-3 row w-50">
-                        <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">{{ __('lang.table_3') }}</label>
+                        <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">{{ __('Product Corression Deadline') }}</label>
                         <div class="col-sm-6">
                             <input class="form-control" id="date" name="delivery_date" value="{{ $application->delivery_date }}" type="date"/>
                         </div>
@@ -316,7 +316,7 @@
                         <th>{{ __('lang.table_7') }}</th>
                         <th>{{ __('lang.table_22') }}</th>
                         <th>{{ __('lang.table_23') }}</th>
-                        <th>{{ __('lang.table_24') }}</th>
+                        <th>{{ __('User') }}</th>
                         <th>Дата подписи</th>
                     </tr>
                 </thead>
