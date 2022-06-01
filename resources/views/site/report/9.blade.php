@@ -55,47 +55,47 @@
 <table id="example" class="display wrap table-bordered dt-responsive" style="border-collapse: collapse; width: 100%; padding-top: 10px">
     <thead class="border border-dark">
     <tr class="border border-dark">
-        <th style="text-align: center;" class="border border-dark" rowspan="2">ID</th>
-        <th style="text-align: center;" class="border border-dark" rowspan="2">Буюртмачи номи</th>
-        <th style="text-align: center;" class="border border-dark" rowspan="2">СТИР</th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">Шартномалара</th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">Электрон дўкон орқали (E-shop))</th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">Миллий дўкон орқали<</th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">Электрон аукцион орқали</th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">Кооперация портали орқали</th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">Шаффоф қурилиш платформаси орқали</th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">Махсус савдо майдончаларидаги электрон биржа савдолари орқали</th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">конкурс (танлов орқали)</th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">Тендер орқали</th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">Энг мақбул таклифларни танлаб олиш йули билан</th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">Ягона етказиб берувчилар билан </th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">Тўғридан-тўғри (ПП-3988, ва бошқалар ПП,УП,РП)</th>
+        <th style="text-align: center;" class="border border-dark" rowspan="2">__('ID')</th>
+        <th style="text-align: center;" class="border border-dark" rowspan="2">__('Наименование заказчика')</th>
+        <th style="text-align: center;" class="border border-dark" rowspan="2">__('СТИР')</th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">__('Договоры')</th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">__('Через электронный магазин (E-shop)')</th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">__('Через национальный магазин')<</th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">__('Через электронный аукцион')</th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">__('Через кооперационный портал')</th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">__('Через платформы "Шаффоф қурилиш"')</th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">__('Через электронные биржевые торги на специальных торговых площадках')</th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">__('Через конкурс(выбор)')</th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">__('Через тендер')</th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">__('Выбор наиболее приемлемых предложений')</th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">__('С едиными поставщиками') </th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">__('Прямые (ПП-3988 и др. ПП, УП, РП)')</th>
     </tr>
     <tr>
-        <th>Сони</th>
-        <th>Суммаси</th>
-        <th>Сони</th>
-        <th>Суммаси</th>
-        <th>Сони</th>
-        <th>Суммаси</th>
-        <th>Сони</th>
-        <th>Суммаси</th>
-        <th>Сони</th>
-        <th>Суммаси</th>
-        <th>Сони</th>
-        <th>Суммаси</th>
-        <th>Сони</th>
-        <th>Суммаси</th>
-        <th>Сони</th>
-        <th>Суммаси</th>
-        <th>Сони</th>
-        <th>Суммаси</th>
-        <th>Сони</th>
-        <th>Суммаси</th>
-        <th>Сони</th>
-        <th>Суммаси</th>
-        <th>Сони</th>
-        <th>Суммаси</th>
+        <th>__('Количество')</th>
+        <th>__('Сумма')</th>
+        <th>__('Количество')</th>
+        <th>__('Сумма')</th>
+        <th>__('Количество')</th>
+        <th>__('Сумма')</th>
+        <th>__('Количество')</th>
+        <th>__('Сумма')</th>
+        <th>__('Количество')</th>
+        <th>__('Сумма')</th>
+        <th>__('Количество')</th>
+        <th>__('Сумма')</th>
+        <th>__('Количество')</th>
+        <th>__('Сумма')</th>
+        <th>__('Количество')</th>
+        <th>__('Сумма')</th>
+        <th>__('Количество')</th>
+        <th>__('Сумма')</th>
+        <th>__('Количество')</th>
+        <th>__('Сумма')</th>
+        <th>__('Количество')</th>
+        <th>__('Сумма')</th>
+        <th>__('Количество')</th>
+        <th>__('Сумма')</th>
     </tr>
     </thead>
 </table>

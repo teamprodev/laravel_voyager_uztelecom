@@ -55,20 +55,17 @@
 <table id="example" class="display wrap table-bordered dt-responsive" style="border-collapse: collapse; width: 100%; padding-top: 10px">
     <thead class="border border-dark">
         <tr class="border border-dark">
-            <th style="text-align: center;" class="border border-dark">ID</th>
-            <th style="text-align: center;" class="border border-dark">Филиал</th>
-            <th style="text-align: center;" class="border border-dark">Контрагент (предприятия поставляющий товаров. работ. услуг)</th>
-            <th style="text-align: center;" class="border border-dark">Предмет закупки (товар,работа,услуга)</th>
-            <th style="text-align: center;" class="border border-dark">номер заявки</th>
-            <th style="text-align: center;" class="border border-dark">сумма заявки</th>
-            <th style="text-align: center;" class="border border-dark">Предмет договора (контракта) и краткая характеристика</th>
-            <th style="text-align: center;" class="border border-dark">Общая сумма договора (контракта)</th>
-            <th style="text-align: center;" class="border border-dark">Номер протокола внутренней комиссии</th>
-            <th style="text-align: center;" class="border border-dark">Дата протокола внутренней комиссии</th>
-            <th style="text-align: center;" class="border border-dark">ИНН Поставшика</th>
-            <th style="text-align: center;" class="border border-dark">Дата договор</th>
-            <th style="text-align: center;" class="border border-dark">Дата заявки</th>
-
+            <th style="text-align: center;" class="border border-dark">__('ID')</th>
+            <th style="text-align: center;" class="border border-dark">__('Филиал')</th>
+            <th style="text-align: center;" class="border border-dark">__('Контрагент (предприятия поставляющий товаров. работ. услуг)')</th>
+            <th style="text-align: center;" class="border border-dark">__('Договор (контракт)')</th>
+            <th style="text-align: center;" class="border border-dark">__('Предмет закупки (товар,работа,услуга)')</th>
+            <th style="text-align: center;" class="border border-dark">__('номер заявки')</th>
+            <th style="text-align: center;" class="border border-dark">__('сумма заявки')</th>
+            <th style="text-align: center;" class="border border-dark">__('Предмет договора (контракта) и краткая характеристика')</th>
+            <th style="text-align: center;" class="border border-dark">__('Общая сумма договора (контракта)')</th>
+            <th style="text-align: center;" class="border border-dark">__('Номер протокола внутренней комиссии')</th>
+            <th style="text-align: center;" class="border border-dark">__('Дата протокола внутренней комиссии')</th>
         </tr>
     </thead>
 </table>
@@ -105,7 +102,7 @@
                 }
 
             },
-            "processing": false,
+            "processing": true,
             pageLength: 10,
             // dom: 'PQlfrtip',
             dom: 'Qlfrtip' + 'Bfrtip',
@@ -117,6 +114,7 @@
                 {data: "id", name: 'id'},
                 {data: 'name', name: 'name'},
                 {data: 'supplier_name', name: 'supplier_name'},
+                {data: 'contract_number', name: 'contract_number    '},
                 {data: 'subject', name: 'subject'},
                 {data: 'number', name: 'number'},
                 {data: 'planned_price', name: 'planned_price'},
@@ -124,76 +122,70 @@
                 {data: 'contract_price', name: 'contract_price'},
                 {data: 'protocol_number', name: 'protocol_number'},
                 {data: 'protocol_date', name: 'protocol_date'},
-                {data: 'supplier_inn', name: 'supplier_inn'},
-                {data: 'contract_date', name: 'contract_date'},
-                {data: 'date', name: 'date'},
-
             ],
+            buttons: {
+                buttons: [
+                    { extend: 'copyHtml5',
+                        text: '<i class="fas fa-copy"></i>',
+                        title: tableTitle,
+                        titleAttr: 'Copy to Clipboard',
+                        exportOptions: {
+                            columns: ':visible:Not(.not-exported)',
+                            rows: ':visible',
+                        },
+                    },
+                    { extend: 'excelHtml5',
+                        text: '<i class="fas fa-file-excel"></i>',
+                        title: tableTitle,
+                        titleAttr: 'Export to Excel',
+                        exportOptions: {
+                            columns: ':visible:Not(.not-exported)',
+                            rows: ':visible',
+                        },
+                    },
+                    { extend: 'pdfHtml5',
+                        text: '<i class="fas fa-file-pdf"></i>',
+                        title: tableTitle,
+                        titleAttr: 'Export to PDF',
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL',
+                        exportOptions: {
+                            columns: ':visible:Not(.not-exported)',
+                            rows: ':visible',
+                        },
+                    },
+                    { extend: 'print',
+                        text: '<i class="fas fa-print"></i>',
+                        title: tableTitle,
+                        titleAttr: 'Print Table',
+                        exportOptions: {
+                            columns: ':visible:Not(.not-exported)',
+                            rows: ':visible',
+                        },
+                    },
+                    { extend: 'colvis',
+                        text: '<i class="fas fa-eye"></i>',
+                        titleAttr: 'Show/Hide Columns',
+                        exportOptions: {
+                            columns: ':visible:Not(.not-exported)',
+                            rows: ':visible',
+                        },
+                    }
+                ],
+                dom: {
+                    button: {
+                        className: 'dt-button'
+                    }
+                }
+            },
 
         });
-        //     buttons: {
-        //         buttons: [
-        //             { extend: 'copyHtml5',
-        //                 text: '<i class="fas fa-copy"></i>',
-        //                 title: tableTitle,
-        //                 titleAttr: 'Copy to Clipboard',
-        //                 exportOptions: {
-        //                     columns: ':visible:Not(.not-exported)',
-        //                     rows: ':visible',
-        //                 },
-        //             },
-        //             { extend: 'excelHtml5',
-        //                 text: '<i class="fas fa-file-excel"></i>',
-        //                 title: tableTitle,
-        //                 titleAttr: 'Export to Excel',
-        //                 exportOptions: {
-        //                     columns: ':visible:Not(.not-exported)',
-        //                     rows: ':visible',
-        //                 },
-        //             },
-        //             { extend: 'pdfHtml5',
-        //                 text: '<i class="fas fa-file-pdf"></i>',
-        //                 title: tableTitle,
-        //                 titleAttr: 'Export to PDF',
-        //                 orientation: 'landscape',
-        //                 pageSize: 'LEGAL',
-        //                 exportOptions: {
-        //                     columns: ':visible:Not(.not-exported)',
-        //                     rows: ':visible',
-        //                 },
-        //             },
-        //             { extend: 'print',
-        //                 text: '<i class="fas fa-print"></i>',
-        //                 title: tableTitle,
-        //                 titleAttr: 'Print Table',
-        //                 exportOptions: {
-        //                     columns: ':visible:Not(.not-exported)',
-        //                     rows: ':visible',
-        //                 },
-        //             },
-        //             { extend: 'colvis',
-        //                 text: '<i class="fas fa-eye"></i>',
-        //                 titleAttr: 'Show/Hide Columns',
-        //                 exportOptions: {
-        //                     columns: ':visible:Not(.not-exported)',
-        //                     rows: ':visible',
-        //                 },
-        //             }
-        //         ],
-        //         dom: {
-        //             button: {
-        //                 className: 'dt-button'
-        //             }
-        //         }
-        //     },
+        var divTitle = ''
+            + '<div class="col-12 text-center text-md-left pt-4 pb-4 display-2" style="text-align: center !important;">'
+            + '<h1 class="text-dark">' + tableTitle + '</h1>'
+            + '</div>';
 
-        // });
-        // var divTitle = ''
-        //     + '<div class="col-12 text-center text-md-left pt-4 pb-4 display-2" style="text-align: center !important;">'
-        //     + '<h1 class="text-dark">' + tableTitle + '</h1>'
-        //     + '</div>';
-
-        // $("#fortext").append(divTitle);
+        $("#fortext").append(divTitle);
 
     });
 </script>

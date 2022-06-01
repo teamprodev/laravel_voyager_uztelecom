@@ -55,19 +55,19 @@
 <table id="example" class="display wrap table-bordered dt-responsive" style="border-collapse: collapse; width: 100%; padding-top: 10px">
     <thead class="border border-dark">
     <tr class="border border-dark">
-        <th style="text-align: center;" class="border border-dark">ID</th>
-        <th style="text-align: center;" class="border border-dark">Молиялаштириш манбаи</th>
-        <th style="text-align: center;" class="border border-dark">Етказиб берувчининг номи</th>
-        <th style="text-align: center;" class="border border-dark">Етказиб берувчининг СТИРи</th>
-        <th style="text-align: center;" class="border border-dark">Шартнома рақами</th>
-        <th style="text-align: center;" class="border border-dark">Шартнома тузилган сана</th>
-        <th style="text-align: center;" class="border border-dark">Шартнома суммаси</th>
-        <th style="text-align: center;" class="border border-dark">Валюта</th>
-        <th style="text-align: center;" class="border border-dark">Давлат харидлари бўйича махсус ахборот порталига жойлаштирилган ЛОТ рақами ва санаси</th>
-        <th style="text-align: center;" class="border border-dark">Харид тури</th>
-        <th style="text-align: center;" class="border border-dark">Шартнома предмети</th>
-        <th style="text-align: center;" class="border border-dark">Товар (хизмат) ишлаб чиқарилган мамлакат</th>
-        <th style="text-align: center;" class="border border-dark">Асос: “Давлат харидлари тўғрисида”ги Қонун/ бошқа қарорлар</th>
+        <th style="text-align: center;" class="border border-dark">__('ID')</th>
+        <th style="text-align: center;" class="border border-dark">__('Источник финансирование')</th>
+        <th style="text-align: center;" class="border border-dark">__('аименование доставщика')</th>
+        <th style="text-align: center;" class="border border-dark">__('Стир доставщика')</th>
+        <th style="text-align: center;" class="border border-dark">__('Номер договора')</th>
+        <th style="text-align: center;" class="border border-dark">__('Дата договора')</th>
+        <th style="text-align: center;" class="border border-dark">__('Сумма договора')</th>
+        <th style="text-align: center;" class="border border-dark">__('Валюта')</th>
+        <th style="text-align: center;" class="border border-dark">__('Номер и дата лота размещенных на специальном информационном портале о государственных закупках')</th>
+        <th style="text-align: center;" class="border border-dark">__('Тип закупки')</th>
+        <th style="text-align: center;" class="border border-dark">__('Предмет закупки')</th>
+        <th style="text-align: center;" class="border border-dark">__('Страна происхождения товаров (услуг)')</th>
+        <th style="text-align: center;" class="border border-dark">__('Основание: Закон о государственных закупках / другие решения')</th>
     </tr>
     </thead>
 </table>
