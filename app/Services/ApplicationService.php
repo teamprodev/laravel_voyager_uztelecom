@@ -99,13 +99,16 @@ class ApplicationService
 
             return Datatables::of($query)
                 ->editColumn('created_at', function ($query) {
-                    return $query->created_at ? with(new Carbon($query->created_at))->format('m/d/Y') : '';
+                    return $query->created_at ? with(new Carbon($query->created_at))->format('d/m/Y') : '';
                 })
                 ->editColumn('updated_at', function ($query) {
-                    return $query->updated_at ? with(new Carbon($query->updated_at))->format('m/d/Y') : '';;
+                    return $query->updated_at ? with(new Carbon($query->updated_at))->format('d/m/Y') : '';
+                })
+                ->editColumn('date', function ($query) {
+                    return $query->updated_at ? with(new Carbon($query->updated_at))->format('d/m/Y') : '';
                 })
                 ->editColumn('delivery_date', function ($query) {
-                    return $query->updated_at ? with(new Carbon($query->updated_at))->format('m/d/Y') : '';;
+                    return $query->updated_at ? with(new Carbon($query->updated_at))->format('d/m/Y') : '';
                 })
                 ->editColumn('status', function ($query){
                     $status_new = __('Новая');
