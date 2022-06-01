@@ -66,19 +66,19 @@
         <thead class="border border-dark">
 
         <tr class="border border-dark">
-            <th style="text-align: center;" class="border border-dark" rowspan="2"> ID</th>
-            <th style="text-align: center;" class="border border-dark" rowspan="2">Филиал</th>
-            <th style="text-align: center;" class="border border-dark" colspan="2"><b>товар</b></th>
-            <th style="text-align: center;" class="border border-dark" colspan="2"><b>работа</b></th>
-            <th style="text-align: center;" class="border border-dark" colspan="2"><b>услуга</b></th>
+            <th style="text-align: center;" class="border border-dark" rowspan="2"> __('ID')</th>
+            <th style="text-align: center;" class="border border-dark" rowspan="2">__('Филиал')</th>
+            <th style="text-align: center;" class="border border-dark" colspan="2"><b>__('товар')</b></th>
+            <th style="text-align: center;" class="border border-dark" colspan="2"><b>__('работа')</b></th>
+            <th style="text-align: center;" class="border border-dark" colspan="2"><b>__('услуга')</b></th>
         </tr>
         <tr class="border border-dark">
-            <th style="text-align: center;" class="border border-dark">Без НДС</th>
-            <th style="text-align: center;" class="border border-dark">С НДС</th>
-            <th style="text-align: center;" class="border border-dark">Без НДС</th>
-            <th style="text-align: center;" class="border border-dark">С НДС</th>
-            <th style="text-align: center;" class="border border-dark">Без НДС</th>
-            <th style="text-align: center;" class="border border-dark">С НДС</th>
+            <th style="text-align: center;" class="border border-dark">__('Без НДС')</th>
+            <th style="text-align: center;" class="border border-dark">__('С НДС')</th>
+            <th style="text-align: center;" class="border border-dark">__('Без НДС')</th>
+            <th style="text-align: center;" class="border border-dark">__('С НДС')</th>
+            <th style="text-align: center;" class="border border-dark">__('Без НДС')</th>
+            <th style="text-align: center;" class="border border-dark">__('С НДС')</th>
         </tr>
         </thead>
     </table>

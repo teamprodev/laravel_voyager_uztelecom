@@ -66,20 +66,20 @@
         <thead class="border border-dark">
 
         <tr class="border border-dark">
-            <th style="text-align: center;" class="border border-dark">ID</th>
-            <th style="text-align: center;" class="border border-dark">Филиал</th>
-            <th style="text-align: center;" class="border border-dark">товар</th>
-            <th style="text-align: center;" class="border border-dark">работа</th>
-            <th style="text-align: center;" class="border border-dark">услуга</th>
-            <th style="text-align: center;" class="border border-dark">товар</th>
-            <th style="text-align: center;" class="border border-dark">работа</th>
-            <th style="text-align: center;" class="border border-dark">услуга</th>
-            <th style="text-align: center;" class="border border-dark">товар</th>
-            <th style="text-align: center;" class="border border-dark">работа</th>
-            <th style="text-align: center;" class="border border-dark">услуга</th>
-            <th style="text-align: center;" class="border border-dark">товар</th>
-            <th style="text-align: center;" class="border border-dark">работа</th>
-            <th style="text-align: center;" class="border border-dark">услуга</th>
+            <th style="text-align: center;" class="border border-dark">__('ID')</th>
+            <th style="text-align: center;" class="border border-dark">__('Филиал')</th>
+            <th style="text-align: center;" class="border border-dark">__('товар')</th>
+            <th style="text-align: center;" class="border border-dark">__('работа')</th>
+            <th style="text-align: center;" class="border border-dark">__('услуга')</th>
+            <th style="text-align: center;" class="border border-dark">__('товар')</th>
+            <th style="text-align: center;" class="border border-dark">__('работа')</th>
+            <th style="text-align: center;" class="border border-dark">__('услуга')</th>
+            <th style="text-align: center;" class="border border-dark">__('товар')</th>
+            <th style="text-align: center;" class="border border-dark">__('работа')</th>
+            <th style="text-align: center;" class="border border-dark">__('услуга')</th>
+            <th style="text-align: center;" class="border border-dark">__('товар')</th>
+            <th style="text-align: center;" class="border border-dark">__('работа')</th>
+            <th style="text-align: center;" class="border border-dark">__('услуга')</th>
         </tr>
         </thead>
     </table>

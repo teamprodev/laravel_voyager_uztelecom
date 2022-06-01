@@ -55,17 +55,17 @@
 <table id="example" class="display wrap table-bordered dt-responsive" style="border-collapse: collapse; width: 100%; padding-top: 10px">
     <thead class="border border-dark">
         <tr class="border border-dark">
-            <th style="text-align: center;" class="border border-dark">ID</th>
-            <th style="text-align: center;" class="border border-dark">Филиал</th>
-            <th style="text-align: center;" class="border border-dark">Контрагент (предприятия поставляющий товаров. работ. услуг)</th>
-            <th style="text-align: center;" class="border border-dark">Договор (контракт)</th>
-            <th style="text-align: center;" class="border border-dark">Предмет закупки (товар,работа,услуга)</th>
-            <th style="text-align: center;" class="border border-dark">номер заявки</th>
-            <th style="text-align: center;" class="border border-dark">сумма заявки</th>
-            <th style="text-align: center;" class="border border-dark">Предмет договора (контракта) и краткая характеристика</th>
-            <th style="text-align: center;" class="border border-dark">Общая сумма договора (контракта)</th>
-            <th style="text-align: center;" class="border border-dark">Номер протокола внутренней комиссии</th>
-            <th style="text-align: center;" class="border border-dark">Дата протокола внутренней комиссии</th>
+            <th style="text-align: center;" class="border border-dark">__('ID')</th>
+            <th style="text-align: center;" class="border border-dark">__('Филиал')</th>
+            <th style="text-align: center;" class="border border-dark">__('Контрагент (предприятия поставляющий товаров. работ. услуг)')</th>
+            <th style="text-align: center;" class="border border-dark">__('Договор (контракт)')</th>
+            <th style="text-align: center;" class="border border-dark">__('Предмет закупки (товар,работа,услуга)')</th>
+            <th style="text-align: center;" class="border border-dark">__('номер заявки')</th>
+            <th style="text-align: center;" class="border border-dark">__('сумма заявки')</th>
+            <th style="text-align: center;" class="border border-dark">__('Предмет договора (контракта) и краткая характеристика')</th>
+            <th style="text-align: center;" class="border border-dark">__('Общая сумма договора (контракта)')</th>
+            <th style="text-align: center;" class="border border-dark">__('Номер протокола внутренней комиссии')</th>
+            <th style="text-align: center;" class="border border-dark">__('Дата протокола внутренней комиссии')</th>
         </tr>
     </thead>
 </table>

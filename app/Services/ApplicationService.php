@@ -104,6 +104,9 @@ class ApplicationService
                 ->editColumn('updated_at', function ($query) {
                     return $query->updated_at ? with(new Carbon($query->updated_at))->format('m/d/Y') : '';;
                 })
+                ->editColumn('delivery_date', function ($query) {
+                    return $query->updated_at ? with(new Carbon($query->updated_at))->format('m/d/Y') : '';;
+                })
                 ->editColumn('status', function ($query){
                     $status_new = __('lang.status_new');
                     $status_in_process = __('lang.status_in_process');
