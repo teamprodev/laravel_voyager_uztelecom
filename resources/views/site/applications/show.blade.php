@@ -8,7 +8,7 @@
         <h5><strong>ID : </strong> {{$application->id}}
             <h5><strong>{{ __('lang.author') }}</strong> {{$application->user->name}} ( {{ $application->user->role->display_name }} )</h5>
             <h5><strong>{{ __('lang.author_filial') }}</strong> {{ $branch_name->name }}</h5>
-            <h5><strong>Должность :</strong> {{ auth()->user()->position->name }}</h5>
+            <h5><strong>Должность :</strong> {{ auth()->user()->position_id ? auth()->user()->position->name:"Нет" }}</h5>
             <h5><strong>{{ __('lang.number') }} : </strong> {{$application->number}} </h5>
             <h5><strong>Date : </strong> {{$application->date}} </h5> <br>
             <h5><strong>Визирование заявки через : </strong>
