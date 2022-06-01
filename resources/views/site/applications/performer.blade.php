@@ -64,7 +64,7 @@
                     }}
 
                     <div class="mr-4 pt-2 pb-2 w-50">
-                        {{Aire::select($subject, 'select', __('lang.table_18'))
+                        {{Aire::select($subject, 'select', __('Предмет закупки'))
                             ->name('subject')
                             ->value($application->subject)
                         }}
@@ -83,7 +83,7 @@
                         @endif
                     </div>
                     <div class="pt-2 pb-2 w-50">
-                        {{Aire::select($purchase, 'select', __('lang.table_19'))
+                        {{Aire::select($purchase, 'select', __('Вид закупки'))
                             ->name('type_of_purchase_id')
                             ->value($application->type_of_purchase_id)
                         }}
@@ -94,7 +94,7 @@
                         }}
                     <div id="file"></div>
                     <div id="a" class="hidden mb-3">
-                        <label for="message-text" class="col-form-label">{{ __('lang.table_23') }}:</label>
+                        <label for="message-text" class="col-form-label">{{ __('Комментарий') }}:</label>
                         <input class="form-control" name="report_if_cancelled" id="report_if_cancelled">
                     </div>
                 </div>

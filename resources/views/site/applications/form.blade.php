@@ -34,20 +34,20 @@
                         ->rows(3)
                         ->cols(40)
                     }}
-                    {{Aire::dateTimeLocal('bio',  __('lang.table_14'))
+                    {{Aire::dateTimeLocal('bio',  __('Гарантийный срок качества товара (работ, услуг)'))
                         ->name('expire_warranty_date')
                     }}
                 </div>
             </div>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::input('bio', __('lang.table_4'))
+                    {{Aire::input('bio', __('Планируемый бюджет закупки (сумма)'))
                         ->name('planned_price')
                         ->id('summa')
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::input('bio', __('lang.table_15'))
+                    {{Aire::input('bio', __('Департамент по планированию бюджета - информация о существовании товара закупок в бизнес-плане'))
                         ->name('info_business_plan')
                     }}
                 </div>
@@ -55,21 +55,21 @@
             </div>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::input('bio', __('lang.table_16'))
+                    {{Aire::input('bio', __('Эквивалентная Планируемая сумма'))
                         ->name('equal_planned_price')
                     }}
                 </div>
             </div>
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::textArea('bio', __('lang.table_20'))
+                    {{Aire::textArea('bio', __('Информация о наличии в «Плане закупок» приобретаемых товаров'))
                         ->name('info_purchase_plan')
                         ->rows(3)
                         ->cols(40)
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::textArea('bio', __('lang.table_21'))
+                    {{Aire::textArea('bio', __('Примечание для заказа'))
                         ->name('comment')
                         ->rows(3)
                         ->cols(40)
