@@ -108,16 +108,16 @@ class ApplicationService
                     return $query->updated_at ? with(new Carbon($query->updated_at))->format('m/d/Y') : '';;
                 })
                 ->editColumn('status', function ($query){
-                    $status_new = __('lang.status_new');
-                    $status_in_process = __('lang.status_in_process');
-                    $status_accepted = __('lang.status_accepted');
-                    $status_refused = __('lang.status_refused');
-                    $status_agreed = __('lang.status_agreed');
-                    $status_rejected = __('lang.status_rejected');
-                    $status_distributed = __('lang.status_distributed');
-                    $status_cancelled = __('lang.status_cancelled');
-                    $status_performed = 'товар доставлен';
-                    $status_overdue = 'просрочен';
+                    $status_new = __('Новая');
+                    $status_in_process = __('На рассмотрении');
+                    $status_accepted = __('Принята');
+                    $status_refused = __('Отказана');
+                    $status_agreed = __('Согласована');
+                    $status_rejected = __('Отклонена');
+                    $status_distributed = __('Распределен');
+                    $status_cancelled = __('Отменен');
+                    $status_performed = __('Товар доставлен');
+                    $status_overdue = ('просрочен');
                     if($query->status === 'new'){
                         return $status_new;
                     }elseif($query->status === 'in_process'){
@@ -150,10 +150,10 @@ class ApplicationService
                     $clone_e = route('site.applications.clone', $row->id);
                     $show_e = route('site.applications.show', $row->id);
                     $destroy_e = route('site.applications.destroy', $row->id);
-                    $app_edit = __('lang.edit');
-                    $app_show= __('lang.show');;
-                    $app_clone= __('lang.clone');;
-                    $app_delete= __('lang.delete');;
+                    $app_edit = __('Изменить');
+                    $app_show= __('Показать');;
+                    $app_clone= __('Копировать');;
+                    $app_delete= __('Удалить');;
 
                     if(auth()->user()->hasPermission('Warehouse')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Branch_Performer'))
                     {
@@ -205,16 +205,17 @@ class ApplicationService
                 return $data->updated_at ? with(new Carbon($data->updated_at))->format('Y/m/d') : '';
             })
             ->editColumn('status', function ($query){
-                $status_new = __('lang.status_new');
-                $status_in_process = __('lang.status_in_process');
-                $status_accepted = __('lang.status_accepted');
-                $status_refused = __('lang.status_refused');
-                $status_agreed = __('lang.status_agreed');
-                $status_rejected = __('lang.status_rejected');
-                $status_distributed = __('lang.status_distributed');
-                $status_cancelled = __('lang.status_cancelled');
-                $status_performed = __('lang.performed');
-                $status_overdue = 'просрочен';
+                $status_new = __('Новая');
+                $status_in_process = __('На рассмотрении');
+                $status_accepted = __('Принята');
+                $status_refused = __('Отказана');
+                $status_agreed = __('Согласована');
+                $status_rejected = __('Отклонена');
+                $status_distributed = __('Распределен');
+                $status_cancelled = __('Отменен');
+                $status_performed = __('Товар доставлен');
+                $status_overdue = ('просрочен');
+
                 if($query->status === 'new'){
                     return $status_new;
                 }elseif($query->status === 'in_process'){
@@ -246,10 +247,10 @@ class ApplicationService
                 $clone_e = route('site.applications.clone', $row->id);
                 $show_e = route('site.applications.show', $row->id);
                 $destroy_e = route('site.applications.destroy', $row->id);
-                $app_edit = __('lang.edit');
-                $app_show= __('lang.show');;
-                $app_clone= __('lang.clone');;
-                $app_delete= __('lang.delete');;
+                $app_edit = __('Изменить');
+                $app_show= __('Показать');;
+                $app_clone= __('Копировать');;
+                $app_delete= __('Удалить');;
 
                 if($row->user_id == auth()->user()->id||auth()->user()->hasPermission('Branch_Performer')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Plan_Budget')||auth()->user()->hasPermission('Plan_Business')||auth()->user()->hasPermission('Number_Change'))
                 {
@@ -305,9 +306,9 @@ class ApplicationService
                 return $query->updated_at ? with(new Carbon($query->updated_at))->format('Y/m/d') : '';;
             })
             ->editColumn('status', function ($status){
-                $status_agreed = __('lang.status_agreed');
-                $status_refused = __('lang.status_refused');
-                $status_not_signed = __('lang.status_not_signed');
+                $status_agreed = __('Согласована');
+                $status_rejected = __('Отклонена');
+                $status_not_signed = __('Не подписан');
                 if($status->status == "1"){
                     return $status_agreed;
                 }elseif($status->status == "0"){
@@ -349,10 +350,10 @@ class ApplicationService
                     $edit = route('site.applications.edit', $row->id);
                     $show = route('site.applications.show', $row->id);
                     $destroy = route('site.applications.destroy', $row->id);
-                    $app_edit = __('lang.edit');
-                    $app_show = __('lang.show');;
-                    $app_clone = __('lang.clone');;
-                    $app_delete = __('lang.delete');;
+                    $app_edit = __('Изменить');
+                    $app_show= __('Показать');;
+                    $app_clone= __('Копировать');;
+                    $app_delete= __('Удалить');;
                     if($row->status == 'accepted' || $row->status =='refused')
                     {
                         $clone = route('site.applications.clone', $row->id);

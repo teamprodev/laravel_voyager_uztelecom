@@ -13,10 +13,10 @@
                     <th>{{ __('lang.table_1') }}</th>
                     <th>{{ __('lang.table_2') }}</th>
                     <th>{{ __('lang.table_3') }}</th>
-                    <th>{{ __('lang.table_4') }}</th>
+                    <th>{{ __('Планируемый бюджет закупки (сумма)') }}</th>
                     <th>{{ __('lang.table_5') }}</th>
                     <th>{{ __('lang.table_6') }}</th>
-                    <th>{{ __('lang.table_7') }}</th>
+                    <th>{{ __('Статус заявки') }}</th>
                     <th>{{ __('lang.table_8') }}</th>
                 </tr>
                 </thead>

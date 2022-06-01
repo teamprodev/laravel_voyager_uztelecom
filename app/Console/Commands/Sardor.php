@@ -61,7 +61,7 @@ class Sardor extends Command
             {
                 $application->status = 'overdue';
                 $array = json_decode($application->signers);
-                $message = 'Status Changed to Overdue';
+                $message = "{$application->id} "."{$application->name} ".setting('admin.application_overdue');
                 $service   = new ApplicationService();
                 $service->sendNotifications($array, $application,$message);
                 $application->save();

@@ -16,7 +16,7 @@
                         <br> {{\App\Models\Resource::find($product)->name}}
                     @endforeach
                 @endif
-                <label class="col-sm-6" for="initiator" class="col-sm-2 col-form-label">{{ __('lang.table_1') }}</label>
+                <label class="col-sm-6" for="initiator" class="col-sm-2 col-form-label">{{ __('Инициатор (наименование подразделения заказчика)') }}</label>
                 <div class="col-sm-6">
                     {{Aire::input()
                         ->name("initiator")
@@ -28,7 +28,7 @@
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-6" for="purchase_basis" class="col-sm-2 col-form-label">{{ __('lang.table_9') }}</label>
+                <label class="col-sm-6" for="purchase_basis" class="col-sm-2 col-form-label">{{ __('Цель / содержание закупки (обоснование необходимости закупки)') }}</label>
                 <div class="col-sm-6">
                     {{Aire::textArea()
                         ->rows(3)
@@ -42,7 +42,7 @@
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-6" for="basis" class="col-sm-2 col-form-label">{{ __('lang.table_11') }}</label>
+                <label class="col-sm-6" for="basis" class="col-sm-2 col-form-label">{{ __('Основания (план закупок, рапорт,распоряжение руководства)') }}</label>
                 <div class="col-sm-6">
                     {{Aire::textArea()
                         ->rows(3)
@@ -56,7 +56,7 @@
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-6" for="name" class="col-sm-2 col-form-label">{{ __('lang.table_2') }}</label>
+                <label class="col-sm-6" for="name" class="col-sm-2 col-form-label">{{ __('Наименование предмета закупки(товар, работа, услуги)') }}</label>
                 <div class="col-sm-6">
                     {{Aire::input()
                         ->name("name")
@@ -68,7 +68,7 @@
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-6" for="specification" class="col-sm-2 col-form-label">{{ __('lang.table_10') }}</label>
+                <label class="col-sm-6" for="specification" class="col-sm-2 col-form-label">{{ __('Описание предмета закупки (технические характеристики)') }}</label>
                 <div class="col-sm-6">
                     {{Aire::textArea()
                         ->rows(3)
@@ -82,14 +82,14 @@
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">{{ __('lang.table_3') }}</label>
+                <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">{{ __('Ожидаемый срок поставки') }}</label>
                 <div class="col-sm-6">
                     <input class="form-control" id="date" name="delivery_date" value="{{ $application->delivery_date }}" type="date"/>
                 </div>
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-6" for="separate_requirements" class="col-sm-2 col-form-label">{{ __('lang.table_12') }}</label>
+                <label class="col-sm-6" for="separate_requirements" class="col-sm-2 col-form-label">{{ __('Особые требования') }}</label>
                 <div class="col-sm-6">
                     {{Aire::textArea()
                         ->rows(3)
@@ -117,14 +117,14 @@
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">{{ __('lang.table_14') }}</label>
+                <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">{{ __('Гарантийный срок качества товара (работ, услуг)') }}</label>
                 <div class="col-sm-6">
                     <input class="form-control" id="date" name="expire_warranty_date" value="{{$application->expire_warranty_date}}" type="date"/>
                 </div>
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-6" for="planned_price" class="col-sm-2 col-form-label">{{ __('lang.table_4') }}</label>
+                <label class="col-sm-6" for="planned_price" class="col-sm-2 col-form-label">{{ __('Планируемый бюджет закупки (сумма)') }}</label>
                 <div class="col-sm-6">
                     {{Aire::input()
                         ->name("planned_price")
@@ -137,7 +137,7 @@
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-6" for="incoterms" class="col-sm-2 col-form-label">{{ __('lang.table_5') }}</label>
+                <label class="col-sm-6" for="incoterms" class="col-sm-2 col-form-label">{{ __('Условия поставки по INCOTERMS (самовывоз со склада/доставка до покупателя)') }}</label>
                 <div class="col-sm-6">
                     {{Aire::textArea()
                         ->rows(3)
@@ -151,7 +151,7 @@
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-6" for="info_business_plan" class="col-sm-2 col-form-label">{{ __('lang.table_15') }}</label>
+                <label class="col-sm-6" for="info_business_plan" class="col-sm-2 col-form-label">{{ __('Департамент по планированию бюджета - информация о существовании товара закупок в бизнес-плане') }}</label>
                 <div class="col-sm-6">
                     {{Aire::input()
                         ->name("info_business_plan")
@@ -162,7 +162,7 @@
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-6" for="info_purchase_plan" class="col-sm-2 col-form-label">{{ __('lang.table_20') }}</label>
+                <label class="col-sm-6" for="info_purchase_plan" class="col-sm-2 col-form-label">{{ __('Информация о наличии в «Плане закупок» приобретаемых товаров') }}</label>
                 <div class="col-sm-6">
                     {{Aire::textArea()
                         ->rows(3)
@@ -175,7 +175,7 @@
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-6" for="comment" class="col-sm-2 col-form-label">{{ __('lang.table_23') }}</label>
+                <label class="col-sm-6" for="comment" class="col-sm-2 col-form-label">{{ __('Комментарий') }}</label>
                 <div class="col-sm-6">
                     {{Aire::textArea()
                         ->rows(3)

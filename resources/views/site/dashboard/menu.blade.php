@@ -40,7 +40,7 @@
                         </a>
                         <a href="{{route('site.applications.show_status', 'rejected')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>{{ __('lang.status_rejected') }}</p>
+                            <p>{{ __('Rejected') }}</p>
                         </a>
 
                         <a href="{{route('site.applications.show_status', 'distributed')}}" id="demo" class="collapse">
