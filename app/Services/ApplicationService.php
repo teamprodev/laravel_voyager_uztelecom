@@ -211,7 +211,7 @@ class ApplicationService
                 $status_distributed = __('Распределен');
                 $status_cancelled = __('Отменен');
                 $status_performed = __('Товар доставлен');
-                $status_overdue = ('просрочен');0
+                $status_overdue = ('просрочен');
 
                 if($query->status === 'new'){
                     return $status_new;

@@ -5,12 +5,13 @@
         <a href="{{route('site.applications.edit',$application->id)}}" class="btn btn-success">Изменить</a>
     </div>
     <div class="px-6 pb-0 pt-6">
-        <h5><strong>{{ __('lang.author') }}</strong> {{$application->user->name}} ( {{ $application->user->role->display_name }} )</h5>
-        <h5><strong>{{ __('lang.author_filial') }}</strong> {{ $branch_name->name }}</h5>
-        <h5><strong>Должность :</strong> {{ auth()->user()->position->name }}</h5>
-        <h5><strong>{{ __('lang.number') }} : </strong> {{$application->number}} </h5>
-        <h5><strong>Date : </strong> {{$application->date}} </h5> <br>
-        <h5><strong>Визирование заявки через : </strong>
+        <h5><strong>ID : </strong> {{$application->id}}
+            <h5><strong>{{ __('lang.author') }}</strong> {{$application->user->name}} ( {{ $application->user->role->display_name }} )</h5>
+            <h5><strong>{{ __('lang.author_filial') }}</strong> {{ $branch_name->name }}</h5>
+            <h5><strong>Должность :</strong> {{ auth()->user()->position->name }}</h5>
+            <h5><strong>{{ __('lang.number') }} : </strong> {{$application->number}} </h5>
+            <h5><strong>Date : </strong> {{$application->date}} </h5> <br>
+            <h5><strong>Визирование заявки через : </strong>
             @if($application->is_more_than_limit == 1)
                 Компанию
             @else
