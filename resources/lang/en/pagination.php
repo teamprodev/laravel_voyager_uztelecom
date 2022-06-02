@@ -1,7 +1,6 @@
-
 <?php
 
 return [
-    "next" => "Next &raquo;",
-    "previous" => "&laquo; Previous"
+    "next" => "Next and Rakko;",
+    "previous" => "& laquo; Front"
 ];

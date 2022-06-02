@@ -3,60 +3,60 @@
         <div class="p-6">
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::select($branch, 'select', __('lang.performer_branch'))
+                    {{Aire::select($branch, 'select', __('Филиал заказчик по контракту'))
                         ->name('branch_customer_id')
                         ->value($application->branch_customer_id)
                         }}
-                    {{Aire::input('bio', __('lang.performer_lot'))
+                    {{Aire::input('bio', __('Номер лота'))
                         ->name('lot_number')
                         ->value($application->lot_number)
                     }}
-                    {{Aire::input('bio', __('lang.performer_contract_num'))
+                    {{Aire::input('bio', __('Номер договора'))
                         ->name('contract_number')
                         ->value($application->contract_number)
                     }}.
-                    {{Aire::dateTimeLocal('bio', __('lang.performer_contract_date'))
+                    {{Aire::dateTimeLocal('bio', __('Дата договора'))
                         ->name('contract_date')
                         ->value($application->contract_date)
                     }}
-                    {{Aire::dateTimeLocal('bio', __('lang.performer_protocol_date'))
+                    {{Aire::dateTimeLocal('bio', __('Дата протокола'))
                         ->name('protocol_date')
                         ->value($application->protocol_date)
                     }}
-                    {{Aire::input('bio', __('lang.performer_protocol_num'))
+                    {{Aire::input('bio', __('Номер протокола'))
                         ->name('protocol_number')
                         ->value($application->protocol_number)
                     }}
-                    {{Aire::textArea('bio', __('lang.performer_contract_info'))
+                    {{Aire::textArea('bio', __('Предмет договора (контракта) и краткая характеристика'))
                         ->name('contract_info')
                         ->value($application->contract_info)
                         ->rows(3)
                         ->cols(40)
                     }}
-                    {{Aire::checkbox('checkbox', __('lang.performer_nds'))
+                    {{Aire::checkbox('checkbox', __('С НДС'))
                        ->name('with_nds')
                     }}
-                    {{Aire::input('bio', __('lang.performer_price'))
+                    {{Aire::input('bio', __('Общая реальная сумма'))
                         ->name('contract_price')
                         ->value($application->contract_price)
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::select($countries,'bio', __('lang.performer_country'))
+                    {{Aire::select($countries,'bio', __('Товары (обслуживание) страна изготовленной'))
                         ->name('country_produced_id')
                         ->value($application->country_produced_id)
                     }}
 
 
-                    {{Aire::input('bio', __('lang.performer_supplier'))
+                    {{Aire::input('bio', __('Наименование поставщика'))
                         ->name('supplier_name')
                         ->value($application->supplier_name)
                     }}
-                    {{Aire::input('bio', __('lang.performer_inn'))
+                    {{Aire::input('bio', __('Поставщик Перемешать номер'))
                         ->name('supplier_inn')
                         ->value($application->supplier_inn)
                     }}
-                    {{Aire::textArea('bio', __('lang.performer_info'))
+                    {{Aire::textArea('bio', __('Информация о товаре'))
                         ->name('product_info')
                         ->value($application->product_info)
                         ->rows(3)
@@ -103,7 +103,7 @@
     </div>
 
     <div class="row ml-4 pb-4">
-        <button type="submit" class="btn btn-success">{{ __('lang.save') }}</button>
+        <button type="submit" class="btn btn-success">{{ __('Сохранить') }}</button>
     </div>
     <script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.min.js"></script>
     <script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.legacy.min.js" nomodule></script>

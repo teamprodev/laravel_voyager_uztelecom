@@ -66,22 +66,22 @@
         <thead class="border border-dark">
 
             <tr class="border border-dark">
-                <th style="text-align: center;" class="border border-dark" rowspan="2">__('ID')</th>
-                <th style="text-align: center;" class="border border-dark" rowspan="2">__('Филиал')</th>
-                <th style="text-align: center;" class="border border-dark" colspan="2">__('Заключенные договора')</th>
-                <th style="text-align: center;" class="border border-dark" colspan="2"><b>__('товар')</b></th>
-                <th style="text-align: center;" class="border border-dark" colspan="2"><b>__('работа')</b></th>
-                <th style="text-align: center;" class="border border-dark" colspan="2"><b>__('услуга')</b></th>
+                <th style="text-align: center;" class="border border-dark" rowspan="2">{{ __('ID') }}</th>
+                <th style="text-align: center;" class="border border-dark" rowspan="2">{{ __('Филиал') }}</th>
+                <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Заключенные договора') }}</th>
+                <th style="text-align: center;" class="border border-dark" colspan="2"><b>{{ __('товар')}}</b></th>
+                <th style="text-align: center;" class="border border-dark" colspan="2"><b>{{ __('работа') }}</b></th>
+                <th style="text-align: center;" class="border border-dark" colspan="2"><b>{{ __('услуга') }}</b></th>
             </tr>
             <tr class="border border-dark">
-                <th style="text-align: center;" class="border border-dark">__('кол-во')</th>
-                <th style="text-align: center;" class="border border-dark">__('сумма')</th>
-                <th style="text-align: center;" class="border border-dark">__('кол-во')</th>
-                <th style="text-align: center;" class="border border-dark">__('сумма')</th>
-                <th style="text-align: center;" class="border border-dark">__('кол-во')</th>
-                <th style="text-align: center;" class="border border-dark">__('сумма')</th>
-                <th style="text-align: center;" class="border border-dark">__('кол-во')</th>
-                <th style="text-align: center;" class="border border-dark">__('сумма')</th>
+                <th style="text-align: center;" class="border border-dark">{{ __('кол-во') }}</th>
+                <th style="text-align: center;" class="border border-dark">{{ __('сумма') }}</th>
+                <th style="text-align: center;" class="border border-dark">{{ __('кол-во') }}</th>
+                <th style="text-align: center;" class="border border-dark">{{ __('сумма')}}</th>
+                <th style="text-align: center;" class="border border-dark">{{ __('кол-во') }}</th>
+                <th style="text-align: center;" class="border border-dark">{{ __('сумма') }}</th>
+                <th style="text-align: center;" class="border border-dark">{{ __('кол-во') }}</th>
+                <th style="text-align: center;" class="border border-dark">{{ __('сумма') }}</th>
             </tr>
         </thead>
     </table>

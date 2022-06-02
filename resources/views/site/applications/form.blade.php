@@ -3,33 +3,33 @@
         <div class="p-6">
             <div class="flex items-baseline">
                 <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::input('bio', __('lang.table_1'))
+                    {{Aire::input('bio', __('Инициатор (наименование подразделения заказчика)'))
                         ->name('initiator')
                     }}
-                    {{Aire::textArea('bio', __('lang.table_9'))
+                    {{Aire::textArea('bio', __('Цель / содержание закупки (обоснование необходимости закупки)'))
                         ->name('purchase_basis')
                         ->rows(3)
                         ->cols(40)
                     }}
-                    {{Aire::textArea('bio', __('lang.table_10'))
+                    {{Aire::textArea('bio', __('Описание предмета закупки (технические характеристики)'))
                         ->name('specification')
                         ->rows(3)
                         ->cols(40)
                     }}
-                    {{Aire::dateTimeLocal('bio', __('Product Corression Deadline'))
+                    {{Aire::dateTimeLocal('bio', __('Ожидаемый срок поставки'))
                         ->name('delivery_date')
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::input('bio', __('lang.table_2'))
+                    {{Aire::input('bio', __('Наименование предмета закупки(товар, работа, услуги)'))
                         ->name('name')
                     }}
-                    {{Aire::textArea('bio', __('lang.table_11'))
+                    {{Aire::textArea('bio', __('Основания (план закупок, рапорт,распоряжение руководства)'))
                         ->name('basis')
                         ->rows(3)
                         ->cols(40)
                     }}
-                    {{Aire::textArea('bio', __('lang.table_12'))
+                    {{Aire::textArea('bio', __('Особые требования'))
                         ->name('separate_requirements')
                         ->rows(3)
                         ->cols(40)
@@ -82,11 +82,11 @@
     <div class="w-full text-right py-4 pr-10">
         <button type="submit"
         class="bg-green-500 hover:bg-green-700 p-2 transition duration-300 rounded-md text-white">
-            {{ __('lang.save_send') }}
+            {{ __('Сохранить и отправить') }}
         </button>
         <button type="submit"
                 class="bg-green-500 hover:bg-green-700 p-2 transition duration-300 rounded-md text-white">
-            {{ __('lang.save_close') }}
+            {{ __('Сохранить и закрыть') }}
         </button>
 
     </div>
