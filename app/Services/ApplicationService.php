@@ -158,7 +158,7 @@ class ApplicationService
                     $app_clone= __('Копировать');;
                     $app_delete= __('Удалить');;
 
-                    if(auth()->user()->hasPermission('Warehouse')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Branch_Performer'))
+                    if(auth()->user()->id == $row->user_id||auth()->user()->hasPermission('Warehouse')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Branch_Performer'))
                     {
                         $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-success btn-sm'>$app_edit</a>";
                     }else{
@@ -442,8 +442,10 @@ class ApplicationService
     public function edit($application)
     {
         $status_extented = StatusExtented::all()->pluck('name','name')->toArray();
-        if($application->status != 'draft' && $application->status != 'new' && $application->status != 'distributed' && in_array($application->status,$status_extented) == false)
+        if(auth()->user()->id != $application->user_id && !auth()->user()->hasPermission('Warehouse') && !auth()->user()->hasPermission('Company_Performer') && !auth()->user()->hasPermission('Branch_Performer'))
+        {
             return redirect()->route('site.applications.index');
+        }
         $countries = ['0' => 'Select country'];
         $countries[] = Country::get()->pluck('country_name','country_alpha3_code')->toArray();
         $products = Resource::get();
