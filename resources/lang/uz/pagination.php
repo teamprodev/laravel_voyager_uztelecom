@@ -1,6 +1,6 @@
 <?php
 
 return [
-    "next" => "Keyingi va Rako;",
+    "next" => "Keyingi va rakko;",
     "previous" => "& laquo; Oldingi"
 ];
