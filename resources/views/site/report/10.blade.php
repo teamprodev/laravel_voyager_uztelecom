@@ -65,20 +65,20 @@
     <table id="example" class="display wrap table-bordered dt-responsive" style="border-collapse: collapse; width: 100%; padding-top: 10px">
         <thead class="border border-dark">
         <tr class="border border-dark">
-            <th style="text-align: center;" class="border border-dark">__('Год')</th>
-            <th style="text-align: center;" class="border border-dark">__('Январь')</th>
-            <th style="text-align: center;" class="border border-dark">__('Февраль')</th>
-            <th style="text-align: center;" class="border border-dark">__('Март')</th>
-            <th style="text-align: center;" class="border border-dark">__('Апрель')</th>
-            <th style="text-align: center;" class="border border-dark">__('Май')</th>
-            <th style="text-align: center;" class="border border-dark">__('Июнь')</th>
-            <th style="text-align: center;" class="border border-dark">__('Июль')</th>
-            <th style="text-align: center;" class="border border-dark">__('Август')</th>
-            <th style="text-align: center;" class="border border-dark">__('Сентябрь')</th>
-            <th style="text-align: center;" class="border border-dark">__('Октябрь')</th>
-            <th style="text-align: center;" class="border border-dark">__('Ноябрь')</th>
-            <th style="text-align: center;" class="border border-dark">__('Декабрь')</th>
-            <th style="text-align: center;" class="border border-dark">__('Итого')</th>
+            <th style="text-align: center;" class="border border-dark">{{ __('Год') }}</th>
+            <th style="text-align: center;" class="border border-dark">{{ __('Январь') }}</th>
+            <th style="text-align: center;" class="border border-dark">{{ __('Февраль') }}</th>
+            <th style="text-align: center;" class="border border-dark">{{ __('Март') }}</th>
+            <th style="text-align: center;" class="border border-dark">{{ __('Апрель') }}</th>
+            <th style="text-align: center;" class="border border-dark">{{ __('Май') }}</th>
+            <th style="text-align: center;" class="border border-dark">{{ __('Июнь') }}</th>
+            <th style="text-align: center;" class="border border-dark">{{ __('Июль') }}</th>
+            <th style="text-align: center;" class="border border-dark">{{ __('Август') }}</th>
+            <th style="text-align: center;" class="border border-dark">{{ __('Сентябрь') }}</th>
+            <th style="text-align: center;" class="border border-dark">{{ __('Октябрь') }}</th>
+            <th style="text-align: center;" class="border border-dark">{{ __('Ноябрь') }}</th>
+            <th style="text-align: center;" class="border border-dark">{{ __('Декабрь') }}</th>
+            <th style="text-align: center;" class="border border-dark">{{ __('Итого')  }}</th>
         </tr>
         </thead>
     </table>

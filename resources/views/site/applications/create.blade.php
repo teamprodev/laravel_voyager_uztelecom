@@ -2,7 +2,7 @@
 
 @section('center_content')
     <div class="p-4">
-        <button class="btn btn-danger" onclick="functionBack()">{{ __('lang.back') }}</button>
+        <button class="btn btn-danger" onclick="functionBack()">{{ __('Назад') }}</button>
     </div>
     {{ Aire::open()
   ->route('site.applications.store')
@@ -13,7 +13,7 @@
     'planned_price' => 'numeric|required',
     ])
     ->messages([
-    'accepted' => __('lang.terms'),
+    'accepted' => __('Вы должны принять условия'),
     ])
   ->post() }}
         @include('site.applications.form')

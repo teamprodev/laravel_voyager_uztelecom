@@ -3,21 +3,21 @@
     <div id="section" class="pt-6">
         <a href="{{route('site.applications.create')}}"
            class="ml-12 bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white mb-8">
-            {{ __('lang.create') }}
+            {{ __('Создать') }}
         </a>
         <div class="w-11/12 mx-auto pt-8 pb-16">
             <table id="yajra-datatable">
                 <thead>
                 <tr>
-                    <th>{{ __('lang.table_0') }}</th>
-                    <th>{{ __('lang.table_1') }}</th>
-                    <th>{{ __('lang.table_2') }}</th>
-                    <th>{{ __('lang.table_3') }}</th>
+                    <th>{{ __('ФИО') }}</th>
+                    <th>{{ __('Инициатор (наименование подразделения заказчика)') }}</th>
+                    <th>{{ __('Наименование предмета закупки(товар, работа, услуги)') }}</th>
+                    <th>{{ __('Ожидаемый срок поставки') }}</th>
                     <th>{{ __('Планируемый бюджет закупки (сумма)') }}</th>
-                    <th>{{ __('lang.table_5') }}</th>
-                    <th>{{ __('lang.table_6') }}</th>
+                    <th>{{ __('Условия поставки по INCOTERMS (самовывоз со склада/доставка до покупателя)') }}</th>
+                    <th>{{ __('Дата создания') }}</th>
                     <th>{{ __('Статус заявки') }}</th>
-                    <th>{{ __('lang.table_8') }}</th>
+                    <th>{{ __('Действие') }}</th>
                 </tr>
                 </thead>
             </table>

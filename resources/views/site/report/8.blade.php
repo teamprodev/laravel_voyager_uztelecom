@@ -55,22 +55,22 @@
     <table id="example" class="display wrap table-bordered dt-responsive" style="border-collapse: collapse; width: 100%; padding-top: 10px">
         <thead class="border border-dark">
             <tr class="border border-dark">
-                <th style="text-align: center;" class="border border-dark" rowspan="2">__('ID')</th>
-                <th style="text-align: center;" class="border border-dark" rowspan="2">__('Филиал')</th>
-                <th style="text-align: center;" class="border border-dark" colspan="4">__('Информация о заявке')</th>
-                <th style="text-align: center;" class="border border-dark" rowspan="2">__('Наименование товара')</th>
-                <th style="text-align: center;" class="border border-dark" rowspan="2">__('Вид закупки')</th>
-                <th style="text-align: center;" class="border border-dark" colspan="3">__('Договор')</th>
-                <th style="text-align: center;" class="border border-dark" rowspan="2">__('Исполнитель')</th>
+                <th style="text-align: center;" class="border border-dark" rowspan="2">{{__('ID')  }}</th>
+                <th style="text-align: center;" class="border border-dark" rowspan="2">{{ __('Филиал') }}</th>
+                <th style="text-align: center;" class="border border-dark" colspan="4">{{ __('Информация о заявке') }}</th>
+                <th style="text-align: center;" class="border border-dark" rowspan="2">{{ __('Наименование товара') }}</th>
+                <th style="text-align: center;" class="border border-dark" rowspan="2">{{ __('Вид закупки') }}</th>
+                <th style="text-align: center;" class="border border-dark" colspan="3">{{ __('Договор') }}</th>
+                <th style="text-align: center;" class="border border-dark" rowspan="2">{{ __('Исполнитель') }}</th>
             </tr>
             <tr>
-                <th class="border border-dark">__('Номер и дата заявки')</th>
-                <th class="border border-dark">__('Планируемый бюджет закупки (сум)')</th>
-                <th class="border border-dark">__('Дата получения отделом')</th>
-                <th class="border border-dark">__('Инициатор')</th>
-                <th class="border border-dark">__('Номер договора')</th>
-                <th class="border border-dark">__('Поставщик')</th>
-                <th class="border border-dark">__('Сумма')</th>
+                <th class="border border-dark">{{ __('Номер и дата заявки') }}</th>
+                <th class="border border-dark">{{ __('Планируемый бюджет закупки (сум)') }}</th>
+                <th class="border border-dark">{{ __('Дата получения отделом') }}</th>
+                <th class="border border-dark">{{ __('Инициатор')}}</th>
+                <th class="border border-dark">{{ __('Номер договора') }}</th>
+                <th class="border border-dark">{{ __('Поставщик') }}</th>
+                <th class="border border-dark">{{ __('Сумма')  }}</th>
             </tr>
         </thead>
     </table>
