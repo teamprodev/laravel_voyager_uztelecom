@@ -8,12 +8,14 @@ use App\Http\Requests\VoteApplicationRequest;
 use App\Jobs\VoteJob;
 use App\Models\Application;
 use App\Models\Notification;
+use App\Models\PermissionRole;
 use App\Services\ApplicationService;
 use Illuminate\Support\Carbon;
 use App\Models\SignedDocs;;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use TCG\Voyager\Models\Role;
 use Yajra\DataTables\DataTables;
 
 class ApplicationController extends Controller
@@ -42,6 +44,9 @@ class ApplicationController extends Controller
     }
     public function index(Request $request)
     {
+        $user = auth()->user();
+        PermissionRole::where('role_id' , $user->role_id)->where('permission_id',165)->first() ? PermissionRole::where('role_id' , $user->role_id)->where('permission_id',166)->delete():null;
+        PermissionRole::where('role_id' , $user->role_id)->where('permission_id',167)->first() ? PermissionRole::where('role_id' , $user->role_id)->where('permission_id',168)->delete():null;
         return $this->service->index($request);
     }
 

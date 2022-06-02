@@ -315,7 +315,7 @@ class ApplicationService
                 if($status->status == "1"){
                     return $status_agreed;
                 }elseif($status->status == "0"){
-                    return $status_refused;
+                    return $status_rejected;
                 }else{
                     return $status_not_signed;
                 }
@@ -327,6 +327,7 @@ class ApplicationService
         $latest = Application::latest('id')->first();
         $application = new Application();
         $application->user_id = auth()->user()->id;
+        $application->branch_initiator_id = auth()->user()->branch_id;
         $application->status = Application::NEW;
         $application->save();
         $data = Application::query()->latest('id')->first();
@@ -452,8 +453,9 @@ class ApplicationService
             $select[] = $products[$i]->name;
         }
         $performer_file = json_decode($application->performer_file);
-        $company_signer = PermissionRole::where('permission_id',166)->select('role_id')->get();
-        $branch_signer = PermissionRole::where('permission_id',167)->select('role_id')->get();
+        $branch_signer = json_decode($application->branch->add_signers);
+        $addsigner = Branch::find(9);
+        $company_signer = json_decode($addsigner->add_signers);
         return view('site.applications.edit', [
             'application' => $application,
             'purchase' => Purchase::all()->pluck('name','id'),
@@ -518,9 +520,12 @@ class ApplicationService
 //            $data['performer_head_of_dep_user_id'] = auth()->user()->id;
         }
         if ($application->is_more_than_limit != 1)
-            $roles = PermissionRole::where('permission_id',168)->pluck('role_id')->toArray();
-        else
-            $roles = PermissionRole::where('permission_id',165)->pluck('role_id')->toArray();
+        {
+            $roles = json_decode($application->branch->signers);
+        }else{
+            $json = Branch::where('id',1)->select('signers')->get();
+            $roles = json_decode($json);
+        }
 
         if (isset($data['signers']))
         {

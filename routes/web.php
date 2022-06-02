@@ -29,10 +29,13 @@ use TCG\Voyager\Facades\Voyager;
 
 Route::get('/report/request/{id}',[ReportController::class,'report'])->name('report');
 
+
 Route::post('/request',[ReportController::class,'request'])->name('request');
 Route::post('/warehouse',[WarehouseController::class,'create'])->name('warehouse.create');
 
 Route::get('/user/{user}',[UserController::class,'changeLeader'])->name('users.leader');
+Route::get('/branches/{id}/signers',[\App\Http\Controllers\BranchController::class,'edit'])->name('signers.add');
+Route::post('/branches/{id}/post',[\App\Http\Controllers\BranchController::class,'update'])->name('signers.update');
 
 Route::get('/', function () {
     return redirect()->route('site.applications.index');

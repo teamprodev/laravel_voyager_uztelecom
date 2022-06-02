@@ -206,14 +206,6 @@
                 </select>
             </div>
 
-            <div class="mb-3 row">
-                <label for="currency" class="col-sm-6 col-form-label">{{ __('lang.branch') }}</label>
-                    {{Aire::select($branch, 'select')
-                    ->name('branch_initiator_id')
-                    ->value('branch_initiator_id')
-                }}
-            </div>
-
             @if($application->is_more_than_limit == '1')
                 {{Aire::checkboxGroup($company_signers, 'radio', __('lang.signers'))
                     ->name('signers[]')
