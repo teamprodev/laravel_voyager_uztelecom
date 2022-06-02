@@ -11,7 +11,7 @@
             </h5>
             <div class="mb-3 row">
                 @if(isset($application->resource_id))
-                    <b>{{ __('lang.resource')}}</b>:
+                    <b>{{ __('Продукт')}}</b>:
                     @foreach(json_decode($application->resource_id) as $product)
                         <br> {{\App\Models\Resource::find($product)->name}}
                     @endforeach
@@ -103,7 +103,7 @@
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-6" for="other_requirements" class="col-sm-2 col-form-label">{{ __('lang.other') }}</label>
+                <label class="col-sm-6" for="other_requirements" class="col-sm-2 col-form-label">{{ __('Другие требования к товару (работе, услуге)') }}</label>
                 <div class="col-sm-6">
                     {{Aire::textArea()
                         ->rows(3)
@@ -187,19 +187,19 @@
                     }}
                 </div>
                 @if($application->with_nds == 1)
-                {{Aire::checkbox('checkbox', __('lang.performer_nds'))
+                {{Aire::checkbox('checkbox', __('С НДС'))
                             ->checked()
                        ->name('with_nds')
                     }}
                 @else
-                {{Aire::checkbox('checkbox', __('lang.performer_nds'))
+                {{Aire::checkbox('checkbox', __('С НДС'))
                    ->name('with_nds')
                    }}
                   @endif
         </div>
 
         <div class="mb-3 row">
-            <label for="currency" class="col-sm-6 col-form-label">{{ __('lang.valyuta') }}</label>
+            <label for="currency" class="col-sm-6 col-form-label">{{ __('Валюта') }}</label>
                 <select class="form-control col-sm-6" name="currency" id="currency">
                     <option value="UZS" @if($application->currency === "UZS") selected @endif>UZS</option>
                     <option value="USD" @if($application->currency === "USD") selected @endif>USD</option>
@@ -207,7 +207,7 @@
             </div>
 
             <div class="mb-3 row">
-                <label for="currency" class="col-sm-6 col-form-label">{{ __('lang.branch') }}</label>
+                <label for="currency" class="col-sm-6 col-form-label">{{ __('Выберите филиал') }}</label>
                     {{Aire::select($branch, 'select')
                     ->name('branch_initiator_id')
                     ->value('branch_initiator_id')
@@ -215,13 +215,13 @@
             </div>
 
             @if($application->is_more_than_limit == '1')
-                {{Aire::checkboxGroup($company_signers, 'radio', __('lang.signers'))
+                {{Aire::checkboxGroup($company_signers, 'radio', __('Подтверждающие лица (e-imzo)'))
                     ->name('signers[]')
                     ->value(json_decode($application->signers))
                     ->multiple()
                 }}
             @elseif($application->is_more_than_limit != '1' )
-                {{Aire::checkboxGroup($branch_signers, 'radio', __('lang.signers'))
+                {{Aire::checkboxGroup($branch_signers, 'radio', __('Подтверждающие лица (e-imzo)'))
                     ->name('signers[]')
                     ->value(json_decode($application->signers))
                     ->multiple()
@@ -231,19 +231,19 @@
         <div class="flex-direction: column">
             @if($application->file_basis === 'null' ||$application->file_basis === null)
                 <div class="mx-1">
-                    <h6 class="my-3">{{ __('lang.base') }}</h6>
+                    <h6 class="my-3">{{ __('Основание') }}</h6>
                     <div id="file_basis"></div>
                 </div>
             @endif
             @if($application->file_tech_spec === 'null' ||$application->file_tech_spec === null)
                 <div class="mx-1">
-                    <h6 class="my-3">{{ __('lang.tz') }}</h6>
+                    <h6 class="my-3">{{ __('Техническое задание') }}</h6>
                     <div id="file_tech_spec"></div>
                 </div>
             @endif
             @if($application->other_files === 'null' ||$application->other_files === null)
                 <div class="mx-1">
-                    <h6 class="my-3">{{ __('lang.doc') }}</h6>
+                    <h6 class="my-3">{{ __('Другие документы необходимые для запуска закупочной процедуры') }}</h6>
                     <div id="other_files"></div>
                 </div>
             @endif
@@ -314,11 +314,11 @@
 <div class="w-full text-center pb-8 ">
     <button class="bg-blue-500 hover:bg-blue-700 mx-4 p-2 transition duration-300 rounded-md text-white"
             name="draft" value="1">
-        {{ __('lang.save_close') }}
+        {{ __('Сохранить и закрыть') }}
     </button>
     <button onclick="functionMy()" class="bg-blue-500 hover:bg-blue-700 mx-4 p-2 transition duration-300 rounded-md text-white"
             name="draft" value="0">
-        {{ __('lang.save_send') }}
+        {{ __('Сохранить и отправить') }}
     </button>
 </div>
 <div class="w-full text-center pb-8 ">

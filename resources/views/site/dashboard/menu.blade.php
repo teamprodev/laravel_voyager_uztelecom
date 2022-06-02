@@ -3,8 +3,8 @@
         <li class="nav-item">
             <a href="{{route('site.applications.index')}}" class="nav-link">
                 <i class="nav-icon fas fa-th-list"></i>
-                <p>
-                    {{ __('lang.applications') }}
+                <p>status
+                    {{ __('Все заявки') }}
                 </p>
             </a>
         </li>
@@ -13,51 +13,51 @@
                 <div class="float-left">
                     <div>
                         <i class="nav-icon fas fa-sort float-left"></i>
-                        <p>{{ __('lang.status') }}</p>
+                        <p>{{ __('Статусы') }}</p>
                     </div>
                     <div class="d-flex align-items-start flex-column">
                         @if(auth()->user()->role_id != 7)
                         <a href="{{route('site.applications.show_status', 'new')}}" id="demo" class="collapse">
                               <i class="nav-icon fas fa-chevron-right"></i>
-                              <p>{{ __('lang.status_new') }}</p>
+                              <p>{{ __('Новая') }}</p>
                           </a>
                         <a href="{{route('site.applications.show_status', 'in_process')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>{{ __('lang.status_in_process') }}</p>
+                            <p>{{ __('На рассмотрении') }}</p>
                         </a>
                         <a href="{{route('site.applications.show_status', 'accepted')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>{{ __('lang.status_accepted') }}</p>
+                            <p>{{ __('Принята') }}</p>
                         </a>
                         <a href="{{route('site.applications.show_status', 'refused')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>{{ __('lang.status_refused') }}</p>
+                            <p>{{ __('Отказана') }}</p>
                         </a>
                         @endif
                         <a href="{{route('site.applications.show_status', 'agreed')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>{{ __('lang.status_agreed') }}</p>
+                            <p>{{ __('Согласован') }}</p>
                         </a>
                         <a href="{{route('site.applications.show_status', 'rejected')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>{{ __('Rejected') }}</p>
+                            <p>{{ __('Отказ') }}</p>
                         </a>
 
                         <a href="{{route('site.applications.show_status', 'distributed')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>{{ __('lang.status_distributed') }}</p>
+                            <p>{{ __('Распределен') }}</p>
                         </a>
                         <a href="{{route('site.applications.show_status','cancelled')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>{{ __('lang.status_cancelled') }}</p>
+                            <p>{{ __('Отменен') }}</p>
                         </a>
                         <a href="{{route('site.applications.show_status', 'performed')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>{{ __('lang.performed') }}</p>
+                            <p>{{ __('Исполнен') }}</p>
                         </a>
                         <a href="{{route('site.applications.show_status', 'overdue')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>{{ __('lang.overdue') }}</p>
+                            <p>{{ __('Просрочен') }}</p>
                         </a>
                     </div>
                 </div>
@@ -124,7 +124,7 @@
             <a href="{{route('site.applications.create')}}" class="nav-link">
                 <i class="nav-icon fas fa-plus-square"></i>
                 <p>
-                    {{ __('lang.create_application') }}
+                    {{ __('Создать заявку') }}
                 </p>
             </a>
         </li>
@@ -133,7 +133,7 @@
             <a href="{{route('site.applications.drafts')}}" class="nav-link">
                 <i class="nav-icon fas fa-file-text"></i>
                 <p>
-                    {{ __('lang.drafts') }}
+                    {{ __('Черновик') }}
                 </p>
             </a>
         </li>
@@ -141,7 +141,7 @@
             <a href="{{route('site.faqs.index')}}" class="nav-link">
                 <i class="nav-icon fas fa-comment"></i>
                 <p>
-                    {{ __('lang.faq') }}
+                    {{ __('База знаний') }}
                 </p>
             </a>
         </li>

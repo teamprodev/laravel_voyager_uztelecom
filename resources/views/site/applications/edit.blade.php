@@ -2,7 +2,7 @@
 
 @section('center_content')
     <div class="pl-4 pt-4">
-        <a href="/" class="btn btn-danger">{{ __('lang.back') }}</a>
+        <a href="/" class="btn btn-danger">{{ __('Назад') }}</a>
     </div>
     @if($application->user_id == auth()->user()->id)
     {{ Aire::open()

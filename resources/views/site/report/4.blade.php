@@ -55,31 +55,31 @@
 <table id="example" class="display wrap table-bordered dt-responsive" style="border-collapse: collapse; width: 100%; padding-top: 10px">
     <thead class="border border-dark">
     <tr class="border border-dark">
-        <th style="text-align: center;" class="border border-dark">__('ID')</th>
-        <th style="text-align: center;" class="border border-dark">__('Филиал')</th>
-        <th style="text-align: center;" class="border border-dark">__('номер заявки')</th>
-        <th style="text-align: center;" class="border border-dark">__('дата заявки')</th>
-        <th style="text-align: center;" class="border border-dark">__('ФИО инициатора')</th>
-        <th style="text-align: center;" class="border border-dark">__('Контактный телефон инициатора')</th>
-        <th style="text-align: center;" class="border border-dark">__('отдел инициатора')</th>
-        <th style="text-align: center;" class="border border-dark">__('вид закупки')</th>
-        <th style="text-align: center;" class="border border-dark">__('Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)')</th>
-        <th style="text-align: center;" class="border border-dark">__('Предмет закупки (товар,работа,услуга)')</th>
-        <th style="text-align: center;" class="border border-dark">__('кол-во закупаемого (товара,работа,услуги)')</th>
-        <th style="text-align: center;" class="border border-dark">__('период')</th>
-        <th style="text-align: center;" class="border border-dark">__('сумма заявки')</th>
-        <th style="text-align: center;" class="border border-dark">__('С НДС')</th>
-        <th style="text-align: center;" class="border border-dark">__('Валюта')</th>
-        <th style="text-align: center;" class="border border-dark">__('Наименование поставщика')</th>
-        <th style="text-align: center;" class="border border-dark">__('сумма договора')</th>
-        <th style="text-align: center;" class="border border-dark">__('Махсулот келишининг муддати')</th>
-        <th style="text-align: center;" class="border border-dark">__('Статус')</th>
-        <th style="text-align: center;" class="border border-dark">__('Начальник Исполнителя заявки')</th>
-        <th style="text-align: center;" class="border border-dark">__('Исполнитель заявки')</th>
-        <th style="text-align: center;" class="border border-dark">__('Бюджетни режалаштириш булими. Маълумот')</th>
-        <th style="text-align: center;" class="border border-dark">__('Харидлар режасида мавжудлиги буича маълумот')</th>
-        <th style="text-align: center;" class="border border-dark">__('Предмет закупки')</th>
-        <th style="text-align: center;" class="border border-dark">__('Основание(план закупок, рапорт, расспорежение руководства)')</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('ID') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('Филиал')  }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('номер заявки') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('дата заявки')}}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('ФИО инициатора') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('Контактный телефон инициатора') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('отдел инициатора') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('вид закупки')}}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('Предмет закупки (товар,работа,услуга)')}}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('кол-во закупаемого (товара,работа,услуги)') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('период') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('сумма заявки') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('С НДС')}}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('Валюта') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('Наименование поставщика') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('сумма договора') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('Махсулот келишининг муддати') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('Статус') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('Начальник Исполнителя заявки') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('Исполнитель заявки') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('Бюджетни режалаштириш булими. Маълумот') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('Харидлар режасида мавжудлиги буича маълумот') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('Предмет закупки') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('Основание(план закупок, рапорт, расспорежение руководства)') }}</th>
     </tr>
     </thead>
 </table>

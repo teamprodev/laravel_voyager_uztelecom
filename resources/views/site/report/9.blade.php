@@ -55,47 +55,47 @@
 <table id="example" class="display wrap table-bordered dt-responsive" style="border-collapse: collapse; width: 100%; padding-top: 10px">
     <thead class="border border-dark">
     <tr class="border border-dark">
-        <th style="text-align: center;" class="border border-dark" rowspan="2">__('ID')</th>
-        <th style="text-align: center;" class="border border-dark" rowspan="2">__('Наименование заказчика')</th>
-        <th style="text-align: center;" class="border border-dark" rowspan="2">__('СТИР')</th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">__('Договоры')</th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">__('Через электронный магазин (E-shop)')</th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">__('Через национальный магазин')<</th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">__('Через электронный аукцион')</th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">__('Через кооперационный портал')</th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">__('Через платформы "Шаффоф қурилиш"')</th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">__('Через электронные биржевые торги на специальных торговых площадках')</th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">__('Через конкурс(выбор)')</th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">__('Через тендер')</th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">__('Выбор наиболее приемлемых предложений')</th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">__('С едиными поставщиками') </th>
-        <th style="text-align: center;" class="border border-dark" colspan="2">__('Прямые (ПП-3988 и др. ПП, УП, РП)')</th>
+        <th style="text-align: center;" class="border border-dark" rowspan="2">{{ __('ID') }}</th>
+        <th style="text-align: center;" class="border border-dark" rowspan="2">{{ __('Наименование заказчика') }}</th>
+        <th style="text-align: center;" class="border border-dark" rowspan="2">{{ __('СТИР') }}</th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Договоры') }}</th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Через электронный магазин (E-shop)') }}</th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Через национальный магазин') }}</th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Через электронный аукцион')  }}</th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Через кооперационный портал') }}</th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Через платформы "Шаффоф қурилиш"') }}</th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Через электронные биржевые торги на специальных торговых площадках') }}</th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Через конкурс(выбор)') }}</th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Через тендер')}}</th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Выбор наиболее приемлемых предложений') }}</th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('С едиными поставщиками') }} </th>
+        <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Прямые (ПП-3988 и др. ПП, УП, РП)') }}</th>
     </tr>
     <tr>
-        <th>__('Количество')</th>
-        <th>__('Сумма')</th>
-        <th>__('Количество')</th>
-        <th>__('Сумма')</th>
-        <th>__('Количество')</th>
-        <th>__('Сумма')</th>
-        <th>__('Количество')</th>
-        <th>__('Сумма')</th>
-        <th>__('Количество')</th>
-        <th>__('Сумма')</th>
-        <th>__('Количество')</th>
-        <th>__('Сумма')</th>
-        <th>__('Количество')</th>
-        <th>__('Сумма')</th>
-        <th>__('Количество')</th>
-        <th>__('Сумма')</th>
-        <th>__('Количество')</th>
-        <th>__('Сумма')</th>
-        <th>__('Количество')</th>
-        <th>__('Сумма')</th>
-        <th>__('Количество')</th>
-        <th>__('Сумма')</th>
-        <th>__('Количество')</th>
-        <th>__('Сумма')</th>
+        <th>{{ __('Количество') }}</th>
+        <th>{{ __('Сумма') }}</th>
+        <th>{{ __('Количество') }}</th>
+        <th>{{ __('Сумма') }}</th>
+        <th>{{ __('Количество') }}</th>
+        <th>{{ __('Сумма') }}</th>
+        <th>{{ __('Количество') }}</th>
+        <th>{{ __('Сумма') }}</th>
+        <th>{{ __('Количество') }}</th>
+        <th>{{ __('Сумма') }}</th>
+        <th>{{ __('Количество') }}</th>
+        <th>{{ __('Сумма') }}</th>
+        <th>{{ __('Количество') }}</th>
+        <th>{{ __('Сумма') }}</th>
+        <th>{{ __('Количество') }}</th>
+        <th>{{ __('Сумма') }}</th>
+        <th>{{ __('Количество') }}</th>
+        <th>{{ __('Сумма') }}</th>
+        <th>{{ __('Количество') }}</th>
+        <th>{{ __('Сумма') }}</th>
+        <th>{{ __('Количество') }}</th>
+        <th>{{ __('Сумма') }}</th>
+        <th>{{ __('Количество') }}</th>
+        <th>{{ __('Сумма') }}</th>
     </tr>
     </thead>
 </table>

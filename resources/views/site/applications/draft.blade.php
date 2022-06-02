@@ -1,7 +1,7 @@
 @extends('site.layouts.app')
 @section('center_content')
     <h2 class="ml-5 pt-8">
-        {{ __('lang.drafts') }}
+        {{ __('Черновик') }}
     </h2>
         <div class="w-11/12 mx-auto pt-8 pb-16">
             <table class="data-table display wrap">
