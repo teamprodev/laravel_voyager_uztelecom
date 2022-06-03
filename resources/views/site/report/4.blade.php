@@ -103,7 +103,7 @@
 
 <script>
     $(document).ready(function() {
-        var tableTitle = '4 - Отчет заявки по статусам';
+        var tableTitle = {{ __('4 - Отчет заявки по статусам') }}
 
         $('#example').DataTable( {
             "language": {
