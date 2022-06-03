@@ -15,8 +15,19 @@ class BranchController extends Controller
         $add_signers = Roles::find($add_signers)->pluck('display_name','id');
         $signers = PermissionRole::where('permission_id',168)->select('role_id')->get();
         $signers = Roles::find($signers)->pluck('display_name','id');
-        $branch = $id;
-        return view('vendor.voyager.branches.signers-add',compact('signers','add_signers','branch'));
+        return view('vendor.voyager.branches.signers-add',[
+            'add_signers' => $add_signers,
+            'signers' => $signers,
+            'branch' => $id,
+        ]);
+    }
+    public function ajax()
+    {
+        $add_signers = PermissionRole::where('permission_id',167)->select('role_id')->get();
+        $add_signers = Roles::find($add_signers)->pluck('display_name','id');
+        $signers = PermissionRole::where('permission_id',168)->select('role_id')->get();
+        $signers = Roles::find($signers)->pluck('display_name','id');
+        return $add_signers;
     }
     public function update(Branch $id,Request $req)
     {

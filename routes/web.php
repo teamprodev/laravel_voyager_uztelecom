@@ -34,8 +34,8 @@ Route::post('/request',[ReportController::class,'request'])->name('request');
 Route::post('/warehouse',[WarehouseController::class,'create'])->name('warehouse.create');
 
 Route::get('/user/{user}',[UserController::class,'changeLeader'])->name('users.leader');
-Route::get('/branches/{id}/signers',[\App\Http\Controllers\BranchController::class,'edit'])->name('signers.add');
 Route::post('/branches/{id}/post',[\App\Http\Controllers\BranchController::class,'update'])->name('signers.update');
+Route::get('/branches/signers',[\App\Http\Controllers\BranchController::class,'ajax'])->name('signers.ajax');
 
 Route::get('/', function () {
     return redirect()->route('site.applications.index');
@@ -48,7 +48,7 @@ Route::group([
     Voyager::routes();
     Route::get('type-of-purchase/{id}/edit',[TypeOfPurchase::class,'edit'])->name('voyager.type-of-purchase.edit');
     Route::post('type-of-purchase/update',[TypeOfPurchase::class,'update'])->name('type-of-purchase.update');
-
+    Route::get('branches/{id}/signers',[\App\Http\Controllers\BranchController::class,'edit'])->name('signers.add');
 
 });
 Route::get('admin/login', [LoginController::class, 'login'])->name('voyager.login');
