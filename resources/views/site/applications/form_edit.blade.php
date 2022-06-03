@@ -2,7 +2,7 @@
 <div class="mt-6">
     <div class="w-full flex">
         <div class="p-6">
-            <h5><strong>Визирование заявки через : </strong>
+            <h5><strong>{{ __('Визирование заявки через :') }} </strong>
                 @if($application->is_more_than_limit == 1)
                     Компанию
                 @elseif($application->is_more_than_limit == '0')
