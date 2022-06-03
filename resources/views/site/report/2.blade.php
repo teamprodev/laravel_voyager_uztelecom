@@ -104,7 +104,7 @@
 
 <script>
     $(document).ready(function() {
-        var tableTitle = '2 - Отчет квартальный итоговый';
+        var tableTitle = {{ __('2 - Отчет квартальный итоговый') }}
 
         $('#example').DataTable( {
             "language": {
@@ -117,7 +117,7 @@
                 }
 
             },
-            "processing": true,
+            "processing": false,
             pageLength: 10,
             // dom: 'PQlfrtip',
             dom: 'Qlfrtip' + 'Bfrtip',

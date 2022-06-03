@@ -106,7 +106,7 @@
 
     <script>
         $(document).ready(function() {
-            var tableTitle = '5 - Отчет свод  общий';
+            var tableTitle = {{ __('5 - Отчет свод  общий') }}
 
             $('#example').DataTable( {
                 "language": {
@@ -119,7 +119,7 @@
                     }
 
                 },
-                "processing": true,
+                "processing": false,
                 pageLength: 10,
                 // dom: 'PQlfrtip',
                 dom: 'Qlfrtip' + 'Bfrtip',

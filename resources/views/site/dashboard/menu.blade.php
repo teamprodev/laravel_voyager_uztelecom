@@ -3,7 +3,7 @@
         <li class="nav-item">
             <a href="{{route('site.applications.index')}}" class="nav-link">
                 <i class="nav-icon fas fa-th-list"></i>
-                <p>status
+                <p>
                     {{ __('Все заявки') }}
                 </p>
             </a>
@@ -68,52 +68,52 @@
                 <div class="float-left">
                     <div>
                         <i class="nav-icon fas fa-sort float-left"></i>
-                        <p>Отчеты</p>
+                        <p>{{__('Отчеты')}}</p>
                     </div>
                     <div class="d-flex align-items-start flex-column">
                         <a href="{{route('site.report.index', '1')}}" id="report" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>1 отчет</p>
+                            <p>{{__('1 отчет')}}</p>
                         </a>
                         <a href="{{route('site.report.index', '2')}}" id="report" class="collapse">
                           <i class="nav-icon fas fa-chevron-right"></i>
-                          <p>2 отчет квартальный итоговый</p>
+                          <p>{{ __('2 отчет квартальный итоговый') }}</p>
                         </a>
                         <a href="{{route('site.report.index', '22')}}" id="report" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>2 отчет квартальный плановый</p>
+                            <p>{{ __('2 отчет квартальный плановый') }}</p>
                         </a>
                         <a href="{{route('site.report.index', '3')}}" id="report" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>3-отчет за год</p>
+                            <p>{{ __('3-отчет за год') }}</p>
                         </a>
                         <a href="{{route('site.report.index', '4')}}" id="report" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>4-отчет за год</p>
+                            <p>{{ __('4-отчет за год') }}</p>
                         </a>
                         <a href="{{route('site.report.index', '5')}}" id="report" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>5 отчет свод  общий</p>
+                            <p>{{ __('5 отчет свод  общий') }}</p>
                         </a>
                         <a href="{{route('site.report.index', '6')}}" id="report" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>6 отчет свод  общий</p>
+                            <p>{{ __('6 отчет свод  общий') }}</p>
 
                         <a href="{{route('site.report.index', '7')}}" id="report" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>7 отчет плановый</p>
+                            <p>{{ __('7 отчет плановый') }}</p>
                         </a>
                         <a href="{{route('site.report.index', '8')}}" id="report" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>8 отчет по видам закупки</p>
+                            <p>{{ __('8 отчет по видам закупки') }}</p>
                         </a>
                         <a href="{{route('site.report.index', '9')}}" id="report" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>9 отчет плановый</p>
+                            <p>{{ __('9 отчет плановый') }}</p>
                         </a>
                         <a href="{{route('site.report.index', '10')}}" id="report" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>10-отчет за год</p>
+                            <p>{{ __('за год') }} </p>
                         </a>
                     </div>
                 </div>
