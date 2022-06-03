@@ -158,7 +158,7 @@ class ApplicationService
                     $app_clone= __('Копировать');;
                     $app_delete= __('Удалить');;
 
-                    if(auth()->user()->hasPermission('Warehouse')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Branch_Performer'))
+                    if(auth()->user()->id == $row->user_id||auth()->user()->hasPermission('Warehouse')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Branch_Performer'))
                     {
                         $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-success btn-sm'>$app_edit</a>";
                     }else{
@@ -315,7 +315,7 @@ class ApplicationService
                 if($status->status == "1"){
                     return $status_agreed;
                 }elseif($status->status == "0"){
-                    return $status_refused;
+                    return $status_rejected;
                 }else{
                     return $status_not_signed;
                 }
@@ -327,6 +327,7 @@ class ApplicationService
         $latest = Application::latest('id')->first();
         $application = new Application();
         $application->user_id = auth()->user()->id;
+        $application->branch_initiator_id = auth()->user()->branch_id;
         $application->status = Application::NEW;
         $application->save();
         $data = Application::query()->latest('id')->first();
@@ -441,8 +442,10 @@ class ApplicationService
     public function edit($application)
     {
         $status_extented = StatusExtented::all()->pluck('name','name')->toArray();
-        if($application->status != 'draft' && $application->status != 'new' && $application->status != 'distributed' && in_array($application->status,$status_extented) == false)
+        if(auth()->user()->id != $application->user_id && !auth()->user()->hasPermission('Warehouse') && !auth()->user()->hasPermission('Company_Performer') && !auth()->user()->hasPermission('Branch_Performer'))
+        {
             return redirect()->route('site.applications.index');
+        }
         $countries = ['0' => 'Select country'];
         $countries[] = Country::get()->pluck('country_name','country_alpha3_code')->toArray();
         $products = Resource::get();
@@ -452,8 +455,9 @@ class ApplicationService
             $select[] = $products[$i]->name;
         }
         $performer_file = json_decode($application->performer_file);
-        $company_signer = PermissionRole::where('permission_id',166)->select('role_id')->get();
-        $branch_signer = PermissionRole::where('permission_id',167)->select('role_id')->get();
+        $branch_signer = json_decode($application->branch->add_signers);
+        $addsigner = Branch::find(9);
+        $company_signer = json_decode($addsigner->add_signers);
         return view('site.applications.edit', [
             'application' => $application,
             'purchase' => Purchase::all()->pluck('name','id'),
@@ -518,9 +522,12 @@ class ApplicationService
 //            $data['performer_head_of_dep_user_id'] = auth()->user()->id;
         }
         if ($application->is_more_than_limit != 1)
-            $roles = PermissionRole::where('permission_id',168)->pluck('role_id')->toArray();
-        else
-            $roles = PermissionRole::where('permission_id',165)->pluck('role_id')->toArray();
+        {
+            $roles = json_decode($application->branch->signers);
+        }else{
+            $json = Branch::where('id',1)->select('signers')->get();
+            $roles = json_decode($json);
+        }
 
         if (isset($data['signers']))
         {

@@ -14,23 +14,23 @@
         {{ Aire::submit(__("Company"))
         ->variant()->green()
         ->name('is_more_than_limit')
-        ->value('1'); }}
+        ->value('1') }}
         @else
             {{ Aire::submit(__("Company"))
         ->variant()->gray()
         ->name('is_more_than_limit')
-        ->value('1'); }}
+        ->value('1') }}
         @endif
         @if($application->is_more_than_limit == '0')
         {{ Aire::submit(__("Filial"))
         ->variant()->green()
         ->name('is_more_than_limit')
-        ->value('0'); }}
+        ->value('0') }}
             @else
             {{ Aire::submit(__("Filial"))
         ->variant()->gray()
         ->name('is_more_than_limit')
-        ->value('0'); }}
+        ->value('0') }}
             @endif
     </div>
     {{ Aire::close() }}
