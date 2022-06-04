@@ -318,7 +318,7 @@
                     </tr>
                 </thead>
             </table>
-        </div>
+            </div>
 
         <script>
             $(function () {

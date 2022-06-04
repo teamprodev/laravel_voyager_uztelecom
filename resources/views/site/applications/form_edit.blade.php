@@ -301,8 +301,41 @@
             console.log(typeof thestring);
     }
 </script>
+<div class="px-6">
+    <table id="yajra-datatable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>{{ __('Статус заявки') }}</th>
+            <th>{{ __('Роль') }}</th>
+            <th>{{ __('Комментарий') }}</th>
+            <th>{{ __('Пользователь') }}</th>
+            <th>Дата подписи</th>
+        </tr>
+        </thead>
+    </table>
+</div>
 
-{{Aire::input()->name('user_id')->value(auth()->user()->id)->class('hidden')}}
+<script>
+    $(function () {
+        var table = $('#yajra-datatable').DataTable({
+            "language": {
+                "emptyTable": "Нет информации в таблица"
+            },
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('site.applications.list.signedocs',$application->id) }}",
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'status', name: 'status'},
+                {data: 'role_id', name: 'role_id'},
+                {data: 'comment', name: 'comment'},
+                {data: 'user_id', name: 'user_id'},
+                {data: 'updated_at', name: 'updated_at'},
+            ]
+        });
+    })
+</script>
 <div class="w-full text-center pb-8 ">
     <button class="bg-blue-500 hover:bg-blue-700 mx-4 p-2 transition duration-300 rounded-md text-white"
             name="draft" value="1">
