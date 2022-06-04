@@ -32,6 +32,18 @@ class ApplicationService
 {
     public function index($request)
     {
+        $filial = PermissionRole::where('permission_id',167)->pluck('role_id')->toArray();
+        $company = PermissionRole::where('permission_id',167)->pluck('role_id')->toArray();
+        foreach ($filial as $b)
+        {
+            $a = PermissionRole::where('permission_id',168)->where('role_id',$b)->pluck('role_id')->toArray();
+            PermissionRole::where('permission_id',168)->where('role_id',$a)->delete();
+        }
+        foreach ($company as $b)
+        {
+            $a = PermissionRole::where('permission_id',165)->where('role_id',$b)->pluck('role_id')->toArray();
+            PermissionRole::where('permission_id',165)->where('role_id',$a)->delete();
+        }
         if ($request->ajax()) {
             $query = Application::query()
                 ->where('draft', '!=',null)

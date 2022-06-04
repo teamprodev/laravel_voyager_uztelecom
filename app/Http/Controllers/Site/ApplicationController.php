@@ -44,9 +44,6 @@ class ApplicationController extends Controller
     }
     public function index(Request $request)
     {
-        $user = auth()->user();
-        PermissionRole::where('role_id' , $user->role_id)->where('permission_id',165)->first() ? PermissionRole::where('role_id' , $user->role_id)->where('permission_id',166)->delete():null;
-        PermissionRole::where('role_id' , $user->role_id)->where('permission_id',167)->first() ? PermissionRole::where('role_id' , $user->role_id)->where('permission_id',168)->delete():null;
         return $this->service->index($request);
     }
 
