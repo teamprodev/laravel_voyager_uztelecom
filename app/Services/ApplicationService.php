@@ -523,15 +523,15 @@ class ApplicationService
         }
         if ($application->is_more_than_limit != 1)
         {
-            $roles = json_decode($application->branch->signers);
+            $roles = ($application->branch->signers);
         }else{
-            $json = Branch::where('id',1)->select('signers')->get();
-            $roles = json_decode($json);
+            $json = Branch::find(9);
+            $roles = json_decode($json->signers);
         }
 
         if (isset($data['signers']))
         {
-            $array = array_merge($roles,$data['signers']);
+            $array = $roles ? array_merge($roles,$data['signers']): $data['signers'];
             $data['signers'] = json_encode($array);
             foreach ($array as $signers)
             {
