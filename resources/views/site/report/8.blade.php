@@ -94,7 +94,7 @@
 
     <script>
         $(document).ready(function() {
-            var tableTitle = '8 - Отчет по видам закупки';
+            var tableTitle = "{{__('8 - Отчет по видам закупки')}}";
             var buttonCommon = {
                 extend: 'excel',
                 title: '8-отчет eshop',
