@@ -217,5 +217,7 @@
     "сумма договора": "Transaction amount",
     "сумма заявки": "Application amount",
     "товар": "product",
-    "услуга": "service"
+    "услуга": "service",
+    "Дополнительные требования": "Additional requirements"
+
 }
