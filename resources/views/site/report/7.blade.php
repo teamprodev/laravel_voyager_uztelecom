@@ -91,7 +91,7 @@
 
 <script>
     $(document).ready(function() {
-        var tableTitle = '7 - Плановый';
+        var tableTitle = "{{__('7 - Плановый')}}";
 
         $('#example').DataTable( {
             "language": {

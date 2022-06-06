@@ -106,7 +106,7 @@
 
     <script>
         $(document).ready(function() {
-            var tableTitle = {{ __('5 - Отчет свод  общий') }}
+            var tableTitle = "{{ __('5 - Отчет свод  общий') }}";
 
             $('#example').DataTable( {
                 "language": {
