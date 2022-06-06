@@ -146,7 +146,7 @@
 
     <script>
         $(document).ready(function() {
-            var tableTitle = '2 - Отчет квартальный плановый';
+            var tableTitle = "{{__('2 - Отчет квартальный плановый')}}";
 
             $('#example').DataTable( {
                 "language": {

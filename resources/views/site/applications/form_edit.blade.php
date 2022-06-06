@@ -103,7 +103,7 @@
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-6" for="other_requirements" class="col-sm-2 col-form-label">{{ __('lang.other') }}</label>
+                <label class="col-sm-6" for="other_requirements" class="col-sm-2 col-form-label">{{ __('Дополнительные требования') }}</label>
                 <div class="col-sm-6">
                     {{Aire::textArea()
                         ->rows(3)
