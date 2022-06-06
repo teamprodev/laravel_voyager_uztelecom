@@ -41,9 +41,7 @@
     ->post() }}
     @includeWhen($application->user_id == auth()->user()->id,'site.applications.form_edit')
     @includeWhen($user->hasPermission('Branch_Performer') && $application->user_id != $user->id || $user->hasPermission('Company_Performer') && $application->user_id != $user->id || $application->performer_role_id == $user->role_id ,'site.applications.performer')
+        @includeWhen($user->hasPermission('Warehouse'),'site.applications.warehouse')
     {{ Aire::close() }}
-    @if($user->hasPermission('Warehouse'))
-        @include('site.applications.warehouse')
-    @endif
 @endsection
 
