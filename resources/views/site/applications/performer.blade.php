@@ -89,7 +89,8 @@
                         }}
                     </div>
                     {{Aire::select($status_extented, 'select')
-                        ->name('performer_status')
+                        ->name('status')
+                        ->name('status')
                         ->value($application->status)
                         }}
                     <div id="file"></div>
