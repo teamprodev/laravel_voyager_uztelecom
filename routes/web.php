@@ -46,6 +46,7 @@ Route::group([
     'middleware' => 'isAdmin'
 ], function () {
     Voyager::routes();
+    Route::put('roles/{id}/update',[\App\Http\Controllers\RoleController::class,'update'])->name('voyager.roles.update');
     Route::get('type-of-purchase/{id}/edit',[TypeOfPurchase::class,'edit'])->name('voyager.type-of-purchase.edit');
     Route::post('type-of-purchase/update',[TypeOfPurchase::class,'update'])->name('type-of-purchase.update');
     Route::get('branches/{id}/signers',[\App\Http\Controllers\BranchController::class,'edit'])->name('signers.add');
