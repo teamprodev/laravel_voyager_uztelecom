@@ -30,7 +30,7 @@ class RoleController extends VoyagerRoleController
                 $json = json_encode($signers);
                 in_array($role->id,json_decode($model->signers)) ? : $model->signers = $json;
                 $model->save();
-            }else{
+            }elseif(in_array(166,$request->permissions)||in_array(167,$request->permissions)){
                 if(in_array($role->id,json_decode($model->signers)))
                 {
                     $role_1 = $role;
