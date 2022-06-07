@@ -18,6 +18,7 @@
             {{ __('Филиала') }}
             @endif
         </h5> <br>
+        </h5>
     </div>
     <div class="flex items-baseline">
         <div class="pt-2 w-100">

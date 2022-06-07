@@ -32,17 +32,17 @@ class ApplicationService
 {
     public function index($request)
     {
-        $filial = PermissionRole::where('permission_id',167)->pluck('role_id')->toArray();
-        $company = PermissionRole::where('permission_id',167)->pluck('role_id')->toArray();
+        $filial = PermissionRole::where('permission_id',168)->pluck('role_id')->toArray();
+        $company = PermissionRole::where('permission_id',165)->pluck('role_id')->toArray();
         foreach ($filial as $b)
         {
-            $a = PermissionRole::where('permission_id',168)->where('role_id',$b)->pluck('role_id')->toArray();
-            PermissionRole::where('permission_id',168)->where('role_id',$a)->delete();
+            $a = PermissionRole::where('permission_id',167)->where('role_id',$b)->pluck('role_id')->toArray();
+            PermissionRole::where('permission_id',167)->where('role_id',$a)->delete();
         }
         foreach ($company as $b)
         {
-            $a = PermissionRole::where('permission_id',165)->where('role_id',$b)->pluck('role_id')->toArray();
-            PermissionRole::where('permission_id',165)->where('role_id',$a)->delete();
+            $a = PermissionRole::where('permission_id',166)->where('role_id',$b)->pluck('role_id')->toArray();
+            PermissionRole::where('permission_id',166)->where('role_id',$a)->delete();
         }
         if ($request->ajax()) {
             $query = Application::query()
@@ -79,7 +79,7 @@ class ApplicationService
             }
             elseif($user->role_id == 7)
             {
-                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('status','new')->orWhere('draft','!=',1)->where('status','accepted')->get();
+                $query = Application::query()->where('draft','!=',1)->where('status','accepted')->where('signers','like',"%7%")->orWhere('draft','!=',1)->orWhere('status','distributed')->where('signers','like',"%7%")->where('user_id',auth()->user()->id)->get();
             }
             elseif ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
             {
