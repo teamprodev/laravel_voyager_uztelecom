@@ -21,16 +21,7 @@ class User extends \TCG\Voyager\Models\User
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'role_id',
-        'name',
-        'email',
-        'password',
-        'lastname',
-        'firstname',
-        'position_id',
-        'leader'
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for serialization.

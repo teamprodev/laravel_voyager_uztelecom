@@ -9,8 +9,4 @@ class Branch extends Model
 {
     use HasFactory;
     protected $table = 'branches';
-    public function departments(){
-        return $this->hasMany(Branch::class);
-    }
-
 }
