@@ -111,7 +111,7 @@ Route::group([
                     Route::get('{application}/show/{view?}', [ApplicationController::class, 'show'])->name('show');
                     Route::get('{application}/edit', [ApplicationController::class, 'edit'])->name('edit');
                     Route::get('{application}/clone', [ApplicationController::class, 'clone'])->name('clone');
-                    Route::post('{application}/update', [ApplicationController::class, 'update'])->name('update');
+                    Route::post('{application}/update', [ApplicationController::class, 'up  date'])->name('update');
                     Route::get('{application}/destroy', [ApplicationController::class, 'destroy'])->name('destroy');
                     Route::get('create', [ApplicationController::class, 'create'])->name('create');
                     Route::post('store', [ApplicationController::class, 'store'])->name('store');
@@ -131,7 +131,7 @@ Route::group([
                     'prefix' => 'faqs',
                 ],
                 function(){
-                    Route::get('', [FaqsController::class, 'index'])->name('index');
+                    Route::get('', [FaqsController::class, 'index'])->name(   'index');
 
                     Route::get('{faq}/show', [FaqsController::class, 'show'])->name('show');
                     Route::get('{faq}/edit', [ApplicationController::class, 'edit'])->name('edit');
