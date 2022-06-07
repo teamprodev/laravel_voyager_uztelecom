@@ -537,7 +537,7 @@ class ApplicationService
             $roles = ($application->branch->signers);
         }else{
             $json = Branch::find(9);
-            $roles = json_decode($json->signers);
+            $roles = $json->signers;
         }
 
         if (isset($data['signers']))
