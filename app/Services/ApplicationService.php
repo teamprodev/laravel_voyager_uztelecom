@@ -70,8 +70,8 @@ class ApplicationService
             }
             elseif($user->hasPermission('Warehouse'))
             {
-                $status = 'товар доставлен';
-                $query = Application::query()->where('draft','!=',1)->where('status','like',"%{$status}%")->orWhere('user_id',auth()->user()->id)->get();
+                $status_0 = 'товар ';
+                $query = Application::query()->where('draft','!=',1)->where('status','like',"%{$status_0}%")->orWhere('user_id',auth()->user()->id)->get();
             }
             elseif($user->hasPermission('Company_Leader') && $user->hasPermission('Branch_Leader'))
             {
@@ -497,7 +497,6 @@ class ApplicationService
         if($application->performer_status != null)
         {
             $application->performer_user_id = auth()->user()->id;
-            $application->status = $data['performer_status'];
         }
         if(isset($data['performer_leader_user_id']))
         {

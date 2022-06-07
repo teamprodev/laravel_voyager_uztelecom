@@ -19,6 +19,11 @@
     <!-- Styles -->
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style type="text/css">
+        body{
+            font-family: "Times New Roman", Times, serif;
+        }
+    </style>
 </head>
 <body>
 <div id="app">
