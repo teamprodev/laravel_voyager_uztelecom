@@ -44,19 +44,21 @@ class RoleController extends VoyagerRoleController
                 in_array($role->id,json_decode($model->add_signers,true)) ? :$model->add_signers = $json;
                 $model->save();
             }else{
-                    $signers = array_diff(json_decode($model->signers),array($role->id));
-                    $add_signers = array_diff(json_decode($model->add_signers),array($role->id));
-                    foreach ($signers as $signer)
-                    {
-                        $required[] = $signer;
-                    }
-                    foreach ($add_signers as $signer)
-                    {
-                        $optional[] = $signer;
-                    }
-                    $model->signers = $required;
-                    $model->add_signers = $optional;
-                    $model->save();
+                $signers = array_diff(json_decode($model->signers),array($role->id));
+                $add_signers = array_diff(json_decode($model->add_signers),array($role->id));
+                foreach ($signers as $a)
+                {
+                    $required[] = $a;
+                }
+                foreach ($add_signers as $b)
+                {
+                    $optional[] = $b;
+                }
+                isset($required) ? : $required = null;
+                isset($optional) ? : $optional = null;
+                $model->signers = $required;
+                $model->add_signers = $optional;
+                $model->save();
             }
         }
         $role->branch_id = json_encode($request->branch_id);
