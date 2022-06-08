@@ -75,7 +75,7 @@ class ApplicationService
             }
             elseif($user->hasPermission('Company_Leader') && $user->hasPermission('Branch_Leader'))
             {
-                $query = Application::query()->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
+                $query = Application::query()->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->where('status','')->get();
             }
             elseif($user->role_id == 7)
             {
@@ -170,7 +170,7 @@ class ApplicationService
                     $app_clone= __('Копировать');;
                     $app_delete= __('Удалить');;
 
-                    if(auth()->user()->id == $row->user_id||auth()->user()->hasPermission('Warehouse')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Branch_Performer'))
+                    if(auth()->user()->id == $row->user_id||auth()->user()->hasPermission('Warehouse')||$row->performer_role_id==auth()->user()->role_id)
                     {
                         $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-success btn-sm'>$app_edit</a>";
                     }else{
