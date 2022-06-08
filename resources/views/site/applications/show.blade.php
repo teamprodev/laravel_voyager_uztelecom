@@ -302,6 +302,19 @@
                                     @endforeach
                                 </div>
                             @endif
+                            @if($performer_file != 'null' && $performer_file != null)
+                                <div class="mb-5" style="width: 80%">
+                                    <h5 class="text-left">{{ __('Файл исполнителя') }}</h5>
+                                    @foreach($performer_file as $file)
+                                        @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
+                                            <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
+                                        @else
+                                            <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
+                                            <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            @endif
                     </div>
                 </div>
                 </div>
