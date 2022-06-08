@@ -109,7 +109,10 @@ class ApplicationController extends Controller
         $application->is_more_than_limit = $request->is_more_than_limit;
         $application->signers = null;
         $application->status = 'new';
-        $application->branch_initiator_id = 9;
+        if($request->is_more_than_limit == 1)
+        {
+            $application->branch_initiator_id = 9;
+        }
         $application->save();
         return redirect()->back();
     }
