@@ -102,7 +102,7 @@ class ApplicationService
             }
             elseif($user->hasPermission('Branch_Leader'))
             {
-                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('is_more_than_limit', 0)->where('status', 'accepted')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->where('status', 'distributed')->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
+                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('is_more_than_limit', 0)->where('status', 'accepted')->orWhere('is_more_than_limit', 0)->where('status', 'new')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->where('status', 'distributed')->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             else {
                 $query = Application::query()->where('draft','!=',1)->get();
