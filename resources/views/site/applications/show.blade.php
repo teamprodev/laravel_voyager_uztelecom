@@ -373,6 +373,7 @@
                 @if($user->hasPermission('Number_Change'))
                     {{Aire::textArea('bio', __('Номер заявки'))
                         ->name('number')
+                        ->value($application->number)
                     }}
                     <div class="mb-3 row w-50">
                         <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">
@@ -386,6 +387,7 @@
             @elseif($user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business'))
                 {{Aire::textArea('bio', __('Номер заявки'))
                     ->name('number')
+                    ->value($application->number)
                 }}
                 <div class="mb-3 row w-50">
                     <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">
@@ -403,6 +405,7 @@
                         <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
                         {{Aire::textArea('bio', __('Комментарий Центр управления закупками'))
                                 ->name('branch_leader_comment')
+                                ->value($application->branch_leader_comment)
                                 ->rows(3)
                                 ->cols(40)
                                  }}
@@ -420,6 +423,7 @@
                         <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
                         {{Aire::textArea('bio', __('Комментарий Центр управления закупками'))
                                 ->name('branch_leader_comment')
+                                ->value($application->branch_leader_comment)
                                 ->rows(3)
                                 ->cols(40)
                                  }}
