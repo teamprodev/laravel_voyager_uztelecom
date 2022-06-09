@@ -575,7 +575,8 @@ class ApplicationService
                 }
             }
             $application->status = 'new';
-            $this->sendNotifications($array, $application,null);
+            $message = "{$application->id} "."{$application->name} ".setting('admin.application_created');
+            $this->sendNotifications($array, $application,$message);
         }
         $result = $application->update($data);
         if ($result)
