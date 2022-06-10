@@ -10,6 +10,7 @@ use App\Models\Application;
 use App\Models\Branch;
 use App\Models\Notification;
 use App\Models\PermissionRole;
+use App\Models\StatusExtented;
 use App\Services\ApplicationService;
 use Illuminate\Support\Carbon;
 use App\Models\SignedDocs;;
@@ -38,10 +39,23 @@ class ApplicationController extends Controller
         Cache::put('status', $status);
         return view('site.applications.status');
     }
-
+    public function performer_status_get(Request $req)
+    {
+        $status = StatusExtented::pluck('name','name')->toArray();
+        return view('site.applications.performer_status',compact('status'));
+    }
+    public function performer_status_post(Request $req)
+    {
+        Cache::put('performer_status_get', $req->performer_status_get);
+        return redirect()->route('site.applications.performer_status_get');
+    }
     public function status_table()
     {
         return $this->service->status_table();
+    }
+    public function performer_status()
+    {
+        return $this->service->performer_status();
     }
     public function index(Request $request)
     {

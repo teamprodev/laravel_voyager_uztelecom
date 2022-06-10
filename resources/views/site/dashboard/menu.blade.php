@@ -59,6 +59,10 @@
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>{{ __('Просрочен') }}</p>
                         </a>
+                            <a href="{{route('site.applications.performer_status_get')}}" id="demo" class="collapse">
+                                <i class="nav-icon fas fa-chevron-right"></i>
+                                <p>{{ __('Статус испольнителя') }}</p>
+                            </a>
                     </div>
                 </div>
             </button>

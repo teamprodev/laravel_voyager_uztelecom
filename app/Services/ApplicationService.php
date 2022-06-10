@@ -295,6 +295,102 @@ class ApplicationService
             ->rawColumns(['action','status'])
             ->make(true);
     }
+    public function performer_status()
+    {
+        $status = Cache::get('performer_status_get');
+        $data = Application::where('status', 'LIKE',"%{$status}%")->get();
+        return Datatables::of($data)
+            ->addIndexColumn()
+            ->editColumn('user_id', function($docs) {
+                return $docs->user ? $docs->user->name:"";
+            })
+            ->editColumn('role_id', function($docs) {
+                return $docs->role ? $docs->role->display_name:"";
+            })
+            ->editColumn('created_at', function ($data) {
+                return $data->created_at ? with(new Carbon($data->created_at))->format('d.m.Y') : '';
+            })
+            ->editColumn('updated_at', function ($data) {
+                return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
+            })
+            ->editColumn('status', function ($query){
+                $status_new = __('Новая');
+                $status_in_process = __('На рассмотрении');
+                $status_accepted = __('Принята');
+                $status_refused = __('Отказана');
+                $status_agreed = __('Согласована');
+                $status_rejected = __('Отклонена');
+                $status_distributed = __('Распределен');
+                $status_cancelled = __('Отменен');
+                $status_performed = __('Товар доставлен');
+                $status_overdue = ('просрочен');
+
+                if($query->status === 'new'){
+                    return $status_new;
+                }elseif($query->status === 'in_process'){
+                    return $status_in_process;
+                }elseif($query->status === 'Overdue'){
+                    return "<input value='{$status_overdue}' type='button' class='text-center m-1 col edit bg-danger btn-sm' disabled>";
+                }elseif($query->status === 'accepted'){
+                    return $status_accepted;
+                }elseif($query->status === 'refused'){
+                    return $status_refused;
+                }elseif($query->status === 'agreed'){
+                    return $status_agreed;
+                }elseif($query->status === 'rejected'){
+                    return $status_rejected;
+                }elseif($query->status === 'distributed'){
+                    return $status_distributed;
+                }elseif($query->status === 'canceled'){
+                    return $status_cancelled;
+                }elseif($query->status === 'товар доставлен') {
+                    return "<div class='row'>
+                        <input type='text' type='button' value='{$status_performed}' class='text-center m-1 col edit bg-success btn-sm' disabled>
+                        </div>";
+                }else{
+                    return $query->status;
+                }
+            })
+            ->addColumn('action', function($row){
+                $edit_e = route('site.applications.edit', $row->id);
+                $clone_e = route('site.applications.clone', $row->id);
+                $show_e = route('site.applications.show', $row->id);
+                $destroy_e = route('site.applications.destroy', $row->id);
+                $app_edit = __('Изменить');
+                $app_show= __('Показать');;
+                $app_clone= __('Копировать');;
+                $app_delete= __('Удалить');;
+
+                if($row->user_id == auth()->user()->id||auth()->user()->hasPermission('Branch_Performer')||auth()->user()->hasPermission('Company_Performer')||auth()->user()->hasPermission('Plan_Budget')||auth()->user()->hasPermission('Plan_Business')||auth()->user()->hasPermission('Number_Change'))
+                {
+                    $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-success btn-sm'>$app_edit</a>";
+                }else{
+                    $edit = "";
+                }
+                $show = "<a href='{$show_e}' class='m-1 col show btn btn-warning btn-sm'>$app_show</a>";
+                if($row->user_id == auth()->user()->id)
+                {
+                    $destroy = "<a href='{$destroy_e}' class='m-1 col show btn btn-danger btn-sm'>$app_delete</a>";
+                }else{
+                    $destroy = "";
+                }
+                if($row->user_id == auth()->user()->id && $row->status == 'cancelled' || $row->user_id == auth()->user()->id && $row->status == 'refused')
+                {
+                    $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>$app_clone</a>";
+                }else{
+                    $clone = "";
+                }
+
+                return "<div class='row'>
+                        {$edit}
+                        {$show}
+                        {$clone}
+                        {$destroy}
+                        </div>";
+            })
+            ->rawColumns(['action','status'])
+            ->make(true);
+    }
     public function clone($id)
     {
         $clone = Application::find($id);
