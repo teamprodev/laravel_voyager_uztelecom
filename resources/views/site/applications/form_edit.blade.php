@@ -126,7 +126,7 @@
             <div class="mb-3 row">
                 <label class="col-sm-6" for="planned_price" class="col-sm-2 col-form-label">{{ __('Планируемый бюджет закупки (сумма)') }}</label>
                 <div class="col-sm-6">
-                    {{Aire::input()
+                    {{Aire::number()
                         ->name("planned_price")
                         ->id("planned_price")
                         ->value($application->planned_price)

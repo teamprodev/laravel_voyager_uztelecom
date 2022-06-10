@@ -13,15 +13,16 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
+    <link rel="stylesheet" href="public/assets/css/app.css">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="public/assets/css/demo.css" rel="stylesheet">
 
     <!-- Styles -->
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style type="text/css">
         body{
-            font-family: "Times New Roman", Times, serif;
+            font-family: "Times New Roman",  serif;
         }
     </style>
 </head>

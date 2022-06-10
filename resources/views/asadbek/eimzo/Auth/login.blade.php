@@ -6,7 +6,7 @@
 
     <title>Uztelecom</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="" rel="stylesheet">
 
     <style>
     </style>
@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="{{asset("css/demo.css")}}">
     <style>
         body {
-            font-family: 'Nunito', sans-serif;
+            font-family: 'Times New Roman', serif;
         }
     </style>
 </head>

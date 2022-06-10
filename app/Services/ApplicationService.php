@@ -112,6 +112,9 @@ class ApplicationService
                 ->editColumn('created_at', function ($query) {
                     return $query->created_at ? with(new Carbon($query->created_at))->format('d/m/Y') : '';
                 })
+                ->editColumn('planned_price', function ($query) {
+                    return $query->planned_price ? number_format($query->planned_price , 0 , ' ' , ' '): '' ;
+                })
                 ->editColumn('updated_at', function ($query) {
                     return $query->updated_at ? with(new Carbon($query->updated_at))->format('d/m/Y') : '';
                 })
