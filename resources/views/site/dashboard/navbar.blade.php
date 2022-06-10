@@ -40,7 +40,7 @@ $notifications = Notification::with('application:id,created_at')->has('applicati
         <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="far fa-bell"></i>
             @if($notifications->count() !== 0)
-                <span class="badge badge-warning navbar-badge" id="notification_count">{{$notifications->count()}}</span>
+                <span class="badge badge-warning navbar-badge red-notification bg-danger" id="notification_count">{{$notifications->count()}}</span>
             @endif
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" id="notifications">
