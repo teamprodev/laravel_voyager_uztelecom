@@ -137,7 +137,7 @@
                             {{Aire::input()
                                 ->name("planned_price")
                                 ->id("planned_price")
-                                ->value(number_format($application->planned_price))
+                                ->value(number_format($application->planned_price , 0 , '' , ' '))
                                 ->class("form-control")->disabled()
                             }}
                         </div>
