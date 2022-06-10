@@ -106,16 +106,16 @@ class ApplicationService
 
             return Datatables::of($query)
                 ->editColumn('created_at', function ($query) {
-                    return $query->created_at ? with(new Carbon($query->created_at))->format('d/m/Y') : '';
+                    return $query->created_at ? with(new Carbon($query->created_at))->format('d.m.Y') : '';
                 })
                 ->editColumn('updated_at', function ($query) {
-                    return $query->updated_at ? with(new Carbon($query->updated_at))->format('d/m/Y') : '';
+                    return $query->updated_at ? with(new Carbon($query->updated_at))->format('d.m.Y') : '';
                 })
                 ->editColumn('date', function ($query) {
-                    return $query->date ? with(new Carbon($query->date))->format('d/m/Y') : '';
+                    return $query->date ? with(new Carbon($query->date))->format('d.m.Y') : '';
                 })
                 ->editColumn('delivery_date', function ($query) {
-                    return $query->updated_at ? with(new Carbon($query->delivery_date))->format('d/m/Y') : '';
+                    return $query->updated_at ? with(new Carbon($query->delivery_date))->format('d.m.Y') : '';
                 })
                 ->editColumn('status', function ($query){
                     $status_new = __('Новая');
@@ -199,7 +199,9 @@ class ApplicationService
     }
     public function status_table()
     {
-        $data = Application::where('status', Cache::get('status'))->get();
+        $all = StatusExtented::pluck('name')->toArray();
+            $a = Application::where('status', $all)->get();
+            $data[] = $a;
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('user_id', function($docs) {
@@ -209,10 +211,10 @@ class ApplicationService
                 return $docs->role ? $docs->role->display_name:"";
             })
             ->editColumn('created_at', function ($data) {
-                return $data->created_at ? with(new Carbon($data->created_at))->format('m/d/Y') : '';
+                return $data->created_at ? with(new Carbon($data->created_at))->format('d.m.Y') : '';
             })
             ->editColumn('updated_at', function ($data) {
-                return $data->updated_at ? with(new Carbon($data->updated_at))->format('Y/m/d') : '';
+                return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
             })
             ->editColumn('status', function ($query){
                 $status_new = __('Новая');
@@ -313,7 +315,7 @@ class ApplicationService
                 return $docs->role ? $docs->role->display_name:"";
             })
             ->editColumn('updated_at', function ($query) {
-                return $query->updated_at ? with(new Carbon($query->updated_at))->format('Y/m/d') : '';;
+                return $query->updated_at ? with(new Carbon($query->updated_at))->format('d.m.Y') : '';;
             })
             ->editColumn('status', function ($status){
                 $status_agreed = __('Согласована');
@@ -352,10 +354,10 @@ class ApplicationService
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->editColumn('created_at', function ($data) {
-                    return $data->created_at ? with(new Carbon($data->created_at))->format('m/d/Y') : '';
+                    return $data->created_at ? with(new Carbon($data->created_at))->format('d.m.Y') : '';
                 })
                 ->editColumn('updated_at', function ($data) {
-                    return $data->updated_at ? with(new Carbon($data->updated_at))->format('Y/m/d') : '';;
+                    return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';;
                 })
                 ->addColumn('action', function($row){
                     $edit = route('site.applications.edit', $row->id);
