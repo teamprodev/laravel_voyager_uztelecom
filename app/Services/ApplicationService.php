@@ -202,9 +202,7 @@ class ApplicationService
     }
     public function status_table()
     {
-        $all = StatusExtented::pluck('name')->toArray();
-            $a = Application::where('status', $all)->get();
-            $data[] = $a;
+        $data = Application::where('status', Cache::get('status'))->get();
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('user_id', function($docs) {
