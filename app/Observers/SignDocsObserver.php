@@ -48,14 +48,15 @@ class SignDocsObserver
         $roles_need_sign = json_decode($signedDocs->application->signers, true);
         if (in_array(7, $agreedUsers->toArray())) {
             $signedDocs->application->status = Application::AGREED;
+            $signedDocs->application->show_director = 2;
         } elseif (in_array(7, $canceledUsers->toArray())) {
             $signedDocs->application->status = Application::REJECTED;
         } elseif ($canceledUsers->toArray() != null) {
             $signedDocs->application->status = Application::REFUSED;
         }elseif (count(array_diff($roles_need_sign, $agreedUsers->toArray())) == 1 && $signedDocs->application->is_more_than_limit == 1) {
-            $signedDocs->application->status = Application::ACCEPTED;
+            $signedDocs->application->show_director = 1;
         }elseif(array_diff($roles_need_sign, $agreedUsers->toArray()) == null && $signedDocs->application->is_more_than_limit != 1){
-            $signedDocs->application->status = Application::ACCEPTED;
+            $signedDocs->application->show_leader = 1;
         }else {
             $signedDocs->application->status = Application::IN_PROCESS;
         }

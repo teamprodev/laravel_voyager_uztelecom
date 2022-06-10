@@ -75,11 +75,11 @@ class ApplicationService
             }
             elseif($user->hasPermission('Company_Leader') && $user->hasPermission('Branch_Leader'))
             {
-                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->where('status','')->get();
+                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             elseif($user->role_id == 7)
             {
-                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('signers','LIKE','%7%')->where('status','accepted')->get();
+                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('signers','LIKE','%7%')->get();
             }
             elseif ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
             {
@@ -92,17 +92,13 @@ class ApplicationService
                     ->orWhere('user_id',auth()->user()->id)
                     ->where('draft','!=',1)->get();
             }
-            elseif ($user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer'))
-            {
-                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('performer_role_id', $user->role->id)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
-            }
             elseif($user->hasPermission('Company_Leader'))
             {
                 $query =  Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('status','agreed')->orWhere('status','distributed')->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             elseif($user->hasPermission('Branch_Leader'))
             {
-                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('is_more_than_limit', 0)->where('status', 'accepted')->orWhere('is_more_than_limit', 0)->where('status', 'new')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->where('status', 'distributed')->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
+                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('is_more_than_limit', 0)->where('show_leader',1)->orWhere('is_more_than_limit', 0)->where('status', 'new')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->where('status', 'distributed')->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             else {
                 $query = Application::query()->where('draft','!=',1)->get();
@@ -530,6 +526,7 @@ class ApplicationService
             $mytime = Carbon::now();
             $data['performer_received_date'] = $mytime->toDateTimeString();
             $data['status'] = 'distributed';
+            $data['show_leader'] = 2;
 //            $data['performer_head_of_dep_user_id'] = auth()->user()->id;
         }
         if ($application->is_more_than_limit != 1)
