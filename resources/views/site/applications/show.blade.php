@@ -75,7 +75,6 @@
                             }}
                         </div>
                     </div>
-
                     <div class="mb-3 row">
                         <label class="col-sm-6" for="specification" class="col-sm-2 col-form-label">{{ __('Описание предмета закупки (технические характеристики)') }}</label>
                         <div class="col-sm-6">
@@ -138,7 +137,7 @@
                             {{Aire::input()
                                 ->name("planned_price")
                                 ->id("planned_price")
-                                ->value($application->planned_price)
+                                ->value(number_format($application->planned_price))
                                 ->class("form-control")->disabled()
                             }}
                         </div>
