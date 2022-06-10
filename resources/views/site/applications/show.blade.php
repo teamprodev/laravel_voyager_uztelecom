@@ -223,7 +223,7 @@
                         @php
                             $comment = \App\Models\User::find($application->branch_leader_user_id)->name;
                         @endphp
-                        {{Aire::textArea('bio', __('Комментарий Центр управления закупками') . ": {$comment}")
+                        {{Aire::textArea('bio', __('Комментарий руководства') . ": {$comment}")
                         ->value($application->branch_leader_comment)
                         ->rows(3)
                         ->cols(40)
@@ -402,7 +402,7 @@
                 @if(!isset($application->performer_user_id))
                     <div class="pb-5">
                         <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
-                        {{Aire::textArea('bio', __('Комментарий Центр управления закупками'))
+                        {{Aire::textArea('bio', __('Комментарий руководства'))
                                 ->name('branch_leader_comment')
                                 ->value($application->branch_leader_comment)
                                 ->rows(3)
@@ -416,11 +416,11 @@
                         <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
                     </div>
                 @endif
-            @elseif($application->is_more_than_limit != 1 && auth()->user()->hasPermission('Branch_Leader') && $application->status == 'accepted')
+            @elseif($application->is_more_than_limit != 1 && auth()->user()->hasPermission('Branch_Leader') && $application->show_leader == 1)
                 @if(!isset($application->performer_user_id))
                     <div class="pb-5">
                         <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
-                        {{Aire::textArea('bio', __('Комментарий Центр управления закупками'))
+                        {{Aire::textArea('bio', __('Комментарий руководства'))
                                 ->name('branch_leader_comment')
                                 ->value($application->branch_leader_comment)
                                 ->rows(3)
@@ -464,7 +464,7 @@
                 </div>
             @endif
     {{Aire::close()}}
-    @if($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer'||'Company_Performer'||'Branch_Performer') || $access && $user->role_id == 7 && $application->status == 'accepted')
+    @if($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer'||'Company_Performer'||'Branch_Performer') || $user->role_id == 7 && $application->show_director == 1)
         <div class="px-6">
             <form name="testform" action="{{route('site.applications.imzo.sign',$application->id)}}"        method="POST">
                 @csrf
