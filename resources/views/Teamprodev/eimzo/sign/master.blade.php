@@ -6,7 +6,7 @@
 
     <title>Laravel</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css" rel="stylesheet">
 
@@ -57,7 +57,7 @@
         }
 
         body {
-            font-family: 'Nunito', sans-serif;
+            font-family: 'Times New Roman', serif;
             color: black;
 
         }

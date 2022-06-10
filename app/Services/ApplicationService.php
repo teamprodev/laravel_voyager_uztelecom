@@ -75,11 +75,11 @@ class ApplicationService
             }
             elseif($user->hasPermission('Company_Leader') && $user->hasPermission('Branch_Leader'))
             {
-                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->where('status','')->get();
+                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             elseif($user->role_id == 7)
             {
-                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('signers','LIKE','%7%')->where('status','accepted')->get();
+                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('signers','LIKE','%7%')->get();
             }
             elseif ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
             {
@@ -92,17 +92,13 @@ class ApplicationService
                     ->orWhere('user_id',auth()->user()->id)
                     ->where('draft','!=',1)->get();
             }
-            elseif ($user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer'))
-            {
-                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('performer_role_id', $user->role->id)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
-            }
             elseif($user->hasPermission('Company_Leader'))
             {
                 $query =  Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('status','agreed')->orWhere('status','distributed')->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             elseif($user->hasPermission('Branch_Leader'))
             {
-                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('is_more_than_limit', 0)->where('status', 'accepted')->orWhere('is_more_than_limit', 0)->where('status', 'new')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->where('status', 'distributed')->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
+                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('is_more_than_limit', 0)->where('show_leader',1)->orWhere('is_more_than_limit', 0)->where('status', 'new')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->where('status', 'distributed')->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             else {
                 $query = Application::query()->where('draft','!=',1)->get();
@@ -110,16 +106,19 @@ class ApplicationService
 
             return Datatables::of($query)
                 ->editColumn('created_at', function ($query) {
-                    return $query->created_at ? with(new Carbon($query->created_at))->format('d/m/Y') : '';
+                    return $query->created_at ? with(new Carbon($query->created_at))->format('d.m.Y') : '';
+                })
+                ->editColumn('planned_price', function ($query) {
+                    return $query->planned_price ? number_format($query->planned_price , 0 , '' , ' '): '' ;
                 })
                 ->editColumn('updated_at', function ($query) {
-                    return $query->updated_at ? with(new Carbon($query->updated_at))->format('d/m/Y') : '';
+                    return $query->updated_at ? with(new Carbon($query->updated_at))->format('d.m.Y') : '';
                 })
                 ->editColumn('date', function ($query) {
-                    return $query->date ? with(new Carbon($query->date))->format('d/m/Y') : '';
+                    return $query->date ? with(new Carbon($query->date))->format('d.m.Y') : '';
                 })
                 ->editColumn('delivery_date', function ($query) {
-                    return $query->updated_at ? with(new Carbon($query->delivery_date))->format('d/m/Y') : '';
+                    return $query->updated_at ? with(new Carbon($query->delivery_date))->format('d.m.Y') : '';
                 })
                 ->editColumn('status', function ($query){
                     $status_new = __('Новая');
@@ -213,10 +212,10 @@ class ApplicationService
                 return $docs->role ? $docs->role->display_name:"";
             })
             ->editColumn('created_at', function ($data) {
-                return $data->created_at ? with(new Carbon($data->created_at))->format('m/d/Y') : '';
+                return $data->created_at ? with(new Carbon($data->created_at))->format('d.m.Y') : '';
             })
             ->editColumn('updated_at', function ($data) {
-                return $data->updated_at ? with(new Carbon($data->updated_at))->format('Y/m/d') : '';
+                return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
             })
             ->editColumn('status', function ($query){
                 $status_new = __('Новая');
@@ -317,7 +316,7 @@ class ApplicationService
                 return $docs->role ? $docs->role->display_name:"";
             })
             ->editColumn('updated_at', function ($query) {
-                return $query->updated_at ? with(new Carbon($query->updated_at))->format('Y/m/d') : '';;
+                return $query->updated_at ? with(new Carbon($query->updated_at))->format('d.m.Y') : '';;
             })
             ->editColumn('status', function ($status){
                 $status_agreed = __('Согласована');
@@ -356,10 +355,10 @@ class ApplicationService
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->editColumn('created_at', function ($data) {
-                    return $data->created_at ? with(new Carbon($data->created_at))->format('m/d/Y') : '';
+                    return $data->created_at ? with(new Carbon($data->created_at))->format('d.m.Y') : '';
                 })
                 ->editColumn('updated_at', function ($data) {
-                    return $data->updated_at ? with(new Carbon($data->updated_at))->format('Y/m/d') : '';;
+                    return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';;
                 })
                 ->addColumn('action', function($row){
                     $edit = route('site.applications.edit', $row->id);
@@ -530,6 +529,7 @@ class ApplicationService
             $mytime = Carbon::now();
             $data['performer_received_date'] = $mytime->toDateTimeString();
             $data['status'] = 'distributed';
+            $data['show_leader'] = 2;
 //            $data['performer_head_of_dep_user_id'] = auth()->user()->id;
         }
         if ($application->is_more_than_limit != 1)
