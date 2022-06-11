@@ -10,12 +10,6 @@
                 @endif
             </h5>
             <div class="mb-3 row">
-                @if(isset($application->resource_id))
-                    <b>{{ __('lang.resource')}}</b>:
-                    @foreach(json_decode($application->resource_id) as $product)
-                        <br> {{\App\Models\Resource::find($product)->name}}
-                    @endforeach
-                @endif
                 <label class="col-sm-6" for="initiator" class="col-sm-2 col-form-label">{{ __('Инициатор (наименование подразделения заказчика)') }}</label>
                 <div class="col-sm-6">
                     {{Aire::input()
@@ -197,7 +191,12 @@
                    }}
                   @endif
         </div>
-
+            @if(isset($application->resource_id))
+                <b>{{ __('lang.resource')}}</b>:
+                @foreach(json_decode($application->resource_id) as $product)
+                    <br> {{\App\Models\Resource::find($product)->name}}
+                @endforeach
+            @endif
         <div class="mb-3 row">
             <label for="currency" class="col-sm-6 col-form-label">{{ __('lang.valyuta') }}</label>
                 <select class="form-control col-sm-6" name="currency" id="currency">
