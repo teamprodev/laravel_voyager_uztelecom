@@ -70,7 +70,7 @@ class ApplicationService
             }
             elseif($user->hasPermission('Warehouse'))
             {
-                $status_0 = 'товар ';
+                $status_0 = 'Принята';
                 $query = Application::query()->where('draft','!=',1)->where('status','like',"%{$status_0}%")->orWhere('user_id',auth()->user()->id)->get();
             }
             elseif($user->hasPermission('Company_Leader') && $user->hasPermission('Branch_Leader'))
