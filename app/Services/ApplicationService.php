@@ -165,6 +165,7 @@ class ApplicationService
                         return "<input style='background-color: {$status};color: {$color};' value='{$status_distributed}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
                     }elseif($query->status === 'canceled'){
                        $status = setting('color.rejected');
+                        $color = $status ? 'white':'black';
                         return "<input style='background-color: {$status};color: {$color};' value='{$status_cancelled}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
                     }elseif($query->status === 'товар доставлен'){
                         $status = setting('color.delivered');
