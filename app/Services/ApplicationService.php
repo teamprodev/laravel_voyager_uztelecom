@@ -547,7 +547,7 @@ class ApplicationService
     {
         if (PHP_SAPI === 'cli')
             return dd($application);
-        $access = SignedDocs::where('role_id', auth()->user()->role_id)->where('user_id', null)->where('application_id', $application->id)->first();
+        $access = SignedDocs::where('role_id', auth()->user()->role_id)->where('status', null)->where('application_id', $application->id)->first();
         $branch = Branch::where('id', $application->branch_initiator_id)->first();
         $signedDocs = $application->signedDocs()->get();
         $file_basis = json_decode($application->file_basis);
@@ -604,6 +604,17 @@ class ApplicationService
     public function update($application,$request)
     {
         $data = $request->validated();
+        if(auth()->id() == $application->user_id && $application->status == 'refused'||auth()->id() == $application->user_id && $application->status == 'rejected')
+        {
+            $data['status'] = 'new';
+            $signedDocs = SignedDocs::where('application_id',$application->id)->get();
+            foreach($signedDocs as $doc)
+            {
+
+                $doc->status = null;
+                $doc->save();
+            }
+        }
         if(isset($data['draft']))
         {
             if($data['draft'] == 1)

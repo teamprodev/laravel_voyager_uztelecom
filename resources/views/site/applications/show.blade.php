@@ -355,7 +355,7 @@
     ->route('site.applications.update',$application->id)
     ->enctype("multipart/form-data")
     ->post() }}
-            @if($user->hasPermission('Plan_Budget') || $user->hasPermission('Plan_Business'))
+            @if($user->hasPermission('Plan_Budget') && $application->user_id != auth()->user()->id || $user->hasPermission('Plan_Business') && $application->user_id != auth()->user()->id)
                 {{Aire::textArea('bio', __('Информация о наличии в «Плане закупок» приобретаемых товаров'))
                     ->name('info_purchase_plan')
                     ->value($application->info_purchase_plan)
@@ -383,7 +383,7 @@
                 @endif
                 {{Aire::submit('Save')}}
 
-            @elseif($user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business'))
+            @elseif($user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business') && $application->user_id != auth()->user()->id)
                 {{Aire::textArea('bio', __('Номер заявки'))
                     ->name('number')
                     ->value($application->number)
@@ -398,7 +398,7 @@
                 </div>
                 {{Aire::submit('Save')}}
             @endif
-            @if($application->is_more_than_limit = 1 && auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
+            @if($application->user_id != auth()->user()->id && $application->is_more_than_limit = 1 && auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
                 @if(!isset($application->performer_user_id))
                     <div class="pb-5">
                         <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
@@ -416,7 +416,7 @@
                         <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
                     </div>
                 @endif
-            @elseif($application->is_more_than_limit != 1 && auth()->user()->hasPermission('Branch_Leader') && $application->show_leader == 1)
+            @elseif($application->user_id != auth()->user()->id && $application->is_more_than_limit != 1 && auth()->user()->hasPermission('Branch_Leader') && $application->show_leader == 1)
                 @if(!isset($application->performer_user_id))
                     <div class="pb-5">
                         <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
