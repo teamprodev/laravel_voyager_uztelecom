@@ -32,7 +32,7 @@ class RoleController extends VoyagerRoleController
                 $signers = json_decode($model->signers) ? json_decode($model->signers) : [];
                 $signers[] = $role->id;
                 $json = json_encode($signers);
-                $model->signers ? in_array($role->id,json_decode($model->signers)) ? : $model->signers = $json: '';
+                $model->signers ? in_array($role->id,json_decode($model->signers)) ? : $model->signers = $json: $model->signers = $json;
                 $model->save();
             }elseif(in_array(166,$request->permissions)||in_array(167,$request->permissions)){
                 if(isset($model->signers))
@@ -49,7 +49,7 @@ class RoleController extends VoyagerRoleController
                 $add_signers = json_decode($model->add_signers,true) ? json_decode($model->add_signers,true) : [];
                 $add_signers = array_merge($add_signers,array($role->id));
                 $json = json_encode($add_signers);
-                in_array($role->id,json_decode($model->add_signers,true)) ? :$model->add_signers = $json;
+                $model->add_signers ? in_array($role->id,json_decode($model->add_signers,true)) ? :$model->add_signers = $json:$model->add_signers = $json;
                 $model->save();
             }else{
                 $signers = $model->signers ? array_diff(json_decode($model->signers),array($role->id)): [];
