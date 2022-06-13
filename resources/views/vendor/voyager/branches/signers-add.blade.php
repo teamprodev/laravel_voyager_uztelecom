@@ -4,10 +4,6 @@
         <div class="res-msg mt-3 mb-3" style="display: none;">
             <div class="alert alert-success"></div>
         </div>
-        {{ Aire::open()
-    ->route('signers.update',$branch->id)
-    ->enctype("multipart/form-data")
-    ->post() }}
             <div class="mb-3">
                 @if($add_signers != '[]')
                 {{Aire::select($add_signers, 'select2', 'Add Signers')
@@ -24,10 +20,6 @@
                 ->value(json_decode($branch->signers))}}
                 @endif
             </div>
-            <div class="d-grid gap-2 mt-3">
-                <button type="submit" class="btn btn-success add-data">Save</button>
-            </div>
-        {{Aire::close()}}
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

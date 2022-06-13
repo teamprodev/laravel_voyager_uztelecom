@@ -9,7 +9,7 @@ class  AddSignerAction extends AbstractAction
 {
     public function getTitle(){
 
-        return "Add Signers";
+        return "Show Signers";
     }
     public function getIcon()
     {

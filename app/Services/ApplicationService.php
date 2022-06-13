@@ -190,14 +190,20 @@ class ApplicationService
 
                     if(auth()->user()->id == $row->user_id||auth()->user()->hasPermission('Warehouse')||$row->performer_role_id==auth()->user()->role_id)
                     {
-                        $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-success btn-sm'>$app_edit</a>";
+                        $bgcolor = setting('color.edit');
+                        $color = $bgcolor ? 'white':'black';
+                        $edit = "<a style='background-color: {$bgcolor};color: {$color}' href='{$edit_e}' class='m-1 col edit btn btn-sm'>$app_edit</a>";
                     }else{
                         $edit = "";
                     }
-                    $show = "<a href='{$show_e}' class='m-1 col show btn btn-warning btn-sm'>$app_show</a>";
+                    $bgcolor = setting('color.show');
+                    $color = $bgcolor ? 'white':'black';
+                    $show = "<a style='background-color: {$bgcolor};color: {$color}' href='{$show_e}' class='m-1 col show btn btn-sm'>$app_show</a>";
                     if($row->user_id == auth()->user()->id)
                     {
-                        $destroy = "<a href='{$destroy_e}' class='m-1 col show btn btn-danger btn-sm'>$app_delete</a>";
+                        $bgcolor = setting('color.delete');
+                        $color = $bgcolor ? 'white':'black';
+                        $destroy = "<a style='background-color: {$bgcolor};color: {$color}' href='{$destroy_e}' class='m-1 col show btn btn-sm'>$app_delete</a>";
                     }else{
                         $destroy = "";
                     }
