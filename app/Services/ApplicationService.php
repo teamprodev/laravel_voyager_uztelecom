@@ -160,7 +160,7 @@ class ApplicationService
                         $color = $status ? 'white':'black';
                         return "<input style='background-color: {$status};color: {$color};' value='{$status_rejected}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
                     }elseif($query->status === 'distributed'){
-                        $status = setting('color.rejected');
+                        $status = setting('color.distributed');
                         $color = $status ? 'white':'black';
                         return "<input style='background-color: {$status};color: {$color};' value='{$status_distributed}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
                     }elseif($query->status === 'canceled'){
