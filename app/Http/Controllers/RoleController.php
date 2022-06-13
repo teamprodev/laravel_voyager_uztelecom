@@ -2,14 +2,56 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Application;
 use App\Models\Branch;
 use App\Models\Roles;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use TCG\Voyager\Http\Controllers\VoyagerRoleController;
 use TCG\Voyager\Models\Role;
+use Yajra\DataTables\DataTables;
 
 class RoleController extends VoyagerRoleController
 {
+    public function index(Request $request)
+    {
+        return view('vendor.voyager.roles.browse');
+    }
+    public function getData()
+    {
+            $query = Roles::query();
+            return Datatables::of($query)
+                ->editColumn('branch_id', function ($query) {
+                    $all = json_decode($query->branch_id);
+                    $branch = $all ? Branch::find($all)->pluck('name'): '';
+                    $decode = json_decode($branch,true);
+                    return $decode;
+                })
+                ->addColumn('action', function($row){
+                    $edit_e = "/admin/roles/{$row->id}/edit";
+                    $destroy_e = route("voyager.roles.destroy",$row->id);
+                    $app_edit = __('Изменить');
+                    $app_delete= __('Посмотреть');;
+                    $bgcolor = setting('color.edit');
+                    $color = $bgcolor ? 'white':'black';
+                    $edit = "<a style='background-color: {$bgcolor};color: {$color}' href='{$edit_e}' class='m-1 col edit btn btn-sm'>$app_edit</a>";
+                    $bgcolor = setting('color.delete');
+                    $color = $bgcolor ? 'white':'black';
+                    $destroy = "<a style='background-color: {$bgcolor};color: {$color}' href='{$destroy_e}' class='m-1 col show btn btn-sm'>$app_delete</a>";
+                    return "<div class='row'>
+                        {$edit}
+                        {$destroy}
+                        </div>";
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+    }
+    public function delete(Branch $id)
+    {
+        dd($id);
+        $id->delete();
+        return redirect()->route('voyager.roles.index');
+    }
     public function update(Request $request, $id)
     {
         $role = Roles::find($id);

@@ -28,6 +28,7 @@ use TCG\Voyager\Facades\Voyager;
 */
 
 Route::get('/report/request/{id}',[ReportController::class,'report'])->name('report');
+Route::get('roles/getData',[\App\Http\Controllers\RoleController::class,'getData'])->name('voyager.roles.getData');
 
 
 Route::post('/request',[ReportController::class,'request'])->name('request');
@@ -47,6 +48,8 @@ Route::group([
 ], function () {
     Voyager::routes();
     Route::put('roles/{id}/update',[\App\Http\Controllers\RoleController::class,'update'])->name('voyager.roles.update');
+    Route::get('roles/',[\App\Http\Controllers\RoleController::class,'index'])->name('voyager.roles.index');
+    Route::get('roles/{id}/delete',[\App\Http\Controllers\RoleController::class,'delete'])->name('voyager.roles.delete');
     Route::get('type-of-purchase/{id}/edit',[TypeOfPurchase::class,'edit'])->name('voyager.type-of-purchase.edit');
     Route::post('type-of-purchase/update',[TypeOfPurchase::class,'update'])->name('type-of-purchase.update');
     Route::get('branches/{id}/signers',[\App\Http\Controllers\BranchController::class,'edit'])->name('signers.add');
