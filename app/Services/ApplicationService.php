@@ -603,8 +603,8 @@ class ApplicationService
             'warehouse' => Warehouse::where('application_id',$application->id)->first(),
             'performer_file' => $performer_file,
             'user' => auth()->user(),
-            'company_signers' => Roles::find($company_signer)->pluck('display_name','id'),
-            'branch_signers' => Roles::find($branch_signer)->pluck('display_name','id'),
+            'company_signers' => $company_signer ? Roles::find($company_signer)->pluck('display_name','id'): null,
+            'branch_signers' => $branch_signer ? Roles::find($branch_signer)->pluck('display_name','id'): null,
         ]);
     }
     public function update($application,$request)

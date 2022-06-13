@@ -127,6 +127,7 @@ class ApplicationController extends Controller
         {
             $application->branch_initiator_id = 9;
         }
+        SignedDocs::where('application_id',$application->id)->delete();
         $application->save();
         return redirect()->back();
     }
