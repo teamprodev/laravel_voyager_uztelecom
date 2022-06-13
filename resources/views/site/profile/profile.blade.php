@@ -45,7 +45,7 @@
                                Филиал:
                            </td>
                            <td class="p-2 w-full">
-                           {{$user->branch->name}}
+                           {{$user->branch->name ? $user->branch->name : ''}}
                            </td>
                        </tr>
                        @endisset
