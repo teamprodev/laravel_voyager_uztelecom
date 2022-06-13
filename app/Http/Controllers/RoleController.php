@@ -32,7 +32,7 @@ class RoleController extends VoyagerRoleController
                 $signers = json_decode($model->signers) ? json_decode($model->signers) : [];
                 $signers[] = $role->id;
                 $json = json_encode($signers);
-                in_array($role->id,json_decode($model->signers)) ? : $model->signers = $json;
+                $model->signers ? in_array($role->id,json_decode($model->signers)) ? : $model->signers = $json: '';
                 $model->save();
             }elseif(in_array(166,$request->permissions)||in_array(167,$request->permissions)){
                 if(isset($model->signers))
