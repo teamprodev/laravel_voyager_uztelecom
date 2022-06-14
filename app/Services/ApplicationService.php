@@ -563,6 +563,24 @@ class ApplicationService
         $same_role_user_ids = User::where('role_id', auth()->user()->role_id)->get()->pluck('id')->toArray();
         $performers_company = Permission::with('roles')->where('key', 'Company_Performer')->first()->roles;
         $performers_branch = Permission::with('roles')->where('key', 'Branch_Performer')->first()->roles;
+        if($performers_company != '[]')
+        {
+            for ($i = 0;$i<count($performers_company);$i++)
+            {
+                $company_id[] = $performers_company[$i]->id;
+            }
+        }
+        if($performers_branch != '[]')
+        {
+            for ($i = 0;$i<count($performers_branch);$i++)
+            {
+                $branch_id[] = $performers_branch[$i]->id;
+            }
+        }
+        $performers_company = Roles::where('id',$company_id)->where('branch_id','LIKE',"%".$application->branch_initiator_id."%")->get();
+
+        $performers_branch = Roles::where('id',$branch_id)->where('branch_id','LIKE',"%".$application->branch_initiator_id."%")->get();
+
         $user = auth()->user();
         $access_comment = Position::find($user->position_id);
         $subjects = Subject::all();

@@ -126,6 +126,7 @@ class ApplicationController extends Controller
         if($request->is_more_than_limit == 1)
         {
             $application->branch_initiator_id = 9;
+            $application->is_more_than_limit = 1;
         }
         SignedDocs::where('application_id',$application->id)->delete();
         $application->save();
