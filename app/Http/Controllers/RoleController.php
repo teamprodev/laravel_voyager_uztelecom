@@ -23,9 +23,8 @@ class RoleController extends VoyagerRoleController
             return Datatables::of($query)
                 ->editColumn('branch_id', function ($query) {
                     $all = json_decode($query->branch_id);
-                    $branch = $all ? Branch::find($all)->pluck('name'): '';
-                    $decode = json_decode($branch,true);
-                    return $decode;
+                    $branch = $all ? Branch::find($all)->pluck('name')->toArray(): [];
+                    return $branch;
                 })
                 ->addColumn('action', function($row){
                     $edit_e = "/admin/roles/{$row->id}/edit";
