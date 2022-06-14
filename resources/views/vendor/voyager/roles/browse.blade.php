@@ -65,7 +65,10 @@
 </head>
 <a href="/admin"><button class="btn btn-outline-danger back-button mt-2 position-fixed z-index"><i class="fas fa-arrow-left"></i></button></a>
 
-
+<a href="/admin/roles/create"
+   style="margin-left: 100px;" class="btn btn-success mt-5">
+    {{ __('Создать') }}
+</a>
     <table id="example" class="stripe wrap hover order-column cell-border" style="width: 100%; border-collapse: collapse !important;">
         <thead  class="text-center">
         <tr>
