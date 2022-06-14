@@ -71,7 +71,7 @@ class ApplicationService
             elseif($user->hasPermission('Warehouse'))
             {
                 $status_0 = 'Принята';
-                $query = Application::query()->where('draft','!=',1)->where('status','like',"%{$status_0}%")->orWhere('user_id',auth()->user()->id)->get();
+                $query = Application::query()->where('draft','!=',1)->where($a,$operator,$b)->where('status','like',"%{$status_0}%")->orWhere('user_id',auth()->user()->id)->get();
             }
             elseif($user->hasPermission('Company_Leader') && $user->hasPermission('Branch_Leader'))
             {
@@ -94,11 +94,11 @@ class ApplicationService
             }
             elseif($user->hasPermission('Company_Leader'))
             {
-                $query =  Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('status','agreed')->orWhere('status','distributed')->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
+                $query =  Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('status','agreed')->orWhere('status','distributed')->where($a,$operator,$b)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             elseif($user->hasPermission('Branch_Leader'))
             {
-                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('is_more_than_limit', 0)->where('show_leader',1)->orWhere('is_more_than_limit', 0)->where('status', 'new')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->where('status', 'distributed')->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
+                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('is_more_than_limit', 0)->where('show_leader',1)->orWhere('is_more_than_limit', 0)->where($a,$operator,$b)->where('status', 'new')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->where($a,$operator,$b)->where('status', 'distributed')->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             else {
                 $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->get();
