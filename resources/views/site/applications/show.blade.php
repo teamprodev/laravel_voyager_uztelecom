@@ -12,7 +12,7 @@
             <h5><strong>{{ __('Номер заявки') }} : </strong> {{$application->number}} </h5>
             <h5><strong>Date : </strong>
                 @if($application->date!=null)
-                    {{ Carbon\Carbon::createFromFormat('Y-m-d', $application->date)->Format('Y.m.d') }}
+                    {{ Carbon\Carbon::createFromFormat('Y-m-d', $application->date)->Format('d.m.Yг') }}
                 @endif
             </h5> <br>
             <h5><strong>{{__('Визирование заявки через:') }}</strong>
