@@ -10,7 +10,7 @@
             <h5><strong>{{ __('Филиал автора:') }}</strong> {{ $branch_name->name ? $branch_name->name : 'Он(а) не выбрал(а) филиал' }}</h5>
             <h5><strong>Должность :</strong> {{ auth()->user()->position_id ? auth()->user()->position->name:"Нет" }}</h5>
             <h5><strong>{{ __('Номер заявки') }} : </strong> {{$application->number}} </h5>
-            <h5><strong>Date : </strong> {{$application->date->format('d/m/Y')}} </h5> <br>
+            <h5><strong>Date : </strong> {{$application->date}} </h5> <br>
             <h5><strong>{{__('Визирование заявки через:') }}</strong>
             @if($application->is_more_than_limit == 1)
                 {{ __('Компанию') }}
