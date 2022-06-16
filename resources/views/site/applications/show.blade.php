@@ -206,16 +206,6 @@
                         </select>
                     </div>
 
-                    <div class="mb-3 row">
-                        <label for="currency" class="col-sm-6 col-form-label">{{ __('Выберите филиал') }}</label>
-                        <select class="custom-select col-sm-6" name="branch_initiator_id" id="branch_initiator_id">
-                            @isset($application->branch_initiator_id)
-                                <option value="{{$application->branch_initiator_id}}"
-                                        selected>{{$application->branch->name}}</option>
-                            @endisset
-                        </select>
-                    </div>
-
                     @if(isset($application->resource_id))
                         <b>{{ __('Продукт')}}</b>:
                         @foreach(json_decode($application->resource_id) as $product)

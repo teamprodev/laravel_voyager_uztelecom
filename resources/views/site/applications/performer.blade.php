@@ -1,3 +1,4 @@
+@if($application->performer_role_id == auth()->user()->role_id)
 <div class="pt-6">
     <div class="w-full flex">
         <div class="p-6">
@@ -176,5 +177,7 @@
         });
     </script>
 </div>
-
+@else
+    <h3 style="text-align:center;color:red;">Рукаводство не выбрал(а) вас</h3>
+@endif
 
