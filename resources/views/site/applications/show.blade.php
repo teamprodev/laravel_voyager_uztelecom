@@ -390,6 +390,7 @@
                         <input class="form-control" id="date" name="date" type="date" value="{{$application->date}}"/>
                     </div>
                 </div>
+                @dd($performers_branch , $performers_company);
                 {{Aire::submit('Save')}}
             @endif
             @if($application->user_id != auth()->user()->id && auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
@@ -403,17 +404,10 @@
                                 ->cols(40)
                                  }}
                         @if($application->is_more_than_limit != 1)
-                            <select class="col-md-6 custom-select" name="performer_role_id" id="performer_role_id">
-                                @foreach($performers_branch as $performer)
-                                    <option value="{{$performer}}">{{$performer}}</option>
-                                @endforeach
-                            </select>
+                            {{Aire::select($performers_branch, 'select', '')->name('performer_role_id')}}
                         @else
-                            <select class="col-md-6 custom-select" name="performer_role_id" id="performer_role_id">
-                                @foreach($performers_company as $performer)
-                                    <option value="{{$performer}}">{{$performer}}</option>
-                                @endforeach
-                            </select>
+                            {{Aire::select($performers_company, 'select', '')->name('performer_role_id')}}
+
                         @endif
                         <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
                     </div>
@@ -429,17 +423,10 @@
                                 ->cols(40)
                                  }}
                         @if($application->is_more_than_limit != 1)
-                        <select class="col-md-6 custom-select" name="performer_role_id" id="performer_role_id">
-                            @foreach($performers_branch as $performer)
-                                <option value="{{$performer}}">{{$performer}}</option>
-                            @endforeach
-                        </select>
+                            {{Aire::select($performers_branch, 'select', '')->name('performer_role_id')}}
                         @else
-                            <select class="col-md-6 custom-select" name="performer_role_id" id="performer_role_id">
-                                @foreach($performers_company as $performer)
-                                    <option value="{{$performer}}">{{$performer}}</option>
-                                @endforeach
-                            </select>
+                            {{Aire::select($performers_company, 'select', '')->name('performer_role_id')}}
+
                         @endif
                         <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
                     </div>

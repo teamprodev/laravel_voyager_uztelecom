@@ -585,6 +585,7 @@ class ApplicationService
         }
         $performers_company = Roles::find($role_company)->pluck('display_name','id');
         $performers_branch = Roles::find($role_branch)->pluck('display_name','id');
+
         $user = auth()->user();
         $access_comment = Position::find($user->position_id);
         $subjects = Subject::all();
