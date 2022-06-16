@@ -237,9 +237,9 @@ class ApplicationService
         }else{
             $a = 'branch_initiator_id';
             $operator = '=';
-            $b = $user->branch_id;
+            $b = auth()->user()->branch_id;
         }
-        $data = Application::where('status', Cache::get('status'))->where($a,$operator,$b)->get();
+        $data = Application::where($a,$operator,$b)->where('status', Cache::get('status'))->get();
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('user_id', function($docs) {
@@ -572,11 +572,19 @@ class ApplicationService
         $other_files = json_decode($application->other_files);
         $performer_file = json_decode($application->performer_file);
         $same_role_user_ids = User::where('role_id', auth()->user()->role_id)->get()->pluck('id')->toArray();
-        $id = DB::table('roles')->whereRaw('json_contains(branch_id, \'["'.$application->branch_initiator_id.'"]\')')->pluck('id');
-        $company = $id!='[]' ? PermissionRole::where('permission_id',170)->where('role_id',$id)->pluck('role_id'):[];
-        $branch = $id!='[]' ? PermissionRole::where('permission_id',171)->where('role_id',$id)->pluck('role_id'):[];
-        $performers_company = $company ? Roles::find($company)->pluck('display_name','id'):[];
-        $performers_branch = $branch ? Roles::find($branch)->pluck('display_name','id'):[];
+        $id = DB::table('roles')->whereRaw('json_contains(branch_id, \'["'.$application->branch_initiator_id.'"]\')')->pluck('id')->toArray();
+        foreach ($id as $role)
+        {
+            $company = PermissionRole::where('role_id',$role)->where('permission_id',170)->get()->pluck('role_id');
+            $role_company[] = $company;
+            $role_company = array_diff($role_company,['[]']);
+
+            $branch = PermissionRole::where('role_id',$role)->where('permission_id',171)->get()->pluck('role_id');
+            $role_branch[] = $branch;
+            $role_branch = array_diff($role_branch,['[]']);
+        }
+        $performers_company = Roles::find($role_company)->pluck('display_name','id');
+        $performers_branch = Roles::find($role_branch)->pluck('display_name','id');
         $user = auth()->user();
         $access_comment = Position::find($user->position_id);
         $subjects = Subject::all();
