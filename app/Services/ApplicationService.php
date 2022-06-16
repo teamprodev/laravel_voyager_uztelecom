@@ -56,37 +56,36 @@ class ApplicationService
             if($user->hasPermission('ЦУЗ'))
             {
                 $a = 'branch_initiator_id';
-                $operator = '!=';
-                $b = null;
+                $b = [9,13];
             }else{
                 $a = 'branch_initiator_id';
-                $operator = '=';
-                $b = $user->branch_id;
+                $b = [$user->branch_id];
             }
+
             if($user->hasPermission('Add_Company_Signer') && $user->hasPermission('Add_Branch_Signer'))
             {
 
                 $query = Application::query()
-                    ->where('draft','!=',1)->where($a,$operator,$b)->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
+                    ->where('draft','!=',1)->whereIn($a,$b)->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             elseif($user->hasPermission('Warehouse'))
             {
                 $status_0 = 'Принята';
-                $query = Application::query()->where('draft','!=',1)->where($a,$operator,$b)->where('status','like',"%{$status_0}%")->orWhere('user_id',auth()->user()->id)->get();
+                $query = Application::query()->where('draft','!=',1)->whereIn($a,$b)->where('status','like',"%{$status_0}%")->orWhere('user_id',auth()->user()->id)->get();
             }
             elseif($user->hasPermission('Company_Leader') && $user->hasPermission('Branch_Leader'))
             {
-                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
+                $query = Application::query()->whereIn($a,$b)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             elseif($user->role_id == 7)
             {
-                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('signers','LIKE','%7%')->get();
+                $query = Application::query()->whereIn($a,$b)->where('draft','!=',1)->where('signers','LIKE','%7%')->get();
             }
             elseif ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
             {
                 $query = Application::query()
                     ->where('draft','!=',1)
-                    ->where($a,$operator,$b)
+                    ->whereIn($a,$b)
                     ->where('signers','like',"%{$user->role_id}%")
                     ->orWhere('performer_role_id', $user->role->id)
                     ->where('draft','!=',1)
@@ -95,14 +94,14 @@ class ApplicationService
             }
             elseif($user->hasPermission('Company_Leader'))
             {
-                $query =  Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('status','agreed')->orWhere('status','distributed')->where($a,$operator,$b)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
+                $query =  Application::query()->whereIn($a,$b)->where('draft','!=',1)->where('status','agreed')->orWhere('status','distributed')->whereIn($a,$b)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             elseif($user->hasPermission('Branch_Leader'))
             {
-                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->where('is_more_than_limit', 0)->where('show_leader',1)->orWhere('is_more_than_limit', 0)->where($a,$operator,$b)->where('status', 'new')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->where($a,$operator,$b)->where('status', 'distributed')->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
+                $query = Application::query()->whereIn($a,$b)->where('draft','!=',1)->where('is_more_than_limit', 0)->where('show_leader',1)->orWhere('is_more_than_limit', 0)->whereIn($a,$b)->where('status', 'new')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->whereIn($a,$b)->where('status', 'distributed')->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             else {
-                $query = Application::query()->where($a,$operator,$b)->where('draft','!=',1)->get();
+                $query = Application::query()->whereIn($a,$b)->where('draft','!=',1)->get();
             }
 
             return Datatables::of($query)
@@ -232,14 +231,12 @@ class ApplicationService
         if(auth()->user()->hasPermission('ЦУЗ'))
         {
             $a = 'branch_initiator_id';
-            $operator = '!=';
-            $b = null;
+            $b = [9,13];
         }else{
             $a = 'branch_initiator_id';
-            $operator = '=';
-            $b = auth()->user()->branch_id;
+            $b = [auth()->user()->branch_id];
         }
-        $data = Application::where($a,$operator,$b)->where('status', Cache::get('status'))->get();
+        $data = Application::whereIn($a,$b)->where('status', Cache::get('status'))->get();
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('user_id', function($docs) {
@@ -334,8 +331,16 @@ class ApplicationService
     }
     public function performer_status()
     {
+        if(auth()->user()->hasPermission('ЦУЗ'))
+        {
+            $a = 'branch_initiator_id';
+            $b = [9,13];
+        }else{
+            $a = 'branch_initiator_id';
+            $b = [auth()->user()->branch_id];
+        }
         $status = Cache::get('performer_status_get');
-        $data = Application::where('status', 'LIKE',"%{$status}%")->get();
+        $data = Application::whereIn($a,$b)->where('status', 'LIKE',"%{$status}%")->get();
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('user_id', function($docs) {
