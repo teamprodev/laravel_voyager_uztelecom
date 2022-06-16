@@ -25,6 +25,7 @@ use App\Models\Country;
 use App\Models\Purchase;
 use App\Models\Roles;
 use App\Models\Subject;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Yajra\DataTables\DataTables;
 
@@ -228,7 +229,17 @@ class ApplicationService
     }
     public function status_table()
     {
-        $data = Application::where('status', Cache::get('status'))->get();
+        if(auth()->user()->hasPermission('ЦУЗ'))
+        {
+            $a = 'branch_initiator_id';
+            $operator = '!=';
+            $b = null;
+        }else{
+            $a = 'branch_initiator_id';
+            $operator = '=';
+            $b = $user->branch_id;
+        }
+        $data = Application::where('status', Cache::get('status'))->where($a,$operator,$b)->get();
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('user_id', function($docs) {
@@ -561,26 +572,11 @@ class ApplicationService
         $other_files = json_decode($application->other_files);
         $performer_file = json_decode($application->performer_file);
         $same_role_user_ids = User::where('role_id', auth()->user()->role_id)->get()->pluck('id')->toArray();
-        $performers_company = Permission::with('roles')->where('key', 'Company_Performer')->first()->roles;
-        $performers_branch = Permission::with('roles')->where('key', 'Branch_Performer')->first()->roles;
-        if($performers_company != '[]')
-        {
-            for ($i = 0;$i<count($performers_company);$i++)
-            {
-                $company_id[] = $performers_company[$i]->id;
-            }
-        }
-        if($performers_branch != '[]')
-        {
-            for ($i = 0;$i<count($performers_branch);$i++)
-            {
-                $branch_id[] = $performers_branch[$i]->id;
-            }
-        }
-        $performers_company = Roles::where('id',$company_id)->where('branch_id','LIKE',"%".$application->branch_initiator_id."%")->get();
-
-        $performers_branch = Roles::where('id',$branch_id)->where('branch_id','LIKE',"%".$application->branch_initiator_id."%")->get();
-
+        $id = DB::table('roles')->whereRaw('json_contains(branch_id, \'["'.$application->branch_initiator_id.'"]\')')->pluck('id');
+        $company = $id!='[]' ? PermissionRole::where('permission_id',170)->where('role_id',$id)->pluck('role_id'):[];
+        $branch = $id!='[]' ? PermissionRole::where('permission_id',171)->where('role_id',$id)->pluck('role_id'):[];
+        $performers_company = $company ? Roles::find($company)->pluck('display_name','id'):[];
+        $performers_branch = $branch ? Roles::find($branch)->pluck('display_name','id'):[];
         $user = auth()->user();
         $access_comment = Position::find($user->position_id);
         $subjects = Subject::all();

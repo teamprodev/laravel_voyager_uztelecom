@@ -7,7 +7,7 @@
     <div class="px-6 pb-0 pt-6">
         <h5><strong>ID : </strong> {{$application->id}}
             <h5><strong>{{ __('Автор заявки:') }}</strong> {{$application->user->name}} ( {{ $application->user->role_id ? $application->user->role->display_name : '' }} )</h5>
-            <h5><strong>{{ __('Филиал автора:') }}</strong> {{ $branch_name->name ? $branch_name->name : 'Он(а) не выбрал(а) филиал' }}</h5>
+            <h5><strong>{{ __('Филиал автора:') }}</strong> {{ $application->user->branch_id ? $branch_name->name : 'Он(а) не выбрал(а) филиал' }}</h5>
             <h5><strong>Должность :</strong> {{ auth()->user()->position_id ? auth()->user()->position->name:"Нет" }}</h5>
             <h5><strong>{{ __('Номер заявки') }} : </strong> {{$application->number}} </h5>
             <h5><strong>Date : </strong> {{$application->date}} </h5> <br>
@@ -398,7 +398,7 @@
                 </div>
                 {{Aire::submit('Save')}}
             @endif
-            @if($application->user_id != auth()->user()->id && $application->is_more_than_limit = 1 && auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
+            @if($application->user_id != auth()->user()->id && auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
                 @if(!isset($application->performer_user_id))
                     <div class="pb-5">
                         <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
@@ -408,15 +408,23 @@
                                 ->rows(3)
                                 ->cols(40)
                                  }}
-                        <select class="col-md-6 custom-select" name="performer_role_id" id="performer_role_id">
-                            @foreach($performers_company as $performer)
-                                <option value="{{$performer->id}}">{{$performer->display_name}}</option>
-                            @endforeach
-                        </select>
+                        @if($application->is_more_than_limit != 1)
+                            <select class="col-md-6 custom-select" name="performer_role_id" id="performer_role_id">
+                                @foreach($performers_branch as $performer)
+                                    <option value="{{$performer}}">{{$performer}}</option>
+                                @endforeach
+                            </select>
+                        @else
+                            <select class="col-md-6 custom-select" name="performer_role_id" id="performer_role_id">
+                                @foreach($performers_company as $performer)
+                                    <option value="{{$performer}}">{{$performer}}</option>
+                                @endforeach
+                            </select>
+                        @endif
                         <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
                     </div>
                 @endif
-            @elseif($application->user_id != auth()->user()->id && $application->is_more_than_limit != 1 && auth()->user()->hasPermission('Branch_Leader') && $application->show_leader == 1)
+            @elseif($application->user_id != auth()->user()->id && auth()->user()->hasPermission('Branch_Leader') && $application->show_leader == 1)
                 @if(!isset($application->performer_user_id))
                     <div class="pb-5">
                         <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
@@ -426,11 +434,19 @@
                                 ->rows(3)
                                 ->cols(40)
                                  }}
+                        @if($application->is_more_than_limit != 1)
                         <select class="col-md-6 custom-select" name="performer_role_id" id="performer_role_id">
                             @foreach($performers_branch as $performer)
-                                <option value="{{$performer->id}}">{{$performer->display_name}}</option>
+                                <option value="{{$performer}}">{{$performer}}</option>
                             @endforeach
                         </select>
+                        @else
+                            <select class="col-md-6 custom-select" name="performer_role_id" id="performer_role_id">
+                                @foreach($performers_company as $performer)
+                                    <option value="{{$performer}}">{{$performer}}</option>
+                                @endforeach
+                            </select>
+                        @endif
                         <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
                     </div>
                 @endif
