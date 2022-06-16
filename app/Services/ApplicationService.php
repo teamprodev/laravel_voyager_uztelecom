@@ -689,7 +689,7 @@ class ApplicationService
 
         if (isset($data['signers']))
         {
-            $array = $roles ? array_merge($data['signers'],json_decode($roles)): $data['signers'];
+            $array = $roles ? array_merge(json_decode($roles),$data['signers']): $data['signers'];
             $data['signers'] = json_encode($array);
             foreach ($array as $signers)
             {
