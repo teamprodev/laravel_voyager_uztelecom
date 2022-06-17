@@ -48,7 +48,6 @@ class RoleController extends VoyagerRoleController
     }
     public function delete(Branch $id)
     {
-        dd($id);
         $id->delete();
         return redirect()->route('voyager.roles.index');
     }
