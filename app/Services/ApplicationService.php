@@ -100,6 +100,10 @@ class ApplicationService
             {
                 $query = Application::query()->whereIn($a,$b)->where('draft','!=',1)->where('is_more_than_limit', 0)->where('show_leader',1)->orWhere('is_more_than_limit', 0)->whereIn($a,$b)->where('status', 'new')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->whereIn($a,$b)->where('status', 'distributed')->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
+            elseif($user->hasPermission('Company_Performer')||$user->hasPermission('Branch_Performer'))
+            {
+                $query = Application::query()->whereIn($a,$b)->where('draft','!=',1)->where('performer_role_id',auth()->user()->role_id)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
+            }
             else {
                 $query = Application::query()->whereIn($a,$b)->where('draft','!=',1)->get();
             }
