@@ -8,6 +8,16 @@
                 </p>
             </a>
         </li>
+        @if(auth()->user()->hasPermission('select_branch'))
+        <li class="nav-item">
+            <a href="{{route('site.applications.index')}}" class="nav-link">
+                <i class="nav-icon fas fa-th-list"></i>
+                <p>
+                    {{ __('Заявки по филиалу') }}
+                </p>
+            </a>
+        </li>
+        @endif
         <li class="nav-item">
             <button data-toggle="collapse" data-target="#demo" class="nav-link">
                 <div class="float-left">

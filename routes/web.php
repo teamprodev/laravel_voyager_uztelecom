@@ -36,7 +36,10 @@ Route::post('/warehouse',[WarehouseController::class,'create'])->name('warehouse
 
 Route::get('/user/{user}',[UserController::class,'changeLeader'])->name('users.leader');
 Route::post('/branches/{id}/post',[\App\Http\Controllers\BranchController::class,'update'])->name('signers.update');
-Route::get('/branches/signers',[\App\Http\Controllers\BranchController::class,'ajax'])->name('signers.ajax');
+
+Route::get('/branches/getData',[\App\Http\Controllers\BranchController::class,'ajax'])->name('branches.getData');
+Route::post('/branches/putCache',[\App\Http\Controllers\BranchController::class,'putCache'])->name('branches.putCache');
+Route::get('/branches/view',[\App\Http\Controllers\BranchController::class,'view'])->name('branches.view');
 
 Route::get('/', function () {
     return redirect()->route('site.applications.index');

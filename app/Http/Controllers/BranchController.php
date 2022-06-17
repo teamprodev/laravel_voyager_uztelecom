@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Application;
 use App\Models\Branch;
 use App\Models\PermissionRole;
 use App\Models\Roles;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
+use Yajra\DataTables\DataTables;
 
 class BranchController extends Controller
 {
@@ -21,13 +25,143 @@ class BranchController extends Controller
             'branch' => $id,
         ]);
     }
+    public function putCache(Request $request)
+    {
+        Cache::put('branch_id',$request->branch_id);
+        return redirect()->back();
+    }
     public function ajax()
     {
-        $add_signers = PermissionRole::where('permission_id',167)->select('role_id')->get();
-        $add_signers = Roles::find($add_signers)->pluck('display_name','id');
-        $signers = PermissionRole::where('permission_id',168)->select('role_id')->get();
-        $signers = Roles::find($signers)->pluck('display_name','id');
-        return $add_signers;
+        $id = Cache::get('branch_id');
+        $data = Application::where('branch_initiator_id', 'LIKE',"%{$id}%")->get();
+        return Datatables::of($data)
+            ->addIndexColumn()
+            ->editColumn('user_id', function($docs) {
+                return $docs->user ? $docs->user->name:"";
+            })
+            ->editColumn('role_id', function($docs) {
+                return $docs->role ? $docs->role->display_name:"";
+            })
+            ->editColumn('created_at', function ($data) {
+                return $data->created_at ? with(new Carbon($data->created_at))->format('d.m.Y') : '';
+            })
+            ->editColumn('updated_at', function ($data) {
+                return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
+            })
+            ->editColumn('status', function ($query){
+                $status_new = __('Новая');
+                $status_in_process = __('На рассмотрении');
+                $status_accepted = __('Принята');
+                $status_refused = __('Отказана');
+                $status_agreed = __('Согласована');
+                $status_rejected = __('Отклонена');
+                $status_distributed = __('Распределен');
+                $status_cancelled = __('Отменен');
+                $status_performed = __('Товар доставлен');
+                $status_overdue = ('просрочен');
+                if($query->status === 'new'){
+                    $status = setting('color.new');
+                    $color = $status ? 'white':'black';
+                    return "<input style='background-color: {$status};color: {$color};' value='{$status_new}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                }elseif($query->status === 'in_process'){
+                    $status = setting('color.in_process');
+                    $color = $status ? 'white':'black';
+                    return "<input style='background-color: {$status};color: {$color};' value='{$status_in_process}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                }elseif($query->status === 'overdue'||$query->status === 'Overdue'){
+                    $status = setting('color.overdue');
+                    $color = $status ? 'white':'black';
+                    return "<input style='background-color: {$status};color: {$color};' value='{$status_overdue}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                }elseif($query->status === 'Принята'){
+                    $status = setting('color.accepted');
+                    $color = $status ? 'white':'black';
+                    return "<input style='background-color: {$status};color: {$color};' value='{$status_accepted}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                }elseif($query->status === 'refused'){
+                    $status = setting('color.rejected');
+                    $color = $status ? 'white':'black';
+                    return "<input style='background-color: {$status};color: {$color};' value='{$status_refused}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                }elseif($query->status === 'agreed'){
+                    $status = setting('color.agreed');
+                    $color = $status ? 'white':'black';
+                    return "<input style='background-color: {$status};color: {$color};' value='{$status_agreed}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                }elseif($query->status === 'rejected'){
+                    $status = setting('color.rejected');
+                    $color = $status ? 'white':'black';
+                    return "<input style='background-color: {$status};color: {$color};' value='{$status_rejected}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                }elseif($query->status === 'distributed'){
+                    $status = setting('color.distributed');
+                    $color = $status ? 'white':'black';
+                    return "<input style='background-color: {$status};color: {$color};' value='{$status_distributed}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                }elseif($query->status === 'canceled'){
+                    $status = setting('color.rejected');
+                    $color = $status ? 'white':'black';
+                    return "<input style='background-color: {$status};color: {$color};' value='{$status_cancelled}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                }elseif($query->status === 'товар доставлен'){
+                    $status = setting('color.delivered');
+                    $color = $status ? 'white':'black';
+                    return "<div class='row'>
+                        <input style='background-color: {$status};color: {$color};' type='text' type='button' value='{$status_performed}' class='text-center display wrap edit btn-sm' disabled>
+                        </div>";
+                }else{
+                    return $query->status;
+                }
+            })
+            ->addIndexColumn()
+            ->addColumn('action', function($row){
+                $edit_e = route('site.applications.edit', $row->id);
+                $clone_e = route('site.applications.clone', $row->id);
+                $show_e = route('site.applications.show', $row->id);
+                $destroy_e = route('site.applications.destroy', $row->id);
+                $app_edit = __('Изменить');
+                $app_show= __('Показать');;
+                $app_clone= __('Копировать');;
+                $app_delete= __('Удалить');;
+
+                if(auth()->user()->id == $row->user_id||auth()->user()->hasPermission('Warehouse')||$row->performer_role_id==auth()->user()->role_id)
+                {
+                    $bgcolor = setting('color.edit');
+                    $color = $bgcolor ? 'white':'black';
+                    $edit = "<a style='background-color: {$bgcolor};color: {$color}' href='{$edit_e}' class='m-1 col edit btn btn-sm'>$app_edit</a>";
+                }else{
+                    $edit = "";
+                }
+                $bgcolor = setting('color.show');
+                $color = $bgcolor ? 'white':'black';
+                $show = "<a style='background-color: {$bgcolor};color: {$color}' href='{$show_e}' class='m-1 col show btn btn-sm'>$app_show</a>";
+                if($row->user_id == auth()->user()->id)
+                {
+                    $bgcolor = setting('color.delete');
+                    $color = $bgcolor ? 'white':'black';
+                    $destroy = "<a style='background-color: {$bgcolor};color: {$color}' href='{$destroy_e}' class='m-1 col show btn btn-sm'>$app_delete</a>";
+                }else{
+                    $destroy = "";
+                }
+                if($row->user_id == auth()->user()->id && $row->status == 'cancelled' || $row->user_id == auth()->user()->id && $row->status == 'refused'||$row->user_id == auth()->user()->id && $row->status == 'rejected')
+                {
+                    $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>$app_clone</a>";
+                }else{
+                    $clone = "";
+                }
+
+                return "<div class='row'>
+                        {$edit}
+                        {$show}
+                        {$clone}
+                        {$destroy}
+                        </div>";
+            })
+            ->rawColumns(['action','status'])
+            ->make(true);
+    }
+    public function view()
+    {
+        if(auth()->user()->hasPermission('select_branch'))
+        {
+            $branch = Branch::pluck('name','id')->toArray();
+            return view('vendor.voyager.branches.view',compact('branch'));
+        }else{
+            return "<h1 style='text-align: center;color:red;'>Вам недоступно</h1>";
+        }
+
     }
     public function update(Branch $id,Request $req)
     {
