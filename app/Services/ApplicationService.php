@@ -58,8 +58,8 @@ class ApplicationService
                 $a = 'branch_initiator_id';
                 $b = [9,13];
             }else{
-                $a = 'branch_initiator_id';
-                $b = [$user->branch_id];
+                $a = 'department_initiator_id';
+                $b = [$user->department_id];
             }
 
             if($user->hasPermission('Add_Company_Signer') && $user->hasPermission('Add_Branch_Signer'))
@@ -237,8 +237,8 @@ class ApplicationService
             $a = 'branch_initiator_id';
             $b = [9,13];
         }else{
-            $a = 'branch_initiator_id';
-            $b = [auth()->user()->branch_id];
+            $a = 'department_initiator_id';
+            $b = [auth()->user()->department_id];
         }
         $data = Application::whereIn($a,$b)->where('status', Cache::get('status'))->get();
         return Datatables::of($data)
@@ -366,8 +366,8 @@ class ApplicationService
             $a = 'branch_initiator_id';
             $b = [9,13];
         }else{
-            $a = 'branch_initiator_id';
-            $b = [auth()->user()->branch_id];
+            $a = 'department_initiator_id';
+            $b = [auth()->user()->department_id];
         }
         $status = Cache::get('performer_status_get');
         $data = Application::whereIn($a,$b)->where('status', 'LIKE',"%{$status}%")->get();
@@ -532,6 +532,7 @@ class ApplicationService
         $application = new Application();
         $application->user_id = auth()->user()->id;
         $application->branch_initiator_id = auth()->user()->branch_id;
+        $application->department_initiator_id = auth()->user()->department_id;
         $application->status = Application::NEW;
         $application->save();
         $data = Application::query()->latest('id')->first();

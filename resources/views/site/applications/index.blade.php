@@ -1,6 +1,6 @@
 @extends('site.layouts.app')
 @section('center_content')
-@if(auth()->user()->branch_id != null)
+@if(auth()->user()->branch_id != null || auth()->user()->department_id != null)
 <div id="section" class="pt-6">
     <a href="{{route('site.applications.create')}}"
         class="ml-12 bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white mb-8">
@@ -28,7 +28,11 @@
     </div>
 </div>
 @else
-<h1 style="color: red; text-align:center;">Вы не выбрали ваш Филиал<br>Админ должен перенаправить вас в филиал</h1>
+    @if(auth()->user()->department_id == null)
+        <h1 style="color: red; text-align:center;">Вы не выбрали ваш Отдел<br>Админ должен перенаправить вас в отдел</h1>
+    @else
+        <h1 style="color: red; text-align:center;">Вы не выбрали ваш Филиал<br>Админ должен перенаправить вас в филиал</h1>
+    @endif
 @endif
 @push('scripts')
 <script>
