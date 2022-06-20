@@ -718,13 +718,15 @@ class ApplicationService
         {
             $application->performer_user_id = auth()->user()->id;
         }
-        if(isset($data['performer_leader_user_id']))
+        if(isset($data['performer_leader_comment']))
         {
             $data['performer_leader_comment_date'] = Carbon::now()->toDateTimeString();
+            $data['performer_leader_user_id'] = auth()->user()->id;
         }
         if(isset($data['performer_comment']))
         {
             $data['performer_comment_date'] = Carbon::now()->toDateTimeString();
+            $data['performer_user_id'] = auth()->user()->id;
         }
         if(isset($data['resource_id']))
         {

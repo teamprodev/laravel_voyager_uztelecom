@@ -387,10 +387,6 @@
                     ->rows(3)
                     ->cols(40)
                  }}
-                <input  class="hidden"
-                        name="performer_leader_user_id"
-                        value="{{auth()->user()->id}}"
-                        type="text">
                 <div class="mt-4">
                     <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
                 </div>
@@ -401,10 +397,6 @@
                     ->rows(3)
                     ->cols(40)
                  }}
-                <input  class="hidden"
-                        name="performer_user_id"
-                        value="{{auth()->user()->id}}"
-                        type="text">
                 <div class="mt-4">
                     <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
                 </div>
