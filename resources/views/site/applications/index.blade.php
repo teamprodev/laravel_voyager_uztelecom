@@ -38,6 +38,11 @@
 <script>
     $(function () {
         var table = $('#yajra-datatable').DataTable({
+            columnDefs: [
+                {
+                    targets: "_all",
+                    className: 'dt-body-center dt-head-center'
+                }],
             order: [[ 0, "desc" ]],
             "language": {
                 "lengthMenu": "Показать _MENU_ записей",
