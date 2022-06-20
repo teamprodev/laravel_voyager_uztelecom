@@ -58,15 +58,18 @@ class ApplicationService
                 $a = 'branch_initiator_id';
                 $b = [9,13];
             }else{
-                $a = 'department_initiator_id';
-                $b = [$user->department_id];
+                $a = 'branch_initiator_id';
+                $b = [$user->branch_id];
+
+                $c = 'department_initiator_id';
+                $d = [$user->department_id];
             }
 
             if($user->hasPermission('Add_Company_Signer') && $user->hasPermission('Add_Branch_Signer'))
             {
 
                 $query = Application::query()
-                    ->where('draft','!=',1)->whereIn($a,$b)->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
+                    ->where('draft','!=',1)->whereIn($c,$d)->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             elseif($user->hasPermission('Warehouse'))
             {
@@ -85,7 +88,7 @@ class ApplicationService
             {
                 $query = Application::query()
                     ->where('draft','!=',1)
-                    ->whereIn($a,$b)
+                    ->whereIn($c,$d)
                     ->where('signers','like',"%{$user->role_id}%")
                     ->orWhere('performer_role_id', $user->role->id)
                     ->where('draft','!=',1)
@@ -237,8 +240,8 @@ class ApplicationService
             $a = 'branch_initiator_id';
             $b = [9,13];
         }else{
-            $a = 'department_initiator_id';
-            $b = [auth()->user()->department_id];
+            $a = 'branch_initiator_id';
+            $b = [auth()->user()->branch_id];
         }
         $data = Application::whereIn($a,$b)->where('status', Cache::get('status'))->get();
         return Datatables::of($data)
@@ -366,8 +369,8 @@ class ApplicationService
             $a = 'branch_initiator_id';
             $b = [9,13];
         }else{
-            $a = 'department_initiator_id';
-            $b = [auth()->user()->department_id];
+            $a = 'branch_initiator_id';
+            $b = [auth()->user()->branch_id];
         }
         $status = Cache::get('performer_status_get');
         $data = Application::whereIn($a,$b)->where('status', 'LIKE',"%{$status}%")->get();
@@ -553,7 +556,7 @@ class ApplicationService
                     return $data->created_at ? with(new Carbon($data->created_at))->format('d.m.Y') : '';
                 })
                 ->editColumn('updated_at', function ($data) {
-                    return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';;
+                    return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
                 })
                 ->addColumn('action', function($row){
                     $edit = route('site.applications.edit', $row->id);
