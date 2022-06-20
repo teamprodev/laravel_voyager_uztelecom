@@ -27,6 +27,11 @@
         <script>
             $(function () {
                 var table = $('#yajra-datatable').DataTable({
+                    columnDefs: [
+                        {
+                            targets: "_all",
+                            className: 'dt-body-center dt-head-center'
+                        }],
                     order: [[ 0, "desc" ]],
                     processing: true,
                     serverSide: true,
