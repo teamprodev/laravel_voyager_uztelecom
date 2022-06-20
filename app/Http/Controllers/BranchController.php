@@ -9,21 +9,44 @@ use App\Models\Roles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
 class BranchController extends Controller
 {
-    public function edit(Branch $id)
+    public function edit($id)
     {
-        $add_signers = json_decode($id->add_signers);
-        $add_signers = $add_signers ? Roles::find($add_signers)->pluck('display_name','id'):'[]';
-        $signers = json_decode($id->signers);
-        $signers = $signers ? Roles::find($signers)->pluck('display_name','id'):'[]';
-        return view('vendor.voyager.branches.signers-add',[
-            'add_signers' => $add_signers,
-            'signers' => $signers,
-            'branch' => $id,
-        ]);
+        Cache::put('id',$id);
+        return view('vendor.voyager.branches.signers-add');
+    }
+    public function getData()
+    {
+        $id = Cache::get('id');
+        $query = DB::table('roles')->whereRaw('json_contains(branch_id, \'["'.$id.'"]\')')->get();
+        return Datatables::of($query)
+            ->editColumn('branch_id', function ($query) {
+                $all = json_decode($query->branch_id);
+                $branch = $all ? Branch::find($all)->pluck('name')->toArray(): [];
+                return $branch;
+            })
+            ->addColumn('action', function($row){
+                $edit_e = "/admin/roles/{$row->id}/edit";
+                $destroy_e = route("voyager.roles.destroy",$row->id);
+                $app_edit = __('Изменить');
+                $app_delete= __('Посмотреть');;
+                $bgcolor = setting('color.edit');
+                $color = $bgcolor ? 'white':'black';
+                $edit = "<a style='background-color: {$bgcolor};color: {$color}' href='{$edit_e}' class='m-1 col edit btn btn-sm'>$app_edit</a>";
+                $bgcolor = setting('color.delete');
+                $color = $bgcolor ? 'white':'black';
+                $destroy = "<a style='background-color: {$bgcolor};color: {$color}' href='{$destroy_e}' class='m-1 col show btn btn-sm'>$app_delete</a>";
+                return "<div class='row'>
+                        {$edit}
+                        {$destroy}
+                        </div>";
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
     public function putCache(Request $request)
     {

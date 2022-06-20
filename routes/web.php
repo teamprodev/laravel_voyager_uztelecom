@@ -44,6 +44,7 @@ Route::get('/branches/view',[\App\Http\Controllers\BranchController::class,'view
 Route::get('/', function () {
     return redirect()->route('site.applications.index');
 });
+Route::get('branches/getData',[\App\Http\Controllers\BranchController::class,'getData'])->name('signers.getData');
 Route::post('/uploadimage/{application}/update', [ApplicationController::class, 'uploadImage'])->name('uploadImage');
 Route::group([
     'prefix' => 'admin',

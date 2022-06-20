@@ -7,9 +7,10 @@ use App\Models\User;
 
 class  AddSignerAction extends AbstractAction
 {
-    public function getTitle(){
+    public function getTitle()
+    {
 
-        return "Show Signers";
+        return "Show Roles";
     }
     public function getIcon()
     {
