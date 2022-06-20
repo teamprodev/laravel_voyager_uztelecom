@@ -1,6 +1,6 @@
 @extends('site.layouts.app')
 @section('center_content')
-@if(auth()->user()->branch_id != null || auth()->user()->department_id != null)
+@if(auth()->user()->branch_id != null && auth()->user()->department_id != null)
 <div id="section" class="pt-6">
     <a href="{{route('site.applications.create')}}"
         class="ml-12 bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white mb-8">

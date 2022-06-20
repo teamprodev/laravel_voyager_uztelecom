@@ -8,6 +8,7 @@
                 </p>
             </a>
         </li>
+        @if(auth()->user()->branch_id != null && auth()->user()->department_id != null)
         @if(auth()->user()->hasPermission('select_branch'))
         <li class="nav-item">
             <a href="{{route('branches.view')}}" class="nav-link">
@@ -142,6 +143,7 @@
                 </p>
             </a>
         </li>
+        @endif
         @endif
         <li class="nav-item">
             <a href="{{route('site.applications.drafts')}}" class="nav-link">
