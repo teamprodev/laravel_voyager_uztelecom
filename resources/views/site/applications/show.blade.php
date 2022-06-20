@@ -364,72 +364,21 @@
                 }}
 
                 @if($user->hasPermission('Number_Change'))
-                    {{Aire::textArea('bio', __('Номер заявки'))
-                        ->name('number')
-                        ->value($application->number)
-                    }}
-                    <div class="mb-3 row w-50">
-                        <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">
-                            {{__('Дата заявки')}}
-                        </label>
-                        <input class="form-control" id="date" name="date" type="date" value="{{$application->date}}"/>
-                    </div>
+                    @include('site.components.number_change')
                 @endif
                 {{Aire::submit('Save')}}
 
             @elseif($user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business') && $application->user_id != auth()->user()->id)
-                {{Aire::textArea('bio', __('Номер заявки'))
-                    ->name('number')
-                    ->value($application->number)
-                }}
-                <div class="mb-3 row w-50">
-                    <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">
-                    {{__('Дата заявки')}}
-                    </label>
-                    <div class="col-sm-6">
-                        <input class="form-control" id="date" name="date" type="date" value="{{$application->date}}"/>
-                    </div>
-                </div>
-                @dd($performers_branch , $performers_company);
+                @include('site.components.number_change')
                 {{Aire::submit('Save')}}
             @endif
             @if($application->user_id != auth()->user()->id && auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
                 @if(!isset($application->performer_user_id))
-                    <div class="pb-5">
-                        <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
-                        {{Aire::textArea('bio', __('Комментарий руководства'))
-                                ->name('branch_leader_comment')
-                                ->value($application->branch_leader_comment)
-                                ->rows(3)
-                                ->cols(40)
-                                 }}
-                        @if($application->is_more_than_limit != 1)
-                            {{Aire::select($performers_branch, 'select', '')->name('performer_role_id')}}
-                        @else
-                            {{Aire::select($performers_company, 'select', '')->name('performer_role_id')}}
-
-                        @endif
-                        <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
-                    </div>
+                    @include('site.components.leader')
                 @endif
             @elseif($application->user_id != auth()->user()->id && auth()->user()->hasPermission('Branch_Leader') && $application->show_leader == 1)
                 @if(!isset($application->performer_user_id))
-                    <div class="pb-5">
-                        <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
-                        {{Aire::textArea('bio', __('Комментарий руководства'))
-                                ->name('branch_leader_comment')
-                                ->value($application->branch_leader_comment)
-                                ->rows(3)
-                                ->cols(40)
-                                 }}
-                        @if($application->is_more_than_limit != 1)
-                            {{Aire::select($performers_branch, 'select', '')->name('performer_role_id')}}
-                        @else
-                            {{Aire::select($performers_company, 'select', '')->name('performer_role_id')}}
-
-                        @endif
-                        <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
-                    </div>
+                    @include('site.components.leader')
                 @endif
             @elseif($application->performer_role_id == $user->role_id && $user->leader == 1)
                 {{Aire::textArea('bio', __('Комментарии начальника'))

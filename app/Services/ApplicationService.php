@@ -751,6 +751,7 @@ class ApplicationService
             $data['performer_received_date'] = $mytime->toDateTimeString();
             $data['status'] = 'distributed';
             $data['show_leader'] = 2;
+            $data['branch_leader_user_id'] = auth()->user()->id;
 //            $data['performer_head_of_dep_user_id'] = auth()->user()->id;
         }
         if ($application->is_more_than_limit != 1)
