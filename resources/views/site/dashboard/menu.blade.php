@@ -130,6 +130,7 @@
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>{{ __('за год') }} </p>
                         </a>
+                        </a>
                     </div>
                 </div>
             </button>
