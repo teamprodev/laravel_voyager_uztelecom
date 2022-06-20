@@ -10,7 +10,7 @@
         </li>
         @if(auth()->user()->hasPermission('select_branch'))
         <li class="nav-item">
-            <a href="{{route('site.applications.index')}}" class="nav-link">
+            <a href="{{route('branches.view')}}" class="nav-link">
                 <i class="nav-icon fas fa-th-list"></i>
                 <p>
                     {{ __('Заявки по филиалу') }}
