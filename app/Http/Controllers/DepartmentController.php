@@ -20,7 +20,8 @@ class DepartmentController extends Controller
         $query = Department::query();
         return Datatables::of($query)
             ->editColumn('branch', function ($query) {
-                $name = $query->branch->name;
+//                $name = $query->branch->name;
+                $name = Branch::where('id', $query->branch_id)->get()->pluck('name')->toArray();
                 return $name;
             })
             ->editColumn('created_at', function ($data) {
