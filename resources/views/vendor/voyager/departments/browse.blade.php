@@ -119,7 +119,6 @@
                         className: 'dt-body-center dt-head-center'
                     },
                     {
-                        targets: 2,
                         className: 'subcat'
                     }
                 ],
