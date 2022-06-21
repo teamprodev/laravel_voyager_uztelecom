@@ -37,7 +37,7 @@ Route::post('/warehouse',[WarehouseController::class,'create'])->name('warehouse
 Route::get('/user/{user}',[UserController::class,'changeLeader'])->name('users.leader');
 Route::post('/branches/{id}/post',[\App\Http\Controllers\BranchController::class,'update'])->name('signers.update');
 
-Route::get('/branches/getData',[\App\Http\Controllers\BranchController::class,'ajax'])->name('branches.getData');
+Route::get('/branches/ajax_branch',[\App\Http\Controllers\BranchController::class,'ajax_branch'])->name('branches.ajax_branch');
 Route::post('/branches/putCache',[\App\Http\Controllers\BranchController::class,'putCache'])->name('branches.putCache');
 Route::get('/branches/view',[\App\Http\Controllers\BranchController::class,'view'])->name('branches.view');
 

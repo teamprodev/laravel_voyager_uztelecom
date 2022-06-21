@@ -21,13 +21,16 @@
                 <table id="yajra-datatable">
                     <thead>
                     <tr>
-                        <th>{{ __('ФИО') }}</th>
+                        <th>ID</th>
+                        <th>{{ __('Заявки')}}</th>
+                        <th>{{ __('Дата заявки')}}</th>
                         <th>{{ __('Инициатор (наименование подразделения заказчика)') }}</th>
                         <th>{{ __('Наименование предмета закупки(товар, работа, услуги)') }}</th>
                         <th>{{ __('Ожидаемый срок поставки') }}</th>
                         <th>{{ __('Планируемый бюджет закупки (сумма)') }}</th>
-                        <th>{{ __('Условия поставки по INCOTERMS (самовывоз со склада/доставка до покупателя)') }}</th>
+                        <th>{{ __('Условия поставки по INCOTERMS') }}</th>
                         <th>{{ __('Дата создания') }}</th>
+                        <th>{{ __('Дата обновления') }}</th>
                         <th>{{ __('Статус заявки') }}</th>
                         <th>{{ __('Действие') }}</th>
                     </tr>
@@ -43,10 +46,12 @@
                     processing: true,
                     serverSide: true,
                     ajax:
-                        "{{ route('branches.getData') }}",
+                        "/branches/ajax_branch",
 
                     columns: [
                         {data: 'id', name: 'id'},
+                        {data: 'number', name: 'number'},
+                        {data: 'date', name: 'date'},
                         {data: 'initiator', name: 'initiator'},
                         {data: 'name', name: 'name'},
                         {data: 'delivery_date', name: 'delivery_date'},
@@ -58,14 +63,12 @@
                             }
                         },
                         {data: 'incoterms', name: 'incoterms'},
-
                         {data: 'created_at', name: 'created_at'},
+                        {data: 'updated_at', name: 'updated_at'},
                         {data: 'status', name: 'status'},
                         {
                             data: 'action',
                             name: 'action',
-                            orderable: true,
-                            searchable: true
                         },
                     ]
                 });

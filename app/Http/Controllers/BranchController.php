@@ -53,7 +53,7 @@ class BranchController extends Controller
         Cache::put('branch_id',$request->branch_id);
         return redirect()->back();
     }
-    public function ajax()
+    public function ajax_branch()
     {
         $id = Cache::get('branch_id');
         $data = Application::where('branch_initiator_id', 'LIKE',"%{$id}%")->get();
