@@ -647,7 +647,7 @@ class ApplicationService
             $role_company[] = $company;
             $role_company = array_diff($role_company,['[]']);
 
-            $branch = PermissionRole::where('role_id',$role)->where('permission_id',171)->get()->pluck('role_id');
+            $branch = PermissionRole::where('role_id',$role)->where('permission_id',172)->get()->pluck('role_id');
             $role_branch[] = $branch;
             $role_branch = array_diff($role_branch,['[]']);
         }

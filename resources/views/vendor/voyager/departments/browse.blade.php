@@ -74,7 +74,7 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>branch</th>
+            <th>Branch</th>
             <th>Дата создания</th>
             <th class="subcat">{{ __('Действие') }}</th>
         </tr>
@@ -108,7 +108,7 @@
 
     <script>
         $(document).ready(function() {
-            var tableTitle = 'Roles';
+            var tableTitle = 'Department';
             function export_format(data, columnIdx){
 
             }
