@@ -56,7 +56,7 @@ class BranchController extends Controller
     public function ajax_branch()
     {
         $id = Cache::get('branch_id');
-        $data = Application::where('branch_initiator_id', 'LIKE',"%{$id}%")->get();
+        $data = Application::where('branch_initiator_id', $id)->get();
         return Datatables::of($data)
             ->editColumn('branch_initiator_id', function ($query) {
                 return $query->branch->name;
