@@ -115,6 +115,9 @@ class ApplicationService
                 ->editColumn('created_at', function ($query) {
                     return $query->created_at ? with(new Carbon($query->created_at))->format('d.m.Y') : '';
                 })
+                ->editColumn('branch_initiator_id', function ($query) {
+                    return $query->branch->name;
+                })
                 ->editColumn('planned_price', function ($query) {
                     return $query->planned_price ? number_format($query->planned_price , 0 , '' , ' '): '' ;
                 })

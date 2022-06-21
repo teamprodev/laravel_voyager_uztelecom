@@ -25,9 +25,9 @@ class ApplicationController extends Controller
     /**
      * @var ApplicationService
      */
-    private ApplicationService $service;
 
-    public function __construct(ApplicationService $service){
+    public function __construct(ApplicationService $service)
+    {
         $this->middleware('auth');
         $this->service = $service;
     }

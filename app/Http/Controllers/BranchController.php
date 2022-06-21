@@ -58,6 +58,9 @@ class BranchController extends Controller
         $id = Cache::get('branch_id');
         $data = Application::where('branch_initiator_id', 'LIKE',"%{$id}%")->get();
         return Datatables::of($data)
+            ->editColumn('branch_initiator_id', function ($query) {
+                return $query->branch->name;
+            })
             ->addIndexColumn()
             ->editColumn('user_id', function($docs) {
                 return $docs->user ? $docs->user->name:"";
