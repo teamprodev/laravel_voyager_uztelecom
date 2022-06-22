@@ -69,7 +69,7 @@ class ApplicationService
             {
 
                 $query = Application::query()
-                    ->where('draft','!=',1)->whereIn($a,$b)->where('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
+                    ->where('draft','!=',1)->whereIn($a,$b)->orWhere('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             elseif($user->hasPermission('Warehouse'))
             {
@@ -89,7 +89,7 @@ class ApplicationService
                 $query = Application::query()
                     ->where('draft','!=',1)
                     ->whereIn($c,$d)
-                    ->where('signers','like',"%{$user->role_id}%")
+                    ->orWhere('signers','like',"%{$user->role_id}%")
                     ->orWhere('performer_role_id', $user->role->id)
                     ->where('draft','!=',1)
                     ->orWhere('user_id',auth()->user()->id)
@@ -105,7 +105,7 @@ class ApplicationService
             }
             elseif($user->hasPermission('Company_Performer')||$user->hasPermission('Branch_Performer'))
             {
-                $query = Application::query()->whereIn($a,$b)->where('draft','!=',1)->where('performer_role_id',auth()->user()->role_id)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
+                $query = Application::query()->where('performer_role_id',auth()->user()->role_id)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             else {
                 $query = Application::query()->whereIn($a,$b)->where('draft','!=',1)->get();
