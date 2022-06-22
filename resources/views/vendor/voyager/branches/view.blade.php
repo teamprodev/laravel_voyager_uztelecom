@@ -18,7 +18,7 @@
             </div>
             {{ Aire::close() }}
             @if(Illuminate\Support\Facades\Cache::get('branch_id') != null)
-                <table id="yajra-datatable">
+                <table id="yajra-datatable" class="display wrap">
                     <thead>
                     <tr>
                         <th>ID</th>
