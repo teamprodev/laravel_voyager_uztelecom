@@ -7,22 +7,22 @@
         {{ __('Создать') }}
     </a>
     <div class="w-11/12 mx-auto pt-8 pb-16">
-        <table id="yajra-datatable" class="display wrap cell-border" style="border-collapse: collapse">
+        <table id="yajra-datatable" class="display wrap">
             <thead  class="text-center">
             <tr>
-                <th class="border border-dark">ID</th>
-                <th class="border border-dark">{{ __('Заявки')}}</th>
-                <th class="border border-dark">{{ __('Дата заявки')}}</th>
-                <th class="border border-dark">{{ __('Инициатор (наименование подразделения заказчика)') }}</th>
-                <th class="border border-dark">{{ __('Филиал') }}</th>
-                <th class="border border-dark">{{ __('Наименование предмета закупки(товар, работа, услуги)') }}</th>
-                <th class="border border-dark">{{ __('Ожидаемый срок поставки') }}</th>
-                <th class="border border-dark">{{ __('Планируемый бюджет закупки (сумма)') }}</th>
-                <th class="border border-dark">{{ __('Условия поставки по INCOTERMS') }}</th>
-                <th class="border border-dark">{{ __('Дата создания') }}</th>
-                <th class="border border-dark">{{ __('Дата обновления') }}</th>
-                <th class="border border-dark">{{ __('Статус заявки') }}</th>
-                <th class="border border-dark">{{ __('Действие') }}</th>
+                <th>ID</th>
+                <th>{{ __('Заявки')}}</th>
+                <th>{{ __('Дата заявки')}}</th>
+                <th>{{ __('Инициатор (наименование подразделения заказчика)') }}</th>
+                <th>{{ __('Филиал') }}</th>
+                <th>{{ __('Наименование предмета закупки(товар, работа, услуги)') }}</th>
+                <th>{{ __('Ожидаемый срок поставки') }}</th>
+                <th>{{ __('Планируемый бюджет закупки (сумма)') }}</th>
+                <th>{{ __('Условия поставки по INCOTERMS') }}</th>
+                <th>{{ __('Дата создания') }}</th>
+                <th>{{ __('Дата обновления') }}</th>
+                <th>{{ __('Статус заявки') }}</th>
+                <th>{{ __('Действие') }}</th>
             </tr>
             </thead>
         </table>
