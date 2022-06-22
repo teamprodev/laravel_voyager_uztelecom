@@ -9,9 +9,11 @@
             <div class="py-2 text-left px-6">
                 <!--Title-->
                 <div class="flex justify-between items-center ">
-                    <div class="w-5/12 mx-auto">
+                    <div class="w-6/12 mx-auto">
                         <img src="http://www.rtmc.uz/wp-content/uploads/2017/03/uztelecom.png"
                              alt="">
+                        <br>
+                        <h5>Система электронных заявок</h5>
                     </div>
                 </div>
 
