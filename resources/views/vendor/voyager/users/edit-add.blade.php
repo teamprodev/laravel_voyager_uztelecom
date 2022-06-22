@@ -78,7 +78,7 @@
                             </div>
                             @if($dataTypeContent->branch_id != null)
                             <div class="form-group">
-                                {{Aire::select($department, 'select', __('Филиал'))
+                                {{Aire::select($department, 'select', __('Отдел'))
                                     ->name('department_id')
                                     ->value($dataTypeContent->branch_id)
                                 }}
