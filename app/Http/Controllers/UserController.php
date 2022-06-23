@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Branch;
 use Illuminate\Http\Request;
 use App\Models\User;
 use TCG\Voyager\Http\Controllers\VoyagerUserController;
