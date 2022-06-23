@@ -28,27 +28,29 @@
 
 <main>
     <article>
-        <div class="container">
-            <button type="button" class="btn btn-info btn-round" data-toggle="modal" data-target="#loginModal">
-                Login
-            </button>
-        </div>
+        <div id="second" class="p-4 ">
+            <section class="bg-blueGray-50">
 
-        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header border-bottom-0">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                <!--Modal-->
+                <div class="w-full h-full mt-28 flex items-center justify-center">
+
+                    <div class="bg-white w-11/12 md:max-w-lg mx-auto rounded shadow-lg z-50 overflow-y-auto">
+
+                        <!-- Add margin if you want to see some of the overlay behind the modal-->
+                        <div class="py-2 text-left px-6">
+                            <!--Title-->
+                            <div class="flex justify-between items-center ">
+                                <div class="w-5/12 mx-auto">
+                                    <img src="./Uztelecom_files/uztelecom.png" alt="">
+                                </div>
+                            </div>
                     <div class="modal-body">
                         <div class="form-title text-center">
                             <h4>Login</h4>
                         </div>
                         <div class="d-flex flex-column text-center">
                             <div class="mb-2 mg-t-15" style="position: relative; z-index: 999999;">
+                                <h1>dsvsdas</h1>
                                 <form name="eri_form" action={{route('eimzo:postlogin')}} id="eri_form" method="post">
                                     @csrf
                                     <div class="form-group mb-2">
