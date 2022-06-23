@@ -67,7 +67,7 @@
                                     $selected_locale = config('app.locale', 'en');
                                 }
                                 $branches = App\Models\Branch::pluck('name','id')->toArray();
-                                $roles = App\Models\Roles::where('branch_id','like',"%{$dataTypeContent->branch_id}%")->pluck('name','id')->toArray();
+                                $roles = App\Models\Roles::where('branch_id','like',"%{$dataTypeContent->branch_id}%")->pluck('display_name','id')->toArray();
                                 $department = App\Models\Department::where('branch_id',$dataTypeContent->branch_id)->pluck('name','id')->toArray();
                             @endphp
                             <div class="form-group">
