@@ -53,6 +53,7 @@ Route::group([
 ], function () {
     Voyager::routes();
     Route::put('roles/{id}/update',[\App\Http\Controllers\RoleController::class,'update'])->name('voyager.roles.update');
+    Route::put('users/{id}/update',[\App\Http\Controllers\UserController::class,'update'])->name('voyager.users.update');
     Route::get('roles/',[\App\Http\Controllers\RoleController::class,'index'])->name('voyager.roles.index');
     Route::get('departments/',[\App\Http\Controllers\DepartmentController::class,'index'])->name('voyager.departments.index');
     Route::get('type-of-purchase/{id}/edit',[TypeOfPurchase::class,'edit'])->name('voyager.type-of-purchase.edit');
