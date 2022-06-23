@@ -178,6 +178,6 @@
     </script>
 </div>
 @else
-    <h3 style="text-align:center;color:red;">Рукаводство не выбрал(а) вас</h3>
+    <h3 style="text-align:center;color:red;">{{ __('Руководство не выбрало вас') }}</h3>
 @endif
 
