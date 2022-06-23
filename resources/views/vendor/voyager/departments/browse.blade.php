@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <h2>Отделы</h2>
+    <h2 align="center">Отделы</h2>
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css"/>
 
