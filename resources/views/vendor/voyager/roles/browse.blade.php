@@ -63,6 +63,7 @@
         }
     </style>
 </head>
+<h2 align="center">Роли</h2>
 <a href="/admin"><button class="btn btn-outline-danger back-button mt-2 position-fixed z-index"><i class="fas fa-arrow-left"></i></button></a>
 
 <a href="/admin/roles/create"
