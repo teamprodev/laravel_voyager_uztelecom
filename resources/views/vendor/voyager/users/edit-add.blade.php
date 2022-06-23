@@ -80,19 +80,17 @@
                             <div class="form-group">
                                 {{Aire::select($department, 'select', __('Отдел'))
                                     ->name('department_id')
-                                    ->value($dataTypeContent->branch_id)
+                                    ->value($dataTypeContent->department_id)
                                 }}
                             </div>
                             @endif
                             @if($dataTypeContent->branch_id != null)
-                            @can('editRoles', $dataTypeContent)
                                 <div class="form-group">
                                     {{Aire::select($roles, 'select', __('voyager::profile.role_default'))
                                         ->name('role_id')
                                         ->value($dataTypeContent->role_id)
                                     }}
                                 </div>
-                            @endcan
                             @endif
                             <div class="form-group">
                                 <label for="locale">{{ __('voyager::generic.locale') }}</label>
