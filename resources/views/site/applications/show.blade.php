@@ -2,7 +2,7 @@
 
 @section('center_content')
     <div class="pl-4 pt-4">
-        <a href="{{route('site.applications.edit',$application->id)}}" class="btn btn-success">Изменить</a>
+        <a href="{{route('site.applications.edit',$application->id)}}" class="btn btn-outline-success">Изменить</a>
     </div>
     <div class="px-6 pb-0 pt-6">
         <h5><strong>ID : </strong> {{$application->id}}

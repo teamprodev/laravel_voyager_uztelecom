@@ -146,18 +146,18 @@ class BranchController extends Controller
                 {
                     $bgcolor = setting('color.edit');
                     $color = $bgcolor ? 'white':'black';
-                    $edit = "<a style='background-color: {$bgcolor};color: {$color}' href='{$edit_e}' class='m-1 col edit btn btn-sm'>$app_edit</a>";
+                    $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-outline-danger editbtn'>$app_edit</a>";
                 }else{
                     $edit = "";
                 }
                 $bgcolor = setting('color.show');
                 $color = $bgcolor ? 'white':'black';
-                $show = "<a style='background-color: {$bgcolor};color: {$color}' href='{$show_e}' class='m-1 col show btn btn-sm'>$app_show</a>";
+                $show = "<a href='{$show_e}' class='m-1 col show btn btn-outline-danger showbtn'>$app_show</a>";
                 if($row->user_id == auth()->user()->id)
                 {
                     $bgcolor = setting('color.delete');
                     $color = $bgcolor ? 'white':'black';
-                    $destroy = "<a style='background-color: {$bgcolor};color: {$color}' href='{$destroy_e}' class='m-1 col show btn btn-sm'>$app_delete</a>";
+                    $destroy = "<a href='{$destroy_e}' class='m-1 col show btn btn-outline-danger deletebtn'>$app_delete</a>";
                 }else{
                     $destroy = "";
                 }

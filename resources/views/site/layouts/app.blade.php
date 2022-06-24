@@ -31,6 +31,35 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+    <style>
+        .editbtn{
+            color: {{ setting('color.edit') }};
+            border-color: {{ setting('color.edit') }} !important;
+        }
+        .editbtn:hover{
+            background-color: {{ setting('color.edit') }};
+            color: white !important;
+        }
+
+
+        .showbtn{
+            color: {{ setting('color.show') }};
+            border-color: {{ setting('color.show') }} !important;
+        }
+        .showbtn:hover{
+            background-color: {{ setting('color.show') }};
+            color: white !important;
+        }
+
+        .deletebtn:hover{
+            color: {{ setting('color.delete') }};
+            border-color: {{ setting('color.delete') }} !important;
+        }
+        .deletebtn:hover{
+            background-color: {{ setting('color.delete') }};
+            color: white !important;
+        }
+    </style>
 </head>
 
 <body class="sidebar-mini" style="height: auto;">
@@ -74,6 +103,10 @@
 
 <script>
     /*Toggle dropdown list*/
+    function onmouse(x, y) {
+        x.style.backgroundColor = y;
+        x.style.color = "white";
+    }
     function toggleDD(myDropMenu) {
         document.getElementById(myDropMenu).classList.toggle("invisible");
     }
