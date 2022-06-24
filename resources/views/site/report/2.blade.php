@@ -117,6 +117,7 @@
                 }
 
             },
+            order: [[0, 'desc']],
             "processing": false,
             pageLength: 10,
             // dom: 'PQlfrtip',
