@@ -4,11 +4,9 @@
 namespace App\Services;
 
 
-use App\Events\Notify;
 use App\Models\Application;
 use App\Models\Branch;
 use App\Models\Notification;
-use App\Models\Permission;
 use App\Models\PermissionRole;
 use App\Models\Position;
 use App\Models\Resource;
@@ -16,10 +14,7 @@ use App\Models\SignedDocs;
 use App\Models\StatusExtented;
 use App\Models\User;
 use App\Models\Warehouse;
-use DateTime;
-use GuzzleHttp\Client;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Country;
 use App\Models\Purchase;
@@ -131,6 +126,7 @@ class ApplicationService
                     return $query->updated_at ? with(new Carbon($query->delivery_date))->format('d.m.Y') : '';
                 })
                 ->editColumn('status', function ($query){
+                    $query = $query->status;
                     $status_new = __('Новая');
                     $status_in_process = __('На рассмотрении');
                     $status_accepted = __('Принята');
@@ -141,50 +137,70 @@ class ApplicationService
                     $status_cancelled = __('Отменен');
                     $status_performed = __('Товар доставлен');
                     $status_overdue = ('просрочен');
-                    if($query->status === 'new'){
+                    if($query === 'new'){
                         $status = setting('color.new');
                         $color = $status ? 'white':'black';
                         return "<input style='background-color: {$status};color: {$color};' value='{$status_new}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-                    }elseif($query->status === 'in_process'){
+                    }elseif($query === 'in_process'){
                         $status = setting('color.in_process');
                         $color = $status ? 'white':'black';
                         return "<input style='background-color: {$status};color: {$color};' value='{$status_in_process}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-                    }elseif($query->status === 'overdue'||$query->status === 'Overdue'){
+                    }elseif($query === 'overdue'||$query === 'Overdue'){
                         $status = setting('color.overdue');
                         $color = $status ? 'white':'black';
                         return "<input style='background-color: {$status};color: {$color};' value='{$status_overdue}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-                    }elseif($query->status === 'Принята'){
+                    }elseif($query === 'Принята'){
                         $status = setting('color.accepted');
                         $color = $status ? 'white':'black';
                         return "<input style='background-color: {$status};color: {$color};' value='{$status_accepted}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-                    }elseif($query->status === 'refused'){
+                    }elseif($query === 'refused'){
                         $status = setting('color.rejected');
                         $color = $status ? 'white':'black';
                         return "<input style='background-color: {$status};color: {$color};' value='{$status_refused}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-                    }elseif($query->status === 'agreed'){
+                    }elseif($query === 'agreed'){
                         $status = setting('color.agreed');
                         $color = $status ? 'white':'black';
                         return "<input style='background-color: {$status};color: {$color};' value='{$status_agreed}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-                    }elseif($query->status === 'rejected'){
+                    }elseif($query === 'rejected'){
                         $status = setting('color.rejected');
                         $color = $status ? 'white':'black';
                         return "<input style='background-color: {$status};color: {$color};' value='{$status_rejected}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-                    }elseif($query->status === 'distributed'){
+                    }elseif($query === 'distributed'){
                         $status = setting('color.distributed');
                         $color = $status ? 'white':'black';
                         return "<input style='background-color: {$status};color: {$color};' value='{$status_distributed}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-                    }elseif($query->status === 'canceled'){
-                       $status = setting('color.rejected');
+                    }elseif($query === 'canceled'){
+                        $status = setting('color.rejected');
                         $color = $status ? 'white':'black';
                         return "<input style='background-color: {$status};color: {$color};' value='{$status_cancelled}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-                    }elseif($query->status === 'товар доставлен'){
+                    }elseif($query === 'Выполнено частично'){
+                        $status = setting('color.partially');
+                        $color = $status ? 'white':'black';
+                        return "<input style='background-color: {$status};color: {$color};' value='Выполнено частично' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                    }elseif($query === 'Выполнено в полном объёме'){
+                        $status = setting('color.total_volume');
+                        $color = $status ? 'white':'black';
+                        return "<input style='background-color: {$status};color: {$color};' value='Выполнено в полном объёме' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                    }elseif($query === 'Заявка аннулирована по заданию руководства'){
+                        $status = setting('color.nulled_by_management');
+                        $color = $status ? 'white':'black';
+                        return "<input style='background-color: {$status};color: {$color};' value='Заявка аннулирована по заданию руководства' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                    }elseif($query === 'Договор аннулирован по инициативе Узбектелеком'){
+                        $status = setting('color.nulled_by_management');
+                        $color = $status ? 'white':'black';
+                        return "<input style='background-color: {$status};color: {$color};' value='Договор аннулирован по инициативе Узбектелеком' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                    }elseif($query === 'заявка передана в Узтелеком'){
+                        $status = setting('color.nulled_by_management');
+                        $color = $status ? 'white':'black';
+                        return "<input style='background-color: {$status};color: {$color};' value='заявка передана в Узтелеком' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                    }elseif($query === 'товар доставлен'){
                         $status = setting('color.delivered');
                         $color = $status ? 'white':'black';
                         return "<div class='row'>
                         <input style='background-color: {$status};color: {$color};' type='text' type='button' value='{$status_performed}' class='text-center display wrap edit btn-sm' disabled>
                         </div>";
                     }else{
-                        return $query->status;
+                        return $query;
                     }
                 })
                 ->addIndexColumn()
@@ -235,6 +251,64 @@ class ApplicationService
                 ->make(true);
         }
         return view('site.applications.index');
+    }
+    public function performer_color($query)
+    {
+        $status_new = __('Новая');
+        $status_in_process = __('На рассмотрении');
+        $status_accepted = __('Принята');
+        $status_refused = __('Отказана');
+        $status_agreed = __('Согласована');
+        $status_rejected = __('Отклонена');
+        $status_distributed = __('Распределен');
+        $status_cancelled = __('Отменен');
+        $status_performed = __('Товар доставлен');
+        $status_overdue = ('просрочен');
+        if($query === 'new'){
+            $status = setting('color.new');
+            $color = $status ? 'white':'black';
+            return "<input style='background-color: {$status};color: {$color};' value='{$status_new}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+        }elseif($query === 'in_process'){
+            $status = setting('color.in_process');
+            $color = $status ? 'white':'black';
+            return "<input style='background-color: {$status};color: {$color};' value='{$status_in_process}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+        }elseif($query === 'overdue'||$query === 'Overdue'){
+            $status = setting('color.overdue');
+            $color = $status ? 'white':'black';
+            return "<input style='background-color: {$status};color: {$color};' value='{$status_overdue}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+        }elseif($query === 'Принята'){
+            $status = setting('color.accepted');
+            $color = $status ? 'white':'black';
+            return "<input style='background-color: {$status};color: {$color};' value='{$status_accepted}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+        }elseif($query === 'refused'){
+            $status = setting('color.rejected');
+            $color = $status ? 'white':'black';
+            return "<input style='background-color: {$status};color: {$color};' value='{$status_refused}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+        }elseif($query === 'agreed'){
+            $status = setting('color.agreed');
+            $color = $status ? 'white':'black';
+            return "<input style='background-color: {$status};color: {$color};' value='{$status_agreed}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+        }elseif($query === 'rejected'){
+            $status = setting('color.rejected');
+            $color = $status ? 'white':'black';
+            return "<input style='background-color: {$status};color: {$color};' value='{$status_rejected}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+        }elseif($query === 'distributed'){
+            $status = setting('color.distributed');
+            $color = $status ? 'white':'black';
+            return "<input style='background-color: {$status};color: {$color};' value='{$status_distributed}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+        }elseif($query === 'canceled'){
+            $status = setting('color.rejected');
+            $color = $status ? 'white':'black';
+            return "<input style='background-color: {$status};color: {$color};' value='{$status_cancelled}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+        }elseif($query === 'товар доставлен'){
+            $status = setting('color.delivered');
+            $color = $status ? 'white':'black';
+            return "<div class='row'>
+                        <input style='background-color: {$status};color: {$color};' type='text' type='button' value='{$status_performed}' class='text-center display wrap edit btn-sm' disabled>
+                        </div>";
+        }else{
+            return $query;
+        }
     }
     public function status_table()
     {
@@ -534,15 +608,14 @@ class ApplicationService
     }
     public function create()
     {
-        $latest = Application::latest('id')->first();
+        $user = auth()->user();
         $application = new Application();
-        $application->user_id = auth()->user()->id;
-        $application->branch_initiator_id = auth()->user()->branch_id;
-        $application->department_initiator_id = auth()->user()->department_id;
+        $application->user_id = $user->id;
+        $application->branch_initiator_id = $user->branch_id;
+        $application->department_initiator_id = $user->department_id;
         $application->status = Application::NEW;
         $application->save();
-        $data = Application::query()->latest('id')->first();
-        return redirect()->route('site.applications.edit',$data->id);
+        return redirect()->route('site.applications.edit',$application->id);
     }
     public function show_draft($request)
     {
