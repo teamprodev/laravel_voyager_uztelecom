@@ -269,12 +269,12 @@
                         ->value($application->contract_number)
                         ->disabled()
                     }}.
-                    {{Aire::dateTimeLocal('bio', __('Дата договора'))
+                    {{Aire::date('date_input', __('Дата договора'))
                         ->name('contract_date')
                         ->value($application->contract_date)
                         ->disabled()
                     }}
-                    {{Aire::dateTimeLocal('bio', __('Дата протокола'))
+                    {{Aire::input('bio', __('Дата протокола'))
                         ->name('protocol_date')
                         ->value($application->protocol_date)
                         ->disabled()
