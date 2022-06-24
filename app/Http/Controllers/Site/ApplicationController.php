@@ -135,4 +135,10 @@ class ApplicationController extends Controller
         $application->save();
         return redirect()->back();
     }
+    public function file_delete(Request $request)
+    {
+        $file = public_path()."/storage/uploads/{$request->file}";
+        unlink($file);
+        return redirect()->back();
+    }
 }

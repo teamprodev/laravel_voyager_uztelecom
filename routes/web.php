@@ -35,6 +35,8 @@ Route::get('departments/getData',[\App\Http\Controllers\DepartmentController::cl
 Route::post('/request',[ReportController::class,'request'])->name('request');
 Route::post('/warehouse',[WarehouseController::class,'create'])->name('warehouse.create');
 
+Route::post('/delete_file',[ApplicationController::class,'file_delete'])->name('delete_file');
+
 Route::get('/user/{user}',[UserController::class,'changeLeader'])->name('users.leader');
 Route::post('/branches/{id}/post',[\App\Http\Controllers\BranchController::class,'update'])->name('signers.update');
 

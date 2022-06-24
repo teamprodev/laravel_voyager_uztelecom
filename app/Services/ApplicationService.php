@@ -210,9 +210,9 @@ class ApplicationService
                     $show_e = route('site.applications.show', $row->id);
                     $destroy_e = route('site.applications.destroy', $row->id);
                     $app_edit = __('Изменить');
-                    $app_show= __('Показать');;
-                    $app_clone= __('Копировать');;
-                    $app_delete= __('Удалить');;
+                    $app_show= __('Показать');
+                    $app_clone= __('Копировать');
+                    $app_delete= __('Удалить');
 
                     if(auth()->user()->id == $row->user_id||auth()->user()->hasPermission('Warehouse')||$row->performer_role_id==auth()->user()->role_id)
                     {
