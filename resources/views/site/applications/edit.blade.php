@@ -39,6 +39,7 @@
         @if($performer_file != 'null' && $performer_file != null)
             <div class="mb-5" style="width: 100%;padding-left: 700px;">
                 @foreach($performer_file as $file)
+                    @if(file_exists(public_path()."/storage/uploads/{$file}"))
                     <h4 class="text-left">Performer File</h4>
                     <form action="{{route('delete_file')}}" method="post">
                         @csrf
@@ -58,6 +59,7 @@
                             <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
                         @endif
                     </form>
+                    @endif
                 @endforeach
             </div>
         @endif
