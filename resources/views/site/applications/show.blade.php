@@ -254,6 +254,52 @@
                                     ->disabled()
                                 }}
                             @endif
+                    {{Aire::select($branch, 'select', __('Филиал заказчик по контракту'))
+                        ->name('branch_customer_id')
+                        ->value($application->branch_customer_id)
+                        ->disabled()
+                        }}
+                    {{Aire::input('bio', __('Номер лота'))
+                        ->name('lot_number')
+                        ->value($application->lot_number)
+                        ->disabled()
+                       }}
+                    {{Aire::input('bio', __('Номер договора'))
+                        ->name('contract_number')
+                        ->value($application->contract_number)
+                        ->disabled()
+                    }}.
+                    {{Aire::dateTimeLocal('bio', __('Дата договора'))
+                        ->name('contract_date')
+                        ->value($application->contract_date)
+                        ->disabled()
+                    }}
+                    {{Aire::dateTimeLocal('bio', __('Дата протокола'))
+                        ->name('protocol_date')
+                        ->value($application->protocol_date)
+                        ->disabled()
+                    }}
+                    {{Aire::input('bio', __('Номер протокола'))
+                        ->name('protocol_number')
+                        ->value($application->protocol_number)
+                        ->disabled()
+                    }}
+                    {{Aire::textArea('bio', __('Предмет договора (контракта) и краткая характеристика'))
+                        ->name('contract_info')
+                        ->value($application->contract_info)
+                        ->rows(3)
+                        ->cols(40)
+                        ->disabled()
+                    }}
+                    {{Aire::checkbox('checkbox', __('С НДС'))
+                       ->name('with_nds')
+                       ->disabled()
+                    }}
+                    {{Aire::input('bio', __('Общая реальная сумма'))
+                        ->name('contract_price')
+                        ->value($application->contract_price)
+                        ->disabled()
+                    }}
                     </div>
                     <div class="flex-direction: column">
                         @if($file_basis != 'null' && $file_basis != null)
