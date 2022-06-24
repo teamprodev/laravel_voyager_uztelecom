@@ -50,12 +50,12 @@ class BranchController extends Controller
     }
     public function putCache(Request $request)
     {
-        Cache::put('branch_id',$request->branch_id);
+        Cache::put(auth()->user()->id,$request->branch_id);
         return redirect()->back();
     }
     public function ajax_branch()
     {
-        $id = Cache::get('branch_id');
+        $id = Cache::get(auth()->user()->id);
         $data = Application::where('branch_initiator_id', $id)->get();
         return Datatables::of($data)
             ->editColumn('branch_initiator_id', function ($query) {

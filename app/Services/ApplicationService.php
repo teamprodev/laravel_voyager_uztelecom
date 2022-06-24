@@ -4,11 +4,9 @@
 namespace App\Services;
 
 
-use App\Events\Notify;
 use App\Models\Application;
 use App\Models\Branch;
 use App\Models\Notification;
-use App\Models\Permission;
 use App\Models\PermissionRole;
 use App\Models\Position;
 use App\Models\Resource;
@@ -16,10 +14,7 @@ use App\Models\SignedDocs;
 use App\Models\StatusExtented;
 use App\Models\User;
 use App\Models\Warehouse;
-use DateTime;
-use GuzzleHttp\Client;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Country;
 use App\Models\Purchase;
@@ -534,15 +529,14 @@ class ApplicationService
     }
     public function create()
     {
-        $latest = Application::latest('id')->first();
+        $user = auth()->user();
         $application = new Application();
-        $application->user_id = auth()->user()->id;
-        $application->branch_initiator_id = auth()->user()->branch_id;
-        $application->department_initiator_id = auth()->user()->department_id;
+        $application->user_id = $user->id;
+        $application->branch_initiator_id = $user->branch_id;
+        $application->department_initiator_id = $user->department_id;
         $application->status = Application::NEW;
         $application->save();
-        $data = Application::query()->latest('id')->first();
-        return redirect()->route('site.applications.edit',$data->id);
+        return redirect()->route('site.applications.edit',$application->id);
     }
     public function show_draft($request)
     {
