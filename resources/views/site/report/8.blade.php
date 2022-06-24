@@ -132,7 +132,7 @@
                     {
                         "data": "",
                         render: function (data, type, row) {
-                            var details = `<b>${row.number}</b> ${row.date}` ;
+                            var details = `<b>${row.number ?? ''}</b> ${row.date ?? ''}` ;
                                 return details;
                         }
                     },
