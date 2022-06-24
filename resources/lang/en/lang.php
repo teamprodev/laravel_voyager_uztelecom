@@ -13,7 +13,7 @@ return [
     "company" => "Management of the company",
     "create" => "To create",
     "create_application" => "Create an app",
-    "doc" => "Lang.doc",
+    //"doc" => "Lang.doc",
     "drafts" => "Draft",
     "eimzo_id" => "Basic ID",
     "eimzo_key" => "Select the key",
