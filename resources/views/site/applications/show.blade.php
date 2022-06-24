@@ -254,11 +254,17 @@
                                     ->disabled()
                                 }}
                             @endif
+                    @if($application->branch_customer_id != null)
                     {{Aire::select($branch, 'select', __('Филиал заказчик по контракту'))
                         ->name('branch_customer_id')
                         ->value($application->branch_customer_id)
                         ->disabled()
                         }}
+                    @else
+                        {{Aire::input('bio',__('Филиал заказчик по контракту'))
+                        ->disabled()
+                       }}
+                    @endif
                     {{Aire::input('bio', __('Номер лота'))
                         ->name('lot_number')
                         ->value($application->lot_number)
