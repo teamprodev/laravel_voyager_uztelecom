@@ -13,7 +13,7 @@ return [
     "company" => "Kompaniya rahbariyati",
     "create" => "Yaratmoq",
     "create_application" => "Ilovani yarating",
-    "doc" => "Lang.doc",
+    //"doc" => "Lang.doc",
     "drafts" => "Qoralama",
     "eimzo_id" => "Asosiy identifikator",
     "eimzo_key" => "Kalitni tanlang",
