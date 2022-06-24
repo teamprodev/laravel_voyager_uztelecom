@@ -720,6 +720,9 @@ class ReportService
                 $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
                 return trim($json, '[], "');
             })
+            ->editColumn('created_at', function ($query) {
+                return $query->created_at ? with(new Carbon($query->created_at))->format('d-m-Y') : '';
+            })
             ->addColumn('filial', function($branch){
                 $applications = Branch::where('id', $branch->branch_initiator_id)->get()->pluck('name');
                 $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
