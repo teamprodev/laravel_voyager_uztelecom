@@ -69,7 +69,8 @@ class ApplicationService
             elseif($user->hasPermission('Warehouse'))
             {
                 $status_0 = 'Принята';
-                $query = Application::query()->where('draft','!=',1)->whereIn($a,$b)->where('status','like',"%{$status_0}%")->orWhere('user_id',auth()->user()->id)->get();
+                $status_1 = 'товар';
+                $query = Application::query()->where('draft','!=',1)->whereIn($a,$b)->where('status','like',"%{$status_0}%")->OrwhereIn($a,$b)->where('status','like',"%{$status_1}%")->orWhere('user_id',auth()->user()->id)->get();
             }
             elseif($user->hasPermission('Company_Leader') && $user->hasPermission('Branch_Leader'))
             {
