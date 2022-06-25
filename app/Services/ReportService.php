@@ -715,6 +715,14 @@ class ReportService
             $query = Application::where('branch_initiator_id',auth()->user()->branch_id)->get();
         }
         return Datatables::of($query)
+            ->addColumn('initiator', function($branch){
+                $applications = User::where('id', $branch->user_id)->get()->pluck('name');
+                $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+                return trim($json, '[], "');
+            })
+            ->editColumn('created_at', function ($query) {
+                return $query->created_at ? with(new Carbon($query->created_at))->format('d-m-Y') : '';
+            })
             ->addColumn('filial', function($branch){
                 $applications = Branch::where('id', $branch->branch_initiator_id)->get()->pluck('name');
                 $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);

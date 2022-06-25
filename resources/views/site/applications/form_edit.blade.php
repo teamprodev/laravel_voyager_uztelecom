@@ -234,7 +234,7 @@
             @endif
             @if($application->other_files === 'null' ||$application->other_files === null)
                 <div class="mx-1">
-                    <h6 class="my-3">{{ __('lang.doc') }}</h6>
+                    <h6 class="my-3">{{ __('Другие файлы') }}</h6>
                     <div id="other_files"></div>
                 </div>
             @endif

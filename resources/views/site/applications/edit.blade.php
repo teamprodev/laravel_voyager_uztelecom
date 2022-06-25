@@ -35,13 +35,43 @@
     </div>
     {{ Aire::close() }}
     @endif
+    @if($application->performer_role_id == auth()->user()->role_id)
+        @if($performer_file != 'null' && $performer_file != null)
+            <div class="mb-5" style="width: 100%;padding-left: 700px;">
+                @foreach($performer_file as $file)
+                    @if(file_exists(public_path()."/storage/uploads/{$file}"))
+                    <h4 class="text-left">Performer File</h4>
+                    <form action="{{route('delete_file')}}" method="post">
+                        @csrf
+                        @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
+                            <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
+                            <input type="text" class="hidden" value="{{$file}}" name="file">
+                            @if($application->performer_role_id == auth()->user()->role_id)
+                                <button class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
+                            @endif
+                        @else
+                            <div class="d-flex align-items-center" style="column-gap: 10px">
+                                <button type="button" class="btn btn-primary"><input type="text" class="hidden" value="{{$file}}" name="file"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
+                                @if($application->performer_role_id == auth()->user()->role_id)
+                                    <button style="text-align: center" class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
+                                @endif
+                            </div>
+                            <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
+                        @endif
+                    </form>
+                    @endif
+                @endforeach
+            </div>
+        @endif
+    @endif
     {{ Aire::open()
+
     ->route('site.applications.update',$application->id)
     ->enctype("multipart/form-data")
     ->post() }}
     @includeWhen($application->user_id == auth()->user()->id,'site.applications.form_edit')
     @includeWhen($user->hasPermission('Branch_Performer') && $application->user_id != $user->id || $user->hasPermission('Company_Performer') && $application->user_id != $user->id || $application->performer_role_id == $user->role_id ,'site.applications.performer')
-    @includeWhen($user->hasPermission('Warehouse') && $application->status == 'Принята','site.applications.warehouse')
+    @includeWhen($user->hasPermission('Warehouse') && $application->status == 'Принята'||$user->hasPermission('Warehouse') && $application->status == 'товар доставлен'||$user->hasPermission('Warehouse') && $application->status == 'товар прибыл','site.applications.warehouse')
     {{ Aire::close() }}
 @endsection
 

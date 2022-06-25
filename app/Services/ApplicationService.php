@@ -69,7 +69,8 @@ class ApplicationService
             elseif($user->hasPermission('Warehouse'))
             {
                 $status_0 = 'Принята';
-                $query = Application::query()->where('draft','!=',1)->whereIn($a,$b)->where('status','like',"%{$status_0}%")->orWhere('user_id',auth()->user()->id)->get();
+                $status_1 = 'товар';
+                $query = Application::query()->where('draft','!=',1)->whereIn($a,$b)->where('status','like',"%{$status_0}%")->OrwhereIn($a,$b)->where('status','like',"%{$status_1}%")->orWhere('user_id',auth()->user()->id)->get();
             }
             elseif($user->hasPermission('Company_Leader') && $user->hasPermission('Branch_Leader'))
             {
@@ -209,26 +210,26 @@ class ApplicationService
                     $show_e = route('site.applications.show', $row->id);
                     $destroy_e = route('site.applications.destroy', $row->id);
                     $app_edit = __('Изменить');
-                    $app_show= __('Показать');;
-                    $app_clone= __('Копировать');;
-                    $app_delete= __('Удалить');;
+                    $app_show= __('Показать');
+                    $app_clone= __('Копировать');
+                    $app_delete= __('Удалить');
 
                     if(auth()->user()->id == $row->user_id||auth()->user()->hasPermission('Warehouse')||$row->performer_role_id==auth()->user()->role_id)
                     {
                         $bgcolor = setting('color.edit');
                         $color = $bgcolor ? 'white':'black';
-                        $edit = "<a style='background-color: {$bgcolor};color: {$color}' href='{$edit_e}' class='m-1 col edit btn btn-sm'>$app_edit</a>";
+                        $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-outline-danger editbtn'>$app_edit</a>";
                     }else{
                         $edit = "";
                     }
                     $bgcolor = setting('color.show');
                     $color = $bgcolor ? 'white':'black';
-                    $show = "<a style='background-color: {$bgcolor};color: {$color}' href='{$show_e}' class='m-1 col show btn btn-sm'>$app_show</a>";
+                    $show = "<a href='{$show_e}' class='m-1 col show btn btn-outline-danger showbtn'>$app_show</a>";
                     if($row->user_id == auth()->user()->id)
                     {
                         $bgcolor = setting('color.delete');
                         $color = $bgcolor ? 'white':'black';
-                        $destroy = "<a style='background-color: {$bgcolor};color: {$color}' href='{$destroy_e}' class='m-1 col show btn btn-sm'>$app_delete</a>";
+                        $destroy = "<a href='{$destroy_e}' class='m-1 col show btn btn-outline-danger deletebtn'>$app_delete</a>";
                     }else{
                         $destroy = "";
                     }

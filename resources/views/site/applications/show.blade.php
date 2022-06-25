@@ -2,11 +2,11 @@
 
 @section('center_content')
     <div class="pl-4 pt-4">
-        <a href="{{route('site.applications.edit',$application->id)}}" class="btn btn-success">Изменить</a>
+        <a href="{{route('site.applications.edit',$application->id)}}" class="btn btn-outline-success">Изменить</a>
     </div>
     <div class="px-6 pb-0 pt-6">
         <h5><strong>ID : </strong> {{$application->id}}
-            <h5><strong>{{ __('Автор заявки:') }}</strong> {{$application->user->name}} ( {{ $application->user->role_id ? $application->user->role->display_name : '' }} )</h5>
+            <h5><strong>{{ __('Автор заявки:') }}</strong> <a href="{{$application->user->id == auth()->id() ? route('site.profile.index'):route('site.profile.other',$application->user->id)}}">{{$application->user->id == auth()->id() ? 'Вы':$application->user->name}}</a> ( {{ $application->user->role_id ? $application->user->role->display_name : '' }} )</h5>
             <h5><strong>{{ __('Филиал автора:') }}</strong> {{ $application->user->branch_id ? $branch_name->name : 'Он(а) не выбрал(а) филиал' }}</h5>
             <h5><strong>Должность :</strong> {{ auth()->user()->position_id ? auth()->user()->position->name:"Нет" }}</h5>
             <h5><strong>{{ __('Номер заявки') }} : </strong> {{$application->number}} </h5>
@@ -254,11 +254,17 @@
                                     ->disabled()
                                 }}
                             @endif
+                    @if($application->branch_customer_id != null)
                     {{Aire::select($branch, 'select', __('Филиал заказчик по контракту'))
                         ->name('branch_customer_id')
                         ->value($application->branch_customer_id)
                         ->disabled()
                         }}
+                    @else
+                        {{Aire::input('bio',__('Филиал заказчик по контракту'))
+                        ->disabled()
+                       }}
+                    @endif
                     {{Aire::input('bio', __('Номер лота'))
                         ->name('lot_number')
                         ->value($application->lot_number)

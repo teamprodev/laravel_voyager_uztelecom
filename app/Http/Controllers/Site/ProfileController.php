@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileRequest;
 use App\Jobs\UpdateProfileJob;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Branch;
@@ -19,10 +20,14 @@ class ProfileController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $fillial = Branch::all()->pluck('name','id');
-        return view('site.profile.profile',compact( 'user','fillial'));
+        return view('site.profile.profile',['user' => $user]);
     }
 
+    public function other(User $id)
+    {
+        $user = $id;
+        return view('site.profile.other',['user' => $user]);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -40,17 +45,6 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
     {
         //
     }
