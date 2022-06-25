@@ -91,6 +91,7 @@ Route::group([
                 ],
                 function(){
                     Route::get('', [ProfileController::class, 'index'])->name('index');
+                    Route::get('{id}/show', [ProfileController::class, 'other'])->name('other');
                     Route::put('update', [ProfileController::class, 'update'])->name('update');
                 });
                 Route::group(
