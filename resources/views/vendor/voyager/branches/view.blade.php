@@ -12,12 +12,12 @@
       ->enctype("multipart/form-data")
       ->post() }}
             <div style="text-align: center; display: flex; justify-content: end; align-items: center; column-gap: 10px; margin-right: 20px">
-                {{Aire::select($branch, 'select', 'Филиал')->value(Illuminate\Support\Facades\Cache::get('branch_id'))->name('branch_id')}}
+                {{Aire::select($branch, 'select', 'Филиал')->value(Illuminate\Support\Facades\Cache::get(auth()->user()->id))->name('branch_id')}}
 
                 <button type="submit" class="btn btn-success" style="margin-top: 8px;">Выбрать</button>
             </div>
             {{ Aire::close() }}
-            @if(Illuminate\Support\Facades\Cache::get('branch_id') != null)
+            @if(Illuminate\Support\Facades\Cache::get(auth()->user()->id) != null)
                 <table id="yajra-datatable" class="display wrap">
                     <thead>
                     <tr>
