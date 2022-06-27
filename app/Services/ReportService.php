@@ -537,7 +537,7 @@ class ReportService
         return Datatables::of($query)
             ->editColumn('branch_initiator_id', function($application)
             {
-                return $application->branch ? $application->branch->name:"";
+                return $application->branch_id ? $application->branch->name:"";
             })
             ->editColumn('performer_leader_user_id', function($application)
             {
