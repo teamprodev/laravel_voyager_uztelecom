@@ -84,8 +84,7 @@ class ApplicationService
             {
                 $query = Application::query()
                     ->where('draft','!=',1)
-                    ->whereIn($c,$d)
-                    ->orWhere('signers','like',"%{$user->role_id}%")
+                    ->where('signers','like',"%{$user->role_id}%")
                     ->orWhere('performer_role_id', $user->role->id)
                     ->where('draft','!=',1)
                     ->orWhere('user_id',auth()->user()->id)
