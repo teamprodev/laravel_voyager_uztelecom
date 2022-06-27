@@ -20,7 +20,7 @@
                         ->name('contract_date')
                         ->value($application->contract_date)
                     }}
-                    {{Aire::input('bio', __('Дата протокола'))
+                    {{Aire::date('bio', __('Дата протокола'))
                         ->name('protocol_date')
                         ->value($application->protocol_date)
                     }}
