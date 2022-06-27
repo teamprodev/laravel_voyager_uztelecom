@@ -161,12 +161,17 @@ class RoleController extends VoyagerRoleController
             $signer_1 = json_decode($model->add_signers);
             $array_merge = array_merge($signer_1,$signer_0);
             $array_diff =  array_diff(json_decode($model->signers),array($role->id));
-            foreach ($array_diff as $signer)
+            $model->signers = null;
+            if($array_diff == null)
             {
-                $signers[] = $signer;
+                foreach ($array_diff as $signer)
+                {
+                    $signers[] = $signer;
+                    $model->signers = $signers;
+                }
             }
+
             $model->add_signers = $array_merge;
-            $signers ? $model->signers = $signers:null;
             $model->save();
         }else{
             $role = $role_1;
@@ -175,12 +180,17 @@ class RoleController extends VoyagerRoleController
             $signer_1 = json_decode($model->signers);
             $array_merge = array_merge($signer_1,$signer_0);
             $array_diff =  array_diff(json_decode($model->add_signers),array($role->id));
-            foreach ($array_diff as $signer)
+            $model->add_signers = null;
+            if($array_diff == null)
             {
-                $signers[] = $signer;
+                foreach ($array_diff as $signer)
+                {
+                    $signers[] = $signer;
+                    $model->add_signers = $signers;
+                }
             }
+
             $model->signers = $array_merge;
-            $signers ? $model->add_signers = $signers:null;
             $model->save();
         }
 
