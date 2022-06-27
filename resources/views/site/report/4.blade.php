@@ -65,7 +65,6 @@
         <th style="text-align: center;" class="border border-dark">{{ __('вид закупки')}}</th>
         <th style="text-align: center;" class="border border-dark">{{ __('Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)') }}</th>
         <th style="text-align: center;" class="border border-dark">{{ __('Предмет закупки (товар,работа,услуга)')}}</th>
-        <th style="text-align: center;" class="border border-dark">{{ __('кол-во закупаемого (товара,работа,услуги)') }}</th>
         <th style="text-align: center;" class="border border-dark">{{ __('период') }}</th>
         <th style="text-align: center;" class="border border-dark">{{ __('сумма заявки') }}</th>
         <th style="text-align: center;" class="border border-dark">{{ __('С НДС')}}</th>
@@ -127,16 +126,15 @@
 
             columns: [
                 {data: "id", name: 'id'},
-                {data: 'name', name: 'name'},
+                {data: 'branch_initiator_id', name: 'branch_initiator_id'},
                 {data: 'number', name: 'number'},
                 {data: 'date', name: 'date'},
-                {data: 'initiator', name: 'initiator'},
-                {data: 'initiator', name: 'initiator'},
-                {data: 'branch_initiator_id', name: 'branch_initiator_id'},
-                {data: 'type_of_purchase', name: 'type_of_purchase'},
-                {data: 'name', name: 'name'},
+                {data: 'user_id', name: 'user_id'},
+                {data: 'phone', name: 'phone'},
+                {data: 'department_initiator_id', name: 'department_initiator_id'},
+                {data: 'type_of_purchase_id', name: 'type_of_purchase_id'},
+                {data: 'resource_id', name: 'resource_id'},
                 {data: 'subject', name: 'subject'},
-                {data: 'amount', name: 'amount'},
                 {data: 'expire_warranty_date', name: 'expire_warranty_date'},
                 {data: 'planned_price', name: 'planned_price'},
                 {data: 'with_nds', name: 'with_nds'},
@@ -145,7 +143,7 @@
                 {data: 'contract_price', name: 'contract_price'},
                 {data: 'delivery_date', name: 'delivery_date'},
                 {data: 'status', name: 'status'},
-                {data: 'id', name: 'id'},
+                {data: 'performer_leader_user_id', name: 'performer_leader_user_id'},
                 {data: 'performer_user_id', name: 'performer_user_id'},
                 {data: 'info_business_plan', name: 'info_business_plan'},
                 {data: 'info_purchase_plan', name: 'info_purchase_plan'},

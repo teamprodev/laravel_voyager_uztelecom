@@ -535,23 +535,119 @@ class ReportService
             $query = Application::where('branch_initiator_id',auth()->user()->branch_id)->get();
         }
         return Datatables::of($query)
-            ->addColumn('name', function($branch){
+            ->addColumn('name', function($branch)
+            {
                 $applications = Branch::where('id', $branch->branch_initiator_id)->get()->pluck('name');
                 $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
                 return trim($json, '[], "');
             })
-            ->editColumn('branch_initiator_id', function($application){
+            ->editColumn('branch_initiator_id', function($application)
+            {
                 return $application->branch ? $application->branch->name:"";
             })
-            ->addColumn('phone', function($application){
+            ->editColumn('performer_leader_user_id', function($application)
+            {
+                return $application->performer_leader_user_id ? $application->performer_leader->name:"";
+            })
+            ->editColumn('performer_user_id', function($application)
+            {
+                return $application->performer_user_id ? $application->performer->name:"";
+            })
+            ->editColumn('department_initiator_id', function($application)
+            {
+                return $application->department_initiator_id ? $application->department->name:"";
+            })
+            ->addColumn('phone', function($application)
+            {
                 return $application->user->phone ? $application->user->phone:"Not Phone Number";
             })
-            ->addColumn('type_of_purchase', function($branch){
-                $applications = Purchase::where('id', $branch->type_of_purchase_id)->get()->pluck('name');
-                $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
-                return trim($json, '[], "');
+            ->editColumn('user_id', function($application)
+            {
+                return $application->user->name;
             })
-            ->addColumn('tovar_1', function($branch){
+            ->editColumn('type_of_purchase_id', function($application)
+            {
+                return $application->type_of_purchase_id ? $application->purchase->name:'';
+            })
+            ->editColumn('subject', function($application)
+            {
+                return $application->subject ? $application->subjects->name:'';
+            })
+            ->editColumn('with_nds', function($application)
+            {
+                return $application->with_nds ?'Да':'Нет';
+            })
+            ->editColumn('status', function ($query){
+                $status_new = __('Новая');
+                $status_in_process = __('На рассмотрении');
+                $status_accepted = __('Принята');
+                $status_refused = __('Отказана');
+                $status_agreed = __('Согласована');
+                $status_rejected = __('Отклонена');
+                $status_distributed = __('Распределен');
+                $status_cancelled = __('Отменен');
+                $status_performed = __('Товар доставлен');
+                $status_overdue = ('просрочен');
+                if($query->status === 'new'){
+                    $status = setting('color.new');
+                    $color = $status ? 'white':'black';
+                    return "<input style='background-color: {$status};color: {$color};' value='{$status_new}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                }elseif($query->status === 'in_process'){
+                    $status = setting('color.in_process');
+                    $color = $status ? 'white':'black';
+                    return "<input style='background-color: {$status};color: {$color};' value='{$status_in_process}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                }elseif($query->status === 'overdue'||$query->status === 'Overdue'){
+                    $status = setting('color.overdue');
+                    $color = $status ? 'white':'black';
+                    return "<input style='background-color: {$status};color: {$color};' value='{$status_overdue}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                }elseif($query->status === 'Принята'){
+                    $status = setting('color.accepted');
+                    $color = $status ? 'white':'black';
+                    return "<input style='background-color: {$status};color: {$color};' value='{$status_accepted}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                }elseif($query->status === 'refused'){
+                    $status = setting('color.rejected');
+                    $color = $status ? 'white':'black';
+                    return "<input style='background-color: {$status};color: {$color};' value='{$status_refused}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                }elseif($query->status === 'agreed'){
+                    $status = setting('color.agreed');
+                    $color = $status ? 'white':'black';
+                    return "<input style='background-color: {$status};color: {$color};' value='{$status_agreed}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                }elseif($query->status === 'rejected'){
+                    $status = setting('color.rejected');
+                    $color = $status ? 'white':'black';
+                    return "<input style='background-color: {$status};color: {$color};' value='{$status_rejected}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                }elseif($query->status === 'distributed'){
+                    $status = setting('color.distributed');
+                    $color = $status ? 'white':'black';
+                    return "<input style='background-color: {$status};color: {$color};' value='{$status_distributed}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                }elseif($query->status === 'canceled'){
+                    $status = setting('color.rejected');
+                    $color = $status ? 'white':'black';
+                    return "<input style='background-color: {$status};color: {$color};' value='{$status_cancelled}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                }elseif($query->status === 'товар доставлен'){
+                    $status = setting('color.delivered');
+                    $color = $status ? 'white':'black';
+                    return "<div class='row'>
+                        <input style='background-color: {$status};color: {$color};' type='text' type='button' value='{$status_performed}' class='text-center display wrap edit btn-sm' disabled>
+                        </div>";
+                }else{
+                    return $query->status;
+                }
+            })
+            ->editColumn('resource_id', function($application)
+            {
+                if($application->resource_id != null)
+                {
+                    foreach (json_decode($application->resource_id) as $product)
+                    {
+                        $all[] = Resource::find($product)->name;
+                    }
+                    return $all;
+                }
+
+            })
+            ->addColumn('tovar_1', function($branch)
+            {
                 $date = Cache::get('date_3_month');
                 $start_date = Carbon::parse("{$date}-01")
                     ->toDateTimeString();
@@ -561,6 +657,7 @@ class ReportService
                 $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
+            ->rawColumns(['status'])
             ->make(true);
     }
 
