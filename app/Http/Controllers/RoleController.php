@@ -88,7 +88,7 @@ class RoleController extends VoyagerRoleController
             $model = Branch::find($branch);
             if(in_array(165,$request->permissions)||in_array(168,$request->permissions))
             {
-                if(isset($model->signers))
+                if(isset($model->signers) && $model->add_signers != null)
                 {
                     if(in_array($role->id,json_decode($model->add_signers)))
                     {
