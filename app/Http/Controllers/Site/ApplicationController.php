@@ -126,6 +126,7 @@ class ApplicationController extends Controller
         if($request->is_more_than_limit == 1)
         {
             $application->is_more_than_limit = 1;
+            $application->branch_initiator_id = 9;
         }
         if($application->branch_initiator_id == 9)
         {

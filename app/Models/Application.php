@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\TypeOfPurchase;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -40,6 +41,10 @@ class Application extends Model
     public function performer()
     {
         return $this->belongsTo(User::class,'performer_user_id','id');
+    }
+    public function performer_leader()
+    {
+        return $this->belongsTo(User::class,'performer_leader_user_id','id');
     }
 
     public function notifications()
@@ -126,6 +131,18 @@ class Application extends Model
     public function branch()
     {
         return $this->belongsTo(Branch::class, 'branch_initiator_id', 'id');
+    }
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'department_initiator_id', 'id');
+    }
+    public function purchase()
+    {
+        return $this->belongsTo(Purchase::class, 'type_of_purchase_id', 'id');
+    }
+    public function subjects()
+    {
+        return $this->belongsTo(Subject::class, 'subject', 'id');
     }
     public function signedDocs()
     {
