@@ -166,7 +166,7 @@ class RoleController extends VoyagerRoleController
                 $signers[] = $signer;
             }
             $model->add_signers = $array_merge;
-            $model->signers = $signers;
+            $signers ? $model->signers = $signers:null;
             $model->save();
         }else{
             $role = $role_1;
@@ -180,7 +180,7 @@ class RoleController extends VoyagerRoleController
                 $signers[] = $signer;
             }
             $model->signers = $array_merge;
-            $model->add_signers = $signers;
+            $signers ? $model->add_signers = $signers:null;
             $model->save();
         }
 
