@@ -207,10 +207,12 @@
                     </div>
 
                     @if(isset($application->resource_id))
-                        <b>{{ __('Продукт')}}</b>:
-                        @foreach(json_decode($application->resource_id) as $product)
-                            <br> {{\App\Models\Resource::find($product)->name}}
-                        @endforeach
+                       <div>
+                           <b>{{ __('Продукт')}}</b>:
+                           @foreach(json_decode($application->resource_id) as $product)
+                               <br> {{\App\Models\Resource::find($product)->name}}
+                           @endforeach
+                       </div>
                     @endif
 
                     @if(isset($application->branch_leader_comment))
@@ -246,14 +248,28 @@
                                     ->disabled()
                                 }}
                             @endif
+                    <div style="display: inline-block; border: 2px solid black; width: 1400px; padding: 10px; margin: 10px;align:left ">
                             @if(isset($application->performer_role_id))
+
                                 {{Aire::textArea('bio', __('Исполнитель'))
                                     ->value(\App\Models\Roles::find($application->performer_role_id)->display_name)
                                     ->rows(3)
                                     ->cols(40)
                                     ->disabled()
                                 }}
-                            @endif
+                        @endif
+                            <h5 class="text-left">{{ __('Файл исполнителя') }}</h5>
+                            @foreach($performer_file as $file)
+                                @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
+                                    <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
+                                @else
+                                    <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
+                                    <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
+                                @endif
+                            @endforeach
+
+
+
                     @if($application->branch_customer_id != null)
                     {{Aire::select($branch, 'select', __('Филиал заказчик по контракту'))
                         ->name('branch_customer_id')
@@ -307,6 +323,7 @@
                         ->disabled()
                     }}
                     </div>
+                </div>
                     <div class="flex-direction: column">
                         @if($file_basis != 'null' && $file_basis != null)
                             <div class="my-5">
