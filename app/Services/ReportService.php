@@ -535,10 +535,6 @@ class ReportService
             $query = Application::where('branch_initiator_id',auth()->user()->branch_id)->get();
         }
         return Datatables::of($query)
-            ->addColumn('name', function($application)
-            {
-                return $application->name ? $application->name:'';
-            })
             ->editColumn('branch_initiator_id', function($application)
             {
                 return $application->branch ? $application->branch->name:"";
