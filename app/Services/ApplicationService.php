@@ -724,8 +724,8 @@ class ApplicationService
             $role_branch[] = $branch;
             $role_branch = array_diff($role_branch,['[]']);
         }
-        $performers_company = $role_company ? Roles::find($role_company)->pluck('display_name','id'):[];
-        $performers_branch = $role_branch ? Roles::find($role_branch)->pluck('display_name','id'):[];
+        $performers_company = $id ? Roles::find($role_company)->pluck('display_name','id'):[];
+        $performers_branch = $id ? Roles::find($role_branch)->pluck('display_name','id'):[];
         $user = auth()->user();
         $access_comment = Position::find($user->position_id);
         $subjects = Subject::all();
@@ -789,9 +789,10 @@ class ApplicationService
             if($data['draft'] == 1)
                 $data['status'] = 'draft';
         }
-        if($application->performer_status != null)
+        if(isset($data['performer_status']))
         {
             $application->performer_user_id = auth()->user()->id;
+            $application->status = $data['performer_status'];
         }
         if(isset($data['performer_leader_comment']))
         {

@@ -77,9 +77,8 @@
                         }}
                     </div>
                     {{Aire::select($status_extented, 'select')
-                        ->name('status')
-                        ->name('status')
-                        ->value($application->status)
+                        ->name('performer_status')
+                        ->value($application->performer_status)
                         }}
                     <div id="file"></div>
                     <div id="a" class="hidden mb-3">
