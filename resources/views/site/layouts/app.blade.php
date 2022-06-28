@@ -42,8 +42,6 @@
             background-color: {{ setting('color.edit') }};
             color: white !important;
         }
-
-
         .showbtn{
             color: {{ setting('color.show') }};
             border-color: {{ setting('color.show') }} !important;
@@ -60,6 +58,31 @@
         .deletebtn:hover{
             background-color: {{ setting('color.delete') }};
             color: white !important;
+        }
+        #example_filter{
+            display: none;
+        }
+        #example_paginate{
+            display: none;
+        }
+        #example_info{
+            display: none;
+        }
+        .dt-buttons{
+            width: 60%;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .dataTables_length{
+            width: 20%;
+            margin-bottom: 15px;
+        }
+        .dataTables_filter{
+            width: 20%;
+            margin-bottom: 15px;
+        }
+        .dtsb-searchBuilder{
+            width: fit-content;
         }
     </style>
 </head>
@@ -110,7 +133,10 @@
 <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.colVis.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js" integrity="sha512-ubuT8Z88WxezgSqf3RLuNi5lmjstiJcyezx34yIU2gAHonIi27Na7atqzUZCOoY4CExaoFumzOsFQ2Ch+I/HCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
