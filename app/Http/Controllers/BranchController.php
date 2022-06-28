@@ -68,6 +68,9 @@ class BranchController extends Controller
             ->editColumn('role_id', function($docs) {
                 return $docs->role ? $docs->role->display_name:"";
             })
+            ->editColumn('planned_price', function ($query) {
+                return $query->planned_price ? number_format($query->planned_price, 0, '', ' ') : '';
+            })
             ->editColumn('created_at', function ($data) {
                 return $data->created_at ? with(new Carbon($data->created_at))->format('d.m.Y') : '';
             })
