@@ -40,7 +40,7 @@
 
                         <div class="panel-body">
                             <div class="form-group">
-                                <label for="name">{{ 'Name' }}</label>
+                                <label for="name">{{ __('voyager::generic.name') }}</label>
                                 <input type="text" class="form-control" id="name" name="name" placeholder="{{ __('voyager::generic.name') }}"
                                        value="{{ old('name', $dataTypeContent->name ?? '') }}">
                             </div>
@@ -60,38 +60,26 @@
                                 <input type="password" class="form-control" id="password" name="password" value="" autocomplete="new-password">
                             </div>
                             @php
-
                                 if (isset($dataTypeContent->locale)) {
-                                    $selected_locale = $dataTypeContent->locale;
-                                } else {
-                                    $selected_locale = config('app.locale', 'en');
-                                }
-                                $branches = App\Models\Branch::pluck('name','id')->toArray();
-                                $roles = App\Models\Roles::where('branch_id','like',"%{$dataTypeContent->branch_id}%")->pluck('display_name','id')->toArray();
-                                $department = App\Models\Department::where('branch_id',$dataTypeContent->branch_id)->pluck('name','id')->toArray();
+                                   $selected_locale = $dataTypeContent->locale;
+                               } else {
+                                   $selected_locale = config('app.locale', 'en');
+                               }
+                               $department = App\Models\Department::all()->pluck('name','id')->toArray();
+                               $roles = App\Models\Roles::all()->pluck('display_name','id')->toArray();
                             @endphp
                             <div class="form-group">
-                                {{Aire::select($branches, 'select', __('Филиал'))
-                                    ->name('branch_id')
-                                    ->value($dataTypeContent->branch_id)
-                                }}
-                            </div>
-                            @if($dataTypeContent->branch_id != null)
-                            <div class="form-group">
                                 {{Aire::select($department, 'select', __('Отдел'))
-                                    ->name('department_id')
-                                    ->value($dataTypeContent->department_id)
-                                }}
+                                   ->name('department_id')
+                                   ->value($dataTypeContent->department_id)
+                               }}
                             </div>
-                            @endif
-                            @if($dataTypeContent->branch_id != null)
-                                <div class="form-group">
-                                    {{Aire::select($roles, 'select', __('voyager::profile.role_default'))
-                                        ->name('role_id')
-                                        ->value($dataTypeContent->role_id)
-                                    }}
-                                </div>
-                            @endif
+                            <div class="form-group">
+                                {{Aire::select($roles, 'select', __('Роли'))
+                                   ->name('role_id')
+                                   ->value($dataTypeContent->role_id)
+                               }}
+                            </div>
                             <div class="form-group">
                                 <label for="locale">{{ __('voyager::generic.locale') }}</label>
                                 <select class="form-control select2" id="locale" name="locale">
