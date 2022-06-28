@@ -51,7 +51,7 @@
                             @endif
                         @else
                             <div class="d-flex align-items-center" style="column-gap: 10px">
-                                <button type="button" class="btn btn-primary"><input type="text" class="hidden" value="{{$file}}" name="file"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
+                                <button type="button" class="btn btn-primary"><input type="text" class="hidden" value="{{$file}}" name="file" required/><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
                                 @if($application->performer_role_id == auth()->user()->role_id)
                                     <button style="text-align: center" class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
                                 @endif
