@@ -37,33 +37,56 @@
 @endif
 @push('scripts')
     <script>
-        var columns = [
-            {data: 'id', name: 'id'},
-            {data: 'number', name: 'number'},
-            {data: 'date', name: 'date'},
-            {data: 'initiator', name: 'initiator'},
-            {data: 'branch_initiator_id', name: 'branch_initiator_id'},
-            {data: 'name', name: 'name'},
-            {data: 'delivery_date', name: 'delivery_date'},
-            {
-                "data": "",
-                render: function (data, type, row) {
-                    var details = row.planned_price + " " + row.currency ;
-                    return details;
-                }
-            },
-            {data: 'incoterms', name: 'incoterms'},
-            {data: 'created_at', name: 'created_at'},
-            {data: 'updated_at', name: 'updated_at'},
-            {data: 'status', name: 'status'},
-            {
-                data: 'action',
-                name: 'action',
-            },
-        ];
-        var getData = "{{route('site.applications.index')}}"
-
+        $(function () {
+            var table = $('#yajra-datatable').DataTable({
+                columnDefs: [
+                    {
+                        targets: [0,1,2,3,4,5,6,8,9,10,11,12],
+                        className: 'dt-body-center dt-head-center'
+                    },
+                    {
+                        targets: 7,
+                        className: 'dt-body-right dt-head-center'}
+                ],
+                order: [[ 0, "desc" ]],
+                "language": {
+                    "lengthMenu": "Показать _MENU_ записей",
+                    "info":      'Показаны записи в диапазоне от _START_ до _END_ (В общем _TOTAL_)',
+                    "search":  'Поиск',
+                    "paginate": {
+                        "previous": "Назад",
+                        "next": "Дальше"
+                    }
+                }, processing: false,
+                serverSide: true,
+                ajax:
+                    "{{ route('site.applications.index') }}",
+                columns: [
+                    {data: 'id', name: 'id'},
+                    {data: 'number', name: 'number'},
+                    {data: 'date', name: 'date'},
+                    {data: 'initiator', name: 'initiator'},
+                    {data: 'branch_initiator_id', name: 'branch_initiator_id'},
+                    {data: 'name', name: 'name'},
+                    {data: 'delivery_date', name: 'delivery_date'},
+                    {
+                        "data": "",
+                        render: function (data, type, row) {
+                            var details = row.planned_price + " " + row.currency ;
+                            return details;
+                        }
+                    },
+                    {data: 'incoterms', name: 'incoterms'},
+                    {data: 'created_at', name: 'created_at'},
+                    {data: 'updated_at', name: 'updated_at'},
+                    {data: 'status', name: 'status'},
+                    {
+                        data: 'action',
+                        name: 'action',
+                    },
+                ]
+            });
+        });
     </script>
-    @include('site.components.yajra')
 @endpush
 @endsection
