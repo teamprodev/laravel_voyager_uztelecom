@@ -68,6 +68,7 @@
                                $department = App\Models\Department::where('branch_id',9)->pluck('name','id')->toArray();
                                $branch = App\Models\Branch::all()->pluck('name','id')->toArray();
                                $roles = App\Models\Roles::all()->pluck('display_name','id')->toArray();
+                               $user = App\Models\User::find($dataTypeContent->id);
                             @endphp
                             <div class="form-group">
                                 {{Aire::select($branch, 'select', __('Филиал'))
@@ -77,10 +78,9 @@
                                }}
                             </div>
                             <div class="form-group">
-                                {{Aire::select($department, 'select', __('Филиал'))
+                                {{Aire::select([$user->department->name], 'select', __('Отдел'))
                                    ->name('department_id')
                                    ->id('department_id')
-                                   ->value($dataTypeContent->department_id)
                                }}
                             </div>
                             <div class="form-group">

@@ -54,4 +54,8 @@ class User extends \TCG\Voyager\Models\User
     {
         return $this->belongsTo(Branch::class);
     }
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
 }
