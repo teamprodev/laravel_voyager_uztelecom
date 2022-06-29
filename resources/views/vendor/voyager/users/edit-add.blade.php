@@ -65,12 +65,21 @@
                                } else {
                                    $selected_locale = config('app.locale', 'en');
                                }
-                               $department = App\Models\Department::all()->pluck('name','id')->toArray();
+                               $department = App\Models\Department::where('branch_id',9)->pluck('name','id')->toArray();
+                               $branch = App\Models\Branch::all()->pluck('name','id')->toArray();
                                $roles = App\Models\Roles::all()->pluck('display_name','id')->toArray();
                             @endphp
                             <div class="form-group">
-                                {{Aire::select($department, 'select', __('Отдел'))
+                                {{Aire::select($branch, 'select', __('Филиал'))
+                                   ->name('branch_id')
+                                   ->id('branch_id')
+                                   ->value($dataTypeContent->branch_id)
+                               }}
+                            </div>
+                            <div class="form-group">
+                                {{Aire::select($department, 'select', __('Филиал'))
                                    ->name('department_id')
+                                   ->id('department_id')
                                    ->value($dataTypeContent->department_id)
                                }}
                             </div>
@@ -80,6 +89,53 @@
                                    ->value($dataTypeContent->role_id)
                                }}
                             </div>
+                            <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+                            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+                            <script type="text/javascript" src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+                            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+                            <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.24/dataRender/datetime.js"></script>
+                            <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
+                            <script type="text/javascript" src="https://cdn.datatables.net/searchbuilder/1.3.2/js/dataTables.searchBuilder.min.js"></script>
+                            <script type="text/javascript" src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                                    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+                            </script>
+                            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                                    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+                            </script>
+                            <input type="text" class="hidden" name="csrf-token" content="{{ csrf_token() }}"="{{csrf_token()}}">
+                            <script>
+                                $("#branch_id").change(function () {
+                                    $.ajaxSetup({
+                                        headers: {
+                                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                                        },
+                                    });
+
+                                    const langId = $(this).val();
+
+                                    $.ajax({
+                                        type: "GET",
+                                        url: "/department/getData/",
+                                        data: {
+                                            id: langId,
+                                        },
+                                        success: function (result) {
+                                            $("#department_id").empty();
+
+                                            if (result && result?.status === "success") {
+                                                result?.data?.map((department_id) => {
+                                                    const frameworks = `<option value='${department_id?.id}'> ${department_id?.name} </option>`;
+                                                    $("#department_id").append(frameworks);
+                                                });
+                                            }
+                                        },
+                                        error: function (result) {
+                                            console.log("error", result);
+                                        },
+                                    });
+                                });
+                            </script>
                             <div class="form-group">
                                 <label for="locale">{{ __('voyager::generic.locale') }}</label>
                                 <select class="form-control select2" id="locale" name="locale">

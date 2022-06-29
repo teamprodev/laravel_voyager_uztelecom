@@ -31,6 +31,8 @@ Route::get('/report/request/{id}',[ReportController::class,'report'])->name('rep
 Route::get('roles/getData',[\App\Http\Controllers\RoleController::class,'getData'])->name('voyager.roles.getData');
 Route::get('departments/getData',[\App\Http\Controllers\DepartmentController::class,'getData'])->name('voyager.departments.getData');
 
+Route::get('department/getData/',[\App\Http\Controllers\UserController::class,'getData'])->name('voyager.users.getData');
+
 
 Route::post('/request',[ReportController::class,'request'])->name('request');
 Route::post('/warehouse',[WarehouseController::class,'create'])->name('warehouse.create');
