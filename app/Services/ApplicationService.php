@@ -876,6 +876,8 @@ class ApplicationService
             $application->status = 'new';
             $message = "{$application->id} "."{$application->name} ".setting('admin.application_created');
             $this->sendNotifications($array, $application,$message);
+        }else{
+            $data['signers'] = json_encode($roles);
         }
         $result = $application->update($data);
         if ($result)
