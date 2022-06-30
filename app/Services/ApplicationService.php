@@ -766,8 +766,8 @@ class ApplicationService
             'warehouse' => Warehouse::where('application_id',$application->id)->first(),
             'performer_file' => $performer_file,
             'user' => auth()->user(),
-            'company_signers' => $company_signer ? Roles::find($company_signer)->pluck('display_name','id'): null,
-            'branch_signers' => $branch_signer ? Roles::find($branch_signer)->pluck('display_name','id'): null,
+            'company_signers' => $company_signer ? Roles::find($company_signer)->sortBy('index')->pluck('display_name','id')->toArray(): null,
+            'branch_signers' => $branch_signer ? Roles::find($branch_signer)->sortBy('index')->pluck('display_name','id')->toArray(): null,
         ]);
     }
     public function update($application,$request)
