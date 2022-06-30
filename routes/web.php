@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\EimzoAuthController;
-use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TypeOfPurchase;
 use App\Http\Controllers\UserController;
@@ -15,6 +14,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use TCG\Voyager\Facades\Voyager;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\BranchController;
+use App\Http\Controllers\ImzoController;
+USE App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,42 +32,38 @@ use TCG\Voyager\Facades\Voyager;
 */
 
 Route::get('/report/request/{id}',[ReportController::class,'report'])->name('report');
-Route::get('roles/getData',[\App\Http\Controllers\RoleController::class,'getData'])->name('voyager.roles.getData');
-Route::get('departments/getData',[\App\Http\Controllers\DepartmentController::class,'getData'])->name('voyager.departments.getData');
-
-Route::get('department/getData/',[\App\Http\Controllers\UserController::class,'getData'])->name('voyager.users.getData');
-
-
+Route::get('roles/getData',[RoleController::class,'getData'])->name('voyager.roles.getData');
+Route::get('departments/getData',[DepartmentController::class,'getData'])->name('voyager.departments.getData');
+Route::get('department/getData/',[UserController::class,'getData'])->name('voyager.users.getData');
 Route::post('/request',[ReportController::class,'request'])->name('request');
 Route::post('/warehouse',[WarehouseController::class,'create'])->name('warehouse.create');
-
 Route::post('/delete_file',[ApplicationController::class,'file_delete'])->name('delete_file');
 
 Route::get('/user/{user}',[UserController::class,'changeLeader'])->name('users.leader');
-Route::post('/branches/{id}/post',[\App\Http\Controllers\BranchController::class,'update'])->name('signers.update');
+Route::post('/branches/{id}/post',[BranchController::class,'update'])->name('signers.update');
 
-Route::get('/branches/ajax_branch',[\App\Http\Controllers\BranchController::class,'ajax_branch'])->name('branches.ajax_branch');
-Route::post('/branches/putCache',[\App\Http\Controllers\BranchController::class,'putCache'])->name('branches.putCache');
-Route::get('/branches/view',[\App\Http\Controllers\BranchController::class,'view'])->name('branches.view');
+Route::get('/branches/ajax_branch',[BranchController::class,'ajax_branch'])->name('branches.ajax_branch');
+Route::post('/branches/putCache',[BranchController::class,'putCache'])->name('branches.putCache');
+Route::get('/branches/view',[BranchController::class,'view'])->name('branches.view');
 
 Route::get('/', function () {
     return redirect()->route('site.applications.index');
 });
-Route::get('branches/getData',[\App\Http\Controllers\BranchController::class,'getData'])->name('signers.getData');
+Route::get('branches/getData',[BranchController::class,'getData'])->name('signers.getData');
 Route::post('/uploadimage/{application}/update', [ApplicationController::class, 'uploadImage'])->name('uploadImage');
 Route::group([
     'prefix' => 'admin',
     'middleware' => 'isAdmin'
 ], function () {
     Voyager::routes();
-    Route::put('roles/{id}/update',[\App\Http\Controllers\RoleController::class,'update'])->name('voyager.roles.update');
-    Route::post('create/role',[\App\Http\Controllers\RoleController::class,'store'])->name('voyager.roles.store');
-    Route::put('users/{id}/update',[\App\Http\Controllers\UserController::class,'update'])->name('voyager.users.update');
-    Route::get('roles/',[\App\Http\Controllers\RoleController::class,'index'])->name('voyager.roles.index');
-    Route::get('departments/',[\App\Http\Controllers\DepartmentController::class,'index'])->name('voyager.departments.index');
+    Route::put('roles/{id}/update',[RoleController::class,'update'])->name('voyager.roles.update');
+    Route::post('create/role',[RoleController::class,'store'])->name('voyager.roles.store');
+    Route::put('users/{id}/update',[UserController::class,'update'])->name('voyager.users.update');
+    Route::get('roles/',[RoleController::class,'index'])->name('voyager.roles.index');
+    Route::get('departments/',[DepartmentController::class,'index'])->name('voyager.departments.index');
     Route::get('type-of-purchase/{id}/edit',[TypeOfPurchase::class,'edit'])->name('voyager.type-of-purchase.edit');
     Route::post('type-of-purchase/update',[TypeOfPurchase::class,'update'])->name('type-of-purchase.update');
-    Route::get('branches/{id}/signers',[\App\Http\Controllers\BranchController::class,'edit'])->name('signers.add');
+    Route::get('branches/{id}/signers',[BranchController::class,'edit'])->name('signers.add');
 
 });
 Route::get('admin/login', [LoginController::class, 'login'])->name('voyager.login');
@@ -136,12 +136,8 @@ Route::group([
                     Route::post('store', [ApplicationController::class, 'store'])->name('store')->middleware('branch');
                     Route::put('{application}/vote', [ApplicationController::class, 'vote'])->name('vote')->middleware('branch');
                     Route::post('{application}/is_more_than_limit', [ApplicationController::class, 'is_more_than_limit'])->name('is_more_than_limit')->middleware('branch','application_user_id');
-//                    Route::post('cancel', [ApplicationController::class, 'cancel'])->name('cancel');
-
                     Route::get('getAll', [ApplicationController::class, 'getAll'])->name('getAll');
-                    Route::post('applications/{application}/eimzo/sign', [\App\Http\Controllers\ImzoController::class,
-                        'verifyPks'])
-                        ->name('imzo.sign');
+                    Route::post('applications/{application}/eimzo/sign', [ImzoController::class, 'verifyPks'])->name('imzo.sign');
                 });
 
             Route::group(
@@ -151,7 +147,6 @@ Route::group([
                 ],
                 function(){
                     Route::get('', [FaqsController::class, 'index'])->name(   'index');
-
                     Route::get('{faq}/show', [FaqsController::class, 'show'])->name('show');
                     Route::get('{faq}/edit', [ApplicationController::class, 'edit'])->name('edit');
                     Route::post('{faq}/update', [ApplicationController::class, 'update'])->name('update');
@@ -159,7 +154,6 @@ Route::group([
                     Route::post('{application}/store', [ApplicationController::class, 'store'])->name('store');
                     Route::post('form', [ApplicationController::class, 'form'])->name('form');
                     Route::get('getAll', [ApplicationController::class, 'getAll'])->name('getAll');
-
                 });
             Route::group(
                 [
@@ -168,40 +162,15 @@ Route::group([
                 ],
                 function(){
                     Route::get('index', [DashboardController::class, 'index'])->name('index');
-
                 });
         }
     );
 
 });
-
-
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
+Route::get('/home', [HomeController::class, 'index']);
 Route::get('/test/{id}', [App\Http\Controllers\Controller::class, 'test']);
 
-Route::get('/layout', function () {
-    return view('site.auth.layout');
-});
-
-Route::get('/profile', function () {
-    return view('site.profile.profile');
-});
-Route::get('/faq/index', function () {
-    return view('site.faq.index');
-});
-Route::get('/faq/show', function () {
-    return view('site.faq.show');
-});
-Route::get('/test', function () {
-    return view('site.test');
-});
 Route::get('getRoles', [ApplicationController::class, '']);
-//Route::get('/test/send', [\App\Http\Controllers\TestController::class, 'index']);
-//Route::get('test/send', function () {
-//    event(new App\Events\NotificationEvent('Monika'));
-//    return "Event has been sent!";
-//});
 Route::get('sign/index', function () {
     return redirect()->route('site.applications.index');
 })->name('sign.index');
