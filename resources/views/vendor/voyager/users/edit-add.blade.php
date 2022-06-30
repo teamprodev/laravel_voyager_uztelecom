@@ -78,7 +78,7 @@
                                }}
                             </div>
                             <div class="form-group">
-                                {{Aire::select([$user->department->name], 'select', __('Отдел'))
+                                {{Aire::select([$user->department_id ? $user->department->name:'Select'], 'select', __('Отдел'))
                                    ->name('department_id')
                                    ->id('department_id')
                                }}
