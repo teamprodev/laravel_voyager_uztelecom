@@ -65,9 +65,8 @@
                                } else {
                                    $selected_locale = config('app.locale', 'en');
                                }
-                               $department = App\Models\Department::where('branch_id',9)->pluck('name','id')->toArray();
+                               $department = App\Models\Department::where('branch_id',$dataTypeContent->branch_id)->pluck('name','id')->toArray();
                                $branch = App\Models\Branch::all()->pluck('name','id')->toArray();
-                               $roles = App\Models\Roles::all()->pluck('display_name','id')->toArray();
                                $user = App\Models\User::find($dataTypeContent->id);
                             @endphp
                             <div class="form-group">
@@ -78,15 +77,15 @@
                                }}
                             </div>
                             <div class="form-group">
-                                {{Aire::select([$user->department_id ? $user->department->name:'Select'], 'select', __('Отдел'))
+                                {{Aire::select($department, 'select', __('Отдел'))
                                    ->name('department_id')
                                    ->id('department_id')
                                }}
                             </div>
                             <div class="form-group">
-                                {{Aire::select($roles, 'select', __('Роли'))
+                                {{Aire::select([$user->role_id ? $user->role->name:'Select'], 'select', __('Роли'))
                                    ->name('role_id')
-                                   ->value($dataTypeContent->role_id)
+                                   ->id('role_id')
                                }}
                             </div>
                             <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -122,11 +121,16 @@
                                         },
                                         success: function (result) {
                                             $("#department_id").empty();
+                                            $("#role_id").empty();
 
                                             if (result && result?.status === "success") {
                                                 result?.data?.map((department_id) => {
                                                     const frameworks = `<option value='${department_id?.id}'> ${department_id?.name} </option>`;
                                                     $("#department_id").append(frameworks);
+                                                });
+                                                result?.role?.map((department_id) => {
+                                                    const frameworks = `<option value='${department_id?.id}'> ${department_id?.name} </option>`;
+                                                    $("#role_id").append(frameworks);
                                                 });
                                             }
                                         },
