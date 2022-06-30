@@ -38,7 +38,7 @@
     "click here to request another": "click here to request another",
     "voyager::generic.email": "Электроная почта",
     "voyager::generic.login": "Войти",
-    "voyager::generic.name": "voyager::generic.name",
+    "voyager::generic.name": "Наименование",
     "voyager::generic.password": "Пароль",
     "voyager::generic.remember_me": "Запомнить меня",
     "voyager::login.loggingin": "Вход в систему",
