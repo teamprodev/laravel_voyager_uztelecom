@@ -79,6 +79,24 @@
 
 
     <script>
+        function export_format(data, columnIdx){
+            switch (columnIdx) {
+                case 2:
+                case 3:
+                    return 'Заключенные договора ' + data;
+                case 4:
+                case 5:
+                    return 'Товар ' + data;
+                case 6:
+                case 7:
+                    return 'Работа ' + data;
+                case 8:
+                case 9:
+                    return 'Услуга ' + data;
+                default:
+                    return data;
+            }
+        }
         var columns = [
             {data: "id", name: 'id'},
             {data: 'name', name: 'name'},
