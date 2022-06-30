@@ -65,10 +65,9 @@
                                } else {
                                    $selected_locale = config('app.locale', 'en');
                                }
-                               $department = App\Models\Department::where('branch_id',$dataTypeContent->branch_id)->pluck('name','id')->toArray();
+                               $dataTypeContent->branch_id ? $department = App\Models\Department::where('branch_id',$dataTypeContent->branch_id)->pluck('name','id')->toArray():$department = App\Models\Department::where('branch_id',9)->pluck('name','id')->toArray();
                                $branch = App\Models\Branch::all()->pluck('name','id')->toArray();
-                               $user = App\Models\User::find($dataTypeContent->id);
-                               $roles = App\Models\Roles::find($dataTypeContent->role_id)->pluck('display_name','id')->toArray();
+                               $dataTypeContent->role_id ? $roles = App\Models\Roles::find($dataTypeContent->role_id)->pluck('display_name','id')->toArray():$roles = DB::table('roles')->whereRaw('json_contains(branch_id, \'["9"]\')')->pluck('name','id')->toArray();
                             @endphp
                             <div class="form-group">
                                 {{Aire::select($branch, 'select', __('Филиал'))
