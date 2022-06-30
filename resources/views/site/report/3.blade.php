@@ -70,6 +70,21 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/af-2.3.2/b-1.5.4/b-colvis-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/cr-1.5.0/fc-3.2.5/fh-3.1.4/kt-2.5.0/r-2.2.2/rg-1.1.0/rr-1.2.4/sc-1.5.0/sl-1.2.6/datatables.min.js"></script>
 
     <script>
+        function export_format(data, columnIdx){
+            switch (columnIdx) {
+                case 2:
+                case 3:
+                    return 'Товар ' + data;
+                case 4:
+                case 5:
+                    return 'Работа ' + data;
+                case 6:
+                case 7:
+                    return 'Услуга ' + data;
+                default:
+                    return data;
+            }
+        }
         var columns = [
             {data: "id", name: 'id'},
             {data: 'name', name: 'name'},
@@ -84,8 +99,8 @@
         var getData = "{{ route('report','3') }}";
         var tableTitle = "{{ __('3 - Отчет за год') }}";
     </script>
-
 @include('site.components.yajra')
+
 @endif
 
 @endsection

@@ -119,7 +119,39 @@
 
 
     <script>
-
+        function export_format(data, columnIdx){
+            switch (columnIdx) {
+                case 2:
+                case 3:
+                case 8:
+                case 9:
+                case 14:
+                case 15:
+                case 20:
+                case 21:
+                    return 'Товар ' + data;
+                case 4:
+                case 5:
+                case 10:
+                case 11:
+                case 16:
+                case 17:
+                case 22:
+                case 23:
+                    return 'Работа ' + data;
+                case 6:
+                case 7:
+                case 12:
+                case 13:
+                case 18:
+                case 19:
+                case 24:
+                case 25:
+                    return 'Услуга ' + data;
+                default:
+                    return data;
+            }
+        }
         var columns = [
             {data: "id", name: 'id'},
             {data: 'name', name: 'name'},
