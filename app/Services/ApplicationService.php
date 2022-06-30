@@ -724,8 +724,8 @@ class ApplicationService
             $role_branch[] = $branch;
             $role_branch = array_diff($role_branch,['[]']);
         }
-        $performers_company = $role_company ? Roles::find($role_company)->pluck('display_name','id'):[];
-        $performers_branch = $role_branch ? Roles::find($role_branch)->pluck('display_name','id'):[];
+        $performers_company = $id ? Roles::find($role_company)->pluck('display_name','id'):[];
+        $performers_branch = $id ? Roles::find($role_branch)->pluck('display_name','id'):[];
         $user = auth()->user();
         $access_comment = Position::find($user->position_id);
         $subjects = Subject::all();
@@ -766,8 +766,8 @@ class ApplicationService
             'warehouse' => Warehouse::where('application_id',$application->id)->first(),
             'performer_file' => $performer_file,
             'user' => auth()->user(),
-            'company_signers' => $company_signer ? Roles::find($company_signer)->pluck('display_name','id'): null,
-            'branch_signers' => $branch_signer ? Roles::find($branch_signer)->pluck('display_name','id'): null,
+            'company_signers' => $company_signer ? Roles::find($company_signer)->sortBy('index')->pluck('display_name','id')->toArray(): null,
+            'branch_signers' => $branch_signer ? Roles::find($branch_signer)->sortBy('index')->pluck('display_name','id')->toArray(): null,
         ]);
     }
     public function update($application,$request)
@@ -789,9 +789,10 @@ class ApplicationService
             if($data['draft'] == 1)
                 $data['status'] = 'draft';
         }
-        if($application->performer_status != null)
+        if(isset($data['performer_status']))
         {
             $application->performer_user_id = auth()->user()->id;
+            $application->status = $data['performer_status'];
         }
         if(isset($data['performer_leader_comment']))
         {
@@ -875,6 +876,8 @@ class ApplicationService
             $application->status = 'new';
             $message = "{$application->id} "."{$application->name} ".setting('admin.application_created');
             $this->sendNotifications($array, $application,$message);
+        }else{
+            $data['signers'] = json_encode($roles);
         }
         $result = $application->update($data);
         if ($result)

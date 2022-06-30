@@ -31,6 +31,8 @@ Route::get('/report/request/{id}',[ReportController::class,'report'])->name('rep
 Route::get('roles/getData',[\App\Http\Controllers\RoleController::class,'getData'])->name('voyager.roles.getData');
 Route::get('departments/getData',[\App\Http\Controllers\DepartmentController::class,'getData'])->name('voyager.departments.getData');
 
+Route::get('department/getData/',[\App\Http\Controllers\UserController::class,'getData'])->name('voyager.users.getData');
+
 
 Route::post('/request',[ReportController::class,'request'])->name('request');
 Route::post('/warehouse',[WarehouseController::class,'create'])->name('warehouse.create');
@@ -55,6 +57,7 @@ Route::group([
 ], function () {
     Voyager::routes();
     Route::put('roles/{id}/update',[\App\Http\Controllers\RoleController::class,'update'])->name('voyager.roles.update');
+    Route::post('create/role',[\App\Http\Controllers\RoleController::class,'store'])->name('voyager.roles.store');
     Route::put('users/{id}/update',[\App\Http\Controllers\UserController::class,'update'])->name('voyager.users.update');
     Route::get('roles/',[\App\Http\Controllers\RoleController::class,'index'])->name('voyager.roles.index');
     Route::get('departments/',[\App\Http\Controllers\DepartmentController::class,'index'])->name('voyager.departments.index');

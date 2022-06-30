@@ -22,35 +22,6 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css"/>
 
-    {{--    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/af-2.3.2/b-1.5.4/b-colvis-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/cr-1.5.0/fc-3.2.5/fh-3.1.4/kt-2.5.0/r-2.2.2/rg-1.1.0/rr-1.2.4/sc-1.5.0/sl-1.2.6/datatables.min.css"/>--}}
-
-    <style>
-        #example_filter{
-            display: none;
-        }
-        #example_paginate{
-            display: none;
-        }
-        #example_info{
-            display: none;
-        }
-        .dt-buttons{
-            width: 60%;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        .dataTables_length{
-            width: 20%;
-            margin-bottom: 15px;
-        }
-        .dataTables_filter{
-            width: 20%;
-            margin-bottom: 15px;
-        }
-        .dtsb-searchBuilder{
-            width: fit-content;
-        }
-    </style>
 </head>
 
 <div id="fortext"></div>
@@ -105,174 +76,25 @@
 
 
 <script>
-    $(document).ready(function() {
-        var tableTitle = "{{__('10 - Отчет по кол-ву статусам')}}";
-
-        $('#example').DataTable( {
-            stateSave: true,
-            "language": {
-                "lengthMenu": "Показать _MENU_ записей",
-                "info":      'Показаны записи в диапазоне от _START_ до _END_ (В общем _TOTAL_)',
-                "search":  'Поиск',
-                "paginate": {
-                    "previous": "Назад",
-                    "next": "Дальше"
-                },
-                "searchBuilder": {
-                    "add": "Добавить фильтр",
-                    "button": {
-                        "0": "Фильтр",
-                        "_": "Фильтр"
-                    },
-                    "clearAll": "Сбросить",
-                    "condition": "Условие",
-                    "conditions": {
-                        "date": {
-                            "after": "После",
-                            "before": "До",
-                            "between": "Между",
-                            "empty": "Пусто",
-                            "equals": "Равно",
-                            "not": "Не равно",
-                            "notBetween": "Не между",
-                            "notEmpty": "Не пусто"
-                        },
-                        "number": {
-                            "between": "Между",
-                            "empty": "Пусто",
-                            "equals": "Равно",
-                            "gt": "Больше чем",
-                            "gte": "Больше чем равно",
-                            "lt": "Меньше чем",
-                            "lte": "Меньше чем равно",
-                            "not": "Не равно",
-                            "notBetween": "Не между",
-                            "notEmpty": "Не пусто"
-                        },
-                        "string": {
-                            "contains": "Содержит",
-                            "empty": "Пусто",
-                            "endsWith": "Заканчивается с",
-                            "equals": "Равно",
-                            "not": "Не равно",
-                            "notEmpty": "Не пусто",
-                            "startsWith": "Начинается с",
-                            "notContains": "Не содержит",
-                            "notStartsWith": "Не начинается с",
-                            "notEndsWith": "Не заканчивается с"
-                        },
-                        "array": {
-                            "without": "Без",
-                            "notEmpty": "Не пусто",
-                            "not": "Не равно",
-                            "contains": "Содержит",
-                            "empty": "Пусто",
-                            "equals": "Равно"
-                        }
-                    },
-                    "data": "Данные",
-                    "deleteTitle": "Удалить правило фильтрации",
-                    "leftTitle": "Критерии отставания",
-                    "logicAnd": "И",
-                    "logicOr": "Или",
-                    "rightTitle": "Критерии отступа",
-                    "title": {
-                        "0": "Фильтр",
-                        "_": "Фильтр"
-                    },
-                    "value": "Значение"
-                },
-            },
-            "processing": false,
-            pageLength: 10,
-            // dom: 'PQlfrtip',
-            dom: 'Qlfrtip' + 'Bfrtip',
-
-            ajax:
-                "{{ route('report','10') }}",
-
-            columns: [
-                {data: 'name', name: 'name'},
-                {data: 'january', name: 'january'},
-                {data: 'february', name: 'february'},
-                {data: 'march', name: 'march'},
-                {data: 'april', name: 'april'},
-                {data: 'may', name: 'may'},
-                {data: 'june', name: 'june'},
-                {data: 'july', name: 'july'},
-                {data: 'august', name: 'august'},
-                {data: 'september', name: 'september'},
-                {data: 'october', name: 'october'},
-                {data: 'november', name: 'november'},
-                {data: 'december', name: 'december'},
-                {data: 'all', name: 'all'},
-            ],
-            buttons: {
-                buttons: [
-                    { extend: 'copyHtml5',
-                        text: '<i class="fas fa-copy"></i>',
-                        title: tableTitle,
-                        titleAttr: 'Copy to Clipboard',
-                        exportOptions: {
-                            columns: ':visible:Not(.not-exported)',
-                            rows: ':visible',
-                        },
-                    },
-                    { extend: 'excelHtml5',
-                        text: '<i class="fas fa-file-excel"></i>',
-                        title: tableTitle,
-                        titleAttr: 'Export to Excel',
-                        exportOptions: {
-                            columns: ':visible:Not(.not-exported)',
-                            rows: ':visible',
-                        },
-                    },
-                    { extend: 'pdfHtml5',
-                        text: '<i class="fas fa-file-pdf"></i>',
-                        title: tableTitle,
-                        titleAttr: 'Export to PDF',
-                        orientation: 'landscape',
-                        pageSize: 'LEGAL',
-                        exportOptions: {
-                            columns: ':visible:Not(.not-exported)',
-                            rows: ':visible',
-                        },
-                    },
-                    { extend: 'print',
-                        text: '<i class="fas fa-print"></i>',
-                        title: tableTitle,
-                        titleAttr: 'Print Table',
-                        exportOptions: {
-                            columns: ':visible:Not(.not-exported)',
-                            rows: ':visible',
-                        },
-                    },
-                    { extend: 'colvis',
-                        text: '<i class="fas fa-eye"></i>',
-                        titleAttr: 'Show/Hide Columns',
-                        exportOptions: {
-                            columns: ':visible:Not(.not-exported)',
-                            rows: ':visible',
-                        },
-                    }
-                ],
-                dom: {
-                    button: {
-                        className: 'dt-button'
-                    }
-                }
-            },
-
-        });
-        var divTitle = ''
-            + '<div class="col-12 text-center text-md-left pt-4 display-2" style="text-align: center !important;">'
-            + '<h1 class="text-dark">' + tableTitle + '</h1>'
-            + '</div>';
-
-        $("#fortext").append(divTitle);
-
-    });
+    var columns = [
+        {data: 'name', name: 'name'},
+        {data: 'january', name: 'january'},
+        {data: 'february', name: 'february'},
+        {data: 'march', name: 'march'},
+        {data: 'april', name: 'april'},
+        {data: 'may', name: 'may'},
+        {data: 'june', name: 'june'},
+        {data: 'july', name: 'july'},
+        {data: 'august', name: 'august'},
+        {data: 'september', name: 'september'},
+        {data: 'october', name: 'october'},
+        {data: 'november', name: 'november'},
+        {data: 'december', name: 'december'},
+        {data: 'all', name: 'all'},
+    ];
+    var getData = "{{ route('report','10') }}";
+    var tableTitle = "{{__('10 - Отчет по кол-ву статусам')}}";
 </script>
 @endif
-
+@include('site.components.yajra')
 @endsection

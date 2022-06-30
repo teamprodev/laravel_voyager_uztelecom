@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
+use App\Models\Roles;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use TCG\Voyager\Http\Controllers\VoyagerUserController;
 
 class UserController extends VoyagerUserController
@@ -23,5 +27,18 @@ class UserController extends VoyagerUserController
         {
             return redirect()->back();
         }
+    }
+    public function getData(Request $request)
+    {
+        if ($request->id) {
+            $frameworks = Department::where('branch_id', $request->id)->get();
+            $id = DB::table('roles')->whereRaw('json_contains(branch_id, \'["'.$request->id.'"]\')')->get();
+
+            if ($frameworks) {
+                return response()->json(['status' => 'success', 'data' => $frameworks,'role' => $id], 200);
+            }
+            return response()->json(['status' => 'failed', 'message' => 'No frameworks found'], 404);
+        }
+        return response()->json(['status' => 'failed', 'message' => 'Please select language'], 500);
     }
 }
