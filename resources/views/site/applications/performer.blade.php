@@ -97,71 +97,7 @@
     <script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.legacy.min.js" nomodule></script>
     <script src="https://releases.transloadit.com/uppy/locales/v2.0.5/ru_RU.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        var uppy = new Uppy.Core({
-            debug: true,
-            autoProceed: true,
-            restrictions: {
-                minFileSize: null,
-                maxFileSize: 10000000,
-                maxTotalFileSize: null,
-                maxNumberOfFiles: 10,
-                minNumberOfFiles: 0,
-                allowedFileTypes: null,
-                requiredMetaFields: [],
-            },
-            meta: {},
-            onBeforeFileAdded: (currentFile, files) => currentFile,
-            onBeforeUpload: (files) => {
-            },
-            locale: {
-                strings: {
-                    browseFiles: 'прикрепить файл',
-                    dropPasteFiles: '%{browseFiles}',
-                }
-            },
-            store: new Uppy.DefaultStore(),
-            logger: Uppy.justErrorsLogger,
-            infoTimeout: 5000,
-        })
-            .use(Uppy.Dashboard, {
-                trigger: '.UppyModalOpenerBtn',
-                inline: true,
-                target: '#file',
-                showProgressDetails: true,
-                note: 'Все типы файлов, до 10 МБ',
-                width: 300,
-                height: 200,
-                metaFields: [
-                    {id: 'name', name: 'Name', placeholder: 'file name'},
-                    {id: 'caption', name: 'Caption', placeholder: 'describe what the image is about'}
-                ],
-                browserBackButtonClose: true
-            })
-            .use(Uppy.XHRUpload, {
-                endpoint: '{{route('uploadImage', $application->id)}}',
-                formData: true,
-                fieldName: 'performer_file',
-                headers: file => ({
-                    'X-CSRF-TOKEN': '{{csrf_token()}}'
-                }),
-            });
-        uppy.on('upload-success', (file, response) => {
-            const httpStatus = response.status // HTTP status code
-            const httpBody = response.body   // extracted response data
-            // do something with file and response
-        });
-        uppy.on('file-added', (file) => {
-            uppy.setFileMeta(file.id, {
-                size: file.size,
-            })
-            console.log(file.name);
-        });
-        uppy.on('complete', result => {
-            console.log('successful files:', result.successful)
-            console.log('failed files:', result.failed)
-        });
-    </script>
+    <x-laravelUppy url="{{route('uploadImage', $application->id)}}" target="#file"/>
 </div>
 @else
     <h3 style="text-align:center;color:red;">{{ __('Руководство не выбрало вас') }}</h3>
