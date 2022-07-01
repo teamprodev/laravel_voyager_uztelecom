@@ -31,25 +31,29 @@ USE App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/report/request/{id}',[ReportController::class,'report'])->name('report');
+Route::controller(BranchController::class)->group(function() {
+    Route::post('/branches/{id}/post','update')->name('signers.update');
+    Route::get('/branches/ajax_branch','ajax_branch')->name('branches.ajax_branch');
+    Route::post('/branches/putCache','putCache')->name('branches.putCache');
+    Route::get('/branches/view','view')->name('branches.view');
+    Route::get('branches/getData','getData')->name('signers.getData');
+});
+Route::controller(ReportController::class)->group(function() {
+    Route::post('/request','request')->name('request');
+    Route::get('/report/request/{id}','report')->name('report');
+
+});
 Route::get('roles/getData',[RoleController::class,'getData'])->name('voyager.roles.getData');
 Route::get('departments/getData',[DepartmentController::class,'getData'])->name('voyager.departments.getData');
 Route::get('department/getData/',[UserController::class,'getData'])->name('voyager.users.getData');
-Route::post('/request',[ReportController::class,'request'])->name('request');
 Route::post('/warehouse',[WarehouseController::class,'create'])->name('warehouse.create');
 Route::post('/delete_file',[ApplicationController::class,'file_delete'])->name('delete_file');
 
 Route::get('/user/{user}',[UserController::class,'changeLeader'])->name('users.leader');
-Route::post('/branches/{id}/post',[BranchController::class,'update'])->name('signers.update');
-
-Route::get('/branches/ajax_branch',[BranchController::class,'ajax_branch'])->name('branches.ajax_branch');
-Route::post('/branches/putCache',[BranchController::class,'putCache'])->name('branches.putCache');
-Route::get('/branches/view',[BranchController::class,'view'])->name('branches.view');
 
 Route::get('/', function () {
     return redirect()->route('site.applications.index');
 });
-Route::get('branches/getData',[BranchController::class,'getData'])->name('signers.getData');
 Route::post('/uploadimage/{application}/update', [ApplicationController::class, 'uploadImage'])->name('uploadImage');
 Route::group([
     'prefix' => 'admin',
