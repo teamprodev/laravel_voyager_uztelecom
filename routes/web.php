@@ -123,25 +123,28 @@ Route::group([
                     function (){
                         Route::get('', [ApplicationController::class, 'show_draft']);
                     });
-                    Route::get('', [ApplicationController::class, 'index'])->name('index');
-                    Route::get('{status}/show_status', [ApplicationController::class, 'show_status'])->name('show_status');
-                    Route::get('status_table/show', [ApplicationController::class, 'status_table'])->name('status_table');
-                    Route::get('performer_status', [ApplicationController::class, 'performer_status_get'])->name('performer_status_get');
-                    Route::post('performer_status/post', [ApplicationController::class, 'performer_status_post'])->name('performer_status_post')->middleware('branch');
-                    Route::get('performer_status/show', [ApplicationController::class, 'performer_status'])->name('performer_status');
-                    Route::get('list', [ApplicationController::class, 'getdata'])->name('list');
-                    Route::get('list/signedocs/{application}', [ApplicationController::class, 'SignedDocs'])->name('list.signedocs');
-                    Route::get('{application}/show/{view?}', [ApplicationController::class, 'show'])->name('show')->middleware('branch');
-                    Route::get('{application}/edit', [ApplicationController::class, 'edit'])->name('edit')->middleware('branch');
-                    Route::get('{application}/clone', [ApplicationController::class, 'clone'])->name('clone')->middleware('branch','application_user_id');
-                    Route::post('{application}/update', [ApplicationController::class, 'update'])->name('update')->middleware('branch');
-                    Route::get('{application}/destroy', [ApplicationController::class, 'destroy'])->name('destroy')->middleware('branch','application_user_id');
-                    Route::get('create', [ApplicationController::class, 'create'])->name('create')->middleware('branch');
-                    Route::post('store', [ApplicationController::class, 'store'])->name('store')->middleware('branch');
-                    Route::put('{application}/vote', [ApplicationController::class, 'vote'])->name('vote')->middleware('branch');
-                    Route::post('{application}/is_more_than_limit', [ApplicationController::class, 'is_more_than_limit'])->name('is_more_than_limit')->middleware('branch','application_user_id');
-                    Route::get('getAll', [ApplicationController::class, 'getAll'])->name('getAll');
+                    Route::controller(ApplicationController::class)->group(function() {
+                        Route::get('', 'index')->name('index');
+                        Route::get('{status}/show_status','show_status')->name('show_status');
+                        Route::get('status_table/show','status_table')->name('status_table');
+                        Route::get('performer_status','performer_status_get')->name('performer_status_get');
+                        Route::post('performer_status/post','performer_status_post')->name('performer_status_post')->middleware('branch');
+                        Route::get('performer_status/show','performer_status')->name('performer_status');
+                        Route::get('list','getdata')->name('list');
+                        Route::get('list/signedocs/{application}','SignedDocs')->name('list.signedocs');
+                        Route::get('{application}/show/{view?}','show')->name('show')->middleware('branch');
+                        Route::get('{application}/edit','edit')->name('edit')->middleware('branch');
+                        Route::get('{application}/clone','clone')->name('clone')->middleware('branch','application_user_id');
+                        Route::post('{application}/update','update')->name('update')->middleware('branch');
+                        Route::get('{application}/destroy','destroy')->name('destroy')->middleware('branch','application_user_id');
+                        Route::get('create','create')->name('create')->middleware('branch');
+                        Route::post('store','store')->name('store')->middleware('branch');
+                        Route::put('{application}/vote','vote')->name('vote')->middleware('branch');
+                        Route::post('{application}/is_more_than_limit','is_more_than_limit')->name('is_more_than_limit')->middleware('branch','application_user_id');
+                        Route::get('getAll','getAll')->name('getAll');
+                    });
                     Route::post('applications/{application}/eimzo/sign', [ImzoController::class, 'verifyPks'])->name('imzo.sign');
+
                 });
 
             Route::group(
