@@ -45,7 +45,8 @@ class SignDocsObserver
             $role_id = $doc->role_id;
             return $role_id;
         });
-        $roles_need_sign = json_decode($signedDocs->application->signers, true);
+        $roles_need_sign = json_decode($signedDocs->application->signers);
+
         if (in_array(7, $agreedUsers->toArray())) {
             $signedDocs->application->status = Application::AGREED;
             $signedDocs->application->show_director = 2;
@@ -53,10 +54,10 @@ class SignDocsObserver
             $signedDocs->application->status = Application::REJECTED;
         } elseif ($canceledUsers->toArray() != null) {
             $signedDocs->application->status = Application::REFUSED;
-        }elseif (count(array_diff($roles_need_sign, $agreedUsers->toArray())) == 1 && $signedDocs->application->is_more_than_limit == 1) {
+        }elseif (count(array_diff(json_decode($roles_need_sign), $agreedUsers->toArray())) == 1 && $signedDocs->application->is_more_than_limit == 1) {
             $signedDocs->application->show_director = 1;
             $signedDocs->application->status = Application::IN_PROCESS;
-        }elseif(array_diff($roles_need_sign, $agreedUsers->toArray()) == null && $signedDocs->application->is_more_than_limit != 1){
+        }elseif(array_diff(json_decode($roles_need_sign), $agreedUsers->toArray()) == null && $signedDocs->application->is_more_than_limit != 1){
             $signedDocs->application->show_leader = 1;
             $signedDocs->application->status = Application::IN_PROCESS;
         }else {
