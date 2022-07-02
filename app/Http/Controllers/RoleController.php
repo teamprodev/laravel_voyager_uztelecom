@@ -150,6 +150,7 @@ class RoleController extends VoyagerRoleController
     public function update(Request $request, $id)
     {
         in_array(198,$request->permissions) ? $request->branch_id = Branch::pluck('id')->toArray(): [];
+        $request->branch_id = array_map('strval', $request->branch_id);
         $role = Roles::find($id);
         $add_json = DB::table('branches')->whereRaw('json_contains(add_signers, \'['.$role->id.']\')')->pluck('add_signers','id');
         $json = DB::table('branches')->whereRaw('json_contains(signers, \'['.$role->id.']\')')->pluck('signers','id');
