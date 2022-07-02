@@ -157,27 +157,21 @@ class RoleController extends VoyagerRoleController
         $role->save();
         foreach ($add_json as $item => $value)
         {
-            if(in_array(array($item),$branch_id))
-            {
-                $signerssss = json_decode($value);
-                $array_diff = array_diff($signerssss,array($role->id));
-                $add_s = $this->array_diff_array($array_diff);
-                $save = Branch::find($item);
-                $save->add_signers = $add_s;
-                $save->save();
-            }
+            $signerssss = json_decode($value);
+            $array_diff = array_diff($signerssss,array($role->id));
+            $array_diff ? $add_s = $this->array_diff_array($array_diff):$add_s = null;
+            $save = Branch::find($item);
+            $save->add_signers = $add_s;
+            $save->save();
         }
         foreach ($json as $item => $value)
         {
-            if(in_array(array($item),$branch_id))
-            {
-                $signerssss = json_decode($value);
-                $array_diff = array_diff($signerssss,array($role->id));
-                $required_s = $this->array_diff_array($array_diff);
-                $save = Branch::find($item);
-                $save->signers = $required_s;
-                $save->save();
-            }
+            $signerssss = json_decode($value);
+            $array_diff = array_diff($signerssss,array($role->id));
+            $array_diff ? $required_s = $this->array_diff_array($array_diff):$required_s = null;
+            $save = Branch::find($item);
+            $save->signers = $required_s;
+            $save->save();
         }
 
         foreach ($request->branch_id as $branch)
