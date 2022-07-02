@@ -832,14 +832,7 @@ class ApplicationService
             $data['branch_leader_user_id'] = auth()->user()->id;
 //            $data['performer_head_of_dep_user_id'] = auth()->user()->id;
         }
-        if ($application->is_more_than_limit != 1)
-        {
-            $roles = ($application->branch->signers);
-        }else{
-            $json = Branch::find(9);
-            $roles = $json->signers;
-        }
-
+        $roles = ($application->branch->signers);
         if (isset($data['signers']))
         {
             $array = $roles ? array_merge(json_decode($roles),$data['signers']): $data['signers'];
@@ -876,7 +869,7 @@ class ApplicationService
             $application->status = 'new';
             $message = "{$application->id} "."{$application->name} ".setting('admin.application_created');
             $this->sendNotifications($array, $application,$message);
-        }else{
+        }elseif($application->signers == null){
             $data['signers'] = $roles;
         }
         $result = $application->update($data);
