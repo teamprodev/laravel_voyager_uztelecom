@@ -806,9 +806,9 @@ class ApplicationService
             $data['performer_comment_date'] = $now->toDateTimeString();
             $data['performer_user_id'] = $user->id;
         }
-        $data['resource_id'] == "[object Object]" ? $data['resource_id'] = null:[];
         if(isset($data['resource_id']))
         {
+            $data['resource_id'] == "[object Object]" ? $data['resource_id'] = null:[];
             $explode = explode(',',$data['resource_id']);
             $id = [];
             for ($i = 0; $i < count($explode); $i++)
