@@ -808,16 +808,20 @@ class ApplicationService
         }
         if(isset($data['resource_id']))
         {
-            $data['resource_id'] == "[object Object]" ? $data['resource_id'] = null:[];
-            $explode = explode(',',$data['resource_id']);
-            $id = [];
-            for ($i = 0; $i < count($explode); $i++)
+            if($data['resource_id'] == "[object Object]")
             {
-                $all = Resource::where('name','like',"%{$explode[$i]}%")->first();
-                $id[] = $all->id;
-                $data['resource_id'] = json_encode($id);
+                $data['resource_id'] = null;
+            }else{
+                $explode = explode(',',$data['resource_id']);
+                $id = [];
+                for ($i = 0; $i < count($explode); $i++)
+                {
+                    $all = Resource::where('name','like',"%{$explode[$i]}%")->first();
+                    $id[] = $all->id;
+                    $data['resource_id'] = json_encode($id);
+                }
+                $application->status = Application::NEW;
             }
-            $application->status = Application::NEW;
         }
 
         if (isset($data['performer_role_id']))
