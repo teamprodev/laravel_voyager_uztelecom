@@ -16,6 +16,7 @@ class Application extends Model
 
     protected $dates = ['deleted_at'];
     const NEW = 'new';
+    const DRAFT = 'draft';
     const IN_PROCESS = 'in_process';
     const CANCELED = 'canceled';
     const ACCEPTED = 'accepted';

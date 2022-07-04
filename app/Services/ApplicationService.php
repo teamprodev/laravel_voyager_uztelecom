@@ -773,10 +773,11 @@ class ApplicationService
     public function update($application,$request)
     {
         $user = auth()->user();
+        $now = Carbon::now();
         $data = $request->validated();
         if(auth()->id() == $application->user_id && $application->status == 'refused'||auth()->id() == $application->user_id && $application->status == 'rejected')
         {
-            $data['status'] = 'new';
+            $data['status'] = Application::NEW;
             $signedDocs = SignedDocs::where('application_id',$application->id)->get();
             foreach($signedDocs as $doc)
             {
@@ -788,7 +789,7 @@ class ApplicationService
         if(isset($data['draft']))
         {
             if($data['draft'] == 1)
-                $data['status'] = 'draft';
+                $data['status'] = Application::DRAFT;
         }
         if(isset($data['performer_status']))
         {
@@ -797,41 +798,34 @@ class ApplicationService
         }
         if(isset($data['performer_leader_comment']))
         {
-            $data['performer_leader_comment_date'] = Carbon::now()->toDateTimeString();
+            $data['performer_leader_comment_date'] = $now->toDateTimeString();
             $data['performer_leader_user_id'] = $user->id;
         }
         if(isset($data['performer_comment']))
         {
-            $data['performer_comment_date'] = Carbon::now()->toDateTimeString();
+            $data['performer_comment_date'] = $now->toDateTimeString();
             $data['performer_user_id'] = $user->id;
         }
+        $data['resource_id'] == "[object Object]" ? $data['resource_id'] = null:[];
         if(isset($data['resource_id']))
         {
-            if($data['resource_id'] == "[object Object]")
+            $explode = explode(',',$data['resource_id']);
+            $id = [];
+            for ($i = 0; $i < count($explode); $i++)
             {
-                $data['resource_id'] = null;
-            }else{
-                $explode = explode(',',$data['resource_id']);
-                $id = [];
-                for ($i = 0; $i < count($explode); $i++)
-                {
-                    $all = Resource::where('name','like',"%{$explode[$i]}%")->first();
-                    $id[] = $all->id;
-                    $data['resource_id'] = json_encode($id);
-                }
-                $application->status = 'new';
+                $all = Resource::where('name','like',"%{$explode[$i]}%")->first();
+                $id[] = $all->id;
+                $data['resource_id'] = json_encode($id);
             }
-
+            $application->status = Application::NEW;
         }
 
         if (isset($data['performer_role_id']))
         {
-            $mytime = Carbon::now();
-            $data['performer_received_date'] = $mytime->toDateTimeString();
+            $data['performer_received_date'] = $now->toDateTimeString();
             $data['status'] = 'distributed';
             $data['show_leader'] = 2;
             $data['branch_leader_user_id'] = $user->id;
-//            $data['performer_head_of_dep_user_id'] = $user->id;
         }
         $roles = ($application->branch->signers);
         if (isset($data['signers']))
@@ -841,21 +835,11 @@ class ApplicationService
             foreach ($array as $signers)
             {
                 $signer = SignedDocs::where('application_id',$application->id)->where('role_id',$signers)->first();
-                if($signer == null)
-                {
-                    $docs = new SignedDocs();
-                    $docs->role_id = $signers;
-                    $docs->application_id = $application->id;
-                    $docs->table_name = "applications";
-                    $docs->save();
-                }else{
-                    $signer->comment = null;
-                    $signer->status = null;
-                    $signer->pkcs = null;
-                    $signer->text = null;
-                    $signer->data = null;
-                }
-
+                $docs = new SignedDocs();
+                $docs->role_id = $signers;
+                $docs->application_id = $application->id;
+                $docs->table_name = "applications";
+                $signer == null ? $docs->save():[];
             }
             if($application->signers != null)
             {
@@ -867,11 +851,24 @@ class ApplicationService
                     SignedDocs::where('application_id',$application->id)->where('role_id',$delete)->delete();
                 }
             }
-            $application->status = 'new';
+            $application->status = Application::NEW;
             $message = "{$application->id} "."{$application->name} ".setting('admin.application_created');
             $this->sendNotifications($array, $application,$message);
-        }elseif($application->signers == null){
+        }elseif($application->signers == null)
+        {
             $data['signers'] = $roles;
+            $array = json_decode($roles);
+            foreach ($array as $signers)
+            {
+                $signer = SignedDocs::where('application_id',$application->id)->where('role_id',$signers)->first();
+                $docs = new SignedDocs();
+                $docs->role_id = $signers;
+                $docs->application_id = $application->id;
+                $docs->table_name = "applications";
+                $signer == null ? $docs->save():[];
+            }
+            $message = "{$application->id} "."{$application->name} ".setting('admin.application_created');
+            $this->sendNotifications($array, $application,$message);
         }
         $result = $application->update($data);
         if ($result)
