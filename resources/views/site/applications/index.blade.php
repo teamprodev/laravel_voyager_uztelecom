@@ -52,7 +52,7 @@
                 "language": {
                     "lengthMenu": "Показать _MENU_ записей",
                     "info":      'Показаны записи в диапазоне от _START_ до _END_ (В общем _TOTAL_)',
-                    "search":  'Поиск',
+                    "search":  "{{ __('Поиск') }}",
                     "paginate": {
                         "previous": "Назад",
                         "next": "Дальше"
