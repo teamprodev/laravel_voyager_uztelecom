@@ -772,6 +772,7 @@ class ApplicationService
     }
     public function update($application,$request)
     {
+        $user = auth()->user();
         $data = $request->validated();
         if(auth()->id() == $application->user_id && $application->status == 'refused'||auth()->id() == $application->user_id && $application->status == 'rejected')
         {
@@ -791,18 +792,18 @@ class ApplicationService
         }
         if(isset($data['performer_status']))
         {
-            $application->performer_user_id = auth()->user()->id;
+            $application->performer_user_id = $user->id;
             $application->status = $data['performer_status'];
         }
         if(isset($data['performer_leader_comment']))
         {
             $data['performer_leader_comment_date'] = Carbon::now()->toDateTimeString();
-            $data['performer_leader_user_id'] = auth()->user()->id;
+            $data['performer_leader_user_id'] = $user->id;
         }
         if(isset($data['performer_comment']))
         {
             $data['performer_comment_date'] = Carbon::now()->toDateTimeString();
-            $data['performer_user_id'] = auth()->user()->id;
+            $data['performer_user_id'] = $user->id;
         }
         if(isset($data['resource_id']))
         {
@@ -829,8 +830,8 @@ class ApplicationService
             $data['performer_received_date'] = $mytime->toDateTimeString();
             $data['status'] = 'distributed';
             $data['show_leader'] = 2;
-            $data['branch_leader_user_id'] = auth()->user()->id;
-//            $data['performer_head_of_dep_user_id'] = auth()->user()->id;
+            $data['branch_leader_user_id'] = $user->id;
+//            $data['performer_head_of_dep_user_id'] = $user->id;
         }
         $roles = ($application->branch->signers);
         if (isset($data['signers']))
