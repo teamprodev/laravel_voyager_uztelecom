@@ -127,7 +127,7 @@
     "Основание": "Asos",
     "Основание(план закупок, рапорт, расспорежение руководства)": "Baza (xaridlar rejasi, hisobot, boshqaruvni yo'q qilish)",
     "Основание: Закон о государственных закупках / другие решения": "Jamg'arma: Davlat xaridlari / boshqa qarorlar to'g'risidagi qonun",
-    "Основания (план закупок, рапорт,распоряжение руководства)": "Asoslar (xaridlar rejasi, hisobot, boshqaruvni boshqarish)",
+    "Основания (план закупок, рапорт,распоряжение руководства)": "Asoslar (xaridlar rejasi, hisobot, Rahbarning buyrug'i)",
     "Особые требования": "Maxsus talablar",
     "Отказ": "Voz kechish",
     "Отказана": "Rad qilindi",
@@ -221,5 +221,8 @@
     "Дополнительные требования": "Qo'shimcha talablar",
     "Другие файлы":"Boshqa fayllar " ,
     "Заявки" :"Buyurtmalar",
-    "Поиск" :"Qidiruv"
+    "Поиск" :"Qidiruv",
+    "Компания":"Kompaniya",
+    "Филлиал":"Fillial",
+    "Визирование заявки через :":"Buyurtmani quyidagi yo'llar bilan tasqdiqlash :"
 }

@@ -11,23 +11,23 @@
   ->post() }}
     <div class="container">
         @if($application->is_more_than_limit == 1)
-        {{ Aire::submit(__("Company"))
+        {{ Aire::submit(__("Компания"))
         ->variant()->green()
         ->name('is_more_than_limit')
         ->value('1') }}
         @else
-            {{ Aire::submit(__("Company"))
+            {{ Aire::submit(__("Компания"))
         ->variant()->gray()
         ->name('is_more_than_limit')
         ->value('1') }}
         @endif
         @if($application->is_more_than_limit == '0')
-        {{ Aire::submit(__("Filial"))
+        {{ Aire::submit(__("Филлиал"))
         ->variant()->green()
         ->name('is_more_than_limit')
         ->value('0') }}
             @else
-            {{ Aire::submit(__("Filial"))
+            {{ Aire::submit(__("Филлиал"))
         ->variant()->gray()
         ->name('is_more_than_limit')
         ->value('0') }}
