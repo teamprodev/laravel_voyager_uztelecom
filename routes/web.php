@@ -153,8 +153,10 @@ Route::group([
                     'prefix' => 'faqs',
                 ],
                 function(){
-                    Route::get('', [FaqsController::class, 'index'])->name(   'index');
-                    Route::get('{faq}/show', [FaqsController::class, 'show'])->name('show');
+                    Route::controller(FaqsController::class)->group(function() {
+                        Route::get('','index')->name('index');
+                        Route::get('{faq}/show','show')->name('show');
+                    });
                     Route::get('{faq}/edit', [ApplicationController::class, 'edit'])->name('edit');
                     Route::post('{faq}/update', [ApplicationController::class, 'update'])->name('update');
                     Route::get('create', [ApplicationController::class, 'create'])->name('create');
