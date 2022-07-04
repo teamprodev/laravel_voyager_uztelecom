@@ -883,7 +883,7 @@ class ApplicationService
             $user_ids = User::query()->whereIn('role_id', $array)->pluck('id')->toArray();
             foreach ($user_ids as $user_id) {
                 $notification = Notification::query()->firstOrCreate(['user_id' => $user_id, 'application_id' => $application->id,'message' => $message]);
-                if ($notification->wasRecentlyCreated) {
+//                if ($notification->wasRecentlyCreated) {
 //                    $diff = now()->diffInMinutes($application->created_at);
 //                    $data = [
 //                        'id' => $application->id,
@@ -891,7 +891,7 @@ class ApplicationService
 //                    ];
 
 //                    broadcast(new Notify(json_encode($data, $assoc = true), $user->id))->toOthers();     // notification
-                }
+//                }
             }
 
             Http::post('ws.smarts.uz/api/send-notification', [
