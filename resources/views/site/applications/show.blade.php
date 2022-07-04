@@ -382,6 +382,7 @@
                         <th>{{ __('Роль') }}</th>
                         <th>{{ __('Комментарий') }}</th>
                         <th>{{ __('Пользователь') }}</th>
+                        <th class="hidden">Index</th>
                         <th>Дата подписи</th>
                     </tr>
                 </thead>
@@ -392,14 +393,22 @@
             $(function () {
                 var table = $('#yajra-datatable').DataTable({
                     processing: true,
+                    order: [[5, 'asc']],
                     serverSide: true,
                     ajax: "{{ route('site.applications.list.signedocs',$application->id) }}",
+                    columnDefs :[
+                        {
+                            targets : 5,
+                            className : 'hidden',
+                        }
+                    ],
                     columns: [
                         {data: 'id', name: 'id'},
                         {data: 'status', name: 'status'},
                         {data: 'role_id', name: 'role_id'},
                         {data: 'comment', name: 'comment'},
                         {data: 'user_id', name: 'user_id'},
+                        {data: 'role_index', name: 'role_index'},
                         {data: 'updated_at', name: 'updated_at'},
                     ]
                 });
