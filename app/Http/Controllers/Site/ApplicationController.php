@@ -128,7 +128,7 @@ class ApplicationController extends Controller
             $application->is_more_than_limit = 1;
             $application->branch_initiator_id = 9;
         }
-        if($application->branch_initiator_id == 9)
+        if($application->branch_initiator_id == 9 && $application->user_id == 9)
         {
             $application->is_more_than_limit = 1;
         }
