@@ -806,18 +806,22 @@ class ApplicationService
             $data['performer_comment_date'] = $now->toDateTimeString();
             $data['performer_user_id'] = $user->id;
         }
-        $data['resource_id'] == "[object Object]" ? $data['resource_id'] = null:[];
         if(isset($data['resource_id']))
         {
-            $explode = explode(',',$data['resource_id']);
-            $id = [];
-            for ($i = 0; $i < count($explode); $i++)
+            if($data['resource_id'] == "[object Object]")
             {
-                $all = Resource::where('name','like',"%{$explode[$i]}%")->first();
-                $id[] = $all->id;
-                $data['resource_id'] = json_encode($id);
+                $data['resource_id'] = null;
+            }else{
+                $explode = explode(',',$data['resource_id']);
+                $id = [];
+                for ($i = 0; $i < count($explode); $i++)
+                {
+                    $all = Resource::where('name','like',"%{$explode[$i]}%")->first();
+                    $id[] = $all->id;
+                    $data['resource_id'] = json_encode($id);
+                }
+                $application->status = Application::NEW;
             }
-            $application->status = Application::NEW;
         }
 
         if (isset($data['performer_role_id']))
@@ -883,7 +887,7 @@ class ApplicationService
             $user_ids = User::query()->whereIn('role_id', $array)->pluck('id')->toArray();
             foreach ($user_ids as $user_id) {
                 $notification = Notification::query()->firstOrCreate(['user_id' => $user_id, 'application_id' => $application->id,'message' => $message]);
-                if ($notification->wasRecentlyCreated) {
+//                if ($notification->wasRecentlyCreated) {
 //                    $diff = now()->diffInMinutes($application->created_at);
 //                    $data = [
 //                        'id' => $application->id,
@@ -891,7 +895,7 @@ class ApplicationService
 //                    ];
 
 //                    broadcast(new Notify(json_encode($data, $assoc = true), $user->id))->toOthers();     // notification
-                }
+//                }
             }
 
             Http::post('ws.smarts.uz/api/send-notification', [
