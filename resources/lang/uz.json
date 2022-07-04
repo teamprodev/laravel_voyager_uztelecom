@@ -102,7 +102,7 @@
     "Март": "Mart oyi",
     "Махсулот келишининг муддати": "Mahsulot Kilanie Muddaati",
     "На рассмотрении": "Ko'rib chiqish bilan",
-    "Назад": "Orqaga qaytish",
+    "Назад": "Ortga qaytish",
     "Наименование доставщика": "Yetkazib beruvchining nomi",
     "Наименование заказчика": "Mijoz nomi",
     "Наименование поставщика": "Ta'minotchi nomi",
@@ -224,5 +224,7 @@
     "Поиск" :"Qidiruv",
     "Компания":"Kompaniya",
     "Филлиал":"Fillial",
-    "Визирование заявки через :":"Buyurtmani quyidagi yo'llar bilan tasqdiqlash :"
+    "Визирование заявки через :":"Buyurtmani quyidagi yo'llar bilan tasqdiqlash :",
+    "Заявки по филиалу":"Filial bo'yicha buyurtmalar",
+    "Дальше": "Keyingi"
 }
