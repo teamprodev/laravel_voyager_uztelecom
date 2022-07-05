@@ -206,6 +206,92 @@
                         </select>
                     </div>
                     <div class="performer-div" style="border:2px solid black;padding:10 px 20px 10px 20px;">
+                    <div class="mr-4 pt-2 pb-2 w-50">
+                    {{Aire::select($branch, 'select', __('Филиал заказчик по контракту'))
+                        ->value($application->branch_customer_id)
+                        ->disabled()
+                        }}
+                    {{Aire::input('bio', __('Номер лота'))
+                        ->value($application->lot_number)
+                        ->disabled()
+                    }}
+                    {{Aire::input('bio', __('Номер договора'))
+                        ->value($application->contract_number)
+                        ->disabled()
+                    }}.
+                    {{Aire::date('date_input', __('Дата договора'))
+                        ->value($application->contract_date)
+                        ->disabled()
+                    }}
+                    {{Aire::date('bio', __('Дата протокола'))
+                        ->value($application->protocol_date)
+                        ->disabled()
+                    }}
+                    {{Aire::input('bio', __('Номер протокола'))
+                        ->value($application->protocol_number)
+                        ->disabled()
+                    }}
+                    {{Aire::textArea('bio', __('Предмет договора (контракта) и краткая характеристика'))
+                        ->value($application->contract_info)
+                        ->rows(3)
+                        ->cols(40)
+                        ->disabled()
+                    }}
+                    {{Aire::checkbox('checkbox', __('С НДС'))
+                        ->disabled()
+                    }}
+                    {{Aire::input('bio', __('Общая реальная сумма'))
+                        ->value($application->contract_price)
+                        ->disabled()
+                    }}
+                </div>
+                <div class="pt-2 pb-2 w-50">
+                    {{Aire::input('bio', __('Товары (обслуживание) страна изготовленной'))
+                        ->value($application->country_produced_id)
+                        ->disabled()
+                    }}
+
+
+                    {{Aire::input('bio', __('Наименование поставщика'))
+                        ->value($application->supplier_name)
+                        ->disabled()
+                    }}
+                    {{Aire::input('bio', __('Поставщик Перемешать номер'))
+                        ->value($application->supplier_inn)
+                        ->disabled()
+                    }}
+                    {{Aire::textArea('bio', __('Информация о товаре'))
+                        ->value($application->product_info)
+                        ->rows(3)
+                        ->cols(40)
+                        ->disabled()
+                    }}
+
+                    <div class="mr-4 pt-2 pb-2 w-50">
+                        {{Aire::input( 'select', __('Предмет закупки'))
+                            ->value($application->subject)
+                            ->disabled()
+                        }}
+                    </div>
+                    <div class="pt-2 pb-2 w-50">
+                        {{Aire::input( 'select', __('Вид закупки'))
+                            ->value($application->type_of_purchase_id)
+                            ->disabled()
+                        }}
+                    </div>
+                    {{Aire::input( 'select')
+                        ->value($application->performer_status)
+                        ->disabled()
+                        }}
+                    <div id="file"></div>
+                    <div id="a" class="hidden mb-3">
+                        <label for="message-text" class="col-form-label">{{ __('Комментарий') }}:</label>
+                        <input class="form-control" name="report_if_cancelled" id="report_if_cancelled">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
                     @if($performer_file != 'null' && $performer_file != null)
                                 <div class="mb-5" style="width: 80%; margin:10px;">
                                     <h5 class="text-left">{{ __('Файл исполнителя') }}</h5>
