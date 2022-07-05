@@ -43,6 +43,14 @@ class Application extends Model
     {
         return $this->belongsTo(User::class,'performer_user_id','id');
     }
+    public function performer_role()
+    {
+        return $this->belongsTo(Roles::class,'performer_role_id','id');
+    }
+    public function branch_leader()
+    {
+        return $this->belongsTo(User::class,'branch_leader_user_id','id');
+    }
     public function performer_leader()
     {
         return $this->belongsTo(User::class,'performer_leader_user_id','id');
