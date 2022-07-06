@@ -13,10 +13,12 @@ class laravelUppy extends Component
      */
     public $url;
     public $target;
-    public function __construct($url,$target)
+    public $fieldName;
+    public function __construct($url,$target,$fieldName)
     {
         $this->url = $url;
         $this->target = $target;
+        $this->fieldName = $fieldName;
     }
 
     /**

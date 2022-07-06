@@ -351,6 +351,7 @@
 <script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.min.js"></script>
 <script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.legacy.min.js" nomodule></script>
 <script src="https://releases.transloadit.com/uppy/locales/v2.0.5/ru_RU.min.js"></script>
-<x-laravelUppy url="{{route('uploadImage', $application->id)}}" target="#file_basis"/>
-<x-laravelUppy url="{{route('uploadImage', $application->id)}}" target="#file_tech_spec"/>
-<x-laravelUppy url="{{route('uploadImage', $application->id)}}" target="#other_files"/>
+
+<x-laravelUppy url="{{route('uploadImage', $application->id)}}" target="#file_basis" fieldName="file_basis"/>
+<x-laravelUppy url="{{route('uploadImage', $application->id)}}" target="#file_tech_spec" fieldName="file_tech_spec"/>
+<x-laravelUppy url="{{route('uploadImage', $application->id)}}" target="#other_files" fieldName="other_files"/>
