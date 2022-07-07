@@ -84,6 +84,9 @@
         .dtsb-searchBuilder{
             width: fit-content;
         }
+        .nav-link p{
+            white-space: inherit !important;
+        }
     </style>
 </head>
 

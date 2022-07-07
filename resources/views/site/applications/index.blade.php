@@ -6,6 +6,7 @@
             .dt-buttons{
                 width: 100%;
             }
+
         </style>
     </head>
 <div id="section" class="pt-6">
@@ -105,11 +106,35 @@
                             text: '<i class="fas fa-print"></i>',
                             title: "Заявки",
                             titleAttr: 'Распечатать',
-                            orientation: 'landscape',
                             exportOptions: {
                                 columns: ':visible:Not(.not-exported)',
                                 rows: ':visible',
                             },
+                            customize: function(win)
+                            {
+
+                                var last = null;
+                                var current = null;
+                                var bod = [];
+
+                                var css = '@page { size: landscape; }',
+                                    head = win.document.head || win.document.getElementsByTagName('head')[0],
+                                    style = win.document.createElement('style');
+
+                                style.type = 'text/css';
+                                style.media = 'print';
+
+                                if (style.styleSheet)
+                                {
+                                    style.styleSheet.cssText = css;
+                                }
+                                else
+                                {
+                                    style.appendChild(win.document.createTextNode(css));
+                                }
+
+                                head.appendChild(style);
+                            }
                         },
                         { extend: 'colvis',
                             text: '<i class="fas fa-eye"></i>',
