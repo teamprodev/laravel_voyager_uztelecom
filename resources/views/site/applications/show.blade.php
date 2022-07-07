@@ -347,6 +347,7 @@
                                     ->disabled()
                                 }}
                             @endif
+                            
                             @if(isset($application->performer_role_id))
                                 {{Aire::textArea('bio', __('Исполнитель'))
                                     ->value(\App\Models\Roles::find($application->performer_role_id)->display_name)
