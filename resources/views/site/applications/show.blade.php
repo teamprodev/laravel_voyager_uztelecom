@@ -205,7 +205,7 @@
                             <option value="USD" @if($application->currency === "USD") selected @endif>USD</option>
                         </select>
                     </div>
-                    <div class="performer-div" style="border:2px solid black;padding:10px 20px 10px 20px;">
+                    <div class="performer-div" style="border:2px solid black;padding:10 px 20px 10px 20px;">
                     <div class="mr-4 pt-2 pb-2 w-50">
                     {{Aire::select($branch, 'select', __('Филиал заказчик по контракту'))
                         ->value($application->branch_customer_id)
@@ -219,11 +219,11 @@
                         ->value($application->contract_number)
                         ->disabled()
                     }}.
-                    {{Aire::input('bio', __('Дата договора'))
+                    {{Aire::date('date_input', __('Дата договора'))
                         ->value($application->contract_date)
                         ->disabled()
                     }}
-                    {{Aire::input('bio', __('Дата протокола'))
+                    {{Aire::date('bio', __('Дата протокола'))
                         ->value($application->protocol_date)
                         ->disabled()
                     }}
@@ -279,28 +279,83 @@
                             ->disabled()
                         }}
                     </div>
+                    {{Aire::input( 'select')
+                        ->value($application->performer_status)
+                        ->disabled()
+                        }}
                     <div id="file"></div>
                     <div id="a" class="hidden mb-3">
                         <label for="message-text" class="col-form-label">{{ __('Комментарий') }}:</label>
                         <input class="form-control" name="report_if_cancelled" id="report_if_cancelled">
                     </div>
-                    @if($performer_file != 'null' && $performer_file != null)
-                        <div class="mb-5" style="width: 80%">
-                            <h5 class="text-left">{{ __('Файл исполнителя') }}</h5>
-                            @foreach($performer_file as $file)
-                                @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
-                                    <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
-                                @else
-                                    <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
-                                    <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
-                                @endif
-                            @endforeach
-                        </div>
-                    @endif
                 </div>
             </div>
         </div>
     </div>
+                    @if($performer_file != 'null' && $performer_file != null)
+                                <div class="mb-5" style="width: 80%; margin:10px;">
+                                    <h5 class="text-left">{{ __('Файл исполнителя') }}</h5>
+                                    @foreach($performer_file as $file)
+                                        @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
+                                            <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
+                                        @else
+                                            <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
+                                            <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            @endif
+                    </div>
+
+                    @if(isset($application->resource_id))
+                        <b>{{ __('Продукт')}}</b>:
+                        @foreach(json_decode($application->resource_id) as $product)
+                            <br> {{\App\Models\Resource::find($product)->name}}
+                        @endforeach
+                    @endif
+
+                    @if(isset($application->branch_leader_comment))
+                        @php
+                            $comment = \App\Models\User::find($application->branch_leader_user_id)->name;
+                        @endphp
+                        {{Aire::textArea('bio', __('Комментарий руководства') . ": {$comment}")
+                        ->value($application->branch_leader_comment)
+                        ->rows(3)
+                        ->cols(40)
+                        ->disabled()
+                         }}
+                    @endif
+                    @if(isset($application->performer_leader_comment))
+                                @php
+                                    $comment = \App\Models\User::find($application->performer_leader_user_id)->name;
+                                @endphp
+                                {{Aire::textArea('bio', __('Комментарии начальника') . ": {$comment}")
+                                    ->value($application->performer_leader_comment)
+                                    ->rows(3)
+                                    ->cols(40)
+                                    ->disabled()
+                                }}
+                            @endif
+                            @if(isset($application->performer_comment))
+                                @php
+                                    $comment = \App\Models\User::find($application->performer_user_id)->name;
+                                @endphp
+                                {{Aire::textArea('bio', __('Комментарии исполнителя') . ": {$comment}")
+                                    ->value($application->performer_comment)
+                                    ->rows(3)
+                                    ->cols(40)
+                                    ->disabled()
+                                }}
+                            @endif
+                            
+                            @if(isset($application->performer_role_id))
+                                {{Aire::textArea('bio', __('Исполнитель'))
+                                    ->value(\App\Models\Roles::find($application->performer_role_id)->display_name)
+                                    ->rows(3)
+                                    ->cols(40)
+                                    ->disabled()
+                                }}
+                            @endif
                     </div>
                     <div class="flex-direction: column">
                         @if($file_basis != 'null' && $file_basis != null)
@@ -342,52 +397,25 @@
                                     @endforeach
                                 </div>
                             @endif
+                            @if($performer_file != 'null' && $performer_file != null)
+                                <div class="mb-5" style="width: 80%">
+                                    <h5 class="text-left">{{ __('Файл исполнителя') }}</h5>
+                                    @foreach($performer_file as $file)
+                                        @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
+                                            <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
+                                        @else
+                                            <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
+                                            <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            @endif
                     </div>
-                    </div>
-                    <div>
+                </div>
+                </div>
 
-                    @if(isset($application->resource_id))
-                        <b>{{ __('Продукт')}}</b>:
-                        @foreach(json_decode($application->resource_id) as $product)
-                            <br> {{\App\Models\Resource::find($product)->name}}
-                        @endforeach
-                    @endif
-
-                    @if(isset($application->branch_leader_comment))
-                        {{Aire::textArea('bio', __('Комментарий руководства') . ": {$application->branch_leader->name}")
-                        ->value($application->branch_leader_comment)
-                        ->rows(3)
-                        ->cols(40)
-                        ->disabled()
-                         }}
-                    @endif
-                    @if(isset($application->performer_leader_comment))
-                        {{Aire::textArea('bio', __('Комментарии начальника') . ": {$application->performer_leader->name}")
-                            ->value($application->performer_leader_comment)
-                            ->rows(3)
-                            ->cols(40)
-                            ->disabled()
-                        }}
-                    @endif
-                    @if(isset($application->performer_comment))
-                        {{Aire::textArea('bio', __('Комментарии исполнителя') . ": {$application->performer->name}")
-                            ->value($application->performer_comment)
-                            ->rows(3)
-                            ->cols(40)
-                            ->disabled()
-                        }}
-                    @endif
-                    @if(isset($application->performer_role_id))
-                        {{Aire::textArea('bio', __('Исполнитель'))
-                            ->value($application->performer_role->display_name)
-                            ->rows(3)
-                            ->cols(40)
-                            ->disabled()
-                        }}
-                    @endif
-                    </div>
-
-        <div class="px-6">
+            </div>
+            <div class="px-6">
                 <table id="yajra-datatable">
                     <thead>
                     <tr>
