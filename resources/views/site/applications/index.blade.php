@@ -52,7 +52,7 @@
                         className: 'dt-body-center dt-head-center'
                     },
                     {
-                        targets: [11,12],
+                        targets: 12,
                         className: 'not-exported'
                     },
                     {
@@ -105,6 +105,7 @@
                             text: '<i class="fas fa-print"></i>',
                             title: "Заявки",
                             titleAttr: 'Распечатать',
+                            orientation: 'landscape',
                             exportOptions: {
                                 columns: ':visible:Not(.not-exported)',
                                 rows: ':visible',
