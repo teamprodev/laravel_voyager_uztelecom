@@ -97,7 +97,7 @@
     <script src="https://releases.transloadit.com/uppy/v2.4.1/uppy.legacy.min.js" nomodule></script>
     <script src="https://releases.transloadit.com/uppy/locales/v2.0.5/ru_RU.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <x-laravelUppy url="{{route('uploadImage', $application->id)}}" target="#file"/>
+    <x-laravelUppy url="{{route('uploadImage', $application->id)}}" target="#file" fieldName="performer_file"/>
 </div>
 @else
     <h3 style="text-align:center;color:red;">{{ __('Руководство не выбрало вас') }}</h3>
