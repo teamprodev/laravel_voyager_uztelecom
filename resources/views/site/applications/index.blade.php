@@ -1,6 +1,14 @@
 @extends('site.layouts.app')
 @section('center_content')
 @if(auth()->user()->branch_id != null && auth()->user()->department_id != null)
+    <head>
+        <style>
+            .dt-buttons{
+                width: 100%;
+            }
+
+        </style>
+    </head>
 <div id="section" class="pt-6">
     <a href="{{route('site.applications.create')}}"
         class="ml-12 bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white mb-8">
@@ -45,6 +53,10 @@
                         className: 'dt-body-center dt-head-center'
                     },
                     {
+                        targets: 12,
+                        className: 'not-exported'
+                    },
+                    {
                         targets: 7,
                         className: 'dt-body-right dt-head-center'}
                 ],
@@ -59,6 +71,87 @@
                     }
                 }, processing: false,
                 serverSide: true,
+                buttons: {
+                    buttons: [
+                        { extend: 'copyHtml5',
+                            text: '<i class="fas fa-copy"></i>',
+                            title: "Заявки",
+                            titleAttr: 'Скопировать в буфер обмена',
+                            exportOptions: {
+                                columns: ':visible:Not(.not-exported)',
+                                rows: ':visible',
+                            },
+                        },
+                        { extend: 'excelHtml5',
+                            text: '<i class="fas fa-file-excel"></i>',
+                            title: "Заявки",
+                            titleAttr: 'Экспорт в Excel',
+                            exportOptions: {
+                                columns: ':visible:Not(.not-exported)',
+                                rows: ':visible',
+                            },
+                        },
+                        { extend: 'pdfHtml5',
+                            text: '<i class="fas fa-file-pdf"></i>',
+                            title: "Заявки",
+                            titleAttr: 'Экспорт в PDF',
+                            orientation: 'landscape',
+                            pageSize: 'LEGAL',
+                            exportOptions: {
+                                columns: ':visible:Not(.not-exported)',
+                                rows: ':visible',
+                            },
+                        },
+                        { extend: 'print',
+                            text: '<i class="fas fa-print"></i>',
+                            title: "Заявки",
+                            titleAttr: 'Распечатать',
+                            exportOptions: {
+                                columns: ':visible:Not(.not-exported)',
+                                rows: ':visible',
+                            },
+                            customize: function(win)
+                            {
+
+                                var last = null;
+                                var current = null;
+                                var bod = [];
+
+                                var css = '@page { size: landscape; }',
+                                    head = win.document.head || win.document.getElementsByTagName('head')[0],
+                                    style = win.document.createElement('style');
+
+                                style.type = 'text/css';
+                                style.media = 'print';
+
+                                if (style.styleSheet)
+                                {
+                                    style.styleSheet.cssText = css;
+                                }
+                                else
+                                {
+                                    style.appendChild(win.document.createTextNode(css));
+                                }
+
+                                head.appendChild(style);
+                            }
+                        },
+                        { extend: 'colvis',
+                            text: '<i class="fas fa-eye"></i>',
+                            titleAttr: 'Показать/скрыть колонки',
+                            exportOptions: {
+                                columns: ':visible:Not(.not-exported)',
+                                rows: ':visible',
+                            },
+                        }
+                    ],
+                    dom: {
+                        button: {
+                            className: 'dt-button'
+                        }
+                    }
+                },
+                dom: "Blfrtip",
                 ajax:
                     "{{ route('site.applications.index') }}",
                 columns: [
