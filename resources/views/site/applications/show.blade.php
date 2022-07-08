@@ -502,12 +502,12 @@
                        ->value($application->contract_date)
                        ->disabled()
                    }}
-                   {{Aire::date('bio', __('Дата протокола'))
-                       ->value($application->protocol_date)
-                       ->disabled()
-                   }}
                    {{Aire::input('bio', __('Номер протокола'))
                        ->value($application->protocol_number)
+                       ->disabled()
+                   }}
+                   {{Aire::date('bio', __('Дата протокола'))
+                       ->value($application->protocol_date)
                        ->disabled()
                    }}
                    {{Aire::textArea('bio', __('Предмет договора (контракта) и краткая характеристика'))
@@ -519,7 +519,7 @@
                    {{Aire::checkbox('checkbox', __('С НДС'))
                        ->disabled()
                    }}
-                   {{Aire::input('bio', __('Общая реальная сумма'))
+                   {{Aire::input('bio', __('Cумма договора'))
                        ->value($application->contract_price)
                        ->disabled()
                    }}
