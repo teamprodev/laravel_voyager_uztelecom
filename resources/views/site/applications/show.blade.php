@@ -12,7 +12,7 @@
             <h5><strong>{{ __('Номер заявки') }} : </strong> {{$application->number}} </h5>
             <h5><strong>Date : </strong>
                 @if($application->date!=null)
-                    {{ Carbon\Carbon::createFromFormat('Y-m-d', $application->date)->Format('d.m.Yг') }}
+                    {{ Carbon\Carbon::createFromFormat('Y-m-d', $application->date)->Format('d.m.Y') }}{{ __('г') }}
                 @endif
             </h5> <br>
             <h5><strong>{{__('Визирование заявки через:') }}</strong>
@@ -79,6 +79,7 @@
                             }}
                         </div>
                     </div>
+
                     <div class="mb-3 row">
                         <label class="col-sm-6" for="specification" class="col-sm-2 col-form-label">{{ __('Описание предмета закупки (технические характеристики)') }}</label>
                         <div class="col-sm-6">
@@ -205,170 +206,16 @@
                             <option value="USD" @if($application->currency === "USD") selected @endif>USD</option>
                         </select>
                     </div>
-                    <div class="mb-5" style="width: 80%; margin:10px;">
-                        @if($performer_file != 'null' && $performer_file != null)
+                </div>
 
-                            <h5 class="text-left">{{ __('Файл исполнителя') }}</h5>
-                            @foreach($performer_file as $file)
-                                @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
-                                    <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
-                                @else
-                                    <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
-                                    <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
-                                @endif
+                <div class="flex flex-col">
+                    <div class="product">
+                        @if(isset($application->resource_id))
+                            <b>{{ __('Продукт')}}</b>:
+                            @foreach(json_decode($application->resource_id) as $product)
+                                <br> {{\App\Models\Resource::find($product)->name}}
                             @endforeach
                         @endif
-                    </div>
-                    <div class="performer-div" style="border:2px solid black;padding:10 px 20px 10px 20px;">
-                    <div class="mr-4 pt-2 pb-2 w-50">
-                    {{Aire::select($branch, 'select', __('Филиал заказчик по контракту'))
-                        ->value($application->branch_customer_id)
-                        ->disabled()
-                        }}
-                    {{Aire::input('bio', __('Номер лота'))
-                        ->value($application->lot_number)
-                        ->disabled()
-                    }}
-                    {{Aire::input('bio', __('Номер договора'))
-                        ->value($application->contract_number)
-                        ->disabled()
-                    }}.
-                    {{Aire::date('date_input', __('Дата договора'))
-                        ->value($application->contract_date)
-                        ->disabled()
-                    }}
-                    {{Aire::date('bio', __('Дата протокола'))
-                        ->value($application->protocol_date)
-                        ->disabled()
-                    }}
-                    {{Aire::input('bio', __('Номер протокола'))
-                        ->value($application->protocol_number)
-                        ->disabled()
-                    }}
-                    {{Aire::textArea('bio', __('Предмет договора (контракта) и краткая характеристика'))
-                        ->value($application->contract_info)
-                        ->rows(3)
-                        ->cols(40)
-                        ->disabled()
-                    }}
-                    {{Aire::checkbox('checkbox', __('С НДС'))
-                        ->disabled()
-                    }}
-                    {{Aire::input('bio', __('Общая реальная сумма'))
-                        ->value($application->contract_price)
-                        ->disabled()
-                    }}
-                </div>
-                <div class="pt-2 pb-2 w-50">
-                    {{Aire::input('bio', __('Товары (обслуживание) страна изготовленной'))
-                        ->value($application->country_produced_id)
-                        ->disabled()
-                    }}
-
-
-                    {{Aire::input('bio', __('Наименование поставщика'))
-                        ->value($application->supplier_name)
-                        ->disabled()
-                    }}
-                    {{Aire::input('bio', __('Поставщик Перемешать номер'))
-                        ->value($application->supplier_inn)
-                        ->disabled()
-                    }}
-                    {{Aire::textArea('bio', __('Информация о товаре'))
-                        ->value($application->product_info)
-                        ->rows(3)
-                        ->cols(40)
-                        ->disabled()
-                    }}
-
-                    <div class="mr-4 pt-2 pb-2 w-50">
-                        {{Aire::input( 'select', __('Предмет закупки'))
-                            ->value($application->subject)
-                            ->disabled()
-                        }}
-                    </div>
-                    <div class="pt-2 pb-2 w-50">
-                        {{Aire::input( 'select', __('Вид закупки'))
-                            ->value($application->type_of_purchase_id)
-                            ->disabled()
-                        }}
-                    </div>
-                    {{Aire::input( 'select')
-                        ->value($application->performer_status)
-                        ->disabled()
-                        }}
-                    <div id="a" class="hidden mb-3">
-                        <label for="message-text" class="col-form-label">{{ __('Комментарий') }}:</label>
-                        <input class="form-control" name="report_if_cancelled" id="report_if_cancelled">
-                    </div>
-                </div>
-
-    </div>
-            <div class="mb-5" style="width: 80%; margin:10px;">
-                    @if($performer_file != 'null' && $performer_file != null)
-
-                                    <h5 class="text-left">{{ __('Файл исполнителя') }}</h5>
-                                    @foreach($performer_file as $file)
-                                        @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
-                                            <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
-                                        @else
-                                            <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
-                                            <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
-                                        @endif
-                                    @endforeach
-                            @endif
-        </div>
-                    </div>
-                    <div class="product">
-                    @if(isset($application->resource_id))
-                        <b>{{ __('Продукт')}}</b>:
-                        @foreach(json_decode($application->resource_id) as $product)
-                            <br> {{\App\Models\Resource::find($product)->name}}
-                        @endforeach
-                    @endif
-                    </div>
-                    @if(isset($application->branch_leader_comment))
-                        @php
-                            $comment = \App\Models\User::find($application->branch_leader_user_id)->name;
-                        @endphp
-                        {{Aire::textArea('bio', __('Комментарий руководства') . ": {$comment}")
-                        ->value($application->branch_leader_comment)
-                        ->rows(3)
-                        ->cols(40)
-                        ->disabled()
-                         }}
-                    @endif
-                    @if(isset($application->performer_leader_comment))
-                                @php
-                                    $comment = \App\Models\User::find($application->performer_leader_user_id)->name;
-                                @endphp
-                                {{Aire::textArea('bio', __('Комментарии начальника') . ": {$comment}")
-                                    ->value($application->performer_leader_comment)
-                                    ->rows(3)
-                                    ->cols(40)
-                                    ->disabled()
-                                }}
-                            @endif
-                            @if(isset($application->performer_comment))
-                                @php
-                                    $comment = \App\Models\User::find($application->performer_user_id)->name;
-                                @endphp
-                                {{Aire::textArea('bio', __('Комментарии исполнителя') . ": {$comment}")
-                                    ->value($application->performer_comment)
-                                    ->rows(3)
-                                    ->cols(40)
-                                    ->disabled()
-                                }}
-                            @endif
-
-                            @if(isset($application->performer_role_id))
-                                {{Aire::textArea('bio', __('Исполнитель'))
-                                    ->value(\App\Models\Roles::find($application->performer_role_id)->display_name)
-                                    ->rows(3)
-                                    ->cols(40)
-                                    ->disabled()
-                                }}
-                            @endif
                     </div>
                     <div class="flex-direction: column">
                         @if($file_basis != 'null' && $file_basis != null)
@@ -384,67 +231,54 @@
                                 @endforeach
                             </div>
                         @endif
-                            @if($file_tech_spec != 'null' && $file_tech_spec != null)
-                                <div class="mb-5">
-                                    <h5 class="text-left">{{ __('Техническое задание') }}</h5>
-                                    @foreach($file_tech_spec as $file)
-                                        @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
-                                            <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
-                                        @else
-                                            <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
-                                            <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            @endif
-                            @if($other_files != 'null' && $other_files != null)
-                                <div class="mb-5" style="width: 80%">
-                                    <h5 class="text-left">{{ __('Другие документы необходимые для запуска закупочной процедуры') }}</h5>
-                                    @foreach($other_files as $file)
-                                        @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
-                                            <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
-                                        @else
-                                            <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
-                                            <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            @endif
-                            @if($performer_file != 'null' && $performer_file != null)
-                                <div class="mb-5" style="width: 80%">
-                                    <h5 class="text-left">{{ __('Файл исполнителя') }}</h5>
-                                    @foreach($performer_file as $file)
-                                        @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
-                                            <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
-                                        @else
-                                            <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
-                                            <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            @endif
+                        @if($file_tech_spec != 'null' && $file_tech_spec != null)
+                            <div class="mb-5">
+                                <h5 class="text-left">{{ __('Техническое задание') }}</h5>
+                                @foreach($file_tech_spec as $file)
+                                    @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
+                                        <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
+                                    @else
+                                        <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
+                                        <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
+                                    @endif
+                                @endforeach
+                            </div>
+                        @endif
+                        @if($other_files != 'null' && $other_files != null)
+                            <div class="mb-5" style="width: 80%">
+                                <h5 class="text-left">{{ __('Другие документы необходимые для запуска закупочной процедуры') }}</h5>
+                                @foreach($other_files as $file)
+                                    @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
+                                        <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
+                                    @else
+                                        <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
+                                        <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
+                                    @endif
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 </div>
-                </div>
-
             </div>
-            <div class="px-6">
+        </div>
+    </div>
+    <div class="px-6">
                 <table id="yajra-datatable">
                     <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>{{ __('Статус заявки') }}</th>
-                        <th>{{ __('Роль') }}</th>
-                        <th>{{ __('Комментарий') }}</th>
-                        <th>{{ __('Пользователь') }}</th>
-                        <th class="hidden">Index</th>
-                        <th>Дата подписи</th>
-                    </tr>
-                </thead>
-            </table>
+                        <tr>
+                            <th>ID</th>
+                            <th>{{ __('Статус заявки') }}</th>
+                            <th>{{ __('Роль') }}</th>
+                            <th>{{ __('Комментарий') }}</th>
+                            <th>{{ __('Пользователь') }}</th>
+                            <th class="hidden">Index</th>
+                            <th>Дата подписи</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
 
-        <script>
+    <script>
             $(function () {
                 var table = $('#yajra-datatable').DataTable({
                     processing: true,
@@ -470,127 +304,130 @@
             })
             </script>
 
-    {{ Aire::open()
+    <div class="px-6 pb-4">
+        {{ Aire::open()
     ->route('site.applications.update',$application->id)
     ->enctype("multipart/form-data")
-    ->post() }}
-            @if($user->hasPermission('Plan_Budget') && $application->user_id != auth()->user()->id || $user->hasPermission('Plan_Business') && $application->user_id != auth()->user()->id)
-                {{Aire::textArea('bio', __('Информация о наличии в «Плане закупок» приобретаемых товаров'))
-                    ->name('info_purchase_plan')
-                    ->value($application->info_purchase_plan)
-                    ->rows(3)
-                    ->cols(40)
-                }}
-                {{Aire::textArea('bio', __('Департамент по планированию бюджета - информация о существовании товара закупок в бизнес-плане'))
-                    ->name('info_business_plan')
-                    ->value($application->info_business_plan)
-                    ->rows(3)
-                    ->cols(40)
-                }}
+    ->post()
+    }}
+        @if($user->hasPermission('Plan_Budget') && $application->user_id != auth()->user()->id || $user->hasPermission('Plan_Business') && $application->user_id != auth()->user()->id)
+            {{Aire::textArea('bio', __('Информация о наличии в «Плане закупок» приобретаемых товаров'))
+                ->name('info_purchase_plan')
+                ->value($application->info_purchase_plan)
+                ->rows(3)
+                ->cols(40)
+            }}
+            {{Aire::textArea('bio', __('Департамент по планированию бюджета - информация о существовании товара закупок в бизнес-плане'))
+                ->name('info_business_plan')
+                ->value($application->info_business_plan)
+                ->rows(3)
+                ->cols(40)
+            }}
 
-                @if($user->hasPermission('Number_Change'))
-                    {{Aire::textArea('bio', __('Номер заявки'))
-                        ->name('number')
-                        ->value($application->number)
-                    }}
-                    <div class="mb-3 row w-50">
-                        <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">
-                            {{__('Дата заявки')}}
-                        </label>
-                        <input class="form-control" id="date" name="date" type="date" value="{{$application->date}}"/>
-                    </div>
-                @endif
-                {{Aire::submit('Save')}}
-
-            @elseif($user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business') && $application->user_id != auth()->user()->id)
+            @if($user->hasPermission('Number_Change'))
                 {{Aire::textArea('bio', __('Номер заявки'))
                     ->name('number')
                     ->value($application->number)
                 }}
                 <div class="mb-3 row w-50">
                     <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">
-                    {{__('Дата заявки')}}
+                        {{__('Дата заявки')}}
                     </label>
-                    <div class="col-sm-6">
-                        <input class="form-control" id="date" name="date" type="date" value="{{$application->date}}"/>
-                    </div>
+                    <input class="form-control" id="date" name="date" type="date" value="{{$application->date}}"/>
                 </div>
-                {{Aire::submit('Save')}}
             @endif
-            @if($application->user_id != auth()->user()->id && auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
-                @if(!isset($application->performer_user_id))
-                    <div class="pb-5">
-                        <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
-                        {{Aire::textArea('bio', __('Комментарий руководства'))
-                                ->name('branch_leader_comment')
-                                ->value($application->branch_leader_comment)
-                                ->rows(3)
-                                ->cols(40)
-                                 }}
-                        @if($application->is_more_than_limit != 1)
-                            {{Aire::select($performers_branch, 'select')
-                                ->name('performer_role_id')
-                            }}
-                        @else
-                            {{Aire::select($performers_company, 'select')
-                                ->name('performer_role_id')
-                            }}
-                        @endif
-                        <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
-                    </div>
-                @endif
-            @elseif($application->user_id != auth()->user()->id && auth()->user()->hasPermission('Branch_Leader') && $application->show_leader == 1)
-                @if(!isset($application->performer_user_id))
-                    <div class="pb-5">
-                        <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
-                        {{Aire::textArea('bio', __('Комментарий руководства'))
-                                ->name('branch_leader_comment')
-                                ->value($application->branch_leader_comment)
-                                ->rows(3)
-                                ->cols(40)
-                                 }}
-                        @if($application->is_more_than_limit != 1)
-                            {{Aire::select($performers_branch, 'select')
-                                ->name('performer_role_id')
-                            }}
-                        @else
-                            {{Aire::select($performers_company, 'select')
-                                ->name('performer_role_id')
-                            }}
-                        @endif
-                        <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
-                    </div>
-                @endif
-            @elseif($application->performer_role_id == $user->role_id && $user->leader == 1)
-                {{Aire::textArea('bio', __('Комментарии начальника'))
-                    ->name('performer_leader_comment')
-                    ->value($application->performer_leader_comment)
-                    ->rows(3)
-                    ->cols(40)
-                 }}
-                <input  class="hidden"
-                        name="performer_leader_user_id"
-                        value="{{auth()->user()->id}}"
-                        type="text">
-                <div class="mt-4">
-                    <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
+            {{Aire::submit('Save')}}
+
+        @elseif($user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business') && $application->user_id != auth()->user()->id)
+            {{Aire::textArea('bio', __('Номер заявки'))
+                ->name('number')
+                ->value($application->number)
+            }}
+            <div class="mb-3 row w-50">
+                <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">
+                    {{__('Дата заявки')}}
+                </label>
+                <div class="col-sm-6">
+                    <input class="form-control" id="date" name="date" type="date" value="{{$application->date}}"/>
                 </div>
-            @elseif($application->performer_role_id == $user->role_id && $user->leader == 0)
-                {{Aire::textArea('bio', __('Комментарий'))
-                    ->name('performer_comment')
-                    ->value($application->performer_comment)
-                    ->rows(3)
-                    ->cols(40)
-                 }}
-                <input  class="hidden"
-                        name="performer_user_id"
-                        value="{{auth()->user()->id}}"
-                        type="text">
-                <div class="mt-4">
+            </div>
+            {{Aire::submit('Save')}}
+        @endif
+        @if($application->user_id != auth()->user()->id && auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
+            @if(!isset($application->performer_user_id))
+                <div class="pb-5">
+                    <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
+                    {{Aire::textArea('bio', __('Комментарий руководства'))
+                            ->name('branch_leader_comment')
+                            ->value($application->branch_leader_comment)
+                            ->rows(3)
+                            ->cols(40)
+                             }}
+                    @if($application->is_more_than_limit != 1)
+                        {{Aire::select($performers_branch, 'select')
+                            ->name('performer_role_id')
+                        }}
+                    @else
+                        {{Aire::select($performers_company, 'select')
+                            ->name('performer_role_id')
+                        }}
+                    @endif
                     <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
                 </div>
             @endif
-    {{Aire::close()}}
+        @elseif($application->user_id != auth()->user()->id && auth()->user()->hasPermission('Branch_Leader') && $application->show_leader == 1)
+            @if(!isset($application->performer_user_id))
+                <div class="pb-5">
+                    <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
+                    {{Aire::textArea('bio', __('Комментарий руководства'))
+                            ->name('branch_leader_comment')
+                            ->value($application->branch_leader_comment)
+                            ->rows(3)
+                            ->cols(40)
+                             }}
+                    @if($application->is_more_than_limit != 1)
+                        {{Aire::select($performers_branch, 'select')
+                            ->name('performer_role_id')
+                        }}
+                    @else
+                        {{Aire::select($performers_company, 'select')
+                            ->name('performer_role_id')
+                        }}
+                    @endif
+                    <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
+                </div>
+            @endif
+        @elseif($application->performer_role_id == $user->role_id && $user->leader == 1)
+            {{Aire::textArea('bio', __('Комментарии начальника'))
+                ->name('performer_leader_comment')
+                ->value($application->performer_leader_comment)
+                ->rows(3)
+                ->cols(40)
+             }}
+            <input  class="hidden"
+                    name="performer_leader_user_id"
+                    value="{{auth()->user()->id}}"
+                    type="text">
+            <div class="mt-4">
+                <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
+            </div>
+        @elseif($application->performer_role_id == $user->role_id && $user->leader == 0)
+            {{Aire::textArea('bio', __('Комментарий'))
+                ->name('performer_comment')
+                ->value($application->performer_comment)
+                ->rows(3)
+                ->cols(40)
+             }}
+            <input  class="hidden"
+                    name="performer_user_id"
+                    value="{{auth()->user()->id}}"
+                    type="text">
+            <div class="mt-4">
+                <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
+            </div>
+        @endif
+        {{Aire::close()}}
+    </div>
     @if($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer'||'Company_Performer'||'Branch_Performer') || $user->role_id == 7 && $application->show_director == 1)
         <div class="px-6">
             <form name="testform" action="{{route('site.applications.imzo.sign',$application->id)}}"        method="POST">
@@ -644,6 +481,179 @@
             </form>
         </div>
     @endif
+
+   <div class="flex flex-row gap-x-4">
+       <div class="performer-div border-2 rounded-xl border-gray-500 w-1/2 p-3 m-6 flex flex-row gap-x-4">
+           <div class="w-1/2">
+               <div class="w-full">
+                   {{Aire::select($branch, 'select', __('Филиал заказчик по контракту'))
+                       ->value($application->branch_customer_id)
+                       ->disabled()
+                       }}
+                   {{Aire::input('bio', __('Номер лота'))
+                       ->value($application->lot_number)
+                       ->disabled()
+                   }}
+                   {{Aire::input('bio', __('Номер договора'))
+                       ->value($application->contract_number)
+                       ->disabled()
+                   }}.
+                   {{Aire::date('date_input', __('Дата договора'))
+                       ->value($application->contract_date)
+                       ->disabled()
+                   }}
+                   {{Aire::date('bio', __('Дата протокола'))
+                       ->value($application->protocol_date)
+                       ->disabled()
+                   }}
+                   {{Aire::input('bio', __('Номер протокола'))
+                       ->value($application->protocol_number)
+                       ->disabled()
+                   }}
+                   {{Aire::textArea('bio', __('Предмет договора (контракта) и краткая характеристика'))
+                       ->value($application->contract_info)
+                       ->rows(3)
+                       ->cols(40)
+                       ->disabled()
+                   }}
+                   {{Aire::checkbox('checkbox', __('С НДС'))
+                       ->disabled()
+                   }}
+                   {{Aire::input('bio', __('Общая реальная сумма'))
+                       ->value($application->contract_price)
+                       ->disabled()
+                   }}
+               </div>
+               <div class="w-full">
+                   {{Aire::input('bio', __('Товары (обслуживание) страна изготовленной'))
+                       ->value($application->country_produced_id)
+                       ->disabled()
+                   }}
+
+
+                   {{Aire::input('bio', __('Наименование поставщика'))
+                       ->value($application->supplier_name)
+                       ->disabled()
+                   }}
+                   {{Aire::input('bio', __('Поставщик Перемешать номер'))
+                       ->value($application->supplier_inn)
+                       ->disabled()
+                   }}
+                   {{Aire::textArea('bio', __('Информация о товаре'))
+                       ->value($application->product_info)
+                       ->rows(3)
+                       ->cols(40)
+                       ->disabled()
+                   }}
+
+                   <div class="mr-4 pt-2 pb-2 w-50">
+                       {{Aire::input( 'select', __('Предмет закупки'))
+                           ->value($application->subject)
+                           ->disabled()
+                       }}
+                   </div>
+                   <div class="pt-2 pb-2 w-50">
+                       {{Aire::input( 'select', __('Вид закупки'))
+                           ->value($application->type_of_purchase_id)
+                           ->disabled()
+                       }}
+                   </div>
+                   {{Aire::input( 'select')
+                       ->value($application->performer_status)
+                       ->disabled()
+                       }}
+                   <div id="a" class="hidden mb-3">
+                       <label for="message-text" class="col-form-label">{{ __('Комментарий') }}:</label>
+                       <input class="form-control" name="report_if_cancelled" id="report_if_cancelled">
+                   </div>
+               </div>
+           </div>
+           <div class="w-1/2">
+               <div class="mb-5">
+                   @if($performer_file != 'null' && $performer_file != null)
+                       <h5 class="text-left">{{ __('Файл исполнителя') }}</h5>
+                       @foreach($performer_file as $file)
+                           @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
+                               <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
+                           @else
+                               <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
+                               <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
+                           @endif
+                       @endforeach
+                   @endif
+               </div>
+               <div class="mb-5">
+                   @if($performer_file != 'null' && $performer_file != null)
+                       <h5 class="text-left">{{ __('Файл исполнителя') }}</h5>
+                       @foreach($performer_file as $file)
+                           @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
+                               <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
+                           @else
+                               <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
+                               <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
+                           @endif
+                       @endforeach
+                   @endif
+               </div>
+               <div class="mb-5">
+                   @if($performer_file != 'null' && $performer_file != null)
+                       <h5 class="text-left">{{ __('Файл исполнителя') }}</h5>
+                       @foreach($performer_file as $file)
+                           @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
+                               <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
+                           @else
+                               <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
+                               <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
+                           @endif
+                       @endforeach
+                   @endif
+               </div>
+           </div>
+       </div>
+       <div class="w-1/2 p-6">
+           @if(isset($application->branch_leader_comment))
+               @php
+                   $comment = \App\Models\User::find($application->branch_leader_user_id)->name;
+               @endphp
+               {{Aire::textArea('bio', __('Комментарий руководства') . ": {$comment}")
+               ->value($application->branch_leader_comment)
+               ->rows(3)
+               ->cols(40)
+               ->disabled()
+                }}
+           @endif
+           @if(isset($application->performer_leader_comment))
+               @php
+                   $comment = \App\Models\User::find($application->performer_leader_user_id)->name;
+               @endphp
+               {{Aire::textArea('bio', __('Комментарии начальника') . ": {$comment}")
+                   ->value($application->performer_leader_comment)
+                   ->rows(3)
+                   ->cols(40)
+                   ->disabled()
+               }}
+           @endif
+           @if(isset($application->performer_comment))
+               @php
+                   $comment = \App\Models\User::find($application->performer_user_id)->name;
+               @endphp
+               {{Aire::textArea('bio', __('Комментарии исполнителя') . ": {$comment}")
+                   ->value($application->performer_comment)
+                   ->rows(3)
+                   ->cols(40)
+                   ->disabled()
+               }}
+           @endif
+           @if(isset($application->performer_role_id))
+               {{Aire::textArea('bio', __('Исполнитель'))
+                   ->value(\App\Models\Roles::find($application->performer_role_id)->display_name)
+                   ->rows(3)
+                   ->cols(40)
+                   ->disabled()
+               }}
+           @endif
+       </div>
+   </div>
     <script>
         function generatekey()
         {
@@ -665,6 +675,7 @@
             window.history.back();
         }
     </script>
+
     <script src="{{asset("assets/js/eimzo/e-imzo.js")}}"></script>
     <script src="{{asset("assets/js/eimzo/e-imzo-client.js")}}"></script>
     <script src="{{asset("assets/js/eimzo/eimzo.js")}}"></script>
