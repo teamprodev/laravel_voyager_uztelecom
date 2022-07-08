@@ -22,12 +22,12 @@
         ->value('1') }}
         @endif
         @if($application->is_more_than_limit == '0')
-        {{ Aire::submit(__("Филлиал"))
+        {{ Aire::submit(__("Филиал"))
         ->variant()->green()
         ->name('is_more_than_limit')
         ->value('0') }}
             @else
-            {{ Aire::submit(__("Филлиал"))
+            {{ Aire::submit(__("Филиал"))
         ->variant()->gray()
         ->name('is_more_than_limit')
         ->value('0') }}
