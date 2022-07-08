@@ -31,7 +31,7 @@
 @else
     @if(auth()->user()->department_id == null)
         <h1 style="color: red; text-align:center;">Вы не выбрали ваш Отдел<br>Админ должен перенаправить вас в отдел</h1>
-    @else
+    @elseif(auth()->user()->branch_id == null)
         <h1 style="color: red; text-align:center;">Вы не выбрали ваш Филиал<br>Админ должен перенаправить вас в филиал</h1>
     @endif
 @endif
