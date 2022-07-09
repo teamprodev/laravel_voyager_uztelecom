@@ -580,7 +580,6 @@ class ApplicationService
     }
     public function SignedDocs($application)
     {
-//        ->sortBy('index')
         $data = SignedDocs::where('application_id',$application)->get();
         return Datatables::of($data)
             ->addIndexColumn()
@@ -597,13 +596,14 @@ class ApplicationService
                 $status_agreed = __('Согласована');
                 $status_rejected = __('Отклонена');
                 $status_not_signed = __('Не подписан');
-                if($status->status == "1"){
-                    return $status_agreed;
-                }elseif($status->status == "0"){
-                    return $status_rejected;
-                }else{
-                    return $status_not_signed;
-                }
+
+                match($status->status)
+                {
+                    1 => $status_signer = $status_agreed,
+                    0 => $status_signer = $status_rejected,
+                    default => $status_signer = $status_not_signed,
+                };
+                return $status_signer;
             })
             ->make(true);
     }
