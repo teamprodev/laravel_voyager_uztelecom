@@ -248,64 +248,6 @@ class ApplicationService
         }
         return view('site.applications.index');
     }
-    public function performer_color($query)
-    {
-        $status_new = __('Новая');
-        $status_in_process = __('На рассмотрении');
-        $status_accepted = __('Принята');
-        $status_refused = __('Отказана');
-        $status_agreed = __('Согласована');
-        $status_rejected = __('Отклонена');
-        $status_distributed = __('Распределен');
-        $status_cancelled = __('Отменен');
-        $status_performed = __('Товар доставлен');
-        $status_overdue = ('просрочен');
-        if($query === 'new'){
-            $status = setting('color.new');
-            $color = $status ? 'white':'black';
-            return "<input style='background-color: {$status};color: {$color};' value='{$status_new}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-        }elseif($query === 'in_process'){
-            $status = setting('color.in_process');
-            $color = $status ? 'white':'black';
-            return "<input style='background-color: {$status};color: {$color};' value='{$status_in_process}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-        }elseif($query === 'overdue'||$query === 'Overdue'){
-            $status = setting('color.overdue');
-            $color = $status ? 'white':'black';
-            return "<input style='background-color: {$status};color: {$color};' value='{$status_overdue}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-        }elseif($query === 'Принята'){
-            $status = setting('color.accepted');
-            $color = $status ? 'white':'black';
-            return "<input style='background-color: {$status};color: {$color};' value='{$status_accepted}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-        }elseif($query === 'refused'){
-            $status = setting('color.rejected');
-            $color = $status ? 'white':'black';
-            return "<input style='background-color: {$status};color: {$color};' value='{$status_refused}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-        }elseif($query === 'agreed'){
-            $status = setting('color.agreed');
-            $color = $status ? 'white':'black';
-            return "<input style='background-color: {$status};color: {$color};' value='{$status_agreed}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-        }elseif($query === 'rejected'){
-            $status = setting('color.rejected');
-            $color = $status ? 'white':'black';
-            return "<input style='background-color: {$status};color: {$color};' value='{$status_rejected}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-        }elseif($query === 'distributed'){
-            $status = setting('color.distributed');
-            $color = $status ? 'white':'black';
-            return "<input style='background-color: {$status};color: {$color};' value='{$status_distributed}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-        }elseif($query === 'canceled'){
-            $status = setting('color.rejected');
-            $color = $status ? 'white':'black';
-            return "<input style='background-color: {$status};color: {$color};' value='{$status_cancelled}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-        }elseif($query === 'товар доставлен'){
-            $status = setting('color.delivered');
-            $color = $status ? 'white':'black';
-            return "<div class='row'>
-                        <input style='background-color: {$status};color: {$color};' type='text' type='button' value='{$status_performed}' class='text-center display wrap edit btn-sm' disabled>
-                        </div>";
-        }else{
-            return $query;
-        }
-    }
     public function status_table()
     {
         if(auth()->user()->hasPermission('ЦУЗ'))
