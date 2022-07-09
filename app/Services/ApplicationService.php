@@ -41,11 +41,7 @@ class ApplicationService
             PermissionRole::where('permission_id',165)->where('role_id',$a)->delete();
         }
         if ($request->ajax()) {
-            $query = Application::query()
-                ->where('draft', '!=',null)
-                ->orWhere('draft','!=', 0)
-                ->latest('id')
-                ->get();
+
             $user = auth()->user();
 
             if($user->hasPermission('ЦУЗ'))
