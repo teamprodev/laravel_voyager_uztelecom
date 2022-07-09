@@ -580,7 +580,7 @@ class ApplicationService
     }
     public function SignedDocs($application)
     {
-        $data = SignedDocs::where('application_id',$application)->get();
+        $data = SignedDocs::where('application_id',$application);
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('user_id', function($docs) {

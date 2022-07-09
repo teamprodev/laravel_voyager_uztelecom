@@ -12,7 +12,8 @@ class SignedDocs extends Model
     protected $with = 'application';
     protected $table = "signed_docs";
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
     public function application()
