@@ -134,7 +134,7 @@ Route::group([
                         Route::get('list/signedocs/{application}','SignedDocs')->name('list.signedocs');
                         Route::get('{application}/show/{view?}','show')->name('show')->middleware('branch');
                         Route::get('{application}/edit','edit')->name('edit')->middleware('branch');
-                        Route::get('{application}/clone','clone')->name('clone')->middleware('branch','application_user_id');
+                        Route::get('{application}/clone','clone')->name('clone')->middleware('branch');
                         Route::post('{application}/update','update')->name('update')->middleware('branch');
                         Route::get('{application}/destroy','destroy')->name('destroy')->middleware('branch','application_user_id');
                         Route::get('create','create')->name('create')->middleware('branch');

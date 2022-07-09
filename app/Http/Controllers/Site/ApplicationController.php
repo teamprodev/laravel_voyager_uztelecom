@@ -64,6 +64,7 @@ class ApplicationController extends Controller
 
     public function clone($id)
     {
+        $this->middleware('application_clone');
         return $this->service->clone($id);
     }
 

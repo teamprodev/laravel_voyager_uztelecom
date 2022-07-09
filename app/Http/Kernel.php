@@ -60,6 +60,7 @@ class Kernel extends HttpKernel
         'auth'                    => \App\Http\Middleware\Authenticate::class,
         'branch'                  => \App\Http\Middleware\BranchDepartment::class,
         'application_user_id'     => \App\Http\Middleware\ApplicationUserId::class,
+        'application_clone'     => \App\Http\Middleware\CloneMiddleware::class,
         'auth.basic'              => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers'           => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can'                     => \Illuminate\Auth\Middleware\Authorize::class,

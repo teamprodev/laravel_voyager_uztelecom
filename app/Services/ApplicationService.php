@@ -571,10 +571,10 @@ class ApplicationService
     }
     public function clone($id)
     {
-        $clone = Application::find($id);
+        $clone = Application::findOrFail($id);
         $application = $clone->replicate();
         $application->signers = null;
-        $application->status = null;
+        $application->status = Application::NEW;
         $application->save();
         return redirect()->back();
     }
