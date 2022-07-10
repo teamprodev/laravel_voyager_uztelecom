@@ -559,11 +559,10 @@ class ApplicationService
     {
         if ($request->ajax()) {
             $user = auth()->user();
-            $data = Application::query()
-                ->where('user_id', $user->id)
-                ->where('draft', !null)
-                ->latest('id')
-                ->get();
+
+            $data = Application::where('user_id', $user->id)
+                ->whereDraft("1");
+
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->editColumn('created_at', function ($data) {
