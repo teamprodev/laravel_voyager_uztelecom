@@ -81,7 +81,8 @@ class ApplicationController extends Controller
 
     public function SignedDocs($application)
     {
-        return $this->service->SignedDocs($application);
+        $data = SignedDocs::where('application_id',$application);
+        return $this->service->SignedDocs($data);
     }
 
     public function uploadImage(Request $request, Application $application)

@@ -516,9 +516,8 @@ class ApplicationService
         $application->save();
         return redirect()->back();
     }
-    public function SignedDocs($application)
+    public function SignedDocs($data)
     {
-        $data = SignedDocs::where('application_id',$application);
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('user_id', function($docs) {
