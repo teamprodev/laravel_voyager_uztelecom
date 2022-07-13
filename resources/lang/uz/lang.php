@@ -30,7 +30,7 @@ return [
     "performer_info" => "Mahsulot haqida ma'lumot",
     "performer_inn" => "Yetkazib beruvchi raqamni aralashtiring",
     "performer_lot" => "Lut raqami",
-    "performer_nds" => "QQS kiritilgan",
+    "performer_nds" => "QQS bilan",
     "performer_price" => "Umumiy real miqdor",
     "performer_protocol_date" => "Protokolning sanasi",
     "performer_protocol_num" => "Protokol raqami",
