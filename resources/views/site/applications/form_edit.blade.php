@@ -4,9 +4,9 @@
         <div class="p-6">
             <h5><strong>{{ __('Визирование заявки через :') }} </strong>
                 @if($application->is_more_than_limit == 1)
-                    Компанию
+                    {{__('Компанию')}}
                 @elseif($application->is_more_than_limit == '0')
-                    Филиала
+                    {{__('Филиала')}}
                 @endif
             </h5>
             <div class="mb-3 row">
