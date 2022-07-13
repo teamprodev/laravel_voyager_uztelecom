@@ -42,7 +42,7 @@
         .use(Uppy.XHRUpload, {
             endpoint: '{{$url}}',
             formData: true,
-            fieldName: 'performer_file',
+            fieldName: '{{$fieldName}}',
             headers: file => ({
                 'X-CSRF-TOKEN': '{{csrf_token()}}'
             }),
