@@ -778,7 +778,7 @@ class ApplicationService
                 $signer = SignedDocs::where('application_id',$application->id)->where('role_id',$signers)->first();
                 $docs = new SignedDocs();
                 $docs->role_id = $signers;
-                $docs->role_index = Roles::find($signers)->index;
+                $docs->role_index = Roles::find($signers)->index == null ? 1 :Roles::find($signers)->index;
                 $docs->application_id = $application->id;
                 $docs->table_name = "applications";
                 $signer == null ? $docs->save():[];
