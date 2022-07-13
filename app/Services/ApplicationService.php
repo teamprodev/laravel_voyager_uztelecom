@@ -26,6 +26,9 @@ use Yajra\DataTables\DataTables;
 
 class ApplicationService
 {
+    /*
+     * Permissionlarga qarab Applicationlar chiqishi
+     */
     public function index($request)
     {
         $filial = PermissionRole::where('permission_id',167)->pluck('role_id')->toArray();
@@ -122,6 +125,9 @@ class ApplicationService
                     return $query->updated_at ? with(new Carbon($query->delivery_date))->format('d.m.Y') : '';
                 })
                 ->editColumn('status', function ($query){
+                    /*
+                     *  Voyager admin paneldan status ranglarini olish va chiqarish
+                     */
                     $query = $query->status;
                     $status_new = __('Новая');
                     $status_in_process = __('На рассмотрении');
@@ -248,6 +254,9 @@ class ApplicationService
         }
         return view('site.applications.index');
     }
+    /*
+     * User tanlagan statusdagi Applicationlarni chiqarish
+     */
     public function status_table()
     {
         if(auth()->user()->hasPermission('ЦУЗ'))
@@ -377,6 +386,9 @@ class ApplicationService
             ->rawColumns(['action','status'])
             ->make(true);
     }
+    /*
+     * User tanlagan Performer_Statusga qarab Applicationlar show bo'lishi
+     * */
     public function performer_status()
     {
         if(auth()->user()->hasPermission('ЦУЗ'))
@@ -507,6 +519,9 @@ class ApplicationService
             ->rawColumns(['action','status'])
             ->make(true);
     }
+    /*
+     * Application Clone(Nusxalash)
+     */
     public function clone($id)
     {
         $clone = Application::findOrFail($id);
@@ -544,6 +559,9 @@ class ApplicationService
             })
             ->make(true);
     }
+    /*
+     * Application Create
+     */
     public function create()
     {
         $user = auth()->user();
@@ -555,6 +573,9 @@ class ApplicationService
         $application->save();
         return redirect()->route('site.applications.edit',$application->id);
     }
+    /*
+     * Draft(Chernovik) Applicationlarni chiqazish
+     */
     public function show_draft($request)
     {
         if ($request->ajax()) {
@@ -597,6 +618,9 @@ class ApplicationService
         }
         return view('site.applications.draft');
     }
+    /*
+     * Image upload
+     */
     public function uploadImage($request,$application)
     {
         $file_basis = json_decode($application->file_basis);
@@ -650,6 +674,15 @@ class ApplicationService
         $other_files = json_decode($application->other_files);
         $performer_file = json_decode($application->performer_file);
         $same_role_user_ids = User::where('role_id', auth()->user()->role_id)->get()->pluck('id')->toArray();
+
+        /*
+         * @var id
+         * @var application branch_initiator_id bo'yicha role larni oladi
+         *
+         * foreach da shu role lardan
+         * Permissionni Company_Performer va Branch_Performer bo'lganlarini ovotti
+         */
+
         $id = DB::table('roles')->whereRaw('json_contains(branch_id, \'["'.$application->branch_initiator_id.'"]\')')->pluck('id')->toArray();
         foreach ($id as $role)
         {
