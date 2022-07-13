@@ -19,7 +19,7 @@
             @if($application->is_more_than_limit == 1)
                 {{ __('Компанию') }}
             @else
-            {{ __('Филиала') }}
+            {{ __('Филиал') }}
             @endif
         </h5> <br>
         </h5>
@@ -582,7 +582,7 @@
                        @endforeach
                    @endif
                </div>
-               
+
            </div>
        </div>
        <div class="w-1/2 p-6">

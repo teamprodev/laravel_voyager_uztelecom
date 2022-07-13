@@ -4,9 +4,9 @@
         <div class="p-6">
             <h5><strong>{{ __('Визирование заявки через :') }} </strong>
                 @if($application->is_more_than_limit == 1)
-                    Компанию
+                    {{__('Компанию')}}
                 @elseif($application->is_more_than_limit == '0')
-                    Филиала
+                    {{__('Филиал')}}
                 @endif
             </h5>
             <div class="mb-3 row">
@@ -192,7 +192,7 @@
                   @endif
         </div>
             @if(isset($application->resource_id))
-                <b>{{ __('lang.resource')}}</b>:
+                <b>{{ __('Продукт')}}</b>:
                 @foreach(json_decode($application->resource_id) as $product)
                     <br> {{\App\Models\Resource::find($product)->name}}
                 @endforeach
