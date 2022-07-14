@@ -714,12 +714,7 @@ class ApplicationService
         }
         $countries = ['0' => 'Select country'];
         $countries[] = Country::get()->pluck('country_name','country_alpha3_code')->toArray();
-        $products = Resource::get();
-        $select = [];
-        for($i=0;$i<count($products);$i++)
-        {
-            $select[] = $products[$i]->name;
-        }
+        $select = Resource::pluck('name','id');
         $performer_file = json_decode($application->performer_file);
         $branch_signer = json_decode($application->branch->add_signers);
         $addsigner = Branch::find(9);
@@ -851,6 +846,23 @@ class ApplicationService
             return back();
 
         return redirect()->back()->with('danger', trans('site.application_failed'));
+    }
+    public function is_more_than_limit($application,$request)
+    {
+        $application->is_more_than_limit = $request->is_more_than_limit;
+        $application->signers = null;
+        $application->status = 'new';
+        if($request->is_more_than_limit == 1)
+        {
+            $application->is_more_than_limit = 1;
+            $application->branch_initiator_id = 9;
+        }
+        if($application->branch_initiator_id == 9 && $application->user_id == 9)
+        {
+            $application->is_more_than_limit = 1;
+        }
+        SignedDocs::where('application_id',$application->id)->delete();
+        $application->save();
     }
     public function sendNotifications($array, $application, $message)
     {

@@ -336,7 +336,7 @@
     })
 </script>
 <div class="w-full text-center pb-8 ">
-    <button class="bg-blue-500 hover:bg-blue-700 mx-4 p-2 transition duration-300 rounded-md text-white"
+    <button onclick="functionMy()" class="bg-blue-500 hover:bg-blue-700 mx-4 p-2 transition duration-300 rounded-md text-white"
             name="draft" value="1">
         {{ __('lang.save_close') }}
     </button>

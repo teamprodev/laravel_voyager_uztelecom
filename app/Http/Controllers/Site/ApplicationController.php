@@ -39,8 +39,8 @@ class ApplicationController extends Controller
         return view('site.applications.status');
     }
     /**
-     * Performer Statusda bo'lgan Applicationlarni ko'rsatish 
-    */ 
+     * Performer Statusda bo'lgan Applicationlarni ko'rsatish
+    */
     public function performer_status_get(Request $req)
     {
         $status = StatusExtented::pluck('name','name')->toArray();
@@ -61,16 +61,16 @@ class ApplicationController extends Controller
     }
     /**
      * All Application
-     * 
+     *
      * Hamma Applicationlar(Zayavkalar)
-    */ 
+    */
     public function index(Request $request)
     {
         return $this->service->index($request);
     }
     /**
-     * Application Clone(Nusxalash)  
-    */ 
+     * Application Clone(Nusxalash)
+    */
     public function clone($id)
     {
         $this->middleware('application_clone');
@@ -78,7 +78,7 @@ class ApplicationController extends Controller
     }
     /**
      * Application Show
-    */ 
+    */
     public function show(Application $application, $view = false)
     {
         if (isset($view)) {
@@ -91,43 +91,43 @@ class ApplicationController extends Controller
     }
     /**
      * @var application ga tegishli bolgan SignedDocs
-    */ 
+    */
     public function SignedDocs($application)
     {
         $data = SignedDocs::where('application_id',$application);
         return $this->service->SignedDocs($data);
     }
     /**
-     * Application Image Upload 
-    */ 
+     * Application Image Upload
+    */
     public function uploadImage(Request $request, Application $application)
     {
         return $this->service->uploadImage($request,$application);
     }
     /**
      * Application Create
-    */ 
+    */
     public function create()
     {
         return $this->service->create();
     }
     /**
      * Application Edit
-    */ 
+    */
     public function edit(Application $application)
     {
             return $this->service->edit($application);
     }
     /**
      * Application Update
-    */ 
+    */
     public function update(Application $application, ApplicationRequest $request)
     {
         return $this->service->update($application,$request);
     }
     /**
      * Chernovik bo'lgan applicationlarni ko'rish
-    */ 
+    */
     public function show_draft(Request $request)
     {
         return $this->service->show_draft($request);
@@ -143,35 +143,22 @@ class ApplicationController extends Controller
     }
     /**
      * application is_more_than_limit update
-     * 
+     *
      * application is_more_than_limit update qilinishi
      * kelayotgan request ga qarab company yoki filialga ketishi
-     * agar request 1 kelsa bu company dan ketadi va application branch_initiator_id 9 ga ozgaradi. 
+     * agar request 1 kelsa bu company dan ketadi va application branch_initiator_id 9 ga ozgaradi.
      * Chunki 9 id bu Company AK UZBEKTELECOM
-     * 
+     *
      * Kelayotgan request 0 bo'lsa unda shu applicationni create qilgan userni filiali branch_initiator_id ga tushadi.
      */
     public function is_more_than_limit(Application $application,Request $request)
     {
-        $application->is_more_than_limit = $request->is_more_than_limit;
-        $application->signers = null;
-        $application->status = 'new';
-        if($request->is_more_than_limit == 1)
-        {
-            $application->is_more_than_limit = 1;
-            $application->branch_initiator_id = 9;
-        }
-        if($application->branch_initiator_id == 9 && $application->user_id == 9)
-        {
-            $application->is_more_than_limit = 1;
-        }
-        SignedDocs::where('application_id',$application->id)->delete();
-        $application->save();
+        $this->service->is_more_than_limit($application,$request);
         return redirect()->back();
     }
     /*
         File delete
-    */ 
+    */
     public function file_delete(Request $request)
     {
         $file = public_path()."/storage/uploads/{$request->file}";
