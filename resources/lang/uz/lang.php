@@ -71,7 +71,7 @@ return [
     "table_22" => "Rol",
     "table_23" => "Sharh",
     "table_24" => "Foydalanuvchi",
-    "table_25" => "Buyurtma raqami",
+    "table_25" => "Buyurtmaning raqami",
     "table_3" => "Mahsulot uchun tartiblash muddati",
     "table_4" => "Xarid qilish rejasi (miqdor)",
     "table_5" => "Mahsulotni olib kelish talab etiladi (Incoterm)",

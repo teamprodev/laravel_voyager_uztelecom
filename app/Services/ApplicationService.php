@@ -63,7 +63,7 @@ class ApplicationService
             {
 
                 $query = Application::query()
-                    ->where('draft','!=',1)->whereIn($a,$b)->orWhere('signers','like',"%{$user->role_id}%")->orWhere('performer_role_id', $user->role->id)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
+                    ->where('draft','!=',1)->whereIn($a,$b)->orWhere('signers','like',"%{$user->role_id}%")->where('draft','!=',1)->orWhere('performer_role_id', $user->role->id)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
             }
             elseif($user->hasPermission('Warehouse'))
             {
