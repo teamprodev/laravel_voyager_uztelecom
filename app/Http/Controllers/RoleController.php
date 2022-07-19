@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Application;
 use App\Models\Branch;
 use App\Models\Roles;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -29,9 +30,9 @@ class RoleController extends VoyagerRoleController
                 })
                 ->addColumn('action', function($row){
                     $edit_e = "/admin/roles/{$row->id}/edit";
-                    $destroy_e = route("voyager.roles.destroy",$row->id);
+                    $destroy_e = route("voyager.roles.delete",$row->id);
                     $app_edit = __('Изменить');
-                    $app_delete= __('Посмотреть');;
+                    $app_delete = __('Удалить');;
                     $bgcolor = setting('color.edit');
                     $color = $bgcolor ? 'white':'black';
                     $edit = "<a style='background-color: {$bgcolor};color: {$color}' href='{$edit_e}' class='m-1 col edit btn btn-sm'>$app_edit</a>";
@@ -46,9 +47,36 @@ class RoleController extends VoyagerRoleController
                 ->rawColumns(['action'])
                 ->make(true);
     }
-    public function delete(Branch $id)
+    public function delete(Role $id)
     {
-        $id->delete();
+        $role = $id;
+        $add_json = DB::table('branches')->whereRaw('json_contains(add_signers, \'['.$role->id.']\')')->pluck('add_signers','id');
+        $json = DB::table('branches')->whereRaw('json_contains(signers, \'['.$role->id.']\')')->pluck('signers','id');
+        foreach ($add_json as $item => $value)
+        {
+            $signerssss = json_decode($value);
+            $array_diff = array_diff($signerssss,array($role->id));
+            $array_diff ? $add_s = $this->array_diff_array($array_diff):$add_s = null;
+            $save = Branch::find($item);
+            $save->add_signers = $add_s;
+            $save->save();
+        }
+        foreach ($json as $item => $value)
+        {
+            $signerssss = json_decode($value);
+            $array_diff = array_diff($signerssss,array($role->id));
+            $array_diff ? $required_s = $this->array_diff_array($array_diff):$required_s = null;
+            $save = Branch::find($item);
+            $save->signers = $required_s;
+            $save->save();
+        }
+        $users = User::where('role_id',$role->id)->get();
+        foreach($users as $user)
+        {
+            $user->role_id = null;
+            $user->save();
+        }
+        $role->delete();
         return redirect()->route('voyager.roles.index');
     }
     public function store(Request $request)
