@@ -149,8 +149,4 @@ class Application extends Model
     {
         return $this->hasMany(SignedDocs::class);
     }
-    public function resource()
-    {
-        return $this->hasMany(Resource::class);
-    }
 }

@@ -791,13 +791,7 @@ class ApplicationService
                 $data['resource_id'] = null;
             }else{
                 $explode = explode(',',$data['resource_id']);
-                $id = [];
-                for ($i = 0; $i < count($explode); $i++)
-                {
-                    $all = Resource::where('name','like',"%{$explode[$i]}%")->first();
-                    $id[] = $all->id;
-                    $data['resource_id'] = json_encode($id);
-                }
+                $data['resource_id'] = json_encode($explode);
                 $application->status = Application::NEW;
             }
         }
