@@ -548,13 +548,13 @@
 
                    <div class="mr-4 pt-2 pb-2 w-50">
                        {{Aire::input( 'select', __('Предмет закупки'))
-                           ->value($application->subject)
+                           ->value($application->subjects->name)
                            ->disabled()
                        }}
                    </div>
                    <div class="pt-2 pb-2 w-50">
                        {{Aire::input( 'select', __('Вид закупки'))
-                           ->value($application->type_of_purchase_id)
+                           ->value($application->purchase->name)
                            ->disabled()
                        }}
                    </div>
