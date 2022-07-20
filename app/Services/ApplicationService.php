@@ -62,47 +62,45 @@ class ApplicationService
             if($user->hasPermission('Add_Company_Signer') && $user->hasPermission('Add_Branch_Signer'))
             {
 
-                $query = Application::query()
-                    ->where('draft','!=',1)->whereIn($a,$b)->orWhere('signers','like',"%{$user->role_id}%")->where('draft','!=',1)->orWhere('performer_role_id', $user->role->id)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
+                $query = Application::where('draft','!=',1)->whereIn($a,$b)->orWhere('signers','like',"%{$user->role_id}%")->where('draft','!=',1)->orWhere('performer_role_id', $user->role->id)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             elseif($user->hasPermission('Warehouse'))
             {
                 $status_0 = 'Принята';
                 $status_1 = 'товар';
-                $query = Application::where('draft','!=',1)->whereIn($a,$b)->where('status','like',"%{$status_0}%")->OrwhereIn($a,$b)->where('status','like',"%{$status_1}%")->orWhere('user_id',auth()->user()->id);
+                $query = Application::where('draft','!=',1)->whereIn($a,$b)->where('status','like',"%{$status_0}%")->OrwhereIn($a,$b)->where('status','like',"%{$status_1}%")->orWhere('user_id',auth()->user()->id)->get();
             }
             elseif($user->hasPermission('Company_Leader') && $user->hasPermission('Branch_Leader'))
             {
-                $query = Application::whereIn($a,$b)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
+                $query = Application::whereIn($a,$b)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             elseif($user->role_id == 7)
             {
-                $query = Application::whereIn($a,$b)->where('draft','!=',1)->where('signers','LIKE','%7%');
+                $query = Application::whereIn($a,$b)->where('draft','!=',1)->where('signers','LIKE','%7%')->get();
             }
             elseif ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer')||$user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'))
             {
-                $query = Application::query()
-                    ->where('draft','!=',1)
+                $query = Application::where('draft','!=',1)
                     ->where('signers','like',"%{$user->role_id}%")
                     ->orWhere('performer_role_id', $user->role->id)
                     ->where('draft','!=',1)
                     ->orWhere('user_id',auth()->user()->id)
-                    ->where('draft','!=',1);
+                    ->where('draft','!=',1)->get();
             }
             elseif($user->hasPermission('Company_Leader'))
             {
-                $query =  Application::whereIn($a,$b)->where('draft','!=',1)->where('status','agreed')->orWhere('status','distributed')->whereIn($a,$b)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
+                $query =  Application::whereIn($a,$b)->where('draft','!=',1)->where('status','agreed')->orWhere('status','distributed')->whereIn($a,$b)->where('draft','!=',1)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             elseif($user->hasPermission('Branch_Leader'))
             {
-                $query = Application::whereIn($a,$b)->where('draft','!=',1)->where('is_more_than_limit', 0)->where('show_leader',1)->orWhere('is_more_than_limit', 0)->whereIn($a,$b)->where('status', 'new')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->whereIn($a,$b)->where('status', 'distributed')->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
+                $query = Application::whereIn($a,$b)->where('draft','!=',1)->where('is_more_than_limit', 0)->where('show_leader',1)->orWhere('is_more_than_limit', 0)->whereIn($a,$b)->where('status', 'new')->orWhere('is_more_than_limit', 0)->where('draft','!=',1)->whereIn($a,$b)->where('status', 'distributed')->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             elseif($user->hasPermission('Company_Performer')||$user->hasPermission('Branch_Performer'))
             {
-                $query = Application::where('performer_role_id',auth()->user()->role_id)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1);
+                $query = Application::where('performer_role_id',auth()->user()->role_id)->orWhere('user_id',auth()->user()->id)->where('draft','!=',1)->get();
             }
             else {
-                $query = Application::whereIn($a,$b)->where('draft','!=',1);
+                $query = Application::whereIn($a,$b)->where('draft','!=',1)->get();
             }
 
             return Datatables::of($query)
