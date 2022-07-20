@@ -191,7 +191,8 @@
                    }}
                   @endif
         </div>
-            @if(isset($application->resource_id))
+
+        @if(isset($application->resource_id))
                 <b>{{ __('Продукт')}}</b>:
                 @foreach(json_decode($application->resource_id) as $product)
                     <br> {{\App\Models\Resource::find($product)->name}}
@@ -294,10 +295,9 @@
             for (let i in resource_id) {
                 thestring += resource_id[i] + ",";
             }
-            thestring = thestring.substring(0, thestring.length -2);
+            thestring = thestring.substring(0, thestring.length -1);
 
             console.log(document.getElementById('resource_id').value = thestring);
-            console.log(typeof thestring);
     }
 </script>
 <div class="px-6">

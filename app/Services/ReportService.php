@@ -585,44 +585,77 @@ class ReportService
                 if($query->status === 'new'){
                     $status = setting('color.new');
                     $color = $status ? 'white':'black';
-                    return "<input style='background-color: {$status};color: {$color};' value='{$status_new}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                    return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_new}</div>";
                 }elseif($query->status === 'in_process'){
                     $status = setting('color.in_process');
                     $color = $status ? 'white':'black';
-                    return "<input style='background-color: {$status};color: {$color};' value='{$status_in_process}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                    return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_in_process}</div>";
+
                 }elseif($query->status === 'overdue'||$query->status === 'Overdue'){
                     $status = setting('color.overdue');
                     $color = $status ? 'white':'black';
-                    return "<input style='background-color: {$status};color: {$color};' value='{$status_overdue}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                    return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_overdue}</div>";
+
                 }elseif($query->status === 'Принята'){
                     $status = setting('color.accepted');
                     $color = $status ? 'white':'black';
-                    return "<input style='background-color: {$status};color: {$color};' value='{$status_accepted}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                    return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_accepted}</div>";
+
                 }elseif($query->status === 'refused'){
                     $status = setting('color.rejected');
                     $color = $status ? 'white':'black';
-                    return "<input style='background-color: {$status};color: {$color};' value='{$status_refused}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                    return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_refused}</div>";
+
                 }elseif($query->status === 'agreed'){
                     $status = setting('color.agreed');
                     $color = $status ? 'white':'black';
-                    return "<input style='background-color: {$status};color: {$color};' value='{$status_agreed}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                    return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_agreed}</div>";
+
                 }elseif($query->status === 'rejected'){
                     $status = setting('color.rejected');
                     $color = $status ? 'white':'black';
-                    return "<input style='background-color: {$status};color: {$color};' value='{$status_rejected}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                    return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_rejected}</div>";
+
                 }elseif($query->status === 'distributed'){
                     $status = setting('color.distributed');
                     $color = $status ? 'white':'black';
-                    return "<input style='background-color: {$status};color: {$color};' value='{$status_distributed}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                    return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_distributed}</div>";
+
                 }elseif($query->status === 'canceled'){
                     $status = setting('color.rejected');
                     $color = $status ? 'white':'black';
-                    return "<input style='background-color: {$status};color: {$color};' value='{$status_cancelled}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
+                    return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_cancelled}</div>";
+
+                }elseif($query->status === 'Выполнено частично'){
+                    $status = setting('color.partially');
+                    $color = $status ? 'white':'black';
+                    return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Выполнено частично</div>";
+
+                }elseif($query->status === 'Выполнено в полном объёме'){
+                    $status = setting('color.total_volume');
+                    $color = $status ? 'white':'black';
+                    return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Выполнено в полном объёме</div>";
+
+                }elseif($query->status === 'Заявка аннулирована по заданию руководства'){
+                    $status = setting('color.nulled_by_management');
+                    $color = $status ? 'white':'black';
+                    return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Заявка аннулирована по заданию руководства</div>";
+
+                }elseif($query->status === 'Договор аннулирован по инициативе Узбектелеком'){
+                    $status = setting('color.nulled_by_management');
+                    $color = $status ? 'white':'black';
+                    return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Договор аннулирован по инициативе Узбектелеком</div>";
+
+                }elseif($query->status === 'заявка передана в Узтелеком'){
+                    $status = setting('color.nulled_by_management');
+                    $color = $status ? 'white':'black';
+                    return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>заявка передана в Узтелеком</div>";
+
                 }elseif($query->status === 'товар доставлен'){
                     $status = setting('color.delivered');
                     $color = $status ? 'white':'black';
                     return "<div class='row'>
-                        <input style='background-color: {$status};color: {$color};' type='text' type='button' value='{$status_performed}' class='text-center display wrap edit btn-sm' disabled>
+                        <div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_performed}</div>
                         </div>";
                 }else{
                     return $query->status;

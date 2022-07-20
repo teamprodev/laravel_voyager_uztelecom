@@ -548,13 +548,13 @@
 
                    <div class="mr-4 pt-2 pb-2 w-50">
                        {{Aire::input( 'select', __('Предмет закупки'))
-                           ->value($application->subject)
+                           ->value($application->subjects->name)
                            ->disabled()
                        }}
                    </div>
                    <div class="pt-2 pb-2 w-50">
                        {{Aire::input( 'select', __('Вид закупки'))
-                           ->value($application->type_of_purchase_id)
+                           ->value($application->purchase->name)
                            ->disabled()
                        }}
                    </div>
@@ -562,10 +562,6 @@
                        ->value($application->performer_status)
                        ->disabled()
                        }}
-                   <div id="a" class="hidden mb-3">
-                       <label for="message-text" class="col-form-label">{{ __('Комментарий') }}:</label>
-                       <input class="form-control" name="report_if_cancelled" id="report_if_cancelled">
-                   </div>
                </div>
            </div>
            <div class="w-1/2">

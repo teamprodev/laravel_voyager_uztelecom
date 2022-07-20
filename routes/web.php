@@ -61,6 +61,7 @@ Route::group([
 ], function () {
     Voyager::routes();
     Route::put('roles/{id}/update',[RoleController::class,'update'])->name('voyager.roles.update');
+    Route::get('roles/{id}/delete',[RoleController::class,'delete'])->name('voyager.roles.delete');
     Route::post('create/role',[RoleController::class,'store'])->name('voyager.roles.store');
     Route::put('users/{id}/update',[UserController::class,'update'])->name('voyager.users.update');
     Route::get('roles/',[RoleController::class,'index'])->name('voyager.roles.index');
