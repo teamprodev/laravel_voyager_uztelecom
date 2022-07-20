@@ -206,9 +206,6 @@
                             <option value="USD" @if($application->currency === "USD") selected @endif>USD</option>
                         </select>
                     </div>
-                </div>
-
-                <div class="flex flex-col">
                     <div class="product">
                         @if(isset($application->resource_id))
                             <b>{{ __('Продукт')}}</b>:
@@ -217,6 +214,9 @@
                             @endforeach
                         @endif
                     </div>
+                </div>
+
+                <div class="flex flex-col">
                     <div class="flex-direction: column">
                         @if($file_basis != 'null' && $file_basis != null)
                             <div class="my-5">
