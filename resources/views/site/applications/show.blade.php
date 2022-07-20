@@ -562,10 +562,6 @@
                        ->value($application->performer_status)
                        ->disabled()
                        }}
-                   <div id="a" class="hidden mb-3">
-                       <label for="message-text" class="col-form-label">{{ __('Комментарий') }}:</label>
-                       <input class="form-control" name="report_if_cancelled" id="report_if_cancelled">
-                   </div>
                </div>
            </div>
            <div class="w-1/2">

@@ -139,11 +139,11 @@ class Application extends Model
     }
     public function purchase()
     {
-        return $this->belongsTo(Purchase::class, 'type_of_purchase_id', 'id');
+        return $this->belongsTo(Purchase::class, 'type_of_purchase_id', 'id')->withDefault(['name' => '']);
     }
     public function subjects()
     {
-        return $this->belongsTo(Subject::class, 'subject', 'id');
+        return $this->belongsTo(Subject::class, 'subject', 'id')->withDefault(['name' => '']);
     }
     public function signedDocs()
     {
