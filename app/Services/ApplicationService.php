@@ -580,6 +580,7 @@ class ApplicationService
         $application->user_id = $user->id;
         $application->branch_initiator_id = $user->branch_id;
         $application->department_initiator_id = $user->department_id;
+        $application->is_more_than_limit = 0;
         $application->status = Application::NEW;
         $application->save();
         return redirect()->route('site.applications.edit',$application->id);
