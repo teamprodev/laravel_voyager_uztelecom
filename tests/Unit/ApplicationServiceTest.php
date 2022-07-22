@@ -29,9 +29,10 @@ class ApplicationServiceTest extends TestCase
         $application->user_id = 1;
         $application->branch_initiator_id = 1;
         $application->department_initiator_id = 1;
+        $application->is_more_than_limit = 0;
         $application->status = Application::NEW;
-
-        $this->assertTrue(true);
+        $data = $application->save();
+        $this->assertTrue($data);
     }
     public function test_send_notification()
     {
