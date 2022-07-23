@@ -38,7 +38,7 @@ class BranchServiceTest extends TestCase
                 $edit_e = "/admin/roles/{$row->id}/edit";
                 $destroy_e = route("voyager.roles.destroy",$row->id);
                 $app_edit = __('Изменить');
-                $app_delete= __('Посмотреть');;
+                $app_delete= __('Посмотреть');
                 $bgcolor = setting('color.edit');
                 $color = $bgcolor ? 'white':'black';
                 $edit = "<a style='background-color: {$bgcolor};color: {$color}' href='{$edit_e}' class='m-1 col edit btn btn-sm'>$app_edit</a>";
