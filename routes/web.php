@@ -45,7 +45,7 @@ Route::controller(ReportController::class)->group(function() {
 });
 Route::get('roles/getData',[RoleController::class,'getData'])->name('voyager.roles.getData');
 Route::get('departments/getData',[DepartmentController::class,'getData'])->name('voyager.departments.getData');
-Route::get('department/getData/',[UserController::class,'getData'])->name('voyager.users.getData');
+Route::get('users/getData/',[UserController::class,'getData'])->name('voyager.users.getData');
 Route::post('/warehouse',[WarehouseController::class,'create'])->name('warehouse.create');
 Route::post('/delete_file',[ApplicationController::class,'file_delete'])->name('delete_file');
 

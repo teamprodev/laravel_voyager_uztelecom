@@ -1,6 +1,6 @@
 <?php
 
-class BranchCest
+class DepartmentCest
 {
     public function _before(AcceptanceTester $I)
     {
@@ -10,9 +10,9 @@ class BranchCest
     public function getData(AcceptanceTester $I)
     {
         $I->amOnPage('/admin/login');
-        $I->fillField('email','aziz@gmail.com');
-        $I->fillField('password','password');
+        $I->fillField('email','admin@admin.com');
+        $I->fillField('password','teamprodev12346');
         $I->click('Войти');
-        $I->amOnPage('/branches/view');
+        $I->amOnPage('/admin/departments');
     }
 }
