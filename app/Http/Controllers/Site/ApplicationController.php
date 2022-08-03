@@ -141,6 +141,13 @@ class ApplicationController extends Controller
 
         return redirect()->back();
     }
+
+    public function cancel(Application $application)
+    {
+        $application->delete();
+
+        return redirect()->route('site.applications.index');
+    }
     /**
      * application is_more_than_limit update
      *

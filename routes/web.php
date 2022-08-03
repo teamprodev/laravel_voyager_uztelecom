@@ -138,6 +138,7 @@ Route::group([
                         Route::get('{application}/clone','clone')->name('clone')->middleware('branch');
                         Route::post('{application}/update','update')->name('update')->middleware('branch');
                         Route::get('{application}/destroy','destroy')->name('destroy')->middleware('branch','application_user_id');
+                        Route::get('{application}/cancel','cancel')->name('cancel')->middleware('branch','application_user_id');
                         Route::get('create','create')->name('create')->middleware('branch');
                         Route::post('store','store')->name('store')->middleware('branch');
                         Route::put('{application}/vote','vote')->name('vote')->middleware('branch');
