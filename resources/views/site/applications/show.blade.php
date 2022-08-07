@@ -430,7 +430,7 @@
     </div>
     @if($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer'||'Company_Performer'||'Branch_Performer') || $user->role_id == 7 && $application->show_director == 1)
         <div class="px-6">
-            <form name="testform" action="{{route('site.applications.imzo.sign',$application->id)}}"        method="POST">
+            <form name="testform" action="{{route('eimzo.sign.verify')}}" method="POST">
                 @csrf
                 <label id="message"></label>
                 <div class="form-group">
@@ -647,8 +647,8 @@
         }
     </script>
 
-    <script src="{{asset("assets/js/eimzo/e-imzo.js")}}"></script>
-    <script src="{{asset("assets/js/eimzo/e-imzo-client.js")}}"></script>
-    <script src="{{asset("assets/js/eimzo/eimzo.js")}}"></script>
+    <script src="{{asset("vendor/eimzo/assets/js/eimzo/e-imzo.js")}}"></script>
+    <script src="{{asset("vendor/eimzo/assets/js/eimzo/e-imzo-client.js")}}"></script>
+    <script src="{{asset("vendor/eimzo/assets/js/eimzo/eimzo.js")}}"></script>
 @endsection
 

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\EimzoAuthController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TypeOfPurchase;
 use App\Http\Controllers\UserController;
@@ -19,6 +18,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\ImzoController;
 USE App\Http\Controllers\HomeController;
+use Teamprodev\Eimzo\Http\Controllers\EimzoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,7 +76,7 @@ Route::post('admin/login', [LoginController::class, 'postLogin'])->name('voyager
 
 Auth::routes();
 
-Route::post('eimzo/login', [EimzoAuthController::class, 'auth'])->name('eri.login');
+Route::post('eimzo/login', [EimzoController::class, 'auth'])->name('eri.login');
 
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
@@ -189,8 +189,8 @@ Route::get('redirect', function (){
     return redirect()->route('site.applications.index');
 })->name('eimzo.auth.back');
 Route::get('eimzo/back',  function(){
-    return redirect()->route('site.applications.index');
+    return redirect()->back();
 })->name('eimzo.back');
-Route::get('eimzo/login', [EimzoAuthController::class, 'login'])->name('eimzo.login.index');
+Route::get('eimzo/login', [EimzoController::class, 'login'])->name('eimzo.login.index');
 
 
