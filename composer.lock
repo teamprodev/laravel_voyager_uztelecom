@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a0243a20c753acf118a8fca0934a01f0",
+    "content-hash": "f1be4a3e1a8e860b4445574ac8639736",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -8239,10 +8239,10 @@
         },
         {
             "name": "teamprodev/laravel_dst_eimzo",
-            "version": "dev-main",
+            "version": "1.14",
             "source": {
                 "type": "git",
-                "url": "https://github.com/teamprodev/laravel_dst_eimzo",
+                "url": "https://github.com/teamprodev/laravel_dst_eimzo.git",
                 "reference": "ac7d3cf2dcf2e2116e656ace79ff6cb189764775"
             },
             "dist": {
@@ -8251,7 +8251,6 @@
                 "reference": "ac7d3cf2dcf2e2116e656ace79ff6cb189764775",
                 "shasum": ""
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -8265,6 +8264,7 @@
                     "Teamprodev\\Eimzo\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -8274,6 +8274,10 @@
                     "email": "sardoryusupov230@gmail.com"
                 }
             ],
+            "support": {
+                "issues": "https://github.com/teamprodev/laravel_dst_eimzo/issues",
+                "source": "https://github.com/teamprodev/laravel_dst_eimzo/tree/1.14"
+            },
             "time": "2022-08-07T09:44:15+00:00"
         },
         {
@@ -12514,9 +12518,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "teamprodev/laravel_dst_eimzo": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
