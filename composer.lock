@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f1be4a3e1a8e860b4445574ac8639736",
+    "content-hash": "2927335101d3535cb4b0bb3413e35ba4",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -1367,16 +1367,16 @@
         },
         {
             "name": "glhd/aire",
-            "version": "2.5.0",
+            "version": "2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/glhd/aire.git",
-                "reference": "5c319c6fb24a6c510df4e9686a6259253b0ad2fb"
+                "reference": "498d00162075b4b0a3b06b37836f7a9d70cd8842"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/glhd/aire/zipball/5c319c6fb24a6c510df4e9686a6259253b0ad2fb",
-                "reference": "5c319c6fb24a6c510df4e9686a6259253b0ad2fb",
+                "url": "https://api.github.com/repos/glhd/aire/zipball/498d00162075b4b0a3b06b37836f7a9d70cd8842",
+                "reference": "498d00162075b4b0a3b06b37836f7a9d70cd8842",
                 "shasum": ""
             },
             "require": {
@@ -1434,9 +1434,9 @@
             ],
             "support": {
                 "issues": "https://github.com/glhd/aire/issues",
-                "source": "https://github.com/glhd/aire/tree/2.5.0"
+                "source": "https://github.com/glhd/aire/tree/2.6.0"
             },
-            "time": "2022-01-24T20:08:11+00:00"
+            "time": "2022-08-08T18:20:17+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -8239,16 +8239,16 @@
         },
         {
             "name": "teamprodev/laravel_dst_eimzo",
-            "version": "1.14",
+            "version": "1.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teamprodev/laravel_dst_eimzo.git",
-                "reference": "ac7d3cf2dcf2e2116e656ace79ff6cb189764775"
+                "reference": "61ef97da440bb33204ce125a98679d4c6984b10f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teamprodev/laravel_dst_eimzo/zipball/ac7d3cf2dcf2e2116e656ace79ff6cb189764775",
-                "reference": "ac7d3cf2dcf2e2116e656ace79ff6cb189764775",
+                "url": "https://api.github.com/repos/teamprodev/laravel_dst_eimzo/zipball/61ef97da440bb33204ce125a98679d4c6984b10f",
+                "reference": "61ef97da440bb33204ce125a98679d4c6984b10f",
                 "shasum": ""
             },
             "type": "library",
@@ -8276,9 +8276,9 @@
             ],
             "support": {
                 "issues": "https://github.com/teamprodev/laravel_dst_eimzo/issues",
-                "source": "https://github.com/teamprodev/laravel_dst_eimzo/tree/1.14"
+                "source": "https://github.com/teamprodev/laravel_dst_eimzo/tree/1.14.1"
             },
-            "time": "2022-08-07T09:44:15+00:00"
+            "time": "2022-08-09T05:38:05+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -9808,16 +9808,16 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.260.0",
+            "version": "v0.261.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client-services.git",
-                "reference": "8c519ddfd2458fda02dc10d10b142973e578516a"
+                "reference": "c91c5a694e3b8bca37136b830072a23f2c1250fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/8c519ddfd2458fda02dc10d10b142973e578516a",
-                "reference": "8c519ddfd2458fda02dc10d10b142973e578516a",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/c91c5a694e3b8bca37136b830072a23f2c1250fa",
+                "reference": "c91c5a694e3b8bca37136b830072a23f2c1250fa",
                 "shasum": ""
             },
             "require": {
@@ -9846,9 +9846,9 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/google-api-php-client-services/issues",
-                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.260.0"
+                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.261.0"
             },
-            "time": "2022-07-31T00:58:12+00:00"
+            "time": "2022-08-08T01:28:12+00:00"
         },
         {
             "name": "google/auth",
