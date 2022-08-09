@@ -29,7 +29,7 @@ class SignDocsObserver
      */
     public function updated($application_id)
     {
-        $signedDocs = SignedDocs::where('application_id',$application_id)->get();
+        $signedDocs = SignedDocs::where('application_id',$application_id)->first();
         $allDocs = SignedDocs::where('application_id', $signedDocs->application->id)->get();
         $user = auth()->user();
         $allUsers = $allDocs->where('user_id', '!=', null)->map(function ($doc) {
@@ -64,7 +64,7 @@ class SignDocsObserver
         }else {
             $signedDocs->application->status = Application::IN_PROCESS;
         }
-        return $signedDocs->application->update();
+        $signedDocs->application->update();
     }
 
     /**
