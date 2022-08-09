@@ -145,8 +145,6 @@ Route::group([
                         Route::post('{application}/is_more_than_limit','is_more_than_limit')->name('is_more_than_limit')->middleware('branch','application_user_id');
                         Route::get('getAll','getAll')->name('getAll');
                     });
-                    Route::post('applications/{application}/eimzo/sign', [ImzoController::class, 'verifyPks'])->name('imzo.sign');
-
                 });
 
             Route::group(
