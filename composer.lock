@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2927335101d3535cb4b0bb3413e35ba4",
+    "content-hash": "b99996a4ef6b223966694da668237bd2",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -8239,16 +8239,16 @@
         },
         {
             "name": "teamprodev/laravel_dst_eimzo",
-            "version": "1.14.1",
+            "version": "1.15.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teamprodev/laravel_dst_eimzo.git",
-                "reference": "61ef97da440bb33204ce125a98679d4c6984b10f"
+                "reference": "c18c46b99bfd53183bdd4837942c9f2e06ee6277"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teamprodev/laravel_dst_eimzo/zipball/61ef97da440bb33204ce125a98679d4c6984b10f",
-                "reference": "61ef97da440bb33204ce125a98679d4c6984b10f",
+                "url": "https://api.github.com/repos/teamprodev/laravel_dst_eimzo/zipball/c18c46b99bfd53183bdd4837942c9f2e06ee6277",
+                "reference": "c18c46b99bfd53183bdd4837942c9f2e06ee6277",
                 "shasum": ""
             },
             "type": "library",
@@ -8276,9 +8276,9 @@
             ],
             "support": {
                 "issues": "https://github.com/teamprodev/laravel_dst_eimzo/issues",
-                "source": "https://github.com/teamprodev/laravel_dst_eimzo/tree/1.14.1"
+                "source": "https://github.com/teamprodev/laravel_dst_eimzo/tree/1.15.2"
             },
-            "time": "2022-08-09T05:38:05+00:00"
+            "time": "2022-08-09T13:32:58+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -9395,16 +9395,16 @@
         },
         {
             "name": "facade/flare-client-php",
-            "version": "1.9.1",
+            "version": "1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facade/flare-client-php.git",
-                "reference": "b2adf1512755637d0cef4f7d1b54301325ac78ed"
+                "reference": "213fa2c69e120bca4c51ba3e82ed1834ef3f41b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facade/flare-client-php/zipball/b2adf1512755637d0cef4f7d1b54301325ac78ed",
-                "reference": "b2adf1512755637d0cef4f7d1b54301325ac78ed",
+                "url": "https://api.github.com/repos/facade/flare-client-php/zipball/213fa2c69e120bca4c51ba3e82ed1834ef3f41b8",
+                "reference": "213fa2c69e120bca4c51ba3e82ed1834ef3f41b8",
                 "shasum": ""
             },
             "require": {
@@ -9417,7 +9417,7 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.14",
-                "phpunit/phpunit": "^7.5.16",
+                "phpunit/phpunit": "^7.5",
                 "spatie/phpunit-snapshot-assertions": "^2.0"
             },
             "type": "library",
@@ -9448,7 +9448,7 @@
             ],
             "support": {
                 "issues": "https://github.com/facade/flare-client-php/issues",
-                "source": "https://github.com/facade/flare-client-php/tree/1.9.1"
+                "source": "https://github.com/facade/flare-client-php/tree/1.10.0"
             },
             "funding": [
                 {
@@ -9456,7 +9456,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-09-13T12:16:46+00:00"
+            "time": "2022-08-09T11:23:57+00:00"
         },
         {
             "name": "facade/ignition",
