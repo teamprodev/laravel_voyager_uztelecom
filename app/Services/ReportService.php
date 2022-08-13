@@ -856,6 +856,8 @@ class ReportService
                 $applications = Purchase::where('id', $branch->type_of_purchase_id)->get()->pluck('name');
                 $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
                 return trim($json, '[], "');
+            })->addColumn('number_and_date_of_app', function($branch){
+                return "{$branch->number } {$branch->date }";
             })
             ->addColumn('product', function($application){
                 $product = json_decode($application->resource_id,true);

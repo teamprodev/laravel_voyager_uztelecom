@@ -122,6 +122,9 @@ class ApplicationService
                 ->editColumn('delivery_date', function ($query) {
                     return $query->updated_at ? with(new Carbon($query->delivery_date))->format('d.m.Y') : '';
                 })
+                ->addColumn('planned_price_curr', function ($query) {
+                    return "{$query->planned_price}  {$query->currency}";
+                })
                 ->editColumn('status', function ($query){
                     /*
                      *  Voyager admin paneldan status ranglarini olish va chiqarish
