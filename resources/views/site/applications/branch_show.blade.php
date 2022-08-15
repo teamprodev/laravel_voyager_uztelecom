@@ -83,7 +83,7 @@
                     }}
                 </div>
                 <div class="pt-2 pb-2 w-50">
-                    {{Aire::input('bio', __('Департамент по планированию бюджета - информация о существовании товара закупок в бизнес-плане'))
+                    {{Aire::input('bio', __('Статья расходов по Бизнес плану'))
                         ->name('info_business_plan')
                         ->value($application->info_business_plan)
                         ->disabled()
