@@ -66,13 +66,7 @@
     var columns = [
         {data: "id", name: 'id'},
         {data: 'filial', name: 'filial'},
-        {
-            "data": "",
-            render: function (data, type, row) {
-                var details = `<b>${row.number ?? ''}</b> ${row.date ?? ''}` ;
-                return details;
-            }
-        },
+        {data: 'number_and_date_of_app', name: 'number_and_date_of_app'},
         {data: 'planned_price', name: 'planned_price'},
         {data: 'performer_received_date', name: 'performer_received_date'},
         {data: 'initiator', name: 'initiator'},

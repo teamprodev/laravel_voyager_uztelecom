@@ -77,6 +77,9 @@ class BranchController extends Controller
             ->editColumn('updated_at', function ($data) {
                 return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
             })
+            ->addColumn('planned_price_curr', function ($query) {
+                return "{$query->planned_price}  {$query->currency}";
+            })
             ->editColumn('status', function ($query){
                 $status_new = __('Новая');
                 $status_in_process = __('На рассмотрении');

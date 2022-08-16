@@ -1,11 +1,26 @@
 @extends('site.layouts.app')
 @section('center_content')
+    <head>
+        <style>
+            .dt-body-center, .dt-body-right{
+                font-size: 0.8rem;
+            }
+            .btn{
+                font-size: 0.9rem !important;
+                padding: 2px !important;
+            }
+            .btn-sm{
+                font-size: 0.75rem !important;
+                padding: 3px !important;
+            }
+        </style>
+    </head>
     <div id="section" class="pt-6">
         <a href="{{route('site.applications.create')}}"
            class="ml-12 bg-blue-500 hover:bg-blue-700 p-2 transition duration-300 rounded-md text-white mb-8">
             {{ __('Создать') }}
         </a>
-        <div class="w-11/12 mx-auto pt-8 pb-16">
+        <div class="pt-8 pb-16">
 
             {{ Aire::open()
       ->route('branches.putCache')
@@ -18,21 +33,19 @@
             </div>
             {{ Aire::close() }}
             @if(Illuminate\Support\Facades\Cache::get(auth()->user()->id) != null)
-                <table id="yajra-datatable" class="display wrap">
+                <table id="yajra-datatable" class="display wrap responsive" style="width: 100%">
                     <thead>
                     <tr>
                         <th>ID</th>
+                        <th>{{ __('Статус заявки') }}</th>
                         <th>{{ __('Заявки')}}</th>
                         <th>{{ __('Дата заявки')}}</th>
                         <th>{{ __('Инициатор (наименование подразделения заказчика)') }}</th>
-                        <th>{{ __('Филиал') }}</th>
                         <th>{{ __('Наименование предмета закупки(товар, работа, услуги)') }}</th>
                         <th>{{ __('Ожидаемый срок поставки') }}</th>
                         <th>{{ __('Планируемый бюджет закупки (сумма)') }}</th>
                         <th>{{ __('Условия поставки по INCOTERMS') }}</th>
                         <th>{{ __('Дата создания') }}</th>
-                        <th>{{ __('Дата обновления') }}</th>
-                        <th>{{ __('Статус заявки') }}</th>
                         <th>{{ __('Действие') }}</th>
                     </tr>
                     </thead>
@@ -45,7 +58,7 @@
                 var table = $('#yajra-datatable').DataTable({
                     columnDefs: [
                         {
-                            targets: [0,1,2,3,4,5,6,8,9,10,11,12],
+                            targets: [0,1,2,3,4,5,6,8,9,10],
                             className: 'dt-body-center dt-head-center'
                         },
                         {
@@ -61,23 +74,15 @@
 
                     columns: [
                         {data: 'id', name: 'id'},
+                        {data: 'status', name: 'status'},
                         {data: 'number', name: 'number'},
                         {data: 'date', name: 'date'},
                         {data: 'initiator', name: 'initiator'},
-                        {data: 'branch_initiator_id', name: 'branch_initiator_id'},
                         {data: 'name', name: 'name'},
                         {data: 'delivery_date', name: 'delivery_date'},
-                        {
-                            "data": "",
-                            render: function (data, type, row) {
-                                var details = row.planned_price + " " + row.currency ;
-                                return details;
-                            }
-                        },
+                        {data: 'planned_price_curr', name: 'planned_price_curr'},
                         {data: 'incoterms', name: 'incoterms'},
                         {data: 'created_at', name: 'created_at'},
-                        {data: 'updated_at', name: 'updated_at'},
-                        {data: 'status', name: 'status'},
                         {
                             data: 'action',
                             name: 'action',
