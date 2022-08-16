@@ -679,6 +679,7 @@ class ApplicationService
         if (PHP_SAPI === 'cli')
             return dd($application);
         $access = SignedDocs::where('role_id', auth()->user()->role_id)->where('status', null)->where('application_id', $application->id)->first();
+        $check = SignedDocs::where('role_id', auth()->user()->role_id)->where('application_id', $application->id)->first();
         $branch = Branch::where('id', $application->branch_initiator_id)->first();
         $signedDocs = $application->signedDocs()->get();
         $file_basis = json_decode($application->file_basis);
@@ -714,7 +715,7 @@ class ApplicationService
         $purchases = Purchase::all();
         $branch_name = Branch::find($application->user->branch_id, 'name');
         $branch = Branch::all()->pluck('name', 'id');
-        return view('site.applications.show', compact('performer_file','branch','access_comment','performers_company','performers_branch','file_basis','file_tech_spec','other_files','user','application','branch','signedDocs', 'same_role_user_ids','access','subjects','purchases','branch_name'));
+        return view('site.applications.show', compact('performer_file','branch','access_comment','performers_company','performers_branch','file_basis','file_tech_spec','other_files','user','application','branch','signedDocs', 'same_role_user_ids','access','subjects','purchases','branch_name','check'));
 
     }
     public function edit($application)
