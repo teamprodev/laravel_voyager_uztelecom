@@ -123,7 +123,8 @@ class ApplicationService
                     return $query->updated_at ? with(new Carbon($query->delivery_date))->format('d.m.Y') : '';
                 })
                 ->addColumn('planned_price_curr', function ($query) {
-                    return "{$query->planned_price}  {$query->currency}";
+                    $planned_price = $query->planned_price ? number_format($query->planned_price , 0 , '' , ' '): '';
+                    return "{$planned_price}  {$query->currency}";
                 })
                 ->editColumn('status', function ($query){
                     /*
