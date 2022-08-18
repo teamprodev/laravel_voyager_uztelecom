@@ -324,7 +324,7 @@
                 ->cols(40)
             }}
 
-            @if($access && $user->hasPermission('Number_Change'))
+            @if($check && $user->hasPermission('Number_Change'))
                 {{Aire::textArea('bio', __('Номер заявки'))
                     ->name('number')
                     ->value($application->number)
