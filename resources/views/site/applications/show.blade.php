@@ -338,7 +338,7 @@
             @endif
             {{Aire::submit('Save')}}
 
-        @elseif($access && $user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business') && $application->user_id != auth()->user()->id)
+        @elseif($check && $user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business') && $application->user_id != auth()->user()->id)
             {{Aire::textArea('bio', __('Номер заявки'))
                 ->name('number')
                 ->value($application->number)
