@@ -41,7 +41,7 @@ class Notify implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return ['notification-send' . $this->user_id];
+        return ['send-notification-' . $this->user_id];
     }
 
 }

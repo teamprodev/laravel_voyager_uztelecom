@@ -109,12 +109,13 @@ $notifications = Notification::with('application:id,created_at')->has('applicati
             forceTLS: false,
             disableStats: true,
         });
-        console.log(window.location.hostname)
-        let channel = pusher.subscribe('uztelecom-notification-send-' + {{auth()->id()}});
+        let channel = pusher.subscribe('send-notification-' + {{auth()->id()}});
         let count = parseInt($('#notification_count').text());
         channel.bind('server-user', function(data) {
+            // console.log(data.data)
+            // console.log(JSON.parse(data.data))
+            // console.log(JSON.parse(data))
             data = JSON.parse(data.data)
-            console.log(data)
             count += 1;
             $('#notification_count').text(count);
             $('#notification_count_text').text(count + ' Notifications');
