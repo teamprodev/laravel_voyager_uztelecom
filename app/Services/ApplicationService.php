@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Events\Notify;
 use App\Models\Application;
 use App\Models\Branch;
 use App\Models\Notification;
@@ -882,22 +883,16 @@ class ApplicationService
             $user_ids = User::query()->whereIn('role_id', $array)->pluck('id')->toArray();
             foreach ($user_ids as $user_id) {
                 $notification = Notification::query()->firstOrCreate(['user_id' => $user_id, 'application_id' => $application->id,'message' => $message]);
-//                if ($notification->wasRecentlyCreated) {
-//                    $diff = now()->diffInMinutes($application->created_at);
-//                    $data = [
-//                        'id' => $application->id,
-//                        'time' => $diff == 0 ? 'recently' : $diff
-//                    ];
+                if ($notification->wasRecentlyCreated) {
+                    $diff = now()->diffInMinutes($application->created_at);
+                    $data = [
+                        'id' => $application->id,
+                        'time' => $diff == 0 ? 'recently' : $diff
+                    ];
 
-//                    broadcast(new Notify(json_encode($data, $assoc = true), $user->id))->toOthers();     // notification
-//                }
+                    broadcast(new Notify(json_encode($data, $assoc = true), $user_id))->toOthers();     // notification
+                }
             }
-
-            Http::post('ws.smarts.uz/api/send-notification', [
-                'user_ids' => $user_ids,
-                'project' => 'uztelecom',
-                'data' => ['id' => $application->id, 'time' => 'recently']
-            ]);
         }
 
     }
