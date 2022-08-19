@@ -100,11 +100,12 @@ $notifications = Notification::with('application:id,created_at')->has('applicati
         // Pusher.logToConsole = true;
         let pusher = new Pusher('{{env("MIX_PUSHER_APP_KEY")}}', {
             cluster: '{{env("PUSHER_APP_CLUSTER")}}',
-            // encrypted: true,
-
             wsHost: '{{env('LARAVEL_WEBSOCKETS_HOST')}}',
             wsPort: '{{env('LARAVEL_WEBSOCKETS_PORT')}}',
-            forceTLS: false,
+            wssPort: {{env('WEBSOCKET_SERVER_PORT', 6001)}},
+
+            encrypted: true,
+            forceTLS: true,
             disableStats: true,
         });
         let channel = pusher.subscribe('send-notification-' + {{auth()->id()}});
