@@ -85,7 +85,7 @@ class ApplicationController extends Controller
             Notification::query()
                 ->where('application_id', $application->id)
                 ->where('user_id', auth()->id())
-                ->increment('is_read');
+                ->update(['is_read' => 1]);
         }
         return $this->service->show($application);
     }

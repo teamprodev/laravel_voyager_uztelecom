@@ -16,7 +16,6 @@ use TCG\Voyager\Facades\Voyager;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\BranchController;
-use App\Http\Controllers\ImzoController;
 USE App\Http\Controllers\HomeController;
 use Teamprodev\Eimzo\Http\Controllers\EimzoController;
 
@@ -79,7 +78,7 @@ Auth::routes();
 Route::post('eimzo/login', [EimzoController::class, 'auth'])->name('eri.login');
 
 Route::group([
-    'prefix' => LaravelLocalization::setLocale(),
+    'prefix' => LaravelLocalization::getCurrentLocale(),
     'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth' ]
 ], function()
 {
