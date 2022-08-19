@@ -85,7 +85,7 @@ class ApplicationController extends Controller
             Notification::query()
                 ->where('application_id', $application->id)
                 ->where('user_id', auth()->id())
-                ->increment('is_read');
+                ->update(['is_read' => 1]);
         }
         return $this->service->show($application);
     }
@@ -142,12 +142,6 @@ class ApplicationController extends Controller
         return redirect()->back();
     }
 
-    public function cancel(Application $application)
-    {
-        $application->delete();
-
-        return redirect()->route('site.applications.index');
-    }
     /**
      * application is_more_than_limit update
      *

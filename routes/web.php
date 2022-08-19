@@ -16,7 +16,6 @@ use TCG\Voyager\Facades\Voyager;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\BranchController;
-use App\Http\Controllers\ImzoController;
 USE App\Http\Controllers\HomeController;
 use Teamprodev\Eimzo\Http\Controllers\EimzoController;
 
@@ -79,7 +78,7 @@ Auth::routes();
 Route::post('eimzo/login', [EimzoController::class, 'auth'])->name('eri.login');
 
 Route::group([
-    'prefix' => LaravelLocalization::setLocale(),
+    'prefix' => LaravelLocalization::getCurrentLocale(),
     'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth' ]
 ], function()
 {
@@ -138,7 +137,6 @@ Route::group([
                         Route::get('{application}/clone','clone')->name('clone')->middleware('branch');
                         Route::post('{application}/update','update')->name('update')->middleware('branch');
                         Route::get('{application}/destroy','destroy')->name('destroy')->middleware('branch','application_user_id');
-                        Route::get('{application}/cancel','cancel')->name('cancel')->middleware('branch','application_user_id');
                         Route::get('create','create')->name('create')->middleware('branch');
                         Route::post('store','store')->name('store')->middleware('branch');
                         Route::put('{application}/vote','vote')->name('vote')->middleware('branch');
