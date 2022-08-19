@@ -60,11 +60,11 @@
         return b.replace(/[\s\S]{1,3}/g, cb_encode);
     };
     var _encode = buffer
-        ? function (u) { return (new buffer(u)).toString('base64') }
+        ? function (u) { return (new buffer(u)).toString('base64') } 
     : function (u) { return btoa(utob(u)) }
     ;
     var encode = function(u, urisafe) {
-        return !urisafe
+        return !urisafe 
             ? _encode(u)
             : _encode(u).replace(/[+\/]/g, function(m0) {
                 return m0 == '+' ? '-' : '_';
@@ -175,7 +175,7 @@
 })(this);
 
 CAPIWS = (typeof EIMZOEXT !== 'undefined') ? EIMZOEXT : {
-    URL: (window.location.protocol.toLowerCase() === "https:" ? "wss://127.0.0.1:64443" : "ws://127.0.0.1:64646") + "/service/cryptapi",
+    URL: (window.location.protocol.toLowerCase() === "https:" ? "wss://127.0.0.1:64443" : "ws://127.0.0.1:64646") + "/service/cryptapi",    
     callFunction: function(funcDef, callback, error){
         if (!window.WebSocket){
             if(error)
@@ -197,7 +197,7 @@ CAPIWS = (typeof EIMZOEXT !== 'undefined') ? EIMZOEXT : {
             socket.close();
             callback(event,data);
         };
-        socket.onopen = function(){
+        socket.onopen = function(){   
             socket.send(JSON.stringify(funcDef));
         };
     },
@@ -222,7 +222,7 @@ CAPIWS = (typeof EIMZOEXT !== 'undefined') ? EIMZOEXT : {
             socket.close();
             callback(event,data);
         };
-        socket.onopen = function(){
+        socket.onopen = function(){            
             var o = {name: 'version'};
             socket.send(JSON.stringify(o));
         };
@@ -248,7 +248,7 @@ CAPIWS = (typeof EIMZOEXT !== 'undefined') ? EIMZOEXT : {
             socket.close();
             callback(event,data);
         };
-        socket.onopen = function(){
+        socket.onopen = function(){            
             var o = {name: 'apidoc'};
             socket.send(JSON.stringify(o));
         };
@@ -274,7 +274,7 @@ CAPIWS = (typeof EIMZOEXT !== 'undefined') ? EIMZOEXT : {
             socket.close();
             callback(event,data);
         };
-        socket.onopen = function(){
+        socket.onopen = function(){            
             var o = {name: 'apikey', arguments: domainAndKey};
             socket.send(JSON.stringify(o));
         };

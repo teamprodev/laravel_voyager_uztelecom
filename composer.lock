@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b99996a4ef6b223966694da668237bd2",
+    "content-hash": "e887a519e2a5e5d3a67a69ff06a3bc4a",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -8239,16 +8239,16 @@
         },
         {
             "name": "teamprodev/laravel_dst_eimzo",
-            "version": "1.15.2",
+            "version": "1.15.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teamprodev/laravel_dst_eimzo.git",
-                "reference": "c18c46b99bfd53183bdd4837942c9f2e06ee6277"
+                "reference": "13c9fdca4ba2a13adf6f58936412413d5f1eb229"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teamprodev/laravel_dst_eimzo/zipball/c18c46b99bfd53183bdd4837942c9f2e06ee6277",
-                "reference": "c18c46b99bfd53183bdd4837942c9f2e06ee6277",
+                "url": "https://api.github.com/repos/teamprodev/laravel_dst_eimzo/zipball/13c9fdca4ba2a13adf6f58936412413d5f1eb229",
+                "reference": "13c9fdca4ba2a13adf6f58936412413d5f1eb229",
                 "shasum": ""
             },
             "type": "library",
@@ -8276,9 +8276,9 @@
             ],
             "support": {
                 "issues": "https://github.com/teamprodev/laravel_dst_eimzo/issues",
-                "source": "https://github.com/teamprodev/laravel_dst_eimzo/tree/1.15.2"
+                "source": "https://github.com/teamprodev/laravel_dst_eimzo/tree/1.15.3"
             },
-            "time": "2022-08-09T13:32:58+00:00"
+            "time": "2022-08-19T08:32:48+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",

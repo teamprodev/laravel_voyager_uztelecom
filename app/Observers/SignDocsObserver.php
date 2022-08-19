@@ -46,6 +46,7 @@ class SignDocsObserver
             $role_id = $doc->role_id;
             return $role_id;
         });
+
         $roles_need_sign = json_decode($signedDocs->application->signers);
 
         if (in_array(7, $agreedUsers->toArray())) {
