@@ -16,7 +16,7 @@ var dates = {
         //   a date object: returned without modification
         //  an array      : Interpreted as [year,month,day]. NOTE: month is 0-11.
         //   a number     : Interpreted as number of milliseconds
-        //                  since 1 Jan 1970 (a timestamp) 
+        //                  since 1 Jan 1970 (a timestamp)
         //   a string     : Any format supported by the javascript engine, like
         //                  "YYYY/MM/DD", "MM/DD/YYYY", "Jan 31 2009" etc.
         //  an object     : Interpreted as an object with year, month and date
@@ -104,19 +104,17 @@ String.prototype.splitKeep = function (splitter, ahead) {
 
 var EIMZOClient = {
     NEW_API: false,
-    NEW_API2: false,
     API_KEYS: [
         'localhost', '96D0C1491615C82B9A54D9989779DF825B690748224C2B04F500F370D51827CE2644D8D4A82C18184D73AB8530BB8ED537269603F61DB0D03D2104ABF789970B',
         '127.0.0.1', 'A7BCFA5D490B351BE0754130DF03A068F855DB4333D43921125B9CF2670EF6A40370C646B90401955E1F7BC9CDBF59CE0B2C5467D820BE189C845D0B79CFC96F'
     ],
     checkVersion: function(success, fail){
         CAPIWS.version(function (event, data) {
-            if(data.success === true){      
+            if(data.success === true){
                 if(data.major && data.minor){
                     var installedVersion = parseInt(data.major) * 100 + parseInt(data.minor);
-                    EIMZOClient.NEW_API = installedVersion >= 336;  
-                    EIMZOClient.NEW_API2 = installedVersion >= 412;  
-                    success(data.major, data.minor);  
+                    EIMZOClient.NEW_API = installedVersion >= 336;
+                    success(data.major, data.minor);
                 } else {
                     fail(null, 'E-IMZO Version is undefined');
                 }
@@ -138,61 +136,28 @@ var EIMZOClient = {
             fail(e, null);
         });
     },
-    listAllUserKeys: function(itemIdGen, itemUiGen, success, fail){        
+    listAllUserKeys: function(itemIdGen, itemUiGen, success, fail){
         var items = [];
         var errors = [];
         if(!EIMZOClient.NEW_API){
             fail(null, 'Please install new version of E-IMZO');
         } else {
-            if(EIMZOClient.NEW_API2){
-                EIMZOClient._findPfxs2(itemIdGen, itemUiGen, items, errors, function (firstItmId2) {                
+            EIMZOClient._findPfxs2(itemIdGen, itemUiGen, items, errors, function (firstItmId2) {
+                EIMZOClient._findTokens2(itemIdGen, itemUiGen, items, errors, function (firstItmId3) {
                     if(items.length === 0 && errors.length > 0){
                         fail(errors[0].e, errors[0].r);
-                    } else {  
+                    } else {
                         var firstId = null;
                         if (items.length === 1) {
                             if (firstItmId2) {
                                 firstId = firstItmId2;
+                            } else if (firstItmId3) {
+                                firstId = firstItmId3;
                             }
                         }
                         success(items, firstId);
-                    }                
+                    }
                 });
-            } else {
-                EIMZOClient._findPfxs2(itemIdGen, itemUiGen, items, errors, function (firstItmId2) {
-                    EIMZOClient._findTokens2(itemIdGen, itemUiGen, items, errors, function (firstItmId3) {
-                        if(items.length === 0 && errors.length > 0){
-                            fail(errors[0].e, errors[0].r);
-                        } else {  
-                            var firstId = null;
-                            if (items.length === 1) {
-                                if (firstItmId2) {
-                                    firstId = firstItmId2;
-                                } else if (firstItmId3) {
-                                    firstId = firstItmId3;
-                                }
-                            }
-                            success(items, firstId);
-                        }
-                    });
-                });
-            }
-        }
-    },
-    idCardIsPLuggedIn: function(success, fail){
-        var items = [];
-        var errors = [];
-        if(!EIMZOClient.NEW_API2){
-            console.log("E-IMZO version should be 4.12 or newer")
-        } else {
-            CAPIWS.callFunction({plugin: "idcard", name: "list_readers"}, function (event, data) {
-                if (data.success) {
-                    success(data.readers.length>0);
-                } else {
-                    fail(null, data.reason);
-                }
-            }, function (e) {
-                fail(e, null);
             });
         }
     },
@@ -292,19 +257,8 @@ var EIMZOClient = {
             }
         }
     },
-    createPkcs7: function(id, data, timestamper, success, fail, detached, isDataBase64Encoded){
-        var data64;
-        if(isDataBase64Encoded === true){
-            data64 = data
-        }else {
-            data64 = Base64.encode(data);
-        }
-        if(detached === true){
-            detached = 'yes';
-        } else {
-            detached = 'no';
-        }
-        CAPIWS.callFunction({plugin: "pkcs7", name: "create_pkcs7", arguments: [data64, id, detached]}, function (event, data) {
+    createPkcs7: function(id, data, timestamper, success, fail){
+        CAPIWS.callFunction({plugin: "pkcs7", name: "create_pkcs7", arguments: [Base64.encode(data), id, 'no']}, function (event, data) {
             if (data.success) {
                 var pkcs7 = data.pkcs7_64;
                 if(timestamper){
@@ -323,7 +277,7 @@ var EIMZOClient = {
                     }, fail);
                 } else {
                     success(pkcs7);
-                }                
+                }
             } else {
                 fail(null, data.reason);
             }
@@ -375,7 +329,7 @@ var EIMZOClient = {
                     var itm = itemUiGen(itmkey, vo);
                     items.push(itm);
                 }
-            } else {            
+            } else {
                 errors.push({r: data.reason});
             }
             callback(itmkey0);
@@ -418,7 +372,7 @@ var EIMZOClient = {
                     var itm = itemUiGen(itmkey, vo);
                     items.push(itm);
                 }
-            } else {            
+            } else {
                 errors.push({r: data.reason});
             }
             callback(itmkey0);
