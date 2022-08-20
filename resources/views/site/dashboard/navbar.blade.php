@@ -104,8 +104,8 @@ $notifications = Notification::with('application:id,created_at')->has('applicati
             wsPort: '{{env('LARAVEL_WEBSOCKETS_PORT')}}',
             wssPort: {{env('WEBSOCKET_SERVER_PORT', 6001)}},
 
-            // encrypted: true,
-            forceTLS: false,
+            encrypted: true,
+            forceTLS: true,
             disableStats: true,
         });
         let channel = pusher.subscribe('send-notification-' + {{auth()->id()}});
