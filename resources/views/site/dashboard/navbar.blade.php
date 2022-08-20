@@ -102,10 +102,10 @@ $notifications = Notification::with('application:id,created_at')->has('applicati
             cluster: '{{env("PUSHER_APP_CLUSTER")}}',
             wsHost: '{{env('LARAVEL_WEBSOCKETS_HOST')}}',
             wsPort: '{{env('LARAVEL_WEBSOCKETS_PORT')}}',
-            wssPort: {{env('WEBSOCKET_SERVER_PORT', 6001)}},
+            {{--wssPort: {{env('WEBSOCKET_SERVER_PORT', 6001)}},--}}
 
-            encrypted: true,
-            forceTLS: true,
+            // encrypted: true,
+            forceTLS: false,
             disableStats: true,
         });
         let channel = pusher.subscribe('send-notification-' + {{auth()->id()}});

@@ -41,8 +41,8 @@ return [
                 'port' => env('LARAVEL_WEBSOCKETS_PORT', 6001),
                 'scheme' => env('LARAVEL_WEBSOCKETS_SCHEME', 'http'),
 
-                'encrypted' => true,
-                'forceTLS' => true,
+//                'encrypted' => true,
+                'forceTLS' => false,
                 'disableStats' => true,
             ],
         ],
