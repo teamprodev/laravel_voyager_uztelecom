@@ -44,7 +44,8 @@
 
 </div>
 
-<script src="{{asset("vendor/eimzo/js/e-imzo.js")}}"></script>
-<script src="{{asset("vendor/eimzo/js/e-imzo-client.js")}}"></script>
+<script src="{{ asset('vendor/eimzo/assets/js/eimzo/e-imzo.js') }}"></script>
+<script src="{{ asset('vendor/eimzo/assets/js/eimzo/e-imzo-client.js') }}"></script>
+<script src="{{ asset('vendor/eimzo/assets/js/eimzo/imzo.js') }}"></script>
 </body>
 </html>
