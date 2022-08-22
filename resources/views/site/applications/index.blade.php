@@ -33,6 +33,7 @@
                 <th>{{ __('Номер Заявки')}}</th>
                 <th>{{ __('Дата заявки')}}</th>
                 <th>{{ __('Инициатор (наименование подразделения заказчика)') }}</th>
+                <th>{{ __('Филиал') }}</th>
                 <th>{{ __('Наименование предмета закупки(товар, работа, услуги)') }}</th>
                 <th>{{ __('Ожидаемый срок поставки') }}</th>
                 <th>{{ __('Планируемый бюджет закупки (сумма)') }}</th>
@@ -169,6 +170,7 @@
                     {data: 'number', name: 'number'},
                     {data: 'date', name: 'date'},
                     {data: 'initiator', name: 'initiator'},
+                    {data: 'branch_initiator_id', name: 'branch_initiator_id'},
                     {data: 'name', name: 'name'},
                     {data: 'delivery_date', name: 'delivery_date'},
                     {data: 'planned_price_curr', name: 'planned_price_curr'},
