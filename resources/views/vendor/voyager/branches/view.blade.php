@@ -13,6 +13,9 @@
                 font-size: 0.75rem !important;
                 padding: 3px !important;
             }
+            thead>tr>th.sorting, table.dataTable thead>tr>th.sorting_asc, table.dataTable thead>tr>th.sorting_desc, table.dataTable thead>tr>th.sorting_asc_disabled, table.dataTable thead>tr>th.sorting_desc_disabled, table.dataTable thead>tr>td.sorting, table.dataTable thead>tr>td.sorting_asc, table.dataTable thead>tr>td.sorting_desc, table.dataTable thead>tr>td.sorting_asc_disabled, table.dataTable thead>tr>td.sorting_desc_disabled{
+                padding-right: 0 !important;
+            }
         </style>
     </head>
     <div id="section" class="pt-6">
@@ -41,6 +44,7 @@
                         <th>{{ __('Заявки')}}</th>
                         <th>{{ __('Дата заявки')}}</th>
                         <th>{{ __('Инициатор (наименование подразделения заказчика)') }}</th>
+                        <th>{{ __('Филиал') }}</th>
                         <th>{{ __('Наименование предмета закупки(товар, работа, услуги)') }}</th>
                         <th>{{ __('Ожидаемый срок поставки') }}</th>
                         <th>{{ __('Планируемый бюджет закупки (сумма)') }}</th>
@@ -78,6 +82,7 @@
                         {data: 'number', name: 'number'},
                         {data: 'date', name: 'date'},
                         {data: 'initiator', name: 'initiator'},
+                        {data: 'branch_initiator_id', name: 'branch_initiator_id'},
                         {data: 'name', name: 'name'},
                         {data: 'delivery_date', name: 'delivery_date'},
                         {data: 'planned_price_curr', name: 'planned_price_curr'},

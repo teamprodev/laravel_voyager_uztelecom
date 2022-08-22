@@ -17,6 +17,9 @@
                 font-size: 0.75rem !important;
                 padding: 3px !important;
             }
+            thead>tr>th.sorting, table.dataTable thead>tr>th.sorting_asc, table.dataTable thead>tr>th.sorting_desc, table.dataTable thead>tr>th.sorting_asc_disabled, table.dataTable thead>tr>th.sorting_desc_disabled, table.dataTable thead>tr>td.sorting, table.dataTable thead>tr>td.sorting_asc, table.dataTable thead>tr>td.sorting_desc, table.dataTable thead>tr>td.sorting_asc_disabled, table.dataTable thead>tr>td.sorting_desc_disabled{
+                padding-right: 0 !important;
+            }
         </style>
     </head>
 <div id="section" class="pt-6">
@@ -68,7 +71,8 @@
                     },
                     {
                         targets: 7,
-                        className: 'dt-body-right dt-head-center'}
+                        className: 'dt-body-right dt-head-center'
+                    },
                 ],
                 order: [[ 0, "desc" ]],
                 "language": {
