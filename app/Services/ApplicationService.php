@@ -743,6 +743,45 @@ class ApplicationService
                 $doc->save();
             }
         }
+        $roles = ($application->branch->signers);
+        if (isset($data['signers'])) {
+            $array = $roles ? array_merge(json_decode($roles), $data['signers']) : $data['signers'];
+            $data['signers'] = json_encode($array);
+            foreach ($array as $signers) {
+                $signer = SignedDocs::where('application_id', $application->id)->where('role_id', $signers)->first();
+                $docs = new SignedDocs();
+                $docs->role_id = $signers;
+                $docs->role_index = Roles::find($signers)->index == null ? 1 : Roles::find($signers)->index;
+                $docs->application_id = $application->id;
+                $docs->table_name = "applications";
+                $signer == null ? $docs->save() : [];
+            }
+            if ($application->signers != null) {
+                $signers = json_decode($data['signers']);
+                $signedDocs = SignedDocs::where('application_id', $application->id)->pluck('role_id')->toArray();
+                $not_signer = array_diff($signedDocs, $signers);
+                foreach ($not_signer as $delete) {
+                    SignedDocs::where('application_id', $application->id)->where('role_id', $delete)->delete();
+                }
+            }
+            $application->status = Application::NEW;
+            $message = "{$application->id} " . "{$application->name} " . setting('admin.application_created');
+            $this->sendNotifications($array, $application, $message);
+        }elseif ($application->signers == null) {
+            $data['signers'] = $roles;
+            $array = json_decode($roles);
+            foreach ($array as $signers) {
+                $signer = SignedDocs::where('application_id', $application->id)->where('role_id', $signers)->first();
+                $docs = new SignedDocs();
+                $docs->role_id = $signers;
+                $docs->role_index = Roles::find($signers)->index;
+                $docs->application_id = $application->id;
+                $docs->table_name = "applications";
+                $signer == null ? $docs->save() : [];
+            }
+            $message = "{$application->id} " . "{$application->name} " . setting('admin.application_created');
+            $this->sendNotifications($array, $application, $message);
+        }
         if (isset($data['draft'])) {
             if ($data['draft'] == 1)
                 $data['status'] = Application::DRAFT;
@@ -774,47 +813,6 @@ class ApplicationService
             $data['status'] = 'distributed';
             $data['show_leader'] = 2;
             $data['branch_leader_user_id'] = $user->id;
-        }
-        $roles = ($application->branch->signers);
-        if (isset($data['signers'])) {
-            $array = $roles ? array_merge(json_decode($roles), $data['signers']) : $data['signers'];
-            $data['signers'] = json_encode($array);
-            foreach ($array as $signers) {
-                $signer = SignedDocs::where('application_id', $application->id)->where('role_id', $signers)->first();
-                $docs = new SignedDocs();
-                $docs->role_id = $signers;
-                $docs->role_index = Roles::find($signers)->index == null ? 1 : Roles::find($signers)->index;
-                $docs->application_id = $application->id;
-                $docs->table_name = "applications";
-                $signer == null ? $docs->save() : [];
-            }
-            if ($application->signers != null) {
-                $signers = json_decode($application->signers);
-                $signedDocs = SignedDocs::where('application_id', $application->id)->pluck('role_id')->toArray();
-                $not_signer = array_diff($signedDocs, $signers);
-                foreach ($not_signer as $delete) {
-                    SignedDocs::where('application_id', $application->id)->where('role_id', $delete)->delete();
-                }
-            }
-            $application->status = Application::NEW;
-            $message = "{$application->id} " . "{$application->name} " . setting('admin.application_created');
-            $this->sendNotifications($array, $application, $message);
-        }
-
-        elseif ($application->signers == null) {
-            $data['signers'] = $roles;
-            $array = json_decode($roles);
-            foreach ($array as $signers) {
-                $signer = SignedDocs::where('application_id', $application->id)->where('role_id', $signers)->first();
-                $docs = new SignedDocs();
-                $docs->role_id = $signers;
-                $docs->role_index = Roles::find($signers)->index;
-                $docs->application_id = $application->id;
-                $docs->table_name = "applications";
-                $signer == null ? $docs->save() : [];
-            }
-            $message = "{$application->id} " . "{$application->name} " . setting('admin.application_created');
-            $this->sendNotifications($array, $application, $message);
         }
 
         $result = $application->update($data);
