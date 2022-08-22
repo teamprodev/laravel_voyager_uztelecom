@@ -27,9 +27,8 @@ class SignDocsObserver
      * @param \App\Models\SignedDocs $signedDocs
      * @return void
      */
-    public function updated($application_id)
+    public function updated(SignedDocs $signedDocs)
     {
-        $signedDocs = SignedDocs::where('application_id',$application_id)->first();
         $allDocs = SignedDocs::where('application_id', $signedDocs->application->id)->get();
         $user = auth()->user();
         $allUsers = $allDocs->where('user_id', '!=', null)->map(function ($doc) {

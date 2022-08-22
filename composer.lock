@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e887a519e2a5e5d3a67a69ff06a3bc4a",
+    "content-hash": "6444f684e667d5508a2eb4c5d618dd3c",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -8239,16 +8239,16 @@
         },
         {
             "name": "teamprodev/laravel_dst_eimzo",
-            "version": "1.15.3",
+            "version": "1.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teamprodev/laravel_dst_eimzo.git",
-                "reference": "13c9fdca4ba2a13adf6f58936412413d5f1eb229"
+                "reference": "62e3c0bef925232b05778688626bca705adf6a10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teamprodev/laravel_dst_eimzo/zipball/13c9fdca4ba2a13adf6f58936412413d5f1eb229",
-                "reference": "13c9fdca4ba2a13adf6f58936412413d5f1eb229",
+                "url": "https://api.github.com/repos/teamprodev/laravel_dst_eimzo/zipball/62e3c0bef925232b05778688626bca705adf6a10",
+                "reference": "62e3c0bef925232b05778688626bca705adf6a10",
                 "shasum": ""
             },
             "type": "library",
@@ -8276,9 +8276,9 @@
             ],
             "support": {
                 "issues": "https://github.com/teamprodev/laravel_dst_eimzo/issues",
-                "source": "https://github.com/teamprodev/laravel_dst_eimzo/tree/1.15.3"
+                "source": "https://github.com/teamprodev/laravel_dst_eimzo/tree/1.16"
             },
-            "time": "2022-08-19T08:32:48+00:00"
+            "time": "2022-08-20T10:44:53+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -10812,23 +10812,23 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "9.2.15",
+            "version": "9.2.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "2e9da11878c4202f97915c1cb4bb1ca318a63f5f"
+                "reference": "2593003befdcc10db5e213f9f28814f5aa8ac073"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/2e9da11878c4202f97915c1cb4bb1ca318a63f5f",
-                "reference": "2e9da11878c4202f97915c1cb4bb1ca318a63f5f",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/2593003befdcc10db5e213f9f28814f5aa8ac073",
+                "reference": "2593003befdcc10db5e213f9f28814f5aa8ac073",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "ext-libxml": "*",
                 "ext-xmlwriter": "*",
-                "nikic/php-parser": "^4.13.0",
+                "nikic/php-parser": "^4.14",
                 "php": ">=7.3",
                 "phpunit/php-file-iterator": "^3.0.3",
                 "phpunit/php-text-template": "^2.0.2",
@@ -10877,7 +10877,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.15"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.16"
             },
             "funding": [
                 {
@@ -10885,7 +10885,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-03-07T09:28:20+00:00"
+            "time": "2022-08-20T05:26:47+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -11130,16 +11130,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.5.21",
+            "version": "9.5.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "0e32b76be457de00e83213528f6bb37e2a38fcb1"
+                "reference": "e329ac6e8744f461518272612a479fde958752fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0e32b76be457de00e83213528f6bb37e2a38fcb1",
-                "reference": "0e32b76be457de00e83213528f6bb37e2a38fcb1",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/e329ac6e8744f461518272612a479fde958752fe",
+                "reference": "e329ac6e8744f461518272612a479fde958752fe",
                 "shasum": ""
             },
             "require": {
@@ -11216,7 +11216,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.21"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.22"
             },
             "funding": [
                 {
@@ -11228,7 +11228,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-06-19T12:14:25+00:00"
+            "time": "2022-08-20T08:25:46+00:00"
         },
         {
             "name": "psr/cache",
