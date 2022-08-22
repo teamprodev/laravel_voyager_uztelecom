@@ -177,7 +177,7 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-6" for="info_business_plan" class="col-sm-2 col-form-label"><?php echo e(__('Департамент по планированию бюджета - информация о существовании товара закупок в бизнес-плане')); ?></label>
+                        <label class="col-sm-6" for="info_business_plan" class="col-sm-2 col-form-label"><?php echo e(__('Статья расходов по Бизнес плану')); ?></label>
                         <div class="col-sm-6">
                             <?php echo e(Aire::input()
                                 ->name("info_business_plan")
@@ -313,21 +313,21 @@
     ->enctype("multipart/form-data")
     ->post()); ?>
 
-        <?php if($access && $user->hasPermission('Plan_Budget') && $application->user_id != auth()->user()->id || $user->hasPermission('Plan_Business') && $access && $application->user_id != auth()->user()->id): ?>
+        <?php if($check && $user->hasPermission('Plan_Budget') && $application->user_id != auth()->user()->id || $user->hasPermission('Plan_Business') && $check && $application->user_id != auth()->user()->id): ?>
             <?php echo e(Aire::textArea('bio', __('Информация о наличии в «Плане закупок» приобретаемых товаров'))
                 ->name('info_purchase_plan')
                 ->value($application->info_purchase_plan)
                 ->rows(3)
                 ->cols(40)); ?>
 
-            <?php echo e(Aire::textArea('bio', __('Департамент по планированию бюджета - информация о существовании товара закупок в бизнес-плане'))
+            <?php echo e(Aire::textArea('bio', __('Статья расходов по Бизнес плану'))
                 ->name('info_business_plan')
                 ->value($application->info_business_plan)
                 ->rows(3)
                 ->cols(40)); ?>
 
 
-            <?php if($access && $user->hasPermission('Number_Change')): ?>
+            <?php if($check && $user->hasPermission('Number_Change')): ?>
                 <?php echo e(Aire::textArea('bio', __('Номер заявки'))
                     ->name('number')
                     ->value($application->number)); ?>
@@ -343,7 +343,7 @@
             <?php echo e(Aire::submit('Save')); ?>
 
 
-        <?php elseif($access && $user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business') && $application->user_id != auth()->user()->id): ?>
+        <?php elseif($check && $user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business') && $application->user_id != auth()->user()->id): ?>
             <?php echo e(Aire::textArea('bio', __('Номер заявки'))
                 ->name('number')
                 ->value($application->number)); ?>

@@ -889,8 +889,12 @@ class ApplicationService
                         'id' => $application->id,
                         'time' => $diff == 0 ? 'recently' : $diff
                     ];
+                    try {
+                        broadcast(new Notify(json_encode($data, $assoc = true), $user_id))->toOthers();     // notification
+                    } catch (\Exception) {
 
-                    broadcast(new Notify(json_encode($data, $assoc = true), $user_id))->toOthers();     // notification
+                    }
+
                 }
             }
         }
