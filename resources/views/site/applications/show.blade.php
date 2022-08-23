@@ -281,6 +281,7 @@
     <script>
             $(function () {
                 var table = $('#yajra-datatable').DataTable({
+                    pageLength: 25,
                     processing: true,
                     order: [[5, 'asc']],
                     serverSide: true,
