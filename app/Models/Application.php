@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use App\Http\Controllers\TypeOfPurchase;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use phpDocumentor\Reflection\Types\Resource;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property $id
+ */
 class Application extends Model
 {
     use HasFactory;

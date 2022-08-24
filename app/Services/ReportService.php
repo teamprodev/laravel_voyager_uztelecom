@@ -2,66 +2,53 @@
 
 
 namespace App\Services;
-use function PHPUnit\Framework\returnSelf;
 
-use App\Events\Notify;
-use App\Http\Controllers\ReportController;
 use App\Models\Application;
 use App\Models\Branch;
-use App\Models\Notification;
-use App\Models\Permission;
-use App\Models\PermissionRole;
-use App\Models\Position;
 use App\Models\Resource;
-use App\Models\SignedDocs;
 use App\Models\StatusExtented;
 use App\Models\User;
-use DateTime;
-use GuzzleHttp\Client;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
-use App\Models\Country;
 use App\Models\Purchase;
-use App\Models\Roles;
-use App\Models\Subject;
-use Illuminate\Support\Facades\Http;
-use Psy\Util\Json;
 use Yajra\DataTables\DataTables;
 
 class ReportService
 {
     public function report_1()
     {
-        if(auth()->user()->hasPermission('ЦУЗ'))
+        /** @var User $authUser */
+        $authUser = auth()->user();
+        if($authUser->hasPermission('ЦУЗ'))
         {
             $query = Branch::query();
         }
         else{
-            $query = Branch::where('id',auth()->user()->branch_id)->get();
+            $query = Branch::query()->where('id', $authUser->branch_id)->get();
         }
         return Datatables::of($query)
             ->addColumn('count', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->get();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->get();
                 return count($applications);
             })
             ->addColumn('tovar', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('subject',1)->get();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('subject',1)->get();
                 return count($applications);
             })
             ->addColumn('rabota', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('subject',2)->get();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('subject',2)->get();
                 return count($applications);
             })
             ->addColumn('usluga', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('subject',3)->get();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('subject',3)->get();
                 return count($applications);
             })
             ->addColumn('summa', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('with_nds', '=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('with_nds', '=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('nds', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('with_nds', '!=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('with_nds', '!=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->make(true);
@@ -73,7 +60,7 @@ class ReportService
             $query = Branch::query();
         }
         else{
-            $query = Branch::where('id',auth()->user()->branch_id)->get();
+            $query = Branch::query()->where('id',auth()->user()->branch_id)->get();
         }
         return Datatables::of($query)
             ->addColumn('tovar_1', function($branch){
@@ -83,7 +70,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-03-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('rabota_1', function($branch){
@@ -93,7 +80,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-03-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('usluga_1', function($branch){
@@ -103,7 +90,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-03-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('tovar_2', function($branch){
@@ -113,7 +100,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-06-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('rabota_2', function($branch){
@@ -123,7 +110,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-06-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('usluga_2', function($branch){
@@ -133,7 +120,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-06-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('tovar_3', function($branch){
@@ -143,7 +130,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-09-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('rabota_3', function($branch){
@@ -153,7 +140,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-09-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('usluga_3', function($branch){
@@ -163,7 +150,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-09-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('tovar_4', function($branch){
@@ -173,7 +160,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-12-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('rabota_4', function($branch){
@@ -183,7 +170,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-12-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('usluga_4', function($branch){
@@ -193,7 +180,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-12-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->make(true);
@@ -205,7 +192,7 @@ class ReportService
             $query = Branch::query();
         }
         else{
-            $query = Branch::where('id',auth()->user()->branch_id)->get();
+            $query = Branch::query()->where('id',auth()->user()->branch_id)->get();
         }
         return Datatables::of($query)
             ->addColumn('tovar_1', function($branch){
@@ -215,7 +202,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-03-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('tovar_1_nds', function($branch){
@@ -225,7 +212,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-03-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
 
@@ -236,7 +223,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-03-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->where('with_nds','=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('rabota_1_nds', function($branch){
@@ -246,7 +233,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-03-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('usluga_1', function($branch){
@@ -256,7 +243,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-03-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->where('with_nds','=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('usluga_1_nds', function($branch){
@@ -266,7 +253,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-03-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('tovar_2', function($branch){
@@ -276,7 +263,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-06-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('tovar_2_nds', function($branch){
@@ -286,7 +273,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-06-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('rabota_2', function($branch){
@@ -296,7 +283,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-06-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->where('with_nds','=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('rabota_2_nds', function($branch){
@@ -306,7 +293,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-06-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('usluga_2', function($branch){
@@ -316,7 +303,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-06-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->where('with_nds','=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('usluga_2_nds', function($branch){
@@ -326,7 +313,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-06-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('tovar_3', function($branch){
@@ -336,7 +323,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-09-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('tovar_3_nds', function($branch){
@@ -346,7 +333,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-09-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('rabota_3', function($branch){
@@ -356,7 +343,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-09-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->where('with_nds','=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('rabota_3_nds', function($branch){
@@ -366,7 +353,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-09-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('usluga_3', function($branch){
@@ -376,7 +363,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-09-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->where('with_nds','=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('usluga_3_nds', function($branch){
@@ -386,7 +373,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-09-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('tovar_4', function($branch){
@@ -396,7 +383,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-12-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('tovar_4_nds', function($branch){
@@ -406,7 +393,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-12-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('rabota_4', function($branch){
@@ -416,7 +403,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-12-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('rabota_4_nds', function($branch){
@@ -426,7 +413,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-12-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('usluga_4', function($branch){
@@ -436,7 +423,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-12-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->where('with_nds','=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('usluga_4_nds', function($branch){
@@ -446,7 +433,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-12-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->make(true);
@@ -458,7 +445,7 @@ class ReportService
             $query = Branch::query();
         }
         else{
-            $query = Branch::where('id',auth()->user()->branch_id)->get();
+            $query = Branch::query()->where('id',auth()->user()->branch_id)->get();
         }
         return Datatables::of($query)
             ->addColumn('tovar_1', function($branch){
@@ -468,7 +455,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('tovar_1_nds', function($branch){
@@ -478,7 +465,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
 
@@ -489,7 +476,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->where('with_nds','=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('rabota_1_nds', function($branch){
@@ -499,7 +486,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',2)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('usluga_1', function($branch){
@@ -509,7 +496,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->where('with_nds','=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('usluga_1_nds', function($branch){
@@ -519,7 +506,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',3)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->make(true);
@@ -532,7 +519,7 @@ class ReportService
 
             $query = Application::query();
         }else{
-            $query = Application::where('branch_initiator_id',auth()->user()->branch_id)->get();
+            $query = Application::query()->where('branch_initiator_id',auth()->user()->branch_id)->get();
         }
         return Datatables::of($query)
             ->editColumn('branch_initiator_id', function($application)
@@ -681,7 +668,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','=',null)->pluck('planned_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('subject',1)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
             ->rawColumns(['status'])
@@ -695,7 +682,7 @@ class ReportService
             $query = Branch::query();
         }
         else{
-            $query = Branch::where('id',auth()->user()->branch_id)->get();
+            $query = Branch::query()->where('id',auth()->user()->branch_id)->get();
         }
         return Datatables::of($query)
             ->addColumn('count', function($branch){
@@ -705,7 +692,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->get();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->get();
                 return count($applications);
             })
             ->addColumn('summa', function($branch){
@@ -715,7 +702,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->pluck('contract_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->pluck('contract_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('count_1', function($branch){
@@ -725,7 +712,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->where('subject',1)->get();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->where('subject',1)->get();
                 return count($applications);
             })
             ->addColumn('summa_1', function($branch){
@@ -735,7 +722,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->where('subject',1)->pluck('contract_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->where('subject',1)->pluck('contract_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('count_2', function($branch){
@@ -745,7 +732,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->where('subject',2)->get();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->where('subject',2)->get();
                 return count($applications);
             })
             ->addColumn('summa_2', function($branch){
@@ -755,7 +742,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->where('subject',2)->pluck('contract_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->where('subject',2)->pluck('contract_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('count_3', function($branch){
@@ -765,7 +752,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->where('subject',3)->get();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->where('subject',3)->get();
                 return count($applications);
             })
             ->addColumn('summa_3', function($branch){
@@ -775,7 +762,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->where('subject',3)->pluck('contract_price')->toArray();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_initiator_id', $branch->id)->where('currency','!=','USD')->where('subject',3)->pluck('contract_price')->toArray();
                 return array_sum($applications);
             })
             ->make(true);
@@ -788,11 +775,11 @@ class ReportService
 
             $query = Application::query();
         }else{
-            $query = Application::where('branch_initiator_id',auth()->user()->branch_id)->get();
+            $query = Application::query()->where('branch_initiator_id',auth()->user()->branch_id)->get();
         }
         return Datatables::of($query)
             ->addColumn('name', function($branch){
-                $applications = Branch::where('id', $branch->branch_initiator_id)->get()->pluck('name');
+                $applications = Branch::query()->where('id', $branch->branch_initiator_id)->get()->pluck('name');
                 $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
                 return trim($json, '[], "');
             })
@@ -814,16 +801,16 @@ class ReportService
 
             $query = Application::query();
         }else{
-            $query = Application::where('branch_initiator_id',auth()->user()->branch_id)->get();
+            $query = Application::query()->where('branch_initiator_id',auth()->user()->branch_id)->get();
         }
         return Datatables::of($query)
             ->addColumn('name', function($branch){
-                $applications = Branch::where('id', $branch->branch_initiator_id)->get()->pluck('name');
+                $applications = Branch::query()->where('id', $branch->branch_initiator_id)->get()->pluck('name');
                 $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
                 return trim($json, '[], "');
             })
             ->addColumn('type_of_purchase', function($branch){
-                $applications = Purchase::where('id', $branch->type_of_purchase_id)->get()->pluck('name');
+                $applications = Purchase::query()->where('id', $branch->type_of_purchase_id)->get()->pluck('name');
                 $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
                 return trim($json, '[], "');
             })
@@ -836,11 +823,11 @@ class ReportService
 
             $query = Application::query();
         }else{
-            $query = Application::where('branch_initiator_id',auth()->user()->branch_id)->get();
+            $query = Application::query()->where('branch_initiator_id',auth()->user()->branch_id)->get();
         }
         return Datatables::of($query)
             ->addColumn('initiator', function($branch){
-                $applications = User::where('id', $branch->user_id)->get()->pluck('name');
+                $applications = User::query()->where('id', $branch->user_id)->get()->pluck('name');
                 $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
                 return trim($json, '[], "');
             })
@@ -848,14 +835,16 @@ class ReportService
                 return $query->created_at ? with(new Carbon($query->created_at))->format('d-m-Y') : '';
             })
             ->addColumn('filial', function($branch){
-                $applications = Branch::where('id', $branch->branch_initiator_id)->get()->pluck('name');
+                $applications = Branch::query()->where('id', $branch->branch_initiator_id)->get()->pluck('name');
                 $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
                 return trim($json, '[], "');
             })
             ->addColumn('type_of_purchase', function($branch){
-                $applications = Purchase::where('id', $branch->type_of_purchase_id)->get()->pluck('name');
+                $applications = Purchase::query()->where('id', $branch->type_of_purchase_id)->get()->pluck('name');
                 $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
                 return trim($json, '[], "');
+            })->addColumn('number_and_date_of_app', function($branch){
+                return "{$branch->number } {$branch->date }";
             })
             ->addColumn('product', function($application){
                 $product = json_decode($application->resource_id,true);
@@ -878,107 +867,107 @@ class ReportService
             $query = Branch::query();
         }
         else{
-            $query = Branch::where('id',auth()->user()->branch_id)->get();
+            $query = Branch::query()->where('id',auth()->user()->branch_id)->get();
         }
 
         return Datatables::of($query)
             ->addColumn('supplier_inn', function($branch){
-                return Application::where('branch_initiator_id', $branch->id)->get()->pluck('supplier_inn')->toArray();
+                return Application::query()->where('branch_initiator_id', $branch->id)->get()->pluck('supplier_inn')->toArray();
             })
             ->addColumn('contract_count', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('contract_price','!=', null)->get();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('contract_price','!=', null)->get();
                 return count($applications);
             })
             ->addColumn('contract_sum', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->pluck('contract_price')->toArray();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->pluck('contract_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('eshop_count', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 3)->get();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 3)->get();
                 return count($applications);
             })
             ->addColumn('eshop_sum', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 3)->pluck('contract_price')->toArray();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 3)->pluck('contract_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('nat_eshop_count', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 7)->get();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 7)->get();
                 return count($applications);
             })
             ->addColumn('nat_eshop_sum', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 7)->pluck('contract_price')->toArray();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 7)->pluck('contract_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('auction_count', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 4)->get();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 4)->get();
                 return count($applications);
             })
             ->addColumn('auction_sum', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 4)->pluck('contract_price')->toArray();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 4)->pluck('contract_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('coop_portal_count', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 5)->get();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 5)->get();
                 return count($applications);
             })
             ->addColumn('coop_portal_sum', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 5)->pluck('contract_price')->toArray();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 5)->pluck('contract_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('tender_platform_count', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 10)->get();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 10)->get();
                 return count($applications);
             })
             ->addColumn('tender_platform_sum', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 10)->pluck('contract_price')->toArray();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 10)->pluck('contract_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('exchange_count', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 11)->get();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 11)->get();
                 return count($applications);
             })
             ->addColumn('exchange_sum', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 11)->pluck('contract_price')->toArray();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 11)->pluck('contract_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('konkurs_count', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 6)->get();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 6)->get();
                 return count($applications);
             })
             ->addColumn('konkurs_sum', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 6)->pluck('contract_price')->toArray();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 6)->pluck('contract_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('tender_count', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 1)->get();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 1)->get();
                 return count($applications);
             })
             ->addColumn('tender_sum', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 1)->pluck('contract_price')->toArray();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 1)->pluck('contract_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('otbor_count', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 2)->get();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 2)->get();
                 return count($applications);
             })
             ->addColumn('otbor_sum', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 2)->pluck('contract_price')->toArray();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 2)->pluck('contract_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('sole_supplier_count', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 14)->get();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 14)->get();
                 return count($applications);
             })
             ->addColumn('sole_supplier_sum', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 14)->pluck('contract_price')->toArray();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 14)->pluck('contract_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('direct_count', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 16)->get();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 16)->get();
                 return count($applications);
             })
             ->addColumn('direct_sum', function($branch){
-                $applications = Application::where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 16)->pluck('contract_price')->toArray();
+                $applications = Application::query()->where('branch_initiator_id', $branch->id)->where('type_of_purchase_id', 16)->pluck('contract_price')->toArray();
                 return array_sum($applications);
             })
             ->make(true);
@@ -986,14 +975,14 @@ class ReportService
 
     public function report_10()
     {
+        /** @var User $user */
         $user = auth()->user();
+        $a = 'branch_initiator_id';
         if($user->hasPermission('ЦУЗ'))
         {
-            $a = 'branch_initiator_id';
             $operator = '!=';
             $b = null;
         }else{
-            $a = 'branch_initiator_id';
             $operator = '=';
             $b = $user->branch_id;
         }
@@ -1009,7 +998,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-01-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('february', function($status){
@@ -1019,7 +1008,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-02-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('march', function($status){
@@ -1029,7 +1018,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-03-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('april', function($status){
@@ -1039,7 +1028,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-04-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('may', function($status){
@@ -1049,7 +1038,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-05-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('june', function($status){
@@ -1059,7 +1048,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-06-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('july', function($status){
@@ -1069,7 +1058,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-07-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('august', function($status){
@@ -1079,7 +1068,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-08-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('september', function($status){
@@ -1089,7 +1078,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-09-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('october', function($status){
@@ -1099,7 +1088,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-10-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('november', function($status){
@@ -1109,7 +1098,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-11-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('december', function($status){
@@ -1119,7 +1108,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-12-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->addColumn('all', function($status){
@@ -1129,7 +1118,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-12-31")
                     ->toDateTimeString();
-                $applications = Application::whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
+                $applications = Application::query()->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('status', $status->name)->get();
                 return count($applications);
             })
             ->make(true);

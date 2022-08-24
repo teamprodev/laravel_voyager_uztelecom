@@ -12,6 +12,9 @@ use TCG\Voyager\Models\Role;
 use App\Models\Branch;
 use App\Models\Position;
 
+/**
+ * @property $branch_id
+ */
 class User extends \TCG\Voyager\Models\User
 {
     use HasApiTokens, HasFactory, Notifiable;

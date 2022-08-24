@@ -15,7 +15,7 @@
                     @if(\Illuminate\Support\Str::contains($faq->file,'jpg')||\Illuminate\Support\Str::contains($faq->file,'png')||\Illuminate\Support\Str::contains($faq->file,'svg'))
                         <img src="/storage/uploads/{{json_decode($faq->file)[0]->download_link}}" width="500" height="500" alt="not found">
                     @else
-                        <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{json_decode($faq->file)[0]->download_link}}">{{json_decode($faq->file)[0]->original_name}}</a></button>
+                        <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/{{json_decode($faq->file)[0]->download_link}}">{{json_decode($faq->file)[0]->original_name}}</a></button>
                     @endif
             </div>
         @endif

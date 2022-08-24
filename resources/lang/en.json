@@ -68,7 +68,7 @@
     "Дата создания": "Date of creation",
     "Действие": "Effort",
     "Декабрь": "December",
-    "Департамент по планированию бюджета - информация о существовании товара закупок в бизнес-плане": "Budget Planning Department is information on the availability of purchases in business plan",
+    "Статья расходов по Бизнес плану": "Budget Planning Department is information on the availability of purchases in business plan",
     "Договор": "Contract",
     "Договор (контракт)": "Agreement (Agreement)",
     "Договоры": "Contracts",
@@ -110,6 +110,7 @@
     "Наименование товара": "Product name",
     "Начальник Исполнителя заявки": "An executive head of the application",
     "Новая": "new",
+    "Новая заявка": "New application",
     "Номер договора": "Agreement number",
     "Номер заказа": "Order number",
     "Номер заявки": "Application number",
@@ -220,6 +221,6 @@
     "услуга": "service",
     "Дополнительные требования": "Additional requirements",
     "Другие файлы":"Other files"
-    
+
 
 }

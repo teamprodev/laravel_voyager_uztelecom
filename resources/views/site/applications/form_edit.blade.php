@@ -145,7 +145,7 @@
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-6" for="info_business_plan" class="col-sm-2 col-form-label">{{ __('Департамент по планированию бюджета - информация о существовании товара закупок в бизнес-плане') }}</label>
+                <label class="col-sm-6" for="info_business_plan" class="col-sm-2 col-form-label">{{ __('Статья расходов по Бизнес плану') }}</label>
                 <div class="col-sm-6">
                     {{Aire::input()
                         ->name("info_business_plan")

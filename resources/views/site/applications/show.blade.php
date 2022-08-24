@@ -175,7 +175,7 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-6" for="info_business_plan" class="col-sm-2 col-form-label">{{ __('Департамент по планированию бюджета - информация о существовании товара закупок в бизнес-плане') }}</label>
+                        <label class="col-sm-6" for="info_business_plan" class="col-sm-2 col-form-label">{{ __('Статья расходов по Бизнес плану') }}</label>
                         <div class="col-sm-6">
                             {{Aire::input()
                                 ->name("info_business_plan")
@@ -281,6 +281,7 @@
     <script>
             $(function () {
                 var table = $('#yajra-datatable').DataTable({
+                    pageLength: 25,
                     processing: true,
                     order: [[5, 'asc']],
                     serverSide: true,
@@ -310,21 +311,21 @@
     ->enctype("multipart/form-data")
     ->post()
     }}
-        @if($access && $user->hasPermission('Plan_Budget') && $application->user_id != auth()->user()->id || $user->hasPermission('Plan_Business') && $access && $application->user_id != auth()->user()->id)
+        @if($check && $user->hasPermission('Plan_Budget') && $application->user_id != auth()->user()->id || $user->hasPermission('Plan_Business') && $check && $application->user_id != auth()->user()->id)
             {{Aire::textArea('bio', __('Информация о наличии в «Плане закупок» приобретаемых товаров'))
                 ->name('info_purchase_plan')
                 ->value($application->info_purchase_plan)
                 ->rows(3)
                 ->cols(40)
             }}
-            {{Aire::textArea('bio', __('Департамент по планированию бюджета - информация о существовании товара закупок в бизнес-плане'))
+            {{Aire::textArea('bio', __('Статья расходов по Бизнес плану'))
                 ->name('info_business_plan')
                 ->value($application->info_business_plan)
                 ->rows(3)
                 ->cols(40)
             }}
 
-            @if($access && $user->hasPermission('Number_Change'))
+            @if($check && $user->hasPermission('Number_Change'))
                 {{Aire::textArea('bio', __('Номер заявки'))
                     ->name('number')
                     ->value($application->number)
@@ -338,7 +339,7 @@
             @endif
             {{Aire::submit('Save')}}
 
-        @elseif($access && $user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business') && $application->user_id != auth()->user()->id)
+        @elseif($check && $user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business') && $application->user_id != auth()->user()->id)
             {{Aire::textArea('bio', __('Номер заявки'))
                 ->name('number')
                 ->value($application->number)
@@ -430,7 +431,7 @@
     </div>
     @if($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer'||'Company_Performer'||'Branch_Performer') || $user->role_id == 7 && $application->show_director == 1)
         <div class="px-6">
-            <form name="testform" action="{{route('site.applications.imzo.sign',$application->id)}}"        method="POST">
+            <form name="testform" action="{{route('eimzo.sign.verify')}}" method="POST">
                 @csrf
                 <label id="message"></label>
                 <div class="form-group">
@@ -647,8 +648,8 @@
         }
     </script>
 
-    <script src="{{asset("assets/js/eimzo/e-imzo.js")}}"></script>
-    <script src="{{asset("assets/js/eimzo/e-imzo-client.js")}}"></script>
-    <script src="{{asset("assets/js/eimzo/eimzo.js")}}"></script>
+<script src="{{ asset('vendor/eimzo/assets/js/eimzo/e-imzo.js') }}"></script>
+<script src="{{ asset('vendor/eimzo/assets/js/eimzo/e-imzo-client.js') }}"></script>
+<script src="{{ asset('vendor/eimzo/assets/js/eimzo/eimzo.js') }}"></script>
 @endsection
 

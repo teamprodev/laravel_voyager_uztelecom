@@ -29,6 +29,9 @@ class SignDocsObserver
      */
     public function updated(SignedDocs $signedDocs)
     {
+
+
+
         $allDocs = SignedDocs::where('application_id', $signedDocs->application->id)->get();
         $user = auth()->user();
         $allUsers = $allDocs->where('user_id', '!=', null)->map(function ($doc) {
@@ -45,6 +48,7 @@ class SignDocsObserver
             $role_id = $doc->role_id;
             return $role_id;
         });
+
         $roles_need_sign = json_decode($signedDocs->application->signers);
 
         if (in_array(7, $agreedUsers->toArray())) {
@@ -63,7 +67,7 @@ class SignDocsObserver
         }else {
             $signedDocs->application->status = Application::IN_PROCESS;
         }
-        return $signedDocs->application->update();
+        $signedDocs->application->update();
     }
 
     /**

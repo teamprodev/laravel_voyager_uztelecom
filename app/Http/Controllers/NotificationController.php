@@ -6,8 +6,8 @@ use App\Events\Notify;
 
 class NotificationController extends Controller
 {
-    public function notify()
+    public static function notify()
     {
-        broadcast(new Notify('12312321', '1', 13))->toOthers();
+        broadcast(new Notify(['test' => 123], '1'))->toOthers();
     }
 }
