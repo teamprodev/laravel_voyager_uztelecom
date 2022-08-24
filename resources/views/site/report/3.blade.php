@@ -25,9 +25,9 @@
   ->enctype("multipart/form-data")
   ->post() }}
 <div style="text-align: center; display: flex; justify-content: end; align-items: center; column-gap: 10px; margin-right: 20px">
-    {{Aire::month('m', 'Месяц')->value(Illuminate\Support\Facades\Cache::get('date_3_month'))->name('date_3_month')}}
+    {{Aire::month('m', __('Месяц'))->value(Illuminate\Support\Facades\Cache::get('date_3_month'))->name('date_3_month')}}
 
-    <button type="submit" class="btn btn-success" style="margin-top: 8px;">Выбрать</button>
+    <button type="submit" class="btn btn-success" style="margin-top: 8px;">{{__('Выбрать')  }}</button>
 </div>
 {{ Aire::close() }}
 @if(Illuminate\Support\Facades\Cache::get('date_3_month') != null)
@@ -74,13 +74,13 @@
             switch (columnIdx) {
                 case 2:
                 case 3:
-                    return 'Товар ' + data;
+                    return '__('Товар') ' + data;
                 case 4:
                 case 5:
-                    return 'Работа ' + data;
+                    return '__('Работа') ' + data;
                 case 6:
                 case 7:
-                    return 'Услуга ' + data;
+                    return '__('Услуга') ' + data;
                 default:
                     return data;
             }

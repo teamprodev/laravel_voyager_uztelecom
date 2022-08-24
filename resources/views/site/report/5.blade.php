@@ -30,9 +30,9 @@
   ->enctype("multipart/form-data")
   ->post() }}
 <div style="text-align: center; display: flex; justify-content: end; align-items: center; column-gap: 10px; margin-right: 20px">
-    {{Aire::month('m', 'Месяц')->value(Illuminate\Support\Facades\Cache::get('date_5'))->name('date_5')}}
+    {{Aire::month('m', __('Месяц'))->value(Illuminate\Support\Facades\Cache::get('date_5'))->name('date_5')}}
 
-    <button type="submit" class="btn btn-success" style="margin-top: 8px;">Выбрать</button>
+    <button type="submit" class="btn btn-success" style="margin-top: 8px;">{{__('Выбрать')}}</button>
 </div>
 {{ Aire::close() }}
 @if(Illuminate\Support\Facades\Cache::get('date_5') != null)
@@ -83,16 +83,16 @@
             switch (columnIdx) {
                 case 2:
                 case 3:
-                    return 'Заключенные договора ' + data;
+                    return '__('Заключенные договора') ' + data;
                 case 4:
                 case 5:
-                    return 'Товар ' + data;
+                    return '__('Товар') ' + data;
                 case 6:
                 case 7:
-                    return 'Работа ' + data;
+                    return '__('Работа') ' + data;
                 case 8:
                 case 9:
-                    return 'Услуга ' + data;
+                    return '__('Услуга') ' + data;
                 default:
                     return data;
             }

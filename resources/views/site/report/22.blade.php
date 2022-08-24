@@ -30,9 +30,9 @@
   ->enctype("multipart/form-data")
   ->post() }}
 <div style="text-align: center; display: flex; justify-content: end; align-items: center; column-gap: 10px; margin-right: 20px">
-    {{Aire::select([2021 => '2021', 2022 => '2022', 2023 => '2023',2024 => '2024'], 'select', 'Год')->value(Illuminate\Support\Facades\Cache::get('date_2'))->name('date_2')}}
+    {{Aire::select([2021 => '2021', 2022 => '2022', 2023 => '2023',2024 => '2024'], 'select', __('Год'))->value(Illuminate\Support\Facades\Cache::get('date_2'))->name('date_2')}}
 
-    <button type="submit" class="btn btn-success" style="margin-top: 8px;">Выбрать</button>
+    <button type="submit" class="btn btn-success" style="margin-top: 8px;">{{ __('Выбрать')  }}</button>
 </div>
 {{ Aire::close() }}
 @if(Illuminate\Support\Facades\Cache::get('date_2') != null)
@@ -129,7 +129,7 @@
                 case 15:
                 case 20:
                 case 21:
-                    return 'Товар ' + data;
+                    return '__('Товар') ' + data;
                 case 4:
                 case 5:
                 case 10:
@@ -138,7 +138,7 @@
                 case 17:
                 case 22:
                 case 23:
-                    return 'Работа ' + data;
+                    return '__('Работа') ' + data;
                 case 6:
                 case 7:
                 case 12:
@@ -147,7 +147,7 @@
                 case 19:
                 case 24:
                 case 25:
-                    return 'Услуга ' + data;
+                    return '__('Услуга') ' + data;
                 default:
                     return data;
             }
