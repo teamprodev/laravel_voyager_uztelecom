@@ -83,16 +83,16 @@
             switch (columnIdx) {
                 case 2:
                 case 3:
-                    return '__('Заключенные договора') ' + data;
+                    return "{{ __('Заключенные договора ') }}"  + data;
                 case 4:
                 case 5:
-                    return '__('Товар') ' + data;
+                    return "{{ __('Товар ') }}"  + data;
                 case 6:
                 case 7:
-                    return '__('Работа') ' + data;
+                    return "{{ __('Работа ') }}"  + data;
                 case 8:
                 case 9:
-                    return '__('Услуга') ' + data;
+                    return "{{ __('Услуга ') }}"  + data;
                 default:
                     return data;
             }

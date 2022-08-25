@@ -129,7 +129,7 @@
                 case 15:
                 case 20:
                 case 21:
-                    return '__('Товар') ' + data;
+                    return "{{ __('Товар ') }}"  + data;
                 case 4:
                 case 5:
                 case 10:
@@ -138,7 +138,7 @@
                 case 17:
                 case 22:
                 case 23:
-                    return '__('Работа') ' + data;
+                    return "{{ __('Работа ') }}"  + data;
                 case 6:
                 case 7:
                 case 12:
@@ -147,7 +147,7 @@
                 case 19:
                 case 24:
                 case 25:
-                    return '__('Услуга') ' + data;
+                    return "{{ __('Услуга ') }}"  + data;
                 default:
                     return data;
             }

@@ -78,7 +78,7 @@ Auth::routes();
 Route::post('eimzo/login', [EimzoController::class, 'auth'])->name('eri.login');
 
 Route::group([
-    'prefix' => LaravelLocalization::getCurrentLocale(),
+    'prefix' => LaravelLocalization::setLocale(),
     'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth' ]
 ], function()
 {
