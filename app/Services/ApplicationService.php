@@ -877,7 +877,7 @@ class ApplicationService
     public function sendNotifications($array, $application, $message)
     {
         if ($array != null) {
-            if (is_resource(@fsockopen('bidding.uztelecom.uz', 6001))) {
+            if (is_resource(@fsockopen(env('LARAVEL_WEBSOCKETS_HOST', '127.0.0.1'), env('LARAVEL_WEBSOCKETS_PORT', 6001)))) {
                 $websocket = true;
             } else {
                 $websocket = false;
