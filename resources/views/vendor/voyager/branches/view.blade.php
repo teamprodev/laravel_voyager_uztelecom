@@ -62,13 +62,13 @@
                 var table = $('#yajra-datatable').DataTable({
                     columnDefs: [
                         {
-                            targets: [0,1,2,3,4,5,6,8,9,10],
+                            targets: [0,1,2,3,4,5,6,7,9,10],
                             className: 'dt-body-center dt-head-center'
                         },
                         {
-                            targets: 7,
+                            targets: 8,
                             className: 'dt-body-right dt-head-center'
-                        }
+                        },
                     ],
                     order: [[ 0, "desc" ]],
                     processing: true,

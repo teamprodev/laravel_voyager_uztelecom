@@ -62,15 +62,15 @@
                 responsive: true,
                 columnDefs: [
                     {
-                        targets: [0,1,2,3,4,5,6,8,9,10],
+                        targets: [0,1,2,3,4,5,6,7,9,10,11],
                         className: 'dt-body-center dt-head-center'
                     },
                     {
-                        targets: 10,
+                        targets: 11,
                         className: 'not-exported'
                     },
                     {
-                        targets: 7,
+                        targets: 8,
                         className: 'dt-body-right dt-head-center'
                     },
                 ],
