@@ -877,6 +877,11 @@ class ApplicationService
     public function sendNotifications($array, $application, $message)
     {
         if ($array != null) {
+            if (is_resource(@fsockopen('bidding.uztelecom.uz', 6001))) {
+                $websocket = true;
+            } else {
+                $websocket = false;
+            }
             $user_ids = User::query()->whereIn('role_id', $array)->pluck('id')->toArray();
             foreach ($user_ids as $user_id) {
                 $notification = Notification::query()->firstOrCreate(['user_id' => $user_id, 'application_id' => $application->id, 'message' => $message]);
@@ -886,8 +891,9 @@ class ApplicationService
                         'id' => $application->id,
                         'time' => $diff == 0 ? 'recently' : $diff
                     ];
-                  //  broadcast(new Notify(json_encode($data, $assoc = true), $user_id))->toOthers();     // notification
-
+                    if ($websocket) {
+                        broadcast(new Notify(json_encode($data, $assoc = true), $user_id))->toOthers();     // notification
+                    }
                 }
             }
         }

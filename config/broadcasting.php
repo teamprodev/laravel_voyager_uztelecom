@@ -42,7 +42,7 @@ return [
                 'scheme' => env('LARAVEL_WEBSOCKETS_SCHEME', 'http'),
 
 //                'encrypted' => true,
-                'forceTLS' => false,
+                'forceTLS' => true,
                 'disableStats' => true,
             ],
         ],

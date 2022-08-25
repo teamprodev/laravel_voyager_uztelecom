@@ -1,5 +1,4 @@
-@extends('site.layouts.app')
-@section('center_content')
+<?php $__env->startSection('center_content'); ?>
     <!doctype html>
 <html lang="en">
 <head>
@@ -25,37 +24,40 @@
 </head>
 
 <div id="fortext"></div>
-{{ Aire::open()
+<?php echo e(Aire::open()
   ->route('request')
   ->enctype("multipart/form-data")
-  ->post() }}
-<div style="text-align: center; display: flex; justify-content: end; align-items: center; column-gap: 10px; margin-right: 20px">
-    {{Aire::month('m', __('Месяц'))->value(Illuminate\Support\Facades\Cache::get('date_5'))->name('date_5')}}
+  ->post()); ?>
 
-    <button type="submit" class="btn btn-success" style="margin-top: 8px;">{{__('Выбрать')}}</button>
+<div style="text-align: center; display: flex; justify-content: end; align-items: center; column-gap: 10px; margin-right: 20px">
+    <?php echo e(Aire::month('m', __('Месяц'))->value(Illuminate\Support\Facades\Cache::get('date_5'))->name('date_5')); ?>
+
+
+    <button type="submit" class="btn btn-success" style="margin-top: 8px;"><?php echo e(__('Выбрать')); ?></button>
 </div>
-{{ Aire::close() }}
-@if(Illuminate\Support\Facades\Cache::get('date_5') != null)
+<?php echo e(Aire::close()); ?>
+
+<?php if(Illuminate\Support\Facades\Cache::get('date_5') != null): ?>
     <table id="example" class="display wrap table-bordered dt-responsive" style="border-collapse: collapse; width: 100%; padding-top: 10px">
         <thead class="border border-dark">
 
             <tr class="border border-dark">
-                <th style="text-align: center;" class="border border-dark" rowspan="2">{{ __('ID') }}</th>
-                <th style="text-align: center;" class="border border-dark" rowspan="2">{{ __('Филиал') }}</th>
-                <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Заключенные договора') }}</th>
-                <th style="text-align: center;" class="border border-dark" colspan="2"><b>{{ __('товар')}}</b></th>
-                <th style="text-align: center;" class="border border-dark" colspan="2"><b>{{ __('работа') }}</b></th>
-                <th style="text-align: center;" class="border border-dark" colspan="2"><b>{{ __('услуга') }}</b></th>
+                <th style="text-align: center;" class="border border-dark" rowspan="2"><?php echo e(__('ID')); ?></th>
+                <th style="text-align: center;" class="border border-dark" rowspan="2"><?php echo e(__('Филиал')); ?></th>
+                <th style="text-align: center;" class="border border-dark" colspan="2"><?php echo e(__('Заключенные договора')); ?></th>
+                <th style="text-align: center;" class="border border-dark" colspan="2"><b><?php echo e(__('товар')); ?></b></th>
+                <th style="text-align: center;" class="border border-dark" colspan="2"><b><?php echo e(__('работа')); ?></b></th>
+                <th style="text-align: center;" class="border border-dark" colspan="2"><b><?php echo e(__('услуга')); ?></b></th>
             </tr>
             <tr class="border border-dark">
-                <th style="text-align: center;" class="border border-dark">{{ __('кол-во') }}</th>
-                <th style="text-align: center;" class="border border-dark">{{ __('сумма') }}</th>
-                <th style="text-align: center;" class="border border-dark">{{ __('кол-во') }}</th>
-                <th style="text-align: center;" class="border border-dark">{{ __('сумма')}}</th>
-                <th style="text-align: center;" class="border border-dark">{{ __('кол-во') }}</th>
-                <th style="text-align: center;" class="border border-dark">{{ __('сумма') }}</th>
-                <th style="text-align: center;" class="border border-dark">{{ __('кол-во') }}</th>
-                <th style="text-align: center;" class="border border-dark">{{ __('сумма') }}</th>
+                <th style="text-align: center;" class="border border-dark"><?php echo e(__('кол-во')); ?></th>
+                <th style="text-align: center;" class="border border-dark"><?php echo e(__('сумма')); ?></th>
+                <th style="text-align: center;" class="border border-dark"><?php echo e(__('кол-во')); ?></th>
+                <th style="text-align: center;" class="border border-dark"><?php echo e(__('сумма')); ?></th>
+                <th style="text-align: center;" class="border border-dark"><?php echo e(__('кол-во')); ?></th>
+                <th style="text-align: center;" class="border border-dark"><?php echo e(__('сумма')); ?></th>
+                <th style="text-align: center;" class="border border-dark"><?php echo e(__('кол-во')); ?></th>
+                <th style="text-align: center;" class="border border-dark"><?php echo e(__('сумма')); ?></th>
             </tr>
         </thead>
     </table>
@@ -110,9 +112,11 @@
             {data: 'count_3', name: 'count_3'},
             {data: 'summa_3', name: 'summa_3'},
         ];
-        var getData = "{{ route('report','5') }}";
-        var tableTitle = "{{ __('5 - Отчет свод  общий') }}";
+        var getData = "<?php echo e(route('report','5')); ?>";
+        var tableTitle = "<?php echo e(__('5 - Отчет свод  общий')); ?>";
     </script>
-@endif
-@include('site.components.yajra')
-@endsection
+<?php endif; ?>
+<?php echo $__env->make('site.components.yajra', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('site.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\OpenServer\domains\laravel_voyager_uztelecom\resources\views/site/report/5.blade.php ENDPATH**/ ?>

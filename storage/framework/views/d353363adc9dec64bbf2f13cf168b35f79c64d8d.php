@@ -1,5 +1,4 @@
-@extends('site.layouts.app')
-@section('center_content')
+<?php $__env->startSection('center_content'); ?>
     <!doctype html>
 <html lang="en">
 <head>
@@ -22,64 +21,40 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css"/>
 
-    {{--    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/af-2.3.2/b-1.5.4/b-colvis-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/cr-1.5.0/fc-3.2.5/fh-3.1.4/kt-2.5.0/r-2.2.2/rg-1.1.0/rr-1.2.4/sc-1.5.0/sl-1.2.6/datatables.min.css"/>--}}
-
-    <style>
-        #example_filter{
-            display: none;
-        }
-        #example_paginate{
-            display: none;
-        }
-        #example_info{
-            display: none;
-        }
-        .dt-buttons{
-            width: 60%;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        .dataTables_length{
-            width: 20%;
-            margin-bottom: 15px;
-        }
-        .dataTables_filter{
-            width: 20%;
-            margin-bottom: 15px;
-        }
-    </style>
 </head>
 
 <div id="fortext"></div>
-{{ Aire::open()
+<?php echo e(Aire::open()
   ->route('request')
   ->enctype("multipart/form-data")
-  ->post() }}
-<div style="text-align: center; display: flex; justify-content: end; align-items: center; column-gap: 10px; margin-right: 20px">
-    {{Aire::select([2021 => '2021', 2022 => '2022', 2023 => '2023',2024 => '2024'], 'select', __('Год'))->value(Illuminate\Support\Facades\Cache::get('date'))->name('date')}}
+  ->post()); ?>
 
-    <button type="submit" class="btn btn-success" style="margin-top: 8px;">{{ __('Выбрать')  }}</button>
+<div style="text-align: center; display: flex; justify-content: end; align-items: center; column-gap: 10px; margin-right: 20px">
+    <?php echo e(Aire::select([2021 => '2021', 2022 => '2022', 2023 => '2023',2024 => '2024'], 'select', __('Год'))->value(Illuminate\Support\Facades\Cache::get('date_10'))->name('date_10')); ?>
+
+
+    <button type="submit" class="btn btn-success" style="margin-top: 8px;"><?php echo e(__('Выбрать')); ?></button>
 </div>
-{{ Aire::close() }}
-@if(Illuminate\Support\Facades\Cache::get('date') != null)
+<?php echo e(Aire::close()); ?>
+
+<?php if(Illuminate\Support\Facades\Cache::get('date_10') != null): ?>
     <table id="example" class="display wrap table-bordered dt-responsive" style="border-collapse: collapse; width: 100%; padding-top: 10px">
         <thead class="border border-dark">
-
         <tr class="border border-dark">
-            <th style="text-align: center;" class="border border-dark">{{ __('ID') }}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('Филиал') }}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('товар') }}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('работа') }}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('услуга') }}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('товар') }}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('работа') }}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('услуга') }}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('товар') }}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('работа') }}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('услуга') }}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('товар')}}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('работа') }}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('услуга') }}</th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Год')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Январь')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Февраль')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Март')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Апрель')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Май')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Июнь')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Июль')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Август')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Сентябрь')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Октябрь')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Ноябрь')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Декабрь')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Итого')); ?></th>
         </tr>
         </thead>
     </table>
@@ -104,29 +79,26 @@
 
 <script>
     var columns = [
-        {data: "id", name: 'id'},
         {data: 'name', name: 'name'},
-
-        {data: 'tovar_1', name: 'tovar_1'},
-        {data: 'rabota_1', name: 'rabota_1'},
-        {data: 'usluga_1', name: 'usluga_1'},
-
-        {data: 'tovar_2', name: 'tovar_2'},
-        {data: 'rabota_2', name: 'rabota_2'},
-        {data: 'usluga_2', name: 'usluga_2'},
-
-        {data: 'tovar_3', name: 'tovar_3'},
-        {data: 'rabota_3', name: 'rabota_3'},
-        {data: 'usluga_3', name: 'usluga_3'},
-
-        {data: 'tovar_4', name: 'tovar_4'},
-        {data: 'rabota_4', name: 'rabota_4'},
-        {data: 'usluga_4', name: 'usluga_4'},
+        {data: 'january', name: 'january'},
+        {data: 'february', name: 'february'},
+        {data: 'march', name: 'march'},
+        {data: 'april', name: 'april'},
+        {data: 'may', name: 'may'},
+        {data: 'june', name: 'june'},
+        {data: 'july', name: 'july'},
+        {data: 'august', name: 'august'},
+        {data: 'september', name: 'september'},
+        {data: 'october', name: 'october'},
+        {data: 'november', name: 'november'},
+        {data: 'december', name: 'december'},
+        {data: 'all', name: 'all'},
     ];
-    var getData = "{{ route('report','2') }}";
-    var tableTitle = "{{ __('2 - Отчет квартальный итоговый') }}";
+    var getData = "<?php echo e(route('report','10')); ?>";
+    var tableTitle = "<?php echo e(__('10 - Отчет по кол-ву статусам')); ?>";
 </script>
+<?php endif; ?>
+<?php echo $__env->make('site.components.yajra', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php $__env->stopSection(); ?>
 
-@endif
-@include('site.components.yajra')
-@endsection
+<?php echo $__env->make('site.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\OpenServer\domains\laravel_voyager_uztelecom\resources\views/site/report/10.blade.php ENDPATH**/ ?>

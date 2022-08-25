@@ -1,5 +1,4 @@
-@extends('site.layouts.app')
-@section('center_content')
+<?php $__env->startSection('center_content'); ?>
     <!doctype html>
 <html lang="en">
 <head>
@@ -25,77 +24,80 @@
 </head>
 
 <div id="fortext"></div>
-{{ Aire::open()
+<?php echo e(Aire::open()
   ->route('request')
   ->enctype("multipart/form-data")
-  ->post() }}
-<div style="text-align: center; display: flex; justify-content: end; align-items: center; column-gap: 10px; margin-right: 20px">
-    {{Aire::select([2021 => '2021', 2022 => '2022', 2023 => '2023',2024 => '2024'], 'select', __('Год'))->value(Illuminate\Support\Facades\Cache::get('date_2'))->name('date_2')}}
+  ->post()); ?>
 
-    <button type="submit" class="btn btn-success" style="margin-top: 8px;">{{ __('Выбрать')  }}</button>
+<div style="text-align: center; display: flex; justify-content: end; align-items: center; column-gap: 10px; margin-right: 20px">
+    <?php echo e(Aire::select([2021 => '2021', 2022 => '2022', 2023 => '2023',2024 => '2024'], 'select', __('Год'))->value(Illuminate\Support\Facades\Cache::get('date_2'))->name('date_2')); ?>
+
+
+    <button type="submit" class="btn btn-success" style="margin-top: 8px;"><?php echo e(__('Выбрать')); ?></button>
 </div>
-{{ Aire::close() }}
-@if(Illuminate\Support\Facades\Cache::get('date_2') != null)
+<?php echo e(Aire::close()); ?>
+
+<?php if(Illuminate\Support\Facades\Cache::get('date_2') != null): ?>
     <table id="example" class="display wrap table-bordered dt-responsive" style="border-collapse: collapse; width: 100%; padding-top: 10px">
         <thead class="border border-dark">
         <tr>
-            <th style="text-align: center;" class="border border-dark" rowspan="3">{{ __('ID') }}</th>
-            <th style="text-align: center;" class="border border-dark" rowspan="3">{{ __('Филиал')}}</th>
-            <th colspan="6" style="text-align: center;" class="border border-dark">{{ __('1 - Квартал') }}</th>
-            <th colspan="6" style="text-align: center;" class="border border-dark">{{ __('2 - Квартал') }}</th>
-            <th colspan="6" style="text-align: center;" class="border border-dark">{{ __('3 - Квартал') }}</th>
-            <th colspan="6" style="text-align: center;" class="border border-dark">{{ __('4 - Квартал') }}</th>
+            <th style="text-align: center;" class="border border-dark" rowspan="3"><?php echo e(__('ID')); ?></th>
+            <th style="text-align: center;" class="border border-dark" rowspan="3"><?php echo e(__('Филиал')); ?></th>
+            <th colspan="6" style="text-align: center;" class="border border-dark"><?php echo e(__('1 - Квартал')); ?></th>
+            <th colspan="6" style="text-align: center;" class="border border-dark"><?php echo e(__('2 - Квартал')); ?></th>
+            <th colspan="6" style="text-align: center;" class="border border-dark"><?php echo e(__('3 - Квартал')); ?></th>
+            <th colspan="6" style="text-align: center;" class="border border-dark"><?php echo e(__('4 - Квартал')); ?></th>
         </tr>
         <tr class="border border-dark">
-            <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Товар') }}</th>
-            <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Работа') }}</th>
-            <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Услуга') }}</th>
-            <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Товар') }}</th>
-            <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Работа') }}</th>
-            <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Услуга') }}</th>
-            <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Товар') }}</th>
-            <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Работа') }}</th>
-            <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Услуга') }}</th>
-            <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Товар') }}</th>
-            <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Работа') }}</th>
-            <th style="text-align: center;" class="border border-dark" colspan="2">{{ __('Услуга') }}</th>
+            <th style="text-align: center;" class="border border-dark" colspan="2"><?php echo e(__('Товар')); ?></th>
+            <th style="text-align: center;" class="border border-dark" colspan="2"><?php echo e(__('Работа')); ?></th>
+            <th style="text-align: center;" class="border border-dark" colspan="2"><?php echo e(__('Услуга')); ?></th>
+            <th style="text-align: center;" class="border border-dark" colspan="2"><?php echo e(__('Товар')); ?></th>
+            <th style="text-align: center;" class="border border-dark" colspan="2"><?php echo e(__('Работа')); ?></th>
+            <th style="text-align: center;" class="border border-dark" colspan="2"><?php echo e(__('Услуга')); ?></th>
+            <th style="text-align: center;" class="border border-dark" colspan="2"><?php echo e(__('Товар')); ?></th>
+            <th style="text-align: center;" class="border border-dark" colspan="2"><?php echo e(__('Работа')); ?></th>
+            <th style="text-align: center;" class="border border-dark" colspan="2"><?php echo e(__('Услуга')); ?></th>
+            <th style="text-align: center;" class="border border-dark" colspan="2"><?php echo e(__('Товар')); ?></th>
+            <th style="text-align: center;" class="border border-dark" colspan="2"><?php echo e(__('Работа')); ?></th>
+            <th style="text-align: center;" class="border border-dark" colspan="2"><?php echo e(__('Услуга')); ?></th>
         </tr>
         <tr class="border border-dark">
-            <th style="text-align: center;" class="border border-dark">{{__('Без НДС')}}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('С НДС')}}</th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Без НДС')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('С НДС')); ?></th>
 
-            <th style="text-align: center;" class="border border-dark">{{__('Без НДС')}}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('С НДС')}}</th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Без НДС')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('С НДС')); ?></th>
 
-            <th style="text-align: center;" class="border border-dark">{{__('Без НДС')}}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('С НДС')}}</th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Без НДС')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('С НДС')); ?></th>
 
-            <th style="text-align: center;" class="border border-dark">{{__('Без НДС')}}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('С НДС')}}</th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Без НДС')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('С НДС')); ?></th>
 
-            <th style="text-align: center;" class="border border-dark">{{__('Без НДС')}}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('С НДС')}}</th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Без НДС')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('С НДС')); ?></th>
 
-            <th style="text-align: center;" class="border border-dark">{{__('Без НДС')}}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('С НДС')}}</th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Без НДС')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('С НДС')); ?></th>
 
-            <th style="text-align: center;" class="border border-dark">{{__('Без НДС')}}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('С НДС')}}</th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Без НДС')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('С НДС')); ?></th>
 
-            <th style="text-align: center;" class="border border-dark">{{__('Без НДС')}}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('С НДС')}}</th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Без НДС')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('С НДС')); ?></th>
 
-            <th style="text-align: center;" class="border border-dark">{{__('Без НДС')}}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('С НДС')}}</th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Без НДС')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('С НДС')); ?></th>
 
-            <th style="text-align: center;" class="border border-dark">{{__('Без НДС')}}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('С НДС')}}</th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Без НДС')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('С НДС')); ?></th>
 
-            <th style="text-align: center;" class="border border-dark">{{__('Без НДС')}}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('С НДС')}}</th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Без НДС')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('С НДС')); ?></th>
 
-            <th style="text-align: center;" class="border border-dark">{{__('Без НДС')}}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('С НДС')}}</th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('Без НДС')); ?></th>
+            <th style="text-align: center;" class="border border-dark"><?php echo e(__('С НДС')); ?></th>
         </tr>
         </thead>
     </table>
@@ -195,9 +197,11 @@
             {data: 'usluga_4', name: 'usluga_4'},
             {data: 'usluga_4_nds', name: 'usluga_4_nds'},
         ];
-        var getData = "{{ route('report','22') }}";
-        var tableTitle = "{{__('2 - Отчет квартальный плановый')}}";
+        var getData = "<?php echo e(route('report','22')); ?>";
+        var tableTitle = "<?php echo e(__('2 - Отчет квартальный плановый')); ?>";
     </script>
-@endif
-@include('site.components.yajra')
-@endsection
+<?php endif; ?>
+<?php echo $__env->make('site.components.yajra', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('site.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\OpenServer\domains\laravel_voyager_uztelecom\resources\views/site/report/22.blade.php ENDPATH**/ ?>
