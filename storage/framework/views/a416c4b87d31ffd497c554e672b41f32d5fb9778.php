@@ -1,0 +1,66 @@
+
+<?php $__env->startSection('center_content'); ?>
+    <h2 class="ml-5 pt-8">
+        <?php echo e(__('lang.drafts')); ?>
+
+    </h2>
+        <div class="w-11/12 mx-auto pt-8 pb-16">
+            <table class="data-table display wrap">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>№</th>
+                    <th><?php echo e(__('lang.table_1')); ?></th>
+                    <th><?php echo e(__('lang.table_2')); ?></th>
+                    <th><?php echo e(__('lang.table_3')); ?></th>
+                    <th><?php echo e(__('lang.table_4')); ?></th>
+                    <th><?php echo e(__('lang.table_50')); ?></th>
+                    <th><?php echo e(__('lang.table_6')); ?></th>
+                    <th><?php echo e(__('lang.table_7')); ?></th>
+                    <th><?php echo e(__('lang.table_8')); ?></th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <?php $__env->startPush('scripts'); ?>
+        <script type="text/javascript">
+            $(function () {
+                var table = $('.data-table').DataTable({
+                    order: [[ 0, "desc" ]],
+                    processing: true,
+                    serverSide: true,
+                    searchable: true,
+                    ajax:
+                        "<?php echo e(route('site.applications.drafts')); ?>",
+                    columns: [
+                        {data: 'id', name: 'id'},
+                        {data: 'number', name: 'number'},
+                        {data: 'initiator', name: 'initiator'},
+                        {data: 'name', name: 'name'},
+                        {data: 'delivery_date', name: 'delivery_date'},
+                        {
+                            "data": "",
+                            render: function (data, type, row) {
+                                var details = row.planned_price + " " + row.currency ;
+                                return details;
+                            }
+                        },
+                        {data: 'incoterms', name: 'incoterms'},
+
+                        {data: 'created_at', name: 'created_at'},
+                        {data: 'status', name: 'status'},
+                        {
+                            data: 'action',
+                            name: 'action',
+                            orderable: true,
+                            searchable: true,
+                        },
+                    ]
+                });
+            });
+        </script>
+    <?php $__env->stopPush(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('site.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\OpenServer\domains\laravel_voyager_uztelecom\resources\views/site/applications/draft.blade.php ENDPATH**/ ?>
