@@ -37,6 +37,7 @@
     "You are logged in!": "You have logged in!",
     "click here to request another": "Click Jace to ask for another",
     "voyager::generic.email": "E-mail",
+    "voyager::generic.phone": "Phone",
     "voyager::generic.login": "Enter",
     "voyager::generic.name": "Name",
     "voyager::generic.password": "Password",

@@ -37,6 +37,7 @@
     "You are logged in!": "Siz tizimga kirdingiz!",
     "click here to request another": "Boshqasini so'rash uchun Jace ni bosing",
     "voyager::generic.email": "Elektron pochta",
+    "voyager::generic.phone": "Telefon nomer",
     "voyager::generic.login": "Kirmoq",
     "voyager::generic.name": "Ism",
     "voyager::generic.password": "parol",

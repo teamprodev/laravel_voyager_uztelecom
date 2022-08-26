@@ -6,8 +6,7 @@
     </div>
     <div class="px-6 pb-0 pt-6">
         <h5><strong>ID : </strong> {{$application->id}}
-            <h5><strong>{{ __('Автор заявки:') }}</strong> {{$application->user->name}} ( {{ $application->user->role_id ? $application->user->role->display_name : '' }} )</h5>
-            <h5><strong>{{ __('Филиал автора:') }}</strong> {{ $application->user->branch_id ? $branch_name->name : 'Он(а) не выбрал(а) филиал' }}</h5>
+            <h5><strong>{{ __('Автор заявки:') }}</strong> <a href="{{$application->user->id == auth()->id() ? route('site.profile.index'):route('site.profile.other',$application->user->id)}}">{{$application->user->id == auth()->id() ? 'Вы':$application->user->name}}</a> ( {{ $application->user->role_id ? $application->user->role->display_name : '' }} )</h5>            <h5><strong>{{ __('Филиал автора:') }}</strong> {{ $application->user->branch_id ? $branch_name->name : 'Он(а) не выбрал(а) филиал' }}</h5>
             <h5><strong>Должность :</strong> {{ auth()->user()->position_id ? auth()->user()->position->name:"Нет" }}</h5>
             <h5><strong>{{ __('Номер заявки') }} : </strong> {{$application->number}} </h5>
             <h5><strong>Date : </strong>

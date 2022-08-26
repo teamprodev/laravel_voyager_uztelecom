@@ -37,6 +37,7 @@
     "You are logged in!": "You are logged in!",
     "click here to request another": "click here to request another",
     "voyager::generic.email": "Электроная почта",
+    "voyager::generic.phone": "Телефон номер",
     "voyager::generic.login": "Войти",
     "voyager::generic.name": "Наименование",
     "voyager::generic.password": "Пароль",
