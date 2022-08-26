@@ -517,14 +517,14 @@ class ReportService
         if(auth()->user()->hasPermission('ЦУЗ'))
         {
 
-            $query = Application::query();
+            $query = Application::query()->where('name', '!=', 'null')->get();
         }else{
-            $query = Application::query()->where('branch_initiator_id',auth()->user()->branch_id)->get();
+            $query = Application::query()->where('branch_initiator_id',auth()->user()->branch_id)->where('name', '!=', 'null')->get();
         }
         return Datatables::of($query)
             ->editColumn('branch_initiator_id', function($application)
             {
-                return $application->branch_id ? $application->branch->name:"";
+                return $application->branch_initiator_id ? $application->branch->name:"";
             })
             ->editColumn('performer_leader_user_id', function($application)
             {
@@ -773,9 +773,9 @@ class ReportService
         if(auth()->user()->hasPermission('ЦУЗ'))
         {
 
-            $query = Application::query();
+            $query = Application::query()->where('name', '!=', 'null')->get();
         }else{
-            $query = Application::query()->where('branch_initiator_id',auth()->user()->branch_id)->get();
+            $query = Application::query()->where('branch_initiator_id',auth()->user()->branch_id)->where('name', '!=', 'null')->get();
         }
         return Datatables::of($query)
             ->addColumn('name', function($branch){
@@ -799,9 +799,9 @@ class ReportService
         if(auth()->user()->hasPermission('ЦУЗ'))
         {
 
-            $query = Application::query();
+            $query = Application::query()->where('name', '!=', 'null')->get();
         }else{
-            $query = Application::query()->where('branch_initiator_id',auth()->user()->branch_id)->get();
+            $query = Application::query()->where('branch_initiator_id',auth()->user()->branch_id)->where('name', '!=', 'null')->get();
         }
         return Datatables::of($query)
             ->addColumn('name', function($branch){
@@ -821,9 +821,9 @@ class ReportService
         if(auth()->user()->hasPermission('ЦУЗ'))
         {
 
-            $query = Application::query();
+            $query = Application::query()->where('name', '!=', 'null')->get();
         }else{
-            $query = Application::query()->where('branch_initiator_id',auth()->user()->branch_id)->get();
+            $query = Application::query()->where('branch_initiator_id',auth()->user()->branch_id)->where('name', '!=', 'null')->get();
         }
         return Datatables::of($query)
             ->addColumn('initiator', function($branch){
