@@ -17,7 +17,7 @@
                                     Роль:
                                 </td>
                                 <td class="p-2 w-full">
-                                    {{$user->role->name ? $user->role->name : ''}}
+                                    {{$user->role_id ? $user->role->name : ''}}
                                 </td>
                             </tr>
                             <tr class="hover:bg-gray-200">
@@ -42,7 +42,7 @@
                                         Филиал:
                                     </td>
                                     <td class="p-2 w-full">
-                                        {{$user->branch->name ? $user->branch->name : ''}}
+                                        {{$user->branch_id ? $user->branch->name : ''}}
                                     </td>
                                 </tr>
                             @endisset
