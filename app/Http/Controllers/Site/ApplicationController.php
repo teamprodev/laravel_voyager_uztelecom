@@ -10,6 +10,7 @@ use App\Models\Application;
 use App\Models\Branch;
 use App\Models\Notification;
 use App\Models\PermissionRole;
+use App\Models\Setting;
 use App\Models\StatusExtented;
 use App\Services\ApplicationService;
 use Illuminate\Support\Carbon;
@@ -17,7 +18,9 @@ use App\Models\SignedDocs;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use TCG\Voyager\Models\Role;
+use TCG\Voyager\Voyager;
 use Yajra\DataTables\DataTables;
 
 class ApplicationController extends Controller
@@ -35,7 +38,9 @@ class ApplicationController extends Controller
     {
         if($status == 'performed')
             $status = 'товар доставлен';
-        Cache::put('status', $status);
+        $voyager = Setting::where('key','admin.show_status')->first();
+        $voyager->value = $status;
+        $voyager->save();
         return view('site.applications.status');
     }
     /**
