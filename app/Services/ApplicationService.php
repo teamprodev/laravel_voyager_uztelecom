@@ -213,7 +213,7 @@ class ApplicationService
                     $bgcolor = setting('color.show');
                     $color = $bgcolor ? 'white' : 'black';
                     $show = "<a href='{$show_e}' class='m-1 col show btn btn-outline-danger showbtn'>$app_show</a>";
-                    if ($row->user_id == auth()->user()->id && $row->show_director != 2 && $row->show_leader != 2) {
+                    if ($row->user_id == auth()->user()->id && $row->show_director != 2 && $row->show_leader != 2 && $row->status != 'refused') {
                         $bgcolor = setting('color.delete');
                         $color = $bgcolor ? 'white' : 'black';
                         $destroy = "<a href='{$destroy_e}' class='m-1 col show btn btn-outline-danger deletebtn'>$app_delete</a>";
