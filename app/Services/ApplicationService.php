@@ -251,7 +251,7 @@ class ApplicationService
             $a = 'branch_initiator_id';
             $b = [auth()->user()->branch_id];
         }
-        $data = Application::whereIn($a, $b)->where('status', Cache::get('status'))->get();
+        $data = Application::whereIn($a, $b)->where('status', Cache::get('status'))->where('name', '!=', 'null')->get();
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('user_id', function ($docs) {
@@ -277,7 +277,7 @@ class ApplicationService
                 $status_cancelled = __('Отменен');
                 $status_performed = __('Товар доставлен');
                 $status_overdue = ('просрочен');
-                switch($query)
+                switch($query->status)
                 {
                     case 'new':
                         $status = setting('color.new');
@@ -343,7 +343,7 @@ class ApplicationService
                             <div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_performed}</div>
                             </div>";
                     default:
-                        return $query;
+                        return $query->status;
                 }
             })
             ->addIndexColumn()
