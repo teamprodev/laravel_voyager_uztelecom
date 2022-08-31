@@ -26,7 +26,7 @@
 
 <div id="fortext"></div>
 
-<table id="example" class="display wrap table-bordered dt-responsive" style="border-collapse: collapse; width: 100%; padding-top: 10px">
+<table id="example" class="display wrap table-bordered " style="border-collapse: collapse; width: 100%; padding-top: 10px">
     <thead class="border border-dark">
     <tr class="border border-dark">
         <th style="text-align: center;" class="border border-dark">{{ __('ID') }}</th>
