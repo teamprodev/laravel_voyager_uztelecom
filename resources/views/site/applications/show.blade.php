@@ -594,10 +594,7 @@
                 }}
            @endif
            @if(isset($application->performer_leader_comment))
-               @php
-                   $comment = \App\Models\User::find($application->performer_leader_user_id)->name;
-               @endphp
-               {{Aire::textArea('bio', __('Комментарии начальника') . ": {$comment}")
+               {{Aire::textArea('bio', __('Комментарии начальника') . ": {$application->performer_leader->name}")
                    ->value($application->performer_leader_comment)
                    ->rows(3)
                    ->cols(40)
@@ -605,10 +602,7 @@
                }}
            @endif
            @if(isset($application->performer_comment))
-               @php
-                   $comment = \App\Models\User::find($application->performer_user_id)->name;
-               @endphp
-               {{Aire::textArea('bio', __('Комментарии исполнителя') . ": {$comment}")
+               {{Aire::textArea('bio', __('Комментарии исполнителя') . ": {$application->performer->name}")
                    ->value($application->performer_comment)
                    ->rows(3)
                    ->cols(40)
@@ -617,7 +611,7 @@
            @endif
            @if(isset($application->performer_role_id))
                {{Aire::textArea('bio', __('Исполнитель'))
-                   ->value(\App\Models\Roles::find($application->performer_role_id)->display_name)
+                   ->value($application->performer_role->display_name)
                    ->rows(3)
                    ->cols(40)
                    ->disabled()
