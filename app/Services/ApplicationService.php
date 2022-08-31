@@ -213,7 +213,7 @@ class ApplicationService
                     $bgcolor = setting('color.show');
                     $color = $bgcolor ? 'white' : 'black';
                     $show = "<a href='{$show_e}' class='m-1 col show btn btn-outline-danger showbtn'>$app_show</a>";
-                    if ($row->user_id == auth()->user()->id && $row->show_director != 2 && $row->show_leader != 2) {
+                    if ($row->user_id == auth()->user()->id && $row->show_director != 2 && $row->show_leader != 2 && $row->status != 'refused') {
                         $bgcolor = setting('color.delete');
                         $color = $bgcolor ? 'white' : 'black';
                         $destroy = "<a href='{$destroy_e}' class='m-1 col show btn btn-outline-danger deletebtn'>$app_delete</a>";
@@ -252,7 +252,7 @@ class ApplicationService
             $b = [auth()->user()->branch_id];
         }
         $status = setting('admin.show_status');
-        $data = Application::whereIn($a, $b)->where('status', $status)->get();
+        $data = Application::whereIn($a, $b)->where('status', $status)->where('name', '!=', 'null')->get();
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('user_id', function ($docs) {
@@ -278,7 +278,7 @@ class ApplicationService
                 $status_cancelled = __('Отменен');
                 $status_performed = __('Товар доставлен');
                 $status_overdue = ('просрочен');
-                switch($query)
+                switch($query->status)
                 {
                     case 'new':
                         $status = setting('color.new');
@@ -344,7 +344,7 @@ class ApplicationService
                             <div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_performed}</div>
                             </div>";
                     default:
-                        return $query;
+                        return $query->status;
                 }
             })
             ->addIndexColumn()
