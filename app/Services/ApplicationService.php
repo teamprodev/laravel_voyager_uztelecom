@@ -865,11 +865,9 @@ class ApplicationService
         $application->signers = null;
         $application->status = 'new';
         if ($request->is_more_than_limit == 1) {
-            $application->is_more_than_limit = 1;
             $application->branch_initiator_id = 9;
-        }
-        if ($application->branch_initiator_id == 9 && $application->user_id == 9) {
-            $application->is_more_than_limit = 1;
+        }else{
+            $application->branch_initiator_id = auth()->user()->branch_id;
         }
         SignedDocs::where('application_id', $application->id)->delete();
         $application->save();
