@@ -221,24 +221,18 @@
             @endif
         </div>
         <div class="flex-direction: column">
-            @if($application->file_basis === 'null' ||$application->file_basis === null)
                 <div class="mx-1">
                     <h6 class="my-3">{{ __('lang.base') }}</h6>
                     <div id="file_basis"></div>
                 </div>
-            @endif
-            @if($application->file_tech_spec === 'null' ||$application->file_tech_spec === null)
                 <div class="mx-1">
                     <h6 class="my-3">{{ __('lang.tz') }}</h6>
                     <div id="file_tech_spec"></div>
                 </div>
-            @endif
-            @if($application->other_files === 'null' ||$application->other_files === null)
                 <div class="mx-1">
                     <h6 class="my-3">{{ __('Другие файлы') }}</h6>
                     <div id="other_files"></div>
                 </div>
-            @endif
         </div>
     </div>
 </div>
