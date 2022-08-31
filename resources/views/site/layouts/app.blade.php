@@ -87,8 +87,9 @@
         .nav-link p{
             white-space: inherit !important;
         }
-        html{
-            overflow-x: hidden;
+        .wrapper{
+            width: fit-content !important;
+            min-width: 100%;
         }
     </style>
 </head>

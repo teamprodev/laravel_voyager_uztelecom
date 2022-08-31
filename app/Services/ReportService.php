@@ -554,6 +554,9 @@ class ReportService
             {
                 return $application->subject ? $application->subjects->name:'';
             })
+            ->addColumn('planned_price', function ($query) {
+                return $query->planned_price ? number_format($query->planned_price, 0, '', ' ') : '';
+            })
             ->editColumn('with_nds', function($application)
             {
                 return $application->with_nds ?'Да':'Нет';
@@ -783,7 +786,9 @@ class ReportService
                 $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
                 return trim($json, '[], "');
             })
-
+            ->addColumn('planned_price', function ($query) {
+                return $query->planned_price ? number_format($query->planned_price, 0, '', ' ') : '';
+            })
             ->addColumn('product', function($application){
                 $product = json_decode($application->resource_id,true);
                 $names = collect($product);
@@ -845,6 +850,9 @@ class ReportService
                 return trim($json, '[], "');
             })->addColumn('number_and_date_of_app', function($branch){
                 return "{$branch->number } {$branch->date }";
+            })
+            ->addColumn('planned_price', function ($query) {
+                return $query->planned_price ? number_format($query->planned_price, 0, '', ' ') : '';
             })
             ->addColumn('product', function($application){
                 $product = json_decode($application->resource_id,true);
