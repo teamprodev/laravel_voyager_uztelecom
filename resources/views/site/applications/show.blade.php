@@ -324,7 +324,7 @@
                 ->cols(40)
             }}
 
-            @if($check && $user->hasPermission('Number_Change'))
+            @if($user->hasPermission('Number_Change'))
                 {{Aire::textArea('bio', __('Номер заявки'))
                     ->name('number')
                     ->value($application->number)
@@ -338,7 +338,7 @@
             @endif
             {{Aire::submit('Save')}}
 
-        @elseif($check && $user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business') && $application->user_id != auth()->user()->id)
+        @elseif($user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business') && $application->user_id != auth()->user()->id)
             {{Aire::textArea('bio', __('Номер заявки'))
                 ->name('number')
                 ->value($application->number)
