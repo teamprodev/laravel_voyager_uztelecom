@@ -87,7 +87,7 @@
            });
            $(".change2").click(function(){
                $(".input2").focus();
-               $(".input1").select();
+               $(".input2").select();
                $(".input2").removeAttr('readonly');
            });
    </script>
