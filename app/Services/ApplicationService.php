@@ -870,6 +870,7 @@ class ApplicationService
         }else{
             $application->branch_initiator_id = auth()->user()->branch_id;
         }
+        $application->branch_id = auth()->user()->branch_id;
         SignedDocs::where('application_id', $application->id)->delete();
         $application->save();
     }
