@@ -856,7 +856,7 @@ class ApplicationService
 
         $result = $application->update($data);
         if ($result)
-            return back();
+            return redirect()->route('site.applications.show',$application->id);
 
         return redirect()->back()->with('danger', trans('site.application_failed'));
     }
