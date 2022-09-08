@@ -23,14 +23,16 @@
                                {{$user->role->name ? $user->role->name : ''}}
                            </td>
                        </tr>
+
                        <tr class="hover:bg-gray-200">
                            <td class="font-medium text-lg p-2">
                                Почта:
                            </td>
                            <td class="p-2 w-full">
-                               {{$user->email ? $user->email : ''}}
+                               <input type="text" name="email" value="{{$user->email}}" readonly class="w-10/12 focus:outline-none bg-transparent input1"><i class="fa-solid fa-pencil cursor-pointer hover:text-blue-500 float-right mt-1 change1"></i>
                            </td>
                        </tr>
+
                        <tr class="hover:bg-gray-200">
                            <td class="font-medium text-lg p-2">
                                Ф.И.О:
@@ -78,8 +80,14 @@
 
 
    <script>
+           $(".change1").click(function(){
+               $(".input1").focus();
+               $(".input1").select();
+               $(".input1").removeAttr('readonly');
+           });
            $(".change2").click(function(){
                $(".input2").focus();
+               $(".input2").select();
                $(".input2").removeAttr('readonly');
            });
    </script>

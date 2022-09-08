@@ -202,6 +202,7 @@ class ApplicationService
                     $app_show = __('Показать');
                     $app_clone = __('Копировать');
                     $app_delete = __('Удалить');
+                    $app_delete_confirm = __("Вы действительно хотите удалить заявку под номером $row->id?");
 
                     if (auth()->user()->id == $row->user_id || auth()->user()->hasPermission('Warehouse') || $row->performer_role_id == auth()->user()->role_id) {
                         $bgcolor = setting('color.edit');
@@ -216,7 +217,7 @@ class ApplicationService
                     if ($row->user_id == auth()->user()->id && $row->show_director != 2 && $row->show_leader != 2 && $row->status != 'refused') {
                         $bgcolor = setting('color.delete');
                         $color = $bgcolor ? 'white' : 'black';
-                        $destroy = "<a href='{$destroy_e}' class='m-1 col show btn btn-outline-danger deletebtn'>$app_delete</a>";
+                        $destroy = "<a href='{$destroy_e}' class='m-1 col show btn btn-outline-danger deletebtn' onclick='return confirm(`$app_delete_confirm`)'>$app_delete</a>";
                     } else {
                         $destroy = "";
                     }
