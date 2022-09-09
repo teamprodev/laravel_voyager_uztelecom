@@ -29,14 +29,9 @@ use Teamprodev\Eimzo\Http\Controllers\EimzoController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('branches/getData', [BranchController::class,'getData'])->name('signers.getData');
+Route::get('/branches/ajax_branch', [BranchController::class,'ajax_branch'])->name('branches.ajax_branch');
 
-Route::controller(BranchController::class)->group(function() {
-    Route::post('/branches/{id}/post','update')->name('signers.update');
-    Route::get('/branches/ajax_branch','ajax_branch')->name('branches.ajax_branch');
-    Route::post('/branches/putCache','putCache')->name('branches.putCache');
-    Route::get('/branches/view','view')->name('branches.view');
-    Route::get('branches/getData','getData')->name('signers.getData');
-});
 Route::controller(ReportController::class)->group(function() {
     Route::post('/request','request')->name('request');
     Route::get('/report/request/{id}','report')->name('report');
@@ -82,6 +77,11 @@ Route::group([
     'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth' ]
 ], function()
 {
+    Route::controller(BranchController::class)->group(function () {
+        Route::post('/branches/{id}/post', 'update')->name('signers.update');
+        Route::post('/branches/putCache', 'putCache')->name('branches.putCache');
+        Route::get('/branches/view', 'view')->name('branches.view');
+    });
     Route::group(
         [
             'as' => 'site.',

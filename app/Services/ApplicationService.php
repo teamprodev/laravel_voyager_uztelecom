@@ -86,6 +86,9 @@ class ApplicationService
             }
 
             return Datatables::of($query)
+                ->editColumn('is_more_than_limit', function ($query) {
+                    return $query->is_more_than_limit == 1 ? __('Компанию') : __('Филиал');
+                })
                 ->editColumn('created_at', function ($query) {
                     return $query->created_at ? with(new Carbon($query->created_at))->format('d.m.Y') : '';
                 })
