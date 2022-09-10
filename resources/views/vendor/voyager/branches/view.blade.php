@@ -41,6 +41,7 @@
                     <tr>
                         <th>ID</th>
                         <th>{{ __('Статус заявки') }}</th>
+                        <th>{{__('Визирование заявки через:') }}</th>
                         <th>{{ __('Заявки')}}</th>
                         <th>{{ __('Дата заявки')}}</th>
                         <th>{{ __('Инициатор (наименование подразделения заказчика)') }}</th>
@@ -80,6 +81,7 @@
                     columns: [
                         {data: 'id', name: 'id'},
                         {data: 'status', name: 'status'},
+                        {data: 'is_more_than_limit', name: 'is_more_than_limit'},
                         {data: 'number', name: 'number'},
                         {data: 'date', name: 'date'},
                         {data: 'initiator', name: 'initiator'},

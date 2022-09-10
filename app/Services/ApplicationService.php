@@ -86,6 +86,9 @@ class ApplicationService
             }
 
             return Datatables::of($query)
+                ->editColumn('is_more_than_limit', function ($query) {
+                    return $query->is_more_than_limit == 1 ? __('Компанию') : __('Филиал');
+                })
                 ->editColumn('created_at', function ($query) {
                     return $query->created_at ? with(new Carbon($query->created_at))->format('d.m.Y') : '';
                 })
@@ -596,6 +599,7 @@ class ApplicationService
         $application = new Application();
         $application->user_id = $user->id;
         $application->branch_initiator_id = $user->branch_id;
+        $application->branch_id = $user->branch_id;
         $application->department_initiator_id = $user->department_id;
         $application->is_more_than_limit = 0;
         $application->status = Application::NEW;
@@ -855,7 +859,7 @@ class ApplicationService
 
         $result = $application->update($data);
         if ($result)
-            return back();
+            return redirect()->route('site.applications.show',$application->id);
 
         return redirect()->back()->with('danger', trans('site.application_failed'));
     }
@@ -870,6 +874,7 @@ class ApplicationService
         }else{
             $application->branch_initiator_id = auth()->user()->branch_id;
         }
+        $application->branch_id = auth()->user()->branch_id;
         SignedDocs::where('application_id', $application->id)->delete();
         $application->save();
     }

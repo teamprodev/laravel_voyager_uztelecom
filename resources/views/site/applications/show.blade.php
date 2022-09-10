@@ -353,7 +353,7 @@
             </div>
             {{Aire::submit('Save')}}
         @endif
-        @if($application->user_id != auth()->user()->id && auth()->user()->hasPermission('Company_Leader') && $application->status == 'agreed')
+        @if($application->user_id != auth()->user()->id && auth()->user()->hasPermission('Company_Leader') && $application->show_director == 1)
             @if(!isset($application->performer_user_id))
                 <div class="pb-5">
                     <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
