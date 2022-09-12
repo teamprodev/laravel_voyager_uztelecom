@@ -220,40 +220,61 @@
                         @if($file_basis != 'null' && $file_basis != null)
                             <div class="my-5">
                                 <h5 class="text-left">{{ __('Основание') }}</h5>
+                                <form action="/delete_file/{{$application->id}}/file_basis" method="post">
+                                @csrf
                                 @foreach($file_basis as $file)
+                                <input type="text" class="hidden" value="{{$file}}" name="file">
                                     @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
                                         <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
                                     @else
                                         <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
                                         <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
                                     @endif
+                                        @if($application->user_id == $user->id)
+                                            <button class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
+                                        @endif
                                 @endforeach
+                                </form>
                             </div>
                         @endif
                         @if($file_tech_spec != 'null' && $file_tech_spec != null)
                             <div class="mb-5">
                                 <h5 class="text-left">{{ __('Техническое задание') }}</h5>
+                                <form action="/delete_file/{{$application->id}}/file_tech_spec" method="post">
+                                @csrf
                                 @foreach($file_tech_spec as $file)
+                                <input type="text" class="hidden" value="{{$file}}" name="file">
                                     @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
                                         <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
                                     @else
                                         <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
                                         <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
                                     @endif
+                                    @if($application->user_id == $user->id)
+                                            <button class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
+                                    @endif
                                 @endforeach
+                                </form>
                             </div>
                         @endif
                         @if($other_files != 'null' && $other_files != null)
                             <div class="mb-5" style="width: 80%">
                                 <h5 class="text-left">{{ __('Другие документы необходимые для запуска закупочной процедуры') }}</h5>
+                                <form action="/delete_file/{{$application->id}}/other_files" method="post">
+                                @csrf
                                 @foreach($other_files as $file)
+                                <input type="text" class="hidden" value="{{$file}}" name="file">
                                     @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
                                         <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
                                     @else
                                         <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
                                         <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
                                     @endif
+                                    @if($application->user_id == $user->id)
+                                            <button class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
+                                    @endif
                                 @endforeach
+                                </form>
                             </div>
                         @endif
                     </div>

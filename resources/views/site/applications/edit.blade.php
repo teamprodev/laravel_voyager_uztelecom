@@ -41,11 +41,11 @@
                 @foreach($performer_file as $file)
                     @if(file_exists(public_path()."/storage/uploads/{$file}"))
                     <h4 class="text-left">Performer File</h4>
-                    <form action="{{route('delete_file')}}" method="post">
+                    <form action="{{route('delete_file',$application->id,'performer_file')}}" method="post">
                         @csrf
+                        <input type="text" class="hidden" value="{{$file}}" name="file">
                         @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
                             <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
-                            <input type="text" class="hidden" value="{{$file}}" name="file">
                             @if($application->performer_role_id == auth()->user()->role_id)
                                 <button class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
                             @endif
