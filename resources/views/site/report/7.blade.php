@@ -79,8 +79,6 @@
         {data: 'country_produced_id', name: 'country_produced_id'},
         {data: 'purchase_basis', name: 'purchase_basis'},
     ];
-    var getData = "{{ route('report','7') }}";
-    var tableTitle = "{{__('7 - Плановый')}}";
 </script>
-@include('site.components.yajra')
+<x-laravelYajra getData="{{ route('report','7') }}" tableTitle="{{__('7 - Плановый')}}"/>
 @endsection

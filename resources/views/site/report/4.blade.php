@@ -23,9 +23,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css"/>
 
 </head>
-
 <div id="fortext"></div>
-
 <table id="example" class="display wrap table-bordered " style="border-collapse: collapse; width: 100%; padding-top: 10px">
     <thead class="border border-dark">
     <tr class="border border-dark">
@@ -72,11 +70,9 @@
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.4.1/js/all.js" integrity="sha384-L469/ELG4Bg9sDQbl0hvjMq8pOcqFgkSpwhwnslzvVVGpDjYJ6wJJyYjvG3u8XW7" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/af-2.3.2/b-1.5.4/b-colvis-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/cr-1.5.0/fc-3.2.5/fh-3.1.4/kt-2.5.0/r-2.2.2/rg-1.1.0/rr-1.2.4/sc-1.5.0/sl-1.2.6/datatables.min.js"></script>
-
-
 <script>
     var columns = [
-        {data: "id", name: 'id'},
+        {data: 'id', name: 'id'},
         {data: 'branch_initiator_id', name: 'branch_initiator_id'},
         {data: 'number', name: 'number'},
         {data: 'date', name: 'date'},
@@ -101,8 +97,7 @@
         {data: 'purchase_basis', name: 'purchase_basis'},
         {data: 'basis', name: 'basis'},
     ];
-    var getData = "{{ route('report','4') }}";
-    var tableTitle = "{{ __('4 - Отчет заявки по статусам') }}";
 </script>
-@include('site.components.yajra')
+<x-laravelYajra getData="{{ route('report','4') }}" tableTitle="{{ __('4 - Отчет заявки по статусам') }}"/>
+
 @endsection

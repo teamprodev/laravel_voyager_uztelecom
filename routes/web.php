@@ -9,6 +9,7 @@ use App\Http\Controllers\Site\ProfileController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Site\FaqsController;
 use App\Http\Controllers\WarehouseController;
+use App\View\Components\laravelYajra;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;

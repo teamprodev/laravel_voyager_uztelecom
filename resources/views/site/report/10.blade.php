@@ -92,9 +92,7 @@
         {data: 'december', name: 'december'},
         {data: 'all', name: 'all'},
     ];
-    var getData = "{{ route('report','10') }}";
-    var tableTitle = "{{__('10 - Отчет по кол-ву статусам')}}";
 </script>
 @endif
-@include('site.components.yajra')
+<x-laravelYajra getData="{{ route('report','10') }}" tableTitle="{{__('10 - Отчет по кол-ву статусам')}}"/>
 @endsection

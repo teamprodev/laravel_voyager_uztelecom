@@ -78,9 +78,6 @@
         {data: 'performer_user_id', name: 'performer_user_id'},
         {data: 'created_at', name: 'created_at'},
     ];
-    var getData = "{{ route('report','8') }}";
-    var tableTitle = "{{__('8 - Отчет по видам закупки')}}";
-
 </script>
-@include('site.components.yajra')
+<x-laravelYajra getData="{{ route('report','8') }}" tableTitle="{{__('8 - Отчет по видам закупки')}}"/>
 @endsection

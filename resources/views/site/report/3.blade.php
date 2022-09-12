@@ -96,11 +96,7 @@
             {data: 'usluga_1', name: 'usluga_1'},
             {data: 'usluga_1_nds', name: 'usluga_1_nds'},
         ];
-        var getData = "{{ route('report','3') }}";
-        var tableTitle = "{{ __('3 - Отчет за год') }}";
     </script>
-@include('site.components.yajra')
-
+    <x-laravelYajra getData="{{ route('report','3') }}" tableTitle="{{ __('3 - Отчет за год') }}"/>
 @endif
-
 @endsection

@@ -64,9 +64,7 @@
         {data: 'summa', name: 'summa'},
         {data: 'nds', name: 'nds'},
     ];
-    var getData = "{{ route('report','1') }}";
-    var tableTitle = "{{ __('1 - Отчет общий') }}";
-
 </script>
-@include('site.components.yajra')
+<x-laravelYajra getData="{{ route('report','1') }}" tableTitle="{{ __('1 - Отчет общий') }}"/>
+
 @endsection

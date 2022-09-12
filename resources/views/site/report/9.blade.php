@@ -133,8 +133,6 @@
         {data: "direct_count", name: 'direct_count'},
         {data: "direct_sum", name: 'direct_sum'},
     ];
-    var getData = "{{ route('report','9') }}";
-    var tableTitle = "{{__('9 - Ойлик харидлар илова плановый')}}";
 </script>
-@include('site.components.yajra')
+<x-laravelYajra getData="{{ route('report','9') }}" tableTitle="{{__('9 - Ойлик харидлар илова плановый')}}"/>
 @endsection

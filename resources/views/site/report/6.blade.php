@@ -101,8 +101,6 @@
         {data: 'protocol_number', name: 'protocol_number'},
         {data: 'protocol_date', name: 'protocol_date'},
     ];
-    var getData = "{{ route('report','6') }}";
-    var tableTitle = "{{__('6 - Отчет свод')}}";
 </script>
-@include('site.components.yajra')
+<x-laravelYajra getData="{{ route('report','6') }}" tableTitle="{{__('6 - Отчет свод')}}"/>
 @endsection
