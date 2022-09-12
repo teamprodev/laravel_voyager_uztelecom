@@ -195,7 +195,7 @@ class ApplicationService
                             $status = setting('color.concluded');
                             $color = $status ? 'white' : 'black';
                             return "<div class='row'>
-                            <div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_performed}</div>
+                            <div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>договор заключен</div>
                             </div>";
                         default:
                             return $query;
