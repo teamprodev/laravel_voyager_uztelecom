@@ -191,6 +191,12 @@ class ApplicationService
                             return "<div class='row'>
                             <div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_performed}</div>
                             </div>";
+                        case 'договор заключен':
+                            $status = setting('color.concluded');
+                            $color = $status ? 'white' : 'black';
+                            return "<div class='row'>
+                            <div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_performed}</div>
+                            </div>";
                         default:
                             return $query;
                     }
