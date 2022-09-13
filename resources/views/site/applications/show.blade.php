@@ -331,7 +331,7 @@
     ->enctype("multipart/form-data")
     ->post()
     }}
-        @if($check && $user->hasPermission('Plan_Budget') && $application->user_id != auth()->user()->id || $user->hasPermission('Plan_Business') && $check && $application->user_id != auth()->user()->id)
+        @if($check && $user->hasPermission('Plan_Budget')|| $user->hasPermission('Plan_Business') && $check)
             {{Aire::textArea('bio', __('Информация о наличии в «Плане закупок» приобретаемых товаров'))
                 ->name('info_purchase_plan')
                 ->value($application->info_purchase_plan)
@@ -359,7 +359,7 @@
             @endif
             {{Aire::submit('Save')}}
 
-        @elseif($user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business') && $application->user_id != auth()->user()->id)
+        @elseif($user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business'))
             {{Aire::textArea('bio', __('Номер заявки'))
                 ->name('number')
                 ->value($application->number)
