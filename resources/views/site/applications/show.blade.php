@@ -449,7 +449,7 @@
         @endif
         {{Aire::close()}}
     </div>
-    @if($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer'||'Company_Performer'||'Branch_Performer') || $user->role_id == 7 && $application->show_director == 1)
+    @if($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer'||'Company_Performer'||'Branch_Performer') || $access && $user->role_id == 7 && $application->show_director == 1)
         <div class="px-6">
             <form name="testform" action="{{route('eimzo.sign.verify')}}" method="POST">
                 @csrf

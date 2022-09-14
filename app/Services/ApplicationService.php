@@ -67,7 +67,7 @@ class ApplicationService
             } elseif ($user->hasPermission('Company_Leader') && $user->hasPermission('Branch_Leader')) {
                 $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
             } elseif ($user->role_id == 7) {
-                $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->where('signers', 'LIKE', '%7%')->get();
+                $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->get();
             } elseif ($user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer') || $user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer')) {
                 $query = Application::where('draft', '!=', 1)
                     ->where('signers', 'like', "%{$user->role_id}%")
