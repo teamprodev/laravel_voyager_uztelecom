@@ -142,8 +142,9 @@ class ApplicationController extends Controller
      */
     public function destroy(Application $application)
     {
+        $application->delete_from = auth()->user()->id;
+        $application->save();
         $application->delete();
-
         return redirect()->back();
     }
 
