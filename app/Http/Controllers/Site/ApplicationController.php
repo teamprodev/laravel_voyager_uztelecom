@@ -121,7 +121,11 @@ class ApplicationController extends Controller
     */
     public function edit(Application $application)
     {
-            return $this->service->edit($application);
+        if($application->status == 'distributed' || $application->show_leader == 2)
+        {
+            abort(405,"Вам нельзя изменить заявку,ибо заявка уже распределена!");
+        }
+        return $this->service->edit($application);
     }
     /**
      * Application Update
