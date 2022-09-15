@@ -121,7 +121,7 @@ class ApplicationController extends Controller
     */
     public function edit(Application $application)
     {
-        if($application->status == 'distributed' || $application->show_leader == 2)
+        if($application->status == 'distributed' && $application->performer_role_id != auth()->user()->role_id || $application->show_leader == 2 && $application->performer_role_id != auth()->user()->role_id)
         {
             abort(405,"Вам нельзя изменить заявку,ибо заявка уже распределена!");
         }
