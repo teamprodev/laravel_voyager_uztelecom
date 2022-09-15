@@ -69,13 +69,9 @@
     ->route('site.applications.update',$application->id)
     ->enctype("multipart/form-data")
     ->post() }}
-    @if($application->user_id == auth()->user()->id)
-        @include('site.applications.form_edit')
-    @elseif($user->hasPermission('Branch_Performer') && $application->user_id != $user->id || $user->hasPermission('Company_Performer') && $application->user_id != $user->id || $application->performer_role_id == $user->role_id)
-        @include('site.applications.performer')
-    @elseif($user->hasPermission('Warehouse') && $application->status == 'Принята'||$user->hasPermission('Warehouse') && $application->status == 'товар доставлен'||$user->hasPermission('Warehouse') && $application->status == 'товар прибыл')
-        @include('site.applications.warehouse')
-    @endif
+    @includeWhen($application->user_id == auth()->user()->id,'site.applications.form_edit')
+    @includeWhen($user->hasPermission('Branch_Performer') && $application->user_id != $user->id || $user->hasPermission('Company_Performer') && $application->user_id != $user->id || $application->performer_role_id == $user->role_id ,'site.applications.performer')
+    @includeWhen($user->hasPermission('Warehouse') && $application->status == 'Принята'||$user->hasPermission('Warehouse') && $application->status == 'товар доставлен'||$user->hasPermission('Warehouse') && $application->status == 'товар прибыл','site.applications.warehouse')
     {{ Aire::close() }}
 @endsection
 
