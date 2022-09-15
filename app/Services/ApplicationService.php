@@ -791,7 +791,7 @@ class ApplicationService
                 $doc->save();
             }
         }
-        $roles = ($application->branch->signers);
+        $roles = ($application->branch_signers->signers);
         if (isset($data['signers'])) {
             $array = $roles ? array_merge(json_decode($roles), $data['signers']) : $data['signers'];
             $data['signers'] = json_encode($array);

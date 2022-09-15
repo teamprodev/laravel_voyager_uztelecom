@@ -138,6 +138,10 @@ class Application extends Model
     {
         return $this->belongsTo(Branch::class, 'branch_id', 'id');
     }
+    public function branch_signers()
+    {
+        return $this->belongsTo(Branch::class, 'branch_initiator_id', 'id');
+    }
     public function department()
     {
         return $this->belongsTo(Department::class, 'department_initiator_id', 'id')->withDefault(['name' => '']);
