@@ -35,7 +35,7 @@
                 <button type="submit" class="btn btn-success" style="margin-top: 8px;">Выбрать</button>
             </div>
             {{ Aire::close() }}
-            @if(Illuminate\Support\Facades\Cache::get(auth()->user()->id) != null)
+            @if(auth()->user()->select_branch_id != null)
                 <table id="yajra-datatable" class="display wrap responsive" style="width: 100%">
                     <thead>
                     <tr>
