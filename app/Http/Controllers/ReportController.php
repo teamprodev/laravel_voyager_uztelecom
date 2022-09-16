@@ -22,6 +22,10 @@ class ReportController extends Controller
         $this->middleware('auth');
         $this->service = $service;
     }
+    /**
+     * Request da Reportlar date keladi.
+     * Shuni Cache ga put qiladi.
+    **/
     public function request(Request $request)
     {
         Cache::put('date',$request->date);
@@ -34,6 +38,9 @@ class ReportController extends Controller
         Cache::put('date_4',$request->date_4);
         return redirect()->back();
     }
+    /**
+     * Nechinchi Reportligiga qarab blade korsatiladi.
+     **/
     public function index($id)
     {
             if($id == 22)
@@ -43,6 +50,9 @@ class ReportController extends Controller
             }
             return view("site.report.10");
     }
+    /**
+     * Nechinchi Report ligiga qarab data chiqadi.
+     **/
     public function report($id)
     {
         switch ($id)
