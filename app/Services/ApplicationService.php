@@ -910,4 +910,12 @@ class ApplicationService
         }
 
     }
+
+    public function StatusChangeToPerformerStatus(){
+        $applications = Application::all();
+        foreach ($applications as $application) {
+            $application = Application::where('performer_status', '!=', null)->update(['status'=> DB::raw("performer_status") ]);
+        }
+    }
+
 }
