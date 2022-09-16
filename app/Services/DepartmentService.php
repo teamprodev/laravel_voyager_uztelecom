@@ -10,6 +10,9 @@ use Yajra\DataTables\DataTables;
 
 class DepartmentService
 {
+    /**
+     * Barcha Department ya'ni Otdellarni chiqazish.
+     **/
     public function getData($query)
     {
         return Datatables::of($query)
