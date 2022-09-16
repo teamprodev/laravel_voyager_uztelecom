@@ -63,8 +63,9 @@ class BranchController extends Controller
     **/
     public function putCache(Request $request)
     {
-        auth()->user()->select_branch_id = $request->branch_id;
-        auth()->user()->save();
+        $user = auth()->user();
+        $user->select_branch_id = $request->branch_id;
+        $user->save();
         return redirect()->back();
     }
     /**
