@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class WarehouseController extends Controller
 {
+    /**
+     * Warehouse Create
+     **/
     public function create(Request $request)
     {
         $data = Warehouse::where('application_id',$request->application_id)->first();
