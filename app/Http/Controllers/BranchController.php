@@ -14,11 +14,20 @@ use Yajra\DataTables\DataTables;
 
 class BranchController extends Controller
 {
+    /**
+     * admin paneldan branches ga kirsak "Show Roles" digan knopka chiqadi
+     * 1 filialga tegishli bolgan shu knopka bosilganda
+     * filial id si cache ga put qilinadi.
+    **/
     public function edit($id)
     {
         Cache::put('id',$id);
         return view('vendor.voyager.branches.signers-add');
     }
+    /**
+     * filial id si cache dan olinadi va shunga tegishli bo'lgan
+     * Role lar chiqib keladi.
+     **/
     public function getData()
     {
         $id = Cache::get('id');
@@ -48,21 +57,32 @@ class BranchController extends Controller
             ->rawColumns(['action'])
             ->make(true);
     }
+    /**
+     * Request das kelayotgan branch_id ni users tablitsadagi select_branch_id columniga
+     * saxranit qiladi.
+    **/
     public function putCache(Request $request)
     {
-        Cache::put(auth()->user()->id,$request->branch_id);
+        auth()->user()->select_branch_id = $request->branch_id;
+        auth()->user()->save();
         return redirect()->back();
     }
+    /**
+     * Zayavkalarni filialiga qarab chiqarish
+     *
+     * users tablitsadagi select_branch_id columni value sini olib
+     * shu branch_id ga tegishli bolgan zayavkalarni ciqarb beradi
+     **/
     public function ajax_branch()
     {
-        $id = Cache::get(auth()->user()->id);
+        $id = auth()->user()->select_branch_id;
         $data = Application::where('branch_initiator_id', $id)->where('name', '!=', 'null')->get();
         return Datatables::of($data)
             ->editColumn('is_more_than_limit', function ($query) {
                 return $query->is_more_than_limit == 1 ? __('Компанию') : __('Филиал');
             })
             ->editColumn('branch_initiator_id', function ($query) {
-                return $query->branch->name;
+                return $query->branch_signers->name;
             })
             ->addIndexColumn()
             ->editColumn('user_id', function($docs) {
@@ -188,6 +208,14 @@ class BranchController extends Controller
             ->rawColumns(['action','status'])
             ->make(true);
     }
+    /**
+     * vxod qilgan user da select_branch permissionni bo'lsa
+     * view ga otib ketadi.
+     *
+     * agar select_branch permissionni bo'lmasa
+     *
+     * "Вам недоступно" so'zi chiqadi.
+     **/
     public function view()
     {
         if(auth()->user()->hasPermission('select_branch'))
@@ -198,12 +226,5 @@ class BranchController extends Controller
             return "<h1 style='text-align: center;color:red;'>Вам недоступно</h1>";
         }
 
-    }
-    public function update(Branch $id,Request $req)
-    {
-        $id->add_signers = $req->add_signers ? json_encode($req->add_signers): null;
-        $id->signers = $req->signers ? json_encode($req->signers): null;
-        $id->update();
-        return redirect('/admin/branches/');
     }
 }
