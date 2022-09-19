@@ -522,6 +522,9 @@ class ReportService
             $query = Application::query()->where('branch_id',auth()->user()->branch_id)->where('name', '!=', 'null')->get();
         }
         return Datatables::of($query)
+            ->addColumn('name', function($branch){
+                return Branch::query()->where('id', $branch->branch_id)->get()->pluck('name')->toArray();
+            })
             ->editColumn('branch_id', function($application)
             {
                 return $application->branch_id ? $application->branch->name:"";
@@ -782,9 +785,7 @@ class ReportService
         }
         return Datatables::of($query)
             ->addColumn('name', function($branch){
-                $applications = Branch::query()->where('id', $branch->branch_id)->get()->pluck('name');
-                $json = json_encode($applications,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
-                return trim($json, '[], "');
+                return Branch::query()->where('id', $branch->branch_id)->get()->pluck('name')->toArray();
             })
             ->addColumn('planned_price', function ($query) {
                 return $query->planned_price ? number_format($query->planned_price, 0, '', ' ') : '';

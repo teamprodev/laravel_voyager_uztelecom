@@ -73,7 +73,7 @@
 <script>
     var columns = [
         {data: 'id', name: 'id'},
-        {data: 'branch_initiator_id', name: 'branch_initiator_id'},
+        {data: 'name', name: 'name'},
         {data: 'number', name: 'number'},
         {data: 'date', name: 'date'},
         {data: 'user_id', name: 'user_id'},
