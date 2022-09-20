@@ -82,7 +82,7 @@ class BranchController extends Controller
             ->editColumn('is_more_than_limit', function ($query) {
                 return $query->is_more_than_limit == 1 ? __('Компанию') : __('Филиал');
             })
-            ->editColumn('branch_id', function ($query) {
+            ->editColumn('branch_initiator_id', function ($query) {
                 return $query->branch->name;
             })
             ->addIndexColumn()
