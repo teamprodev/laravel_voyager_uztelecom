@@ -95,6 +95,9 @@ class BranchController extends Controller
             ->editColumn('planned_price', function ($query) {
                 return $query->planned_price ? number_format($query->planned_price, 0, '', ' ') : '';
             })
+            ->editColumn('delivery_date', function ($query) {
+                return $query->updated_at ? with(new Carbon($query->delivery_date))->format('d.m.Y') : '';
+            })
             ->editColumn('created_at', function ($data) {
                 return $data->created_at ? with(new Carbon($data->created_at))->format('d.m.Y') : '';
             })
