@@ -331,7 +331,7 @@
     ->enctype("multipart/form-data")
     ->post()
     }}
-        @if($check && $user->hasPermission('Plan_Budget')|| $user->hasPermission('Plan_Business') && $check)
+        @if($perms["Plan"])
             {{Aire::textArea('bio', __('Информация о наличии в «Плане закупок» приобретаемых товаров'))
                 ->name('info_purchase_plan')
                 ->value($application->info_purchase_plan)
@@ -359,7 +359,7 @@
             @endif
             {{Aire::submit('Save')}}
 
-        @elseif($user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business'))
+        @elseif($perms["NumberChange"])
             {{Aire::textArea('bio', __('Номер заявки'))
                 ->name('number')
                 ->value($application->number)
@@ -419,7 +419,7 @@
                     <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
                 </div>
             @endif
-        @elseif($application->performer_role_id == $user->role_id && $user->leader == 1)
+        @elseif($perms["PerformerLeader"])
             {{Aire::textArea('bio', __('Комментарии начальника'))
                 ->name('performer_leader_comment')
                 ->value($application->performer_leader_comment)
@@ -450,7 +450,7 @@
         @endif
         {{Aire::close()}}
     </div>
-    @if($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer'||'Company_Performer'||'Branch_Performer') || $access && $user->role_id == 7 && $application->show_director == 1)
+    @if($perms["Signers"])
         <div class="px-6">
             <form name="testform" action="{{route('eimzo.sign.verify')}}" method="POST">
                 @csrf

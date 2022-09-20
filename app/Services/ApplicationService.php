@@ -746,9 +746,13 @@ class ApplicationService
         $branch_name = Branch::find($application->user->branch_id, 'name');
         $branch = Branch::all()->pluck('name', 'id');
 
-        $perms['CompanyLeader'] = $application->user_id != $user->id && $user->hasPermission('Company_Leader') && $application->show_director == 1;
+        $perms['CompanyLeader'] = $application->user_id != $user->id && $user->hasPermission('Company_Leader') && $application->show_leader == 1;
         $perms['BranchLeader'] = $application->user_id != $user->id && $user->hasPermission('Branch_Leader') && $application->show_leader == 1;
         $perms['PerformerComment'] = $application->performer_role_id == $user->role_id && $user->leader == 0;
+        $perms['NumberChange'] = $user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business');
+        $perms['Plan'] = $check && $user->hasPermission('Plan_Budget') || $user->hasPermission('Plan_Business') && $check;
+        $perms['PerformerLeader'] = $application->performer_role_id == $user->role_id && $user->leader == 1;
+        $perms['Signers'] = $access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer'||'Company_Performer'||'Branch_Performer') || $access && $user->role_id == 7 && $application->show_director == 1;
 
         return view('site.applications.show', compact('performer_file', 'branch','perms', 'access_comment', 'performers_company', 'performers_branch', 'file_basis', 'file_tech_spec', 'other_files', 'user', 'application', 'branch', 'signedDocs', 'same_role_user_ids', 'access', 'subjects', 'purchases', 'branch_name', 'check'));
 
