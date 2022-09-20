@@ -374,9 +374,10 @@
             </div>
             {{Aire::submit('Save')}}
         @endif
-        @if($application->user_id != auth()->user()->id && auth()->user()->hasPermission('Company_Leader') && $application->show_director == 1)
+        @if($perms['CompanyLeader'])
             @if(!isset($application->performer_user_id))
                 <div class="pb-5">
+
                     <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
                     {{Aire::textArea('bio', __('Комментарий руководства'))
                             ->name('branch_leader_comment')
@@ -396,7 +397,7 @@
                     <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
                 </div>
             @endif
-        @elseif($application->user_id != auth()->user()->id && auth()->user()->hasPermission('Branch_Leader') && $application->show_leader == 1)
+        @elseif($perms['BranchLeader'])
             @if(!isset($application->performer_user_id))
                 <div class="pb-5">
                     <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
@@ -432,7 +433,7 @@
             <div class="mt-4">
                 <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
             </div>
-        @elseif($application->performer_role_id == $user->role_id && $user->leader == 0)
+        @elseif($perms['PerformerComment'])
             {{Aire::textArea('bio', __('Комментарий'))
                 ->name('performer_comment')
                 ->value($application->performer_comment)

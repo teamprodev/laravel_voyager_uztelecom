@@ -30,6 +30,9 @@ class ApplicationService
     /*
      * Permissionlarga qarab Applicationlar chiqishi
      */
+    const Permission_Company_Performer = 170;
+
+
     public function index($request)
     {
         $filial = PermissionRole::where('permission_id', 167)->pluck('role_id')->toArray();
@@ -118,7 +121,6 @@ class ApplicationService
                     $query = $query->status;
                     $status_new = __('Новая');
                     $status_in_process = __('На рассмотрении');
-                    $status_accepted = __('Принята');
                     $status_refused = __('Отказана');
                     $status_agreed = __('Согласована');
                     $status_rejected = __('Отклонена');
@@ -144,7 +146,7 @@ class ApplicationService
                         case 'Принята':
                             $status = setting('color.accepted');
                             $color = $status ? 'white' : 'black';
-                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_accepted}</div>";
+                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{__('Принята')}</div>";
                         case 'refused':
                             $status = setting('color.rejected');
                             $color = $status ? 'white' : 'black';
@@ -703,10 +705,9 @@ class ApplicationService
         $application->update();
     }
 
-    public function show($application)
+    public function show($application, $user)
     {
-        if (PHP_SAPI === 'cli')
-            return dd($application);
+
         $access = SignedDocs::where('role_id', auth()->user()->role_id)->where('status', null)->where('application_id', $application->id)->first();
         $check = SignedDocs::where('role_id', auth()->user()->role_id)->where('application_id', $application->id)->first();
         $branch = Branch::where('id', $application->branch_initiator_id)->first();
@@ -726,24 +727,30 @@ class ApplicationService
          */
 
         $id = DB::table('roles')->whereRaw('json_contains(branch_id, \'["' . $application->branch_initiator_id . '"]\')')->pluck('id')->toArray();
+
         foreach ($id as $role) {
-            $company = PermissionRole::where('role_id', $role)->where('permission_id', 170)->get()->pluck('role_id');
-            $role_company[] = $company;
+            $role_company[] = PermissionRole::where('role_id', $role)->where('permission_id', self::Permission_Company_Performer)->get()->pluck('role_id');
+
             $role_company = array_diff($role_company, ['[]']);
 
             $branch = PermissionRole::where('role_id', $role)->where('permission_id', 172)->get()->pluck('role_id');
+
             $role_branch[] = $branch;
             $role_branch = array_diff($role_branch, ['[]']);
         }
         $performers_company = $id ? Roles::find($role_company)->pluck('display_name', 'id') : [];
         $performers_branch = $id ? Roles::find($role_branch)->pluck('display_name', 'id') : [];
-        $user = auth()->user();
         $access_comment = Position::find($user->position_id);
         $subjects = Subject::all();
         $purchases = Purchase::all();
         $branch_name = Branch::find($application->user->branch_id, 'name');
         $branch = Branch::all()->pluck('name', 'id');
-        return view('site.applications.show', compact('performer_file', 'branch', 'access_comment', 'performers_company', 'performers_branch', 'file_basis', 'file_tech_spec', 'other_files', 'user', 'application', 'branch', 'signedDocs', 'same_role_user_ids', 'access', 'subjects', 'purchases', 'branch_name', 'check'));
+
+        $perms['CompanyLeader'] = $application->user_id != $user->id && $user->hasPermission('Company_Leader') && $application->show_director == 1;
+        $perms['BranchLeader'] = $application->user_id != $user->id && $user->hasPermission('Branch_Leader') && $application->show_leader == 1;
+        $perms['PerformerComment'] = $application->performer_role_id == $user->role_id && $user->leader == 0;
+
+        return view('site.applications.show', compact('performer_file', 'branch','perms', 'access_comment', 'performers_company', 'performers_branch', 'file_basis', 'file_tech_spec', 'other_files', 'user', 'application', 'branch', 'signedDocs', 'same_role_user_ids', 'access', 'subjects', 'purchases', 'branch_name', 'check'));
 
     }
 

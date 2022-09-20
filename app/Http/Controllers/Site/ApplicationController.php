@@ -92,7 +92,7 @@ class ApplicationController extends Controller
                 ->where('user_id', auth()->id())
                 ->update(['is_read' => 1]);
         }
-        return $this->service->show($application);
+        return $this->service->show($application, auth()->user());
     }
     /**
      * @var application ga tegishli bolgan SignedDocs
