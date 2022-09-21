@@ -108,10 +108,10 @@ class BranchController extends Controller
                 $planned_price = $query->planned_price ? number_format($query->planned_price, 0, '', ' ') : '';
                 return "{$planned_price}  {$query->currency}";
             })
-            ->editColumn('status', function ($query){
+            ->editColumn('status', function ($query) {
+                $query = $query->status;
                 $status_new = __('Новая');
                 $status_in_process = __('На рассмотрении');
-                $status_accepted = __('Принята');
                 $status_refused = __('Отказана');
                 $status_agreed = __('Согласована');
                 $status_rejected = __('Отклонена');
@@ -119,50 +119,79 @@ class BranchController extends Controller
                 $status_cancelled = __('Отменен');
                 $status_performed = __('Товар доставлен');
                 $status_overdue = ('просрочен');
-                if($query->status === 'new'){
-                    $status = setting('color.new');
-                    $color = $status ? 'white':'black';
-                    return "<input style='background-color: {$status};color: {$color};' value='{$status_new}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-                }elseif($query->status === 'in_process'){
-                    $status = setting('color.in_process');
-                    $color = $status ? 'white':'black';
-                    return "<input style='background-color: {$status};color: {$color};' value='{$status_in_process}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-                }elseif($query->status === 'overdue'||$query->status === 'Overdue'){
-                    $status = setting('color.overdue');
-                    $color = $status ? 'white':'black';
-                    return "<input style='background-color: {$status};color: {$color};' value='{$status_overdue}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-                }elseif($query->status === 'Принята'){
-                    $status = setting('color.accepted');
-                    $color = $status ? 'white':'black';
-                    return "<input style='background-color: {$status};color: {$color};' value='{$status_accepted}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-                }elseif($query->status === 'refused'){
-                    $status = setting('color.rejected');
-                    $color = $status ? 'white':'black';
-                    return "<input style='background-color: {$status};color: {$color};' value='{$status_refused}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-                }elseif($query->status === 'agreed'){
-                    $status = setting('color.agreed');
-                    $color = $status ? 'white':'black';
-                    return "<input style='background-color: {$status};color: {$color};' value='{$status_agreed}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-                }elseif($query->status === 'rejected'){
-                    $status = setting('color.rejected');
-                    $color = $status ? 'white':'black';
-                    return "<input style='background-color: {$status};color: {$color};' value='{$status_rejected}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-                }elseif($query->status === 'distributed'){
-                    $status = setting('color.distributed');
-                    $color = $status ? 'white':'black';
-                    return "<input style='background-color: {$status};color: {$color};' value='{$status_distributed}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-                }elseif($query->status === 'canceled'){
-                    $status = setting('color.rejected');
-                    $color = $status ? 'white':'black';
-                    return "<input style='background-color: {$status};color: {$color};' value='{$status_cancelled}' type='button' class='text-center m-1 col edit btn-sm' disabled>";
-                }elseif($query->status === 'товар доставлен'){
-                    $status = setting('color.delivered');
-                    $color = $status ? 'white':'black';
-                    return "<div class='row'>
-                        <input style='background-color: {$status};color: {$color};' type='text' type='button' value='{$status_performed}' class='text-center display wrap edit btn-sm' disabled>
-                        </div>";
-                }else{
-                    return $query->status;
+                switch($query)
+                {
+                    case 'new':
+                        $status = setting('color.new');
+                        $color = $status ? 'white' : 'black';
+                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_new}</div>";
+                        break;
+                    case 'in_process':
+                        $status = setting('color.in_process');
+                        $color = $status ? 'white' : 'black';
+                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_in_process}</div>";
+                    case 'overdue':
+                        $status = setting('color.overdue');
+                        $color = $status ? 'white' : 'black';
+                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_overdue}</div>";
+                    case 'Принята':
+                        $status = setting('color.accepted');
+                        $color = $status ? 'white' : 'black';
+                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{__('Принята')}</div>";
+                    case 'refused':
+                        $status = setting('color.rejected');
+                        $color = $status ? 'white' : 'black';
+                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_refused}</div>";
+                    case 'agreed':
+                        $status = setting('color.agreed');
+                        $color = $status ? 'white' : 'black';
+                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_agreed}</div>";
+                    case 'rejected':
+                        $status = setting('color.rejected');
+                        $color = $status ? 'white' : 'black';
+                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_rejected}</div>";
+                    case 'distributed':
+                        $status = setting('color.distributed');
+                        $color = $status ? 'white' : 'black';
+                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_distributed}</div>";
+                    case 'canceled':
+                        $status = setting('color.rejected');
+                        $color = $status ? 'white' : 'black';
+                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_cancelled}</div>";
+                    case 'Выполнено частично':
+                        $status = setting('color.partially');
+                        $color = $status ? 'white' : 'black';
+                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Выполнено частично</div>";
+                    case 'Выполнено в полном объёме':
+                        $status = setting('color.total_volume');
+                        $color = $status ? 'white' : 'black';
+                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Выполнено в полном объёме</div>";
+                    case 'Заявка аннулирована по заданию руководства':
+                        $status = setting('color.nulled_by_management');
+                        $color = $status ? 'white' : 'black';
+                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Заявка аннулирована по заданию руководства</div>";
+                    case 'Договор аннулирован по инициативе Узбектелеком':
+                        $status = setting('color.nulled_by_management');
+                        $color = $status ? 'white' : 'black';
+                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Договор аннулирован по инициативе Узбектелеком</div>";
+                    case 'заявка передана в Узтелеком':
+                        $status = setting('color.nulled_by_management');
+                        $color = $status ? 'white' : 'black';
+                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>заявка передана в Узтелеком</div>";
+                    case 'товар доставлен':
+                        $status = setting('color.delivered');
+                        $color = $status ? 'white' : 'black';
+                        return "<div class='row'>
+                            <div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_performed}</div>
+                            </div>";
+                    case 'договор заключен':
+                        $status = setting('color.concluded');
+                        $color = $status ? 'white' : 'black';
+                        return "<div class='row'>
+                            <div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>договор заключен</div>
+                            </div>";
+                    default:
+                        return $query;
                 }
             })
             ->addIndexColumn()
