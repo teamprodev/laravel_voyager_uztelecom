@@ -793,15 +793,15 @@ class ApplicationService
         $user = auth()->user();
         $now = Carbon::now();
         $data = $request->validated();
-        if (auth()->id() == $application->user_id && $application->status == 'refused' || auth()->id() == $application->user_id && $application->status == 'rejected') {
-            $data['status'] = Application::NEW;
-            $signedDocs = SignedDocs::where('application_id', $application->id)->get();
-            foreach ($signedDocs as $doc) {
-
-                $doc->status = null;
-                $doc->save();
-            }
-        }
+//        if (auth()->id() == $application->user_id && $application->status == 'refused' || auth()->id() == $application->user_id && $application->status == 'rejected') {
+//            $data['status'] = Application::NEW;
+//            $signedDocs = SignedDocs::where('application_id', $application->id)->get();
+//            foreach ($signedDocs as $doc) {
+//
+//                $doc->status = null;
+//                $doc->save();
+//            }
+//        }
         $roles = ($application->branch_signers->signers);
         if (isset($data['signers'])) {
             $array = $roles ? array_merge(json_decode($roles), $data['signers']) : $data['signers'];
@@ -823,7 +823,7 @@ class ApplicationService
                     SignedDocs::where('application_id', $application->id)->where('role_id', $delete)->delete();
                 }
             }
-            $application->status = Application::NEW;
+//            $application->status = Application::NEW;
             $message = "{$application->id} " . "{$application->name} " . setting('admin.application_created');
             $this->sendNotifications($array, $application, $message);
         }elseif ($application->signers == null) {
@@ -863,7 +863,7 @@ class ApplicationService
             } else {
                 $explode = explode(',', $data['resource_id']);
                 $data['resource_id'] = json_encode($explode);
-                $application->status = Application::NEW;
+//                $application->status = Application::NEW;
             }
         }
 
