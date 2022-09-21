@@ -264,7 +264,7 @@ class ApplicationService
             $b = [auth()->user()->branch_id];
         }
         $status = setting('admin.show_status');
-        $data = Application::whereIn($a, $b)->where('status', $status)->where('name', '!=', 'null')->get();
+        $data = Application::whereIn($a, $b)->where('status', $status)->where('name', '!=', null)->get();
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('user_id', function ($docs) {

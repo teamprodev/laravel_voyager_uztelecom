@@ -37,7 +37,7 @@ class ApplicationController extends Controller
     public function show_status($status)
     {
         if($status == 'performed')
-            $status = 'товар доставлен';
+            $status = 'Принята';
         $voyager = Setting::where('key','admin.show_status')->first();
         $voyager->value = $status;
         $voyager->save();
