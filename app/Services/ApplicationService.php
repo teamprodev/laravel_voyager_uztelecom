@@ -31,19 +31,23 @@ class ApplicationService
      * Permissionlarga qarab Applicationlar chiqishi
      */
     const Permission_Company_Performer = 170;
+    const Permission_Add_Branch_Signer = 167;
+    const Permission_Branch_Signer = 168;
+    const Permission_Company_Signer = 165;
+    const Permission_Branch_Performer = 172;
 
 
     public function index($request)
     {
-        $filial = PermissionRole::where('permission_id', 167)->pluck('role_id')->toArray();
-        $company = PermissionRole::where('permission_id', 167)->pluck('role_id')->toArray();
+        $filial = PermissionRole::where('permission_id', self::Permission_Add_Branch_Signer)->pluck('role_id')->toArray();
+        $company = PermissionRole::where('permission_id', self::Permission_Add_Branch_Signer)->pluck('role_id')->toArray();
         foreach ($filial as $b) {
-            $a = PermissionRole::where('permission_id', 168)->where('role_id', $b)->pluck('role_id')->toArray();
-            PermissionRole::where('permission_id', 168)->where('role_id', $a)->delete();
+            $a = PermissionRole::where('permission_id', self::Permission_Branch_Signer)->where('role_id', $b)->pluck('role_id')->toArray();
+            PermissionRole::where('permission_id', self::Permission_Branch_Signer)->where('role_id', $a)->delete();
         }
         foreach ($company as $b) {
-            $a = PermissionRole::where('permission_id', 165)->where('role_id', $b)->pluck('role_id')->toArray();
-            PermissionRole::where('permission_id', 165)->where('role_id', $a)->delete();
+            $a = PermissionRole::where('permission_id', self::Permission_Company_Signer)->where('role_id', $b)->pluck('role_id')->toArray();
+            PermissionRole::where('permission_id', self::Permission_Company_Signer)->where('role_id', $a)->delete();
         }
         if ($request->ajax()) {
 
@@ -733,7 +737,7 @@ class ApplicationService
 
             $role_company = array_diff($role_company, ['[]']);
 
-            $branch = PermissionRole::where('role_id', $role)->where('permission_id', 172)->get()->pluck('role_id');
+            $branch = PermissionRole::where('role_id', $role)->where('permission_id', self::Permission_Branch_Performer)->get()->pluck('role_id');
 
             $role_branch[] = $branch;
             $role_branch = array_diff($role_branch, ['[]']);
