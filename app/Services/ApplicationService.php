@@ -273,10 +273,7 @@ class ApplicationService
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('user_id', function ($docs) {
-                return $docs->user ? $docs->user->name : "";
-            })
-            ->editColumn('role_id', function ($docs) {
-                return $docs->role ? $docs->role->display_name : "";
+                return $docs->user_id ? $docs->user->name : "";
             })
             ->editColumn('created_at', function ($data) {
                 return $data->created_at ? with(new Carbon($data->created_at))->format('d.m.Y') : '';

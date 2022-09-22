@@ -39,7 +39,7 @@
                         "{{ route('site.applications.status_table') }}",
 
                     columns: [
-                        {data: 'id', name: 'id'},
+                        {data: 'user_id', name: 'user_id'},
                         {data: 'initiator', name: 'initiator'},
                         {data: 'name', name: 'name'},
                         {data: 'delivery_date', name: 'delivery_date'},
