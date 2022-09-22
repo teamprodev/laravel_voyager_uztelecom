@@ -594,7 +594,7 @@
                            @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
                                <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
                            @else
-                               <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
+                               <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}" target="_blank">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
                                <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
                            @endif
                        @endforeach
