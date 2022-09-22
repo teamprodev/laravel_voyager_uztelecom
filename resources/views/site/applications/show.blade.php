@@ -5,23 +5,78 @@
         <a href="{{route('site.applications.edit',$application->id)}}" class="btn btn-success">Изменить</a>
     </div>
     <div class="px-6 pb-0 pt-6">
-        <h5><strong>ID : </strong> {{$application->id}}
-            <h5><strong>{{ __('Автор заявки:') }}</strong> <a href="{{$application->user->id == auth()->id() ? route('site.profile.index'):route('site.profile.other',$application->user->id)}}">{{$application->user->id == auth()->id() ? 'Вы':$application->user->name}}</a> ( {{ $application->user->role_id ? $application->user->role->display_name : '' }} )</h5>            <h5><strong>{{ __('Филиал автора:') }}</strong> {{ $application->user->branch_id ? $branch_name->name : 'Он(а) не выбрал(а) филиал' }}</h5>
-            <h5><strong>Должность :</strong> {{ auth()->user()->position_id ? auth()->user()->position->name:"Нет" }}</h5>
-            <h5><strong>{{ __('Номер заявки') }} : </strong> {{$application->number}} </h5>
-            <h5><strong>Date : </strong>
-                @if($application->date!=null)
-                    {{ Carbon\Carbon::createFromFormat('Y-m-d', $application->date)->Format('d.m.Y') }}{{ __('г') }}
-                @endif
-            </h5> <br>
-            <h5><strong>{{__('Визирование заявки через:') }}</strong>
+        <h5><strong>ID : </strong> {{$application->id}}</h5>
+        <h5><strong>{{ __('Автор заявки:') }}</strong> <a href="{{$application->user->id == auth()->id() ? route('site.profile.index'):route('site.profile.other',$application->user->id)}}">{{$application->user->id == auth()->id() ? 'Вы':$application->user->name}}</a> ( {{ $application->user->role_id ? $application->user->role->display_name : '' }} )</h5>            <h5><strong>{{ __('Филиал автора:') }}</strong> {{ $application->user->branch_id ? $branch_name->name : 'Он(а) не выбрал(а) филиал' }}</h5>
+        <h5><strong>Должность :</strong> {{ auth()->user()->position_id ? auth()->user()->position->name:"Нет" }}</h5>
+        <h5><strong>{{ __('Номер заявки') }} : </strong> {{$application->number}} </h5>
+        <h5><strong>Date : </strong>
+            @if($application->date!=null)
+                {{ Carbon\Carbon::createFromFormat('Y-m-d', $application->date)->Format('d.m.Y') }}{{ __('г') }}
+            @endif
+        </h5> <br>
+        <h5><strong>{{ __('Статус') }} : </strong>
+            @switch($application->status)
+                @case('new')
+                    <span>{{__('Новая')}}</span>
+                    @break
+                @case('in_process')
+                    <span>{{__('На рассмотрении')}}</span>
+                    @break
+                @case('overdue')
+                    <span>{{__('просрочен')}}</span>
+                    @break
+                @case('Принята')
+                    <span>{{__('Принята')}}</span>
+                    @break
+                @case('refused')
+                    <span>{{__('Отказана')}}</span>
+                    @break
+                @case('agreed')
+                    <span>{{__('Согласована')}}</span>
+                    @break
+                @case('rejected')
+                    <span>{{__('Отклонена')}}</span>
+                    @break
+                @case('distributed')
+                    <span>{{__('Распределен')}}</span>
+                    @break
+                @case('canceled')
+                    <span>{{__('Отменен')}}</span>
+                    @break
+                @case('Выполнено частично')
+                    <span>{{__('Выполнено частично')}}</span>
+                    @break
+                @case('Выполнено в полном объёме')
+                    <span>{{__('Выполнено в полном объёме')}}</span>
+                    @break
+                @case('Заявка аннулирована по заданию руководства')
+                    <span>{{__('Заявка аннулирована по заданию руководства')}}</span>
+                    @break
+                @case('Договор аннулирован по инициативе Узбектелеком')
+                    <span>{{__('Договор аннулирован по инициативе Узбектелеком')}}</span>
+                    @break
+                @case('заявка передана в Узтелеком')
+                    <span>{{__('заявка передана в Узтелеком')}}</span>
+                    @break
+                @case('товар доставлен')
+                    <span>{{__('Товар доставлен')}}</span>
+                    @break
+                @case('договор заключен')
+                    <span>{{__('договор заключен')}}</span>
+                    @break
+                @case('draft')
+                    <span>{{__('draft')}}</span>
+                    @break
+            @endswitch
+        </h5>
+        <h5><strong>{{__('Визирование заявки через:') }}</strong>
             @if($application->is_more_than_limit == 1)
                 {{ __('Компанию') }}
             @else
-            {{ __('Филиал') }}
+                {{ __('Филиал') }}
             @endif
         </h5> <br>
-        </h5>
+
     </div>
     <div class="flex items-baseline">
         <div class="pt-2 w-100">

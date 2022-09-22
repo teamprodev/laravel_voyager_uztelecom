@@ -96,7 +96,7 @@ class ApplicationService
                 case $user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer') :
                     $query = Application::where('performer_role_id', auth()->user()->role_id)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
                     break;
-                default : $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->get();;
+                default :  $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->get();;
                     break;
             }
 
