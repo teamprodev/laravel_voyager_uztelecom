@@ -53,7 +53,7 @@ class ApplicationService
 
             $user = auth()->user();
 
-            if ($user->hasPermission('ЦУЗ')) {
+            if ($user->hasPermission('Purchasing_Management_Center')) {
                 $a = 'branch_initiator_id';
                 $b = [9, 13];
             } else {
@@ -260,7 +260,7 @@ class ApplicationService
      */
     public function status_table($user)
     {
-        if ($user->hasPermission('ЦУЗ')) {
+        if ($user->hasPermission('Purchasing_Management_Center')) {
             $a = 'branch_initiator_id';
             $b = [9, 13];
         } else {
@@ -413,7 +413,7 @@ class ApplicationService
      * */
     public function performer_status()
     {
-        if (auth()->user()->hasPermission('ЦУЗ')) {
+        if (auth()->user()->hasPermission('Purchasing_Management_Center')) {
             $a = 'branch_initiator_id';
             $b = [9, 13];
         } else {
