@@ -254,17 +254,17 @@ class ApplicationService
     /*
      * User tanlagan statusdagi Applicationlarni chiqarish
      */
-    public function status_table()
+    public function status_table($user)
     {
-        if (auth()->user()->hasPermission('ЦУЗ')) {
+        if ($user->hasPermission('ЦУЗ')) {
             $a = 'branch_initiator_id';
             $b = [9, 13];
         } else {
             $a = 'branch_initiator_id';
-            $b = [auth()->user()->branch_id];
+            $b = [$user->branch_id];
         }
         $status = setting('admin.show_status');
-        $data = Application::whereIn($a, $b)->where('status', $status)->where('name', '!=', null)->get();
+        $data = Application::where('signers', 'like', "%{$user->role_id}%")->where('status', $status)->where('name', '!=', null)->OrWhere('performer_role_id',$user->role_id)->where('status', $status)->where('name', '!=', null)->get();
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('user_id', function ($docs) {
