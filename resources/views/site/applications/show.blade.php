@@ -1,3 +1,4 @@
+@php use App\Services\ApplicationData;use Ratchet\App; @endphp
 @extends('site.layouts.app')
 
 @section('center_content')
@@ -6,7 +7,11 @@
     </div>
     <div class="px-6 pb-0 pt-6">
         <h5><strong>ID : </strong> {{$application->id}}</h5>
-        <h5><strong>{{ __('Автор заявки:') }}</strong> <a href="{{$application->user->id == auth()->id() ? route('site.profile.index'):route('site.profile.other',$application->user->id)}}">{{$application->user->id == auth()->id() ? 'Вы':$application->user->name}}</a> ( {{ $application->user->role_id ? $application->user->role->display_name : '' }} )</h5>            <h5><strong>{{ __('Филиал автора:') }}</strong> {{ $application->user->branch_id ? $branch_name->name : 'Он(а) не выбрал(а) филиал' }}</h5>
+        <h5><strong>{{ __('Автор заявки:') }}</strong> <a
+                    href="{{$application->user->id == auth()->id() ? route('site.profile.index'):route('site.profile.other',$application->user->id)}}">{{$application->user->id == auth()->id() ? 'Вы':$application->user->name}}</a>
+            ( {{ $application->user->role_id ? $application->user->role->display_name : '' }} )</h5>            <h5>
+            <strong>{{ __('Филиал автора:') }}</strong> {{ $application->user->branch_id ? $branch_name->name : 'Он(а) не выбрал(а) филиал' }}
+        </h5>
         <h5><strong>Должность :</strong> {{ auth()->user()->position_id ? auth()->user()->position->name:"Нет" }}</h5>
         <h5><strong>{{ __('Номер заявки') }} : </strong> {{$application->number}} </h5>
         <h5><strong>Date : </strong>
@@ -16,10 +21,10 @@
         </h5> <br>
         <h5><strong>{{ __('Статус') }} : </strong>
             @switch($application->status)
-                @case('new')
+                @case(ApplicationData::Status_New)
                     <span>{{__('Новая')}}</span>
                     @break
-                @case('in_process')
+                @case(ApplicationData::Status_In_Process)
                     <span>{{__('На рассмотрении')}}</span>
                     @break
                 @case('overdue')
@@ -83,7 +88,8 @@
             <div class="flex items-baseline">
                 <div class="p-6">
                     <div class="mb-3 row">
-                        <label class="col-sm-6" for="initiator" class="col-sm-2 col-form-label">{{ __('Инициатор (наименование подразделения заказчика)') }}</label>
+                        <label class="col-sm-6" for="initiator"
+                               class="col-sm-2 col-form-label">{{ __('Инициатор (наименование подразделения заказчика)') }}</label>
                         <div class="col-sm-6">
                             {{Aire::input()
                                 ->name("initiator")
@@ -95,7 +101,8 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-6" for="purchase_basis" class="col-sm-2 col-form-label">{{ __('Цель / содержание закупки (обоснование необходимости закупки)') }}</label>
+                        <label class="col-sm-6" for="purchase_basis"
+                               class="col-sm-2 col-form-label">{{ __('Цель / содержание закупки (обоснование необходимости закупки)') }}</label>
                         <div class="col-sm-6">
                             {{Aire::textArea()
                                 ->rows(3)
@@ -109,7 +116,8 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-6" for="basis" class="col-sm-2 col-form-label">{{ __('Основания (план закупок, рапорт,распоряжение руководства)') }}</label>
+                        <label class="col-sm-6" for="basis"
+                               class="col-sm-2 col-form-label">{{ __('Основания (план закупок, рапорт,распоряжение руководства)') }}</label>
                         <div class="col-sm-6">
                             {{Aire::textArea()
                                 ->rows(3)
@@ -123,7 +131,8 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-6" for="name" class="col-sm-2 col-form-label">{{ __('Наименование предмета закупки(товар, работа, услуги)') }}</label>
+                        <label class="col-sm-6" for="name"
+                               class="col-sm-2 col-form-label">{{ __('Наименование предмета закупки(товар, работа, услуги)') }}</label>
                         <div class="col-sm-6">
                             {{Aire::input()
                                 ->name("name")
@@ -135,7 +144,8 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-6" for="specification" class="col-sm-2 col-form-label">{{ __('Описание предмета закупки (технические характеристики)') }}</label>
+                        <label class="col-sm-6" for="specification"
+                               class="col-sm-2 col-form-label">{{ __('Описание предмета закупки (технические характеристики)') }}</label>
                         <div class="col-sm-6">
                             {{Aire::textArea()
                                 ->rows(3)
@@ -149,14 +159,17 @@
                     </div>
 
                     <div class="mb-3 row w-50">
-                        <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">{{ __('Ожидаемый срок поставки') }}</label>
+                        <label class="col-sm-6" for="date"
+                               class="col-sm-2 col-form-label">{{ __('Ожидаемый срок поставки') }}</label>
                         <div class="col-sm-6">
-                            <input class="form-control" id="date" name="delivery_date" value="{{ $application->delivery_date }}" type="date"/>
+                            <input class="form-control" id="date" name="delivery_date"
+                                   value="{{ $application->delivery_date }}" type="date"/>
                         </div>
                     </div>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-6" for="separate_requirements" class="col-sm-2 col-form-label">{{ __('Особые требования') }}</label>
+                        <label class="col-sm-6" for="separate_requirements"
+                               class="col-sm-2 col-form-label">{{ __('Особые требования') }}</label>
                         <div class="col-sm-6">
                             {{Aire::textArea()
                                 ->rows(3)
@@ -170,7 +183,8 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-6" for="other_requirements" class="col-sm-2 col-form-label">{{ __('Другие требования к товару (работе, услуге)') }}</label>
+                        <label class="col-sm-6" for="other_requirements"
+                               class="col-sm-2 col-form-label">{{ __('Другие требования к товару (работе, услуге)') }}</label>
                         <div class="col-sm-6">
                             {{Aire::textArea()
                                 ->rows(3)
@@ -184,14 +198,17 @@
                     </div>
 
                     <div class="mb-3 row w-50">
-                        <label class="col-sm-6" for="date" class="col-sm-2 col-form-label">{{ __('Гарантийный срок качества товара (работ, услуг)') }}</label>
+                        <label class="col-sm-6" for="date"
+                               class="col-sm-2 col-form-label">{{ __('Гарантийный срок качества товара (работ, услуг)') }}</label>
                         <div class="col-sm-6">
-                            <input class="form-control" id="date" name="expire_warranty_date" value="{{$application->expire_warranty_date}}" type="date"/>
+                            <input class="form-control" id="date" name="expire_warranty_date"
+                                   value="{{$application->expire_warranty_date}}" type="date"/>
                         </div>
                     </div>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-6" for="planned_price" class="col-sm-2 col-form-label">{{ __('Планируемый бюджет закупки (сумма)') }}</label>
+                        <label class="col-sm-6" for="planned_price"
+                               class="col-sm-2 col-form-label">{{ __('Планируемый бюджет закупки (сумма)') }}</label>
                         <div class="col-sm-6">
                             {{Aire::input()
                                 ->name("planned_price")
@@ -203,7 +220,8 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-6" for="incoterms" class="col-sm-2 col-form-label">{{ __('Условия поставки по INCOTERMS (самовывоз со склада/доставка до покупателя)') }}</label>
+                        <label class="col-sm-6" for="incoterms"
+                               class="col-sm-2 col-form-label">{{ __('Условия поставки по INCOTERMS (самовывоз со склада/доставка до покупателя)') }}</label>
                         <div class="col-sm-6">
                             {{Aire::textArea()
                                 ->rows(3)
@@ -216,7 +234,8 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-6" for="info_purchase_plan" class="col-sm-2 col-form-label">{{ __('Информация о наличии в «Плане закупок» приобретаемых товаров') }}</label>
+                        <label class="col-sm-6" for="info_purchase_plan"
+                               class="col-sm-2 col-form-label">{{ __('Информация о наличии в «Плане закупок» приобретаемых товаров') }}</label>
                         <div class="col-sm-6">
                             {{Aire::textArea()
                                 ->rows(3)
@@ -229,7 +248,8 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-6" for="info_business_plan" class="col-sm-2 col-form-label">{{ __('Статья расходов по Бизнес плану') }}</label>
+                        <label class="col-sm-6" for="info_business_plan"
+                               class="col-sm-2 col-form-label">{{ __('Статья расходов по Бизнес плану') }}</label>
                         <div class="col-sm-6">
                             {{Aire::input()
                                 ->name("info_business_plan")
@@ -240,7 +260,8 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-6" for="comment" class="col-sm-2 col-form-label">{{ __('Комментарий') }}</label>
+                        <label class="col-sm-6" for="comment"
+                               class="col-sm-2 col-form-label">{{ __('Комментарий') }}</label>
                         <div class="col-sm-6">
                             {{Aire::textArea()
                                 ->rows(3)
@@ -269,7 +290,8 @@
                         @endif
                     </div>
                     <div class="my-6">
-                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        <button class="btn btn-primary" type="button" data-toggle="collapse"
+                                data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                             {{__('Служебное информации')}}
                         </button>
                         <div class="collapse my-3" id="collapseExample">
@@ -285,7 +307,8 @@
                             </div>
 
                             <div class="mb-3 row">
-                                <label class="col-sm-6" for="comment" class="col-sm-2 col-form-label">show_director</label>
+                                <label class="col-sm-6" for="comment"
+                                       class="col-sm-2 col-form-label">show_director</label>
                                 <div class="col-sm-6">
                                     {{Aire::textArea()
                                         ->rows(3)
@@ -306,19 +329,23 @@
                             <div class="my-5">
                                 <h5 class="text-left">{{ __('Основание') }}</h5>
                                 <form action="/delete_file/{{$application->id}}/file_basis" method="post">
-                                @csrf
-                                @foreach($file_basis as $file)
-                                <input type="text" class="hidden" value="{{$file}}" name="file">
-                                    @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
-                                        <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
-                                    @else
-                                        <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}" target="_blank">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
-                                        <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
-                                    @endif
+                                    @csrf
+                                    @foreach($file_basis as $file)
+                                        <input type="text" class="hidden" value="{{$file}}" name="file">
+                                        @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
+                                            <img src="/storage/uploads/{{$file}}" width="500" height="500"
+                                                 alt="not found">
+                                        @else
+                                            <button type="button" class="btn btn-primary"><a style="color: white;"
+                                                                                             href="/storage/uploads/{{$file}}"
+                                                                                             target="_blank">{{preg_replace('/[0-9]+_/', '', $file)}}</a>
+                                            </button>
+                                            <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
+                                        @endif
                                         @if($application->user_id == $user->id)
                                             <button class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
                                         @endif
-                                @endforeach
+                                    @endforeach
                                 </form>
                             </div>
                         @endif
@@ -326,19 +353,23 @@
                             <div class="mb-5">
                                 <h5 class="text-left">{{ __('Техническое задание') }}</h5>
                                 <form action="/delete_file/{{$application->id}}/file_tech_spec" method="post">
-                                @csrf
-                                @foreach($file_tech_spec as $file)
-                                <input type="text" class="hidden" value="{{$file}}" name="file">
-                                    @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
-                                        <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
-                                    @else
-                                        <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}" target="_blank">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
-                                        <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
-                                    @endif
-                                    @if($application->user_id == $user->id)
+                                    @csrf
+                                    @foreach($file_tech_spec as $file)
+                                        <input type="text" class="hidden" value="{{$file}}" name="file">
+                                        @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
+                                            <img src="/storage/uploads/{{$file}}" width="500" height="500"
+                                                 alt="not found">
+                                        @else
+                                            <button type="button" class="btn btn-primary"><a style="color: white;"
+                                                                                             href="/storage/uploads/{{$file}}"
+                                                                                             target="_blank">{{preg_replace('/[0-9]+_/', '', $file)}}</a>
+                                            </button>
+                                            <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
+                                        @endif
+                                        @if($application->user_id == $user->id)
                                             <button class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
-                                    @endif
-                                @endforeach
+                                        @endif
+                                    @endforeach
                                 </form>
                             </div>
                         @endif
@@ -346,19 +377,23 @@
                             <div class="mb-5" style="width: 80%">
                                 <h5 class="text-left">{{ __('Другие документы необходимые для запуска закупочной процедуры') }}</h5>
                                 <form action="/delete_file/{{$application->id}}/other_files" method="post">
-                                @csrf
-                                @foreach($other_files as $file)
-                                <input type="text" class="hidden" value="{{$file}}" name="file">
-                                    @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
-                                        <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
-                                    @else
-                                        <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}" target="_blank">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
-                                        <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
-                                    @endif
-                                    @if($application->user_id == $user->id)
+                                    @csrf
+                                    @foreach($other_files as $file)
+                                        <input type="text" class="hidden" value="{{$file}}" name="file">
+                                        @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
+                                            <img src="/storage/uploads/{{$file}}" width="500" height="500"
+                                                 alt="not found">
+                                        @else
+                                            <button type="button" class="btn btn-primary"><a style="color: white;"
+                                                                                             href="/storage/uploads/{{$file}}"
+                                                                                             target="_blank">{{preg_replace('/[0-9]+_/', '', $file)}}</a>
+                                            </button>
+                                            <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
+                                        @endif
+                                        @if($application->user_id == $user->id)
                                             <button class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
-                                    @endif
-                                @endforeach
+                                        @endif
+                                    @endforeach
                                 </form>
                             </div>
                         @endif
@@ -368,47 +403,47 @@
         </div>
     </div>
     <div class="px-6">
-                <table id="yajra-datatable">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>{{ __('Статус заявки') }}</th>
-                            <th>{{ __('Роль') }}</th>
-                            <th>{{ __('Комментарий') }}</th>
-                            <th>{{ __('Пользователь') }}</th>
-                            <th class="hidden">Index</th>
-                            <th>Дата подписи</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
+        <table id="yajra-datatable">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>{{ __('Статус заявки') }}</th>
+                <th>{{ __('Роль') }}</th>
+                <th>{{ __('Комментарий') }}</th>
+                <th>{{ __('Пользователь') }}</th>
+                <th class="hidden">Index</th>
+                <th>Дата подписи</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
 
     <script>
-            $(function () {
-                var table = $('#yajra-datatable').DataTable({
-                    pageLength: 25,
-                    processing: true,
-                    order: [[5, 'asc']],
-                    serverSide: true,
-                    ajax: "{{ route('site.applications.list.signedocs',$application->id) }}",
-                    columnDefs :[
-                        {
-                            targets : 5,
-                            className : 'hidden',
-                        }
-                    ],
-                    columns: [
-                        {data: 'id', name: 'id'},
-                        {data: 'status', name: 'status'},
-                        {data: 'role_id', name: 'role_id'},
-                        {data: 'comment', name: 'comment'},
-                        {data: 'user_id', name: 'user_id'},
-                        {data: 'role_index', name: 'role_index'},
-                        {data: 'updated_at', name: 'updated_at'},
-                    ]
-                });
-            })
-            </script>
+        $(function () {
+            var table = $('#yajra-datatable').DataTable({
+                pageLength: 25,
+                processing: true,
+                order: [[5, 'asc']],
+                serverSide: true,
+                ajax: "{{ route('site.applications.list.signedocs',$application->id) }}",
+                columnDefs: [
+                    {
+                        targets: 5,
+                        className: 'hidden',
+                    }
+                ],
+                columns: [
+                    {data: 'id', name: 'id'},
+                    {data: 'status', name: 'status'},
+                    {data: 'role_id', name: 'role_id'},
+                    {data: 'comment', name: 'comment'},
+                    {data: 'user_id', name: 'user_id'},
+                    {data: 'role_index', name: 'role_index'},
+                    {data: 'updated_at', name: 'updated_at'},
+                ]
+            });
+        })
+    </script>
 
     <div class="px-6 pb-4">
         {{ Aire::open()
@@ -479,7 +514,7 @@
                             ->name('performer_role_id')
                         }}
                     @endif
-                    <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
+                    <button type="submit" class="btn btn-success col-md-2">{{ __('Отправить') }}</button>
                 </div>
             @endif
         @elseif($perms['BranchLeader'])
@@ -501,7 +536,7 @@
                             ->name('performer_role_id')
                         }}
                     @endif
-                    <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
+                    <button type="submit" class="btn btn-success col-md-2">{{ __('Отправить') }}</button>
                 </div>
             @endif
         @elseif($perms["PerformerLeader"])
@@ -511,12 +546,12 @@
                 ->rows(3)
                 ->cols(40)
              }}
-            <input  class="hidden"
-                    name="performer_leader_user_id"
-                    value="{{auth()->user()->id}}"
-                    type="text">
+            <input class="hidden"
+                   name="performer_leader_user_id"
+                   value="{{auth()->user()->id}}"
+                   type="text">
             <div class="mt-4">
-                <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
+                <button type="submit" class="btn btn-success col-md-2">{{ __('Отправить') }}</button>
             </div>
         @elseif($perms['PerformerComment'])
             {{Aire::textArea('bio', __('Комментарий'))
@@ -525,12 +560,12 @@
                 ->rows(3)
                 ->cols(40)
              }}
-            <input  class="hidden"
-                    name="performer_user_id"
-                    value="{{auth()->user()->id}}"
-                    type="text">
+            <input class="hidden"
+                   name="performer_user_id"
+                   value="{{auth()->user()->id}}"
+                   type="text">
             <div class="mt-4">
-                <button type="submit" class="btn btn-success col-md-2" >{{ __('Отправить') }}</button>
+                <button type="submit" class="btn btn-success col-md-2">{{ __('Отправить') }}</button>
             </div>
         @endif
         {{Aire::close()}}
@@ -544,7 +579,7 @@
                     <label for="select1">
                         {{ __('Выберите ключ') }}
                     </label>
-                    <select name="key" id="select1" onchange="cbChanged(this)"></select> <br />
+                    <select name="key" id="select1" onchange="cbChanged(this)"></select> <br/>
                 </div>
                 <div class="form-group hidden">
                     <label for="exampleFormControlTextarea1">
@@ -553,9 +588,11 @@
                     <textarea class="form-control" id="eri_data" name="data" rows="3"></textarea>
                 </div>
                 <div class="mb-2 text-center mr-6">
-                    {{ __('Идентификатор ключа') }} <label id="keyId"></label><br />
+                    {{ __('Идентификатор ключа') }} <label id="keyId"></label><br/>
 
-                    <button onclick="generatekey()" class="hidden btn btn-success" type="button">{{ __('Подпись') }}</button><br />
+                    <button onclick="generatekey()" class="hidden btn btn-success"
+                            type="button">{{ __('Подпись') }}</button>
+                    <br/>
                 </div>
                 <div class="w-1/2">
                     {{Aire::textArea('bio', __('Комментарий'))
@@ -568,20 +605,22 @@
                     <label for="exampleFormControlTextarea3">
                         Подписанный документ PKCS#7
                     </label>
-                    <textarea   class="form-control" readonly required
-                                name="pkcs7" id="exampleFormControlTextarea3"
-                                rows="3"></textarea>
-                </div> <br />
+                    <textarea class="form-control" readonly required
+                              name="pkcs7" id="exampleFormControlTextarea3"
+                              rows="3"></textarea>
+                </div>
+                <br/>
                 <input id="status" name="status" class="hidden" type="text">
                 <input value="applications" id="table_name" name="table_name" class="hidden" type="text">
-                <input value="{{$application->id}}" id="application_id" name="application_id" class="hidden" type="text">
+                <input value="{{$application->id}}" id="application_id" name="application_id" class="hidden"
+                       type="text">
                 <input value="{{auth()->user()->id}}" name="user_id" class="hidden" type="text">
                 <input value="{{auth()->user()->role_id}}" name="role_id" class="hidden" type="text">
                 <div class="row ml-4 pb-4">
-                    <button onclick="status1()" type="submit" class="btn btn-success col-md-2" >
+                    <button onclick="status1()" type="submit" class="btn btn-success col-md-2">
                         {{ __('Принять') }}
                     </button>
-                    <button onclick="status0()" type="submit" class="btn btn-danger col-md-2 mx-2   " >
+                    <button onclick="status0()" type="submit" class="btn btn-danger col-md-2 mx-2   ">
                         {{ __('Отказ') }}
                     </button>
                 </div>
@@ -589,164 +628,166 @@
         </div>
     @endif
 
-   <div class="flex flex-row gap-x-4">
-       <div class="performer-div border-2 rounded-xl border-gray-500 w-1/2 p-3 m-6 flex flex-row gap-x-4">
-           <div class="w-1/2">
-               <div class="w-full">
-                   {{Aire::select($branch, 'select', __('Филиал заказчик по контракту'))
-                       ->value($application->branch_customer_id)
-                       ->disabled()
-                       }}
-                   {{Aire::input('bio', __('Номер лота'))
-                       ->value($application->lot_number)
-                       ->disabled()
-                   }}
-                   {{Aire::input('bio', __('Номер договора'))
-                       ->value($application->contract_number)
-                       ->disabled()
-                   }}.
-                   {{Aire::date('date_input', __('Дата договора'))
-                       ->value($application->contract_date)
-                       ->disabled()
-                   }}
-                   {{Aire::input('bio', __('Номер протокола'))
-                       ->value($application->protocol_number)
-                       ->disabled()
-                   }}
-                   {{Aire::date('bio', __('Дата протокола'))
-                       ->value($application->protocol_date)
-                       ->disabled()
-                   }}
-                   {{Aire::textArea('bio', __('Предмет договора (контракта) и краткая характеристика'))
-                       ->value($application->contract_info)
-                       ->rows(3)
-                       ->cols(40)
-                       ->disabled()
-                   }}
-                   {{Aire::checkbox('checkbox', __('С НДС'))
-                       ->disabled()
-                   }}
-                   {{Aire::input('bio', __('Cумма договора'))
-                       ->value($application->contract_price)
-                       ->disabled()
-                   }}
-               </div>
-               <div class="w-full">
-                   {{Aire::input('bio', __('Товары (обслуживание) страна изготовленной'))
-                       ->value($application->country_produced_id)
-                       ->disabled()
-                   }}
+    <div class="flex flex-row gap-x-4">
+        <div class="performer-div border-2 rounded-xl border-gray-500 w-1/2 p-3 m-6 flex flex-row gap-x-4">
+            <div class="w-1/2">
+                <div class="w-full">
+                    {{Aire::select($branch, 'select', __('Филиал заказчик по контракту'))
+                        ->value($application->branch_customer_id)
+                        ->disabled()
+                        }}
+                    {{Aire::input('bio', __('Номер лота'))
+                        ->value($application->lot_number)
+                        ->disabled()
+                    }}
+                    {{Aire::input('bio', __('Номер договора'))
+                        ->value($application->contract_number)
+                        ->disabled()
+                    }}.
+                    {{Aire::date('date_input', __('Дата договора'))
+                        ->value($application->contract_date)
+                        ->disabled()
+                    }}
+                    {{Aire::input('bio', __('Номер протокола'))
+                        ->value($application->protocol_number)
+                        ->disabled()
+                    }}
+                    {{Aire::date('bio', __('Дата протокола'))
+                        ->value($application->protocol_date)
+                        ->disabled()
+                    }}
+                    {{Aire::textArea('bio', __('Предмет договора (контракта) и краткая характеристика'))
+                        ->value($application->contract_info)
+                        ->rows(3)
+                        ->cols(40)
+                        ->disabled()
+                    }}
+                    {{Aire::checkbox('checkbox', __('С НДС'))
+                        ->disabled()
+                    }}
+                    {{Aire::input('bio', __('Cумма договора'))
+                        ->value($application->contract_price)
+                        ->disabled()
+                    }}
+                </div>
+                <div class="w-full">
+                    {{Aire::input('bio', __('Товары (обслуживание) страна изготовленной'))
+                        ->value($application->country_produced_id)
+                        ->disabled()
+                    }}
 
 
-                   {{Aire::input('bio', __('Наименование поставщика'))
-                       ->value($application->supplier_name)
-                       ->disabled()
-                   }}
-                   {{Aire::input('bio', __('Поставщик Перемешать номер'))
-                       ->value($application->supplier_inn)
-                       ->disabled()
-                   }}
-                   {{Aire::textArea('bio', __('Информация о товаре'))
-                       ->value($application->product_info)
-                       ->rows(3)
-                       ->cols(40)
-                       ->disabled()
-                   }}
+                    {{Aire::input('bio', __('Наименование поставщика'))
+                        ->value($application->supplier_name)
+                        ->disabled()
+                    }}
+                    {{Aire::input('bio', __('Поставщик Перемешать номер'))
+                        ->value($application->supplier_inn)
+                        ->disabled()
+                    }}
+                    {{Aire::textArea('bio', __('Информация о товаре'))
+                        ->value($application->product_info)
+                        ->rows(3)
+                        ->cols(40)
+                        ->disabled()
+                    }}
 
-                   <div class="mr-4 pt-2 pb-2 w-50">
-                       {{Aire::input( 'select', __('Предмет закупки'))
-                           ->value($application->subjects->name)
-                           ->disabled()
-                       }}
-                   </div>
-                   <div class="pt-2 pb-2 w-50">
-                       {{Aire::input( 'select', __('Вид закупки'))
-                           ->value($application->purchase->name)
-                           ->disabled()
-                       }}
-                   </div>
-                   {{Aire::input( 'select')
-                       ->value($application->performer_status)
-                       ->disabled()
-                       }}
-               </div>
-           </div>
-           <div class="w-1/2">
-               <div class="mb-5">
-                   @if($performer_file != 'null' && $performer_file != null)
-                       <h5 class="text-left">{{ __('Файл исполнителя') }}</h5>
-                       @foreach($performer_file as $file)
-                           @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
-                               <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
-                           @else
-                               <button type="button" class="btn btn-primary"><a style="color: white;" href="/storage/uploads/{{$file}}" target="_blank">{{preg_replace('/[0-9]+_/', '', $file)}}</a></button>
-                               <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
-                           @endif
-                       @endforeach
-                   @endif
-               </div>
+                    <div class="mr-4 pt-2 pb-2 w-50">
+                        {{Aire::input( 'select', __('Предмет закупки'))
+                            ->value($application->subjects->name)
+                            ->disabled()
+                        }}
+                    </div>
+                    <div class="pt-2 pb-2 w-50">
+                        {{Aire::input( 'select', __('Вид закупки'))
+                            ->value($application->purchase->name)
+                            ->disabled()
+                        }}
+                    </div>
+                    {{Aire::input( 'select')
+                        ->value($application->performer_status)
+                        ->disabled()
+                        }}
+                </div>
+            </div>
+            <div class="w-1/2">
+                <div class="mb-5">
+                    @if($performer_file != 'null' && $performer_file != null)
+                        <h5 class="text-left">{{ __('Файл исполнителя') }}</h5>
+                        @foreach($performer_file as $file)
+                            @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
+                                <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
+                            @else
+                                <button type="button" class="btn btn-primary"><a style="color: white;"
+                                                                                 href="/storage/uploads/{{$file}}"
+                                                                                 target="_blank">{{preg_replace('/[0-9]+_/', '', $file)}}</a>
+                                </button>
+                                <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
+                            @endif
+                        @endforeach
+                    @endif
+                </div>
 
-           </div>
-       </div>
-       <div class="w-1/2 p-6">
-           @if(isset($application->branch_leader_comment))
-               {{Aire::textArea('bio', __('Комментарий руководства') . ": {$application->branch_leader->name}")
-               ->value($application->branch_leader_comment)
-               ->rows(3)
-               ->cols(40)
-               ->disabled()
+            </div>
+        </div>
+        <div class="w-1/2 p-6">
+            @if(isset($application->branch_leader_comment))
+                {{Aire::textArea('bio', __('Комментарий руководства') . ": {$application->branch_leader->name}")
+                ->value($application->branch_leader_comment)
+                ->rows(3)
+                ->cols(40)
+                ->disabled()
+                 }}
+            @endif
+            @if(isset($application->performer_leader_comment))
+                {{Aire::textArea('bio', __('Комментарии начальника') . ": {$application->performer_leader->name}")
+                    ->value($application->performer_leader_comment)
+                    ->rows(3)
+                    ->cols(40)
+                    ->disabled()
                 }}
-           @endif
-           @if(isset($application->performer_leader_comment))
-               {{Aire::textArea('bio', __('Комментарии начальника') . ": {$application->performer_leader->name}")
-                   ->value($application->performer_leader_comment)
-                   ->rows(3)
-                   ->cols(40)
-                   ->disabled()
-               }}
-           @endif
-           @if(isset($application->performer_comment))
-               {{Aire::textArea('bio', __('Комментарии исполнителя') . ": {$application->performer->name}")
-                   ->value($application->performer_comment)
-                   ->rows(3)
-                   ->cols(40)
-                   ->disabled()
-               }}
-           @endif
-           @if(isset($application->performer_role_id))
-               {{Aire::textArea('bio', __('Исполнитель'))
-                   ->value($application->performer_role->display_name)
-                   ->rows(3)
-                   ->cols(40)
-                   ->disabled()
-               }}
-           @endif
-       </div>
-   </div>
+            @endif
+            @if(isset($application->performer_comment))
+                {{Aire::textArea('bio', __('Комментарии исполнителя') . ": {$application->performer->name}")
+                    ->value($application->performer_comment)
+                    ->rows(3)
+                    ->cols(40)
+                    ->disabled()
+                }}
+            @endif
+            @if(isset($application->performer_role_id))
+                {{Aire::textArea('bio', __('Исполнитель'))
+                    ->value($application->performer_role->display_name)
+                    ->rows(3)
+                    ->cols(40)
+                    ->disabled()
+                }}
+            @endif
+        </div>
+    </div>
     <script>
-        function generatekey()
-        {
+        function generatekey() {
             var data = "application_{{$application->id}}";
             document.getElementById('eri_data').value = data;
             console.log(data);
             sign();
         }
-        function status1()
-        {
+
+        function status1() {
             document.getElementById('status').value = 1;
         }
-        function status0()
-        {
+
+        function status0() {
             document.getElementById('status').value = 0;
         }
-        function functionBack()
-        {
+
+        function functionBack() {
             window.history.back();
         }
     </script>
 
-<script src="{{ asset('vendor/eimzo/assets/js/eimzo/e-imzo.js') }}"></script>
-<script src="{{ asset('vendor/eimzo/assets/js/eimzo/e-imzo-client.js') }}"></script>
-<script src="{{ asset('vendor/eimzo/assets/js/eimzo/eimzo.js') }}"></script>
+    <script src="{{ asset('vendor/eimzo/assets/js/eimzo/e-imzo.js') }}"></script>
+    <script src="{{ asset('vendor/eimzo/assets/js/eimzo/e-imzo-client.js') }}"></script>
+    <script src="{{ asset('vendor/eimzo/assets/js/eimzo/eimzo.js') }}"></script>
 @endsection
 
