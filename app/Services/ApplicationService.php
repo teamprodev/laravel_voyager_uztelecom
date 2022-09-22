@@ -823,7 +823,7 @@ class ApplicationService
                     SignedDocs::where('application_id', $application->id)->where('role_id', $delete)->delete();
                 }
             }
-//            $application->status = Application::NEW;
+            $application->status = Application::NEW;
             $message = "{$application->id} " . "{$application->name} " . setting('admin.application_created');
             $this->sendNotifications($array, $application, $message);
         }elseif ($application->signers == null) {
