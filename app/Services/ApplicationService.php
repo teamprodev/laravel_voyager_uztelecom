@@ -96,7 +96,7 @@ class ApplicationService
                 case $user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer') :
                     $query = Application::where('performer_role_id', auth()->user()->role_id)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
                     break;
-                default : $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->get();;
+                default :  $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->get();;
                     break;
             }
 
@@ -131,21 +131,30 @@ class ApplicationService
                      *  Voyager admin paneldan status ranglarini olish va chiqarish
                      */
                     $query = $query->status;
+                    $status_new = __('Новая');
+                    $status_in_process = __('На рассмотрении');
+                    $status_refused = __('Отказана');
+                    $status_agreed = __('Согласована');
+                    $status_rejected = __('Отклонена');
+                    $status_distributed = __('Распределен');
+                    $status_cancelled = __('Отменен');
+                    $status_performed = __('Товар доставлен');
+                    $status_overdue = ('просрочен');
                     switch($query)
                     {
                         case 'new':
                             $status = setting('color.new');
                             $color = $status ? 'white' : 'black';
-                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{__('Новая')}</div>";
+                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_new}</div>";
                             break;
                         case 'in_process':
                             $status = setting('color.in_process');
                             $color = $status ? 'white' : 'black';
-                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{__('На рассмотрении')}</div>";
+                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_in_process}</div>";
                         case 'overdue':
                             $status = setting('color.overdue');
                             $color = $status ? 'white' : 'black';
-                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{('просрочен')}</div>";
+                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_overdue}</div>";
                         case 'Принята':
                             $status = setting('color.accepted');
                             $color = $status ? 'white' : 'black';
@@ -153,23 +162,23 @@ class ApplicationService
                         case 'refused':
                             $status = setting('color.rejected');
                             $color = $status ? 'white' : 'black';
-                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{__('Отказана')}</div>";
+                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_refused}</div>";
                         case 'agreed':
                             $status = setting('color.agreed');
                             $color = $status ? 'white' : 'black';
-                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{__('Согласована')}</div>";
+                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_agreed}</div>";
                         case 'rejected':
                             $status = setting('color.rejected');
                             $color = $status ? 'white' : 'black';
-                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{__('Отклонена')}</div>";
+                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_rejected}</div>";
                         case 'distributed':
                             $status = setting('color.distributed');
                             $color = $status ? 'white' : 'black';
-                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{__('Распределен')}</div>";
+                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_distributed}</div>";
                         case 'canceled':
                             $status = setting('color.rejected');
                             $color = $status ? 'white' : 'black';
-                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{__('Отменен')}</div>";
+                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_cancelled}</div>";
                         case 'Выполнено частично':
                             $status = setting('color.partially');
                             $color = $status ? 'white' : 'black';
@@ -194,7 +203,7 @@ class ApplicationService
                             $status = setting('color.delivered');
                             $color = $status ? 'white' : 'black';
                             return "<div class='row'>
-                            <div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{__('Товар доставлен')}</div>
+                            <div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_performed}</div>
                             </div>";
                         case 'договор заключен':
                             $status = setting('color.concluded');
