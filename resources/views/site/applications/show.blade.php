@@ -268,8 +268,38 @@
                             @endforeach
                         @endif
                     </div>
-                </div>
+                    <div class="my-6">
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            {{__('Служебное информации')}}
+                        </button>
+                        <div class="collapse my-3" id="collapseExample">
+                            <div class="mb-3 row">
+                                <label class="col-sm-6" for="info_business_plan" class="col-sm-2 col-form-label">show_leader</label>
+                                <div class="col-sm-6">
+                                    {{Aire::input()
+                                        ->name("info_business_plan")
+                                        ->value($application->show_leader)
+                                        ->class("form-control")->disabled()
+                                    }}
+                                </div>
+                            </div>
 
+                            <div class="mb-3 row">
+                                <label class="col-sm-6" for="comment" class="col-sm-2 col-form-label">show_director</label>
+                                <div class="col-sm-6">
+                                    {{Aire::textArea()
+                                        ->rows(3)
+                                        ->name("comment")
+                                        ->value($application->show_director)
+                                        ->cols(40)
+                                        ->class("form-control")
+                                        ->disabled()
+                                    }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="flex flex-col">
                     <div class="flex-direction: column">
                         @if($file_basis != 'null' && $file_basis != null)

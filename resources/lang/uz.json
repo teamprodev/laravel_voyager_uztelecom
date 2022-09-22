@@ -160,6 +160,7 @@
     "С НДС": "QQS bilan",
     "С едиными поставщиками": "Yagona yetkazib beruvchilar bilan",
     "СТИР": "Yuvish",
+    "Служебное информации": "Xizmat haqida ma'lumot",
     "Сентябрь": "Sentyabr",
     "Согласован": "Kelishilgan",
     "Согласована": "Kelishilgan",
@@ -232,5 +233,6 @@
     "Месяц": "Oy",
     "Выбрать": "Tanlash",
     "за год": "yil uchun",
-    "Все": "Hammasi"
+    "Все": "Hammasi",
+    "Дополнительная информация": "Qo'shimcha ma'lumotlar"
 }

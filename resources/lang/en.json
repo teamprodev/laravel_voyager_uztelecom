@@ -164,6 +164,7 @@
     "Согласован": "Agreed",
     "Согласована": "Agreed",
     "Создать": "To create",
+    "Служебное информации": "Service information",
     "Создать заявку": "Create an app",
     "Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)": "Purchase Name of Product (Product, Work, Ismat)",
     "Сохранить": "Saver",
@@ -221,7 +222,8 @@
     "товар": "product",
     "услуга": "service",
     "Дополнительные требования": "Additional requirements",
-    "Другие файлы":"Other files"
+    "Другие файлы":"Other files",
+    "Дополнительная информация": "Additional information"
 
 
 }
