@@ -134,12 +134,13 @@ class ApplicationService
                     $status_new = __('Новая');
                     $status_in_process = __('На рассмотрении');
                     $status_refused = __('Отказана');
+                    $status_accepted = __('Принята');
                     $status_agreed = __('Согласована');
                     $status_rejected = __('Отклонена');
                     $status_distributed = __('Распределен');
                     $status_cancelled = __('Отменен');
                     $status_performed = __('Товар доставлен');
-                    $status_overdue = ('просрочен');
+                    $status_overdue = __('просрочен');
                     switch($query)
                     {
                         case 'new':
@@ -158,7 +159,7 @@ class ApplicationService
                         case 'Принята':
                             $status = setting('color.accepted');
                             $color = $status ? 'white' : 'black';
-                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{__('Принята')}</div>";
+                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_accepted}</div>";
                         case 'refused':
                             $status = setting('color.rejected');
                             $color = $status ? 'white' : 'black';
@@ -291,7 +292,7 @@ class ApplicationService
                 $status_distributed = __('Распределен');
                 $status_cancelled = __('Отменен');
                 $status_performed = __('Товар доставлен');
-                $status_overdue = ('просрочен');
+                $status_overdue = __('просрочен');
                 switch($query->status)
                 {
                     case 'new':
@@ -444,7 +445,7 @@ class ApplicationService
                 $status_distributed = __('Распределен');
                 $status_cancelled = __('Отменен');
                 $status_performed = __('Товар доставлен');
-                $status_overdue = ('просрочен');
+                $status_overdue = __('просрочен');
                 switch($query->status)
                 {
                     case 'new':
