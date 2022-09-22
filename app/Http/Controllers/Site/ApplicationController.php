@@ -206,7 +206,11 @@ class ApplicationController extends Controller
                 return $role_id;
             });
             $roles_need_sign = json_decode($docs->signers);
-            if (count(array_diff($roles_need_sign, $agreedUsers->toArray())) == 1 && $docs->is_more_than_limit == 1 && $docs->show_leader == null && $docs->status == 'in_process') {
+            if (in_array(7, $agreedUsers->toArray()) && $docs->status == 'in_process') {
+                $docs->status = Application::AGREED;
+                $docs->show_director = 2;
+                $docs->show_leader = 1;
+            }elseif (count(array_diff($roles_need_sign, $agreedUsers->toArray())) == 1 && $docs->is_more_than_limit == 1 && $docs->show_leader == null && $docs->status == 'in_process') {
                 $docs->show_director = 1;
                 $docs->status = Application::IN_PROCESS;
             }elseif(array_diff($roles_need_sign, $agreedUsers->toArray()) == null && $docs->is_more_than_limit != 1 && $docs->show_leader == null && $docs->status == 'in_process'){
