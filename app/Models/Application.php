@@ -52,6 +52,10 @@ class Application extends Model
     {
         return $this->belongsTo(User::class,'performer_leader_user_id','id');
     }
+    public function branch_leader()
+    {
+        return $this->belongsTo(User::class,'branch_leader_user_id','id');
+    }
 
     public function notifications()
     {

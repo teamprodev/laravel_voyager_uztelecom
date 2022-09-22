@@ -660,10 +660,7 @@
        </div>
        <div class="w-1/2 p-6">
            @if(isset($application->branch_leader_comment))
-               @php
-                   $comment = \App\Models\User::find($application->branch_leader_user_id)->name;
-               @endphp
-               {{Aire::textArea('bio', __('Комментарий руководства') . ": {$comment}")
+               {{Aire::textArea('bio', __('Комментарий руководства') . ": {$application->branch_leader->name}")
                ->value($application->branch_leader_comment)
                ->rows(3)
                ->cols(40)
