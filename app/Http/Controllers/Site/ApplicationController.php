@@ -63,7 +63,8 @@ class ApplicationController extends Controller
     }
     public function performer_status()
     {
-        return $this->service->performer_status();
+        $user = auth()->user();
+        return $this->service->performer_status($user);
     }
     /**
      * All Application
