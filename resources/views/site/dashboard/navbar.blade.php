@@ -45,18 +45,22 @@ $notifications = Notification::with('application:id,created_at')->has('applicati
             <span class="badge badge-warning navbar-badge red-notification bg-danger"
                   id="notification_count">{{$notifications->count() == 0 ? '' : $notifications->count()}}</span>
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" id="notifications">
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right notifications-menu" id="notifications">
             <span class="dropdown-header" id="notification_count_text">{{$notifications->count()}} Notifications</span>
-            @foreach($notifications as $notification)
-                <div class="dropdown-divider"></div>
-                <a href="{{route('site.applications.show', ['application' => $notification->application->id, 'view' => 1])}}"
-                   class="dropdown-item" target="new">
-                    <i class="fas fa-envelope mr-2"></i>{{$notification->message}}
-                    <span class="float-right text-muted text-sm">
-                        {{now()->diffInMinutes($notification->created_at)}} minutes
-                    </span>
-                </a>
-            @endforeach
+            <div class="py-1 overflow-y-auto max-h-96">
+                @foreach($notifications as $notification)
+                    <div class="dropdown-divider"></div>
+                    <a href="{{route('site.applications.show', ['application' => $notification->application->id, 'view' => 1])}}" class="dropdown-item">
+                        <p>
+                            <i class="fas fa-envelope mr-2"></i>
+                            {{$notification->message}}
+                            <span class="float-right text-muted text-sm">
+                                {{now()->diffInMinutes($notification->created_at)}} minutes
+                            </span>
+                        </p>
+                    </a>
+                @endforeach
+            </div>
         </div>
     </li>
     <li class="nav-item">
