@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\DB;
 use TCG\Voyager\Models\Role;
 use TCG\Voyager\Voyager;
 use Yajra\DataTables\DataTables;
+use Carbon\Carbon as Date;
+use Illuminate\Support\Facades\File;
 
 class ApplicationController extends Controller
 {
@@ -179,7 +181,11 @@ class ApplicationController extends Controller
         $application->$column = $delete;
         $application->save();
         $file = public_path()."/storage/uploads/{$request->file}";
-        unlink($file);
+        $date_now = Date::now();
+        $date_now = str_replace([' ',':', '/'], '-',$date_now);
+        $file_ext =  pathinfo($file, PATHINFO_EXTENSION);
+        $file_rename = str_replace($file_ext, '',$request->file);
+        File::move($file, public_path()."/storage/backups/{$file_rename}".$date_now.'.'.$file_ext);
         return redirect()->back();
     }
     public function change_status()
