@@ -187,7 +187,44 @@ class ApplicationController extends Controller
         $applications = Application::where('performer_role_id','!=',null)->where('status','in_process')->get();
         foreach ($applications as $application) {
             $application->status = Application::DISTRIBUTED;
+            $application->show_leader = 2;
             $application->save();
+        }
+
+        $signed_docs = Application::where('draft','!=',1)->get();
+        foreach ($signed_docs as $docs) {
+            $signedDocsId = SignedDocs::where('application_id',$docs->id)->get();
+
+            $agreedUsers = $signedDocsId->where('status', 1)->map(function ($doc) {
+                if (isset($doc->role_id)) {
+                    $role_id = $doc->role_id;
+                    return $role_id;
+                }
+            });
+            $canceledUsers = $signedDocsId->where('status', 0)->whereNotNull('status')->map(function ($doc) {
+                $role_id = $doc->role_id;
+                return $role_id;
+            });
+            $roles_need_sign = json_decode($docs->signers);
+            if (count(array_diff($roles_need_sign, $agreedUsers->toArray())) == 1 && $docs->is_more_than_limit == 1 && $docs->show_leader == null && $docs->status == 'in_process') {
+                $docs->show_director = 1;
+                $docs->status = Application::IN_PROCESS;
+            }elseif(array_diff($roles_need_sign, $agreedUsers->toArray()) == null && $docs->is_more_than_limit != 1 && $docs->show_leader == null && $docs->status == 'in_process'){
+                $docs->show_leader = 1;
+                $docs->status = Application::IN_PROCESS;
+            }elseif(array_diff($roles_need_sign, $agreedUsers->toArray()) != null && $docs->show_leader == 1 && $docs->status == 'in_process'){
+                $docs->show_leader = null;
+                $docs->performer_role_id = null;
+                $docs->performer_received_date = null;
+                $docs->performer_comment = null;
+                $docs->performer_comment_date = null;
+            }elseif (in_array(7, $canceledUsers->toArray()) && $docs->show_leader == null) {
+                $docs->status = Application::REJECTED;
+            } elseif ($canceledUsers->toArray() != null && $docs->show_leader == null) {
+                $docs->status = Application::REFUSED;
+            }
+            $docs->save();
+            return dd(true);
         }
     }
 }

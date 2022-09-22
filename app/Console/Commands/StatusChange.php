@@ -41,7 +41,6 @@ class StatusChange extends Command
      */
     public function handle()
     {
-        $this->service->change_status();
-        return dd(true);
+        return $this->service->change_status();
     }
 }
