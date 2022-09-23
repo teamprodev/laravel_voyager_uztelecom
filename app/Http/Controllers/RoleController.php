@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Application;
 use App\Models\Branch;
 use App\Models\Roles;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use TCG\Voyager\Http\Controllers\VoyagerRoleController;
 use TCG\Voyager\Models\Role;
@@ -155,7 +153,7 @@ class RoleController extends VoyagerRoleController
                 $model->signers ? in_array($role->id,json_decode($model->signers)) ? : $model->signers = $json: $model->signers = $json;
                 $model->save();
             }elseif(in_array(166,$request->permissions)||in_array(167,$request->permissions)){
-                if(isset($model->signers) && $model->signers != null)
+                if(isset($model->signers) && $model->signers !== null)
                 {
                     if(in_array($role->id,json_decode($model->signers)))
                     {
@@ -228,7 +226,7 @@ class RoleController extends VoyagerRoleController
             $model = Branch::find($branch);
             if(in_array(165,$request->permissions)||in_array(168,$request->permissions))
             {
-                if(isset($model->signers) && $model->add_signers != null)
+                if(isset($model->signers) && $model->add_signers !== null)
                 {
                     if(in_array($role->id,json_decode($model->add_signers)))
                     {

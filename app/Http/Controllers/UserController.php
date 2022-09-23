@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
-use App\Models\Roles;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use TCG\Voyager\Http\Controllers\VoyagerUserController;
 
