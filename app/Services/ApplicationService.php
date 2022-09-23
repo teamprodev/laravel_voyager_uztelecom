@@ -153,6 +153,14 @@ class ApplicationService
                             $status = setting('color.overdue');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_overdue}</div>";
+                        case ApplicationData::Status_Order_Delivered:
+                            $status = setting('color.delivered');
+                            $color = $status ? 'white' : 'black';
+                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>товар доставлен</div>";
+                        case ApplicationData::Status_Order_Arrived:
+                            $status = setting('color.arrived');
+                            $color = $status ? 'white' : 'black';
+                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>товар прибыл</div>";
                         case $query->performer_status !== null:
                             $a = StatusExtented::find($query->performer_status)->first();
                             return $this->status($a->name);

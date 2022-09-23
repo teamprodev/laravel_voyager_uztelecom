@@ -30,6 +30,7 @@ class ApplicationData
     public const Status_Uztelecom_Canceled = 'uztelecom_canceled';
     public const Status_Application_Uztelecom = 'application_uztelecom';
     public const Status_Order_Delivered = 'order_delivered';
+    public const Status_Order_Arrived = 'order_arrived';
     public const Status_Contract_Concluded = 'contract_concluded';
     public const Status_Draft = 'draft';
 
