@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Services\ApplicationData;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,7 @@ class CloneMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->application->user_id == auth()->user()->id && $request->application->status == 'cancelled' || $request->application->user_id == auth()->user()->id && $request->application->status == 'refused'||$request->application->user_id == auth()->user()->id && $request->application->status == 'rejected')
+        if(($request->application->user_id === auth()->user()->id && $request->application->status === ApplicationData::Status_Canceled ) || ($request->application->user_id === auth()->user()->id && $request->application->status === ApplicationData::Status_Refused) || ($request->application->user_id === auth()->user()->id && $request->application->status === ApplicationData::Status_Rejected))
         {
             return $next($request);
         }

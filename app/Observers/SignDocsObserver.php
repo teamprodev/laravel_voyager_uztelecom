@@ -3,10 +3,8 @@
 namespace App\Observers;
 
 use App\Models\Application;
-use App\Models\Roles;
 use App\Models\SignedDocs;
-use App\Models\User;
-use Illuminate\Support\Facades\Artisan;
+use App\Services\ApplicationData;
 
 class SignDocsObserver
 {
@@ -52,21 +50,21 @@ class SignDocsObserver
         $roles_need_sign = json_decode($signedDocs->application->signers);
 
         if (in_array(7, $agreedUsers->toArray())) {
-            $signedDocs->application->status = Application::AGREED;
+            $signedDocs->application->status = ApplicationData::Status_Agreed;
             $signedDocs->application->show_director = 2;
             $signedDocs->application->show_leader = 1;
         } elseif (in_array(7, $canceledUsers->toArray())) {
-            $signedDocs->application->status = Application::REJECTED;
+            $signedDocs->application->status = ApplicationData::Status_Rejected;
         } elseif ($canceledUsers->toArray() != null) {
-            $signedDocs->application->status = Application::REFUSED;
+            $signedDocs->application->status = ApplicationData::Status_Refused;
         }elseif (count(array_diff($roles_need_sign, $agreedUsers->toArray())) == 1 && $signedDocs->application->is_more_than_limit == 1) {
             $signedDocs->application->show_director = 1;
-            $signedDocs->application->status = Application::IN_PROCESS;
+            $signedDocs->application->status = ApplicationData::Status_In_Process;
         }elseif(array_diff($roles_need_sign, $agreedUsers->toArray()) == null && $signedDocs->application->is_more_than_limit != 1){
             $signedDocs->application->show_leader = 1;
-            $signedDocs->application->status = Application::IN_PROCESS;
+            $signedDocs->application->status = ApplicationData::Status_In_Process;
         }else {
-            $signedDocs->application->status = Application::IN_PROCESS;
+            $signedDocs->application->status = ApplicationData::Status_In_Process;
         }
         $signedDocs->application->update();
     }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\ApplicationData;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -16,16 +17,7 @@ class Application extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
-    const NEW = 'new';
-    const DRAFT = 'draft';
-    const IN_PROCESS = 'in_process';
-    const CANCELED = 'canceled';
-    const ACCEPTED = 'accepted';
-    const REFUSED = 'refused';
-    const AGREED = 'agreed';
-    const REJECTED = 'rejected';
-    const DISTRIBUTED = 'distributed';
-    const PERFORMED = 'performed';
+
 
     protected $table = "applications";
     protected $guarded = [];
@@ -99,7 +91,7 @@ class Application extends Model
                 break;
             case 5:
                 {
-                    $result = $query->where('status', Application::ACCEPTED);
+                    $result = $query->where('status', ApplicationData::Status_Accepted);
                 }
                 break;
             //HEAD OF DEPARTMENT of user who created APPLICATION
@@ -120,20 +112,7 @@ class Application extends Model
         return $result;
 
     }
-//    public function getStatusAttribute(){
-//        switch (intval($this->attributes['status'])){
-//            case 0: {
-//                $status = "NEW";
-//            } break;
-//            case 1: {
-//                $status = "STEP 2";
-//            } break;
-//            default: {
-//                $status = "UNDEFINED";
-//            } break;
-//        }
-//        return $status;
-//    }
+
     public function country()
     {
         return $this->belongsTo(Country::class, 'country_produced_id', 'country_alpha3_code');

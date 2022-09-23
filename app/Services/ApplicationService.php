@@ -750,7 +750,7 @@ class ApplicationService
                     SignedDocs::where('application_id', $application->id)->where('role_id', $delete)->delete();
                 }
             }
-            $application->status = Application::NEW;
+            $application->status = ApplicationData::Status_New;
             $message = "{$application->id} " . "{$application->name} " . setting('admin.application_created');
             $this->sendNotifications($array, $application, $message);
         }elseif ($application->signers == null) {
@@ -770,7 +770,7 @@ class ApplicationService
         }
         if (isset($data['draft'])) {
             if ($data['draft'] == 1)
-                $data['status'] = Application::DRAFT;
+                $data['status'] = ApplicationData::Status_Draft;
         }
         if (isset($data['performer_status'])) {
             $application->performer_user_id = $user->id;
