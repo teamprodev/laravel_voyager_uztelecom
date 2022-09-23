@@ -31,7 +31,6 @@ class ApplicationData
     public const Status_Application_Uztelecom = 'application_uztelecom';
     public const Status_Order_Delivered = 'order_delivered';
     public const Status_Contract_Concluded = 'contract_concluded';
-    public const Status_Extended = 'extended';
     public const Status_Draft = 'draft';
 
 }
