@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\PerformerStatus;
 use App\Console\Commands\Sardor;
 use App\Console\Commands\StatusChange;
 use Illuminate\Console\Scheduling\Schedule;
@@ -12,6 +13,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
       Sardor::class,
       StatusChange::class,
+      PerformerStatus::class,
     ];
     /**
      * Define the application's command schedule.

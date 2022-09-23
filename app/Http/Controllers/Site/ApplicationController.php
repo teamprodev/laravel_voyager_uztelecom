@@ -29,8 +29,6 @@ class ApplicationController extends Controller
     }
     public function show_status($status)
     {
-        if($status === ApplicationData::Status_Order_Delivered)
-            $status = ApplicationData::Status_Accepted;
         $voyager = Setting::where('key','admin.show_status')->first();
         $voyager->value = $status;
         $voyager->save();
@@ -41,7 +39,7 @@ class ApplicationController extends Controller
     */
     public function performer_status_get(Request $req)
     {
-        $status = StatusExtented::pluck('name','name')->toArray();
+        $status = StatusExtented::pluck('name','id')->toArray();
         return view('site.applications.performer_status',compact('status'));
     }
     public function performer_status_post(Request $req)
@@ -116,7 +114,8 @@ class ApplicationController extends Controller
     */
     public function edit(Application $application)
     {
-        if((($application->performer_role_id !== null) && ($application->performer_role_id !== auth()->user()->role_id)) || (($application->show_leader === 2) && ($application->performer_role_id !== auth()->user()->role_id)))
+        $user = auth()->user();
+        if(((($application->performer_role_id !== null) && ($application->performer_role_id !== auth()->user()->role_id)) && $user->hasPermission('Warehouse')) || ((($application->show_leader === 2) && ($application->performer_role_id !== auth()->user()->role_id)) && $user->hasPermission('Warehouse')))
         {
             abort(405,__("Вам нельзя изменить заявку,ибо заявка уже подписана!"));
         }

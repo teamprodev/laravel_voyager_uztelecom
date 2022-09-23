@@ -36,10 +36,6 @@
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>{{ __('На рассмотрении') }}</p>
                         </a>
-                        <a href="{{route('site.applications.show_status', 'accepted')}}" id="demo" class="collapse">
-                            <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>{{ __('Принята') }}</p>
-                        </a>
                         <a href="{{route('site.applications.show_status', 'refused')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>{{ __('Отказана') }}</p>

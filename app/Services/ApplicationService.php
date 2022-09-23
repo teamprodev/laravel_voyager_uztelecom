@@ -129,18 +129,16 @@ class ApplicationService
                     /*
                      *  Voyager admin paneldan status ranglarini olish va chiqarish
                      */
-                    $query = $query->status;
+                    $status = $query->status;
                     $status_new = __('Новая');
                     $status_in_process = __('На рассмотрении');
                     $status_refused = __('Отказана');
-                    $status_accepted = __('Принята');
                     $status_agreed = __('Согласована');
                     $status_rejected = __('Отклонена');
                     $status_distributed = __('Распределен');
                     $status_cancelled = __('Отменен');
-                    $status_performed = __('Товар доставлен');
                     $status_overdue = __('просрочен');
-                    switch($query)
+                    switch($status)
                     {
                         case ApplicationData::Status_New:
                             $status = setting('color.new');
@@ -155,10 +153,9 @@ class ApplicationService
                             $status = setting('color.overdue');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_overdue}</div>";
-                        case ApplicationData::Status_Accepted:
-                            $status = setting('color.accepted');
-                            $color = $status ? 'white' : 'black';
-                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_accepted}</div>";
+                        case $query->performer_status !== null:
+                            $a = StatusExtented::find($query->performer_status)->first();
+                            return $this->status($a->name);
                         case ApplicationData::Status_Refused:
                             $status = setting('color.rejected');
                             $color = $status ? 'white' : 'black';
@@ -179,38 +176,6 @@ class ApplicationService
                             $status = setting('color.rejected');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_cancelled}</div>";
-                        case ApplicationData::Status_Partially_Completed:
-                            $status = setting('color.partially');
-                            $color = $status ? 'white' : 'black';
-                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Выполнено частично</div>";
-                        case ApplicationData::Status_Completed_Full:
-                            $status = setting('color.total_volume');
-                            $color = $status ? 'white' : 'black';
-                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Выполнено в полном объёме</div>";
-                        case ApplicationData::Status_Management_Canceled:
-                            $status = setting('color.nulled_by_management');
-                            $color = $status ? 'white' : 'black';
-                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Заявка аннулирована по заданию руководства</div>";
-                        case ApplicationData::Status_Uztelecom_Canceled:
-                            $status = setting('color.nulled_by_management');
-                            $color = $status ? 'white' : 'black';
-                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Договор аннулирован по инициативе Узбектелеком</div>";
-                        case ApplicationData::Status_Application_Uztelecom:
-                            $status = setting('color.nulled_by_management');
-                            $color = $status ? 'white' : 'black';
-                            return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>заявка передана в Узтелеком</div>";
-                        case ApplicationData::Status_Order_Delivered:
-                            $status = setting('color.delivered');
-                            $color = $status ? 'white' : 'black';
-                            return "<div class='row'>
-                            <div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_performed}</div>
-                            </div>";
-                        case ApplicationData::Status_Contract_Concluded:
-                            $status = setting('color.concluded');
-                            $color = $status ? 'white' : 'black';
-                            return "<div class='row'>
-                            <div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>договор заключен</div>
-                            </div>";
                         default:
                             return $query;
                     }
@@ -268,8 +233,18 @@ class ApplicationService
      */
     public function status_table($user)
     {
+        if ($user->hasPermission('Purchasing_Management_Center')) {
+                $a = 'branch_initiator_id';
+                $b = [9, 13];
+            } else {
+                $a = 'branch_initiator_id';
+                $b = [$user->branch_id];
+
+                $c = 'department_initiator_id';
+                $d = [$user->department_id];
+            }
         $status = setting('admin.show_status');
-        $data = Application::where('signers', 'like', "%{$user->role_id}%")->where('status', $status)->where('name', '!=', null)->OrWhere('performer_role_id',$user->role_id)->where('status', $status)->where('name', '!=', null)->get();
+        $data = Application::whereIn($a, $b)->where('status', $status)->where('name', '!=', null)->get();
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('user_id', function ($docs) {
@@ -282,17 +257,19 @@ class ApplicationService
                 return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
             })
             ->editColumn('status', function ($query) {
+                /*
+                 *  Voyager admin paneldan status ranglarini olish va chiqarish
+                 */
+                $status = $query->status;
                 $status_new = __('Новая');
                 $status_in_process = __('На рассмотрении');
-                $status_accepted = __('Принята');
                 $status_refused = __('Отказана');
                 $status_agreed = __('Согласована');
                 $status_rejected = __('Отклонена');
                 $status_distributed = __('Распределен');
                 $status_cancelled = __('Отменен');
-                $status_performed = __('Товар доставлен');
                 $status_overdue = __('просрочен');
-                switch($query->status)
+                switch($status)
                 {
                     case ApplicationData::Status_New:
                         $status = setting('color.new');
@@ -307,10 +284,9 @@ class ApplicationService
                         $status = setting('color.overdue');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_overdue}</div>";
-                    case ApplicationData::Status_Accepted:
-                        $status = setting('color.accepted');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_accepted}</div>";
+                    case $query->performer_status !== null:
+                        $a = StatusExtented::find($query->performer_status)->first();
+                        return $this->status($a->name);
                     case ApplicationData::Status_Refused:
                         $status = setting('color.rejected');
                         $color = $status ? 'white' : 'black';
@@ -331,34 +307,8 @@ class ApplicationService
                         $status = setting('color.rejected');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_cancelled}</div>";
-                    case ApplicationData::Status_Partially_Completed:
-                        $status = setting('color.partially');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Выполнено частично</div>";
-                    case ApplicationData::Status_Completed_Full:
-                        $status = setting('color.total_volume');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Выполнено в полном объёме</div>";
-                    case ApplicationData::Status_Management_Canceled:
-                        $status = setting('color.nulled_by_management');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Заявка аннулирована по заданию руководства</div>";
-                    case ApplicationData::Status_Uztelecom_Canceled:
-                        $status = setting('color.nulled_by_management');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Договор аннулирован по инициативе Узбектелеком</div>";
-                    case ApplicationData::Status_Application_Uztelecom:
-                        $status = setting('color.nulled_by_management');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>заявка передана в Узтелеком</div>";
-                    case ApplicationData::Status_Order_Delivered:
-                        $status = setting('color.delivered');
-                        $color = $status ? 'white' : 'black';
-                        return "<div class='row'>
-                            <div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_performed}</div>
-                            </div>";
                     default:
-                        return $query->status;
+                        return $query;
                 }
             })
             ->addIndexColumn()
@@ -419,7 +369,7 @@ class ApplicationService
             $b = [$user->branch_id];
         }
         $status = Cache::get('performer_status_get');
-        $data = Application::WhereIn('branch_initiator_id',[$user->branch_id])->where('status', $status)->where('name', '!=', null)->OrWhereIn($a,$b)->where('status', $status)->where('name', '!=', null)->get();
+        $data = Application::WhereIn('branch_initiator_id',[$user->branch_id])->where('status_extended_id', $status)->where('name', '!=', null)->OrWhereIn($a,$b)->where('status', $status)->where('name', '!=', null)->get();
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('user_id', function ($docs) {
@@ -435,17 +385,19 @@ class ApplicationService
                 return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
             })
             ->editColumn('status', function ($query) {
+                /*
+                 *  Voyager admin paneldan status ranglarini olish va chiqarish
+                 */
+                $status = $query->status;
                 $status_new = __('Новая');
                 $status_in_process = __('На рассмотрении');
-                $status_accepted = __('Принята');
                 $status_refused = __('Отказана');
                 $status_agreed = __('Согласована');
                 $status_rejected = __('Отклонена');
                 $status_distributed = __('Распределен');
                 $status_cancelled = __('Отменен');
-                $status_performed = __('Товар доставлен');
                 $status_overdue = __('просрочен');
-                switch($query->status)
+                switch($status)
                 {
                     case ApplicationData::Status_New:
                         $status = setting('color.new');
@@ -460,10 +412,9 @@ class ApplicationService
                         $status = setting('color.overdue');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_overdue}</div>";
-                    case ApplicationData::Status_Accepted:
-                        $status = setting('color.accepted');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_accepted}</div>";
+                    case $query->performer_status !== null:
+                        $a = StatusExtented::find($query->performer_status)->first();
+                        return $this->status($a->name);
                     case ApplicationData::Status_Refused:
                         $status = setting('color.rejected');
                         $color = $status ? 'white' : 'black';
@@ -484,34 +435,8 @@ class ApplicationService
                         $status = setting('color.rejected');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_cancelled}</div>";
-                    case ApplicationData::Status_Partially_Completed:
-                        $status = setting('color.partially');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Выполнено частично</div>";
-                    case ApplicationData::Status_Completed_Full:
-                        $status = setting('color.total_volume');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Выполнено в полном объёме</div>";
-                    case ApplicationData::Status_Management_Canceled:
-                        $status = setting('color.nulled_by_management');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Заявка аннулирована по заданию руководства</div>";
-                    case ApplicationData::Status_Uztelecom_Canceled:
-                        $status = setting('color.nulled_by_management');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Договор аннулирован по инициативе Узбектелеком</div>";
-                    case ApplicationData::Status_Application_Uztelecom:
-                        $status = setting('color.nulled_by_management');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>заявка передана в Узтелеком</div>";
-                    case ApplicationData::Status_Order_Delivered:
-                        $status = setting('color.delivered');
-                        $color = $status ? 'white' : 'black';
-                        return "<div class='row'>
-                            <div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_performed}</div>
-                            </div>";
                     default:
-                        return $query->status;
+                        return $query;
                 }
             })
             ->addIndexColumn()
@@ -762,7 +687,7 @@ class ApplicationService
 
     public function edit($application)
     {
-        $status_extented = StatusExtented::all()->pluck('name', 'name')->toArray();
+        $status_extented = StatusExtented::all()->pluck('name', 'id')->toArray();
         if (auth()->user()->id != $application->user_id && !auth()->user()->hasPermission('Warehouse') && !auth()->user()->hasPermission('Company_Performer') && !auth()->user()->hasPermission('Branch_Performer')) {
             return redirect()->route('site.applications.index');
         }
@@ -928,6 +853,47 @@ class ApplicationService
         $applications = Application::all();
         foreach ($applications as $application) {
             $application = Application::where('performer_status', '!=', null)->update(['status'=> DB::raw("performer_status") ]);
+        }
+    }
+
+    public function status(string $status)
+    {
+        $status_accepted = __('Принята');
+
+        $status_performed = __('Товар доставлен');
+
+        switch($status)
+        {
+            case 'Принята':
+                $status = setting('color.accepted');
+                $color = $status ? 'white' : 'black';
+                return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_accepted}</div>";
+            case 'Выполнено частично':
+                $status = setting('color.partially');
+                $color = $status ? 'white' : 'black';
+                return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Выполнено частично</div>";
+            case 'Выполнено в полном объёме':
+                $status = setting('color.total_volume');
+                $color = $status ? 'white' : 'black';
+                return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Выполнено в полном объёме</div>";
+            case 'Заявка аннулирована по заданию руководства':
+                $status = setting('color.nulled_by_management');
+                $color = $status ? 'white' : 'black';
+                return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Заявка аннулирована по заданию руководства</div>";
+            case 'Договор аннулирован по инициативе Узбектелеком':
+                $status = setting('color.nulled_by_management');
+                $color = $status ? 'white' : 'black';
+                return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Договор аннулирован по инициативе Узбектелеком</div>";
+            case 'заявка передана в Узтелеком':
+                $status = setting('color.nulled_by_management');
+                $color = $status ? 'white' : 'black';
+                return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>заявка передана в Узтелеком</div>";
+            case 'товар доставлен':
+                $status = setting('color.delivered');
+                $color = $status ? 'white' : 'black';
+                return "<div class='row'>
+                            <div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_performed}</div>
+                            </div>";
         }
     }
 

@@ -12,7 +12,7 @@
             ( {{ $application->user->role_id ? $application->user->role->display_name : '' }} )</h5>            <h5>
             <strong>{{ __('Филиал автора:') }}</strong> {{ $application->user->branch_id ? $branch_name->name : 'Он(а) не выбрал(а) филиал' }}
         </h5>
-        <h5><strong>Должность :</strong> {{ auth()->user()->position_id ? auth()->user()->position->name:"Нет" }}</h5>
+        <h5><strong>Должность :</strong> {{ $user->position_id ? $user->position->name:"Нет" }}</h5>
         <h5><strong>{{ __('Номер заявки') }} : </strong> {{$application->number}} </h5>
         <h5><strong>Date : </strong>
             @if($application->date!==null)
@@ -498,7 +498,7 @@
             @if(!isset($application->performer_user_id))
                 <div class="pb-5">
 
-                    <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
+                    <input type="text" class="hidden" value="{{$user->id}}" name="branch_leader_user_id">
                     {{Aire::textArea('bio', __('Комментарий руководства'))
                             ->name('branch_leader_comment')
                             ->value($application->branch_leader_comment)
@@ -520,7 +520,7 @@
         @elseif($perms['BranchLeader'])
             @if(!isset($application->performer_user_id))
                 <div class="pb-5">
-                    <input type="text" class="hidden" value="{{auth()->user()->id}}" name="branch_leader_user_id">
+                    <input type="text" class="hidden" value="{{$user->id}}" name="branch_leader_user_id">
                     {{Aire::textArea('bio', __('Комментарий руководства'))
                             ->name('branch_leader_comment')
                             ->value($application->branch_leader_comment)
@@ -548,7 +548,7 @@
              }}
             <input class="hidden"
                    name="performer_leader_user_id"
-                   value="{{auth()->user()->id}}"
+                   value="{{$user->id}}"
                    type="text">
             <div class="mt-4">
                 <button type="submit" class="btn btn-success col-md-2">{{ __('Отправить') }}</button>
@@ -562,7 +562,7 @@
              }}
             <input class="hidden"
                    name="performer_user_id"
-                   value="{{auth()->user()->id}}"
+                   value="{{$user->id}}"
                    type="text">
             <div class="mt-4">
                 <button type="submit" class="btn btn-success col-md-2">{{ __('Отправить') }}</button>
@@ -614,8 +614,8 @@
                 <input value="applications" id="table_name" name="table_name" class="hidden" type="text">
                 <input value="{{$application->id}}" id="application_id" name="application_id" class="hidden"
                        type="text">
-                <input value="{{auth()->user()->id}}" name="user_id" class="hidden" type="text">
-                <input value="{{auth()->user()->role_id}}" name="role_id" class="hidden" type="text">
+                <input value="{{$user->id}}" name="user_id" class="hidden" type="text">
+                <input value="{{$user->role_id}}" name="role_id" class="hidden" type="text">
                 <div class="row ml-4 pb-4">
                     <button onclick="status1()" type="submit" class="btn btn-success col-md-2">
                         {{ __('Принять') }}
