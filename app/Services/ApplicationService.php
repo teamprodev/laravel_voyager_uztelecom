@@ -22,7 +22,6 @@ use App\Models\Purchase;
 use App\Models\Roles;
 use App\Models\Subject;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
 use Yajra\DataTables\DataTables;
 
 class ApplicationService
@@ -69,14 +68,14 @@ class ApplicationService
                     $query = Application::where('draft', '!=', 1)->whereIn($a, $b)->orWhere('signers', 'like', "%{$user->role_id}%")->where('draft', '!=', 1)->orWhere('performer_role_id', $user->role->id)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
                     break;
                 case $user->hasPermission('Warehouse') :
-                    $status_0 = 'Принята';
+                    $status_0 = ApplicationData::Status_Accepted;
                     $status_1 = 'товар';
                     $query = Application::where('draft', '!=', 1)->whereIn($a, $b)->where('status', 'like', "%{$status_0}%")->OrwhereIn($a, $b)->where('status', 'like', "%{$status_1}%")->orWhere('user_id', auth()->user()->id)->get();
                     break;
                 case $user->hasPermission('Company_Leader') && $user->hasPermission('Branch_Leader') :
                     $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
                     break;
-                case $user->role_id == 7 :
+                case $user->role_id === 7 :
                     $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->get();
                     break;
                 case $user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer') || $user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'):
@@ -91,7 +90,7 @@ class ApplicationService
                     $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->where('status', 'agreed')->orWhere('status', 'distributed')->whereIn($a, $b)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
                     break;
                 case $user->hasPermission('Branch_Leader') :
-                    $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->where('is_more_than_limit', 0)->where('show_leader', 1)->orWhere('is_more_than_limit', 0)->whereIn($a, $b)->where('status', 'new')->orWhere('is_more_than_limit', 0)->where('draft', '!=', 1)->whereIn($a, $b)->where('status', 'distributed')->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
+                    $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->where('is_more_than_limit', 0)->where('show_leader', 1)->orWhere('is_more_than_limit', 0)->whereIn($a, $b)->where('status', ApplicationData::Status_New)->orWhere('is_more_than_limit', 0)->where('draft', '!=', 1)->whereIn($a, $b)->where('status', ApplicationData::Status_Distributed)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
                     break;
                 case $user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer') :
                     $query = Application::where('performer_role_id', auth()->user()->role_id)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
@@ -143,70 +142,70 @@ class ApplicationService
                     $status_overdue = __('просрочен');
                     switch($query)
                     {
-                        case 'new':
+                        case ApplicationData::Status_New:
                             $status = setting('color.new');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_new}</div>";
                             break;
-                        case 'in_process':
+                        case ApplicationData::Status_In_Process:
                             $status = setting('color.in_process');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_in_process}</div>";
-                        case 'overdue':
+                        case ApplicationData::Status_Overdue:
                             $status = setting('color.overdue');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_overdue}</div>";
-                        case 'Принята':
+                        case ApplicationData::Status_Accepted:
                             $status = setting('color.accepted');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_accepted}</div>";
-                        case 'refused':
+                        case ApplicationData::Status_Refused:
                             $status = setting('color.rejected');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_refused}</div>";
-                        case 'agreed':
+                        case ApplicationData::Status_Agreed:
                             $status = setting('color.agreed');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_agreed}</div>";
-                        case 'rejected':
+                        case ApplicationData::Status_Rejected:
                             $status = setting('color.rejected');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_rejected}</div>";
-                        case 'distributed':
+                        case ApplicationData::Status_Distributed:
                             $status = setting('color.distributed');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_distributed}</div>";
-                        case 'canceled':
+                        case ApplicationData::Status_Canceled:
                             $status = setting('color.rejected');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_cancelled}</div>";
-                        case 'Выполнено частично':
+                        case ApplicationData::Status_Partially_Completed:
                             $status = setting('color.partially');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Выполнено частично</div>";
-                        case 'Выполнено в полном объёме':
+                        case ApplicationData::Status_Completed_Full:
                             $status = setting('color.total_volume');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Выполнено в полном объёме</div>";
-                        case 'Заявка аннулирована по заданию руководства':
+                        case ApplicationData::Status_Management_Canceled:
                             $status = setting('color.nulled_by_management');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Заявка аннулирована по заданию руководства</div>";
-                        case 'Договор аннулирован по инициативе Узбектелеком':
+                        case ApplicationData::Status_Uztelecom_Canceled:
                             $status = setting('color.nulled_by_management');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Договор аннулирован по инициативе Узбектелеком</div>";
-                        case 'заявка передана в Узтелеком':
+                        case ApplicationData::Status_Application_Uztelecom:
                             $status = setting('color.nulled_by_management');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>заявка передана в Узтелеком</div>";
-                        case 'товар доставлен':
+                        case ApplicationData::Status_Order_Delivered:
                             $status = setting('color.delivered');
                             $color = $status ? 'white' : 'black';
                             return "<div class='row'>
                             <div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_performed}</div>
                             </div>";
-                        case 'договор заключен':
+                        case ApplicationData::Status_Contract_Concluded:
                             $status = setting('color.concluded');
                             $color = $status ? 'white' : 'black';
                             return "<div class='row'>
@@ -238,7 +237,7 @@ class ApplicationService
                     $bgcolor = setting('color.show');
                     $color = $bgcolor ? 'white' : 'black';
                     $show = "<a href='{$show_e}' class='m-1 col show btn btn-outline-danger showbtn'>$app_show</a>";
-                    if ($row->user_id == auth()->user()->id && $row->show_director != 2 && $row->show_leader != 2 && $row->status != 'refused') {
+                    if ($row->user_id === auth()->user()->id && $row->show_director !== 2 && $row->show_leader !== 2 && $row->status !== ApplicationData::Status_Refused) {
                         $bgcolor = setting('color.delete');
                         $color = $bgcolor ? 'white' : 'black';
                         $destroy = "<a href='{$destroy_e}' class='m-1 col show btn btn-outline-danger deletebtn' onclick='return confirm(`$app_delete_confirm`)'>$app_delete</a>";

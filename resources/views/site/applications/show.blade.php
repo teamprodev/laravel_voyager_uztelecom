@@ -8,14 +8,14 @@
     <div class="px-6 pb-0 pt-6">
         <h5><strong>ID : </strong> {{$application->id}}</h5>
         <h5><strong>{{ __('Автор заявки:') }}</strong> <a
-                    href="{{$application->user->id == auth()->id() ? route('site.profile.index'):route('site.profile.other',$application->user->id)}}">{{$application->user->id == auth()->id() ? 'Вы':$application->user->name}}</a>
+                    href="{{$application->user->id === auth()->id() ? route('site.profile.index'):route('site.profile.other',$application->user->id)}}">{{$application->user->id === auth()->id() ? 'Вы':$application->user->name}}</a>
             ( {{ $application->user->role_id ? $application->user->role->display_name : '' }} )</h5>            <h5>
             <strong>{{ __('Филиал автора:') }}</strong> {{ $application->user->branch_id ? $branch_name->name : 'Он(а) не выбрал(а) филиал' }}
         </h5>
         <h5><strong>Должность :</strong> {{ auth()->user()->position_id ? auth()->user()->position->name:"Нет" }}</h5>
         <h5><strong>{{ __('Номер заявки') }} : </strong> {{$application->number}} </h5>
         <h5><strong>Date : </strong>
-            @if($application->date!=null)
+            @if($application->date!==null)
                 {{ Carbon\Carbon::createFromFormat('Y-m-d', $application->date)->Format('d.m.Y') }}{{ __('г') }}
             @endif
         </h5> <br>
@@ -27,55 +27,55 @@
                 @case(ApplicationData::Status_In_Process)
                     <span>{{__('На рассмотрении')}}</span>
                     @break
-                @case('overdue')
+                @case(ApplicationData::Status_Overdue)
                     <span>{{__('просрочен')}}</span>
                     @break
-                @case('Принята')
+                @case(ApplicationData::Status_Accepted)
                     <span>{{__('Принята')}}</span>
                     @break
-                @case('refused')
+                @case(ApplicationData::Status_Refused)
                     <span>{{__('Отказана')}}</span>
                     @break
-                @case('agreed')
+                @case(ApplicationData::Status_Agreed)
                     <span>{{__('Согласована')}}</span>
                     @break
-                @case('rejected')
+                @case(ApplicationData::Status_Rejected)
                     <span>{{__('Отклонена')}}</span>
                     @break
-                @case('distributed')
+                @case(ApplicationData::Status_Distributed)
                     <span>{{__('Распределен')}}</span>
                     @break
-                @case('canceled')
+                @case(ApplicationData::Status_Canceled)
                     <span>{{__('Отменен')}}</span>
                     @break
-                @case('Выполнено частично')
+                @case(ApplicationData::Status_Partially_Completed)
                     <span>{{__('Выполнено частично')}}</span>
                     @break
-                @case('Выполнено в полном объёме')
+                @case(ApplicationData::Status_Completed_Full)
                     <span>{{__('Выполнено в полном объёме')}}</span>
                     @break
-                @case('Заявка аннулирована по заданию руководства')
+                @case(ApplicationData::Status_Management_Canceled)
                     <span>{{__('Заявка аннулирована по заданию руководства')}}</span>
                     @break
-                @case('Договор аннулирован по инициативе Узбектелеком')
+                @case(ApplicationData::Status_Uztelecom_Canceled)
                     <span>{{__('Договор аннулирован по инициативе Узбектелеком')}}</span>
                     @break
-                @case('заявка передана в Узтелеком')
+                @case(ApplicationData::Status_Application_Uztelecom)
                     <span>{{__('заявка передана в Узтелеком')}}</span>
                     @break
-                @case('товар доставлен')
+                @case(ApplicationData::Status_Order_Delivered)
                     <span>{{__('Товар доставлен')}}</span>
                     @break
-                @case('договор заключен')
+                @case(ApplicationData::Status_Contract_Concluded)
                     <span>{{__('договор заключен')}}</span>
                     @break
-                @case('draft')
+                @case(ApplicationData::Status_Draft)
                     <span>{{__('draft')}}</span>
                     @break
             @endswitch
         </h5>
         <h5><strong>{{__('Визирование заявки через:') }}</strong>
-            @if($application->is_more_than_limit == 1)
+            @if($application->is_more_than_limit === 1)
                 {{ __('Компанию') }}
             @else
                 {{ __('Филиал') }}
@@ -325,7 +325,7 @@
                 </div>
                 <div class="flex flex-col">
                     <div class="flex-direction: column">
-                        @if($file_basis != 'null' && $file_basis != null)
+                        @if($file_basis !== 'null' && $file_basis !== null)
                             <div class="my-5">
                                 <h5 class="text-left">{{ __('Основание') }}</h5>
                                 <form action="/delete_file/{{$application->id}}/file_basis" method="post">
@@ -342,14 +342,14 @@
                                             </button>
                                             <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
                                         @endif
-                                        @if($application->user_id == $user->id)
+                                        @if($application->user_id === $user->id)
                                             <button class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
                                         @endif
                                     @endforeach
                                 </form>
                             </div>
                         @endif
-                        @if($file_tech_spec != 'null' && $file_tech_spec != null)
+                        @if($file_tech_spec !== 'null' && $file_tech_spec !== null)
                             <div class="mb-5">
                                 <h5 class="text-left">{{ __('Техническое задание') }}</h5>
                                 <form action="/delete_file/{{$application->id}}/file_tech_spec" method="post">
@@ -366,14 +366,14 @@
                                             </button>
                                             <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
                                         @endif
-                                        @if($application->user_id == $user->id)
+                                        @if($application->user_id === $user->id)
                                             <button class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
                                         @endif
                                     @endforeach
                                 </form>
                             </div>
                         @endif
-                        @if($other_files != 'null' && $other_files != null)
+                        @if($other_files !== 'null' && $other_files !== null)
                             <div class="mb-5" style="width: 80%">
                                 <h5 class="text-left">{{ __('Другие документы необходимые для запуска закупочной процедуры') }}</h5>
                                 <form action="/delete_file/{{$application->id}}/other_files" method="post">
@@ -390,7 +390,7 @@
                                             </button>
                                             <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
                                         @endif
-                                        @if($application->user_id == $user->id)
+                                        @if($application->user_id === $user->id)
                                             <button class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
                                         @endif
                                     @endforeach
@@ -505,7 +505,7 @@
                             ->rows(3)
                             ->cols(40)
                              }}
-                    @if($application->is_more_than_limit != 1)
+                    @if($application->is_more_than_limit !== 1)
                         {{Aire::select($performers_branch, 'select')
                             ->name('performer_role_id')
                         }}
@@ -527,7 +527,7 @@
                             ->rows(3)
                             ->cols(40)
                              }}
-                    @if($application->is_more_than_limit != 1)
+                    @if($application->is_more_than_limit !== 1)
                         {{Aire::select($performers_branch, 'select')
                             ->name('performer_role_id')
                         }}
@@ -712,7 +712,7 @@
             </div>
             <div class="w-1/2">
                 <div class="mb-5">
-                    @if($performer_file != 'null' && $performer_file != null)
+                    @if($performer_file !== 'null' && $performer_file !== null)
                         <h5 class="text-left">{{ __('Файл исполнителя') }}</h5>
                         @foreach($performer_file as $file)
                             @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
