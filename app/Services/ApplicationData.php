@@ -16,6 +16,7 @@ class ApplicationData
 {
     public const Status_New = 'new';
     public const Status_In_Process = 'in_process';
+    public const Status_Extended = 'extended';
     public const Status_Overdue = 'overdue';
     public const Status_Accepted = 'accepted';
     public const Status_Refused = 'refused';
