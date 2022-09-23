@@ -4,26 +4,17 @@ namespace App\Http\Controllers\Site;
 
 use App\DataTables\DraftDataTable;
 use App\Http\Requests\ApplicationRequest;
-use App\Http\Requests\VoteApplicationRequest;
-use App\Jobs\VoteJob;
 use App\Models\Application;
-use App\Models\Branch;
 use App\Models\Notification;
-use App\Models\PermissionRole;
 use App\Models\Setting;
 use App\Models\StatusExtented;
 use App\Services\ApplicationService;
-use Illuminate\Support\Carbon;
 use App\Models\SignedDocs;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
-use TCG\Voyager\Models\Role;
-use TCG\Voyager\Voyager;
-use Yajra\DataTables\DataTables;
 use Carbon\Carbon as Date;
 use Illuminate\Support\Facades\File;
+use App\Services\ApplicationData;
 
 class ApplicationController extends Controller
 {
@@ -38,8 +29,8 @@ class ApplicationController extends Controller
     }
     public function show_status($status)
     {
-        if($status == 'performed')
-            $status = 'Принята';
+        if($status === ApplicationData::Status_Order_Delivered)
+            $status = ApplicationData::Status_Accepted;
         $voyager = Setting::where('key','admin.show_status')->first();
         $voyager->value = $status;
         $voyager->save();
@@ -127,7 +118,7 @@ class ApplicationController extends Controller
     {
         if((($application->performer_role_id !== null) && ($application->performer_role_id !== auth()->user()->role_id)) || (($application->show_leader === 2) && ($application->performer_role_id !== auth()->user()->role_id)))
         {
-            abort(405,"Вам нельзя изменить заявку,ибо заявка уже подписана!");
+            abort(405,__("Вам нельзя изменить заявку,ибо заявка уже подписана!"));
         }
         return $this->service->edit($application);
     }
@@ -190,9 +181,9 @@ class ApplicationController extends Controller
     }
     public function change_status()
     {
-        $applications = Application::where('performer_role_id','!=',null)->where('status','in_process')->get();
+        $applications = Application::where('performer_role_id','!=',null)->where('status',ApplicationData::Status_In_Process)->get();
         foreach ($applications as $application) {
-            $application->status = Application::DISTRIBUTED;
+            $application->status = ApplicationData::Status_Distributed;
             $application->show_leader = 2;
             $application->save();
         }
@@ -212,26 +203,26 @@ class ApplicationController extends Controller
                 return $role_id;
             });
             $roles_need_sign = json_decode($docs->signers);
-            if (in_array(7, $agreedUsers->toArray()) && $docs->status == 'in_process') {
-                $docs->status = Application::AGREED;
+            if (in_array(7, $agreedUsers->toArray()) && $docs->status === ApplicationData::Status_In_Process) {
+                $docs->status = ApplicationData::Status_Agreed;
                 $docs->show_director = 2;
                 $docs->show_leader = 1;
-            }elseif (count(array_diff($roles_need_sign, $agreedUsers->toArray())) == 1 && $docs->is_more_than_limit == 1 && $docs->show_leader == null && $docs->status == 'in_process') {
+            }elseif (count(array_diff($roles_need_sign, $agreedUsers->toArray())) === 1 && $docs->is_more_than_limit === 1 && $docs->show_leader === null && $docs->status === ApplicationData::Status_In_Process) {
                 $docs->show_director = 1;
-                $docs->status = Application::IN_PROCESS;
-            }elseif(array_diff($roles_need_sign, $agreedUsers->toArray()) == null && $docs->is_more_than_limit != 1 && $docs->show_leader == null && $docs->status == 'in_process'){
+                $docs->status = ApplicationData::Status_In_Process;
+            }elseif(array_diff($roles_need_sign, $agreedUsers->toArray()) === null && $docs->is_more_than_limit !== 1 && $docs->show_leader === null && $docs->status === ApplicationData::Status_In_Process){
                 $docs->show_leader = 1;
-                $docs->status = Application::IN_PROCESS;
-            }elseif(array_diff($roles_need_sign, $agreedUsers->toArray()) != null && $docs->show_leader == 1 && $docs->status == 'in_process'){
+                $docs->status = ApplicationData::Status_In_Process;
+            }elseif(array_diff($roles_need_sign, $agreedUsers->toArray()) !== null && $docs->show_leader === 1 && $docs->status === ApplicationData::Status_In_Process){
                 $docs->show_leader = null;
                 $docs->performer_role_id = null;
                 $docs->performer_received_date = null;
                 $docs->performer_comment = null;
                 $docs->performer_comment_date = null;
-            }elseif (in_array(7, $canceledUsers->toArray()) && $docs->show_leader == null) {
-                $docs->status = Application::REJECTED;
-            } elseif ($canceledUsers->toArray() != null && $docs->show_leader == null) {
-                $docs->status = Application::REFUSED;
+            }elseif (in_array(7, $canceledUsers->toArray()) && $docs->show_leader === null) {
+                $docs->status = ApplicationData::Status_Rejected;
+            } elseif ($canceledUsers->toArray() !== null && $docs->show_leader === null) {
+                $docs->status = ApplicationData::Status_Refused;
             }
             $docs->save();
             return dd(true);

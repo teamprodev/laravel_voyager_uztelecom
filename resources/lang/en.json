@@ -223,7 +223,8 @@
     "услуга": "service",
     "Дополнительные требования": "Additional requirements",
     "Другие файлы":"Other files",
-    "Дополнительная информация": "Additional information"
+    "Дополнительная информация": "Additional information",
+    "Вам нельзя изменить заявку,ибо заявка уже подписана!": "You cannot change the application, because the application has already been signed!"
 
 
 }
