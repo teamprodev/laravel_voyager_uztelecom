@@ -4,15 +4,10 @@ namespace Tests\Unit;
 
 use App\Models\Application;
 use App\Models\Notification;
-use App\Models\Roles;
 use App\Models\SignedDocs;
-use App\Services\ApplicationService;
+use App\Services\ApplicationData;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Yajra\DataTables\DataTables;
 
 
@@ -30,7 +25,7 @@ class ApplicationServiceTest extends TestCase
         $application->branch_initiator_id = 1;
         $application->department_initiator_id = 1;
         $application->is_more_than_limit = 0;
-        $application->status = Application::NEW;
+        $application->status = ApplicationData::Status_New;
         $data = $application->save();
         $this->assertTrue($data);
     }
@@ -48,7 +43,7 @@ class ApplicationServiceTest extends TestCase
         $clone = Application::find(1);
         $application = $clone->replicate();
         $application->signers = null;
-        $application->status = Application::NEW;
+        $application->status = ApplicationData::Status_New;
         $application->save();
     }
     public function test_SignedDocs()
@@ -118,7 +113,7 @@ class ApplicationServiceTest extends TestCase
     {
         $application = Application::find(1);
         if($application->draft == 1)
-            $application->status = Application::DRAFT;
+            $application->status = ApplicationData::Status_Draft;
 
         $application->update();
     }
