@@ -128,6 +128,8 @@ Route::group([
                         Route::get('', 'index')->name('index');
                         Route::get('{status}/show_status','show_status')->name('show_status');
                         Route::get('status_table/show','status_table')->name('status_table');
+                        Route::get('to_sign/','to_sign')->name('to_sign');
+                        Route::get('to_sign/show','to_sign_data')->name('to_sign_data');
                         Route::get('performer_status','performer_status_get')->name('performer_status_get');
                         Route::post('performer_status/post','performer_status_post')->name('performer_status_post')->middleware('branch');
                         Route::get('performer_status/show','performer_status')->name('performer_status');

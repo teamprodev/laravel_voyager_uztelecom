@@ -160,6 +160,15 @@ class ApplicationController extends Controller
         $this->service->is_more_than_limit($application,$request);
         return redirect()->back();
     }
+    public function to_sign()
+    {
+        return view('site.applications.to_sign');
+    }
+    public function to_sign_data()
+    {
+        $user = auth()->user();
+        return $this->service->to_sign_data($user);
+    }
     /*
         File delete
     */
@@ -227,7 +236,6 @@ class ApplicationController extends Controller
                     break;
             }
             $docs->save();
-            return dd(true);
         }
     }
 }
