@@ -7,8 +7,6 @@ use App\Http\Requests\ProfileRequest;
 use App\Jobs\UpdateProfileJob;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Branch;
 
 class ProfileController extends Controller
 {
