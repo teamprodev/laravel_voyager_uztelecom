@@ -49,7 +49,7 @@ class RoleController extends VoyagerRoleController
                     $bgcolor = setting('color.delete');
                     $color = $bgcolor ? 'white':'black';
                     $app_delete_confirm = __("Вы действительно хотите удалить роль под номером $row->id - $row->name?");
-                    $destroy = "<a style='background-color: $bgcolor;color: $color' href='$destroy_e' onclick='return confirm($app_delete_confirm)' class='m-1 col show btn btn-sm'>$app_delete</a>";
+                    $destroy = "<a style='background-color: $bgcolor;color: $color' href='$destroy_e' onclick='return confirm(`$app_delete_confirm`)' class='m-1 col show btn btn-sm'>$app_delete</a>";
                     return "<div class='row'>
                         $edit
                         $destroy
