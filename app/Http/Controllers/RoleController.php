@@ -48,7 +48,8 @@ class RoleController extends VoyagerRoleController
                     $edit = "<a style='background-color: $bgcolor;color: $color' href='$edit_e' class='m-1 col edit btn btn-sm'>$app_edit</a>";
                     $bgcolor = setting('color.delete');
                     $color = $bgcolor ? 'white':'black';
-                    $destroy = "<a style='background-color: $bgcolor;color: $color' href='$destroy_e' class='m-1 col show btn btn-sm'>$app_delete</a>";
+                    $app_delete_confirm = __("Вы действительно хотите удалить роль под номером $row->id - $row->name?");
+                    $destroy = "<a style='background-color: $bgcolor;color: $color' href='$destroy_e' onclick='return confirm($app_delete_confirm)' class='m-1 col show btn btn-sm'>$app_delete</a>";
                     return "<div class='row'>
                         $edit
                         $destroy
@@ -89,13 +90,24 @@ class RoleController extends VoyagerRoleController
             $save->save();
         }
         $users = User::where('role_id',$role->id)->get();
-        foreach($users as $user)
-        {
-            $user->role_id = null;
-            $user->save();
-        }
-        $role->delete();
-        return redirect()->route('voyager.roles.index');
+        $users_name = User::where('role_id',$role->id)->get()->pluck('id');
+
+//        foreach($users as $user)
+//        {
+//            $user->role_id = null;
+//            $user->save();
+//        }
+        if(count($users) > 0)
+            echo "<script type='text/javascript'>
+                    alert('Вы не сможете удалить роль так как пользователям под айди ' + $users_name + ' выдана эта роль');
+                    location.href = '/admin/roles';
+                    </script>";
+        else
+            $role->delete();
+        echo "<script type='text/javascript'>
+                    location.href = '/admin/roles';
+                    </script>";
+
     }
     /**
      * Role Create qilinadi.
