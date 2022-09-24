@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Site;
 
-use App\DataTables\DraftDataTable;
 use App\Http\Requests\ApplicationRequest;
 use App\Models\Application;
 use App\Models\Notification;
@@ -202,26 +201,30 @@ class ApplicationController extends Controller
                 return $role_id;
             });
             $roles_need_sign = json_decode($docs->signers);
-            if (in_array(7, $agreedUsers->toArray()) && $docs->status === ApplicationData::Status_In_Process) {
-                $docs->status = ApplicationData::Status_Agreed;
-                $docs->show_director = 2;
-                $docs->show_leader = 1;
-            }elseif (count(array_diff($roles_need_sign, $agreedUsers->toArray())) === 1 && $docs->is_more_than_limit === 1 && $docs->show_leader === null && $docs->status === ApplicationData::Status_In_Process) {
-                $docs->show_director = 1;
-                $docs->status = ApplicationData::Status_In_Process;
-            }elseif(array_diff($roles_need_sign, $agreedUsers->toArray()) === null && $docs->is_more_than_limit !== 1 && $docs->show_leader === null && $docs->status === ApplicationData::Status_In_Process){
-                $docs->show_leader = 1;
-                $docs->status = ApplicationData::Status_In_Process;
-            }elseif(array_diff($roles_need_sign, $agreedUsers->toArray()) !== null && $docs->show_leader === 1 && $docs->status === ApplicationData::Status_In_Process){
-                $docs->show_leader = null;
-                $docs->performer_role_id = null;
-                $docs->performer_received_date = null;
-                $docs->performer_comment = null;
-                $docs->performer_comment_date = null;
-            }elseif (in_array(7, $canceledUsers->toArray()) && $docs->show_leader === null) {
-                $docs->status = ApplicationData::Status_Rejected;
-            } elseif ($canceledUsers->toArray() !== null && $docs->show_leader === null) {
-                $docs->status = ApplicationData::Status_Refused;
+            switch (true){
+                case in_array(7, $agreedUsers->toArray()) && $docs->status === ApplicationData::Status_In_Process:
+                    $docs->status = ApplicationData::Status_Agreed;
+                    $docs->show_director = 2;
+                    $docs->show_leader = 1;
+                    break;
+                case count(array_diff($roles_need_sign, $agreedUsers->toArray())) === 1 && $docs->is_more_than_limit === 1 && $docs->show_leader === null && $docs->status === ApplicationData::Status_In_Process :
+                    $docs->show_director = 1;
+                    $docs->status = ApplicationData::Status_In_Process;
+                    break;
+                case  array_diff($roles_need_sign, $agreedUsers->toArray()) === null && $docs->is_more_than_limit !== 1 && $docs->show_leader === null && $docs->status === ApplicationData::Status_In_Process :
+                    $docs->show_leader = 1;
+                    $docs->status = ApplicationData::Status_In_Process;
+                    break;
+                case array_diff($roles_need_sign, $agreedUsers->toArray()) !== null && $docs->show_leader === 1 && $docs->status === ApplicationData::Status_In_Process :
+                    $docs->show_leader = null;
+                    $docs->performer_role_id = null;
+                    $docs->performer_received_date = null;
+                    $docs->performer_comment = null;
+                    $docs->performer_comment_date = null;
+                    break;
+                case  in_array(7, $canceledUsers->toArray()) && $docs->show_leader === null :
+                    $docs->status = ApplicationData::Status_Rejected;
+                    break;
             }
             $docs->save();
             return dd(true);

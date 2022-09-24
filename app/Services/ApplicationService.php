@@ -87,7 +87,7 @@ class ApplicationService
                         ->where('draft', '!=', 1)->get();
                     break;
                 case $user->hasPermission('Company_Leader') :
-                    $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->where('status', 'agreed')->orWhere('status', 'distributed')->whereIn($a, $b)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
+                    $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->where('status', ApplicationData::Status_Agreed)->orWhere('status', ApplicationData::Status_Distributed)->whereIn($a, $b)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
                     break;
                 case $user->hasPermission('Branch_Leader') :
                     $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->where('is_more_than_limit', 0)->where('show_leader', 1)->orWhere('is_more_than_limit', 0)->whereIn($a, $b)->where('status', ApplicationData::Status_New)->orWhere('is_more_than_limit', 0)->where('draft', '!=', 1)->whereIn($a, $b)->where('status', ApplicationData::Status_Distributed)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
@@ -200,7 +200,7 @@ class ApplicationService
                     $app_delete = __('Удалить');
                     $app_delete_confirm = __("Вы действительно хотите удалить заявку под номером $row->id?");
 
-                    if (auth()->user()->id == $row->user_id || auth()->user()->hasPermission('Warehouse') || $row->performer_role_id == auth()->user()->role_id) {
+                    if (auth()->user()->id === $row->user_id || auth()->user()->hasPermission('Warehouse') || $row->performer_role_id === auth()->user()->role_id) {
                         $bgcolor = setting('color.edit');
                         $color = $bgcolor ? 'white' : 'black';
                         $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-outline-danger editbtn'>$app_edit</a>";
@@ -217,7 +217,7 @@ class ApplicationService
                     } else {
                         $destroy = "";
                     }
-                    if ($row->user_id == auth()->user()->id && $row->status == ApplicationData::Status_Canceled || $row->user_id == auth()->user()->id && $row->status == ApplicationData::Status_Refused || $row->user_id == auth()->user()->id && $row->status == ApplicationData::Status_Rejected) {
+                    if (($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Rejected)) {
                         $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>$app_clone</a>";
                     } else {
                         $clone = "";
@@ -347,7 +347,7 @@ class ApplicationService
                 } else {
                     $destroy = "";
                 }
-                if ($row->user_id == auth()->user()->id && $row->status == ApplicationData::Status_Canceled || $row->user_id == auth()->user()->id && $row->status == ApplicationData::Status_Refused || $row->user_id == auth()->user()->id && $row->status == ApplicationData::Status_Rejected) {
+                if (($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Rejected)) {
                     $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>$app_clone</a>";
                 } else {
                     $clone = "";
@@ -475,7 +475,7 @@ class ApplicationService
                 } else {
                     $destroy = "";
                 }
-                if ($row->user_id == auth()->user()->id && $row->status == ApplicationData::Status_Canceled || $row->user_id == auth()->user()->id && $row->status == ApplicationData::Status_Refused || $row->user_id == auth()->user()->id && $row->status == ApplicationData::Status_Rejected) {
+                if (($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Rejected)) {
                     $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>$app_clone</a>";
                 } else {
                     $clone = "";
@@ -685,9 +685,9 @@ class ApplicationService
         $perms['BranchLeader'] = $application->user_id !== $user->id && $user->hasPermission('Branch_Leader') && $application->show_leader === 1;
         $perms['PerformerComment'] = $application->performer_role_id === $user->role_id && $user->leader === 0;
         $perms['NumberChange'] = $user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business');
-        $perms['Plan'] = $check && $user->hasPermission('Plan_Budget') || $user->hasPermission('Plan_Business') && $check;
+        $perms['Plan'] = ($check && $user->hasPermission('Plan_Budget')) || ($user->hasPermission('Plan_Business') && $check);
         $perms['PerformerLeader'] = $application->performer_role_id === $user->role_id && $user->leader === 1;
-        $perms['Signers'] = $access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer'||'Company_Performer'||'Branch_Performer') || $access && $user->role_id == 7 && $application->show_director == 1;
+        $perms['Signers'] = ($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer'||'Company_Performer'||'Branch_Performer')) || ($access && $user->role_id === 7 && $application->show_director === 1);
 
         return view('site.applications.show', compact('performer_file', 'branch','perms', 'access_comment', 'performers_company', 'performers_branch', 'file_basis', 'file_tech_spec', 'other_files', 'user', 'application', 'branch', 'signedDocs', 'same_role_user_ids', 'access', 'subjects', 'purchases', 'branch_name', 'check'));
 
@@ -696,7 +696,7 @@ class ApplicationService
     public function edit($application)
     {
         $status_extented = StatusExtented::all()->pluck('name', 'id')->toArray();
-        if (auth()->user()->id != $application->user_id && !auth()->user()->hasPermission('Warehouse') && !auth()->user()->hasPermission('Company_Performer') && !auth()->user()->hasPermission('Branch_Performer')) {
+        if (auth()->user()->id !== $application->user_id && !auth()->user()->hasPermission('Warehouse') && !auth()->user()->hasPermission('Company_Performer') && !auth()->user()->hasPermission('Branch_Performer')) {
             return redirect()->route('site.applications.index');
         }
         $countries = ['0' => 'Select country'];
@@ -745,12 +745,12 @@ class ApplicationService
                 $signer = SignedDocs::where('application_id', $application->id)->where('role_id', $signers)->first();
                 $docs = new SignedDocs();
                 $docs->role_id = $signers;
-                $docs->role_index = Roles::find($signers)->index === null ? 1 : Roles::find($signers)->index;
+                $docs->role_index = Roles::find($signers)->index === null ? 1 : (Roles::find($signers)->index);
                 $docs->application_id = $application->id;
                 $docs->table_name = "applications";
                 $signer === null ? $docs->save() : [];
             }
-            if ($application->signers != null) {
+            if ($application->signers !== null) {
                 $signers = json_decode($data['signers']);
                 $signedDocs = SignedDocs::where('application_id', $application->id)->pluck('role_id')->toArray();
                 $not_signer = array_diff($signedDocs, $signers);
@@ -761,7 +761,7 @@ class ApplicationService
             $application->status = ApplicationData::Status_New;
             $message = "{$application->id} " . "{$application->name} " . setting('admin.application_created');
             $this->sendNotifications($array, $application, $message);
-        }elseif ($application->signers == null) {
+        }elseif ($application->signers === null) {
             $data['signers'] = $roles;
             $array = json_decode($roles);
             foreach ($array as $signers) {
@@ -771,13 +771,13 @@ class ApplicationService
                 $docs->role_index = Roles::find($signers)->index;
                 $docs->application_id = $application->id;
                 $docs->table_name = "applications";
-                $signer == null ? $docs->save() : [];
+                $signer === null ? $docs->save() : [];
             }
             $message = "{$application->id} " . "{$application->name} " . setting('admin.application_created');
             $this->sendNotifications($array, $application, $message);
         }
         if (isset($data['draft'])) {
-            if ($data['draft'] == 1)
+            if ($data['draft'] === 1)
                 $data['status'] = ApplicationData::Status_Draft;
         }
         if (isset($data['performer_status'])) {
@@ -821,7 +821,7 @@ class ApplicationService
         $application->is_more_than_limit = $request->is_more_than_limit;
         $application->signers = null;
         $application->status = 'new';
-        if ($request->is_more_than_limit == 1) {
+        if ($request->is_more_than_limit === 1) {
             $application->branch_initiator_id = 9;
         }else{
             $application->branch_initiator_id = auth()->user()->branch_id;
@@ -833,7 +833,7 @@ class ApplicationService
 
     public function sendNotifications($array, $application, $message)
     {
-        if ($array != null) {
+        if ($array !== null) {
             if (is_resource(@fsockopen(env('LARAVEL_WEBSOCKETS_HOST', '127.0.0.1'), env('LARAVEL_WEBSOCKETS_PORT', 6001)))) {
                 $websocket = true;
             } else {

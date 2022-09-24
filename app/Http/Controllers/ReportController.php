@@ -15,6 +15,9 @@ use Yajra\DataTables\DataTables;
 
 class ReportController extends Controller
 {
+    const Quarterly_Planned_Report = 22;
+    const Report_Statuses_Quantity = 10;
+
     private ReportService $service;
 
     public function __construct(ReportService $service)
@@ -43,9 +46,9 @@ class ReportController extends Controller
      **/
     public function index($id)
     {
-            if($id == 22)
+            if($id === self::Quarterly_Planned_Report)
                 return view("site.report.{$id}");
-            elseif($id <= 10){
+            elseif($id <= self::Report_Statuses_Quantity){
                 return view("site.report.{$id}");
             }
             return view("site.report.10");

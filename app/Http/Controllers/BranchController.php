@@ -79,7 +79,7 @@ class BranchController extends Controller
         $data = Application::where('branch_id', $id)->where('name', '!=', 'null')->get();
         return Datatables::of($data)
             ->editColumn('is_more_than_limit', function ($query) {
-                return $query->is_more_than_limit == 1 ? __('Компанию') : __('Филиал');
+                return $query->is_more_than_limit === 1 ? __('Компанию') : __('Филиал');
             })
             ->editColumn('branch_initiator_id', function ($query) {
                 return $query->branch->name;
