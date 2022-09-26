@@ -140,6 +140,9 @@ class ApplicationService
                     $status_overdue = __('просрочен');
                     switch($status)
                     {
+                        case $query->performer_status !== null:
+                            $a = StatusExtented::find($query->performer_status)->first();
+                            return $this->status($a->name);
                         case ApplicationData::Status_New:
                             $status = setting('color.new');
                             $color = $status ? 'white' : 'black';
@@ -161,9 +164,6 @@ class ApplicationService
                             $status = setting('color.arrived');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>товар прибыл</div>";
-                        case $query->performer_status !== null:
-                            $a = StatusExtented::find($query->performer_status)->first();
-                            return $this->status($a->name);
                         case ApplicationData::Status_Refused:
                             $status = setting('color.rejected');
                             $color = $status ? 'white' : 'black';
@@ -279,6 +279,9 @@ class ApplicationService
                 $status_overdue = __('просрочен');
                 switch($status)
                 {
+                    case $query->performer_status !== null:
+                        $a = StatusExtented::find($query->performer_status)->first();
+                        return $this->status($a->name);
                     case ApplicationData::Status_New:
                         $status = setting('color.new');
                         $color = $status ? 'white' : 'black';
@@ -292,9 +295,6 @@ class ApplicationService
                         $status = setting('color.overdue');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_overdue}</div>";
-                    case $query->performer_status !== null:
-                        $a = StatusExtented::find($query->performer_status)->first();
-                        return $this->status($a->name);
                     case ApplicationData::Status_Refused:
                         $status = setting('color.rejected');
                         $color = $status ? 'white' : 'black';
@@ -407,6 +407,9 @@ class ApplicationService
                 $status_overdue = __('просрочен');
                 switch($status)
                 {
+                    case $query->performer_status !== null:
+                        $a = StatusExtented::find($query->performer_status)->first();
+                        return $this->status($a->name);
                     case ApplicationData::Status_New:
                         $status = setting('color.new');
                         $color = $status ? 'white' : 'black';
@@ -420,9 +423,6 @@ class ApplicationService
                         $status = setting('color.overdue');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_overdue}</div>";
-                    case $query->performer_status !== null:
-                        $a = StatusExtented::find($query->performer_status)->first();
-                        return $this->status($a->name);
                     case ApplicationData::Status_Refused:
                         $status = setting('color.rejected');
                         $color = $status ? 'white' : 'black';
@@ -893,6 +893,9 @@ class ApplicationService
                 $status_overdue = __('просрочен');
                 switch($status)
                 {
+                    case $query->performer_status !== null:
+                        $a = StatusExtented::find($query->performer_status)->first();
+                        return $this->status($a->name);
                     case ApplicationData::Status_New:
                         $status = setting('color.new');
                         $color = $status ? 'white' : 'black';
@@ -906,9 +909,6 @@ class ApplicationService
                         $status = setting('color.overdue');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_overdue}</div>";
-                    case $query->performer_status !== null:
-                        $a = StatusExtented::find($query->performer_status)->first();
-                        return $this->status($a->name);
                     case ApplicationData::Status_Refused:
                         $status = setting('color.rejected');
                         $color = $status ? 'white' : 'black';
