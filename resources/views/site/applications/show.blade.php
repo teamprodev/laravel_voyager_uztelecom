@@ -19,60 +19,7 @@
                 {{ Carbon\Carbon::createFromFormat('Y-m-d', $application->date)->Format('d.m.Y') }}{{ __('г') }}
             @endif
         </h5> <br>
-        <h5><strong>{{ __('Статус') }} : </strong>
-            @switch($application->status)
-                @case(ApplicationData::Status_New)
-                    <span>{{__('Новая')}}</span>
-                    @break
-                @case(ApplicationData::Status_In_Process)
-                    <span>{{__('На рассмотрении')}}</span>
-                    @break
-                @case(ApplicationData::Status_Overdue)
-                    <span>{{__('просрочен')}}</span>
-                    @break
-                @case(ApplicationData::Status_Accepted)
-                    <span>{{__('Принята')}}</span>
-                    @break
-                @case(ApplicationData::Status_Refused)
-                    <span>{{__('Отказана')}}</span>
-                    @break
-                @case(ApplicationData::Status_Agreed)
-                    <span>{{__('Согласована')}}</span>
-                    @break
-                @case(ApplicationData::Status_Rejected)
-                    <span>{{__('Отклонена')}}</span>
-                    @break
-                @case(ApplicationData::Status_Distributed)
-                    <span>{{__('Распределен')}}</span>
-                    @break
-                @case(ApplicationData::Status_Canceled)
-                    <span>{{__('Отменен')}}</span>
-                    @break
-                @case(ApplicationData::Status_Partially_Completed)
-                    <span>{{__('Выполнено частично')}}</span>
-                    @break
-                @case(ApplicationData::Status_Completed_Full)
-                    <span>{{__('Выполнено в полном объёме')}}</span>
-                    @break
-                @case(ApplicationData::Status_Management_Canceled)
-                    <span>{{__('Заявка аннулирована по заданию руководства')}}</span>
-                    @break
-                @case(ApplicationData::Status_Uztelecom_Canceled)
-                    <span>{{__('Договор аннулирован по инициативе Узбектелеком')}}</span>
-                    @break
-                @case(ApplicationData::Status_Application_Uztelecom)
-                    <span>{{__('заявка передана в Узтелеком')}}</span>
-                    @break
-                @case(ApplicationData::Status_Order_Delivered)
-                    <span>{{__('Товар доставлен')}}</span>
-                    @break
-                @case(ApplicationData::Status_Contract_Concluded)
-                    <span>{{__('договор заключен')}}</span>
-                    @break
-                @case(ApplicationData::Status_Draft)
-                    <span>{{__('draft')}}</span>
-                    @break
-            @endswitch
+        <h5><strong>{{ __('Статус') }} : {!! $perms['application_status'] !!}</strong>
         </h5>
         <h5><strong>{{__('Визирование заявки через:') }}</strong>
             @if($application->is_more_than_limit === 1)
