@@ -762,7 +762,7 @@ class ApplicationService
 
     public function edit($application)
     {
-        $status_extented = StatusExtented::all()->pluck('name', 'name')->toArray();
+        $status_extented = StatusExtented::all()->pluck('name', 'id')->toArray();
         if (auth()->user()->id !== $application->user_id && !auth()->user()->hasPermission('Warehouse') && !auth()->user()->hasPermission('Company_Performer') && !auth()->user()->hasPermission('Branch_Performer')) {
             return redirect()->route('site.applications.index');
         }
