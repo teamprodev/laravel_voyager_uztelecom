@@ -887,7 +887,7 @@ class ApplicationService
         $application->is_more_than_limit = $request->is_more_than_limit;
         $application->signers = null;
         $application->status = 'new';
-        if ($request->is_more_than_limit === 1) {
+        if ($request->is_more_than_limit == 1) {
             $application->branch_initiator_id = 9;
         }else{
             $application->branch_initiator_id = auth()->user()->branch_id;
