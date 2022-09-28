@@ -56,11 +56,8 @@ class ApplicationService
                 $a = 'branch_initiator_id';
                 $b = [9, 13];
             } else {
-                $a = 'branch_initiator_id';
-                $b = [$user->branch_id];
-
-                $c = 'department_initiator_id';
-                $d = [$user->department_id];
+                $a = 'department_initiator_id';
+                $b = [$user->department_id];
             }
 
             switch (true){
