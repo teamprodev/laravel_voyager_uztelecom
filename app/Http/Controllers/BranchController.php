@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Application;
 use App\Models\Branch;
+use App\Models\StatusExtented;
 use App\Services\ApplicationData;
+use App\Services\ApplicationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -108,7 +110,7 @@ class BranchController extends Controller
                 return "{$planned_price}  {$query->currency}";
             })
             ->editColumn('status', function ($query) {
-                $query = $query->status;
+                $application_status = $query->status;
                 $status_new = __('Новая');
                 $status_in_process = __('На рассмотрении');
                 $status_refused = __('Отказана');
@@ -119,8 +121,12 @@ class BranchController extends Controller
                 $status_cancelled = __('Отменен');
                 $status_performed = __('Товар доставлен');
                 $status_overdue = ('просрочен');
-                switch($query)
+                switch($application_status)
                 {
+                    case $query->performer_status !== null:
+                        $application_service = new ApplicationService;
+                        $a = StatusExtented::find($query->performer_status)->first();
+                        return $application_service->status($a->name);
                     case ApplicationData::Status_New:
                         $status = setting('color.new');
                         $color = $status ? 'white' : 'black';
@@ -191,7 +197,7 @@ class BranchController extends Controller
                             <div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>договор заключен</div>
                             </div>";
                     default:
-                        return $query;
+                        return $application_status;
                 }
             })
             ->addIndexColumn()
