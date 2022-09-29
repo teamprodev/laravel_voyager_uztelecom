@@ -183,7 +183,7 @@ class ApplicationService
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_cancelled}</div>";
                         default:
-                            return $query;
+                            return $status;
                     }
                 })
                 ->addIndexColumn()
