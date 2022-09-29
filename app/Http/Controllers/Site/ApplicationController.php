@@ -116,7 +116,7 @@ class ApplicationController extends Controller
     public function edit(Application $application)
     {
         $user = auth()->user();
-        if(((($application->performer_role_id !== null) && ($application->performer_role_id !== auth()->user()->role_id)) && $user->hasPermission('Warehouse')) || ((($application->show_leader === 2) && ($application->performer_role_id !== auth()->user()->role_id)) && $user->hasPermission('Warehouse')))
+        if(((($application->performer_role_id !== null) && ($application->performer_role_id !== auth()->user()->role_id)) && $user->hasPermission(PermissionEnum::Warehouse)) || ((($application->show_leader === 2) && ($application->performer_role_id !== auth()->user()->role_id)) && $user->hasPermission(PermissionEnum::Warehouse)))
         {
             abort(405,__("Вам нельзя изменить заявку,ибо заявка уже подписана!"));
         }
