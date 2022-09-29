@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Site;
 
+use App\Enums\PermissionEnum;
 use App\Http\Requests\ApplicationRequest;
 use App\Models\Application;
 use App\Models\Notification;
