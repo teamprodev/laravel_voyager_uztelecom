@@ -786,9 +786,8 @@ class ApplicationService
         ]);
     }
 
-    public function update($application, $request)
+    public function update($application, $request,$user)
     {
-        $user = auth()->user();
         $now = Carbon::now();
         $data = $request->validated();
 //        if (auth()->id() == $application->user_id && $application->status == ApplicationData::Status_Refused || auth()->id() == $application->user_id && $application->status == ApplicationData::Status_Rejected) {
@@ -844,7 +843,7 @@ class ApplicationService
         }
         if (isset($data['performer_status'])) {
             $application->performer_user_id = $user->id;
-            $application->status = $data['performer_status'];
+            $application->status = ApplicationData::Status_Extended;
         }
         if (isset($data['performer_leader_comment'])) {
             $data['performer_leader_comment_date'] = $now->toDateTimeString();
