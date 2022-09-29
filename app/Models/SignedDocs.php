@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Models\Role;
 
 class SignedDocs extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     protected $with = 'application';
     protected $table = "signed_docs";
 
