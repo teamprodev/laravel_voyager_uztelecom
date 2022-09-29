@@ -228,6 +228,12 @@
                             <option value="USD" @if($application->currency === "USD") selected @endif>USD</option>
                         </select>
                     </div>
+                    <div class="mb-3 row">
+                        {{Aire::checkbox('checkbox', __('С НДС'))
+                      ->name('with_nds')
+                      ->disabled()
+                   }}
+                    </div>
                     <div class="product">
                         @if(isset($application->resource_id))
                             <b>{{ __('Продукт')}}</b>:
