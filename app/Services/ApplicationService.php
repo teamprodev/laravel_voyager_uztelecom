@@ -4,6 +4,8 @@
 namespace App\Services;
 
 
+use App\Enums\ApplicationStatusEnum;
+use App\Enums\PermissionEnum;
 use App\Events\Notify;
 use App\Models\Application;
 use App\Models\Branch;
@@ -66,7 +68,7 @@ class ApplicationService
                 case $user->hasPermission('Add_Company_Signer') && $user->hasPermission('Add_Branch_Signer') :
                     $query = Application::where('draft', '!=', 1)->whereIn($a, $b)->orWhere('signers', 'like', "%{$user->role_id}%")->where('draft', '!=', 1)->orWhere('performer_role_id', $user->role->id)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
                     break;
-                case $user->hasPermission('Warehouse') :
+                case $user->hasPermission(PermissionEnum::Warehouse) :
                     $status_0 = ApplicationData::Status_Accepted;
                     $status_1 = 'товар';
                     $query = Application::where('draft', '!=', 1)->whereIn($a, $b)->where('status', 'like', "%{$status_0}%")->OrwhereIn($a, $b)->where('status', 'like', "%{$status_1}%")->orWhere('user_id', auth()->user()->id)->get();
@@ -198,7 +200,7 @@ class ApplicationService
                     $app_delete = __('Удалить');
                     $app_delete_confirm = __("Вы действительно хотите удалить заявку под номером $row->id?");
 
-                    if (auth()->user()->id === $row->user_id || auth()->user()->hasPermission('Warehouse') || $row->performer_role_id === auth()->user()->role_id) {
+                    if (auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id) {
                         $bgcolor = setting('color.edit');
                         $color = $bgcolor ? 'white' : 'black';
                         $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-outline-danger editbtn'>$app_edit</a>";
@@ -304,6 +306,8 @@ class ApplicationService
                     case ApplicationData::Status_Rejected:
                         $status = setting('color.rejected');
                         $color = $status ? 'white' : 'black';
+                        $statusText = $status_rejected;
+
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_rejected}</div>";
                     case ApplicationData::Status_Distributed:
                         $status = setting('color.distributed');
@@ -331,7 +335,7 @@ class ApplicationService
                 $boolCheckUser = (int)auth()->user()->id === (int)$row->user_id;
                 $boolCheckRole = (int)$row->performer_role_id === (int)auth()->user()->role_id;
 
-                if ($boolCheckUser || $boolCheckRole || auth()->user()->hasPermission('Warehouse')) {
+                if ($boolCheckUser || $boolCheckRole || auth()->user()->hasPermission(PermissionEnum::Warehouse)) {
                     $bgcolor = setting('color.edit');
                     $color = $bgcolor ? 'white' : 'black';
                     $edit = "<a style='background-color: {$bgcolor};color: {$color}' href='{$edit_e}' class='m-1 col edit btn btn-sm'>$app_edit</a>";
@@ -348,7 +352,7 @@ class ApplicationService
                 } else {
                     $destroy = "";
                 }
-                if (($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Rejected)) {
+                if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Rejected)) {
                     $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>$app_clone</a>";
                 } else {
                     $clone = "";
@@ -459,7 +463,7 @@ class ApplicationService
                 $app_clone = __('Копировать');;
                 $app_delete = __('Удалить');;
 
-                if (auth()->user()->id === $row->user_id || auth()->user()->hasPermission('Warehouse') || $row->performer_role_id === auth()->user()->role_id) {
+                if (auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id) {
                     $bgcolor = setting('color.edit');
                     $color = $bgcolor ? 'white' : 'black';
                     $edit = "<a style='background-color: {$bgcolor};color: {$color}' href='{$edit_e}' class='m-1 col edit btn btn-sm'>$app_edit</a>";
@@ -762,7 +766,7 @@ class ApplicationService
     public function edit($application)
     {
         $status_extented = StatusExtented::all()->pluck('name', 'id')->toArray();
-        if (auth()->user()->id !== $application->user_id && !auth()->user()->hasPermission('Warehouse') && !auth()->user()->hasPermission('Company_Performer') && !auth()->user()->hasPermission('Branch_Performer')) {
+        if (auth()->user()->id !== $application->user_id && !auth()->user()->hasPermission(PermissionEnum::Warehouse) && !auth()->user()->hasPermission('Company_Performer') && !auth()->user()->hasPermission('Branch_Performer')) {
             return redirect()->route('site.applications.index');
         }
         $countries = ['0' => 'Select country'];
@@ -1007,7 +1011,7 @@ class ApplicationService
                 $app_clone = __('Копировать');;
                 $app_delete = __('Удалить');;
 
-                if (auth()->user()->id == $row->user_id || auth()->user()->hasPermission('Warehouse') || $row->performer_role_id == auth()->user()->role_id) {
+                if (auth()->user()->id == $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id == auth()->user()->role_id) {
                     $bgcolor = setting('color.edit');
                     $color = $bgcolor ? 'white' : 'black';
                     $edit = "<a style='background-color: {$bgcolor};color: {$color}' href='{$edit_e}' class='m-1 col edit btn btn-sm'>$app_edit</a>";

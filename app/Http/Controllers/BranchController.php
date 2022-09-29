@@ -211,7 +211,7 @@ class BranchController extends Controller
                 $app_clone= __('Копировать');
                 $app_delete= __('Удалить');
 
-                if(auth()->user()->id === $row->user_id || auth()->user()->hasPermission('Warehouse') || $row->performer_role_id === auth()->user()->role_id)
+                if(auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id)
                 {
                     $bgcolor = setting('color.edit');
                     $color = $bgcolor ? 'white':'black';
