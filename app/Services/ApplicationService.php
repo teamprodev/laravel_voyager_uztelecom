@@ -36,7 +36,7 @@ class ApplicationService
     const Permission_Branch_Performer = 172;
 
 
-    public function index($request)
+    public function index($request,$user)
     {
         $filial = PermissionRole::where('permission_id', self::Permission_Add_Branch_Signer)->pluck('role_id')->toArray();
         $company = PermissionRole::where('permission_id', self::Permission_Add_Branch_Signer)->pluck('role_id')->toArray();
@@ -50,11 +50,13 @@ class ApplicationService
         }
         if ($request->ajax()) {
 
-            $user = auth()->user();
 
             if ($user->hasPermission('Purchasing_Management_Center')) {
                 $a = 'branch_initiator_id';
                 $b = [9, 13];
+            }elseif($user->hasPermission('Company_Leader') | $user->hasPermission('Branch_Leader')){
+                $a = 'branch_initiator_id';
+                $b = [$user->branch_id];
             } else {
                 $a = 'department_initiator_id';
                 $b = [$user->department_id];
@@ -821,7 +823,6 @@ class ApplicationService
                     SignedDocs::where('application_id', $application->id)->where('role_id', $delete)->delete();
                 }
             }
-            $application->status = ApplicationData::Status_New;
             $message = "{$application->id} " . "{$application->name} " . setting('admin.application_created');
             $this->sendNotifications($array, $application, $message);
         }elseif ($application->signers === null) {

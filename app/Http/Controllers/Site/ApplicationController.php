@@ -63,7 +63,8 @@ class ApplicationController extends Controller
     */
     public function index(Request $request)
     {
-        return $this->service->index($request);
+        $user = auth()->user();
+        return $this->service->index($request,$user);
     }
     /**
      * Application Clone(Nusxalash)
