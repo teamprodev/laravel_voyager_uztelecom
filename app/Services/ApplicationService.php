@@ -534,15 +534,13 @@ class ApplicationService
     /*
      * Application Create
      */
-    public function create()
+    public function create($user)
     {
-        $user = auth()->user();
         $application = new Application();
         $application->user_id = $user->id;
         $application->branch_initiator_id = $user->branch_id;
         $application->branch_id = $user->branch_id;
         $application->department_initiator_id = $user->department_id;
-        $application->is_more_than_limit = 0;
         $application->status = ApplicationData::Status_New;
         $application->save();
         return redirect()->route('site.applications.edit', $application->id);

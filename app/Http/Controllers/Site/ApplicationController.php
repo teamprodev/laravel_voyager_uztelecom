@@ -107,7 +107,8 @@ class ApplicationController extends Controller
     */
     public function create()
     {
-        return $this->service->create();
+        $user = auth()->user();
+        return $this->service->create($user);
     }
     /**
      * Application Edit
