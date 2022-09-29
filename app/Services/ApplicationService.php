@@ -328,7 +328,10 @@ class ApplicationService
                 $app_clone = __('Копировать');;
                 $app_delete = __('Удалить');;
 
-                if (auth()->user()->id == $row->user_id || auth()->user()->hasPermission('Warehouse') || $row->performer_role_id == auth()->user()->role_id) {
+                $boolCheckUser = (int)auth()->user()->id === (int)$row->user_id;
+                $boolCheckRole = (int)$row->performer_role_id === (int)auth()->user()->role_id;
+
+                if ($boolCheckUser || $boolCheckRole || auth()->user()->hasPermission('Warehouse')) {
                     $bgcolor = setting('color.edit');
                     $color = $bgcolor ? 'white' : 'black';
                     $edit = "<a style='background-color: {$bgcolor};color: {$color}' href='{$edit_e}' class='m-1 col edit btn btn-sm'>$app_edit</a>";
