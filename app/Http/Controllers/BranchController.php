@@ -126,7 +126,7 @@ class BranchController extends Controller
                 {
                     case $query->performer_status !== null:
                         $application_service = new ApplicationService;
-                        $a = StatusExtented::find($query->performer_status)->first();
+                        $a = StatusExtented::find($query->performer_status);
                         return $application_service->status($a->name);
                     case ApplicationData::Status_New:
                         $status = setting('color.new');
