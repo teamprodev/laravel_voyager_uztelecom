@@ -836,6 +836,7 @@ class ApplicationService
         if (isset($data['performer_status'])) {
             $application->performer_user_id = $user->id;
             $application->status = ApplicationData::Status_Extended;
+            $application->status_extended_id = $data['performer_status'];
         }
         if (isset($data['performer_leader_comment'])) {
             $data['performer_leader_comment_date'] = $now->toDateTimeString();
