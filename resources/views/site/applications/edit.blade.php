@@ -75,5 +75,6 @@
     @includeWhen($user->hasPermission('Warehouse') && $application->status == 'Принята'||$user->hasPermission('Warehouse') && $application->status == 'товар доставлен'||$user->hasPermission('Warehouse') && $application->status == 'товар прибыл','site.applications.warehouse')
     {{ Aire::close() }}
     @endif
+    
 @endsection
 
