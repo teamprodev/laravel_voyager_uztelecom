@@ -19,7 +19,7 @@
                 {{ Carbon\Carbon::createFromFormat('Y-m-d', $application->date)->Format('d.m.Y') }}{{ __('г') }}
             @endif
         </h5> <br>
-        <h5><strong>{{ __('Статус') }} : <div style='background-color: {{setting("color.{$status}")}};color: {{$status ? 'white' : 'black'}};' class='btn btn-sm'>{{__($status)}}</div></strong>
+        <h5><strong>{{ __('Статус') }} : <div style='background-color: {{setting("color.{$status}")}};color: {{$status === 'draft' ? 'black' : 'white'}};' class='btn btn-sm'>{{__($status)}}</div></strong>
         </h5>
         <h5><strong>{{__('Визирование заявки через:') }}</strong>
             @if($application->is_more_than_limit === 1)
