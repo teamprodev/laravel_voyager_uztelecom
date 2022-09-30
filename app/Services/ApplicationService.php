@@ -269,56 +269,11 @@ class ApplicationService
                  *  Voyager admin paneldan status ranglarini olish va chiqarish
                  */
                 $status = $query->status;
-                $status_new = __('new');
-                $status_in_process = __('in_process');
-                $status_refused = __('refused');
-                $status_agreed = __('agreed');
-                $status_rejected = __('rejected');
-                $status_distributed = __('distributed');
-                $status_cancelled = __('cancelled');
-                $status_overdue = __('overdue');
-                switch($status)
-                {
-                    case $query->performer_status !== null:
-                        $a = StatusExtented::find($query->performer_status);
-                        return $this->status($a->name);
-                    case ApplicationStatusEnum::New:
-                        $status = setting('color.new');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_new}</div>";
-                        break;
-                    case ApplicationStatusEnum::In_Process:
-                        $status = setting('color.in_process');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_in_process}</div>";
-                    case ApplicationStatusEnum::Overdue:
-                        $status = setting('color.overdue');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_overdue}</div>";
-                    case ApplicationStatusEnum::Refused:
-                        $status = setting('color.rejected');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_refused}</div>";
-                    case ApplicationStatusEnum::Agreed:
-                        $status = setting('color.agreed');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_agreed}</div>";
-                    case ApplicationStatusEnum::Rejected:
-                        $status = setting('color.rejected');
-                        $color = $status ? 'white' : 'black';
-                        $statusText = $status_rejected;
-
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_rejected}</div>";
-                    case ApplicationStatusEnum::Distributed:
-                        $status = setting('color.distributed');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_distributed}</div>";
-                    case ApplicationStatusEnum::Canceled:
-                        $status = setting('color.rejected');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_cancelled}</div>";
-                    default:
-                        return $query;
+                if ($query->performer_status !== null) {
+                    $a = StatusExtented::find($query->performer_status);
+                    return $this->status($a->name);
+                } else {
+                    return view('site.applications.colors', compact('status'));
                 }
             })
             ->addIndexColumn()
