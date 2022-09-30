@@ -131,14 +131,14 @@ class ApplicationService
                      *  Voyager admin paneldan status ranglarini olish va chiqarish
                      */
                     $status = $query->status;
-                    $status_new = __('Новая');
-                    $status_in_process = __('На рассмотрении');
-                    $status_refused = __('Отказана');
-                    $status_agreed = __('Согласована');
-                    $status_rejected = __('Отклонена');
-                    $status_distributed = __('Распределен');
-                    $status_cancelled = __('Отменен');
-                    $status_overdue = __('просрочен');
+                    $status_new = __('new');
+                    $status_in_process = __('in_process');
+                    $status_refused = __('refused');
+                    $status_agreed = __('agreed');
+                    $status_rejected = __('rejected');
+                    $status_distributed = __('distributed');
+                    $status_cancelled = __('cancelled');
+                    $status_overdue = __('overdue');
                     switch($status)
                     {
                         case $query->performer_status !== null:
@@ -269,14 +269,14 @@ class ApplicationService
                  *  Voyager admin paneldan status ranglarini olish va chiqarish
                  */
                 $status = $query->status;
-                $status_new = __('Новая');
-                $status_in_process = __('На рассмотрении');
-                $status_refused = __('Отказана');
-                $status_agreed = __('Согласована');
-                $status_rejected = __('Отклонена');
-                $status_distributed = __('Распределен');
-                $status_cancelled = __('Отменен');
-                $status_overdue = __('просрочен');
+                $status_new = __('new');
+                $status_in_process = __('in_process');
+                $status_refused = __('refused');
+                $status_agreed = __('agreed');
+                $status_rejected = __('rejected');
+                $status_distributed = __('distributed');
+                $status_cancelled = __('cancelled');
+                $status_overdue = __('overdue');
                 switch($status)
                 {
                     case $query->performer_status !== null:
@@ -402,14 +402,14 @@ class ApplicationService
                  *  Voyager admin paneldan status ranglarini olish va chiqarish
                  */
                 $status = $query->status;
-                $status_new = __('Новая');
-                $status_in_process = __('На рассмотрении');
-                $status_refused = __('Отказана');
-                $status_agreed = __('Согласована');
-                $status_rejected = __('Отклонена');
-                $status_distributed = __('Распределен');
-                $status_cancelled = __('Отменен');
-                $status_overdue = __('просрочен');
+                $status_new = __('new');
+                $status_in_process = __('in_process');
+                $status_refused = __('refused');
+                $status_agreed = __('agreed');
+                $status_rejected = __('rejected');
+                $status_distributed = __('distributed');
+                $status_cancelled = __('cancelled');
+                $status_overdue = __('overdue');
                 switch($status)
                 {
                     case $query->performer_status !== null:
@@ -524,8 +524,8 @@ class ApplicationService
                 return $query->updated_at ? with(new Carbon($query->updated_at))->format('d.m.Y') : '';;
             })
             ->editColumn('status', function ($status) {
-                $status_agreed = __('Согласована');
-                $status_rejected = __('Отклонена');
+                $status_agreed = __('agreed');
+                $status_rejected = __('rejected');
                 $status_not_signed = __('Не подписан');
 
                 match ($status->status) {
@@ -548,7 +548,7 @@ class ApplicationService
         $application->branch_initiator_id = $user->branch_id;
         $application->branch_id = $user->branch_id;
         $application->department_initiator_id = $user->department_id;
-        $application->status = ApplicationStatusEnum::New;
+        $application->status = ApplicationData::Status_New;
         $application->save();
         return redirect()->route('site.applications.edit', $application->id);
     }
@@ -692,24 +692,24 @@ class ApplicationService
         $perms['PerformerLeader'] = $application->performer_role_id === $user->role_id && $user->leader === 1;
         $perms['Signers'] = ($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer'||'Company_Performer'||'Branch_Performer')) || ($access && $user->role_id === 7 && $application->show_director === 1);
         $status = $application->status;
-        $status_new = __('Новая');
-        $status_in_process = __('На рассмотрении');
-        $status_refused = __('Отказана');
-        $status_agreed = __('Согласована');
-        $status_rejected = __('Отклонена');
-        $status_distributed = __('Распределен');
-        $status_cancelled = __('Отменен');
-        $status_overdue = __('просрочен');
+        /*$status_new = __('new');
+        $status_in_process = __('in_process');
+        $status_refused = __('refused');
+        $status_agreed = __('agreed');
+        $status_rejected = __('rejected');
+        $status_distributed = __('distributed');
+        $status_cancelled = __('cancelled');
+        $status_overdue = __('overdue');*/
         switch($status)
         {
             case $application->performer_status !== null:
                 $a = StatusExtented::find($application->performer_status);
                 $perms['application_status'] = $this->status_1($a->name);
                 break;
-            case ApplicationStatusEnum::New:
+            /*case ApplicationData::Status_New:
                 $status = setting('color.new');
                 $color = $status ? 'white' : 'black';
-                $perms['application_status'] = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>{$status_new}</div>";
+                $status_title = $status_new;
                 break;
             case ApplicationStatusEnum::In_Process:
                 $status = setting('color.in_process');
@@ -755,11 +755,11 @@ class ApplicationService
                 $status = setting('color.rejected');
                 $color = $status ? 'white' : 'black';
                 $perms['application_status'] = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>{$status_cancelled}</div>";
-                break;
+                break;*/
             default:
                 $perms['application_status'] = $application->status;
         }
-        return view('site.applications.show', compact('performer_file', 'branch','perms', 'access_comment', 'performers_company', 'performers_branch', 'file_basis', 'file_tech_spec', 'other_files', 'user', 'application', 'branch', 'signedDocs', 'same_role_user_ids', 'access', 'subjects', 'purchases', 'branch_name', 'check'));
+        return view('site.applications.show', compact('performer_file', 'branch','perms', 'access_comment', 'performers_company', 'performers_branch', 'file_basis', 'file_tech_spec', 'other_files', 'user', 'application', 'branch', 'signedDocs', 'same_role_user_ids', 'access', 'subjects', 'purchases', 'branch_name', 'check', 'status'));
 
     }
 
@@ -950,14 +950,14 @@ class ApplicationService
                  *  Voyager admin paneldan status ranglarini olish va chiqarish
                  */
                 $status = $query->status;
-                $status_new = __('Новая');
-                $status_in_process = __('На рассмотрении');
-                $status_refused = __('Отказана');
-                $status_agreed = __('Согласована');
-                $status_rejected = __('Отклонена');
-                $status_distributed = __('Распределен');
-                $status_cancelled = __('Отменен');
-                $status_overdue = __('просрочен');
+                $status_new = __('new');
+                $status_in_process = __('in_process');
+                $status_refused = __('refused');
+                $status_agreed = __('agreed');
+                $status_rejected = __('rejected');
+                $status_distributed = __('distributed');
+                $status_cancelled = __('cancelled');
+                $status_overdue = __('overdue');
                 switch($status)
                 {
                     case $query->performer_status !== null:
