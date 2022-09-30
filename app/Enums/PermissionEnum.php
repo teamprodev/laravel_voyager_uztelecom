@@ -14,6 +14,11 @@ namespace App\Enums;
 
 class PermissionEnum
 {
-    public const Warehouse = PermissionEnum::Warehouse;
+    public const Warehouse = 'Warehouse';
+
+
+
+
+
 
 }

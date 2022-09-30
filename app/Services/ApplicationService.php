@@ -984,14 +984,20 @@ class ApplicationService
                         $status = setting('color.agreed');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_agreed}</div>";
+
+
                     case ApplicationData::Status_Rejected:
                         $status = setting('color.rejected');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_rejected}</div>";
                     case ApplicationData::Status_Distributed:
+
                         $status = setting('color.distributed');
                         $color = $status ? 'white' : 'black';
+
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_distributed}</div>";
+
+
                     case ApplicationData::Status_Canceled:
                         $status = setting('color.rejected');
                         $color = $status ? 'white' : 'black';
