@@ -54,7 +54,7 @@ class ApplicationService
                 $application = Application::where('draft', '!=', 1)->whereIn($a,$b);
             }
 
-            switch (true){
+            switch ($user->hasPermission('Purchasing_Management_Center') == false){
                 case $user->hasPermission('Add_Company_Signer') && $user->hasPermission('Add_Branch_Signer') :
                     $query = $application->orWhere('signers', 'like', "%{$user->role_id}%")->where('draft', '!=', 1)->orWhere('performer_role_id', $user->role->id)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
                     break;
