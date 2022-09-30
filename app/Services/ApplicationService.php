@@ -41,7 +41,6 @@ class ApplicationService
     public function index($request,$user)
     {
         if ($request->ajax()) {
-
             if ($user->hasPermission('Purchasing_Management_Center')) {
                 $application = Application::where('draft', '!=', 1)->where('branch_initiator_id','!=',null);
             }elseif($user->hasPermission('Company_Leader') | $user->hasPermission('Branch_Leader')){
@@ -56,14 +55,14 @@ class ApplicationService
 
             switch ($user->hasPermission('Purchasing_Management_Center') == false){
                 case $user->hasPermission('Add_Company_Signer') && $user->hasPermission('Add_Branch_Signer') :
-                    $query = $application->orWhere('signers', 'like', "%{$user->role_id}%")->where('draft', '!=', 1)->orWhere('performer_role_id', $user->role->id)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
+                    $query = $application->orWhere('signers', 'like', "%{$user->role_id}%")->where('draft', '!=', 1)->orWhere('performer_role_id', $user->role->id)->where('draft', '!=', 1)->orWhere('user_id', $user->id)->where('draft', '!=', 1)->get();
                     break;
                 case $user->hasPermission(PermissionEnum::Warehouse) :
                     $status_0 = ApplicationData::Status_Accepted;
-                    $query = $application->where('status', 'like', "%{$status_0}%")->orWhere('user_id', auth()->user()->id)->get();
+                    $query = $application->where('status', 'like', "%{$status_0}%")->orWhere('user_id', $user->id)->get();
                     break;
                 case $user->hasPermission('Company_Leader') && $user->hasPermission('Branch_Leader') :
-                    $query = $application->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
+                    $query = $application->orWhere('user_id', $user->id)->where('draft', '!=', 1)->get();
                     break;
                 case $user->role_id === 7 :
                     $query = $application->get();
@@ -73,17 +72,17 @@ class ApplicationService
                         ->where('signers', 'like', "%{$user->role_id}%")
                         ->orWhere('performer_role_id', $user->role->id)
                         ->where('draft', '!=', 1)
-                        ->orWhere('user_id', auth()->user()->id)
+                        ->orWhere('user_id', $user->id)
                         ->where('draft', '!=', 1)->get();
                     break;
                 case $user->hasPermission('Company_Leader') :
-                    $query = $application->where('status', ApplicationData::Status_Agreed)->orWhere('status', ApplicationData::Status_Distributed)->whereIn($a, $b)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
+                    $query = $application->where('status', ApplicationData::Status_Agreed)->orWhere('status', ApplicationData::Status_Distributed)->whereIn($a, $b)->where('draft', '!=', 1)->orWhere('user_id', $user->id)->where('draft', '!=', 1)->get();
                     break;
                 case $user->hasPermission('Branch_Leader') :
-                    $query = $application->where('is_more_than_limit', 0)->where('show_leader', 1)->orWhere('is_more_than_limit', 0)->whereIn($a, $b)->where('status', ApplicationData::Status_New)->orWhere('is_more_than_limit', 0)->where('draft', '!=', 1)->whereIn($a, $b)->where('status', ApplicationData::Status_Distributed)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
+                    $query = $application->where('is_more_than_limit', 0)->where('show_leader', 1)->orWhere('is_more_than_limit', 0)->whereIn($a, $b)->where('status', ApplicationData::Status_New)->orWhere('is_more_than_limit', 0)->where('draft', '!=', 1)->whereIn($a, $b)->where('status', ApplicationData::Status_Distributed)->orWhere('user_id', $user->id)->where('draft', '!=', 1)->get();
                     break;
                 case $user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer') :
-                    $query = Application::where('performer_role_id', auth()->user()->role_id)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
+                    $query = Application::where('performer_role_id', $user->role_id)->orWhere('user_id', $user->id)->where('draft', '!=', 1)->get();
                     break;
                 default :  $query = $application->get();
                     break;
