@@ -418,7 +418,7 @@
                 ->cols(40)
             }}
 
-            @if($user->hasPermission('Number_Change'))
+            @if($user->hasPermission(\App\Enums\PermissionEnum::Number_Change))
                 {{Aire::textArea('bio', __('Номер заявки'))
                     ->name('number')
                     ->value($application->number)

@@ -54,7 +54,7 @@ class UserPolicy extends BasePolicy
         // Does this record belong to another user?
         $another = $user->id != $model->id;
 
-        return $another && $user->hasPermission('edit_users');
+        return $another && $user->hasPermission('');
     }
 
     protected function checkPermission(\TCG\Voyager\Contracts\User $user, $model, $action)

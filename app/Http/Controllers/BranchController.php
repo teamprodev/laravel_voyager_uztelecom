@@ -258,7 +258,7 @@ class BranchController extends Controller
      **/
     public function view()
     {
-        if(auth()->user()->hasPermission('select_branch'))
+        if(auth()->user()->hasPermission(PermissionEnum::Select_Branch))
         {
             $branch = Branch::pluck('name','id')->toArray();
             return view('vendor.voyager.branches.view',compact('branch'));

@@ -3,6 +3,7 @@
 
 namespace App\Services;
 
+use App\Enums\PermissionEnum;
 use App\Models\Application;
 use App\Models\Branch;
 use App\Models\Resource;
@@ -188,7 +189,7 @@ class ReportService
     }
     public function report_2_2()
     {
-        if(auth()->user()->hasPermission('Purchasing_Management_Center'))
+        if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
             $query = Branch::query();
         }
@@ -441,7 +442,7 @@ class ReportService
     }
     public function report_3()
     {
-        if(auth()->user()->hasPermission('Purchasing_Management_Center'))
+        if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
             $query = Branch::query();
         }
@@ -515,7 +516,7 @@ class ReportService
 
     public function report_4()
     {
-        if(auth()->user()->hasPermission('Purchasing_Management_Center'))
+        if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
 
             $query = Application::query()->where('name', '!=', 'null')->get();
@@ -680,7 +681,7 @@ class ReportService
 
     public function report_5()
     {
-        if(auth()->user()->hasPermission('Purchasing_Management_Center'))
+        if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
             $query = Branch::query();
         }
@@ -773,7 +774,7 @@ class ReportService
 
     public function report_6()
     {
-        if(auth()->user()->hasPermission('Purchasing_Management_Center'))
+        if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
 
             $query = Application::query()->where('name', '!=', 'null')->get();
@@ -799,7 +800,7 @@ class ReportService
     }
 
     public function report_7(){
-        if(auth()->user()->hasPermission('Purchasing_Management_Center'))
+        if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
 
             $query = Application::query()->where('name', '!=', 'null')->get();
@@ -821,7 +822,7 @@ class ReportService
             ->make(true);
     }
     public function report_8(){
-        if(auth()->user()->hasPermission('Purchasing_Management_Center'))
+        if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
 
             $query = Application::query()->where('name', '!=', 'null')->get();
@@ -868,7 +869,7 @@ class ReportService
 
     public function report_9()
     {
-        if(auth()->user()->hasPermission('Purchasing_Management_Center'))
+        if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
             $query = Branch::query();
         }
@@ -984,7 +985,7 @@ class ReportService
         /** @var User $user */
         $user = auth()->user();
         $a = 'branch_id';
-        if($user->hasPermission('Purchasing_Management_Center'))
+        if($user->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
             $operator = '!=';
             $b = null;

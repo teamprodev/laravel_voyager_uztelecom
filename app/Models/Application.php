@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Services\ApplicationData;
+use App\Enums\ApplicationStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -91,7 +91,7 @@ class Application extends Model
                 break;
             case 5:
                 {
-                    $result = $query->where('status', ApplicationData::Status_Accepted);
+                    $result = $query->where('status', ApplicationStatusEnum::Accepted);
                 }
                 break;
             //HEAD OF DEPARTMENT of user who created APPLICATION
