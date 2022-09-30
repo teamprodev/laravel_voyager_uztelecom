@@ -845,7 +845,7 @@ class ApplicationService
             $this->sendNotifications($array, $application, $message);
         }
         if (isset($data['draft'])) {
-            if ($data['draft'] === 1)
+            if ($data['draft'] == 1)
                 $data['status'] = ApplicationData::Status_Draft;
         }
         if (isset($data['performer_status'])) {
