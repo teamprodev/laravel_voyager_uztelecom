@@ -537,9 +537,6 @@ class ReportService
             $query = $this->application_query()->where('branch_id',auth()->user()->branch_id)->where('draft','!=',1)->get();
         }
         return Datatables::of($query)
-            ->addColumn('name', function($branch){
-                return Branch::find($branch->branch_id)->pluck('name')->toArray();
-            })
             ->editColumn('branch_id', function($application)
             {
                 return $application->branch_id ? $application->branch->name:"";
