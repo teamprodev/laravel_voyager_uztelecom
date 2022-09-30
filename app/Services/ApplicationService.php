@@ -365,6 +365,12 @@ class ApplicationService
                 $status_distributed = __('distributed');
                 $status_cancelled = __('cancelled');
                 $status_overdue = __('overdue');
+                if ($query->performer_status !== null) {
+                    $a = StatusExtented::find($query->performer_status);
+                    return $this->status($a->name);
+                } else {
+                    return view('site.applications.colors', compact('status'));
+                }
                 switch($status)
                 {
                     case $query->performer_status !== null:
@@ -545,7 +551,8 @@ class ApplicationService
                         <a href='{$edit}' class='m-1 col edit btn btn-success btn-sm'>$app_edit</a>
                         <a href='{$show}' class='m-1 col show btn btn-warning btn-sm'>$app_show</a>
                         <a href='{$clone}' class='m-1 col show btn btn-primary btn-sm'>$app_clone</a>
-                        <a href='{$destroy}' class='m-1 col show btn btn-danger btn-sm'>$app_delete</a></div>";
+                        <a href='{$destroy}' class='m-1 col show btn btn-danger btn-sm'>$app_delete</a>
+                        </div>";
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -647,73 +654,6 @@ class ApplicationService
         $perms['PerformerLeader'] = $application->performer_role_id === $user->role_id && $user->leader === 1;
         $perms['Signers'] = ($access && $user->hasPermission(PermissionEnum::Company_Signer||PermissionEnum::Add_Company_Signer||PermissionEnum::Branch_Signer||PermissionEnum::Add_Branch_Signer||PermissionEnum::Company_Performer||PermissionEnum::Branch_Performer)) || ($access && $user->role_id === 7 && $application->show_director === 1);
         $status = $application->status;
-        /*$status_new = __('new');
-        $status_in_process = __('in_process');
-        $status_refused = __('refused');
-        $status_agreed = __('agreed');
-        $status_rejected = __('rejected');
-        $status_distributed = __('distributed');
-        $status_cancelled = __('cancelled');
-        $status_overdue = __('overdue');*/
-        switch($status)
-        {
-            case $application->performer_status !== null:
-                $a = StatusExtented::find($application->performer_status);
-                $perms['application_status'] = $this->status_1($a->name);
-                break;
-            /*case ApplicationData::Status_New:
-                $status = setting('color.new');
-                $color = $status ? 'white' : 'black';
-                $status_title = $status_new;
-                break;
-            case ApplicationStatusEnum::In_Process:
-                $status = setting('color.in_process');
-                $color = $status ? 'white' : 'black';
-                $perms['application_status'] = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>{$status_in_process}</div>";
-                break;
-            case ApplicationStatusEnum::Overdue:
-                $status = setting('color.overdue');
-                $color = $status ? 'white' : 'black';
-                $perms['application_status'] = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>{$status_overdue}</div>";
-                break;
-            case ApplicationStatusEnum::Order_Delivered:
-                $status = setting('color.delivered');
-                $color = $status ? 'white' : 'black';
-                $perms['application_status'] = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>товар доставлен</div>";
-                break;
-            case ApplicationStatusEnum::Order_Arrived:
-                $status = setting('color.arrived');
-                $color = $status ? 'white' : 'black';
-                $perms['application_status'] = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>товар прибыл</div>";
-                break;
-            case ApplicationStatusEnum::Refused:
-                $status = setting('color.rejected');
-                $color = $status ? 'white' : 'black';
-                $perms['application_status'] = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>{$status_refused}</div>";
-                break;
-            case ApplicationStatusEnum::Agreed:
-                $status = setting('color.agreed');
-                $color = $status ? 'white' : 'black';
-                $perms['application_status'] = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>{$status_agreed}</div>";
-                break;
-            case ApplicationStatusEnum::Rejected:
-                $status = setting('color.rejected');
-                $color = $status ? 'white' : 'black';
-                $perms['application_status'] = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>{$status_rejected}</div>";
-                break;
-            case ApplicationStatusEnum::Distributed:
-                $status = setting('color.distributed');
-                $color = $status ? 'white' : 'black';
-                $perms['application_status'] = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>{$status_distributed}</div>";
-                break;
-            case ApplicationStatusEnum::Canceled:
-                $status = setting('color.rejected');
-                $color = $status ? 'white' : 'black';
-                $perms['application_status'] = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>{$status_cancelled}</div>";
-                break;*/
-            default:
-                $perms['application_status'] = $application->status;
-        }
         return view('site.applications.show', compact('performer_file', 'branch','perms', 'access_comment', 'performers_company', 'performers_branch', 'file_basis', 'file_tech_spec', 'other_files', 'user', 'application', 'branch', 'signedDocs', 'same_role_user_ids', 'access', 'subjects', 'purchases', 'branch_name', 'check', 'status'));
 
     }
