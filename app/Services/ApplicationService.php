@@ -40,44 +40,33 @@ class ApplicationService
 
     public function index($request,$user)
     {
-        $filial = PermissionRole::where('permission_id', self::Permission_Add_Branch_Signer)->pluck('role_id')->toArray();
-        $company = PermissionRole::where('permission_id', self::Permission_Add_Branch_Signer)->pluck('role_id')->toArray();
-        foreach ($filial as $b) {
-            $a = PermissionRole::where('permission_id', self::Permission_Branch_Signer)->where('role_id', $b)->pluck('role_id')->toArray();
-            PermissionRole::where('permission_id', self::Permission_Branch_Signer)->where('role_id', $a)->delete();
-        }
-        foreach ($company as $b) {
-            $a = PermissionRole::where('permission_id', self::Permission_Company_Signer)->where('role_id', $b)->pluck('role_id')->toArray();
-            PermissionRole::where('permission_id', self::Permission_Company_Signer)->where('role_id', $a)->delete();
-        }
         if ($request->ajax()) {
 
-
             if ($user->hasPermission('Purchasing_Management_Center')) {
-                $a = 'branch_initiator_id';
-                $b = [9, 13];
+                $application = Application::where('draft', '!=', 1)->where('branch_initiator_id','!=',null);
             }elseif($user->hasPermission('Company_Leader') | $user->hasPermission('Branch_Leader')){
                 $a = 'branch_initiator_id';
                 $b = [$user->branch_id];
+                $application = Application::where('draft', '!=', 1)->whereIn($a,$b);
             } else {
                 $a = 'department_initiator_id';
                 $b = [$user->department_id];
+                $application = Application::where('draft', '!=', 1)->whereIn($a,$b);
             }
 
             switch (true){
                 case $user->hasPermission('Add_Company_Signer') && $user->hasPermission('Add_Branch_Signer') :
-                    $query = Application::where('draft', '!=', 1)->whereIn($a, $b)->orWhere('signers', 'like', "%{$user->role_id}%")->where('draft', '!=', 1)->orWhere('performer_role_id', $user->role->id)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
+                    $query = $application->orWhere('signers', 'like', "%{$user->role_id}%")->where('draft', '!=', 1)->orWhere('performer_role_id', $user->role->id)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
                     break;
                 case $user->hasPermission(PermissionEnum::Warehouse) :
                     $status_0 = ApplicationData::Status_Accepted;
-                    $status_1 = 'товар';
-                    $query = Application::where('draft', '!=', 1)->whereIn($a, $b)->where('status', 'like', "%{$status_0}%")->OrwhereIn($a, $b)->where('status', 'like', "%{$status_1}%")->orWhere('user_id', auth()->user()->id)->get();
+                    $query = $application->where('status', 'like', "%{$status_0}%")->orWhere('user_id', auth()->user()->id)->get();
                     break;
                 case $user->hasPermission('Company_Leader') && $user->hasPermission('Branch_Leader') :
-                    $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
+                    $query = $application->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
                     break;
                 case $user->role_id === 7 :
-                    $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->get();
+                    $query = $application->get();
                     break;
                 case $user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer') || $user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'):
                     $query = Application::where('draft', '!=', 1)
@@ -88,15 +77,15 @@ class ApplicationService
                         ->where('draft', '!=', 1)->get();
                     break;
                 case $user->hasPermission('Company_Leader') :
-                    $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->where('status', ApplicationData::Status_Agreed)->orWhere('status', ApplicationData::Status_Distributed)->whereIn($a, $b)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
+                    $query = $application->where('status', ApplicationData::Status_Agreed)->orWhere('status', ApplicationData::Status_Distributed)->whereIn($a, $b)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
                     break;
                 case $user->hasPermission('Branch_Leader') :
-                    $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->where('is_more_than_limit', 0)->where('show_leader', 1)->orWhere('is_more_than_limit', 0)->whereIn($a, $b)->where('status', ApplicationData::Status_New)->orWhere('is_more_than_limit', 0)->where('draft', '!=', 1)->whereIn($a, $b)->where('status', ApplicationData::Status_Distributed)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
+                    $query = $application->where('is_more_than_limit', 0)->where('show_leader', 1)->orWhere('is_more_than_limit', 0)->whereIn($a, $b)->where('status', ApplicationData::Status_New)->orWhere('is_more_than_limit', 0)->where('draft', '!=', 1)->whereIn($a, $b)->where('status', ApplicationData::Status_Distributed)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
                     break;
                 case $user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer') :
                     $query = Application::where('performer_role_id', auth()->user()->role_id)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
                     break;
-                default :  $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->get();;
+                default :  $query = $application->get();
                     break;
             }
 
@@ -328,9 +317,9 @@ class ApplicationService
                 $show_e = route('site.applications.show', $row->id);
                 $destroy_e = route('site.applications.destroy', $row->id);
                 $app_edit = __('Изменить');
-                $app_show = __('Показать');;
-                $app_clone = __('Копировать');;
-                $app_delete = __('Удалить');;
+                $app_show = __('Показать');
+                $app_clone = __('Копировать');
+                $app_delete = __('Удалить');
 
                 $boolCheckUser = (int)auth()->user()->id === (int)$row->user_id;
                 $boolCheckRole = (int)$row->performer_role_id === (int)auth()->user()->role_id;
@@ -459,9 +448,9 @@ class ApplicationService
                 $show_e = route('site.applications.show', $row->id);
                 $destroy_e = route('site.applications.destroy', $row->id);
                 $app_edit = __('Изменить');
-                $app_show = __('Показать');;
-                $app_clone = __('Копировать');;
-                $app_delete = __('Удалить');;
+                $app_show = __('Показать');
+                $app_clone = __('Копировать');
+                $app_delete = __('Удалить');
 
                 if (auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id) {
                     $bgcolor = setting('color.edit');
@@ -521,7 +510,7 @@ class ApplicationService
                 return $docs->role ? $docs->role->display_name : "";
             })
             ->editColumn('updated_at', function ($query) {
-                return $query->updated_at ? with(new Carbon($query->updated_at))->format('d.m.Y') : '';;
+                return $query->updated_at ? with(new Carbon($query->updated_at))->format('d.m.Y') : '';
             })
             ->editColumn('status', function ($status) {
                 $status_agreed = __('Согласована');
@@ -577,9 +566,9 @@ class ApplicationService
                     $show = route('site.applications.show', $row->id);
                     $destroy = route('site.applications.destroy', $row->id);
                     $app_edit = __('Изменить');
-                    $app_show = __('Показать');;
-                    $app_clone = __('Копировать');;
-                    $app_delete = __('Удалить');;
+                    $app_show = __('Показать');
+                    $app_clone = __('Копировать');
+                    $app_delete = __('Удалить');
                     if ($row->status === ApplicationData::Status_Accepted || $row->status === ApplicationData::Status_Refused) {
                         $clone = route('site.applications.clone', $row->id);
                     } else {
@@ -1013,9 +1002,9 @@ class ApplicationService
                 $show_e = route('site.applications.show', $row->id);
                 $destroy_e = route('site.applications.destroy', $row->id);
                 $app_edit = __('Изменить');
-                $app_show = __('Показать');;
-                $app_clone = __('Копировать');;
-                $app_delete = __('Удалить');;
+                $app_show = __('Показать');
+                $app_clone = __('Копировать');
+                $app_delete = __('Удалить');
 
                 if (auth()->user()->id == $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id == auth()->user()->role_id) {
                     $bgcolor = setting('color.edit');
