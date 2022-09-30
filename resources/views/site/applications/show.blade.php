@@ -284,6 +284,7 @@
                                 <form action="/delete_file/{{$application->id}}/file_basis" method="post">
                                     @csrf
                                     @foreach($file_basis as $file)
+                                        <button class='btn btn-sm btn-danger'>{{__('Удалить')}}</button>
                                         <input type="text" class="hidden" value="{{$file}}" name="file">
                                         @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
                                             <img src="/storage/uploads/{{$file}}" width="500" height="500"
@@ -296,7 +297,6 @@
                                             <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
                                         @endif
                                         @if($application->user_id === $user->id)
-                                            <button class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
                                         @endif
                                     @endforeach
                                 </form>
@@ -308,6 +308,7 @@
                                 <form action="/delete_file/{{$application->id}}/file_tech_spec" method="post">
                                     @csrf
                                     @foreach($file_tech_spec as $file)
+                                        <button class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
                                         <input type="text" class="hidden" value="{{$file}}" name="file">
                                         @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
                                             <img src="/storage/uploads/{{$file}}" width="500" height="500"
@@ -320,7 +321,7 @@
                                             <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
                                         @endif
                                         @if($application->user_id === $user->id)
-                                            <button class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
+
                                         @endif
                                     @endforeach
                                 </form>
@@ -332,6 +333,7 @@
                                 <form action="/delete_file/{{$application->id}}/other_files" method="post">
                                     @csrf
                                     @foreach($other_files as $file)
+                                        <button class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
                                         <input type="text" class="hidden" value="{{$file}}" name="file">
                                         @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
                                             <img src="/storage/uploads/{{$file}}" width="500" height="500"
@@ -344,7 +346,7 @@
                                             <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
                                         @endif
                                         @if($application->user_id === $user->id)
-                                            <button class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
+                                          
                                         @endif
                                     @endforeach
                                 </form>
