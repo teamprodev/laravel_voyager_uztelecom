@@ -5,8 +5,8 @@ namespace App\Models;
 use App\Services\ApplicationData;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @property $id
@@ -15,6 +15,9 @@ class Application extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    const NOT_DISTRIBUTED = 2;
+
 
     protected $dates = ['deleted_at'];
 
@@ -34,19 +37,22 @@ class Application extends Model
 
     public function performer()
     {
-        return $this->belongsTo(User::class,'performer_user_id','id');
+        return $this->belongsTo(User::class, 'performer_user_id', 'id');
     }
+
     public function performer_role()
     {
-        return $this->belongsTo(Roles::class,'performer_role_id','id');
+        return $this->belongsTo(Roles::class, 'performer_role_id', 'id');
     }
+
     public function performer_leader()
     {
-        return $this->belongsTo(User::class,'performer_leader_user_id','id');
+        return $this->belongsTo(User::class, 'performer_leader_user_id', 'id');
     }
+
     public function branch_leader()
     {
-        return $this->belongsTo(User::class,'branch_leader_user_id','id');
+        return $this->belongsTo(User::class, 'branch_leader_user_id', 'id');
     }
 
     public function notifications()
@@ -117,26 +123,32 @@ class Application extends Model
     {
         return $this->belongsTo(Country::class, 'country_produced_id', 'country_alpha3_code');
     }
+
     public function branch()
     {
         return $this->belongsTo(Branch::class, 'branch_id', 'id');
     }
+
     public function branch_signers()
     {
         return $this->belongsTo(Branch::class, 'branch_initiator_id', 'id');
     }
+
     public function department()
     {
         return $this->belongsTo(Department::class, 'department_initiator_id', 'id')->withDefault(['name' => '']);
     }
+
     public function purchase()
     {
         return $this->belongsTo(Purchase::class, 'type_of_purchase_id', 'id')->withDefault(['name' => '']);
     }
+
     public function subjects()
     {
         return $this->belongsTo(Subject::class, 'subject', 'id')->withDefault(['name' => '']);
     }
+
     public function signedDocs()
     {
         return $this->hasMany(SignedDocs::class);

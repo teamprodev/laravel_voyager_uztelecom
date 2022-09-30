@@ -7,20 +7,20 @@ namespace App\Services;
 use App\Events\Notify;
 use App\Models\Application;
 use App\Models\Branch;
+use App\Models\Country;
 use App\Models\Notification;
 use App\Models\PermissionRole;
 use App\Models\Position;
+use App\Models\Purchase;
 use App\Models\Resource;
+use App\Models\Roles;
 use App\Models\SignedDocs;
 use App\Models\StatusExtented;
+use App\Models\Subject;
 use App\Models\User;
 use App\Models\Warehouse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
-use App\Models\Country;
-use App\Models\Purchase;
-use App\Models\Roles;
-use App\Models\Subject;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
@@ -63,7 +63,7 @@ class ApplicationService
                 $d = [$user->department_id];
             }
 
-            switch (true){
+            switch (true) {
                 case $user->hasPermission('Add_Company_Signer') && $user->hasPermission('Add_Branch_Signer') :
                     $query = Application::where('draft', '!=', 1)->whereIn($a, $b)->orWhere('signers', 'like', "%{$user->role_id}%")->where('draft', '!=', 1)->orWhere('performer_role_id', $user->role->id)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
                     break;
@@ -95,7 +95,8 @@ class ApplicationService
                 case $user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer') :
                     $query = Application::where('performer_role_id', auth()->user()->role_id)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
                     break;
-                default :  $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->get();;
+                default :
+                    $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->get();;
                     break;
             }
 
@@ -138,8 +139,7 @@ class ApplicationService
                     $status_distributed = __('Распределен');
                     $status_cancelled = __('Отменен');
                     $status_overdue = __('просрочен');
-                    switch($status)
-                    {
+                    switch ($status) {
                         case ApplicationData::Status_New:
                             $status = setting('color.new');
                             $color = $status ? 'white' : 'black';
@@ -242,15 +242,15 @@ class ApplicationService
     public function status_table($user)
     {
         if ($user->hasPermission('Purchasing_Management_Center')) {
-                $a = 'branch_initiator_id';
-                $b = [9, 13];
-            } else {
-                $a = 'branch_initiator_id';
-                $b = [$user->branch_id];
+            $a = 'branch_initiator_id';
+            $b = [9, 13];
+        } else {
+            $a = 'branch_initiator_id';
+            $b = [$user->branch_id];
 
-                $c = 'department_initiator_id';
-                $d = [$user->department_id];
-            }
+            $c = 'department_initiator_id';
+            $d = [$user->department_id];
+        }
         $status = setting('admin.show_status');
         $data = Application::whereIn($a, $b)->where('status', $status)->where('name', '!=', null)->get();
         return Datatables::of($data)
@@ -277,8 +277,7 @@ class ApplicationService
                 $status_distributed = __('Распределен');
                 $status_cancelled = __('Отменен');
                 $status_overdue = __('просрочен');
-                switch($status)
-                {
+                switch ($status) {
                     case ApplicationData::Status_New:
                         $status = setting('color.new');
                         $color = $status ? 'white' : 'black';
@@ -377,7 +376,7 @@ class ApplicationService
             $b = [$user->branch_id];
         }
         $status = Cache::get('performer_status_get');
-        $data = Application::WhereIn('branch_initiator_id',[$user->branch_id])->where('status_extended_id', $status)->where('name', '!=', null)->OrWhereIn($a,$b)->where('status', $status)->where('name', '!=', null)->get();
+        $data = Application::WhereIn('branch_initiator_id', [$user->branch_id])->where('status_extended_id', $status)->where('name', '!=', null)->OrWhereIn($a, $b)->where('status', $status)->where('name', '!=', null)->get();
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('user_id', function ($docs) {
@@ -405,8 +404,7 @@ class ApplicationService
                 $status_distributed = __('Распределен');
                 $status_cancelled = __('Отменен');
                 $status_overdue = __('просрочен');
-                switch($status)
-                {
+                switch ($status) {
                     case ApplicationData::Status_New:
                         $status = setting('color.new');
                         $color = $status ? 'white' : 'black';
@@ -687,9 +685,9 @@ class ApplicationService
         $perms['NumberChange'] = $user->hasPermission('Number_Change') && !$user->hasPermission('Plan_Budget') && !$user->hasPermission('Plan_Business');
         $perms['Plan'] = ($check && $user->hasPermission('Plan_Budget')) || ($user->hasPermission('Plan_Business') && $check);
         $perms['PerformerLeader'] = $application->performer_role_id === $user->role_id && $user->leader === 1;
-        $perms['Signers'] = ($access && $user->hasPermission('Company_Signer'||'Add_Company_Signer'||'Branch_Signer'||'Add_Branch_Signer'||'Company_Performer'||'Branch_Performer')) || ($access && $user->role_id === 7 && $application->show_director === 1);
+        $perms['Signers'] = ($access && $user->hasPermission('Company_Signer' || 'Add_Company_Signer' || 'Branch_Signer' || 'Add_Branch_Signer' || 'Company_Performer' || 'Branch_Performer')) || ($access && $user->role_id === 7 && $application->show_director === 1);
 
-        return view('site.applications.show', compact('performer_file', 'branch','perms', 'access_comment', 'performers_company', 'performers_branch', 'file_basis', 'file_tech_spec', 'other_files', 'user', 'application', 'branch', 'signedDocs', 'same_role_user_ids', 'access', 'subjects', 'purchases', 'branch_name', 'check'));
+        return view('site.applications.show', compact('performer_file', 'branch', 'perms', 'access_comment', 'performers_company', 'performers_branch', 'file_basis', 'file_tech_spec', 'other_files', 'user', 'application', 'branch', 'signedDocs', 'same_role_user_ids', 'access', 'subjects', 'purchases', 'branch_name', 'check'));
 
     }
 
@@ -761,7 +759,7 @@ class ApplicationService
             $application->status = ApplicationData::Status_New;
             $message = "{$application->id} " . "{$application->name} " . setting('admin.application_created');
             $this->sendNotifications($array, $application, $message);
-        }elseif ($application->signers === null) {
+        } elseif ($application->signers === null) {
             $data['signers'] = $roles;
             $array = json_decode($roles);
             foreach ($array as $signers) {
@@ -811,7 +809,7 @@ class ApplicationService
 
         $result = $application->update($data);
         if ($result)
-            return redirect()->route('site.applications.show',$application->id);
+            return redirect()->route('site.applications.show', $application->id);
 
         return redirect()->back()->with('danger', trans('site.application_failed'));
     }
@@ -823,7 +821,7 @@ class ApplicationService
         $application->status = 'new';
         if ($request->is_more_than_limit === 1) {
             $application->branch_initiator_id = 9;
-        }else{
+        } else {
             $application->branch_initiator_id = auth()->user()->branch_id;
         }
         $application->branch_id = auth()->user()->branch_id;
@@ -857,10 +855,11 @@ class ApplicationService
 
     }
 
-    public function StatusChangeToPerformerStatus(){
+    public function StatusChangeToPerformerStatus()
+    {
         $applications = Application::all();
         foreach ($applications as $application) {
-            $application = Application::where('performer_status', '!=', null)->update(['status'=> DB::raw("performer_status") ]);
+            $application = Application::where('performer_status', '!=', null)->update(['status' => DB::raw("performer_status")]);
         }
     }
 
@@ -870,8 +869,7 @@ class ApplicationService
 
         $status_performed = __('Товар доставлен');
 
-        switch($status)
-        {
+        switch ($status) {
             case 'Принята':
                 $status = setting('color.accepted');
                 $color = $status ? 'white' : 'black';
@@ -903,6 +901,30 @@ class ApplicationService
                             <div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_performed}</div>
                             </div>";
         }
+    }
+
+    /*
+     * Check open components (site.applications.form_edit)
+    */
+    public static function checkFormEdit(Application $application, $authId)
+    {
+        return ($application->user_id == $authId && $application->show_leader != Application::NOT_DISTRIBUTED);
+    }
+
+    /*
+     * Check open components (site.applications.performer)
+    */
+    public static function checkPerformer(Application $application, User $user)
+    {
+        return (($user->hasPermission('Branch_Performer') && $application->user_id != $user->id) || ($user->hasPermission('Company_Performer') && $application->user_id != $user->id) || $application->performer_role_id == $user->role_id);
+    }
+
+    /*
+         * Check open components (site.applications.warehouse)
+        */
+    public static function checkWarehouse(Application $application, User $user)
+    {
+        return ($user->hasPermission('Warehouse') && $application->status == ApplicationData::Status_Accepted) || ($user->hasPermission('Warehouse') && $application->status == ApplicationData::Status_Order_Delivered) || ($user->hasPermission('Warehouse') && $application->status == ApplicationData::Status_Order_Arrived);
     }
 
 }
