@@ -230,17 +230,14 @@ class ApplicationService
     public function status_table($user)
     {
         if ($user->hasPermission('Purchasing_Management_Center')) {
-                $a = 'branch_initiator_id';
-                $b = [9, 13];
+                $application = Application::where('branch_initiator_id','!=',null);
             } else {
                 $a = 'branch_initiator_id';
                 $b = [$user->branch_id];
-
-                $c = 'department_initiator_id';
-                $d = [$user->department_id];
+                $application = Application::whereIn($a, $b);
             }
         $status = setting('admin.show_status');
-        $data = Application::whereIn($a, $b)->where('performer_status', $status)->where('name', '!=', null)->get();
+        $data = $application->where('status', $status)->get();
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('user_id', function ($docs) {
