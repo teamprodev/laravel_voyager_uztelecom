@@ -278,7 +278,7 @@
                 </div>
                 <div class="flex flex-col">
                     <div class="flex-direction: column">
-                        @if($file_basis !== 'null' && $file_basis !== null)
+                        @if($file_basis !== 'null' && $file_basis !== null && $file_basis !== [])
                             <div class="my-5">
                                 <h5 class="text-left">{{ __('Основание') }}</h5>
                                 <form action="/delete_file/{{$application->id}}/file_basis" method="post">
@@ -302,7 +302,7 @@
                                 </form>
                             </div>
                         @endif
-                        @if($file_tech_spec !== 'null' && $file_tech_spec !== null)
+                        @if($file_tech_spec !== 'null' && $file_tech_spec !== null && $file_tech_spec !== [])
                             <div class="mb-5">
                                 <h5 class="text-left">{{ __('Техническое задание') }}</h5>
                                 <form action="/delete_file/{{$application->id}}/file_tech_spec" method="post">
@@ -326,7 +326,7 @@
                                 </form>
                             </div>
                         @endif
-                        @if($other_files !== 'null' && $other_files !== null)
+                        @if($other_files !== 'null' && $other_files !== null && $other_files !== [])
                             <div class="mb-5" style="width: 80%">
                                 <h5 class="text-left">{{ __('Другие документы необходимые для запуска закупочной процедуры') }}</h5>
                                 <form action="/delete_file/{{$application->id}}/other_files" method="post">
@@ -665,7 +665,7 @@
             </div>
             <div class="w-1/2">
                 <div class="mb-5">
-                    @if($performer_file !== 'null' && $performer_file !== null)
+                    @if($performer_file !== 'null' && $performer_file !== null && $performer_file !== [])
                         <h5 class="text-left">{{ __('Файл исполнителя') }}</h5>
                         @foreach($performer_file as $file)
                             @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
