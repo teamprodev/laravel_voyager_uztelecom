@@ -69,7 +69,7 @@ class ApplicationService
                     $query = Application::where('draft', '!=', 1)->whereIn($a, $b)->orWhere('signers', 'like', "%{$user->role_id}%")->where('draft', '!=', 1)->orWhere('performer_role_id', $user->role->id)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
                     break;
                 case $user->hasPermission(PermissionEnum::Warehouse) :
-                    $status_0 = ApplicationData::Status_Accepted;
+                    $status_0 = ApplicationStatusEnum::Accepted;
                     $status_1 = 'товар';
                     $query = Application::where('draft', '!=', 1)->whereIn($a, $b)->where('status', 'like', "%{$status_0}%")->OrwhereIn($a, $b)->where('status', 'like', "%{$status_1}%")->orWhere('user_id', auth()->user()->id)->get();
                     break;
@@ -88,10 +88,10 @@ class ApplicationService
                         ->where('draft', '!=', 1)->get();
                     break;
                 case $user->hasPermission('Company_Leader') :
-                    $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->where('status', ApplicationData::Status_Agreed)->orWhere('status', ApplicationData::Status_Distributed)->whereIn($a, $b)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
+                    $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->where('status', ApplicationStatusEnum::Agreed)->orWhere('status', ApplicationStatusEnum::Distributed)->whereIn($a, $b)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
                     break;
                 case $user->hasPermission('Branch_Leader') :
-                    $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->where('is_more_than_limit', 0)->where('show_leader', 1)->orWhere('is_more_than_limit', 0)->whereIn($a, $b)->where('status', ApplicationData::Status_New)->orWhere('is_more_than_limit', 0)->where('draft', '!=', 1)->whereIn($a, $b)->where('status', ApplicationData::Status_Distributed)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
+                    $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->where('is_more_than_limit', 0)->where('show_leader', 1)->orWhere('is_more_than_limit', 0)->whereIn($a, $b)->where('status', ApplicationStatusEnum::New)->orWhere('is_more_than_limit', 0)->where('draft', '!=', 1)->whereIn($a, $b)->where('status', ApplicationStatusEnum::Distributed)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
                     break;
                 case $user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer') :
                     $query = Application::where('performer_role_id', auth()->user()->role_id)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
@@ -144,43 +144,43 @@ class ApplicationService
                         case $query->performer_status !== null:
                             $a = StatusExtented::find($query->performer_status);
                             return $this->status($a->name);
-                        case ApplicationData::Status_New:
+                        case ApplicationStatusEnum::New:
                             $status = setting('color.new');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_new}</div>";
-                        case ApplicationData::Status_In_Process:
+                        case ApplicationStatusEnum::In_Process:
                             $status = setting('color.in_process');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_in_process}</div>";
-                        case ApplicationData::Status_Overdue:
+                        case ApplicationStatusEnum::Overdue:
                             $status = setting('color.overdue');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_overdue}</div>";
-                        case ApplicationData::Status_Order_Delivered:
+                        case ApplicationStatusEnum::Order_Delivered:
                             $status = setting('color.delivered');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>товар доставлен</div>";
-                        case ApplicationData::Status_Order_Arrived:
+                        case ApplicationStatusEnum::Order_Arrived:
                             $status = setting('color.arrived');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>товар прибыл</div>";
-                        case ApplicationData::Status_Refused:
+                        case ApplicationStatusEnum::Refused:
                             $status = setting('color.rejected');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_refused}</div>";
-                        case ApplicationData::Status_Agreed:
+                        case ApplicationStatusEnum::Agreed:
                             $status = setting('color.agreed');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_agreed}</div>";
-                        case ApplicationData::Status_Rejected:
+                        case ApplicationStatusEnum::Rejected:
                             $status = setting('color.rejected');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_rejected}</div>";
-                        case ApplicationData::Status_Distributed:
+                        case ApplicationStatusEnum::Distributed:
                             $status = setting('color.distributed');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_distributed}</div>";
-                        case ApplicationData::Status_Canceled:
+                        case ApplicationStatusEnum::Canceled:
                             $status = setting('color.rejected');
                             $color = $status ? 'white' : 'black';
                             return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_cancelled}</div>";
@@ -210,14 +210,14 @@ class ApplicationService
                     $bgcolor = setting('color.show');
                     $color = $bgcolor ? 'white' : 'black';
                     $show = "<a href='{$show_e}' class='m-1 col show btn btn-outline-danger showbtn'>$app_show</a>";
-                    if ($row->user_id === auth()->user()->id && $row->show_director !== 2 && $row->show_leader !== 2 && $row->status !== ApplicationData::Status_Refused) {
+                    if ($row->user_id === auth()->user()->id && $row->show_director !== 2 && $row->show_leader !== 2 && $row->status !== ApplicationStatusEnum::Refused) {
                         $bgcolor = setting('color.delete');
                         $color = $bgcolor ? 'white' : 'black';
                         $destroy = "<a href='{$destroy_e}' class='m-1 col show btn btn-outline-danger deletebtn' onclick='return confirm(`$app_delete_confirm`)'>$app_delete</a>";
                     } else {
                         $destroy = "";
                     }
-                    if (($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Rejected)) {
+                    if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
                         $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>$app_clone</a>";
                     } else {
                         $clone = "";
@@ -282,38 +282,38 @@ class ApplicationService
                     case $query->performer_status !== null:
                         $a = StatusExtented::find($query->performer_status);
                         return $this->status($a->name);
-                    case ApplicationData::Status_New:
+                    case ApplicationStatusEnum::New:
                         $status = setting('color.new');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_new}</div>";
                         break;
-                    case ApplicationData::Status_In_Process:
+                    case ApplicationStatusEnum::In_Process:
                         $status = setting('color.in_process');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_in_process}</div>";
-                    case ApplicationData::Status_Overdue:
+                    case ApplicationStatusEnum::Overdue:
                         $status = setting('color.overdue');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_overdue}</div>";
-                    case ApplicationData::Status_Refused:
+                    case ApplicationStatusEnum::Refused:
                         $status = setting('color.rejected');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_refused}</div>";
-                    case ApplicationData::Status_Agreed:
+                    case ApplicationStatusEnum::Agreed:
                         $status = setting('color.agreed');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_agreed}</div>";
-                    case ApplicationData::Status_Rejected:
+                    case ApplicationStatusEnum::Rejected:
                         $status = setting('color.rejected');
                         $color = $status ? 'white' : 'black';
                         $statusText = $status_rejected;
 
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_rejected}</div>";
-                    case ApplicationData::Status_Distributed:
+                    case ApplicationStatusEnum::Distributed:
                         $status = setting('color.distributed');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_distributed}</div>";
-                    case ApplicationData::Status_Canceled:
+                    case ApplicationStatusEnum::Canceled:
                         $status = setting('color.rejected');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_cancelled}</div>";
@@ -352,7 +352,7 @@ class ApplicationService
                 } else {
                     $destroy = "";
                 }
-                if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Rejected)) {
+                if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
                     $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>$app_clone</a>";
                 } else {
                     $clone = "";
@@ -415,36 +415,36 @@ class ApplicationService
                     case $query->performer_status !== null:
                         $a = StatusExtented::find($query->performer_status);
                         return $this->status($a->name);
-                    case ApplicationData::Status_New:
+                    case ApplicationStatusEnum::New:
                         $status = setting('color.new');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_new}</div>";
                         break;
-                    case ApplicationData::Status_In_Process:
+                    case ApplicationStatusEnum::In_Process:
                         $status = setting('color.in_process');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_in_process}</div>";
-                    case ApplicationData::Status_Overdue:
+                    case ApplicationStatusEnum::Overdue:
                         $status = setting('color.overdue');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_overdue}</div>";
-                    case ApplicationData::Status_Refused:
+                    case ApplicationStatusEnum::Refused:
                         $status = setting('color.rejected');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_refused}</div>";
-                    case ApplicationData::Status_Agreed:
+                    case ApplicationStatusEnum::Agreed:
                         $status = setting('color.agreed');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_agreed}</div>";
-                    case ApplicationData::Status_Rejected:
+                    case ApplicationStatusEnum::Rejected:
                         $status = setting('color.rejected');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_rejected}</div>";
-                    case ApplicationData::Status_Distributed:
+                    case ApplicationStatusEnum::Distributed:
                         $status = setting('color.distributed');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_distributed}</div>";
-                    case ApplicationData::Status_Canceled:
+                    case ApplicationStatusEnum::Canceled:
                         $status = setting('color.rejected');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_cancelled}</div>";
@@ -480,7 +480,7 @@ class ApplicationService
                 } else {
                     $destroy = "";
                 }
-                if (($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Rejected)) {
+                if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
                     $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>$app_clone</a>";
                 } else {
                     $clone = "";
@@ -505,7 +505,7 @@ class ApplicationService
         $clone = Application::findOrFail($id);
         $application = $clone->replicate();
         $application->signers = null;
-        $application->status = ApplicationData::Status_New;
+        $application->status = ApplicationStatusEnum::New;
         $application->save();
         return redirect()->back();
     }
@@ -548,7 +548,7 @@ class ApplicationService
         $application->branch_initiator_id = $user->branch_id;
         $application->branch_id = $user->branch_id;
         $application->department_initiator_id = $user->department_id;
-        $application->status = ApplicationData::Status_New;
+        $application->status = ApplicationStatusEnum::New;
         $application->save();
         return redirect()->route('site.applications.edit', $application->id);
     }
@@ -580,7 +580,7 @@ class ApplicationService
                     $app_show = __('Показать');;
                     $app_clone = __('Копировать');;
                     $app_delete = __('Удалить');;
-                    if ($row->status === ApplicationData::Status_Accepted || $row->status === ApplicationData::Status_Refused) {
+                    if ($row->status === ApplicationStatusEnum::Accepted || $row->status === ApplicationStatusEnum::Refused) {
                         $clone = route('site.applications.clone', $row->id);
                     } else {
                         $clone = '#';
@@ -706,52 +706,52 @@ class ApplicationService
                 $a = StatusExtented::find($application->performer_status);
                 $perms['application_status'] = $this->status_1($a->name);
                 break;
-            case ApplicationData::Status_New:
+            case ApplicationStatusEnum::New:
                 $status = setting('color.new');
                 $color = $status ? 'white' : 'black';
                 $perms['application_status'] = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>{$status_new}</div>";
                 break;
-            case ApplicationData::Status_In_Process:
+            case ApplicationStatusEnum::In_Process:
                 $status = setting('color.in_process');
                 $color = $status ? 'white' : 'black';
                 $perms['application_status'] = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>{$status_in_process}</div>";
                 break;
-            case ApplicationData::Status_Overdue:
+            case ApplicationStatusEnum::Overdue:
                 $status = setting('color.overdue');
                 $color = $status ? 'white' : 'black';
                 $perms['application_status'] = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>{$status_overdue}</div>";
                 break;
-            case ApplicationData::Status_Order_Delivered:
+            case ApplicationStatusEnum::Order_Delivered:
                 $status = setting('color.delivered');
                 $color = $status ? 'white' : 'black';
                 $perms['application_status'] = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>товар доставлен</div>";
                 break;
-            case ApplicationData::Status_Order_Arrived:
+            case ApplicationStatusEnum::Order_Arrived:
                 $status = setting('color.arrived');
                 $color = $status ? 'white' : 'black';
                 $perms['application_status'] = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>товар прибыл</div>";
                 break;
-            case ApplicationData::Status_Refused:
+            case ApplicationStatusEnum::Refused:
                 $status = setting('color.rejected');
                 $color = $status ? 'white' : 'black';
                 $perms['application_status'] = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>{$status_refused}</div>";
                 break;
-            case ApplicationData::Status_Agreed:
+            case ApplicationStatusEnum::Agreed:
                 $status = setting('color.agreed');
                 $color = $status ? 'white' : 'black';
                 $perms['application_status'] = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>{$status_agreed}</div>";
                 break;
-            case ApplicationData::Status_Rejected:
+            case ApplicationStatusEnum::Rejected:
                 $status = setting('color.rejected');
                 $color = $status ? 'white' : 'black';
                 $perms['application_status'] = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>{$status_rejected}</div>";
                 break;
-            case ApplicationData::Status_Distributed:
+            case ApplicationStatusEnum::Distributed:
                 $status = setting('color.distributed');
                 $color = $status ? 'white' : 'black';
                 $perms['application_status'] = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>{$status_distributed}</div>";
                 break;
-            case ApplicationData::Status_Canceled:
+            case ApplicationStatusEnum::Canceled:
                 $status = setting('color.rejected');
                 $color = $status ? 'white' : 'black';
                 $perms['application_status'] = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>{$status_cancelled}</div>";
@@ -797,8 +797,8 @@ class ApplicationService
     {
         $now = Carbon::now();
         $data = $request->validated();
-//        if (auth()->id() == $application->user_id && $application->status == ApplicationData::Status_Refused || auth()->id() == $application->user_id && $application->status == ApplicationData::Status_Rejected) {
-//            $data['status'] = ApplicationData::Status_New;
+//        if (auth()->id() == $application->user_id && $application->status == ApplicationStatusEnum::Refused || auth()->id() == $application->user_id && $application->status == ApplicationStatusEnum::Rejected) {
+//            $data['status'] = ApplicationStatusEnum::New;
 //            $signedDocs = SignedDocs::where('application_id', $application->id)->get();
 //            foreach ($signedDocs as $doc) {
 //
@@ -846,11 +846,11 @@ class ApplicationService
         }
         if (isset($data['draft'])) {
             if ($data['draft'] === 1)
-                $data['status'] = ApplicationData::Status_Draft;
+                $data['status'] = ApplicationStatusEnum::Draft;
         }
         if (isset($data['performer_status'])) {
             $application->performer_user_id = $user->id;
-            $application->status = ApplicationData::Status_Extended;
+            $application->status = ApplicationStatusEnum::Extended;
         }
         if (isset($data['performer_leader_comment'])) {
             $data['performer_leader_comment_date'] = $now->toDateTimeString();
@@ -866,13 +866,13 @@ class ApplicationService
             } else {
                 $explode = explode(',', $data['resource_id']);
                 $data['resource_id'] = json_encode($explode);
-//                $application->status = ApplicationData::Status_New;
+//                $application->status = ApplicationStatusEnum::New;
             }
         }
 
         if (isset($data['performer_role_id'])) {
             $data['performer_received_date'] = $now->toDateTimeString();
-            $data['status'] = ApplicationData::Status_Distributed;
+            $data['status'] = ApplicationStatusEnum::Distributed;
             $data['show_leader'] = 2;
             $data['branch_leader_user_id'] = $user->id;
         }
@@ -963,34 +963,34 @@ class ApplicationService
                     case $query->performer_status !== null:
                         $a = StatusExtented::find($query->performer_status);
                         return $this->status($a->name);
-                    case ApplicationData::Status_New:
+                    case ApplicationStatusEnum::New:
                         $status = setting('color.new');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_new}</div>";
                         break;
-                    case ApplicationData::Status_In_Process:
+                    case ApplicationStatusEnum::In_Process:
                         $status = setting('color.in_process');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_in_process}</div>";
-                    case ApplicationData::Status_Overdue:
+                    case ApplicationStatusEnum::Overdue:
                         $status = setting('color.overdue');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_overdue}</div>";
-                    case ApplicationData::Status_Refused:
+                    case ApplicationStatusEnum::Refused:
                         $status = setting('color.rejected');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_refused}</div>";
-                    case ApplicationData::Status_Agreed:
+                    case ApplicationStatusEnum::Agreed:
                         $status = setting('color.agreed');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_agreed}</div>";
 
 
-                    case ApplicationData::Status_Rejected:
+                    case ApplicationStatusEnum::Rejected:
                         $status = setting('color.rejected');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_rejected}</div>";
-                    case ApplicationData::Status_Distributed:
+                    case ApplicationStatusEnum::Distributed:
 
                         $status = setting('color.distributed');
                         $color = $status ? 'white' : 'black';
@@ -998,7 +998,7 @@ class ApplicationService
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_distributed}</div>";
 
 
-                    case ApplicationData::Status_Canceled:
+                    case ApplicationStatusEnum::Canceled:
                         $status = setting('color.rejected');
                         $color = $status ? 'white' : 'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_cancelled}</div>";
@@ -1034,7 +1034,7 @@ class ApplicationService
                 } else {
                     $destroy = "";
                 }
-                if (($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Rejected)) {
+                if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
                     $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>$app_clone</a>";
                 } else {
                     $clone = "";

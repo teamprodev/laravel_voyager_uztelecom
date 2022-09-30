@@ -5,7 +5,7 @@ namespace Tests\Unit;
 use App\Models\Application;
 use App\Models\Notification;
 use App\Models\SignedDocs;
-use App\Services\ApplicationData;
+use App\Enums\ApplicationStatusEnum;
 use Illuminate\Support\Carbon;
 use Tests\TestCase;
 use Yajra\DataTables\DataTables;
@@ -25,7 +25,7 @@ class ApplicationServiceTest extends TestCase
         $application->branch_initiator_id = 1;
         $application->department_initiator_id = 1;
         $application->is_more_than_limit = 0;
-        $application->status = ApplicationData::Status_New;
+        $application->status = ApplicationStatusEnum::New;
         $data = $application->save();
         $this->assertTrue($data);
     }
@@ -43,7 +43,7 @@ class ApplicationServiceTest extends TestCase
         $clone = Application::find(1);
         $application = $clone->replicate();
         $application->signers = null;
-        $application->status = ApplicationData::Status_New;
+        $application->status = ApplicationStatusEnum::New;
         $application->save();
     }
     public function test_SignedDocs()
@@ -113,7 +113,7 @@ class ApplicationServiceTest extends TestCase
     {
         $application = Application::find(1);
         if($application->draft == 1)
-            $application->status = ApplicationData::Status_Draft;
+            $application->status = ApplicationStatusEnum::Draft;
 
         $application->update();
     }

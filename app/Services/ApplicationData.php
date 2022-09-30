@@ -34,11 +34,4 @@ class ApplicationData
     public const Status_Contract_Concluded = 'contract_concluded';
     public const Status_Draft = 'draft';
 
-
-
-
-
-
-
-
 }

@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Application;
 use App\Models\StatusExtented;
-use App\Services\ApplicationData;
+use App\Enums\ApplicationStatusEnum;
 use Illuminate\Console\Command;
 
 class PerformerStatus extends Command
@@ -46,7 +46,7 @@ class PerformerStatus extends Command
             $update = StatusExtented::where('name',$app->performer_status)->first();
             if($app->status === $update)
             {
-                    $app->status = ApplicationData::Status_Extended;
+                    $app->status = ApplicationStatusEnum::Extended;
             }
             $app->performer_status = $update->id;
             $app->status_extended_id = $update->id;

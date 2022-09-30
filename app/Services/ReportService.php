@@ -12,6 +12,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Purchase;
 use Yajra\DataTables\DataTables;
+use App\Enums\ApplicationStatusEnum;
 
 class ReportService
 {
@@ -578,69 +579,69 @@ class ReportService
                 $status_overdue = ('просрочен');
 
                 switch ($query){
-                    case ApplicationData::Status_New:
+                    case ApplicationStatusEnum::New:
                         $status = setting('color.new');
                         $color = $status ? 'white':'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_new}</div>";
-                    case ApplicationData::Status_In_Process:
+                    case ApplicationStatusEnum::In_Process:
                         $status = setting('color.in_process');
                         $color = $status ? 'white':'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_in_process}</div>";
-                    case ApplicationData::Status_Overdue:
+                    case ApplicationStatusEnum::Overdue:
                         $status = setting('color.overdue');
                         $color = $status ? 'white':'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_overdue}</div>";
-                    case ApplicationData::Status_Accepted:
+                    case ApplicationStatusEnum::Accepted:
                         $status = setting('color.accepted');
                         $color = $status ? 'white':'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_accepted}</div>";
-                    case ApplicationData::Status_Refused:
+                    case ApplicationStatusEnum::Refused:
                         $status = setting('color.rejected');
                         $color = $status ? 'white':'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_refused}</div>";
-                    case ApplicationData::Status_Agreed:
+                    case ApplicationStatusEnum::Agreed:
                         $status = setting('color.agreed');
                         $color = $status ? 'white':'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_agreed}</div>";
-                    case ApplicationData::Status_Rejected:
+                    case ApplicationStatusEnum::Rejected:
                         $status = setting('color.rejected');
                         $color = $status ? 'white':'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_rejected}</div>";
-                    case ApplicationData::Status_Distributed:
+                    case ApplicationStatusEnum::Distributed:
                         $status = setting('color.distributed');
                         $color = $status ? 'white':'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_distributed}</div>";
-                    case ApplicationData::Status_Canceled:
+                    case ApplicationStatusEnum::Canceled:
                         $status = setting('color.rejected');
                         $color = $status ? 'white':'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_cancelled}</div>";
-                    case ApplicationData::Status_Partially_Completed:
+                    case ApplicationStatusEnum::Partially_Completed:
                         $status = setting('color.partially');
                         $color = $status ? 'white':'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Выполнено частично</div>";
-                    case ApplicationData::Status_Completed_Full:
+                    case ApplicationStatusEnum::Completed_Full:
                         $status = setting('color.total_volume');
                         $color = $status ? 'white':'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Выполнено в полном объёме</div>";
-                    case ApplicationData::Status_Management_Canceled:
+                    case ApplicationStatusEnum::Management_Canceled:
                         $status = setting('color.nulled_by_management');
                         $color = $status ? 'white':'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Заявка аннулирована по заданию руководства</div>";
-                    case ApplicationData::Status_Uztelecom_Canceled:
+                    case ApplicationStatusEnum::Uztelecom_Canceled:
                         $status = setting('color.nulled_by_management');
                         $color = $status ? 'white':'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Договор аннулирован по инициативе Узбектелеком</div>";
-                    case ApplicationData::Status_Application_Uztelecom:
+                    case ApplicationStatusEnum::Application_Uztelecom:
                         $status = setting('color.nulled_by_management');
                         $color = $status ? 'white':'black';
                         return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>заявка передана в Узтелеком</div>";
-                    case ApplicationData::Status_Order_Delivered:
+                    case ApplicationStatusEnum::Order_Delivered:
                         $status = setting('color.delivered');
                         $color = $status ? 'white':'black';
                         return "<div class='row'>
                         <div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_performed}</div>
                         </div>";
-                    case ApplicationData::Status_Contract_Concluded:
+                    case ApplicationStatusEnum::Contract_Concluded:
                         $status = setting('color.concluded');
                         $color = $status ? 'white' : 'black';
                         return "<div class='row'>

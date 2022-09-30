@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon as Date;
 use Illuminate\Support\Facades\File;
-use App\Services\ApplicationData;
+use App\Enums\ApplicationStatusEnum;
 
 class ApplicationController extends Controller
 {
@@ -192,9 +192,9 @@ class ApplicationController extends Controller
     }
     public function change_status()
     {
-        $applications = Application::where('performer_role_id','!=',null)->where('status',ApplicationData::Status_In_Process)->get();
+        $applications = Application::where('performer_role_id','!=',null)->where('status',ApplicationStatusEnum::In_Process)->get();
         foreach ($applications as $application) {
-            $application->status = ApplicationData::Status_Distributed;
+            $application->status = ApplicationStatusEnum::Distributed;
             $application->show_leader = 2;
             $application->save();
         }
@@ -215,20 +215,20 @@ class ApplicationController extends Controller
             });
             $roles_need_sign = json_decode($docs->signers);
             switch (true){
-                case in_array(7, $agreedUsers->toArray()) && $docs->status === ApplicationData::Status_In_Process:
-                    $docs->status = ApplicationData::Status_Agreed;
+                case in_array(7, $agreedUsers->toArray()) && $docs->status === ApplicationStatusEnum::In_Process:
+                    $docs->status = ApplicationStatusEnum::Agreed;
                     $docs->show_director = 2;
                     $docs->show_leader = 1;
                     break;
-                case count(array_diff($roles_need_sign, $agreedUsers->toArray())) === 1 && $docs->is_more_than_limit === 1 && $docs->show_leader === null && $docs->status === ApplicationData::Status_In_Process :
+                case count(array_diff($roles_need_sign, $agreedUsers->toArray())) === 1 && $docs->is_more_than_limit === 1 && $docs->show_leader === null && $docs->status === ApplicationStatusEnum::In_Process :
                     $docs->show_director = 1;
-                    $docs->status = ApplicationData::Status_In_Process;
+                    $docs->status = ApplicationStatusEnum::In_Process;
                     break;
-                case  array_diff($roles_need_sign, $agreedUsers->toArray()) === null && $docs->is_more_than_limit !== 1 && $docs->show_leader === null && $docs->status === ApplicationData::Status_In_Process :
+                case  array_diff($roles_need_sign, $agreedUsers->toArray()) === null && $docs->is_more_than_limit !== 1 && $docs->show_leader === null && $docs->status === ApplicationStatusEnum::In_Process :
                     $docs->show_leader = 1;
-                    $docs->status = ApplicationData::Status_In_Process;
+                    $docs->status = ApplicationStatusEnum::In_Process;
                     break;
-                case array_diff($roles_need_sign, $agreedUsers->toArray()) !== null && $docs->show_leader === 1 && $docs->status === ApplicationData::Status_In_Process :
+                case array_diff($roles_need_sign, $agreedUsers->toArray()) !== null && $docs->show_leader === 1 && $docs->status === ApplicationStatusEnum::In_Process :
                     $docs->show_leader = null;
                     $docs->performer_role_id = null;
                     $docs->performer_received_date = null;
@@ -236,7 +236,7 @@ class ApplicationController extends Controller
                     $docs->performer_comment_date = null;
                     break;
                 case  in_array(7, $canceledUsers->toArray()) && $docs->show_leader === null :
-                    $docs->status = ApplicationData::Status_Rejected;
+                    $docs->status = ApplicationStatusEnum::Rejected;
                     break;
             }
             $docs->save();

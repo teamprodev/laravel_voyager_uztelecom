@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Services\ApplicationData;
+use App\Enums\ApplicationStatusEnum;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -17,7 +17,7 @@ class CloneMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(($request->application->user_id === auth()->user()->id && $request->application->status === ApplicationData::Status_Canceled ) || ($request->application->user_id === auth()->user()->id && $request->application->status === ApplicationData::Status_Refused) || ($request->application->user_id === auth()->user()->id && $request->application->status === ApplicationData::Status_Rejected))
+        if(($request->application->user_id === auth()->user()->id && $request->application->status === ApplicationStatusEnum::Canceled ) || ($request->application->user_id === auth()->user()->id && $request->application->status === ApplicationStatusEnum::Refused) || ($request->application->user_id === auth()->user()->id && $request->application->status === ApplicationStatusEnum::Rejected))
         {
             return $next($request);
         }
