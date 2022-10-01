@@ -240,5 +240,10 @@
     "за год": "yil uchun",
     "Все": "Hammasi",
     "Дополнительная информация": "Qo'shimcha ma'lumotlar",
-    "Вам нельзя изменить заявку,ибо заявка уже подписана!": "Ilovani o'zgartira olmaysiz, chunki ariza allaqachon imzolangan!"
+    "Вам нельзя изменить заявку,ибо заявка уже подписана!": "Ilovani o'zgartira olmaysiz, chunki ariza allaqachon imzolangan!",
+    "edit": "Изменить",
+    "show": "Показать",
+    "clone": "Копировать",
+    "destroy": "Удалить",
+    "confirm": "Вы действительно хотите удалить заявку под номером"
 }

@@ -190,45 +190,24 @@ class ApplicationService
                 })
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $edit_e = route('site.applications.edit', $row->id);
-                    $clone_e = route('site.applications.clone', $row->id);
-                    $show_e = route('site.applications.show', $row->id);
-                    $destroy_e = route('site.applications.destroy', $row->id);
-                    $app_edit = __('Изменить');
-                    $app_show = __('Показать');
-                    $app_clone = __('Копировать');
-                    $app_delete = __('Удалить');
-                    $app_delete_confirm = __("Вы действительно хотите удалить заявку под номером $row->id?");
 
                     if (auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id) {
-                        $bgcolor = setting('color.edit');
-                        $color = $bgcolor ? 'white' : 'black';
-                        $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-outline-danger editbtn'>$app_edit</a>";
-                    } else {
-                        $edit = "";
-                    }
-                    $bgcolor = setting('color.show');
-                    $color = $bgcolor ? 'white' : 'black';
-                    $show = "<a href='{$show_e}' class='m-1 col show btn btn-outline-danger showbtn'>$app_show</a>";
-                    if ($row->user_id === auth()->user()->id && $row->show_director !== 2 && $row->show_leader !== 2 && $row->status !== ApplicationStatusEnum::Refused) {
-                        $bgcolor = setting('color.delete');
-                        $color = $bgcolor ? 'white' : 'black';
-                        $destroy = "<a href='{$destroy_e}' class='m-1 col show btn btn-outline-danger deletebtn' onclick='return confirm(`$app_delete_confirm`)'>$app_delete</a>";
-                    } else {
-                        $destroy = "";
-                    }
-                    if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
-                        $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>$app_clone</a>";
-                    } else {
-                        $clone = "";
+                        $data['edit'] = route('site.applications.edit', $row->id);
                     }
 
-                    return "<div class='row'>
-                        {$edit}
-                        {$show}
-                        {$clone}
-                        {$destroy}
-                        </div>";
+                    $data['show'] = route('site.applications.show', $row->id);
+
+                    if ($row->user_id === auth()->user()->id && $row->show_director !== 2 && $row->show_leader !== 2 && $row->status !== ApplicationStatusEnum::Refused) {
+                        $data['destroy'] = route('site.applications.destroy', $row->id);
+                    }
+
+                    if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
+                        $data['clone'] = route('site.applications.clone', $row->id);
+                    }
+
+                    $confirm = _('confirm') . ' ' . "$row->id?";
+
+                    return view('site.applications.crud_link', compact('data', 'confirm'));
                 })
                 ->rawColumns(['action', 'status'])
                 ->make(true);
@@ -291,34 +270,22 @@ class ApplicationService
                 $boolCheckRole = (int)$row->performer_role_id === (int)auth()->user()->role_id;
 
                 if ($boolCheckUser || $boolCheckRole || auth()->user()->hasPermission(PermissionEnum::Warehouse)) {
-                    $bgcolor = setting('color.edit');
-                    $color = $bgcolor ? 'white' : 'black';
-                    $edit = "<a style='background-color: {$bgcolor};color: {$color}' href='{$edit_e}' class='m-1 col edit btn btn-sm'>$app_edit</a>";
-                } else {
-                    $edit = "";
-                }
-                $bgcolor = setting('color.show');
-                $color = $bgcolor ? 'white' : 'black';
-                $show = "<a style='background-color: {$bgcolor};color: {$color}' href='{$show_e}' class='m-1 col show btn btn-sm'>$app_show</a>";
-                if ($row->user_id == auth()->user()->id) {
-                    $bgcolor = setting('color.delete');
-                    $color = $bgcolor ? 'white' : 'black';
-                    $destroy = "<a style='background-color: {$bgcolor};color: {$color}' href='{$destroy_e}' class='m-1 col show btn btn-sm'>$app_delete</a>";
-                } else {
-                    $destroy = "";
-                }
-                if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
-                    $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>$app_clone</a>";
-                } else {
-                    $clone = "";
+                    $data['edit'] = route('site.applications.edit', $row->id);
                 }
 
-                return "<div class='row'>
-                        {$edit}
-                        {$show}
-                        {$clone}
-                        {$destroy}
-                        </div>";
+                $data['show'] = route('site.applications.show', $row->id);
+
+                if ($row->user_id == auth()->user()->id) {
+                    $data['destroy'] = route('site.applications.destroy', $row->id);
+                }
+
+                if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
+                    $data['clone'] = route('site.applications.clone', $row->id);
+                }
+
+                $confirm = _('confirm') . ' ' . "$row->id?";
+
+                return view('site.applications.crud_link', compact('data', 'confirm'));
             })
             ->rawColumns(['action', 'status'])
             ->make(true);
@@ -357,102 +324,33 @@ class ApplicationService
                  *  Voyager admin paneldan status ranglarini olish va chiqarish
                  */
                 $status = $query->status;
-                $status_new = __('new');
-                $status_in_process = __('in_process');
-                $status_refused = __('refused');
-                $status_agreed = __('agreed');
-                $status_rejected = __('rejected');
-                $status_distributed = __('distributed');
-                $status_cancelled = __('cancelled');
-                $status_overdue = __('overdue');
                 if ($query->performer_status !== null) {
                     $a = StatusExtented::find($query->performer_status);
                     return $this->status($a->name);
                 } else {
                     return view('site.applications.colors', compact('status'));
                 }
-                switch($status)
-                {
-                    case $query->performer_status !== null:
-                        $a = StatusExtented::find($query->performer_status);
-                        return $this->status($a->name);
-                    case ApplicationStatusEnum::New:
-                        $status = setting('color.new');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_new}</div>";
-                        break;
-                    case ApplicationStatusEnum::In_Process:
-                        $status = setting('color.in_process');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_in_process}</div>";
-                    case ApplicationStatusEnum::Overdue:
-                        $status = setting('color.overdue');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_overdue}</div>";
-                    case ApplicationStatusEnum::Refused:
-                        $status = setting('color.rejected');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_refused}</div>";
-                    case ApplicationStatusEnum::Agreed:
-                        $status = setting('color.agreed');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_agreed}</div>";
-                    case ApplicationStatusEnum::Rejected:
-                        $status = setting('color.rejected');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_rejected}</div>";
-                    case ApplicationStatusEnum::Distributed:
-                        $status = setting('color.distributed');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_distributed}</div>";
-                    case ApplicationStatusEnum::Canceled:
-                        $status = setting('color.rejected');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_cancelled}</div>";
-                    default:
-                        return $query;
-                }
             })
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                $edit_e = route('site.applications.edit', $row->id);
-                $clone_e = route('site.applications.clone', $row->id);
-                $show_e = route('site.applications.show', $row->id);
-                $destroy_e = route('site.applications.destroy', $row->id);
-                $app_edit = __('Изменить');
-                $app_show = __('Показать');;
-                $app_clone = __('Копировать');;
-                $app_delete = __('Удалить');;
 
                 if (auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id) {
-                    $bgcolor = setting('color.edit');
-                    $color = $bgcolor ? 'white' : 'black';
-                    $edit = "<a style='background-color: {$bgcolor};color: {$color}' href='{$edit_e}' class='m-1 col edit btn btn-sm'>$app_edit</a>";
-                } else {
-                    $edit = "";
-                }
-                $bgcolor = setting('color.show');
-                $color = $bgcolor ? 'white' : 'black';
-                $show = "<a style='background-color: {$bgcolor};color: {$color}' href='{$show_e}' class='m-1 col show btn btn-sm'>$app_show</a>";
-                if ($row->user_id === auth()->user()->id) {
-                    $bgcolor = setting('color.delete');
-                    $color = $bgcolor ? 'white' : 'black';
-                    $destroy = "<a style='background-color: {$bgcolor};color: {$color}' href='{$destroy_e}' class='m-1 col show btn btn-sm'>$app_delete</a>";
-                } else {
-                    $destroy = "";
-                }
-                if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
-                    $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>$app_clone</a>";
-                } else {
-                    $clone = "";
+                    $data['edit'] = route('site.applications.edit', $row->id);
                 }
 
-                return "<div class='row'>
-                        {$edit}
-                        {$show}
-                        {$clone}
-                        {$destroy}
-                        </div>";
+                $data['show'] = route('site.applications.show', $row->id);
+
+                if ($row->user_id === auth()->user()->id) {
+                    $data['destroy'] = route('site.applications.destroy', $row->id);
+                }
+
+                if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
+                    $data['clone'] = route('site.applications.clone', $row->id);
+                }
+
+                $confirm = _('confirm') . ' ' . "$row->id?";
+
+                return view('site.applications.crud_link', compact('data', 'confirm'));
             })
             ->rawColumns(['action', 'status'])
             ->make(true);
@@ -534,25 +432,16 @@ class ApplicationService
                     return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
                 })
                 ->addColumn('action', function ($row) {
-                    $edit = route('site.applications.edit', $row->id);
-                    $show = route('site.applications.show', $row->id);
-                    $destroy = route('site.applications.destroy', $row->id);
-                    $app_edit = __('Изменить');
-                    $app_show = __('Показать');;
-                    $app_clone = __('Копировать');;
-                    $app_delete = __('Удалить');;
+                    $data['edit'] = route('site.applications.edit', $row->id);
+                    $data['show'] = route('site.applications.show', $row->id);
+                    $data['destroy'] = route('site.applications.destroy', $row->id);
                     if ($row->status === ApplicationStatusEnum::Accepted || $row->status === ApplicationStatusEnum::Refused) {
-                        $clone = route('site.applications.clone', $row->id);
-                    } else {
-                        $clone = '#';
+                        $data['clone'] = route('site.applications.clone', $row->id);
                     }
 
-                    return "<div class='row'>
-                        <a href='{$edit}' class='m-1 col edit btn btn-success btn-sm'>$app_edit</a>
-                        <a href='{$show}' class='m-1 col show btn btn-warning btn-sm'>$app_show</a>
-                        <a href='{$clone}' class='m-1 col show btn btn-primary btn-sm'>$app_clone</a>
-                        <a href='{$destroy}' class='m-1 col show btn btn-danger btn-sm'>$app_delete</a>
-                        </div>";
+                    $confirm = _('confirm') . ' ' . "$row->id?";
+
+                    return view('site.applications.crud_link', compact('data', 'confirm'));
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -825,6 +714,7 @@ class ApplicationService
             $application = Application::where('performer_status', '!=', null)->update(['status'=> DB::raw("performer_status") ]);
         }
     }
+
     public function to_sign_data($user)
     {
         $signedDocs = SignedDocs::where('role_id',$user->role_id)->where('status',null)->pluck('application_id')->toArray();
@@ -845,102 +735,32 @@ class ApplicationService
                  *  Voyager admin paneldan status ranglarini olish va chiqarish
                  */
                 $status = $query->status;
-                $status_new = __('new');
-                $status_in_process = __('in_process');
-                $status_refused = __('refused');
-                $status_agreed = __('agreed');
-                $status_rejected = __('rejected');
-                $status_distributed = __('distributed');
-                $status_cancelled = __('cancelled');
-                $status_overdue = __('overdue');
-                switch($status)
-                {
-                    case $query->performer_status !== null:
-                        $a = StatusExtented::find($query->performer_status);
-                        return $this->status($a->name);
-                    case ApplicationStatusEnum::New:
-                        $status = setting('color.new');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_new}</div>";
-                        break;
-                    case ApplicationStatusEnum::In_Process:
-                        $status = setting('color.in_process');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_in_process}</div>";
-                    case ApplicationStatusEnum::Overdue:
-                        $status = setting('color.overdue');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_overdue}</div>";
-                    case ApplicationStatusEnum::Refused:
-                        $status = setting('color.rejected');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_refused}</div>";
-                    case ApplicationStatusEnum::Agreed:
-                        $status = setting('color.agreed');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_agreed}</div>";
-
-
-                    case ApplicationStatusEnum::Rejected:
-                        $status = setting('color.rejected');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_rejected}</div>";
-                    case ApplicationStatusEnum::Distributed:
-
-                        $status = setting('color.distributed');
-                        $color = $status ? 'white' : 'black';
-
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_distributed}</div>";
-
-
-                    case ApplicationStatusEnum::Canceled:
-                        $status = setting('color.rejected');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_cancelled}</div>";
-                    default:
-                        return $query;
+                if ($query->performer_status !== null) {
+                    $a = StatusExtented::find($query->performer_status);
+                    return $this->status($a->name);
+                } else {
+                    return view('site.applications.colors', compact('status'));
                 }
             })
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                $edit_e = route('site.applications.edit', $row->id);
-                $clone_e = route('site.applications.clone', $row->id);
-                $show_e = route('site.applications.show', $row->id);
-                $destroy_e = route('site.applications.destroy', $row->id);
-                $app_edit = __('Изменить');
-                $app_show = __('Показать');;
-                $app_clone = __('Копировать');;
-                $app_delete = __('Удалить');;
+                $data = array();
 
                 if (auth()->user()->id == $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id == auth()->user()->role_id) {
-                    $bgcolor = setting('color.edit');
-                    $color = $bgcolor ? 'white' : 'black';
-                    $edit = "<a style='background-color: {$bgcolor};color: {$color}' href='{$edit_e}' class='m-1 col edit btn btn-sm'>$app_edit</a>";
-                } else {
-                    $edit = "";
-                }
-                $bgcolor = setting('color.show');
-                $color = $bgcolor ? 'white' : 'black';
-                $show = "<a style='background-color: {$bgcolor};color: {$color}' href='{$show_e}' class='m-1 col show btn btn-sm'>$app_show</a>";
-                if ($row->user_id == auth()->user()->id) {
-                    $bgcolor = setting('color.delete');
-                    $color = $bgcolor ? 'white' : 'black';
-                    $destroy = "<a style='background-color: {$bgcolor};color: {$color}' href='{$destroy_e}' class='m-1 col show btn btn-sm'>$app_delete</a>";
-                } else {
-                    $destroy = "";
-                }
-                if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
-                    $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>$app_clone</a>";
-                } else {
-                    $clone = "";
+                    $data['edit'] = route('site.applications.edit', $row->id);
                 }
 
-                return "<div class='row'>
-                        {$edit}
-                        {$show}
-                        {$clone}
-                        {$destroy}
-                        </div>";
+                $data['show'] = route('site.applications.show', $row->id);
+
+                if ($row->user_id == auth()->user()->id) {
+                    $data['destroy'] = route('site.applications.destroy', $row->id);
+                }
+
+                if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
+                    $data['clone'] = route('site.applications.clone', $row->id);
+                }
+
+                return view('site.applications.crud_link', compact('data'));
             })
             ->rawColumns(['action', 'status'])
             ->make(true);
@@ -995,6 +815,7 @@ class ApplicationService
         }
         return $return_status;
     }
+
     public function status_1(string $status)
     {
         $status_accepted = __('Принята');
