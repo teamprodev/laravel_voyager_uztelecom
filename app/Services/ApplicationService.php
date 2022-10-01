@@ -22,6 +22,7 @@ use App\Models\Warehouse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\DataTables;
 
 class ApplicationService
@@ -712,6 +713,7 @@ class ApplicationService
             'users' => User::where('role_id', 5)->get(),
             'status_extented' => $status_extented,
             'countries' => $countries,
+            'component'=>$this->checkComponentsInclude($application),
             'products' => $select,
             'warehouse' => Warehouse::where('application_id', $application->id)->first(),
             'performer_file' => $performer_file,
@@ -903,28 +905,22 @@ class ApplicationService
         }
     }
 
-    /*
-     * Check open components (site.applications.form_edit)
-    */
-    public static function checkFormEdit(Application $application, $authId)
-    {
-        return ($application->user_id == $authId && $application->show_leader != Application::NOT_DISTRIBUTED);
-    }
 
-    /*
-     * Check open components (site.applications.performer)
-    */
-    public static function checkPerformer(Application $application, User $user)
+    private function checkComponentsInclude($application)
     {
-        return (($user->hasPermission('Branch_Performer') && $application->user_id != $user->id) || ($user->hasPermission('Company_Performer') && $application->user_id != $user->id) || $application->performer_role_id == $user->role_id);
-    }
-
-    /*
-         * Check open components (site.applications.warehouse)
-        */
-    public static function checkWarehouse(Application $application, User $user)
-    {
-        return ($user->hasPermission('Warehouse') && $application->status == ApplicationData::Status_Accepted) || ($user->hasPermission('Warehouse') && $application->status == ApplicationData::Status_Order_Delivered) || ($user->hasPermission('Warehouse') && $application->status == ApplicationData::Status_Order_Arrived);
+        if ($application->user_id == auth()->user()->id && $application->show_leader != Application::NOT_DISTRIBUTED) {
+            return "site.applications.form_edit";
+        } elseif ((auth()->user()->hasPermission('Branch_Performer') && $application->user_id != auth()->user()->id) ||
+            (auth()->user()->hasPermission('Company_Performer') && $application->user_id != auth()->user()->id) ||
+            $application->performer_role_id == auth()->user()->role_id) {
+            return "site.applications.performer";
+        } elseif ((auth()->user()->hasPermission('Warehouse') && $application->status == ApplicationData::Status_Accepted) ||
+            (auth()->user()->hasPermission('Warehouse') && $application->status == ApplicationData::Status_Order_Delivered) ||
+            (auth()->user()->hasPermission('Warehouse') && $application->status == ApplicationData::Status_Order_Arrived)) {
+            return "site.applications.warehouse";
+        } else {
+                Log::debug('В файле ApplicationService, метод checkComponentsInclude(стр.908)',[$application,auth()->user()]);
+        }
     }
 
 }

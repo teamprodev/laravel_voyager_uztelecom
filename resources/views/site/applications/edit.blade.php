@@ -74,9 +74,7 @@
     ->route('site.applications.update',$application->id)
     ->enctype("multipart/form-data")
     ->post() }}
-    @includeWhen(\App\Services\ApplicationService::checkFormEdit($application,auth()->user()->id),'site.applications.form_edit')
-    @includeWhen(\App\Services\ApplicationService::checkPerformer($application,$user) ,'site.applications.performer')
-    @includeWhen(\App\Services\ApplicationService::checkWarehouse($application,$user),'site.applications.warehouse')
+    @include($component)
     {{ Aire::close() }}
 @endsection
 
