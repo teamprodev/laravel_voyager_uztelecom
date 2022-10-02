@@ -205,7 +205,7 @@ class ApplicationService
                         $data['clone'] = route('site.applications.clone', $row->id);
                     }
 
-                    $confirm = _('confirm') . ' ' . "$row->id?";
+                    $confirm = __('confirm') . ' ' . "$row->id?";
 
                     return view('site.applications.crud_link', compact('data', 'confirm'));
                 })
@@ -283,7 +283,7 @@ class ApplicationService
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
 
-                $confirm = _('confirm') . ' ' . "$row->id?";
+                $confirm = __('confirm') . ' ' . "$row->id?";
 
                 return view('site.applications.crud_link', compact('data', 'confirm'));
             })
@@ -348,7 +348,7 @@ class ApplicationService
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
 
-                $confirm = _('confirm') . ' ' . "$row->id?";
+                $confirm = __('confirm') . ' ' . "$row->id?";
 
                 return view('site.applications.crud_link', compact('data', 'confirm'));
             })
@@ -439,7 +439,7 @@ class ApplicationService
                         $data['clone'] = route('site.applications.clone', $row->id);
                     }
 
-                    $confirm = _('confirm') . ' ' . "$row->id?";
+                    $confirm = __('confirm') . ' ' . "$row->id?";
 
                     return view('site.applications.crud_link', compact('data', 'confirm'));
                 })
