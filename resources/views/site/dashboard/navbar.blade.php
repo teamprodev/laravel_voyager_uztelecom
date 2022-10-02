@@ -79,7 +79,7 @@ $notifications = Notification::with('application:id,created_at')->has('applicati
                        placeholder="Search.." id="myInput" onkeyup="filterDD('myDropdown','myInput')">
                 <a href="{{route('site.profile.index')}}"
                    class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i
-                        class="fa fa-user fa-fw"></i> Profile</a>
+                        class="fa fa-user fa-fw"></i> {{ __("Profile") }}</a>
                 <div class="border border-gray-800"></div>
                 <form action="{{route('logout')}}" method="POST">
                     @csrf
@@ -87,7 +87,7 @@ $notifications = Notification::with('application:id,created_at')->has('applicati
                         <i class="fas fa-sign-out-alt fa-fw text-white float-left mt-1 ml-2 mr-1"></i><input
                             type="submit"
                             class="bg-gray-800 text-white text-sm no-underline hover:no-underline block text-white cursor-pointer"
-                            value="Выйти">
+                            value="{{ __('Exit') }}">
                     </div>
                 </form>
             </div>

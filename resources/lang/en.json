@@ -234,5 +234,9 @@
     "clone": "Копировать",
     "destroy": "Удалить",
     "confirm": "Вы действительно хотите удалить заявку под номером",
-    "Unavailable_to_you": "Unavailable to you"
+    "Unavailable_to_you": "Unavailable to you",
+    "Mail": "Mail",
+    "Full_name": "Full Name",
+    "Exit": "Exit",
+    "Profile": "Profile"
 }

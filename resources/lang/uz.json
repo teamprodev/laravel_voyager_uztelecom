@@ -246,5 +246,9 @@
     "clone": "Копировать",
     "destroy": "Удалить",
     "confirm": "Вы действительно хотите удалить заявку под номером",
-    "Unavailable_to_you": "Siz mavjud emassiz"
+    "Unavailable_to_you": "Siz mavjud emassiz",
+    "Mail": "Pochta",
+    "Full_name": "F.I.О",
+    "Exit": "Chiqish",
+    "Profile": "Profil"
 }
