@@ -713,7 +713,7 @@ class ApplicationService
             'users' => User::where('role_id', 5)->get(),
             'status_extented' => $status_extented,
             'countries' => $countries,
-            'component'=>$this->checkComponentsInclude($application),
+            'component' => $this->checkComponentsInclude($application),
             'products' => $select,
             'warehouse' => Warehouse::where('application_id', $application->id)->first(),
             'performer_file' => $performer_file,
@@ -919,7 +919,8 @@ class ApplicationService
             (auth()->user()->hasPermission('Warehouse') && $application->status == ApplicationData::Status_Order_Arrived)) {
             return "site.applications.warehouse";
         } else {
-                Log::debug('В файле ApplicationService, метод checkComponentsInclude(стр.908)',[$application,auth()->user()]);
+            Log::debug('В файле ApplicationService, метод checkComponentsInclude(стр.908)', [$application, auth()->user()]);
+            abort(404);
         }
     }
 
