@@ -135,12 +135,12 @@ class ApplicationService
                      */
 
                     $status = $query->status;
+                    $color = setting("color.{$status}");
                     if ($query->performer_status !== null) {
                         $a = StatusExtented::find($query->performer_status);
-                        return $this->status($a->name);
-                    } else {
-                        return view('site.applications.colors', compact('status'));
+                        return $this->status($a->name, $a->color);
                     }
+                    return view('site.applications.colors', compact('status', 'color'));
                 })
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -202,23 +202,15 @@ class ApplicationService
                  *  Voyager admin paneldan status ranglarini olish va chiqarish
                  */
                 $status = $query->status;
+                $color = setting("color.{$status}");
                 if ($query->performer_status !== null) {
                     $a = StatusExtented::find($query->performer_status);
-                    return $this->status($a->name);
-                } else {
-                    return view('site.applications.colors', compact('status'));
+                    return $this->status($a->name, $a->color);
                 }
+                return view('site.applications.colors', compact('status', 'color'));
             })
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                $edit_e = route('site.applications.edit', $row->id);
-                $clone_e = route('site.applications.clone', $row->id);
-                $show_e = route('site.applications.show', $row->id);
-                $destroy_e = route('site.applications.destroy', $row->id);
-                $app_edit = __('Изменить');
-                $app_show = __('Показать');;
-                $app_clone = __('Копировать');;
-                $app_delete = __('Удалить');;
 
                 $boolCheckUser = (int)auth()->user()->id === (int)$row->user_id;
                 $boolCheckRole = (int)$row->performer_role_id === (int)auth()->user()->role_id;
@@ -278,12 +270,12 @@ class ApplicationService
                  *  Voyager admin paneldan status ranglarini olish va chiqarish
                  */
                 $status = $query->status;
+                $color = setting("color.{$status}");
                 if ($query->performer_status !== null) {
                     $a = StatusExtented::find($query->performer_status);
-                    return $this->status($a->name);
-                } else {
-                    return view('site.applications.colors', compact('status'));
+                    return $this->status($a->name, $a->color);
                 }
+                return view('site.applications.colors', compact('status', 'color'));
             })
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
@@ -536,15 +528,6 @@ class ApplicationService
     {
         $now = Carbon::now();
         $data = $request->validated();
-//        if (auth()->id() == $application->user_id && $application->status == ApplicationStatusEnum::Refused || auth()->id() == $application->user_id && $application->status == ApplicationStatusEnum::Rejected) {
-//            $data['status'] = ApplicationStatusEnum::New;
-//            $signedDocs = SignedDocs::where('application_id', $application->id)->get();
-//            foreach ($signedDocs as $doc) {
-//
-//                $doc->status = null;
-//                $doc->save();
-//            }
-//        }
         $roles = ($application->branch_signers->signers);
         if (isset($data['signers'])) {
             $array = $roles ? array_merge(json_decode($roles), $data['signers']) : $data['signers'];
@@ -691,12 +674,12 @@ class ApplicationService
                  *  Voyager admin paneldan status ranglarini olish va chiqarish
                  */
                 $status = $query->status;
+                $color = setting("color.{$status}");
                 if ($query->performer_status !== null) {
                     $a = StatusExtented::find($query->performer_status);
-                    return $this->status($a->name);
-                } else {
-                    return view('site.applications.colors', compact('status'));
+                    return $this->status($a->name, $a->color);
                 }
+                return view('site.applications.colors', compact('status', 'color'));
             })
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
@@ -722,53 +705,9 @@ class ApplicationService
             ->make(true);
     }
 
-    public function status(string $status)
+    public function status(string $status, string $color)
     {
-        $status_accepted = __('Принята');
-
-        $status_performed = __('Товар доставлен');
-        switch ($status) {
-            case 'Принята':
-                $status = setting('color.accepted');
-                $color = $status ? 'white' : 'black';
-                $return_status = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>{$status_accepted}</div>";
-                break;
-            case 'Выполнено частично':
-                $status = setting('color.partially');
-                $color = $status ? 'white' : 'black';
-                $return_status = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>Выполнено частично</div>";
-                break;
-            case 'Выполнено в полном объёме':
-                $status = setting('color.total_volume');
-                $color = $status ? 'white' : 'black';
-                $return_status = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>Выполнено в полном объёме</div>";
-                break;
-            case 'Заявка аннулирована по заданию руководства':
-                $status = setting('color.nulled_by_management');
-                $color = $status ? 'white' : 'black';
-                $return_status = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>Заявка аннулирована по заданию руководства</div>";
-                break;
-            case 'Договор аннулирован по инициативе Узбектелеком':
-                $status = setting('color.nulled_by_management');
-                $color = $status ? 'white' : 'black';
-                $return_status = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>Договор аннулирован по инициативе Узбектелеком</div>";
-                break;
-            case 'заявка передана в Узтелеком':
-                $status = setting('color.nulled_by_management');
-                $color = $status ? 'white' : 'black';
-                $return_status = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>заявка передана в Узтелеком</div>";
-                break;
-            case 'товар доставлен':
-                $status = setting('color.delivered');
-                $color = $status ? 'white' : 'black';
-                $return_status = "<div class='row'>
-                            <div style='background-color: {$status};color: {$color};' class='btn btn-sm'>{$status_performed}</div>
-                            </div>";
-                break;
-            default:
-                $return_status = $status;
-        }
-        return $return_status;
+        return view('site.applications.colors', compact('status', 'color'));
     }
 
     private function checkComponentsInclude($application)
