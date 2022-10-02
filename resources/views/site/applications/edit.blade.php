@@ -34,6 +34,7 @@
             @endif
         </div>
         {{ Aire::close() }}
+
     @endif
     @if($application->is_more_than_limit !== null)
         @if($application->performer_role_id == auth()->user()->role_id)

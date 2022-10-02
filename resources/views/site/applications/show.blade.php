@@ -365,7 +365,7 @@
                 <th>{{ __('Комментарий') }}</th>
                 <th>{{ __('Пользователь') }}</th>
                 <th class="hidden">Index</th>
-                <th>Дата подписи</th>
+                <th>{{ __("date_signature") }}</th>
             </tr>
             </thead>
         </table>
@@ -430,7 +430,7 @@
                     <input class="form-control" id="date" name="date" type="date" value="{{$application->date}}"/>
                 </div>
             @endif
-            {{Aire::submit('Save')}}
+            {{Aire::submit(__("Сохранить"))}}
 
         @elseif($perms["NumberChange"])
             {{Aire::textArea('bio', __('Номер заявки'))

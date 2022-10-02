@@ -243,5 +243,7 @@
     "Mail": "Почта",
     "Full_name": "Ф.И.О",
     "Exit": "Выйти",
-    "Profile": "Профиль"
+    "Profile": "Профиль",
+    "With_VAT": "C НДС",
+    "date_signature": "Дата подписи"
 }

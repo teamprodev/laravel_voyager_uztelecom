@@ -238,5 +238,7 @@
     "Mail": "Mail",
     "Full_name": "Full Name",
     "Exit": "Exit",
-    "Profile": "Profile"
+    "Profile": "Profile",
+    "With_VAT": "with VAT",
+    "date_signature": "Signature date"
 }
