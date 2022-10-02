@@ -771,56 +771,6 @@ class ApplicationService
         return $return_status;
     }
 
-//    public function status_1(string $status)
-//    {
-//        $status_accepted = __('Принята');
-//
-//        $status_performed = __('Товар доставлен');
-//
-//        switch($status)
-//        {
-//            case 'Принята':
-//                $status = setting('color.accepted');
-//                $color = $status ? 'white' : 'black';
-//                $return_status = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>{$status_accepted}</div>";
-//                break;
-//            case 'Выполнено частично':
-//                $status = setting('color.partially');
-//                $color = $status ? 'white' : 'black';
-//                $return_status = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>Выполнено частично</div>";
-//                break;
-//            case 'Выполнено в полном объёме':
-//                $status = setting('color.total_volume');
-//                $color = $status ? 'white' : 'black';
-//                $return_status = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>Выполнено в полном объёме</div>";
-//                break;
-//            case 'Заявка аннулирована по заданию руководства':
-//                $status = setting('color.nulled_by_management');
-//                $color = $status ? 'white' : 'black';
-//                $return_status = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>Заявка аннулирована по заданию руководства</div>";
-//                break;
-//            case 'Договор аннулирован по инициативе Узбектелеком':
-//                $status = setting('color.nulled_by_management');
-//                $color = $status ? 'white' : 'black';
-//                $return_status = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>Договор аннулирован по инициативе Узбектелеком</div>";
-//                break;
-//            case 'заявка передана в Узтелеком':
-//                $status = setting('color.nulled_by_management');
-//                $color = $status ? 'white' : 'black';
-//                $return_status = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>заявка передана в Узтелеком</div>";
-//                break;
-//            case 'товар доставлен':
-//                $status = setting('color.delivered');
-//                $color = $status ? 'white' : 'black';
-//                $return_status = "<div class='row'>
-//                            <div style='background-color: {$status};color: {$color};' class='btn btn-sm'>{$status_performed}</div>
-//                            </div>";
-//                            break;
-//            default:
-//                $return_status = $status;
-//        }
-//        return $return_status;
-//    }
     private function checkComponentsInclude($application)
     {
         if ($application->user_id == auth()->user()->id && $application->show_leader != Application::NOT_DISTRIBUTED) {
