@@ -16,8 +16,8 @@ class Application extends Model
     use HasFactory;
     use SoftDeletes;
 
-    const NOT_DISTRIBUTED = 2;
-
+    const NOT_DISTRIBUTED = 2;      // SHOW_LEADER
+    const DISTRIBUTED = 1;          // SHOW_LEADER
 
     protected $dates = ['deleted_at'];
 
