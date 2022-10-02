@@ -18,7 +18,8 @@ class Application extends Model
 
     const NOT_DISTRIBUTED = 2;      // SHOW_LEADER
     const DISTRIBUTED = 1;          // SHOW_LEADER
-
+    const PLANNER_AGREE = 3;
+    const CANCELED_APP = 4;
 
     protected $dates = ['deleted_at'];
 

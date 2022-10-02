@@ -39,21 +39,11 @@ class RoleController extends VoyagerRoleController
                     return $all ? Branch::find($all)->pluck('name')->toArray(): [];
                 })
                 ->addColumn('action', function($row){
-                    $edit_e = "/admin/roles/$row->id/edit";
-                    $destroy_e = route("voyager.roles.delete",$row->id);
-                    $app_edit = __('Изменить');
-                    $app_delete = __('Удалить');
-                    $bgcolor = setting('color.edit');
-                    $color = $bgcolor ? 'white':'black';
-                    $edit = "<a style='background-color: $bgcolor;color: $color' href='$edit_e' class='m-1 col edit btn btn-sm'>$app_edit</a>";
-                    $bgcolor = setting('color.delete');
-                    $color = $bgcolor ? 'white':'black';
-                    $app_delete_confirm = __("Вы действительно хотите удалить роль под номером $row->id - $row->name?");
-                    $destroy = "<a style='background-color: $bgcolor;color: $color' href='$destroy_e' onclick='return confirm(`$app_delete_confirm`)' class='m-1 col show btn btn-sm'>$app_delete</a>";
-                    return "<div class='row'>
-                        $edit
-                        $destroy
-                        </div>";
+                    $data['edit'] = "/admin/roles/$row->id/edit";
+                    $data['destroy'] = route("voyager.roles.delete",$row->id);
+                    $confirm = __('confirm') . ' ' . "$row->id?";
+
+                    return view('site.applications.crud_link', compact('data', 'confirm'));
                 })
                 ->rawColumns(['action'])
                 ->make(true);

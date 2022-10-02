@@ -587,7 +587,6 @@ class ApplicationService
             } else {
                 $explode = explode(',', $data['resource_id']);
                 $data['resource_id'] = json_encode($explode);
-//                $application->status = ApplicationStatusEnum::New;
             }
         }
 

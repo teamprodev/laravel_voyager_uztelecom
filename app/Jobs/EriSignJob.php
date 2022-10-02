@@ -52,7 +52,6 @@ class EriSignJob implements ShouldQueue
             $document->data = json_encode($data);
             $document->save();
         } catch (\Exception $exception){
-            dd('Ex'.$exception->getMessage());
             DB::rollBack();
             throw $exception;
         }
