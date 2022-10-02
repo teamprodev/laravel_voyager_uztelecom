@@ -142,17 +142,20 @@ class ApplicationService
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
 
-                    if (auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id) {
+                    $boolCheckUser = (int)auth()->user()->id === (int)$row->user_id;
+                    $boolCheckRole = (int)$row->performer_role_id === (int)auth()->user()->role_id;
+
+                    if ($boolCheckUser || $boolCheckRole || auth()->user()->hasPermission(PermissionEnum::Warehouse)) {
                         $data['edit'] = route('site.applications.edit', $row->id);
                     }
 
                     $data['show'] = route('site.applications.show', $row->id);
 
-                    if ($row->user_id === auth()->user()->id && $row->show_director !== 2 && $row->show_leader !== 2 && $row->status !== ApplicationStatusEnum::Refused) {
+                    if ($boolCheckUser && $row->show_director !== 2 && $row->show_leader !== 2 && $row->status !== ApplicationStatusEnum::Refused) {
                         $data['destroy'] = route('site.applications.destroy', $row->id);
                     }
 
-                    if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
+                    if (($boolCheckUser && $row->status === ApplicationStatusEnum::Canceled) || ($boolCheckUser && $row->status === ApplicationStatusEnum::Refused) || ($boolCheckUser && $row->status === ApplicationStatusEnum::Rejected)) {
                         $data['clone'] = route('site.applications.clone', $row->id);
                     }
 
@@ -208,14 +211,6 @@ class ApplicationService
             })
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                $edit_e = route('site.applications.edit', $row->id);
-                $clone_e = route('site.applications.clone', $row->id);
-                $show_e = route('site.applications.show', $row->id);
-                $destroy_e = route('site.applications.destroy', $row->id);
-                $app_edit = __('Изменить');
-                $app_show = __('Показать');;
-                $app_clone = __('Копировать');;
-                $app_delete = __('Удалить');;
 
                 $boolCheckUser = (int)auth()->user()->id === (int)$row->user_id;
                 $boolCheckRole = (int)$row->performer_role_id === (int)auth()->user()->role_id;
@@ -230,7 +225,7 @@ class ApplicationService
                     $data['destroy'] = route('site.applications.destroy', $row->id);
                 }
 
-                if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
+                if (($boolCheckUser && $row->status === ApplicationStatusEnum::Canceled) || ($boolCheckUser && $row->status === ApplicationStatusEnum::Refused) || ($boolCheckUser && $row->status === ApplicationStatusEnum::Rejected)) {
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
 
@@ -285,17 +280,20 @@ class ApplicationService
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
 
-                if (auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id) {
+                $boolCheckUser = (int)auth()->user()->id === (int)$row->user_id;
+                $boolCheckRole = (int)$row->performer_role_id === (int)auth()->user()->role_id;
+
+                if ($boolCheckUser || $boolCheckRole || auth()->user()->hasPermission(PermissionEnum::Warehouse)) {
                     $data['edit'] = route('site.applications.edit', $row->id);
                 }
 
                 $data['show'] = route('site.applications.show', $row->id);
 
-                if ($row->user_id === auth()->user()->id) {
+                if ($boolCheckUser) {
                     $data['destroy'] = route('site.applications.destroy', $row->id);
                 }
 
-                if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
+                if (($boolCheckUser && $row->status === ApplicationStatusEnum::Canceled) || ($boolCheckUser && $row->status === ApplicationStatusEnum::Refused) || ($boolCheckUser && $row->status === ApplicationStatusEnum::Rejected)) {
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
 
@@ -532,15 +530,6 @@ class ApplicationService
     {
         $now = Carbon::now();
         $data = $request->validated();
-//        if (auth()->id() == $application->user_id && $application->status == ApplicationStatusEnum::Refused || auth()->id() == $application->user_id && $application->status == ApplicationStatusEnum::Rejected) {
-//            $data['status'] = ApplicationStatusEnum::New;
-//            $signedDocs = SignedDocs::where('application_id', $application->id)->get();
-//            foreach ($signedDocs as $doc) {
-//
-//                $doc->status = null;
-//                $doc->save();
-//            }
-//        }
         $roles = ($application->branch_signers->signers);
         if (isset($data['signers'])) {
             $array = $roles ? array_merge(json_decode($roles), $data['signers']) : $data['signers'];
@@ -697,7 +686,9 @@ class ApplicationService
             ->addColumn('action', function ($row) {
                 $data = array();
 
-                if (auth()->user()->id == $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id == auth()->user()->role_id) {
+                $boolCheckUser = (int)auth()->user()->id === (int)$row->user_id;
+
+                if ($boolCheckUser || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id == auth()->user()->role_id) {
                     $data['edit'] = route('site.applications.edit', $row->id);
                 }
 
@@ -707,7 +698,7 @@ class ApplicationService
                     $data['destroy'] = route('site.applications.destroy', $row->id);
                 }
 
-                if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
+                if (($boolCheckUser && $row->status === ApplicationStatusEnum::Canceled) || ($boolCheckUser && $row->status === ApplicationStatusEnum::Refused) || ($boolCheckUser && $row->status === ApplicationStatusEnum::Rejected)) {
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
 
@@ -765,55 +756,4 @@ class ApplicationService
         }
         return $return_status;
     }
-
-//    public function status_1(string $status)
-//    {
-//        $status_accepted = __('Принята');
-//
-//        $status_performed = __('Товар доставлен');
-//
-//        switch($status)
-//        {
-//            case 'Принята':
-//                $status = setting('color.accepted');
-//                $color = $status ? 'white' : 'black';
-//                $return_status = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>{$status_accepted}</div>";
-//                break;
-//            case 'Выполнено частично':
-//                $status = setting('color.partially');
-//                $color = $status ? 'white' : 'black';
-//                $return_status = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>Выполнено частично</div>";
-//                break;
-//            case 'Выполнено в полном объёме':
-//                $status = setting('color.total_volume');
-//                $color = $status ? 'white' : 'black';
-//                $return_status = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>Выполнено в полном объёме</div>";
-//                break;
-//            case 'Заявка аннулирована по заданию руководства':
-//                $status = setting('color.nulled_by_management');
-//                $color = $status ? 'white' : 'black';
-//                $return_status = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>Заявка аннулирована по заданию руководства</div>";
-//                break;
-//            case 'Договор аннулирован по инициативе Узбектелеком':
-//                $status = setting('color.nulled_by_management');
-//                $color = $status ? 'white' : 'black';
-//                $return_status = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>Договор аннулирован по инициативе Узбектелеком</div>";
-//                break;
-//            case 'заявка передана в Узтелеком':
-//                $status = setting('color.nulled_by_management');
-//                $color = $status ? 'white' : 'black';
-//                $return_status = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>заявка передана в Узтелеком</div>";
-//                break;
-//            case 'товар доставлен':
-//                $status = setting('color.delivered');
-//                $color = $status ? 'white' : 'black';
-//                $return_status = "<div class='row'>
-//                            <div style='background-color: {$status};color: {$color};' class='btn btn-sm'>{$status_performed}</div>
-//                            </div>";
-//                            break;
-//            default:
-//                $return_status = $status;
-//        }
-//        return $return_status;
-//    }
 }
