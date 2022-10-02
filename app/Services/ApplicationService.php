@@ -9,21 +9,23 @@ use App\Enums\PermissionEnum;
 use App\Events\Notify;
 use App\Models\Application;
 use App\Models\Branch;
+use App\Models\Country;
 use App\Models\Notification;
 use App\Models\PermissionRole;
 use App\Models\Position;
+use App\Models\Purchase;
 use App\Models\Resource;
+use App\Models\Roles;
 use App\Models\SignedDocs;
 use App\Models\StatusExtented;
+use App\Models\Subject;
 use App\Models\User;
 use App\Models\Warehouse;
+use App\Structures\ApplicationData;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
-use App\Models\Country;
-use App\Models\Purchase;
-use App\Models\Roles;
-use App\Models\Subject;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\DataTables;
 
 class ApplicationService
@@ -38,7 +40,7 @@ class ApplicationService
     const Permission_Branch_Performer = 172;
 
 
-    public function index($request,$user)
+    public function index($request, $user)
     {
         $filial = PermissionRole::where('permission_id', self::Permission_Add_Branch_Signer)->pluck('role_id')->toArray();
         $company = PermissionRole::where('permission_id', self::Permission_Add_Branch_Signer)->pluck('role_id')->toArray();
@@ -56,7 +58,7 @@ class ApplicationService
             if ($user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
                 $a = 'branch_initiator_id';
                 $b = [9, 13];
-            }elseif($user->hasPermission(PermissionEnum::Company_Leader) | $user->hasPermission(PermissionEnum::Branch_Leader)){
+            } elseif ($user->hasPermission(PermissionEnum::Company_Leader) | $user->hasPermission(PermissionEnum::Branch_Leader)) {
                 $a = 'branch_initiator_id';
                 $b = [$user->branch_id];
             } else {
@@ -64,7 +66,7 @@ class ApplicationService
                 $b = [$user->department_id];
             }
 
-            switch (true){
+            switch (true) {
                 case $user->hasPermission(PermissionEnum::Add_Company_Signer) && $user->hasPermission(PermissionEnum::Add_Branch_Signer) :
                     $query = Application::where('draft', '!=', 1)->whereIn($a, $b)->orWhere('signers', 'like', "%{$user->role_id}%")->where('draft', '!=', 1)->orWhere('performer_role_id', $user->role->id)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
                     break;
@@ -96,7 +98,8 @@ class ApplicationService
                 case $user->hasPermission(PermissionEnum::Company_Performer) || $user->hasPermission(PermissionEnum::Branch_Performer) :
                     $query = Application::where('performer_role_id', auth()->user()->role_id)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
                     break;
-                default :  $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->get();;
+                default :
+                    $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->get();;
                     break;
             }
 
@@ -172,15 +175,15 @@ class ApplicationService
     public function status_table($user)
     {
         if ($user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
-                $a = 'branch_initiator_id';
-                $b = [9, 13];
-            } else {
-                $a = 'branch_initiator_id';
-                $b = [$user->branch_id];
+            $a = 'branch_initiator_id';
+            $b = [9, 13];
+        } else {
+            $a = 'branch_initiator_id';
+            $b = [$user->branch_id];
 
-                $c = 'department_initiator_id';
-                $d = [$user->department_id];
-            }
+            $c = 'department_initiator_id';
+            $d = [$user->department_id];
+        }
         $status = setting('admin.show_status');
         $data = Application::whereIn($a, $b)->where('performer_status', $status)->where('name', '!=', null)->get();
         return Datatables::of($data)
@@ -255,7 +258,7 @@ class ApplicationService
             $b = [$user->branch_id];
         }
         $status = Cache::get('performer_status_get');
-        $data = Application::WhereIn('branch_initiator_id',[$user->branch_id])->where('status_extended_id', $status)->where('name', '!=', null)->OrWhereIn($a,$b)->where('status', $status)->where('name', '!=', null)->get();
+        $data = Application::WhereIn('branch_initiator_id', [$user->branch_id])->where('status_extended_id', $status)->where('name', '!=', null)->OrWhereIn($a, $b)->where('status', $status)->where('name', '!=', null)->get();
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('user_id', function ($docs) {
@@ -492,9 +495,9 @@ class ApplicationService
         $perms['NumberChange'] = $user->hasPermission(PermissionEnum::Number_Change) && !$user->hasPermission(PermissionEnum::Plan_Budget) && !$user->hasPermission(PermissionEnum::Plan_Business);
         $perms['Plan'] = ($check && $user->hasPermission('Plan_Budget')) || ($user->hasPermission('Plan_Business') && $check);
         $perms['PerformerLeader'] = $application->performer_role_id === $user->role_id && $user->leader === 1;
-        $perms['Signers'] = ($access && $user->hasPermission(PermissionEnum::Company_Signer||PermissionEnum::Add_Company_Signer||PermissionEnum::Branch_Signer||PermissionEnum::Add_Branch_Signer||PermissionEnum::Company_Performer||PermissionEnum::Branch_Performer)) || ($access && $user->role_id === 7 && $application->show_director === 1);
+        $perms['Signers'] = ($access && $user->hasPermission(PermissionEnum::Company_Signer || PermissionEnum::Add_Company_Signer || PermissionEnum::Branch_Signer || PermissionEnum::Add_Branch_Signer || PermissionEnum::Company_Performer || PermissionEnum::Branch_Performer)) || ($access && $user->role_id === 7 && $application->show_director === 1);
         $status = $application->status;
-        return view('site.applications.show', compact('performer_file', 'branch','perms', 'access_comment', 'performers_company', 'performers_branch', 'file_basis', 'file_tech_spec', 'other_files', 'user', 'application', 'branch', 'signedDocs', 'same_role_user_ids', 'access', 'subjects', 'purchases', 'branch_name', 'check', 'status'));
+        return view('site.applications.show', compact('performer_file', 'branch', 'perms', 'access_comment', 'performers_company', 'performers_branch', 'file_basis', 'file_tech_spec', 'other_files', 'user', 'application', 'branch', 'signedDocs', 'same_role_user_ids', 'access', 'subjects', 'purchases', 'branch_name', 'check', 'status'));
 
     }
 
@@ -519,6 +522,7 @@ class ApplicationService
             'users' => User::where('role_id', 5)->get(),
             'status_extented' => $status_extented,
             'countries' => $countries,
+            'component' => $this->checkComponentsInclude($application),
             'products' => $select,
             'warehouse' => Warehouse::where('application_id', $application->id)->first(),
             'performer_file' => $performer_file,
@@ -528,7 +532,7 @@ class ApplicationService
         ]);
     }
 
-    public function update($application, $request,$user)
+    public function update($application, $request, $user)
     {
         $now = Carbon::now();
         $data = $request->validated();
@@ -564,7 +568,7 @@ class ApplicationService
             }
             $message = "{$application->id} " . "{$application->name} " . setting('admin.application_created');
             $this->sendNotifications($array, $application, $message);
-        }elseif ($application->signers === null) {
+        } elseif ($application->signers === null) {
             $data['signers'] = $roles;
             $array = json_decode($roles);
             foreach ($array as $signers) {
@@ -614,7 +618,7 @@ class ApplicationService
 
         $result = $application->update($data);
         if ($result)
-            return redirect()->route('site.applications.show',$application->id);
+            return redirect()->route('site.applications.show', $application->id);
 
         return redirect()->back()->with('danger', trans('site.application_failed'));
     }
@@ -625,7 +629,7 @@ class ApplicationService
         $application->signers = null;
         if ($request->is_more_than_limit == 1) {
             $application->branch_initiator_id = 9;
-        }else{
+        } else {
             $application->branch_initiator_id = auth()->user()->branch_id;
         }
         $application->branch_id = auth()->user()->branch_id;
@@ -641,7 +645,7 @@ class ApplicationService
             } else {
                 $websocket = false;
             }
-            $user_ids = User::query()->whereIn('role_id', $array)->where('branch_id',$application->branch_initiator_id)->pluck('id')->toArray();
+            $user_ids = User::query()->whereIn('role_id', $array)->where('branch_id', $application->branch_initiator_id)->pluck('id')->toArray();
             foreach ($user_ids as $user_id) {
                 $notification = Notification::query()->firstOrCreate(['user_id' => $user_id, 'application_id' => $application->id, 'message' => $message]);
                 if ($notification->wasRecentlyCreated) {
@@ -659,16 +663,17 @@ class ApplicationService
 
     }
 
-    public function StatusChangeToPerformerStatus(){
+    public function StatusChangeToPerformerStatus()
+    {
         $applications = Application::all();
         foreach ($applications as $application) {
-            $application = Application::where('performer_status', '!=', null)->update(['status'=> DB::raw("performer_status") ]);
+            $application = Application::where('performer_status', '!=', null)->update(['status' => DB::raw("performer_status")]);
         }
     }
 
     public function to_sign_data($user)
     {
-        $signedDocs = SignedDocs::where('role_id',$user->role_id)->where('status',null)->pluck('application_id')->toArray();
+        $signedDocs = SignedDocs::where('role_id', $user->role_id)->where('status', null)->pluck('application_id')->toArray();
         $data = Application::find($signedDocs);
         return Datatables::of($data)
             ->addIndexColumn()
@@ -716,13 +721,13 @@ class ApplicationService
             ->rawColumns(['action', 'status'])
             ->make(true);
     }
+
     public function status(string $status)
     {
         $status_accepted = __('Принята');
 
         $status_performed = __('Товар доставлен');
-        switch($status)
-        {
+        switch ($status) {
             case 'Принята':
                 $status = setting('color.accepted');
                 $color = $status ? 'white' : 'black';
@@ -816,4 +821,20 @@ class ApplicationService
 //        }
 //        return $return_status;
 //    }
+    private function checkComponentsInclude($application)
+    {
+        if ($application->user_id == auth()->user()->id && $application->show_leader != Application::NOT_DISTRIBUTED) {
+            return "site.applications.form_edit";
+        } elseif ((auth()->user()->hasPermission('Branch_Performer') && $application->user_id != auth()->user()->id) ||
+            (auth()->user()->hasPermission('Company_Performer') && $application->user_id != auth()->user()->id) ||
+            $application->performer_role_id == auth()->user()->role_id) {
+            return "site.applications.performer";
+        } elseif ((auth()->user()->hasPermission('Warehouse') && $application->status == ApplicationData::Status_Accepted) ||
+            (auth()->user()->hasPermission('Warehouse') && $application->status == ApplicationData::Status_Order_Delivered) ||
+            (auth()->user()->hasPermission('Warehouse') && $application->status == ApplicationData::Status_Order_Arrived)) {
+            return "site.applications.warehouse";
+        } else {
+            Log::debug('В файле ApplicationService, метод checkComponentsInclude(стр.908)', [$application, auth()->user()]);
+        }
+    }
 }
