@@ -721,7 +721,6 @@ class ApplicationService
         $status_accepted = __('Принята');
 
         $status_performed = __('Товар доставлен');
-
         switch($status)
         {
             case 'Принята':
@@ -732,12 +731,12 @@ class ApplicationService
             case 'Выполнено частично':
                 $status = setting('color.partially');
                 $color = $status ? 'white' : 'black';
-                $return_status = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>Выполнено частично</div>";
+                $return_status = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>reb</div>";
                 break;
             case 'Выполнено в полном объёме':
                 $status = setting('color.total_volume');
                 $color = $status ? 'white' : 'black';
-                $return_status = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>Выполнено в полном объёме</div>";
+                $return_status = "<div style='background-color: {$status};color: {$color};' class='btn btn-sm'>reb</div>";
                 break;
             case 'Заявка аннулирована по заданию руководства':
                 $status = setting('color.nulled_by_management');
