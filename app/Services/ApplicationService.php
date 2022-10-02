@@ -21,7 +21,6 @@ use App\Models\StatusExtented;
 use App\Models\Subject;
 use App\Models\User;
 use App\Models\Warehouse;
-use App\Structures\ApplicationData;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -712,18 +711,19 @@ class ApplicationService
 
     private function checkComponentsInclude($application)
     {
-        if ($application->user_id == auth()->user()->id && $application->show_leader != Application::NOT_DISTRIBUTED) {
+        if ($application->user_id === auth()->user()->id && $application->show_leader != Application::NOT_DISTRIBUTED) {
             return "site.applications.form_edit";
-        } elseif ((auth()->user()->hasPermission('Branch_Performer') && $application->user_id != auth()->user()->id) ||
-            (auth()->user()->hasPermission('Company_Performer') && $application->user_id != auth()->user()->id) ||
-            $application->performer_role_id == auth()->user()->role_id) {
+        } elseif ((auth()->user()->hasPermission('Branch_Performer') && $application->user_id !== auth()->user()->id) ||
+            (auth()->user()->hasPermission('Company_Performer') && $application->user_id !== auth()->user()->id) ||
+            ($application->performer_role_id === auth()->user()->role_id)) {
             return "site.applications.performer";
-        } elseif ((auth()->user()->hasPermission('Warehouse') && $application->status == ApplicationData::Status_Accepted) ||
-            (auth()->user()->hasPermission('Warehouse') && $application->status == ApplicationData::Status_Order_Delivered) ||
-            (auth()->user()->hasPermission('Warehouse') && $application->status == ApplicationData::Status_Order_Arrived)) {
+        } elseif ((auth()->user()->hasPermission('Warehouse') && $application->status === ApplicationStatusEnum::Accepted) ||
+            (auth()->user()->hasPermission('Warehouse') && $application->status === ApplicationStatusEnum::Order_Delivered) ||
+            (auth()->user()->hasPermission('Warehouse') && $application->status === ApplicationStatusEnum::Order_Arrived)) {
             return "site.applications.warehouse";
         } else {
             Log::debug('В файле ApplicationService, метод checkComponentsInclude(стр.908)', [$application, auth()->user()]);
+            abort(404);
         }
     }
 }
