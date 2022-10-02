@@ -240,5 +240,7 @@
     "Exit": "Exit",
     "Profile": "Profile",
     "With_VAT": "with VAT",
-    "date_signature": "Signature date"
+    "date_signature": "Signature date",
+    "for_signature": "For signature",
+    "Performer_status": "Performer status"
 }
