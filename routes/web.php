@@ -66,9 +66,6 @@ Route::group([
     Route::get('branches/{id}/signers',[BranchController::class,'edit'])->name('signers.add');
 
 });
-Route::get('admin/login', [LoginController::class, 'login'])->name('voyager.login');
-Route::post('admin/login', [LoginController::class, 'postLogin'])->name('voyager.login');
-
 Auth::routes();
 
 Route::post('eimzo/login', [EimzoController::class, 'auth'])->name('eri.login');
@@ -118,14 +115,16 @@ Route::group([
                 function(){
                     Route::group(
                         [
-                            'as' => 'drafts',
+                            'as' => 'drafts.',
                             'prefix' => 'drafts',
                         ],
                     function (){
-                        Route::get('', [ApplicationController::class, 'show_draft']);
+                        Route::get('', [ApplicationController::class, 'show_draft'])->name('index');
+                        Route::get('show_draft_getData', [ApplicationController::class, 'show_draft_getData'])->name('show_draft_getData');
                     });
                     Route::controller(ApplicationController::class)->group(function() {
                         Route::get('', 'index')->name('index');
+                        Route::get('index_getData', 'index_getData')->name('index_getData');
                         Route::get('{status}/show_status','show_status')->name('show_status');
                         Route::get('status_table/show','status_table')->name('status_table');
                         Route::get('to_sign/','to_sign')->name('to_sign');

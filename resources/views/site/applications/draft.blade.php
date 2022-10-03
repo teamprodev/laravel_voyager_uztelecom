@@ -21,7 +21,6 @@
                 </thead>
             </table>
         </div>
-    </div>
     @push('scripts')
         <script type="text/javascript">
             $(function () {
@@ -31,7 +30,7 @@
                     serverSide: true,
                     searchable: true,
                     ajax:
-                        "{{ route('site.applications.drafts') }}",
+                        "{{ route('site.applications.drafts.show_draft_getData') }}",
                     columns: [
                         {data: 'id', name: 'id'},
                         {data: 'number', name: 'number'},
