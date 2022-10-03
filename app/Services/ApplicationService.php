@@ -124,9 +124,10 @@ class ApplicationService
                     $color = setting("color.{$status}");
                     if ($query->performer_status !== null) {
                         $a = StatusExtented::find($query->performer_status);
-                        return $this->status($a->name, $a->color);
+                        $status = $a->name;
+                        $color = $a->color;
                     }
-                    return view('site.applications.colors', compact('status', 'color'));
+                    return json_encode(['backgroundColor' => $color,'app' => $status,'color' => $color ? 'white':'black']);
                 })
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -180,15 +181,17 @@ class ApplicationService
             })
             ->editColumn('status', function ($query) {
                 /*
-                 *  Voyager admin paneldan status ranglarini olish va chiqarish
-                 */
+                     *  Voyager admin paneldan status ranglarini olish va chiqarish
+                     */
+
                 $status = $query->status;
                 $color = setting("color.{$status}");
                 if ($query->performer_status !== null) {
                     $a = StatusExtented::find($query->performer_status);
-                    return $this->status($a->name, $a->color);
+                    $status = $a->name;
+                    $color = $a->color;
                 }
-                return view('site.applications.colors', compact('status', 'color'));
+                return json_encode(['backgroundColor' => $color,'app' => $status,'color' => $color ? 'white':'black']);
             })
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
@@ -248,15 +251,17 @@ class ApplicationService
             })
             ->editColumn('status', function ($query) {
                 /*
-                 *  Voyager admin paneldan status ranglarini olish va chiqarish
-                 */
+                     *  Voyager admin paneldan status ranglarini olish va chiqarish
+                     */
+
                 $status = $query->status;
                 $color = setting("color.{$status}");
                 if ($query->performer_status !== null) {
                     $a = StatusExtented::find($query->performer_status);
-                    return $this->status($a->name, $a->color);
+                    $status = $a->name;
+                    $color = $a->color;
                 }
-                return view('site.applications.colors', compact('status', 'color'));
+                return json_encode(['backgroundColor' => $color,'app' => $status,'color' => $color ? 'white':'black']);
             })
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
@@ -636,15 +641,17 @@ class ApplicationService
             })
             ->editColumn('status', function ($query) {
                 /*
-                 *  Voyager admin paneldan status ranglarini olish va chiqarish
-                 */
+                     *  Voyager admin paneldan status ranglarini olish va chiqarish
+                     */
+
                 $status = $query->status;
                 $color = setting("color.{$status}");
                 if ($query->performer_status !== null) {
                     $a = StatusExtented::find($query->performer_status);
-                    return $this->status($a->name, $a->color);
+                    $status = $a->name;
+                    $color = $a->color;
                 }
-                return view('site.applications.colors', compact('status', 'color'));
+                return json_encode(['backgroundColor' => $color,'app' => $status,'color' => $color ? 'white':'black']);
             })
             ->addIndexColumn()
             ->addColumn('action', function ($row) {

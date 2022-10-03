@@ -53,7 +53,16 @@
                         {data: 'incoterms', name: 'incoterms'},
 
                         {data: 'created_at', name: 'created_at'},
-                        {data: 'status', name: 'status'},
+                        {
+                            "data": "status",
+                            render: function (data, type, row) {
+                                var details = JSON.parse(row.status).backgroundColor;
+                                var color = JSON.parse(row.status).color;
+                                var app = JSON.parse(row.status).app;
+                                console.log(JSON.parse(row.status).app);
+                                return `<button style='background-color: ${details};color:${color};width: 100%;height:100%' class='btn btn-lg'>`+app+`</button>`;
+                            }
+                        },
                         {
                             data: 'action',
                             name: 'action',

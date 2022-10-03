@@ -172,7 +172,16 @@
                     "{{ route('site.applications.index_getData') }}",
                 columns: [
                     {data: 'id', name: 'id'},
-                    {data: 'status', name: 'status'},
+                    {
+                        "data": "status",
+                        render: function (data, type, row) {
+                            var details = JSON.parse(row.status).backgroundColor;
+                            var color = JSON.parse(row.status).color;
+                            var app = JSON.parse(row.status).app;
+                            console.log(JSON.parse(row.status).app);
+                            return `<button style='background-color: ${details};color:${color};width: 100%;height:100%' class='btn btn-lg'>`+app+`</button>`;
+                        }
+                    },
                     {data: 'is_more_than_limit', name: 'is_more_than_limit'},
                     {data: 'number', name: 'number'},
                     {data: 'date', name: 'date'},
