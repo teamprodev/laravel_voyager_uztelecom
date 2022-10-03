@@ -194,12 +194,10 @@ class ApplicationController extends Controller
         $delete = array_diff($file,[$request->file]);
         $application->$column = $delete;
         $application->save();
-        $file = public_path()."/storage/uploads/{$request->file}";
-        $date_now = Date::now();
-        $date_now = str_replace([' ',':', '/'], '-',$date_now);
-        $file_ext =  pathinfo($file, PATHINFO_EXTENSION);
-        $file_rename = str_replace($file_ext, '',$request->file);
-        File::move($file, public_path()."/storage/backups/{$file_rename}".$date_now.'.'.$file_ext);
+        $file = public_path() . "/storage/uploads/{$request->file}";
+        $file_ext = File::extension($file);
+        $file_rename = str_replace($file_ext, '', $request->file);
+        File::move($file, public_path() . "/storage/backups/{$file_rename}" . Date::now()->format('Y-m-d-H-i-s') . '.' . $file_ext);
         return redirect()->back();
     }
     public function change_status()
