@@ -139,7 +139,7 @@
             dom: 'Qlfrtip' + 'QBfrtip',
 
             ajax:
-                "{{ route('signers.getData') }}",
+                "{{ route('signers.getData',$id) }}",
 
             columns: [
                 {data: 'id', name: 'id'},

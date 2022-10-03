@@ -37,7 +37,7 @@ class ApplicationController extends Controller
     /**
      * Performer Statusda bo'lgan Applicationlarni ko'rsatish
     */
-    public function performer_status_get(Request $req)
+    public function performer_status_get()
     {
         $status = StatusExtented::pluck('name','id')->toArray();
         return view('site.applications.performer_status',compact('status'));

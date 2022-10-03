@@ -30,7 +30,7 @@ use Teamprodev\Eimzo\Http\Controllers\EimzoController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('branches/getData', [BranchController::class,'getData'])->name('signers.getData');
+Route::get('branches/{id}/getData', [BranchController::class,'getData'])->name('signers.getData');
 Route::get('/branches/ajax_branch', [BranchController::class,'ajax_branch'])->name('branches.ajax_branch');
 
 Route::controller(ReportController::class)->group(function() {
@@ -40,7 +40,6 @@ Route::controller(ReportController::class)->group(function() {
 });
 Route::get('roles/getData',[RoleController::class,'getData'])->name('voyager.roles.getData');
 Route::get('departments/getData',[DepartmentController::class,'getData'])->name('voyager.departments.getData');
-Route::get('users/getData/',[UserController::class,'getData'])->name('voyager.users.getData');
 Route::post('/warehouse',[WarehouseController::class,'create'])->name('warehouse.create');
 Route::post('/delete_file/{application}/{column}',[ApplicationController::class,'file_delete'])->name('delete_file');
 
