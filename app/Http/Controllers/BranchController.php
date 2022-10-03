@@ -8,6 +8,7 @@ use App\Models\Branch;
 use App\Models\StatusExtented;
 use App\Enums\ApplicationStatusEnum;
 use App\Services\ApplicationService;
+use App\Services\BranchService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -17,42 +18,33 @@ use Yajra\DataTables\DataTables;
 class BranchController extends Controller
 {
     /**
+     * @var BranchService
+     */
+    public function __construct(BranchService $service)
+    {
+        $this->service = $service;
+    }
+    /**
      * admin paneldan branches ga kirsak "Show Roles" digan knopka chiqadi
      * 1 filialga tegishli bolgan shu knopka bosilganda
      * filial id si cache ga put qilinadi.
-    **/
+     **/
     public function edit($id)
     {
-        Cache::put('id',$id);
-        return view('vendor.voyager.branches.signers-add');
+        return view('vendor.voyager.branches.signers-add',compact('id'));
     }
     /**
      * filial id si cache dan olinadi va shunga tegishli bo'lgan
      * Role lar chiqib keladi.
      **/
-    public function getData()
+    public function getData($id)
     {
-        $id = Cache::get('id');
-        $query = DB::table('roles')->whereRaw('json_contains(branch_id, \'["'.$id.'"]\')')->get();
-        return Datatables::of($query)
-            ->editColumn('branch_id', function ($query) {
-                $all = json_decode($query->branch_id);
-                $branch = $all ? Branch::find($all)->pluck('name')->toArray(): [];
-                return $branch;
-            })
-            ->addColumn('action', function($row){
-                $data['edit'] = "/admin/roles/{$row->id}/edit";
-                $data['destroy'] =route("voyager.roles.destroy",$row->id);
-                $confirm = __('confirm') . ' ' . "$row->id?";
-                return view('site.applications.crud_link', compact('data', 'confirm'));
-            })
-            ->rawColumns(['action'])
-            ->make(true);
+        return $this->service->getData($id);
     }
     /**
      * Request das kelayotgan branch_id ni users tablitsadagi select_branch_id columniga
      * saxranit qiladi.
-    **/
+     **/
     public function putCache(Request $request)
     {
         $user = auth()->user();
@@ -69,72 +61,7 @@ class BranchController extends Controller
     public function ajax_branch()
     {
         $id = auth()->user()->select_branch_id;
-        $data = Application::where('branch_id', $id)->where('name', '!=', 'null')->get();
-        return Datatables::of($data)
-            ->editColumn('is_more_than_limit', function ($query) {
-                return $query->is_more_than_limit === 1 ? __('Компанию') : __('Филиал');
-            })
-            ->editColumn('branch_initiator_id', function ($query) {
-                return $query->branch->name;
-            })
-            ->addIndexColumn()
-            ->editColumn('user_id', function($docs) {
-                return $docs->user ? $docs->user->name:"";
-            })
-            ->editColumn('role_id', function($docs) {
-                return $docs->role ? $docs->role->display_name:"";
-            })
-            ->editColumn('planned_price', function ($query) {
-                return $query->planned_price ? number_format($query->planned_price, 0, '', ' ') : '';
-            })
-            ->editColumn('delivery_date', function ($query) {
-                return $query->updated_at ? with(new Carbon($query->delivery_date))->format('d.m.Y') : '';
-            })
-            ->editColumn('created_at', function ($data) {
-                return $data->created_at ? with(new Carbon($data->created_at))->format('d.m.Y') : '';
-            })
-            ->editColumn('updated_at', function ($data) {
-                return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
-            })
-            ->addColumn('planned_price_curr', function ($query) {
-                $planned_price = $query->planned_price ? number_format($query->planned_price, 0, '', ' ') : '';
-                return "{$planned_price}  {$query->currency}";
-            })
-            ->editColumn('status', function ($query) {
-                $status = $query->status;
-                if ($query->performer_status !== null) {
-                    $a = StatusExtented::find($query->performer_status);
-                    return $this->status($a->name);
-                } else {
-                    return view('site.applications.colors', compact('status'));
-                }
-            })
-            ->addIndexColumn()
-            ->addColumn('action', function($row){
-
-                if(auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id)
-                {
-                    $data['edit'] = route('site.applications.edit', $row->id);
-                }
-
-                $data['show'] = route('site.applications.show', $row->id);
-
-                if($row->user_id == auth()->user()->id)
-                {
-                    $data['destroy'] = route('site.applications.destroy', $row->id);
-                }
-
-                if(($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused)||($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected))
-                {
-                    $data['clone'] = route('site.applications.clone', $row->id);
-                }
-
-                $confirm = __('confirm') . ' ' . "$row->id?";
-
-                return view('site.applications.crud_link', compact('data', 'confirm'));
-            })
-            ->rawColumns(['action','status'])
-            ->make(true);
+        return $this->service->ajax_branch($id);
     }
     /**
      * vxod qilgan user da select_branch permissionni bo'lsa

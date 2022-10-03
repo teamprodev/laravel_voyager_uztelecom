@@ -30,7 +30,7 @@ use Teamprodev\Eimzo\Http\Controllers\EimzoController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('branches/getData', [BranchController::class,'getData'])->name('signers.getData');
+Route::get('branches/{id}/getData', [BranchController::class,'getData'])->name('signers.getData');
 Route::get('/branches/ajax_branch', [BranchController::class,'ajax_branch'])->name('branches.ajax_branch');
 
 Route::controller(ReportController::class)->group(function() {
@@ -40,7 +40,6 @@ Route::controller(ReportController::class)->group(function() {
 });
 Route::get('roles/getData',[RoleController::class,'getData'])->name('voyager.roles.getData');
 Route::get('departments/getData',[DepartmentController::class,'getData'])->name('voyager.departments.getData');
-Route::get('users/getData/',[UserController::class,'getData'])->name('voyager.users.getData');
 Route::post('/warehouse',[WarehouseController::class,'create'])->name('warehouse.create');
 Route::post('/delete_file/{application}/{column}',[ApplicationController::class,'file_delete'])->name('delete_file');
 
@@ -66,9 +65,6 @@ Route::group([
     Route::get('branches/{id}/signers',[BranchController::class,'edit'])->name('signers.add');
 
 });
-Route::get('admin/login', [LoginController::class, 'login'])->name('voyager.login');
-Route::post('admin/login', [LoginController::class, 'postLogin'])->name('voyager.login');
-
 Auth::routes();
 
 Route::post('eimzo/login', [EimzoController::class, 'auth'])->name('eri.login');
@@ -102,14 +98,14 @@ Route::group([
                     Route::get('{id}/show', [ProfileController::class, 'other'])->name('other');
                     Route::put('update', [ProfileController::class, 'update'])->name('update');
                 });
-                Route::group(
-                    [
-                        'as' => 'report.',
-                        'prefix' => 'report',
-                    ],
-                    function(){
-                        Route::get('/{id}',[ReportController::class,'index'])->name('index');
-                    });
+            Route::group(
+                [
+                    'as' => 'report.',
+                    'prefix' => 'report',
+                ],
+                function(){
+                    Route::get('/{id}',[ReportController::class,'index'])->name('index');
+                });
             Route::group(
                 [
                     'as' => 'applications.',
@@ -118,14 +114,16 @@ Route::group([
                 function(){
                     Route::group(
                         [
-                            'as' => 'drafts',
+                            'as' => 'drafts.',
                             'prefix' => 'drafts',
                         ],
-                    function (){
-                        Route::get('', [ApplicationController::class, 'show_draft']);
-                    });
+                        function (){
+                            Route::get('', [ApplicationController::class, 'show_draft'])->name('index');
+                            Route::get('show_draft_getData', [ApplicationController::class, 'show_draft_getData'])->name('show_draft_getData');
+                        });
                     Route::controller(ApplicationController::class)->group(function() {
                         Route::get('', 'index')->name('index');
+                        Route::get('index_getData', 'index_getData')->name('index_getData');
                         Route::get('{status}/show_status','show_status')->name('show_status');
                         Route::get('status_table/show','status_table')->name('status_table');
                         Route::get('to_sign/','to_sign')->name('to_sign');
@@ -191,5 +189,3 @@ Route::get('eimzo/back',  function(){
     return redirect()->back();
 })->name('eimzo.back');
 Route::get('eimzo/login', [EimzoController::class, 'login'])->name('eimzo.login.index');
-
-

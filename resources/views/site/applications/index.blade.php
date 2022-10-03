@@ -169,7 +169,7 @@
                 },
                 dom: "Blfrtip",
                 ajax:
-                    "{{ route('site.applications.index') }}",
+                    "{{ route('site.applications.index_getData') }}",
                 columns: [
                     {data: 'id', name: 'id'},
                     {data: 'status', name: 'status'},

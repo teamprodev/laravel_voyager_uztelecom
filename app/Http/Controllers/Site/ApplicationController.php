@@ -37,7 +37,7 @@ class ApplicationController extends Controller
     /**
      * Performer Statusda bo'lgan Applicationlarni ko'rsatish
     */
-    public function performer_status_get(Request $req)
+    public function performer_status_get()
     {
         $status = StatusExtented::pluck('name','id')->toArray();
         return view('site.applications.performer_status',compact('status'));
@@ -62,10 +62,14 @@ class ApplicationController extends Controller
      *
      * Hamma Applicationlar(Zayavkalar)
     */
-    public function index(Request $request)
+    public function index()
+    {
+        return view('site.applications.index');
+    }
+    public function index_getData()
     {
         $user = auth()->user();
-        return $this->service->index($request,$user);
+        return $this->service->index_getData($user);
     }
     /**
      * Application Clone(Nusxalash)
@@ -86,7 +90,8 @@ class ApplicationController extends Controller
                 ->where('user_id', auth()->id())
                 ->update(['is_read' => 1]);
         }
-        return $this->service->show($application, auth()->user());
+        $compact = $this->service->show($application, auth()->user());
+        return view('site.applications.show', $compact);
     }
     /**
      * @var application ga tegishli bolgan SignedDocs
@@ -117,11 +122,13 @@ class ApplicationController extends Controller
     public function edit(Application $application)
     {
         $user = auth()->user();
-        if(((($application->performer_role_id !== null) && ($application->performer_role_id !== auth()->user()->role_id)) && $user->hasPermission(PermissionEnum::Warehouse)) || ((($application->show_leader === 2) && ($application->performer_role_id !== auth()->user()->role_id)) && $user->hasPermission(PermissionEnum::Warehouse)))
+        if(((($application->performer_role_id !== null) && ($application->performer_role_id !== auth()->user()->role_id)) && $user->hasPermission(PermissionEnum::Warehouse)) || $application->show_leader === 2)
         {
             abort(405,__("Вам нельзя изменить заявку,ибо заявка уже подписана!"));
         }
-        return $this->service->edit($application);
+        $compact = $this->service->edit($application,$user);
+        return view('site.applications.edit', $compact);
+
     }
     /**
      * Application Update
@@ -134,9 +141,14 @@ class ApplicationController extends Controller
     /**
      * Chernovik bo'lgan applicationlarni ko'rish
     */
-    public function show_draft(Request $request)
+    public function show_draft()
     {
-        return $this->service->show_draft($request);
+        return view('site.applications.draft');
+    }
+    public function show_draft_getData()
+    {
+        $user = auth()->user();
+        return $this->service->show_draft($user);
     }
     /**
      * soft delete post

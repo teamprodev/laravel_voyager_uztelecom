@@ -147,7 +147,7 @@
         @endif
         @endif
         <li class="nav-item">
-            <a href="{{route('site.applications.drafts')}}" class="nav-link">
+            <a href="{{route('site.applications.drafts.index')}}" class="nav-link">
                 <i class="nav-icon fas fa-file-text"></i>
                 <p>
                     {{ __('Черновик') }}

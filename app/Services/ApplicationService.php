@@ -39,21 +39,8 @@ class ApplicationService
     const Permission_Branch_Performer = 172;
 
 
-    public function index($request, $user)
+    public function index_getData($user)
     {
-        $filial = PermissionRole::where('permission_id', self::Permission_Add_Branch_Signer)->pluck('role_id')->toArray();
-        $company = PermissionRole::where('permission_id', self::Permission_Add_Branch_Signer)->pluck('role_id')->toArray();
-        foreach ($filial as $b) {
-            $a = PermissionRole::where('permission_id', self::Permission_Branch_Signer)->where('role_id', $b)->pluck('role_id')->toArray();
-            PermissionRole::where('permission_id', self::Permission_Branch_Signer)->where('role_id', $a)->delete();
-        }
-        foreach ($company as $b) {
-            $a = PermissionRole::where('permission_id', self::Permission_Company_Signer)->where('role_id', $b)->pluck('role_id')->toArray();
-            PermissionRole::where('permission_id', self::Permission_Company_Signer)->where('role_id', $a)->delete();
-        }
-        if ($request->ajax()) {
-
-
             if ($user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
                 $a = 'branch_initiator_id';
                 $b = [9, 13];
@@ -98,7 +85,7 @@ class ApplicationService
                     $query = Application::where('performer_role_id', auth()->user()->role_id)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
                     break;
                 default :
-                    $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->get();;
+                    $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->get();
                     break;
             }
 
@@ -164,8 +151,6 @@ class ApplicationService
                 })
                 ->rawColumns(['action', 'status'])
                 ->make(true);
-        }
-        return view('site.applications.index');
     }
 
     /*
@@ -173,18 +158,15 @@ class ApplicationService
      */
     public function status_table($user)
     {
-        if ($user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
-            $a = 'branch_initiator_id';
-            $b = [9, 13];
+        if ($user->hasPermission('Purchasing_Management_Center')) {
+            $application = Application::where('branch_initiator_id','!=',null);
         } else {
             $a = 'branch_initiator_id';
             $b = [$user->branch_id];
-
-            $c = 'department_initiator_id';
-            $d = [$user->department_id];
+            $application = Application::whereIn($a, $b);
         }
         $status = setting('admin.show_status');
-        $data = Application::whereIn($a, $b)->where('performer_status', $status)->where('name', '!=', null)->get();
+        $data = $application->where('status', $status)->get();
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('user_id', function ($docs) {
@@ -325,7 +307,7 @@ class ApplicationService
                 return $docs->role ? $docs->role->display_name : "";
             })
             ->editColumn('updated_at', function ($query) {
-                return $query->updated_at ? with(new Carbon($query->updated_at))->format('d.m.Y') : '';;
+                return $query->updated_at ? with(new Carbon($query->updated_at))->format('d.m.Y') : '';
             })
             ->editColumn('status', function ($status) {
                 $status_agreed = __('agreed');
@@ -360,14 +342,10 @@ class ApplicationService
     /*
      * Draft(Chernovik) Applicationlarni chiqazish
      */
-    public function show_draft($request)
+    public function show_draft($user)
     {
-        if ($request->ajax()) {
-            $user = auth()->user();
-
             $data = Application::where('user_id', $user->id)
                 ->whereDraft("1");
-
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->editColumn('created_at', function ($data) {
@@ -390,8 +368,6 @@ class ApplicationService
                 })
                 ->rawColumns(['action'])
                 ->make(true);
-        }
-        return view('site.applications.draft');
     }
 
     /*
@@ -441,7 +417,6 @@ class ApplicationService
 
     public function show($application, $user)
     {
-
         $access = SignedDocs::where('role_id', auth()->user()->role_id)->where('status', null)->where('application_id', $application->id)->first();
         $check = SignedDocs::where('role_id', auth()->user()->role_id)->where('application_id', $application->id)->first();
         $branch = Branch::where('id', $application->branch_initiator_id)->first();
@@ -488,14 +463,14 @@ class ApplicationService
         $perms['PerformerLeader'] = $application->performer_role_id === $user->role_id && $user->leader === 1;
         $perms['Signers'] = ($access && $user->hasPermission(PermissionEnum::Company_Signer || PermissionEnum::Add_Company_Signer || PermissionEnum::Branch_Signer || PermissionEnum::Add_Branch_Signer || PermissionEnum::Company_Performer || PermissionEnum::Branch_Performer)) || ($access && $user->role_id === 7 && $application->show_director === 1);
         $status = $application->status;
-        return view('site.applications.show', compact('performer_file', 'branch', 'perms', 'access_comment', 'performers_company', 'performers_branch', 'file_basis', 'file_tech_spec', 'other_files', 'user', 'application', 'branch', 'signedDocs', 'same_role_user_ids', 'access', 'subjects', 'purchases', 'branch_name', 'check', 'status'));
+        return ['performer_file' => $performer_file,'perms' => $perms, 'access_comment' => $access_comment, 'performers_company' => $performers_company, 'performers_branch' => $performers_branch, 'file_basis' => $file_basis, 'file_tech_spec' => $file_tech_spec, 'other_files' => $other_files, 'user' => $user, 'application' => $application, 'branch' => $branch, 'signedDocs' => $signedDocs, 'same_role_user_ids' => $same_role_user_ids, 'access' => $access, 'subjects' => $subjects, 'purchases' => $purchases, 'branch_name' => $branch_name, 'check' => $check,'status' => $status];
 
     }
 
-    public function edit($application)
+    public function edit($application,$user)
     {
         $status_extented = StatusExtented::all()->pluck('name', 'id')->toArray();
-        if (auth()->user()->id !== $application->user_id && !auth()->user()->hasPermission(PermissionEnum::Warehouse) && !auth()->user()->hasPermission(PermissionEnum::Company_Performer) && !auth()->user()->hasPermission(PermissionEnum::Branch_Performer)) {
+        if ($user->id !== $application->user_id && !$user->hasPermission(PermissionEnum::Warehouse) && !$user->hasPermission(PermissionEnum::Company_Performer) && !$user->hasPermission(PermissionEnum::Branch_Performer)) {
             return redirect()->route('site.applications.index');
         }
         $countries = ['0' => 'Select country'];
@@ -505,7 +480,7 @@ class ApplicationService
         $branch_signer = json_decode($application->branch->add_signers);
         $addsigner = Branch::find(9);
         $company_signer = json_decode($addsigner->add_signers);
-        return view('site.applications.edit', [
+        return [
             'application' => $application,
             'purchase' => Purchase::all()->pluck('name', 'id'),
             'subject' => Subject::all()->pluck('name', 'id'),
@@ -517,10 +492,10 @@ class ApplicationService
             'products' => $select,
             'warehouse' => Warehouse::where('application_id', $application->id)->first(),
             'performer_file' => $performer_file,
-            'user' => auth()->user(),
+            'user' => $user,
             'company_signers' => $company_signer ? Roles::find($company_signer)->sortBy('index')->pluck('display_name', 'id')->toArray() : null,
             'branch_signers' => $branch_signer ? Roles::find($branch_signer)->sortBy('index')->pluck('display_name', 'id')->toArray() : null,
-        ]);
+        ];
     }
 
     public function update($application, $request, $user)
@@ -644,14 +619,6 @@ class ApplicationService
 
     }
 
-    public function StatusChangeToPerformerStatus()
-    {
-        $applications = Application::all();
-        foreach ($applications as $application) {
-            $application = Application::where('performer_status', '!=', null)->update(['status' => DB::raw("performer_status")]);
-        }
-    }
-
     public function to_sign_data($user)
     {
         $signedDocs = SignedDocs::where('role_id', $user->role_id)->where('status', null)->pluck('application_id')->toArray();
@@ -703,7 +670,7 @@ class ApplicationService
             ->make(true);
     }
 
-    public function status(string $status, string $color)
+    public function status(string $status,$color)
     {
         return view('site.applications.colors', compact('status', 'color'));
     }
