@@ -46,7 +46,7 @@ $notifications = Notification::with('application:id,created_at')->has('applicati
                   id="notification_count">{{$notifications->count() == 0 ? '' : $notifications->count()}}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right notifications-menu" id="notifications">
-            <span class="dropdown-header" id="notification_count_text">{{$notifications->count()}} Notifications</span>
+            <span class="dropdown-header" id="notification_count_text">{{$notifications->count()}} {{ __("notification") }}</span>
             <div class="py-1 overflow-y-auto max-h-96">
                 @foreach($notifications as $notification)
                     <div class="dropdown-divider"></div>
@@ -55,7 +55,7 @@ $notifications = Notification::with('application:id,created_at')->has('applicati
                             <i class="fas fa-envelope mr-2"></i>
                             {{$notification->message}}
                             <span class="float-right text-muted text-sm">
-                                {{now()->diffInMinutes($notification->created_at)}} minutes
+                                {{now()->diffInMinutes($notification->created_at)}} {{ __('minutes') }}
                             </span>
                         </p>
                     </a>
@@ -76,7 +76,7 @@ $notifications = Notification::with('application:id,created_at')->has('applicati
                  class="dropdownlist absolute bg-gray-800 text-black right-0 mt-3 p-3 overflow-auto z-30 invisible">
 
                 <input type="text" class="drop-search focus:outline-none rounded p-2 text-gray-600"
-                       placeholder="Search.." id="myInput" onkeyup="filterDD('myDropdown','myInput')">
+                       placeholder="{{ __("search") }}.." id="myInput" onkeyup="filterDD('myDropdown','myInput')">
                 <a href="{{route('site.profile.index')}}"
                    class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i
                         class="fa fa-user fa-fw"></i> {{ __("Profile") }}</a>
@@ -120,7 +120,7 @@ $notifications = Notification::with('application:id,created_at')->has('applicati
             data = JSON.parse(data.data)
             count += 1;
             $('#notification_count').text(count);
-            $('#notification_count_text').text(count + ' Notifications');
+            $('#notification_count_text').text(count + ' Notifications1');
             let url = window.location.origin + '/' + '{{\Mcamara\LaravelLocalization\Facades\LaravelLocalization::getCurrentLocale()}}' + `/site/applications/${data['id']}/show/1`
             let message = '{{__('Новая заявка')}}';
             console.log(url)

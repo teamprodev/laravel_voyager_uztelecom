@@ -7,39 +7,40 @@
         </a>
         <div class="w-11/12 mx-auto pt-8 pb-16">
 
-        {{ Aire::open()
-  ->route('site.applications.performer_status_post')
-  ->enctype("multipart/form-data")
-  ->post() }}
-        <div style="text-align: center; display: flex; justify-content: end; align-items: center; column-gap: 10px; margin-right: 20px">
-            {{Aire::select($status, 'select', 'Статус')->value(Illuminate\Support\Facades\Cache::get('performer_status_get'))->name('performer_status_get')}}
+            {{ Aire::open()
+      ->route('site.applications.performer_status_post')
+      ->enctype("multipart/form-data")
+      ->post() }}
+            <div
+                style="text-align: center; display: flex; justify-content: end; align-items: center; column-gap: 10px; margin-right: 20px">
+                {{Aire::select($status, 'select', 'Статус')->value(Illuminate\Support\Facades\Cache::get('performer_status_get'))->name('performer_status_get')}}
 
-            <button type="submit" class="btn btn-success" style="margin-top: 8px;">Выбрать</button>
-        </div>
-        {{ Aire::close() }}
-        @if(Illuminate\Support\Facades\Cache::get('performer_status_get') != null)
-            <table id="yajra-datatable">
-                <thead>
-                <tr>
-                    <th>{{ __('ФИО') }}</th>
-                    <th>{{ __('Инициатор (наименование подразделения заказчика)') }}</th>
-                    <th>{{ __('Наименование предмета закупки(товар, работа, услуги)') }}</th>
-                    <th>{{ __('Ожидаемый срок поставки') }}</th>
-                    <th>{{ __('Планируемый бюджет закупки (сумма)') }}</th>
-                    <th>{{ __('Условия поставки по INCOTERMS (самовывоз со склада/доставка до покупателя)') }}</th>
-                    <th>{{ __('Дата создания') }}</th>
-                    <th>{{ __('Статус заявки') }}</th>
-                    <th>{{ __('Действие') }}</th>
-                </tr>
-                </thead>
-            </table>
+                <button type="submit" class="btn btn-success" style="margin-top: 8px;">{{ __("Выбрать") }}</button>
+            </div>
+            {{ Aire::close() }}
+            @if(Illuminate\Support\Facades\Cache::get('performer_status_get') != null)
+                <table id="yajra-datatable">
+                    <thead>
+                    <tr>
+                        <th>{{ __('ФИО') }}</th>
+                        <th>{{ __('Инициатор (наименование подразделения заказчика)') }}</th>
+                        <th>{{ __('Наименование предмета закупки(товар, работа, услуги)') }}</th>
+                        <th>{{ __('Ожидаемый срок поставки') }}</th>
+                        <th>{{ __('Планируемый бюджет закупки (сумма)') }}</th>
+                        <th>{{ __('Условия поставки по INCOTERMS (самовывоз со склада/доставка до покупателя)') }}</th>
+                        <th>{{ __('Дата создания') }}</th>
+                        <th>{{ __('Статус заявки') }}</th>
+                        <th>{{ __('Действие') }}</th>
+                    </tr>
+                    </thead>
+                </table>
         </div>
     </div>
     @push('scripts')
         <script>
             $(function () {
                 var table = $('#yajra-datatable').DataTable({
-                    order: [[ 0, "desc" ]],
+                    order: [[0, "desc"]],
                     processing: true,
                     serverSide: true,
                     ajax:
@@ -53,7 +54,7 @@
                         {
                             "data": "",
                             render: function (data, type, row) {
-                                var details = row.planned_price + " " + row.currency ;
+                                var details = row.planned_price + " " + row.currency;
                                 return details;
                             }
                         },
@@ -72,8 +73,7 @@
 
 
             });
-            if(document.getElementById('status').value === 'Исполнена')
-            {
+            if (document.getElementById('status').value === 'Исполнена') {
                 document.getElementById('status').style.backgroundColor = green;
             }
             console.log(document.getElementById('status'))

@@ -247,5 +247,8 @@
     "With_VAT": "C НДС",
     "date_signature": "Дата подписи",
     "for_signature": "На подпись",
-    "Performer_status": "Статус исполнителя"
+    "Performer_status": "Статус исполнителя",
+    "notification": "Уведомлений",
+    "minutes": "минут",
+    "search": "Поиск"
 }

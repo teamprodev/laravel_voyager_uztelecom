@@ -242,5 +242,8 @@
     "With_VAT": "with VAT",
     "date_signature": "Signature date",
     "for_signature": "For signature",
-    "Performer_status": "Performer status"
+    "Performer_status": "Performer status",
+    "notification": "Notification",
+    "minutes": "minutes",
+    "search": "Search"
 }
