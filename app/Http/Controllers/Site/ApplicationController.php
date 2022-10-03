@@ -121,7 +121,7 @@ class ApplicationController extends Controller
         {
             abort(405,__("Вам нельзя изменить заявку,ибо заявка уже подписана!"));
         }
-        return $this->service->edit($application);
+        return $this->service->edit($application,$user);
     }
     /**
      * Application Update

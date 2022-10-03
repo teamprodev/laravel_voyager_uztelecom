@@ -748,10 +748,10 @@ class ApplicationService
 
     }
 
-    public function edit($application)
+    public function edit($application,$user)
     {
         $status_extented = StatusExtented::all()->pluck('name', 'id')->toArray();
-        if (auth()->user()->id !== $application->user_id && !auth()->user()->hasPermission(PermissionEnum::Warehouse) && !auth()->user()->hasPermission('Company_Performer') && !auth()->user()->hasPermission('Branch_Performer')) {
+        if ($user->id !== $application->user_id && !$user->hasPermission(PermissionEnum::Warehouse) && !$user->hasPermission('Company_Performer') && !$user->hasPermission('Branch_Performer')) {
             return redirect()->route('site.applications.index');
         }
         $countries = ['0' => 'Select country'];
@@ -772,7 +772,7 @@ class ApplicationService
             'products' => $select,
             'warehouse' => Warehouse::where('application_id', $application->id)->first(),
             'performer_file' => $performer_file,
-            'user' => auth()->user(),
+            'user' => $user,
             'company_signers' => $company_signer ? Roles::find($company_signer)->sortBy('index')->pluck('display_name', 'id')->toArray() : null,
             'branch_signers' => $branch_signer ? Roles::find($branch_signer)->sortBy('index')->pluck('display_name', 'id')->toArray() : null,
         ]);
@@ -874,12 +874,13 @@ class ApplicationService
     {
         $application->is_more_than_limit = $request->is_more_than_limit;
         $application->signers = null;
+        $branch_id = auth()->user()->branch_id;
         if ($request->is_more_than_limit == 1) {
             $application->branch_initiator_id = 9;
         }else{
-            $application->branch_initiator_id = auth()->user()->branch_id;
+            $application->branch_initiator_id = $branch_id;
         }
-        $application->branch_id = auth()->user()->branch_id;
+        $application->branch_id = $branch_id;
         SignedDocs::where('application_id', $application->id)->delete();
         $application->save();
     }
