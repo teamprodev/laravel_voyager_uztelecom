@@ -41,117 +41,115 @@ class ApplicationService
 
     public function index_getData($user)
     {
-            if ($user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
-                $a = 'branch_initiator_id';
-                $b = [9, 13];
-            } elseif ($user->hasPermission(PermissionEnum::Company_Leader) | $user->hasPermission(PermissionEnum::Branch_Leader)) {
-                $a = 'branch_initiator_id';
-                $b = [$user->branch_id];
-            } else {
-                $a = 'department_initiator_id';
-                $b = [$user->department_id];
-            }
+        if ($user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
+            $a = 'branch_initiator_id';
+            $b = [9, 13];
+        } elseif ($user->hasPermission(PermissionEnum::Company_Leader) | $user->hasPermission(PermissionEnum::Branch_Leader)) {
+            $a = 'branch_initiator_id';
+            $b = [$user->branch_id];
+        } else {
+            $a = 'department_initiator_id';
+            $b = [$user->department_id];
+        }
 
-            switch (true) {
-                case $user->hasPermission(PermissionEnum::Add_Company_Signer) && $user->hasPermission(PermissionEnum::Add_Branch_Signer) :
-                    $query = Application::where('draft', '!=', 1)->whereIn($a, $b)->orWhere('signers', 'like', "%{$user->role_id}%")->where('draft', '!=', 1)->orWhere('performer_role_id', $user->role->id)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
-                    break;
-                case $user->hasPermission(PermissionEnum::Warehouse) :
-                    $status_0 = ApplicationStatusEnum::Accepted;
-                    $status_1 = 'товар';
-                    $query = Application::where('draft', '!=', 1)->whereIn($a, $b)->where('status', 'like', "%{$status_0}%")->OrwhereIn($a, $b)->where('status', 'like', "%{$status_1}%")->orWhere('user_id', auth()->user()->id)->get();
-                    break;
-                case $user->hasPermission(PermissionEnum::Company_Leader) && $user->hasPermission(PermissionEnum::Branch_Leader) :
-                    $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
-                    break;
-                case $user->role_id === 7 :
-                    $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->get();
-                    break;
-                case $user->hasPermission(PermissionEnum::Company_Signer) || $user->hasPermission(PermissionEnum::Add_Company_Signer) || $user->hasPermission(PermissionEnum::Branch_Signer) || $user->hasPermission(PermissionEnum::Add_Branch_Signer):
-                    $query = Application::where('draft', '!=', 1)
-                        ->where('signers', 'like', "%{$user->role_id}%")
-                        ->orWhere('performer_role_id', $user->role->id)
-                        ->where('draft', '!=', 1)
-                        ->orWhere('user_id', auth()->user()->id)
-                        ->where('draft', '!=', 1)->get();
-                    break;
-                case $user->hasPermission(PermissionEnum::Company_Leader) :
-                    $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->where('status', ApplicationStatusEnum::Agreed)->orWhere('status', ApplicationStatusEnum::Distributed)->whereIn($a, $b)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
-                    break;
-                case $user->hasPermission(PermissionEnum::Branch_Leader) :
-                    $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->where('is_more_than_limit', 0)->where('show_leader', 1)->orWhere('is_more_than_limit', 0)->whereIn($a, $b)->where('status', ApplicationStatusEnum::New)->orWhere('is_more_than_limit', 0)->where('draft', '!=', 1)->whereIn($a, $b)->where('status', ApplicationStatusEnum::Distributed)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
-                    break;
-                case $user->hasPermission(PermissionEnum::Company_Performer) || $user->hasPermission(PermissionEnum::Branch_Performer) :
-                    $query = Application::where('performer_role_id', auth()->user()->role_id)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
-                    break;
-                default :
-                    $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->get();
-                    break;
-            }
+        switch (true) {
+            case $user->hasPermission(PermissionEnum::Add_Company_Signer) && $user->hasPermission(PermissionEnum::Add_Branch_Signer) :
+                $query = Application::where('draft', '!=', 1)->whereIn($a, $b)->orWhere('signers', 'like', "%{$user->role_id}%")->where('draft', '!=', 1)->orWhere('performer_role_id', $user->role->id)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
+                break;
+            case $user->hasPermission(PermissionEnum::Warehouse) :
+                $status_0 = ApplicationStatusEnum::Accepted;
+                $status_1 = 'товар';
+                $query = Application::where('draft', '!=', 1)->whereIn($a, $b)->where('status', 'like', "%{$status_0}%")->OrwhereIn($a, $b)->where('status', 'like', "%{$status_1}%")->orWhere('user_id', auth()->user()->id)->get();
+                break;
+            case $user->hasPermission(PermissionEnum::Company_Leader) && $user->hasPermission(PermissionEnum::Branch_Leader) :
+                $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
+                break;
+            case $user->role_id === 7 :
+                $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->get();
+                break;
+            case $user->hasPermission(PermissionEnum::Company_Signer) || $user->hasPermission(PermissionEnum::Add_Company_Signer) || $user->hasPermission(PermissionEnum::Branch_Signer) || $user->hasPermission(PermissionEnum::Add_Branch_Signer):
+                $query = Application::where('draft', '!=', 1)
+                    ->where('signers', 'like', "%{$user->role_id}%")
+                    ->orWhere('performer_role_id', $user->role->id)
+                    ->where('draft', '!=', 1)
+                    ->orWhere('user_id', auth()->user()->id)
+                    ->where('draft', '!=', 1)->get();
+                break;
+            case $user->hasPermission(PermissionEnum::Company_Leader) :
+                $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->where('status', ApplicationStatusEnum::Agreed)->orWhere('status', ApplicationStatusEnum::Distributed)->whereIn($a, $b)->where('draft', '!=', 1)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
+                break;
+            case $user->hasPermission(PermissionEnum::Branch_Leader) :
+                $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->where('is_more_than_limit', 0)->where('show_leader', 1)->orWhere('is_more_than_limit', 0)->whereIn($a, $b)->where('status', ApplicationStatusEnum::New)->orWhere('is_more_than_limit', 0)->where('draft', '!=', 1)->whereIn($a, $b)->where('status', ApplicationStatusEnum::Distributed)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
+                break;
+            case $user->hasPermission(PermissionEnum::Company_Performer) || $user->hasPermission(PermissionEnum::Branch_Performer) :
+                $query = Application::where('performer_role_id', auth()->user()->role_id)->orWhere('user_id', auth()->user()->id)->where('draft', '!=', 1)->get();
+                break;
+            default :
+                $query = Application::whereIn($a, $b)->where('draft', '!=', 1)->get();
+                break;
+        }
 
-            return Datatables::of($query)
-                ->editColumn('is_more_than_limit', function ($query) {
-                    return $query->is_more_than_limit == 1 ? __('Компанию') : __('Филиал');
-                })
-                ->editColumn('created_at', function ($query) {
-                    return $query->created_at ? with(new Carbon($query->created_at))->format('d.m.Y') : '';
-                })
-                ->editColumn('branch_initiator_id', function ($query) {
-                    return $query->branch->name;
-                })
-                ->editColumn('planned_price', function ($query) {
-                    return $query->planned_price ? number_format($query->planned_price, 0, '', ' ') : '';
-                })
-                ->editColumn('updated_at', function ($query) {
-                    return $query->updated_at ? with(new Carbon($query->updated_at))->format('d.m.Y') : '';
-                })
-                ->editColumn('date', function ($query) {
-                    return $query->date ? with(new Carbon($query->date))->format('d.m.Y') : '';
-                })
-                ->editColumn('delivery_date', function ($query) {
-                    return $query->updated_at ? with(new Carbon($query->delivery_date))->format('d.m.Y') : '';
-                })
-                ->addColumn('planned_price_curr', function ($query) {
-                    $planned_price = $query->planned_price ? number_format($query->planned_price, 0, '', ' ') : '';
-                    return "{$planned_price}  {$query->currency}";
-                })
-                ->editColumn('status', function ($query) {
-                    /*
-                     *  Voyager admin paneldan status ranglarini olish va chiqarish
-                     */
+        return Datatables::of($query)
+            ->editColumn('is_more_than_limit', function ($query) {
+                return $query->is_more_than_limit == 1 ? __('Компанию') : __('Филиал');
+            })
+            ->editColumn('created_at', function ($query) {
+                return $query->created_at ? with(new Carbon($query->created_at))->format('d.m.Y') : '';
+            })
+            ->editColumn('branch_initiator_id', function ($query) {
+                return $query->branch->name;
+            })
+            ->editColumn('planned_price', function ($query) {
+                return $query->planned_price ? number_format($query->planned_price, 0, '', ' ') : '';
+            })
+            ->editColumn('updated_at', function ($query) {
+                return $query->updated_at ? with(new Carbon($query->updated_at))->format('d.m.Y') : '';
+            })
+            ->editColumn('date', function ($query) {
+                return $query->date ? with(new Carbon($query->date))->format('d.m.Y') : '';
+            })
+            ->editColumn('delivery_date', function ($query) {
+                return $query->updated_at ? with(new Carbon($query->delivery_date))->format('d.m.Y') : '';
+            })
+            ->addColumn('planned_price_curr', function ($query) {
+                $planned_price = $query->planned_price ? number_format($query->planned_price, 0, '', ' ') : '';
+                return "{$planned_price}  {$query->currency}";
+            })
+            ->editColumn('status', function ($query) {
+                /*
+                 *  Voyager admin paneldan status ranglarini olish va chiqarish
+                 */
 
-                    $status = $query->status;
-                    $color = setting("color.{$status}");
-                    if ($query->performer_status !== null) {
-                        $a = StatusExtented::find($query->performer_status);
-                        $status = $a->name;
-                        $color = $a->color;
-                    }
-                    return json_encode(['backgroundColor' => $color,'app' => $status,'color' => $color ? 'white':'black']);
-                })
-                ->addIndexColumn()
-                ->addColumn('action', function ($row) {
+                $status = $query->status;
+                $color = setting("color.{$status}");
+                if ($query->performer_status !== null) {
+                    $a = StatusExtented::find($query->performer_status);
+                    $status = $a->name;
+                    $color = $a->color;
+                }
+                return json_encode(['backgroundColor' => $color, 'app' => $status, 'color' => $color ? 'white' : 'black']);
+            })
+            ->addIndexColumn()
+            ->addColumn('action', function ($row) {
 
-                    if (auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id) {
-                        $data['edit'] = route('site.applications.edit', $row->id);
-                    }
+                if (auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id) {
+                    $data['edit'] = route('site.applications.edit', $row->id);
+                }
 
-                    $data['show'] = route('site.applications.show', $row->id);
+                $data['show'] = route('site.applications.show', $row->id);
 
-                    if ($row->user_id === auth()->user()->id && $row->show_director !== 2 && $row->show_leader !== 2 && $row->status !== ApplicationStatusEnum::Refused) {
-                        $data['destroy'] = route('site.applications.destroy', $row->id);
-                    }
+                if ($row->user_id === auth()->user()->id && $row->show_director !== 2 && $row->show_leader !== 2 && $row->status !== ApplicationStatusEnum::Refused) {
+                    $data['destroy'] = route('site.applications.destroy', $row->id);
+                }
 
-                    if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
-                        $data['clone'] = route('site.applications.clone', $row->id);
-                    }
+                if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
+                    $data['clone'] = route('site.applications.clone', $row->id);
+                }
 
-                    $confirm = __('confirm') . ' ' . "$row->id?";
-
-                    return view('site.applications.crud_link', compact('data', 'confirm'));
-                })
-                ->rawColumns(['action', 'status'])
-                ->make(true);
+                return json_encode(['link' => $data]);
+            })
+            ->rawColumns(['action', 'status'])
+            ->make(true);
     }
 
     /*
@@ -160,7 +158,7 @@ class ApplicationService
     public function status_table($user)
     {
         if ($user->hasPermission('Purchasing_Management_Center')) {
-            $application = Application::where('branch_initiator_id','!=',null);
+            $application = Application::where('branch_initiator_id', '!=', null);
         } else {
             $a = 'branch_initiator_id';
             $b = [$user->branch_id];
@@ -191,7 +189,7 @@ class ApplicationService
                     $status = $a->name;
                     $color = $a->color;
                 }
-                return json_encode(['backgroundColor' => $color,'app' => $status,'color' => $color ? 'white':'black']);
+                return json_encode(['backgroundColor' => $color, 'app' => $status, 'color' => $color ? 'white' : 'black']);
             })
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
@@ -213,9 +211,7 @@ class ApplicationService
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
 
-                $confirm = __('confirm') . ' ' . "$row->id?";
-
-                return view('site.applications.crud_link', compact('data', 'confirm'));
+                return json_encode(['link' => $data]);
             })
             ->rawColumns(['action', 'status'])
             ->make(true);
@@ -261,7 +257,7 @@ class ApplicationService
                     $status = $a->name;
                     $color = $a->color;
                 }
-                return json_encode(['backgroundColor' => $color,'app' => $status,'color' => $color ? 'white':'black']);
+                return json_encode(['backgroundColor' => $color, 'app' => $status, 'color' => $color ? 'white' : 'black']);
             })
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
@@ -280,9 +276,7 @@ class ApplicationService
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
 
-                $confirm = __('confirm') . ' ' . "$row->id?";
-
-                return view('site.applications.crud_link', compact('data', 'confirm'));
+                return json_encode(['link' => $data]);
             })
             ->rawColumns(['action', 'status'])
             ->make(true);
@@ -349,30 +343,27 @@ class ApplicationService
      */
     public function show_draft($user)
     {
-            $data = Application::where('user_id', $user->id)
-                ->whereDraft("1");
-            return Datatables::of($data)
-                ->addIndexColumn()
-                ->editColumn('created_at', function ($data) {
-                    return $data->created_at ? with(new Carbon($data->created_at))->format('d.m.Y') : '';
-                })
-                ->editColumn('updated_at', function ($data) {
-                    return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
-                })
-                ->addColumn('action', function ($row) {
-                    $data['edit'] = route('site.applications.edit', $row->id);
-                    $data['show'] = route('site.applications.show', $row->id);
-                    $data['destroy'] = route('site.applications.destroy', $row->id);
-                    if ($row->status === ApplicationStatusEnum::Accepted || $row->status === ApplicationStatusEnum::Refused) {
-                        $data['clone'] = route('site.applications.clone', $row->id);
-                    }
-
-                    $confirm = __('confirm') . ' ' . "$row->id?";
-
-                    return view('site.applications.crud_link', compact('data', 'confirm'));
-                })
-                ->rawColumns(['action'])
-                ->make(true);
+        $data = Application::where('user_id', $user->id)
+            ->whereDraft("1");
+        return Datatables::of($data)
+            ->addIndexColumn()
+            ->editColumn('created_at', function ($data) {
+                return $data->created_at ? with(new Carbon($data->created_at))->format('d.m.Y') : '';
+            })
+            ->editColumn('updated_at', function ($data) {
+                return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
+            })
+            ->addColumn('action', function ($row) {
+                $data['edit'] = route('site.applications.edit', $row->id);
+                $data['show'] = route('site.applications.show', $row->id);
+                $data['destroy'] = route('site.applications.destroy', $row->id);
+                if ($row->status === ApplicationStatusEnum::Accepted || $row->status === ApplicationStatusEnum::Refused) {
+                    $data['clone'] = route('site.applications.clone', $row->id);
+                }
+                return json_encode(['link' => $data]);
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     /*
@@ -468,11 +459,11 @@ class ApplicationService
         $perms['PerformerLeader'] = $application->performer_role_id === $user->role_id && $user->leader === 1;
         $perms['Signers'] = ($access && $user->hasPermission(PermissionEnum::Company_Signer || PermissionEnum::Add_Company_Signer || PermissionEnum::Branch_Signer || PermissionEnum::Add_Branch_Signer || PermissionEnum::Company_Performer || PermissionEnum::Branch_Performer)) || ($access && $user->role_id === 7 && $application->show_director === 1);
         $status = $application->status;
-        return ['performer_file' => $performer_file,'perms' => $perms, 'access_comment' => $access_comment, 'performers_company' => $performers_company, 'performers_branch' => $performers_branch, 'file_basis' => $file_basis, 'file_tech_spec' => $file_tech_spec, 'other_files' => $other_files, 'user' => $user, 'application' => $application, 'branch' => $branch, 'signedDocs' => $signedDocs, 'same_role_user_ids' => $same_role_user_ids, 'access' => $access, 'subjects' => $subjects, 'purchases' => $purchases, 'branch_name' => $branch_name, 'check' => $check,'status' => $status];
+        return ['performer_file' => $performer_file, 'perms' => $perms, 'access_comment' => $access_comment, 'performers_company' => $performers_company, 'performers_branch' => $performers_branch, 'file_basis' => $file_basis, 'file_tech_spec' => $file_tech_spec, 'other_files' => $other_files, 'user' => $user, 'application' => $application, 'branch' => $branch, 'signedDocs' => $signedDocs, 'same_role_user_ids' => $same_role_user_ids, 'access' => $access, 'subjects' => $subjects, 'purchases' => $purchases, 'branch_name' => $branch_name, 'check' => $check, 'status' => $status];
 
     }
 
-    public function edit($application,$user)
+    public function edit($application, $user)
     {
         $status_extented = StatusExtented::all()->pluck('name', 'id')->toArray();
         if ($user->id !== $application->user_id && !$user->hasPermission(PermissionEnum::Warehouse) && !$user->hasPermission(PermissionEnum::Company_Performer) && !$user->hasPermission(PermissionEnum::Branch_Performer)) {
@@ -651,7 +642,7 @@ class ApplicationService
                     $status = $a->name;
                     $color = $a->color;
                 }
-                return json_encode(['backgroundColor' => $color,'app' => $status,'color' => $color ? 'white':'black']);
+                return json_encode(['backgroundColor' => $color, 'app' => $status, 'color' => $color ? 'white' : 'black']);
             })
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
@@ -670,16 +661,10 @@ class ApplicationService
                 if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
-
-                return view('site.applications.crud_link', compact('data'));
+                return json_encode(['link' => $data]);
             })
             ->rawColumns(['action', 'status'])
             ->make(true);
-    }
-
-    public function status(string $status,$color)
-    {
-        return view('site.applications.colors', compact('status', 'color'));
     }
 
     private function checkComponentsInclude($application)

@@ -2,18 +2,21 @@
 @section('center_content')
     <head>
         <style>
-            .dt-body-center, .dt-body-right{
+            .dt-body-center, .dt-body-right {
                 font-size: 0.8rem;
             }
-            .btn{
+
+            .btn {
                 font-size: 0.9rem !important;
                 padding: 2px !important;
             }
-            .btn-sm{
+
+            .btn-sm {
                 font-size: 0.75rem !important;
                 padding: 3px !important;
             }
-            thead>tr>th.sorting, table.dataTable thead>tr>th.sorting_asc, table.dataTable thead>tr>th.sorting_desc, table.dataTable thead>tr>th.sorting_asc_disabled, table.dataTable thead>tr>th.sorting_desc_disabled, table.dataTable thead>tr>td.sorting, table.dataTable thead>tr>td.sorting_asc, table.dataTable thead>tr>td.sorting_desc, table.dataTable thead>tr>td.sorting_asc_disabled, table.dataTable thead>tr>td.sorting_desc_disabled{
+
+            thead > tr > th.sorting, table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sorting_desc, table.dataTable thead > tr > th.sorting_asc_disabled, table.dataTable thead > tr > th.sorting_desc_disabled, table.dataTable thead > tr > td.sorting, table.dataTable thead > tr > td.sorting_asc, table.dataTable thead > tr > td.sorting_desc, table.dataTable thead > tr > td.sorting_asc_disabled, table.dataTable thead > tr > td.sorting_desc_disabled {
                 padding-right: 0 !important;
             }
         </style>
@@ -29,7 +32,8 @@
       ->route('branches.putCache')
       ->enctype("multipart/form-data")
       ->post() }}
-            <div style="text-align: center; display: flex; justify-content: end; align-items: center; column-gap: 10px; margin-right: 20px">
+            <div
+                style="text-align: center; display: flex; justify-content: end; align-items: center; column-gap: 10px; margin-right: 20px">
                 {{Aire::select($branch, 'select', 'Филиал')->value(auth()->user()->select_branch_id)->name('branch_id')}}
 
                 <button type="submit" class="btn btn-success" style="margin-top: 8px;">Выбрать</button>
@@ -63,7 +67,7 @@
                 var table = $('#yajra-datatable').DataTable({
                     columnDefs: [
                         {
-                            targets: [0,1,2,3,4,5,6,7,8,10,11],
+                            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11],
                             className: 'dt-body-center dt-head-center'
                         },
                         {
@@ -71,8 +75,8 @@
                             className: 'dt-body-right dt-head-center'
                         },
                     ],
-                    order: [[ 0, "desc" ]],
-                    "lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "{{ __('Все') }}"] ] ,
+                    order: [[0, "desc"]],
+                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "{{ __('Все') }}"]],
                     processing: true,
                     serverSide: true,
                     ajax:
@@ -80,7 +84,15 @@
 
                     columns: [
                         {data: 'id', name: 'id'},
-                        {data: 'status', name: 'status'},
+                        {
+                            data: 'status', name: 'status', render: function (data, type, row) {
+                                var details = JSON.parse(row.status).backgroundColor;
+                                var color = JSON.parse(row.status).color;
+                                var app = JSON.parse(row.status).app;
+                                console.log(JSON.parse(row.status).app);
+                                return `<button style='background-color: ${details};color:${color};width: 100%;height:100%' class='btn btn-lg'>` + app + `</button>`;
+                            }
+                        },
                         {data: 'is_more_than_limit', name: 'is_more_than_limit'},
                         {data: 'number', name: 'number'},
                         {data: 'date', name: 'date'},
@@ -93,6 +105,9 @@
                         {data: 'created_at', name: 'created_at'},
                         {
                             data: 'action',
+                            render: function (link) {
+                                return checkActionUser(JSON.parse(link));
+                            },
                             name: 'action',
                         },
                     ]
@@ -100,11 +115,23 @@
 
 
             });
-            if(document.getElementById('status').value === 'Исполнена')
-            {
-                document.getElementById('status').style.backgroundColor = green;
+
+            function checkActionUser(link) {
+                var htmlCode;
+                if (link.link.show !== undefined) {
+                    htmlCode = `<a style="background-color: #000080; color: white" href="${link.link.show}" class="m-1 col edit btn btn-sm"> {{ __('show')  }} </a>`;
+                }
+                if (link.link.edit !== undefined) {
+                    htmlCode += `<a  href="${link.link.edit}" class="m-1 col edit btn btn-sm btn-secondary"> {{ __('edit')  }} </a>`;
+                }
+                if (link.link.destroy !== undefined) {
+                    htmlCode += `<a  href="${link.link.destroy}"  class="m-1 col edit btn btn-sm btn-danger" onclick="return confirm('Вы уверены?')" >  {{ __('destroy')  }}  </a>`;
+                }
+                if (link.link.clone !== undefined) {
+                    htmlCode += `<a  href="${link.link.clone}" class="m-1 col edit btn btn-sm btn-warning"> {{ __('clone')  }} </a>`;
+                }
+                return htmlCode;
             }
-            console.log(document.getElementById('status'))
         </script>
     @endpush
     @endif
