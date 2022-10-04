@@ -15,10 +15,6 @@ namespace App\Enums;
 class PermissionEnum
 {
     public const Warehouse = 'Warehouse';
-
-
-
-
-
+    public const Purchasing_Management_Center = 'Purchasing_Management_Center';
 
 }
