@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Site;
 
+use App\Enums\ApplicationMagicNumber;
 use App\Enums\PermissionEnum;
 use App\Http\Requests\ApplicationRequest;
 use App\Models\Application;
@@ -88,7 +89,7 @@ class ApplicationController extends Controller
             Notification::query()
                 ->where('application_id', $application->id)
                 ->where('user_id', auth()->id())
-                ->update(['is_read' => 1]);
+                ->update(['is_read' => ApplicationMagicNumber::one]);
         }
         $compact = $this->service->show($application, auth()->user());
         return view('site.applications.show', $compact);
@@ -122,7 +123,7 @@ class ApplicationController extends Controller
     public function edit(Application $application)
     {
         $user = auth()->user();
-        if(((($application->performer_role_id !== null) && ($application->performer_role_id !== auth()->user()->role_id)) && $user->hasPermission(PermissionEnum::Warehouse)) || $application->show_leader === 2)
+        if(((($application->performer_role_id !== null) && ($application->performer_role_id !== auth()->user()->role_id)) && $user->hasPermission(PermissionEnum::Warehouse)) || $application->show_leader === ApplicationMagicNumber::two)
         {
             abort(405,__("Вам нельзя изменить заявку,ибо заявка уже подписана!"));
         }
@@ -205,47 +206,47 @@ class ApplicationController extends Controller
         $applications = Application::where('performer_role_id','!=',null)->where('status',ApplicationStatusEnum::In_Process)->get();
         foreach ($applications as $application) {
             $application->status = ApplicationStatusEnum::Distributed;
-            $application->show_leader = 2;
+            $application->show_leader = ApplicationMagicNumber::two;
             $application->save();
         }
 
-        $signed_docs = Application::where('draft','!=',1)->get();
+        $signed_docs = Application::where('draft','!=',ApplicationMagicNumber::one)->get();
         foreach ($signed_docs as $docs) {
             $signedDocsId = SignedDocs::where('application_id',$docs->id)->get();
 
-            $agreedUsers = $signedDocsId->where('status', 1)->map(function ($doc) {
+            $agreedUsers = $signedDocsId->where('status', ApplicationMagicNumber::one)->map(function ($doc) {
                 if (isset($doc->role_id)) {
                     $role_id = $doc->role_id;
                     return $role_id;
                 }
             });
-            $canceledUsers = $signedDocsId->where('status', 0)->whereNotNull('status')->map(function ($doc) {
+            $canceledUsers = $signedDocsId->where('status', ApplicationMagicNumber::zero)->whereNotNull('status')->map(function ($doc) {
                 $role_id = $doc->role_id;
                 return $role_id;
             });
             $roles_need_sign = json_decode($docs->signers);
             switch (true){
-                case in_array(7, $agreedUsers->toArray()) && $docs->status === ApplicationStatusEnum::In_Process:
+                case in_array(ApplicationMagicNumber::Director, $agreedUsers->toArray()) && $docs->status === ApplicationStatusEnum::In_Process:
                     $docs->status = ApplicationStatusEnum::Agreed;
-                    $docs->show_director = 2;
-                    $docs->show_leader = 1;
+                    $docs->show_director = ApplicationMagicNumber::two;
+                    $docs->show_leader = ApplicationMagicNumber::one;
                     break;
-                case count(array_diff($roles_need_sign, $agreedUsers->toArray())) === 1 && $docs->is_more_than_limit === 1 && $docs->show_leader === null && $docs->status === ApplicationStatusEnum::In_Process :
-                    $docs->show_director = 1;
+                case count(array_diff($roles_need_sign, $agreedUsers->toArray())) === ApplicationMagicNumber::one && $docs->is_more_than_limit === ApplicationMagicNumber::one && $docs->show_leader === null && $docs->status === ApplicationStatusEnum::In_Process :
+                    $docs->show_director = ApplicationMagicNumber::one;
                     $docs->status = ApplicationStatusEnum::In_Process;
                     break;
-                case  array_diff($roles_need_sign, $agreedUsers->toArray()) === null && $docs->is_more_than_limit !== 1 && $docs->show_leader === null && $docs->status === ApplicationStatusEnum::In_Process :
-                    $docs->show_leader = 1;
+                case  array_diff($roles_need_sign, $agreedUsers->toArray()) === null && $docs->is_more_than_limit !== ApplicationMagicNumber::one && $docs->show_leader === null && $docs->status === ApplicationStatusEnum::In_Process :
+                    $docs->show_leader = ApplicationMagicNumber::one;
                     $docs->status = ApplicationStatusEnum::In_Process;
                     break;
-                case array_diff($roles_need_sign, $agreedUsers->toArray()) !== null && $docs->show_leader === 1 && $docs->status === ApplicationStatusEnum::In_Process :
+                case array_diff($roles_need_sign, $agreedUsers->toArray()) !== null && $docs->show_leader === ApplicationMagicNumber::one && $docs->status === ApplicationStatusEnum::In_Process :
                     $docs->show_leader = null;
                     $docs->performer_role_id = null;
                     $docs->performer_received_date = null;
                     $docs->performer_comment = null;
                     $docs->performer_comment_date = null;
                     break;
-                case  in_array(7, $canceledUsers->toArray()) && $docs->show_leader === null :
+                case  in_array(ApplicationMagicNumber::Director, $canceledUsers->toArray()) && $docs->show_leader === null :
                     $docs->status = ApplicationStatusEnum::Rejected;
                     break;
             }

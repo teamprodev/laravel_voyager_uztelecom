@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ApplicationMagicNumber;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -12,7 +13,7 @@ class UserController extends VoyagerUserController
 {
     public function changeLeader(User $user)
     {
-        $user->leader = $user->leader?0:1;
+        $user->leader = $user->leader?ApplicationMagicNumber::zero:ApplicationMagicNumber::one;
         $user->save();
         return back()->with([
             'message' => "Muvafaqiyatli o'zgartirildi!"

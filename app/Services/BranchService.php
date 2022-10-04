@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\ApplicationMagicNumber;
 use App\Enums\ApplicationStatusEnum;
 use App\Enums\PermissionEnum;
 use App\Models\Application;
@@ -49,7 +50,7 @@ class BranchService
         $data = Application::where('branch_id', $id)->where('name', '!=', 'null')->get();
         return Datatables::of($data)
             ->editColumn('is_more_than_limit', function ($query) {
-                return $query->is_more_than_limit === 1 ? __('Компанию') : __('Филиал');
+                return $query->is_more_than_limit == ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
             })
             ->editColumn('branch_initiator_id', function ($query) {
                 return $query->branch->name;
@@ -62,7 +63,7 @@ class BranchService
                 return $docs->role ? $docs->role->display_name:"";
             })
             ->editColumn('planned_price', function ($query) {
-                return $query->planned_price ? number_format($query->planned_price, 0, '', ' ') : '';
+                return $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
             })
             ->editColumn('delivery_date', function ($query) {
                 return $query->updated_at ? with(new Carbon($query->delivery_date))->format('d.m.Y') : '';
@@ -74,7 +75,7 @@ class BranchService
                 return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
             })
             ->addColumn('planned_price_curr', function ($query) {
-                $planned_price = $query->planned_price ? number_format($query->planned_price, 0, '', ' ') : '';
+                $planned_price = $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
                 return "{$planned_price}  {$query->currency}";
             })
             ->editColumn('status', function ($query) {
