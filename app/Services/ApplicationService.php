@@ -356,14 +356,12 @@ class ApplicationService
     public function performer_status($user)
     {
         if ($user->hasPermission('Purchasing_Management_Center')) {
-            $a = 'branch_initiator_id';
-            $b = [9, 13];
+            $application = Application::Where('branch_initiator_id','!=',null);
         } else {
-            $a = 'branch_initiator_id';
-            $b = [$user->branch_id];
+            $application = Application::where('branch_initiator_id',$user->branch_id);
         }
         $status = Cache::get('performer_status_get');
-        $data = Application::WhereIn('branch_initiator_id',[$user->branch_id])->where('status_extended_id', $status)->where('name', '!=', null)->OrWhereIn($a,$b)->where('status', $status)->where('name', '!=', null)->get();
+        $data = $application->where('performer_status', $status)->get();
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('user_id', function ($docs) {
