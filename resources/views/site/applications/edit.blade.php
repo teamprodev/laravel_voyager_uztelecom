@@ -9,7 +9,8 @@
   ->route('site.applications.is_more_than_limit',$application->id)
   ->enctype("multipart/form-data")
   ->post() }}
-    <div class="container">
+    @if($application->name == null)
+        <div class="container">
         @if($application->is_more_than_limit == 1)
         {{ Aire::submit(__("Компания"))
         ->variant()->green()
@@ -33,6 +34,7 @@
         ->value('0') }}
             @endif
     </div>
+    @endif
     {{ Aire::close() }}
     @endif
     @if($application->is_more_than_limit !== null)
@@ -75,6 +77,6 @@
     @includeWhen($user->hasPermission('Warehouse') && $application->status == 'Принята'||$user->hasPermission('Warehouse') && $application->status == 'товар доставлен'||$user->hasPermission('Warehouse') && $application->status == 'товар прибыл','site.applications.warehouse')
     {{ Aire::close() }}
     @endif
-    
+
 @endsection
 
