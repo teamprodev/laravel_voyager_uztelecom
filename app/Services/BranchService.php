@@ -33,8 +33,7 @@ class BranchService
             ->addColumn('action', function($row){
                 $data['edit'] = "/admin/roles/{$row->id}/edit";
                 $data['destroy'] =route("voyager.roles.destroy",$row->id);
-                $confirm = __('confirm') . ' ' . "$row->id?";
-                return view('site.applications.crud_link', compact('data', 'confirm'));
+                return json_encode(['link' => $data]);
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -80,13 +79,13 @@ class BranchService
             })
             ->editColumn('status', function ($query) {
                 $status = $query->status;
+                $color = setting("color.{$status}");
                 if ($query->performer_status !== null) {
                     $a = StatusExtented::find($query->performer_status);
-                    $service = new ApplicationService();
-                    return $service->status($a->name,$a->color);
-                } else {
-                    return view('site.applications.colors', compact('status'));
+                    $status = $a->name;
+                    $color = $a->color;
                 }
+                return json_encode(['backgroundColor' => $color, 'app' => $status, 'color' => $color ? 'white' : 'black']);
             })
             ->addIndexColumn()
             ->addColumn('action', function($row){
@@ -107,10 +106,7 @@ class BranchService
                 {
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
-
-                $confirm = __('confirm') . ' ' . "$row->id?";
-
-                return view('site.applications.crud_link', compact('data', 'confirm'));
+                return json_encode(['link' => $data]);
             })
             ->rawColumns(['action','status'])
             ->make(true);

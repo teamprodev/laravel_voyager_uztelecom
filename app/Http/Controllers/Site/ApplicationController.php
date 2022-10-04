@@ -12,6 +12,7 @@ use App\Models\StatusExtented;
 use App\Services\ApplicationService;
 use App\Models\SignedDocs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon as Date;
 use Illuminate\Support\Facades\File;

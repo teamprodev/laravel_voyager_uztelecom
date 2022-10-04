@@ -137,10 +137,7 @@ class ApplicationService
                     if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
                         $data['clone'] = route('site.applications.clone', $row->id);
                     }
-
-                    $confirm = __('confirm') . ' ' . "$row->id?";
-
-                    return view('site.applications.crud_link', compact('data', 'confirm'));
+                    return json_encode(['link' => $data]);
                 })
                 ->rawColumns(['action', 'status'])
                 ->make(true);
@@ -205,9 +202,7 @@ class ApplicationService
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
 
-                $confirm = __('confirm') . ' ' . "$row->id?";
-
-                return view('site.applications.crud_link', compact('data', 'confirm'));
+                return json_encode(['link' => $data]);
             })
             ->rawColumns(['action', 'status'])
             ->make(true);
@@ -270,9 +265,7 @@ class ApplicationService
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
 
-                $confirm = __('confirm') . ' ' . "$row->id?";
-
-                return view('site.applications.crud_link', compact('data', 'confirm'));
+                return json_encode(['link' => $data]);
             })
             ->rawColumns(['action', 'status'])
             ->make(true);
@@ -357,9 +350,7 @@ class ApplicationService
                         $data['clone'] = route('site.applications.clone', $row->id);
                     }
 
-                    $confirm = __('confirm') . ' ' . "$row->id?";
-
-                    return view('site.applications.crud_link', compact('data', 'confirm'));
+                    return json_encode(['link' => $data]);
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -659,16 +650,10 @@ class ApplicationService
                 if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
-
-                return view('site.applications.crud_link', compact('data'));
+                return json_encode(['link' => $data]);
             })
             ->rawColumns(['action', 'status'])
             ->make(true);
-    }
-
-    public function status(string $status,$color)
-    {
-        return view('site.applications.colors', compact('status', 'color'));
     }
 
     private function checkComponentsInclude($application,$user)
