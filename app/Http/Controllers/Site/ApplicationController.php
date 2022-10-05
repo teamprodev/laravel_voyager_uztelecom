@@ -122,10 +122,10 @@ class ApplicationController extends Controller
     public function edit(Application $application)
     {
         $user = auth()->user();
-        if(((($application->performer_role_id !== null) && ($application->performer_role_id !== auth()->user()->role_id)) && $user->hasPermission(PermissionEnum::Warehouse)) || $application->show_leader === 2)
-        {
-            abort(405,__("Вам нельзя изменить заявку,ибо заявка уже подписана!"));
-        }
+//        if(((($application->performer_role_id !== null) && ($application->performer_role_id !== auth()->user()->role_id)) && $user->hasPermission(PermissionEnum::Warehouse)) || $application->show_leader === 2)
+//        {
+//            abort(405,__("Вам нельзя изменить заявку,ибо заявка уже подписана!"));
+//        }
         $compact = $this->service->edit($application,$user);
         return view('site.applications.edit', $compact);
 

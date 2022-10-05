@@ -46,9 +46,9 @@ class ReportController extends Controller
      **/
     public function index($id)
     {
-            if($id === self::Quarterly_Planned_Report)
+            if($id == self::Quarterly_Planned_Report)
                 return view("site.report.{$id}");
-            elseif($id <= self::Report_Statuses_Quantity){
+            elseif($id < self::Report_Statuses_Quantity){
                 return view("site.report.{$id}");
             }
             return view("site.report.10");
