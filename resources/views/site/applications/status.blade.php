@@ -9,6 +9,7 @@
             <table id="yajra-datatable">
                 <thead>
                 <tr>
+                    <th>ID</th>
                     <th>{{ __('ФИО') }}</th>
                     <th>{{ __('Инициатор (наименование подразделения заказчика)') }}</th>
                     <th>{{ __('Наименование предмета закупки(товар, работа, услуги)') }}</th>
@@ -39,6 +40,7 @@
                         "{{ route('site.applications.status_table') }}",
 
                     columns: [
+                        {data: 'id', name: 'id'},
                         {data: 'user_id', name: 'user_id'},
                         {data: 'initiator', name: 'initiator'},
                         {data: 'name', name: 'name'},
