@@ -115,7 +115,7 @@ var uiCreateItem = function (itmkey, vo) {
     var data;
     $.ajax({
         type: 'GET', //THIS NEEDS TO BE GET
-        url: 'http://bidding.uztelecom.uz/auth/user',
+        url: '/auth/user',
         dataType: 'json',
         async: false,
         success: function (user) {
