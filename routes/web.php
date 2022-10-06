@@ -30,6 +30,10 @@ use Teamprodev\Eimzo\Http\Controllers\EimzoController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/auth/user', function (){
+    return response()->json(['serialNumber' => auth()->user()->username]);
+});
 Route::get('branches/{id}/getData', [BranchController::class,'getData'])->name('signers.getData');
 Route::get('/branches/ajax_branch', [BranchController::class,'ajax_branch'])->name('branches.ajax_branch');
 
@@ -98,14 +102,14 @@ Route::group([
                     Route::get('{id}/show', [ProfileController::class, 'other'])->name('other');
                     Route::put('update', [ProfileController::class, 'update'])->name('update');
                 });
-                Route::group(
-                    [
-                        'as' => 'report.',
-                        'prefix' => 'report',
-                    ],
-                    function(){
-                        Route::get('/{id}',[ReportController::class,'index'])->name('index');
-                    });
+            Route::group(
+                [
+                    'as' => 'report.',
+                    'prefix' => 'report',
+                ],
+                function(){
+                    Route::get('/{id}',[ReportController::class,'index'])->name('index');
+                });
             Route::group(
                 [
                     'as' => 'applications.',
@@ -117,10 +121,10 @@ Route::group([
                             'as' => 'drafts.',
                             'prefix' => 'drafts',
                         ],
-                    function (){
-                        Route::get('', [ApplicationController::class, 'show_draft'])->name('index');
-                        Route::get('show_draft_getData', [ApplicationController::class, 'show_draft_getData'])->name('show_draft_getData');
-                    });
+                        function (){
+                            Route::get('', [ApplicationController::class, 'show_draft'])->name('index');
+                            Route::get('show_draft_getData', [ApplicationController::class, 'show_draft_getData'])->name('show_draft_getData');
+                        });
                     Route::controller(ApplicationController::class)->group(function() {
                         Route::get('', 'index')->name('index');
                         Route::get('index_getData', 'index_getData')->name('index_getData');
@@ -189,5 +193,3 @@ Route::get('eimzo/back',  function(){
     return redirect()->back();
 })->name('eimzo.back');
 Route::get('eimzo/login', [EimzoController::class, 'login'])->name('eimzo.login.index');
-
-

@@ -17,7 +17,7 @@
                            @csrf
                        <tr class="hover:bg-gray-200">
                            <td class="font-medium text-lg p-2">
-                               Роль:
+                               {{ __("Роль") }}:
                            </td>
                            <td class="p-2 w-full">
                                {{$user->role->name ? $user->role->name : ''}}
@@ -26,7 +26,7 @@
 
                        <tr class="hover:bg-gray-200">
                            <td class="font-medium text-lg p-2">
-                               Почта:
+                               {{ __("Mail") }}:
                            </td>
                            <td class="p-2 w-full">
                                <input type="text" name="email" value="{{$user->email}}" readonly class="w-10/12 focus:outline-none bg-transparent input1"><i class="fa-solid fa-pencil cursor-pointer hover:text-blue-500 float-right mt-1 change1"></i>
@@ -35,7 +35,7 @@
 
                        <tr class="hover:bg-gray-200">
                            <td class="font-medium text-lg p-2">
-                               Ф.И.О:
+                               {{ __('Full_name') }}:
                            </td>
                            <td class="p-2 w-full">
                                {{$user->name ? $user->name : ''}}
@@ -44,7 +44,7 @@
                        @isset($user->branch_id)
                        <tr class="hover:bg-gray-200">
                            <td class="font-medium text-lg p-2">
-                               Филиал:
+                               {{ __("Филиал") }}:
                            </td>
                            <td class="p-2 w-full">
                            {{$user->branch->name ? $user->branch->name : ''}}
@@ -53,7 +53,7 @@
                        @endisset
                         <tr class="hover:bg-gray-200">
                            <td class="font-medium text-lg p-2">
-                               Тел.номер:
+                               {{ __("voyager::generic.phone") }}:
                            </td>
                            <td class="p-2 w-full">
                                <input type="text" name="phone" value="{{$user->phone}}" readonly class="w-10/12 focus:outline-none bg-transparent input2"><i class="fa-solid fa-pencil cursor-pointer hover:text-blue-500 float-right mt-1 change2"></i>
@@ -62,7 +62,7 @@
                            <tr>
                                <td class="pt-4">
                                    <button type="submit" class="float-right bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
-                                       Сохранить
+                                       {{ __("Сохранить") }}
                                    </button>
                                </td>
                            </tr>

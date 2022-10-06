@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ApplicationMagicNumber;
 use App\Models\StatusExtented;
 use App\Services\ApplicationService;
 use App\Services\ReportService;
@@ -60,40 +61,36 @@ class ReportController extends Controller
     {
         switch ($id)
         {
-            case 1:
+            case ApplicationMagicNumber::one:
             return $this->service->report_1();
             break;
-            case 2:
+            case ApplicationMagicNumber::two:
             return $this->service->report_2();
             break;
-            case 22:
+            case ApplicationMagicNumber::twentyTwo:
             return $this->service->report_2_2();
             break;
-            case 3:
+            case ApplicationMagicNumber::three:
             return $this->service->report_3();
             break;
-            case 4:
+            case ApplicationMagicNumber::four:
             return $this->service->report_4();
             break;
-            case 5:
+            case ApplicationMagicNumber::five:
             return $this->service->report_5();
             break;
-
-            case 6:
+            case ApplicationMagicNumber::six:
             return $this->service->report_6();
             break;
-
-            case 7:
+            case ApplicationMagicNumber::seven:
             return $this->service->report_7();
             break;
-            case 8:
+            case ApplicationMagicNumber::eight:
             return $this->service->report_8();
             break;
-
-            case 9:
+            case ApplicationMagicNumber::nine:
             return $this->service->report_9();
             break;
-
             default:
             return $this->service->report_10();
         }

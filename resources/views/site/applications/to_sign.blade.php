@@ -32,7 +32,7 @@
                             targets: "_all",
                             className: 'dt-body-center dt-head-center'
                         }],
-                    order: [[ 0, "desc" ]],
+                    order: [[0, "desc"]],
                     processing: true,
                     serverSide: true,
                     ajax:
@@ -44,19 +44,29 @@
                         {data: 'name', name: 'name'},
                         {data: 'delivery_date', name: 'delivery_date'},
                         {
-                            "data": "",
+                            "data": "planned_price",
+                            "name": "planned_price",
                             render: function (data, type, row) {
-                                var details = row.planned_price + " " + row.currency ;
-                                return details;
+                                if (row.planned_price === null) return " "
+                                return new Intl.NumberFormat('ru-RU').format(row.planned_price)  + ' ' + row.currency;
                             }
                         },
                         {data: 'incoterms', name: 'incoterms'},
-
                         {data: 'created_at', name: 'created_at'},
-                        {data: 'status', name: 'status'},
+                        {
+                            data: 'status', name: 'status', render: function (data, type, row) {
+                                var details = JSON.parse(row.status).backgroundColor;
+                                var color = JSON.parse(row.status).color;
+                                var app = JSON.parse(row.status).app;
+                                return `<button style='background-color: ${details};color:${color};width: 100%;height:100%' class='btn btn-lg'>` + app + `</button>`;
+                            }
+                        },
                         {
                             data: 'action',
                             name: 'action',
+                            render: function (link) {
+                                return checkActionUser(JSON.parse(link));
+                            },
                             orderable: true,
                             searchable: true
                         },
@@ -65,11 +75,26 @@
 
 
             });
-            if(document.getElementById('status').value === 'Исполнена')
-            {
+            if (document.getElementById('status').value === 'Исполнена') {
                 document.getElementById('status').style.backgroundColor = green;
             }
-            console.log(document.getElementById('status'))
+
+            function checkActionUser(link) {
+                var htmlCode;
+                if (link.link.show !== undefined) {
+                    htmlCode = `<a style="background-color: #000080; color: white" href="${link.link.show}" class="m-1 col edit btn btn-sm"> {{ __('show')  }} </a>`;
+                }
+                if (link.link.edit !== undefined) {
+                    htmlCode += `<a  href="${link.link.edit}" class="m-1 col edit btn btn-sm btn-secondary"> {{ __('edit')  }} </a>`;
+                }
+                if (link.link.destroy !== undefined) {
+                    htmlCode += `<a  href="${link.link.destroy}"  class="m-1 col edit btn btn-sm btn-danger" onclick="return confirm('Вы уверены?')" >  {{ __('destroy')  }}  </a>`;
+                }
+                if (link.link.clone !== undefined) {
+                    htmlCode += `<a  href="${link.link.clone}" class="m-1 col edit btn btn-sm btn-warning"> {{ __('clone')  }} </a>`;
+                }
+                return htmlCode;
+            }
         </script>
     @endpush
 @endsection

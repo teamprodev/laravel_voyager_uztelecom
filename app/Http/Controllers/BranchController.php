@@ -6,7 +6,7 @@ use App\Enums\PermissionEnum;
 use App\Models\Application;
 use App\Models\Branch;
 use App\Models\StatusExtented;
-use App\Services\ApplicationData;
+use App\Enums\ApplicationStatusEnum;
 use App\Services\ApplicationService;
 use App\Services\BranchService;
 use Illuminate\Http\Request;
@@ -28,7 +28,7 @@ class BranchController extends Controller
      * admin paneldan branches ga kirsak "Show Roles" digan knopka chiqadi
      * 1 filialga tegishli bolgan shu knopka bosilganda
      * filial id si cache ga put qilinadi.
-    **/
+     **/
     public function edit($id)
     {
         return view('vendor.voyager.branches.signers-add',compact('id'));
@@ -44,7 +44,7 @@ class BranchController extends Controller
     /**
      * Request das kelayotgan branch_id ni users tablitsadagi select_branch_id columniga
      * saxranit qiladi.
-    **/
+     **/
     public function putCache(Request $request)
     {
         $user = auth()->user();
@@ -73,12 +73,12 @@ class BranchController extends Controller
      **/
     public function view()
     {
-        if(auth()->user()->hasPermission('select_branch'))
+        if(auth()->user()->hasPermission(PermissionEnum::Select_Branch))
         {
             $branch = Branch::pluck('name','id')->toArray();
             return view('vendor.voyager.branches.view',compact('branch'));
         }else{
-            return "<h1 style='text-align: center;color:red;'>Вам недоступно</h1>";
+            return "<h1 style='text-align: center;color:red;'>".__("Unavailable_to_you")."</h1>";
         }
 
     }

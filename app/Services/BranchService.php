@@ -2,19 +2,24 @@
 
 namespace App\Services;
 
+use App\Enums\ApplicationMagicNumber;
+use App\Enums\ApplicationStatusEnum;
 use App\Enums\PermissionEnum;
 use App\Models\Application;
 use App\Models\ApplicationSigners;
 use App\Models\Branch;
 use App\Models\StatusExtented;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
 class BranchService
 {
     /**
-     * Barcha Department ya'ni Otdellarni chiqazish.
+     * filial id si cache dan olinadi va shunga tegishli bo'lgan
+     * Role lar chiqib keladi.
      **/
     public function getData($id)
     {
@@ -26,30 +31,25 @@ class BranchService
                 return $branch;
             })
             ->addColumn('action', function($row){
-                $edit_e = "/admin/roles/{$row->id}/edit";
-                $destroy_e = route("voyager.roles.destroy",$row->id);
-                $app_edit = __('Изменить');
-                $app_delete= __('Посмотреть');;
-                $bgcolor = setting('color.edit');
-                $color = $bgcolor ? 'white':'black';
-                $edit = "<a style='background-color: {$bgcolor};color: {$color}' href='{$edit_e}' class='m-1 col edit btn btn-sm'>$app_edit</a>";
-                $bgcolor = setting('color.delete');
-                $color = $bgcolor ? 'white':'black';
-                $destroy = "<a style='background-color: {$bgcolor};color: {$color}' href='{$destroy_e}' class='m-1 col show btn btn-sm'>$app_delete</a>";
-                return "<div class='row'>
-                        {$edit}
-                        {$destroy}
-                        </div>";
+                $data['edit'] = "/admin/roles/{$row->id}/edit";
+                $data['destroy'] =route("voyager.roles.destroy",$row->id);
+                return json_encode(['link' => $data]);
             })
             ->rawColumns(['action'])
             ->make(true);
     }
+    /**
+     * Zayavkalarni filialiga qarab chiqarish
+     *
+     * users tablitsadagi select_branch_id columni value sini olib
+     * shu branch_id ga tegishli bolgan zayavkalarni ciqarb beradi
+     **/
     public function ajax_branch($id)
     {
         $data = Application::where('branch_id', $id)->where('name', '!=', 'null')->get();
         return Datatables::of($data)
             ->editColumn('is_more_than_limit', function ($query) {
-                return $query->is_more_than_limit === 1 ? __('Компанию') : __('Филиал');
+                return $query->is_more_than_limit == ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
             })
             ->editColumn('branch_initiator_id', function ($query) {
                 return $query->branch->name;
@@ -62,7 +62,7 @@ class BranchService
                 return $docs->role ? $docs->role->display_name:"";
             })
             ->editColumn('planned_price', function ($query) {
-                return $query->planned_price ? number_format($query->planned_price, 0, '', ' ') : '';
+                return $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
             })
             ->editColumn('delivery_date', function ($query) {
                 return $query->updated_at ? with(new Carbon($query->delivery_date))->format('d.m.Y') : '';
@@ -74,143 +74,39 @@ class BranchService
                 return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
             })
             ->addColumn('planned_price_curr', function ($query) {
-                $planned_price = $query->planned_price ? number_format($query->planned_price, 0, '', ' ') : '';
+                $planned_price = $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
                 return "{$planned_price}  {$query->currency}";
             })
             ->editColumn('status', function ($query) {
-                $application_status = $query->status;
-                $status_new = __('Новая');
-                $status_in_process = __('На рассмотрении');
-                $status_refused = __('Отказана');
-                $status_agreed = __('Согласована');
-                $status_rejected = __('Отклонена');
-                $status_accepted = __('Принята');
-                $status_distributed = __('Распределен');
-                $status_cancelled = __('Отменен');
-                $status_performed = __('Товар доставлен');
-                $status_overdue = ('просрочен');
-                switch($application_status)
-                {
-                    case $query->performer_status !== null:
-                        $application_service = new ApplicationService;
-                        $a = StatusExtented::find($query->performer_status);
-                        return $application_service->status($a->name);
-                    case ApplicationData::Status_New:
-                        $status = setting('color.new');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_new}</div>";
-                        break;
-                    case ApplicationData::Status_In_Process:
-                        $status = setting('color.in_process');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_in_process}</div>";
-                    case ApplicationData::Status_Overdue:
-                        $status = setting('color.overdue');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_overdue}</div>";
-                    case ApplicationData::Status_Accepted:
-                        $status = setting('color.accepted');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_accepted}</div>";
-                    case ApplicationData::Status_Refused:
-                        $status = setting('color.rejected');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_refused}</div>";
-                    case ApplicationData::Status_Agreed:
-                        $status = setting('color.agreed');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_agreed}</div>";
-                    case ApplicationData::Status_Rejected:
-                        $status = setting('color.rejected');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_rejected}</div>";
-                    case ApplicationData::Status_Distributed:
-                        $status = setting('color.distributed');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_distributed}</div>";
-                    case ApplicationData::Status_Canceled:
-                        $status = setting('color.rejected');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_cancelled}</div>";
-                    case ApplicationData::Status_Partially_Completed:
-                        $status = setting('color.partially');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Выполнено частично</div>";
-                    case ApplicationData::Status_Completed_Full:
-                        $status = setting('color.total_volume');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Выполнено в полном объёме</div>";
-                    case ApplicationData::Status_Management_Canceled:
-                        $status = setting('color.nulled_by_management');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Заявка аннулирована по заданию руководства</div>";
-                    case ApplicationData::Status_Uztelecom_Canceled:
-                        $status = setting('color.nulled_by_management');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>Договор аннулирован по инициативе Узбектелеком</div>";
-                    case ApplicationData::Status_Application_Uztelecom:
-                        $status = setting('color.nulled_by_management');
-                        $color = $status ? 'white' : 'black';
-                        return "<div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>заявка передана в Узтелеком</div>";
-                    case ApplicationData::Status_Order_Delivered:
-                        $status = setting('color.delivered');
-                        $color = $status ? 'white' : 'black';
-                        return "<div class='row'>
-                            <div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>{$status_performed}</div>
-                            </div>";
-                    case ApplicationData::Status_Contract_Concluded:
-                        $status = setting('color.concluded');
-                        $color = $status ? 'white' : 'black';
-                        return "<div class='row'>
-                            <div style='background-color: {$status};color: {$color};' class='text-center m-1 col edit btn-sm'>договор заключен</div>
-                            </div>";
-                    default:
-                        return $application_status;
+                $status = $query->status;
+                $color = setting("color.{$status}");
+                if ($query->performer_status !== null) {
+                    $a = StatusExtented::find($query->performer_status);
+                    $status = $a->name;
+                    $color = $a->color;
                 }
+                return json_encode(['backgroundColor' => $color, 'app' => $status, 'color' => $color ? 'white' : 'black']);
             })
             ->addIndexColumn()
             ->addColumn('action', function($row){
-                $edit_e = route('site.applications.edit', $row->id);
-                $clone_e = route('site.applications.clone', $row->id);
-                $show_e = route('site.applications.show', $row->id);
-                $destroy_e = route('site.applications.destroy', $row->id);
-                $app_edit = __('Изменить');
-                $app_show= __('Показать');
-                $app_clone= __('Копировать');
-                $app_delete= __('Удалить');
 
                 if(auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id)
                 {
-                    $bgcolor = setting('color.edit');
-                    $color = $bgcolor ? 'white':'black';
-                    $edit = "<a href='{$edit_e}' class='m-1 col edit btn btn-outline-danger editbtn'>$app_edit</a>";
-                }else{
-                    $edit = "";
-                }
-                $bgcolor = setting('color.show');
-                $color = $bgcolor ? 'white':'black';
-                $show = "<a href='{$show_e}' class='m-1 col show btn btn-outline-danger showbtn'>$app_show</a>";
-                if($row->user_id == auth()->user()->id)
-                {
-                    $bgcolor = setting('color.delete');
-                    $color = $bgcolor ? 'white':'black';
-                    $destroy = "<a href='{$destroy_e}' class='m-1 col show btn btn-outline-danger deletebtn'>$app_delete</a>";
-                }else{
-                    $destroy = "";
-                }
-                if(($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Refused)||($row->user_id === auth()->user()->id && $row->status === ApplicationData::Status_Rejected))
-                {
-                    $clone = "<a href='{$clone_e}' class='m-1 col show btn btn-primary btn-sm'>$app_clone</a>";
-                }else{
-                    $clone = "";
+                    $data['edit'] = route('site.applications.edit', $row->id);
                 }
 
-                return "<div class='row'>
-                        {$edit}
-                        {$show}
-                        {$clone}
-                        {$destroy}
-                        </div>";
+                $data['show'] = route('site.applications.show', $row->id);
+
+                if($row->user_id == auth()->user()->id)
+                {
+                    $data['destroy'] = route('site.applications.destroy', $row->id);
+                }
+
+                if(($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused)||($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected))
+                {
+                    $data['clone'] = route('site.applications.clone', $row->id);
+                }
+                return json_encode(['link' => $data]);
             })
             ->rawColumns(['action','status'])
             ->make(true);

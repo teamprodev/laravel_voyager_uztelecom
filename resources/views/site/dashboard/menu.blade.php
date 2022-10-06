@@ -30,15 +30,15 @@
                         @if(auth()->user()->role_id != 7)
                         <a href="{{route('site.applications.show_status', 'new')}}" id="demo" class="collapse">
                               <i class="nav-icon fas fa-chevron-right"></i>
-                              <p>{{ __('Новая') }}</p>
+                              <p>{{ __('new') }}</p>
                           </a>
                         <a href="{{route('site.applications.show_status', 'in_process')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>{{ __('На рассмотрении') }}</p>
+                            <p>{{ __('in_process') }}</p>
                         </a>
                         <a href="{{route('site.applications.show_status', 'refused')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>{{ __('Отказана') }}</p>
+                            <p>{{ __('refused') }}</p>
                         </a>
                         @endif
                         <a href="{{route('site.applications.show_status', 'agreed')}}" id="demo" class="collapse">
@@ -52,11 +52,11 @@
 
                         <a href="{{route('site.applications.show_status', 'distributed')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>{{ __('Распределен') }}</p>
+                            <p>{{ __('distributed') }}</p>
                         </a>
                         <a href="{{route('site.applications.show_status','cancelled')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>{{ __('Отменен') }}</p>
+                            <p>{{ __('canceled') }}</p>
                         </a>
                         <a href="{{route('site.applications.show_status', 'performed')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
@@ -64,15 +64,15 @@
                         </a>
                         <a href="{{route('site.applications.show_status', 'overdue')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>{{ __('Просрочен') }}</p>
+                            <p>{{ __('overdue') }}</p>
                         </a>
                         <a href="{{route('site.applications.to_sign')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>{{ __('На подпись') }}</p>
+                            <p>{{ __('for_signature') }}</p>
                         </a>
                             <a href="{{route('site.applications.performer_status_get')}}" id="demo" class="collapse">
                                 <i class="nav-icon fas fa-chevron-right"></i>
-                                <p>{{ __('Статус испольнителя') }}</p>
+                                <p>{{ __('Performer_status') }}</p>
                             </a>
                     </div>
                 </div>

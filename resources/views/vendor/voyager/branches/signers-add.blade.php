@@ -148,6 +148,9 @@
                 {data: 'branch_id', name: 'branch_id'},
                 {
                     data: 'action',
+                    render: function (link) {
+                        return checkActionUser(JSON.parse(link));
+                    },
                     name: 'action',
                 },
             ],
@@ -207,7 +210,22 @@
             + '</div>';
 
         $("#fortext").append(divTitle);
-
+        function checkActionUser(link) {
+            var htmlCode;
+            if (link.link.show !== undefined) {
+                htmlCode = `<a style="background-color: #000080; color: white" href="${link.link.show}" class="m-1 col edit btn btn-sm"> {{ __('show')  }} </a>`;
+            }
+            if (link.link.edit !== undefined) {
+                htmlCode = `<a  href="${link.link.edit}" class="m-1 col edit btn btn-sm btn-secondary"> {{ __('edit')  }} </a>`;
+            }
+            if (link.link.destroy !== undefined) {
+                htmlCode += `<a  href="${link.link.destroy}"  class="m-1 col edit btn btn-sm btn-danger" onclick="return confirm('Вы уверены?')" >  {{ __('destroy')  }}  </a>`;
+            }
+            if (link.link.clone !== undefined) {
+                htmlCode += `<a  href="${link.link.clone}" class="m-1 col edit btn btn-sm btn-warning"> {{ __('clone')  }} </a>`;
+            }
+            return htmlCode;
+        }
     });
 </script>
 

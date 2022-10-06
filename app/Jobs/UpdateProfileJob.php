@@ -44,7 +44,6 @@ class UpdateProfileJob implements ShouldQueue
             $user->save();
         } catch (\Exception $exception) {
             DB::rollBack();
-            dd($exception);
             throw $exception;
         }
         DB::commit();

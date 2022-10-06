@@ -19,7 +19,7 @@
                 {{ Carbon\Carbon::createFromFormat('Y-m-d', $application->date)->Format('d.m.Y') }}{{ __('г') }}
             @endif
         </h5> <br>
-        <h5><strong>{{ __('Статус') }} : {!! $perms['application_status'] !!}</strong>
+        <h5><strong>{{ __('Статус') }} : <div style='background-color: {{setting("color.{$status}")}};color: {{setting('color.' . $status) ? 'white' : 'black'}};' class='btn btn-sm'>{{__($status)}}</div></strong>
         </h5>
         <h5><strong>{{__('Визирование заявки через:') }}</strong>
             @if($application->is_more_than_limit === 1)
@@ -375,7 +375,7 @@
                 <th>{{ __('Комментарий') }}</th>
                 <th>{{ __('Пользователь') }}</th>
                 <th class="hidden">Index</th>
-                <th>Дата подписи</th>
+                <th>{{ __("date_signature") }}</th>
             </tr>
             </thead>
         </table>
@@ -428,7 +428,7 @@
                 ->cols(40)
             }}
 
-            @if($user->hasPermission('Number_Change'))
+            @if($user->hasPermission(\App\Enums\PermissionEnum::Number_Change))
                 {{Aire::textArea('bio', __('Номер заявки'))
                     ->name('number')
                     ->value($application->number)
@@ -440,7 +440,7 @@
                     <input class="form-control" id="date" name="date" type="date" value="{{$application->date}}"/>
                 </div>
             @endif
-            {{Aire::submit('Save')}}
+            {{Aire::submit(__("Сохранить"))}}
 
         @elseif($perms["NumberChange"])
             {{Aire::textArea('bio', __('Номер заявки'))
