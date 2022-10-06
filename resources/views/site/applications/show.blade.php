@@ -228,12 +228,20 @@
                             <option value="USD" @if($application->currency === "USD") selected @endif>USD</option>
                         </select>
                     </div>
-                    <div class="mb-3 row">
-                        {{Aire::checkbox('checkbox', __('С НДС'))
-                      ->name('with_nds')
-                      ->disabled()
-                   }}
-                    </div>
+                    @if($application->with_nds == 1)
+                        <div class="mb-3 row">
+                            {{Aire::checkbox('checkbox', __('С НДС'))
+                               ->checked()
+                               ->name('with_nds')
+                            }}
+                        </div>
+                    @else
+                        <div class="mb-3 row">
+                            {{Aire::checkbox('checkbox', __('С НДС'))
+                               ->name('with_nds')
+                               }}
+                        </div>
+                    @endif
                     <div class="product">
                         @if(isset($application->resource_id))
                             <b>{{ __('Продукт')}}</b>:
@@ -278,12 +286,13 @@
                 </div>
                 <div class="flex flex-col">
                     <div class="flex-direction: column">
-                        @if($file_basis !== 'null' && $file_basis !== null)
+                        @if($file_basis !== 'null' && $file_basis !== null && $file_basis !== [])
                             <div class="my-5">
                                 <h5 class="text-left">{{ __('Основание') }}</h5>
                                 <form action="/delete_file/{{$application->id}}/file_basis" method="post">
                                     @csrf
                                     @foreach($file_basis as $file)
+                                        <button class='btn btn-sm btn-danger'>{{__('Удалить')}}</button>
                                         <input type="text" class="hidden" value="{{$file}}" name="file">
                                         @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
                                             <img src="/storage/uploads/{{$file}}" width="500" height="500"
@@ -296,18 +305,18 @@
                                             <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
                                         @endif
                                         @if($application->user_id === $user->id)
-                                            <button class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
                                         @endif
                                     @endforeach
                                 </form>
                             </div>
                         @endif
-                        @if($file_tech_spec !== 'null' && $file_tech_spec !== null)
+                        @if($file_tech_spec !== 'null' && $file_tech_spec !== null && $file_tech_spec !== [])
                             <div class="mb-5">
                                 <h5 class="text-left">{{ __('Техническое задание') }}</h5>
                                 <form action="/delete_file/{{$application->id}}/file_tech_spec" method="post">
                                     @csrf
                                     @foreach($file_tech_spec as $file)
+                                        <button class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
                                         <input type="text" class="hidden" value="{{$file}}" name="file">
                                         @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
                                             <img src="/storage/uploads/{{$file}}" width="500" height="500"
@@ -320,18 +329,19 @@
                                             <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
                                         @endif
                                         @if($application->user_id === $user->id)
-                                            <button class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
+
                                         @endif
                                     @endforeach
                                 </form>
                             </div>
                         @endif
-                        @if($other_files !== 'null' && $other_files !== null)
+                        @if($other_files !== 'null' && $other_files !== null && $other_files !== [])
                             <div class="mb-5" style="width: 80%">
                                 <h5 class="text-left">{{ __('Другие документы необходимые для запуска закупочной процедуры') }}</h5>
                                 <form action="/delete_file/{{$application->id}}/other_files" method="post">
                                     @csrf
                                     @foreach($other_files as $file)
+                                        <button class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
                                         <input type="text" class="hidden" value="{{$file}}" name="file">
                                         @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
                                             <img src="/storage/uploads/{{$file}}" width="500" height="500"
@@ -344,7 +354,7 @@
                                             <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
                                         @endif
                                         @if($application->user_id === $user->id)
-                                            <button class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
+
                                         @endif
                                     @endforeach
                                 </form>
@@ -665,7 +675,7 @@
             </div>
             <div class="w-1/2">
                 <div class="mb-5">
-                    @if($performer_file !== 'null' && $performer_file !== null)
+                    @if($performer_file !== 'null' && $performer_file !== null && $performer_file !== [])
                         <h5 class="text-left">{{ __('Файл исполнителя') }}</h5>
                         @foreach($performer_file as $file)
                             @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))

@@ -55,7 +55,11 @@ class SignDocsObserver
         } elseif (in_array(7, $canceledUsers->toArray())) {
             $signedDocs->application->status = ApplicationStatusEnum::Rejected;
         } elseif ($canceledUsers->toArray() != null) {
+            $signedDocs->application->status = ApplicationStatusEnum::Rejected;
+            $signedDocs->application->show_leader = 0;
+        } elseif ($canceledUsers->toArray() != null) {
             $signedDocs->application->status = ApplicationStatusEnum::Refused;
+            $signedDocs->application->show_leader = 0;
         }elseif (count(array_diff($roles_need_sign, $agreedUsers->toArray())) == 1 && $signedDocs->application->is_more_than_limit == 1) {
             $signedDocs->application->show_director = 1;
             $signedDocs->application->status = ApplicationStatusEnum::In_Process;
