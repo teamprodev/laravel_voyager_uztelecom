@@ -587,10 +587,11 @@ class ApplicationService
     {
         $application->is_more_than_limit = $request->is_more_than_limit;
         $application->signers = null;
+        $branch_id = auth()->user()->branch_id;
         if ($request->is_more_than_limit == ApplicationMagicNumber::one) {
             $application->branch_initiator_id = ApplicationMagicNumber::Company;
         } else {
-            $application->branch_initiator_id = auth()->user()->branch_id;
+            $application->branch_initiator_id = $branch_id;
         }
         $application->branch_id = $branch_id;
         SignedDocs::where('application_id', $application->id)->delete();
