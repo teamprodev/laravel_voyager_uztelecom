@@ -350,7 +350,7 @@ class ApplicationService
     /*
      * Draft(Chernovik) Applicationlarni chiqazish
      */
-    public function show_draft($user)
+    public function show_draft_getData($user)
     {
             $data = Application::where('user_id', $user->id)
                 ->whereDraft(ApplicationMagicNumber::one);
