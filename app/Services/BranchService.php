@@ -85,7 +85,7 @@ class BranchService
                     $status = $a->name;
                     $color = $a->color;
                 }
-                return json_encode(['backgroundColor' => $color, 'app' => $status, 'color' => $color ? 'white' : 'black']);
+                return json_encode(['backgroundColor' => $color, 'app' => $this->translateStatus($status), 'color' => $color ? 'white' : 'black']);
             })
             ->addIndexColumn()
             ->addColumn('action', function($row){
