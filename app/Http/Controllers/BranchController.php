@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\PermissionEnum;
 use App\Models\Application;
 use App\Models\Branch;
-use App\Models\StatusExtented;
+use App\Models\StatusExtended;
 use App\Enums\ApplicationStatusEnum;
 use App\Services\ApplicationService;
 use App\Services\BranchService;

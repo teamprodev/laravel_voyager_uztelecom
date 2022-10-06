@@ -22,14 +22,17 @@
                 <table id="yajra-datatable">
                     <thead>
                     <tr>
-                        <th>{{ __('ФИО') }}</th>
+                        <th>ID</th>
+                        <th>{{ __('Статус заявки') }}</th>
+                        <th>{{__('Визирование заявки через:') }}</th>
+                        <th>{{ __('Заявки')}}</th>
+                        <th>{{ __('Дата заявки')}}</th>
                         <th>{{ __('Инициатор (наименование подразделения заказчика)') }}</th>
+                        <th>{{ __('Филиал') }}</th>
                         <th>{{ __('Наименование предмета закупки(товар, работа, услуги)') }}</th>
                         <th>{{ __('Ожидаемый срок поставки') }}</th>
                         <th>{{ __('Планируемый бюджет закупки (сумма)') }}</th>
-                        <th>{{ __('Условия поставки по INCOTERMS (самовывоз со склада/доставка до покупателя)') }}</th>
-                        <th>{{ __('Дата создания') }}</th>
-                        <th>{{ __('Статус заявки') }}</th>
+                        <th>{{ __('Условия поставки по INCOTERMS') }}</th>
                         <th>{{ __('Действие') }}</th>
                     </tr>
                     </thead>
@@ -48,22 +51,8 @@
 
                     columns: [
                         {data: 'id', name: 'id'},
-                        {data: 'initiator', name: 'initiator'},
-                        {data: 'name', name: 'name'},
-                        {data: 'delivery_date', name: 'delivery_date'},
                         {
-                            "data": "",
-                            render: function (data, type, row) {
-                                if (row.planned_price === null ) return " "
-                                return new Intl.NumberFormat('ru-RU').format(row.planned_price) + ' ' + row.currency;
-                            }
-                        },
-                        {data: 'incoterms', name: 'incoterms'},
-
-                        {data: 'created_at', name: 'created_at'},
-                        {
-                            "data": "status",
-                            render: function (data, type, row) {
+                            data: 'status', name: 'status', render: function (data, type, row) {
                                 var details = JSON.parse(row.status).backgroundColor;
                                 var color = JSON.parse(row.status).color;
                                 var app = JSON.parse(row.status).app;
@@ -71,14 +60,21 @@
                                 return `<button style='background-color: ${details};color:${color};width: 100%;height:100%' class='btn btn-lg'>`+app+`</button>`;
                             }
                         },
+                        {data: 'is_more_than_limit', name: 'is_more_than_limit'},
+                        {data: 'number', name: 'number'},
+                        {data: 'date', name: 'date'},
+                        {data: 'initiator', name: 'initiator'},
+                        {data: 'branch_initiator_id', name: 'branch_initiator_id'},
+                        {data: 'name', name: 'name'},
+                        {data: 'delivery_date', name: 'delivery_date'},
+                        {data: 'planned_price_curr', name: 'planned_price_curr'},
+                        {data: 'incoterms', name: 'incoterms'},
                         {
                             data: 'action',
-                            name: 'action',
                             render: function (link) {
                                 return checkActionUser(JSON.parse(link));
                             },
-                            orderable: true,
-                            searchable: true
+                            name: 'action',
                         },
                     ]
                 });

@@ -197,7 +197,6 @@
                         {data: 'delivery_date', name: 'delivery_date'},
                         {
                             data: 'planned_price_curr', name: 'planned_price_curr', render: function (data, type, row) {
-                                console.log(row);
                                 if (row.planned_price === null || row.planned_price==="" ) return " "
                                 return new Intl.NumberFormat('ru-RU').format(row.planned_price) + ' ' + row.currency;
                             }

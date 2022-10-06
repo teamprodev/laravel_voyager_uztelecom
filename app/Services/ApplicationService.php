@@ -18,7 +18,7 @@ use App\Models\Purchase;
 use App\Models\Resource;
 use App\Models\Roles;
 use App\Models\SignedDocs;
-use App\Models\StatusExtented;
+use App\Models\StatusExtended;
 use App\Models\Subject;
 use App\Models\User;
 use App\Models\Warehouse;
@@ -112,7 +112,6 @@ class ApplicationService
                 /*
                  *  Voyager admin paneldan status ranglarini olish va chiqarish
                  */
-
                 $status = $query->status;
                 $color = setting("color.{$status}");
                 if ($query->performer_status !== null) {
@@ -157,50 +156,61 @@ class ApplicationService
         $status = setting('admin.show_status');
         $data = $application->where('status', $status)->get();
         return Datatables::of($data)
-            ->addIndexColumn()
-            ->editColumn('user_id', function ($docs) {
-                return $docs->user_id ? $docs->user->name : "";
+            ->editColumn('is_more_than_limit', function ($query) {
+                return $query->is_more_than_limit == ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
             })
-            ->editColumn('created_at', function ($data) {
-                return $data->created_at ? with(new Carbon($data->created_at))->format('d.m.Y') : '';
+            ->editColumn('branch_initiator_id', function ($query) {
+                return $query->branch->name;
+            })
+            ->addIndexColumn()
+            ->editColumn('user_id', function($docs) {
+                return $docs->user ? $docs->user->name:"";
+            })
+            ->editColumn('role_id', function($docs) {
+                return $docs->role ? $docs->role->display_name:"";
+            })
+            ->editColumn('planned_price', function ($query) {
+                return $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
+            })
+            ->editColumn('delivery_date', function ($query) {
+                return $query->updated_at ? with(new Carbon($query->delivery_date))->format('d.m.Y') : '';
             })
             ->editColumn('updated_at', function ($data) {
                 return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
             })
+            ->addColumn('planned_price_curr', function ($query) {
+                $planned_price = $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
+                return "{$planned_price}  {$query->currency}";
+            })
             ->editColumn('status', function ($query) {
-                /*
-                     *  Voyager admin paneldan status ranglarini olish va chiqarish
-                     */
-
                 $status = $query->status;
                 $color = setting("color.{$status}");
                 if ($query->performer_status !== null) {
-                    $a = StatusExtented::find($query->performer_status);
+                    $a = StatusExtended::find($query->performer_status);
                     $status = $a->name;
                     $color = $a->color;
                 }
                 return json_encode(['backgroundColor' => $color, 'app' => $this->translateStatus($status), 'color' => $color ? 'white' : 'black']);
             })
             ->addIndexColumn()
-            ->addColumn('action', function ($row) {
+            ->addColumn('action', function($row){
 
-                $boolCheckUser = (int)auth()->user()->id === (int)$row->user_id;
-                $boolCheckRole = (int)$row->performer_role_id === (int)auth()->user()->role_id;
-
-                if ($boolCheckUser || $boolCheckRole || auth()->user()->hasPermission(PermissionEnum::Warehouse)) {
+                if(auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id)
+                {
                     $data['edit'] = route('site.applications.edit', $row->id);
                 }
 
                 $data['show'] = route('site.applications.show', $row->id);
 
-                if ($row->user_id == auth()->user()->id) {
+                if($row->user_id == auth()->user()->id)
+                {
                     $data['destroy'] = route('site.applications.destroy', $row->id);
                 }
 
-                if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
+                if(($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused)||($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected))
+                {
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
-
                 return json_encode(['link' => $data]);
             })
             ->rawColumns(['action', 'status'])
@@ -220,50 +230,61 @@ class ApplicationService
         $status = Cache::get('performer_status_get');
         $data = $application->where('performer_status', $status)->get();
         return Datatables::of($data)
+            ->editColumn('is_more_than_limit', function ($query) {
+                return $query->is_more_than_limit == ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
+            })
+            ->editColumn('branch_initiator_id', function ($query) {
+                return $query->branch->name;
+            })
             ->addIndexColumn()
-            ->editColumn('user_id', function ($docs) {
-                return $docs->user ? $docs->user->name : "";
+            ->editColumn('user_id', function($docs) {
+                return $docs->user ? $docs->user->name:"";
             })
-            ->editColumn('role_id', function ($docs) {
-                return $docs->role ? $docs->role->display_name : "";
+            ->editColumn('role_id', function($docs) {
+                return $docs->role ? $docs->role->display_name:"";
             })
-            ->editColumn('created_at', function ($data) {
-                return $data->created_at ? with(new Carbon($data->created_at))->format('d.m.Y') : '';
+            ->editColumn('planned_price', function ($query) {
+                return $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
+            })
+            ->editColumn('delivery_date', function ($query) {
+                return $query->updated_at ? with(new Carbon($query->delivery_date))->format('d.m.Y') : '';
             })
             ->editColumn('updated_at', function ($data) {
                 return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
             })
+            ->addColumn('planned_price_curr', function ($query) {
+                $planned_price = $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
+                return "{$planned_price}  {$query->currency}";
+            })
             ->editColumn('status', function ($query) {
-                /*
-                     *  Voyager admin paneldan status ranglarini olish va chiqarish
-                     */
-
                 $status = $query->status;
                 $color = setting("color.{$status}");
                 if ($query->performer_status !== null) {
-                    $a = StatusExtented::find($query->performer_status);
+                    $a = StatusExtended::find($query->performer_status);
                     $status = $a->name;
                     $color = $a->color;
                 }
                 return json_encode(['backgroundColor' => $color, 'app' => $this->translateStatus($status), 'color' => $color ? 'white' : 'black']);
             })
             ->addIndexColumn()
-            ->addColumn('action', function ($row) {
+            ->addColumn('action', function($row){
 
-                if (auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id) {
+                if(auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id)
+                {
                     $data['edit'] = route('site.applications.edit', $row->id);
                 }
 
                 $data['show'] = route('site.applications.show', $row->id);
 
-                if ($row->user_id === auth()->user()->id) {
+                if($row->user_id == auth()->user()->id)
+                {
                     $data['destroy'] = route('site.applications.destroy', $row->id);
                 }
 
-                if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
+                if(($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused)||($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected))
+                {
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
-
                 return json_encode(['link' => $data]);
             })
             ->rawColumns(['action', 'status'])
@@ -329,7 +350,7 @@ class ApplicationService
     /*
      * Draft(Chernovik) Applicationlarni chiqazish
      */
-    public function show_draft($user)
+    public function show_draft_getData($user)
     {
         $data = Application::where('user_id', $user->id)
             ->whereDraft(ApplicationMagicNumber::one);
@@ -453,7 +474,7 @@ class ApplicationService
 
     public function edit($application, $user)
     {
-        $status_extented = StatusExtented::all()->pluck('name', 'id')->toArray();
+        $status_extented = StatusExtended::all()->pluck('name', 'id')->toArray();
         if ($user->id !== $application->user_id && !$user->hasPermission(PermissionEnum::Warehouse) && !$user->hasPermission(PermissionEnum::Company_Performer) && !$user->hasPermission(PermissionEnum::Branch_Performer)) {
             return redirect()->route('site.applications.index');
         }
@@ -485,6 +506,7 @@ class ApplicationService
     {
         $now = Carbon::now();
         $data = $request->validated();
+        $data['with_nds'] = 0;
         $roles = ($application->branch_signers->signers);
         if (isset($data['signers'])) {
             $array = $roles ? array_merge(json_decode($roles), $data['signers']) : $data['signers'];
@@ -522,6 +544,15 @@ class ApplicationService
             }
             $message = "{$application->id} " . "{$application->name} " . setting('admin.application_created');
             $this->sendNotifications($array, $application, $message);
+        }
+        if ($application->signers !== null && !isset($data['signers'])) {
+            $signers = json_decode($roles);
+            $signedDocs = SignedDocs::where('application_id', $application->id)->pluck('role_id')->toArray();
+            $not_signer = array_diff($signedDocs,$signers);
+            $data['signers'] = $roles;
+            foreach ($not_signer as $delete) {
+                SignedDocs::where('application_id', $application->id)->where('role_id', $delete)->delete();
+            }
         }
         if (isset($data['draft'])) {
             if ($data['draft'] == ApplicationMagicNumber::one)
@@ -566,10 +597,11 @@ class ApplicationService
     {
         $application->is_more_than_limit = $request->is_more_than_limit;
         $application->signers = null;
+        $branch_id = auth()->user()->branch_id;
         if ($request->is_more_than_limit == ApplicationMagicNumber::one) {
             $application->branch_initiator_id = ApplicationMagicNumber::Company;
         } else {
-            $application->branch_initiator_id = auth()->user()->branch_id;
+            $application->branch_initiator_id = $branch_id;
         }
         $application->branch_id = $branch_id;
         SignedDocs::where('application_id', $application->id)->delete();
@@ -625,7 +657,7 @@ class ApplicationService
                 $status = $query->status;
                 $color = setting("color.{$status}");
                 if ($query->performer_status !== null) {
-                    $a = StatusExtented::find($query->performer_status);
+                    $a = StatusExtended::find($query->performer_status);
                     $status = $a->name;
                     $color = $a->color;
                 }

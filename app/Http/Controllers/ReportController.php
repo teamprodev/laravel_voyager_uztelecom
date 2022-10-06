@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ApplicationMagicNumber;
-use App\Models\StatusExtented;
+use App\Models\StatusExtended;
 use App\Services\ApplicationService;
 use App\Services\ReportService;
 use Illuminate\Http\Request;

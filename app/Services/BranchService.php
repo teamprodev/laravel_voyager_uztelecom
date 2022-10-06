@@ -67,9 +67,6 @@ class BranchService
             ->editColumn('delivery_date', function ($query) {
                 return $query->updated_at ? with(new Carbon($query->delivery_date))->format('d.m.Y') : '';
             })
-            ->editColumn('created_at', function ($data) {
-                return $data->created_at ? with(new Carbon($data->created_at))->format('d.m.Y') : '';
-            })
             ->editColumn('updated_at', function ($data) {
                 return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
             })
