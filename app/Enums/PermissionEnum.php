@@ -32,8 +32,4 @@ class PermissionEnum
     public const Select_Branch = 'select_branch';
     public const Edit_Users = 'edit_users';
 
-
-
-
-
 }

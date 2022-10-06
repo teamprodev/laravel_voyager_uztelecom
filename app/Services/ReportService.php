@@ -251,6 +251,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-03-31")
                     ->toDateTimeString();
+
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })
@@ -351,6 +352,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-09-31")
                     ->toDateTimeString();
+
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 return array_sum($applications);
             })

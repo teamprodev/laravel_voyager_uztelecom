@@ -151,9 +151,7 @@ class ApplicationService
         if ($user->hasPermission('Purchasing_Management_Center')) {
             $application = Application::where('branch_initiator_id','!=',null);
         } else {
-            $a = 'branch_initiator_id';
-            $b = [$user->branch_id];
-            $application = Application::whereIn($a, $b);
+            $application = Application::where('branch_initiator_id', $user->branch_id);
         }
         $status = setting('admin.show_status');
         $data = $application->where('status', $status)->get();
@@ -450,7 +448,6 @@ class ApplicationService
         $perms['Signers'] = ($access && $user->hasPermission(PermissionEnum::Company_Signer || PermissionEnum::Add_Company_Signer || PermissionEnum::Branch_Signer || PermissionEnum::Add_Branch_Signer || PermissionEnum::Company_Performer || PermissionEnum::Branch_Performer)) || ($access && $user->role_id === ApplicationMagicNumber::Director && $application->show_director === ApplicationMagicNumber::one);
         $status = $application->status;
         return ['performer_file' => $performer_file,'perms' => $perms, 'access_comment' => $access_comment, 'performers_company' => $performers_company, 'performers_branch' => $performers_branch, 'file_basis' => $file_basis, 'file_tech_spec' => $file_tech_spec, 'other_files' => $other_files, 'user' => $user, 'application' => $application, 'branch' => $branch, 'signedDocs' => $signedDocs, 'same_role_user_ids' => $same_role_user_ids, 'access' => $access, 'subjects' => $subjects, 'purchases' => $purchases, 'branch_name' => $branch_name, 'check' => $check,'status' => $status];
-
     }
 
     public function edit($application,$user)
@@ -573,7 +570,7 @@ class ApplicationService
         } else {
             $application->branch_initiator_id = auth()->user()->branch_id;
         }
-        $application->branch_id = auth()->user()->branch_id;
+        $application->branch_id = $branch_id;
         SignedDocs::where('application_id', $application->id)->delete();
         $application->save();
     }
