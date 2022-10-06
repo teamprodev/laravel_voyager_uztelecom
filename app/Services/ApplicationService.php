@@ -544,6 +544,15 @@ class ApplicationService
             $message = "{$application->id} " . "{$application->name} " . setting('admin.application_created');
             $this->sendNotifications($array, $application, $message);
         }
+        if ($application->signers !== null && !isset($data['signers'])) {
+            $signers = json_decode($roles);
+            $signedDocs = SignedDocs::where('application_id', $application->id)->pluck('role_id')->toArray();
+            $not_signer = array_diff($signedDocs,$signers);
+            $data['signers'] = $roles;
+            foreach ($not_signer as $delete) {
+                SignedDocs::where('application_id', $application->id)->where('role_id', $delete)->delete();
+            }
+        }
         if (isset($data['draft'])) {
             if ($data['draft'] == ApplicationMagicNumber::one)
                 $data['status'] = ApplicationStatusEnum::Draft;
