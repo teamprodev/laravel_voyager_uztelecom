@@ -8,7 +8,7 @@ use App\Http\Requests\ApplicationRequest;
 use App\Models\Application;
 use App\Models\Notification;
 use App\Models\Setting;
-use App\Models\StatusExtented;
+use App\Models\StatusExtended;
 use App\Services\ApplicationService;
 use App\Models\SignedDocs;
 use Illuminate\Http\Request;
@@ -41,7 +41,7 @@ class ApplicationController extends Controller
     */
     public function performer_status_get()
     {
-        $status = StatusExtented::pluck('name','id')->toArray();
+        $status = StatusExtended::pluck('name','id')->toArray();
         return view('site.applications.performer_status',compact('status'));
     }
     public function performer_status_post(Request $req)

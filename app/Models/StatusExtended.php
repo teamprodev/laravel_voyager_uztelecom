@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StatusExtented extends Model
+class StatusExtended extends Model
 {
     protected $table = 'status_extended';
 }

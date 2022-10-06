@@ -54,7 +54,6 @@
                         <th>{{ __('Ожидаемый срок поставки') }}</th>
                         <th>{{ __('Планируемый бюджет закупки (сумма)') }}</th>
                         <th>{{ __('Условия поставки по INCOTERMS') }}</th>
-                        <th>{{ __('Дата создания') }}</th>
                         <th>{{ __('Действие') }}</th>
                     </tr>
                     </thead>
@@ -102,7 +101,6 @@
                         {data: 'delivery_date', name: 'delivery_date'},
                         {data: 'planned_price_curr', name: 'planned_price_curr'},
                         {data: 'incoterms', name: 'incoterms'},
-                        {data: 'created_at', name: 'created_at'},
                         {
                             data: 'action',
                             render: function (link) {
