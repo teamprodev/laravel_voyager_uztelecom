@@ -506,6 +506,7 @@ class ApplicationService
     {
         $now = Carbon::now();
         $data = $request->validated();
+        $data['with_nds'] = 0;
         $roles = ($application->branch_signers->signers);
         if (isset($data['signers'])) {
             $array = $roles ? array_merge(json_decode($roles), $data['signers']) : $data['signers'];
