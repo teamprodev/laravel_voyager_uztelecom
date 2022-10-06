@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Enums\ApplicationMagicNumber;
 use App\Models\SignedDocs;
 use App\Enums\ApplicationStatusEnum;
 
@@ -35,13 +36,13 @@ class SignDocsObserver
             $role_id = $doc->user->role_id;
             return $role_id;
         });
-        $agreedUsers = $allDocs->where('status', 1)->map(function ($doc) {
+        $agreedUsers = $allDocs->where('status', ApplicationMagicNumber::one)->map(function ($doc) {
             if (isset($doc->role_id)) {
                 $role_id = $doc->role_id;
                 return $role_id;
             }
         });
-        $canceledUsers = $allDocs->where('status', 0)->whereNotNull('status')->map(function ($doc) {
+        $canceledUsers = $allDocs->where('status', ApplicationMagicNumber::zero)->whereNotNull('status')->map(function ($doc) {
             $role_id = $doc->role_id;
             return $role_id;
         });
@@ -50,21 +51,21 @@ class SignDocsObserver
 
         if (in_array(7, $agreedUsers->toArray())) {
             $signedDocs->application->status = ApplicationStatusEnum::Agreed;
-            $signedDocs->application->show_director = 2;
-            $signedDocs->application->show_leader = 1;
+            $signedDocs->application->show_director = ApplicationMagicNumber::two;
+            $signedDocs->application->show_leader = ApplicationMagicNumber::one;
         } elseif (in_array(7, $canceledUsers->toArray())) {
             $signedDocs->application->status = ApplicationStatusEnum::Rejected;
         } elseif ($canceledUsers->toArray() != null) {
             $signedDocs->application->status = ApplicationStatusEnum::Rejected;
-            $signedDocs->application->show_leader = 0;
+            $signedDocs->application->show_leader = ApplicationMagicNumber::zero;
         } elseif ($canceledUsers->toArray() != null) {
             $signedDocs->application->status = ApplicationStatusEnum::Refused;
-            $signedDocs->application->show_leader = 0;
-        }elseif (count(array_diff($roles_need_sign, $agreedUsers->toArray())) == 1 && $signedDocs->application->is_more_than_limit == 1) {
-            $signedDocs->application->show_director = 1;
+            $signedDocs->application->show_leader = ApplicationMagicNumber::zero;
+        }elseif (count(array_diff($roles_need_sign, $agreedUsers->toArray())) == ApplicationMagicNumber::one && $signedDocs->application->is_more_than_limit == ApplicationMagicNumber::one) {
+            $signedDocs->application->show_director = ApplicationMagicNumber::one;
             $signedDocs->application->status = ApplicationStatusEnum::In_Process;
-        }elseif(array_diff($roles_need_sign, $agreedUsers->toArray()) == null && $signedDocs->application->is_more_than_limit != 1){
-            $signedDocs->application->show_leader = 1;
+        }elseif(array_diff($roles_need_sign, $agreedUsers->toArray()) == null && $signedDocs->application->is_more_than_limit != ApplicationMagicNumber::one){
+            $signedDocs->application->show_leader = ApplicationMagicNumber::one;
             $signedDocs->application->status = ApplicationStatusEnum::In_Process;
         }else {
             $signedDocs->application->status = ApplicationStatusEnum::In_Process;
