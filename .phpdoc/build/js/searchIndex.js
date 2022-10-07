@@ -1346,15 +1346,15 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Models-SignedDocs.html#property_table"
         },                {
-            "fqsen": "\\App\\Models\\StatusExtented",
-            "name": "StatusExtented",
+            "fqsen": "\\App\\Models\\StatusExtended",
+            "name": "StatusExtended",
             "summary": "",
-            "url": "classes/App-Models-StatusExtented.html"
+            "url": "classes/App-Models-StatusExtended.html"
         },                {
-            "fqsen": "\\App\\Models\\StatusExtented\u003A\u003A\u0024table",
+            "fqsen": "\\App\\Models\\StatusExtended\u003A\u003A\u0024table",
             "name": "table",
             "summary": "",
-            "url": "classes/App-Models-StatusExtented.html#property_table"
+            "url": "classes/App-Models-StatusExtended.html#property_table"
         },                {
             "fqsen": "\\App\\Models\\Subject",
             "name": "Subject",

@@ -9,7 +9,7 @@ use App\Enums\PermissionEnum;
 use App\Models\Application;
 use App\Models\Branch;
 use App\Models\Resource;
-use App\Models\StatusExtented;
+use App\Models\StatusExtended;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -585,7 +585,7 @@ class ReportService
                 $status = $query->status;
                 $color = setting("color.{$status}");
                 if ($query->performer_status !== null) {
-                    $a = StatusExtented::find($query->performer_status);
+                    $a = StatusExtended::find($query->performer_status);
                     $status = $a->name;
                     $color = $a->color;
                 }
@@ -635,7 +635,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('currency','!=','USD')->get();
+                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('performer_status', '<=' ,39)->where('currency','!=','USD')->get();
                 return count($applications);
             })
             ->addColumn('summa', function($branch){
@@ -645,7 +645,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('currency','!=','USD')->pluck('contract_price')->toArray();
+                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('performer_status', '<=' ,39)->where('currency','!=','USD')->pluck('contract_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('count_1', function($branch){
@@ -934,7 +934,7 @@ class ReportService
         $this->a = 'branch_id';
         $this->operator = $operator;
         $this->b = $b;
-        $status = StatusExtented::query();
+        $status = StatusExtended::query();
         return Datatables::of($status)
             ->addColumn('january', function($status){
                 $date = Cache::get('date_10');

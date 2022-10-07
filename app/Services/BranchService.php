@@ -8,7 +8,7 @@ use App\Enums\PermissionEnum;
 use App\Models\Application;
 use App\Models\ApplicationSigners;
 use App\Models\Branch;
-use App\Models\StatusExtented;
+use App\Models\StatusExtended;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -78,7 +78,7 @@ class BranchService
                 $status = $query->status;
                 $color = setting("color.{$status}");
                 if ($query->performer_status !== null) {
-                    $a = StatusExtented::find($query->performer_status);
+                    $a = StatusExtended::find($query->performer_status);
                     $status = $a->name;
                     $color = $a->color;
                 }

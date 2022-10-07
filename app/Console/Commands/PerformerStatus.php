@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Application;
-use App\Models\StatusExtented;
+use App\Models\StatusExtended;
 use App\Enums\ApplicationStatusEnum;
 use Illuminate\Console\Command;
 
@@ -43,7 +43,7 @@ class PerformerStatus extends Command
         $application_s = Application::where('performer_status','!=',null)->get();
         foreach ($application_s as $app)
         {
-            $update = StatusExtented::where('name',$app->performer_status)->first();
+            $update = StatusExtended::where('name',$app->performer_status)->first();
             if($app->status === $update)
             {
                     $app->status = ApplicationStatusEnum::Extended;
