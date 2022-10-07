@@ -232,12 +232,14 @@
                         <div class="mb-3 row">
                             {{Aire::checkbox('checkbox', __('С НДС'))
                                ->checked()
+                               ->disabled()
                                ->name('with_nds')
                             }}
                         </div>
                     @else
                         <div class="mb-3 row">
                             {{Aire::checkbox('checkbox', __('С НДС'))
+                                ->disabled()
                                ->name('with_nds')
                                }}
                         </div>
