@@ -115,7 +115,7 @@ class ApplicationService
                 $status = $query->status;
                 $color = setting("color.{$status}");
                 if ($query->performer_status !== null) {
-                    $a = StatusExtented::find($query->performer_status);
+                    $a = StatusExtended::find($query->performer_status);
                     $status = $a->status;
                     $color = $a->color;
                 }
