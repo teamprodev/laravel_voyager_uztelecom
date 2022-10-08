@@ -119,7 +119,8 @@ class ApplicationService
                     $status = $a->status;
                     $color = $a->color;
                 }
-                return json_encode(['backgroundColor' => $color, 'app' => $this->translateStatus($status), 'color' => $color ? 'white' : 'black']);
+                $app_status = $query->performer_status !== null ? $status : $this->translateStatus($status);
+                return json_encode(['backgroundColor' => $color, 'app' => $app_status, 'color' => $color ? 'white' : 'black']);
             })
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
