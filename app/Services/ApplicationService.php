@@ -557,6 +557,8 @@ class ApplicationService
         if (isset($data['draft'])) {
             if ($data['draft'] == ApplicationMagicNumber::one)
                 $data['status'] = ApplicationStatusEnum::Draft;
+            else
+                $data['status'] = ApplicationStatusEnum::New;
         }
         if (isset($data['performer_status'])) {
             $application->performer_user_id = $user->id;
