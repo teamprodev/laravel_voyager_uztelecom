@@ -688,15 +688,15 @@ class ApplicationService
 
     private function checkComponentsInclude($application, $user)
     {
-        if ($application->user_id === $user->id && $application->show_leader != Application::NOT_DISTRIBUTED) {
+        if ($application->user_id == $user->id && $application->show_leader != Application::NOT_DISTRIBUTED) {
             return "site.applications.form_edit";
-        } elseif (($user->hasPermission('Branch_Performer') && $application->user_id !== $user->id) ||
-            ($user->hasPermission('Company_Performer') && $application->user_id !== $user->id) ||
-            ($application->performer_role_id === $user->role_id)) {
+        } elseif (($user->hasPermission('Branch_Performer') && $application->user_id != $user->id) ||
+            ($user->hasPermission('Company_Performer') && $application->user_id != $user->id) ||
+            ($application->performer_role_id == $user->role_id)) {
             return "site.applications.performer";
-        } elseif (($user->hasPermission('Warehouse') && $application->status === ApplicationStatusEnum::Accepted) ||
-            ($user->hasPermission('Warehouse') && $application->status === ApplicationStatusEnum::Order_Delivered) ||
-            ($user->hasPermission('Warehouse') && $application->status === ApplicationStatusEnum::Order_Arrived)) {
+        } elseif (($user->hasPermission('Warehouse') && $application->status == ApplicationStatusEnum::Accepted) ||
+            ($user->hasPermission('Warehouse') && $application->status == ApplicationStatusEnum::Order_Delivered) ||
+            ($user->hasPermission('Warehouse') && $application->status == ApplicationStatusEnum::Order_Arrived)) {
             return "site.applications.warehouse";
         } else {
             Log::debug('В файле ApplicationService, метод checkComponentsInclude(стр.908)', [$application, $user]);
