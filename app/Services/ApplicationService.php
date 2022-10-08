@@ -731,6 +731,8 @@ class ApplicationService
             case "canceled":
                 return __('Отменен');
                 break;
+            default:
+                return $status;
         }
     }
 }
