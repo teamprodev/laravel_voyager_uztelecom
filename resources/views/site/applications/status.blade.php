@@ -49,7 +49,7 @@
                                 var color = JSON.parse(row.status).color;
                                 var app = JSON.parse(row.status).app;
 
-                                return `<button style='background-color: ${details};color:${color};width: 100%;height:100%' class='btn btn-lg'>` + app + `</button>`;
+                                return `<button style='background-color: ${details};color:${color};width: 100%;height:100%' class='btn '>` + app + `</button>`;
                             }
                         },
                         {data: 'is_more_than_limit', name: 'is_more_than_limit'},

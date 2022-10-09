@@ -108,4 +108,34 @@ class BranchService
             ->rawColumns(['action','status'])
             ->make(true);
     }
+
+    private function translateStatus($status)
+    {
+        switch ($status) {
+            case 'new':
+                return __('Новая');
+                break;
+            case "in_process":
+                return __('На рассмотрении');
+                break;
+            case "overdue":
+                return __('просрочен');
+                break;
+            case "refused":
+                return __('Отказана');
+                break;
+            case "agreed":
+                return __('Согласована');
+                break;
+            case "rejected":
+                return __('Отклонена');
+                break;
+            case "distributed":
+                return __('Распределен');
+                break;
+            case "canceled":
+                return __('Отменен');
+                break;
+        }
+    }
 }
