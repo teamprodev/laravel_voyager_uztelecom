@@ -15,7 +15,6 @@
                     <th>{{ __('Ожидаемый срок поставки') }}</th>
                     <th>{{ __('Планируемый бюджет закупки (сумма)') }}</th>
                     <th>{{ __('Условия поставки по INCOTERMS (самовывоз со склада/доставка до покупателя)') }}</th>
-                    <th>{{ __('Дата создания') }}</th>
                     <th>{{ __('Статус заявки') }}</th>
                     <th>{{ __('Действие') }}</th>
                 </tr>
@@ -52,13 +51,12 @@
                             }
                         },
                         {data: 'incoterms', name: 'incoterms'},
-                        {data: 'created_at', name: 'created_at'},
                         {
                             data: 'status', name: 'status', render: function (data, type, row) {
                                 var details = JSON.parse(row.status).backgroundColor;
                                 var color = JSON.parse(row.status).color;
                                 var app = JSON.parse(row.status).app;
-                                return `<button style='background-color: ${details};color:${color};width: 100%;height:100%' class='btn '>` + app + `</button>`;
+                                return `<button style='background-color: ${details};color:${color};' class='btn-sm'>` + app + `</button>`;
                             }
                         },
                         {

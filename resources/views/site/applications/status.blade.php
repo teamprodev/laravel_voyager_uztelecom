@@ -12,7 +12,7 @@
                     <th>ID</th>
                     <th>{{ __('Статус заявки') }}</th>
                     <th>{{__('Визирование заявки через:') }}</th>
-                    <th>{{ __('Заявки')}}</th>
+{{--                    <th>{{ __('Заявки')}}</th>--}}
                     <th>{{ __('Дата заявки')}}</th>
                     <th>{{ __('Инициатор (наименование подразделения заказчика)') }}</th>
                     <th>{{ __('Филиал') }}</th>
@@ -49,10 +49,10 @@
                                 var color = JSON.parse(row.status).color;
                                 var app = JSON.parse(row.status).app;
 
-                                return `<button style='background-color: ${details};color:${color};width: 100%;height:100%' class='btn '>` + app + `</button>`;
+                                return `<button style='background-color: ${details};color:${color};' class='btn-sm'>` + app + `</button>`;
                             }
                         },
-                        {data: 'is_more_than_limit', name: 'is_more_than_limit'},
+                        // {data: 'is_more_than_limit', name: 'is_more_than_limit'},
                         {data: 'number', name: 'number'},
                         {data: 'date', name: 'date'},
                         {data: 'initiator', name: 'initiator'},
