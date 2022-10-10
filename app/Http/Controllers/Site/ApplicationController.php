@@ -128,6 +128,9 @@ class ApplicationController extends Controller
 //        {
 //            abort(405,__("Вам нельзя изменить заявку,ибо заявка уже подписана!"));
 //        }
+        if ($user->id !== $application->user_id && !$user->hasPermission(PermissionEnum::Warehouse) && !$user->hasPermission(PermissionEnum::Company_Performer) && !$user->hasPermission(PermissionEnum::Branch_Performer)) {
+            return redirect()->route('site.applications.index');
+        }
         $compact = $this->service->edit($application,$user);
         return view('site.applications.edit', $compact);
 

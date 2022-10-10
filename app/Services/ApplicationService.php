@@ -475,9 +475,6 @@ class ApplicationService
     public function edit($application, $user)
     {
         $status_extented = StatusExtended::all()->pluck('name', 'id')->toArray();
-        if ($user->id !== $application->user_id && !$user->hasPermission(PermissionEnum::Warehouse) && !$user->hasPermission(PermissionEnum::Company_Performer) && !$user->hasPermission(PermissionEnum::Branch_Performer)) {
-            return redirect()->route('site.applications.index');
-        }
         $countries = ['0' => 'Select country'];
         $countries[] = Country::get()->pluck('country_name', 'country_alpha3_code')->toArray();
         $select = Resource::pluck('name', 'id');
