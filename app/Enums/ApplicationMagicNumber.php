@@ -32,5 +32,6 @@ class ApplicationMagicNumber
     public const twentyTwo = 22;
     public const twentyFive = 25;
     public const Company = 9;
+    public const Filial = 13;
     public const Director = 7;
 }

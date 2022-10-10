@@ -420,7 +420,7 @@ class ApplicationService
     public function show($application, $user)
     {
         $user_branch = true;
-        if(!$user->hasPermission('Purchasing_Management_Center'))
+        if((!$user->hasPermission('Purchasing_Management_Center')) || ($user->branch_id != ApplicationMagicNumber::Filial && $user->branch_id != ApplicationMagicNumber::Company))
         {
             $user_branch = $application->branch_initiator_id == $user->branch_id;
         }
@@ -467,7 +467,8 @@ class ApplicationService
         $perms['NumberChange'] = $user_branch && $user->hasPermission(PermissionEnum::Number_Change) && !$user->hasPermission(PermissionEnum::Plan_Budget) && !$user->hasPermission(PermissionEnum::Plan_Business);
         $perms['Plan'] = ($user_branch && $check) || ($user_branch && $user->hasPermission('Plan_Business') && $check);
         $perms['PerformerLeader'] = $user_branch && $application->performer_role_id === $user->role_id && $user->leader === ApplicationMagicNumber::one;
-        $perms['Signers'] = ($user_branch && $access && $user->hasPermission(PermissionEnum::Company_Signer || PermissionEnum::Add_Company_Signer || PermissionEnum::Branch_Signer || PermissionEnum::Add_Branch_Signer || PermissionEnum::Company_Performer || PermissionEnum::Branch_Performer)) || ($user_branch && $access && $user->role_id === ApplicationMagicNumber::Director && $application->show_director === ApplicationMagicNumber::one);
+        $perms['Signers'] = ($user_branch && $user->hasPermission(PermissionEnum::Company_Signer || PermissionEnum::Add_Company_Signer || PermissionEnum::Branch_Signer || PermissionEnum::Add_Branch_Signer || PermissionEnum::Company_Performer || PermissionEnum::Branch_Performer)) || ($user_branch && $access && $user->role_id === ApplicationMagicNumber::Director && $application->show_director === ApplicationMagicNumber::one);
+        dd($perms["Signers"]);
         $status = $application->status;
         return ['performer_file' => $performer_file, 'perms' => $perms, 'access_comment' => $access_comment, 'performers_company' => $performers_company, 'performers_branch' => $performers_branch, 'file_basis' => $file_basis, 'file_tech_spec' => $file_tech_spec, 'other_files' => $other_files, 'user' => $user, 'application' => $application, 'branch' => $branch, 'signedDocs' => $signedDocs, 'same_role_user_ids' => $same_role_user_ids, 'access' => $access, 'subjects' => $subjects, 'purchases' => $purchases, 'branch_name' => $branch_name, 'check' => $check, 'status' => $status];
     }
