@@ -420,7 +420,7 @@ class ApplicationService
     public function show($application, $user)
     {
         $user_branch = true;
-        if(!$user->hasPermission('Purchasing_Management_Center'))
+        if(!$user->hasPermission('Purchasing_Management_Center') || $application->user_id != $user->id)
         {
             $user_branch = $application->branch_initiator_id == $user->branch_id;
         }
