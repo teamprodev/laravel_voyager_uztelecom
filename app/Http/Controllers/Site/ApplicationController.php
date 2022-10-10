@@ -192,7 +192,7 @@ class ApplicationController extends Controller
     */
     public function file_delete(Request $request, Application $application,$column)
     {
-        $file = json_decode($application->$column);
+        $file = json_decode($application->$column, true);
         $delete = array_diff($file,[$request->file]);
         $application->$column = $delete;
         $application->save();
