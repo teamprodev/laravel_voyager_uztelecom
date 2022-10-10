@@ -36,34 +36,34 @@ class ApplicationService
     public function index_getData($user)
     {
         if ($user->hasPermission('Purchasing_Management_Center')) {
-            $application = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('branch_initiator_id', '!=', null)->where('name', '!=', null);
+            $application = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null);
         } elseif ($user->hasPermission('Company_Leader') | $user->hasPermission('Branch_Leader')) {
             $a = 'branch_initiator_id';
             $b = [$user->branch_id];
-            $application = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('name', '!=', null)->whereIn($a, $b);
+            $application = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null)->whereIn($a, $b);
         } else {
             $a = 'department_initiator_id';
             $b = [$user->department_id];
-            $application = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('name', '!=', null)->whereIn($a, $b);
+            $application = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null)->whereIn($a, $b);
         }
         switch ($user->hasPermission('Purchasing_Management_Center') == false) {
             case $user->hasPermission('Add_Company_Signer') && $user->hasPermission('Add_Branch_Signer') :
-                $query = $application->orWhere('signers', 'like', "%{$user->role_id}%")->where('name', '!=', null)->where('draft', '!=', ApplicationMagicNumber::one)->orWhere('performer_role_id', $user->role->id)->where('draft', '!=', ApplicationMagicNumber::one)->orWhere('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->get();
+                $query = $application->orWhere('signers', 'like', "%{$user->role_id}%")->where('draft', '!=', ApplicationMagicNumber::one)->orWhere('performer_role_id', $user->role->id)->where('draft', '!=', ApplicationMagicNumber::one)->orWhere('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->get();
                 break;
             case $user->hasPermission(PermissionEnum::Warehouse) :
 
                 $status = ApplicationStatusEnum::Accepted;
-                $query = $application->where('status', 'like', "%{$status}%")->orWhere('user_id', $user->id)->where('name', '!=', null)->get();
+                $query = $application->where('status', 'like', "%{$status}%")->orWhere('user_id', $user->id)->get();
                 break;
             case $user->hasPermission('Company_Leader') && $user->hasPermission('Branch_Leader') :
-                $query = $application->orWhere('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->where('name', '!=', null)->get();
+                $query = $application->orWhere('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->get();
                 break;
             case $user->role_id === ApplicationMagicNumber::Director:
 
                 $query = $application->get();
                 break;
             case $user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer') || $user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'):
-                $query = Application::where('draft', '!=', ApplicationMagicNumber::one)
+                $query = $application
                     ->where('signers', 'like', "%{$user->role_id}%")
                     ->orWhere('performer_role_id', $user->role->id)
                     ->where('draft', '!=', ApplicationMagicNumber::one)
@@ -72,16 +72,16 @@ class ApplicationService
                     ->where('draft', '!=', ApplicationMagicNumber::one)->get();
                 break;
             case $user->hasPermission('Company_Leader') :
-                $query = $application->where('status', ApplicationStatusEnum::Agreed)->where('name', '!=', null)->orWhere('status', ApplicationStatusEnum::Distributed)->whereIn($a, $b)->where('draft', '!=', ApplicationMagicNumber::one)->orWhere('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->get();
+                $query = $application->where('status', ApplicationStatusEnum::Agreed)->orWhere('status', ApplicationStatusEnum::Distributed)->whereIn($a, $b)->where('draft', '!=', ApplicationMagicNumber::one)->orWhere('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->get();
                 break;
             case $user->hasPermission('Branch_Leader') :
-                $query = $application->where('is_more_than_limit', ApplicationMagicNumber::zero)->where('name', '!=', null)->where('show_leader', ApplicationMagicNumber::one)->orWhere('is_more_than_limit', ApplicationMagicNumber::zero)->whereIn($a, $b)->where('status', ApplicationStatusEnum::New)->orWhere('is_more_than_limit', ApplicationMagicNumber::zero)->where('draft', '!=', ApplicationMagicNumber::one)->whereIn($a, $b)->where('status', ApplicationStatusEnum::Distributed)->orWhere('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->get();
+                $query = $application->where('is_more_than_limit', ApplicationMagicNumber::zero)->where('show_leader', ApplicationMagicNumber::one)->orWhere('is_more_than_limit', ApplicationMagicNumber::zero)->whereIn($a, $b)->where('status', ApplicationStatusEnum::New)->orWhere('is_more_than_limit', ApplicationMagicNumber::zero)->where('draft', '!=', ApplicationMagicNumber::one)->whereIn($a, $b)->where('status', ApplicationStatusEnum::Distributed)->orWhere('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->get();
                 break;
             case $user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer') :
-                $query = Application::where('performer_role_id', $user->role_id)->where('name', '!=', null)->orWhere('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->get();
+                $query = Application::where('performer_role_id', $user->role_id)->orWhere('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->get();
                 break;
             default :
-                $query = $application->where('name', '!=', null)->get();
+                $query = $application->get();
                 break;
         }
         return Datatables::of($query)
@@ -553,7 +553,7 @@ class ApplicationService
         if (isset($data['draft'])) {
             if ($data['draft'] == ApplicationMagicNumber::one)
                 $data['status'] = ApplicationStatusEnum::Draft;
-            elseif($application->draft == 1)
+            elseif ($application->draft == 1)
                 $data['status'] = ApplicationStatusEnum::New;
         }
         if (isset($data['performer_status'])) {
