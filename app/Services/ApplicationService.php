@@ -686,48 +686,49 @@ class ApplicationService
 
     private function checkComponentsInclude($application, $user)
     {
+        $component = array();
         if ($application->user_id == $user->id && $application->show_leader != Application::NOT_DISTRIBUTED) {
-            return "site.applications.form_edit";
-        } elseif (($user->hasPermission('Branch_Performer') && $application->user_id != $user->id) ||
+            $component[] = "site.applications.form_edit";
+        }
+        if (($user->hasPermission('Branch_Performer') && $application->user_id != $user->id) ||
             ($user->hasPermission('Company_Performer') && $application->user_id != $user->id) ||
             ($application->performer_role_id == $user->role_id)) {
-            return "site.applications.performer";
-        } elseif (($user->hasPermission('Warehouse') && $application->status == ApplicationStatusEnum::Accepted) ||
+            $component[] = "site.applications.performer";
+        }
+        if (($user->hasPermission('Warehouse') && $application->status == ApplicationStatusEnum::Accepted) ||
             ($user->hasPermission('Warehouse') && $application->status == ApplicationStatusEnum::Order_Delivered) ||
             ($user->hasPermission('Warehouse') && $application->status == ApplicationStatusEnum::Order_Arrived)) {
-            return "site.applications.warehouse";
-        } else {
-            Log::debug('В файле ApplicationService, метод checkComponentsInclude(стр.908)', [$application, $user]);
-            abort(404);
+            $component[] = "site.applications.warehouse";
         }
+        return $component;
     }
 
     private function translateStatus($status)
     {
         switch ($status) {
             case 'new':
-                return __('Новая');
+                return __('new');
                 break;
             case "in_process":
-                return __('На рассмотрении');
+                return __('in_process');
                 break;
             case "overdue":
-                return __('просрочен');
+                return __('overdue');
                 break;
             case "refused":
-                return __('Отказана');
+                return __('refused');
                 break;
             case "agreed":
-                return __('Согласована');
+                return __('agreed');
                 break;
             case "rejected":
-                return __('Отклонена');
+                return __('rejected');
                 break;
             case "distributed":
-                return __('Распределен');
+                return __('distributed');
                 break;
             case "canceled":
-                return __('Отменен');
+                return __('canceled');
                 break;
             default:
                 return $status;

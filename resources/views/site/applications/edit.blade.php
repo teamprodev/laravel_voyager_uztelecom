@@ -77,7 +77,9 @@
         ->route('site.applications.update',$application->id)
         ->enctype("multipart/form-data")
         ->post() }}
-        @include($component)
+        @foreach($component as $view)
+            @include($view)
+        @endforeach
         {{ Aire::close() }}
     @endif
 

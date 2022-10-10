@@ -39,10 +39,9 @@
                         {data: 'name', name: 'name'},
                         {data: 'delivery_date', name: 'delivery_date'},
                         {
-                            "data": "planned_price",
-                            render: function (data, type, row) {
-                                if (row.planned_price === null) return " "
-                                return new Intl.NumberFormat('ru-RU').format(row.planned_price) + ' ' + row.currency;
+                            data: 'planned_price_curr', name: 'planned_price_curr', render: function (data, type, row) {
+                                if (row.planned_price === null || row.planned_price==="" ) return `{{ __('not_filled') }}`;
+                                return row.planned_price + ' ' + row.currency;
                             }
                         },
                         {data: 'incoterms', name: 'incoterms'},
