@@ -676,7 +676,10 @@
                 <div class="mb-5">
                     @if($performer_file !== 'null' && $performer_file !== null && $performer_file !== [])
                         <h5 class="text-left">{{ __('Файл исполнителя') }}</h5>
+                        <form action="/delete_file/{{$application->id}}/performer_file" method="post">
+                        @csrf
                         @foreach($performer_file as $file)
+                            <input type="text" class="hidden" value="{{$file}}" name="file">
                             @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
                                 <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
                             @else
@@ -684,9 +687,14 @@
                                                                                  href="/storage/uploads/{{$file}}"
                                                                                  target="_blank">{{preg_replace('/[0-9]+_/', '', $file)}}</a>
                                 </button>
+                                @if($application->performer_role_id == $user->role_id)
+                                    <button style="text-align: center"
+                                            class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
+                                @endif
                                 <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
                             @endif
                         @endforeach
+                        </form>
                     @endif
                 </div>
 
