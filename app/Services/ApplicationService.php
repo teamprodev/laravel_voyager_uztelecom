@@ -420,9 +420,13 @@ class ApplicationService
     public function show($application, $user)
     {
         $user_branch = true;
-        if((!$user->hasPermission('Purchasing_Management_Center')) || ($user->branch_id != ApplicationMagicNumber::Filial && $user->branch_id != ApplicationMagicNumber::Company))
+        if(!$user->hasPermission('Purchasing_Management_Center'))
         {
             $user_branch = $application->branch_initiator_id == $user->branch_id;
+        }
+        if($user->branch_id == ApplicationMagicNumber::Filial || $user->branch_id == ApplicationMagicNumber::Company)
+        {
+            $user_branch = true;
         }
         $access = SignedDocs::where('role_id', auth()->user()->role_id)->where('status', null)->where('application_id', $application->id)->first();
         $check = SignedDocs::where('role_id', auth()->user()->role_id)->where('application_id', $application->id)->first();
