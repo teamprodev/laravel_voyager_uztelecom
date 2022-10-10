@@ -23,21 +23,22 @@ class BranchService
      **/
     public function getData($id)
     {
-        $query = DB::table('roles')->whereRaw('json_contains(branch_id, \'["'.$id.'"]\')')->get();
+        $query = DB::table('roles')->whereRaw('json_contains(branch_id, \'["' . $id . '"]\')')->get();
         return Datatables::of($query)
             ->editColumn('branch_id', function ($query) {
                 $all = json_decode($query->branch_id);
-                $branch = $all ? Branch::find($all)->pluck('name')->toArray(): [];
+                $branch = $all ? Branch::find($all)->pluck('name')->toArray() : [];
                 return $branch;
             })
-            ->addColumn('action', function($row){
+            ->addColumn('action', function ($row) {
                 $data['edit'] = "/admin/roles/{$row->id}/edit";
-                $data['destroy'] =route("voyager.roles.destroy",$row->id);
+                $data['destroy'] = route("voyager.roles.destroy", $row->id);
                 return json_encode(['link' => $data]);
             })
             ->rawColumns(['action'])
             ->make(true);
     }
+
     /**
      * Zayavkalarni filialiga qarab chiqarish
      *
@@ -55,11 +56,11 @@ class BranchService
                 return $query->branch->name;
             })
             ->addIndexColumn()
-            ->editColumn('user_id', function($docs) {
-                return $docs->user ? $docs->user->name:"";
+            ->editColumn('user_id', function ($docs) {
+                return $docs->user ? $docs->user->name : "";
             })
-            ->editColumn('role_id', function($docs) {
-                return $docs->role ? $docs->role->display_name:"";
+            ->editColumn('role_id', function ($docs) {
+                return $docs->role ? $docs->role->display_name : "";
             })
             ->editColumn('planned_price', function ($query) {
                 return $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
@@ -85,27 +86,24 @@ class BranchService
                 return json_encode(['backgroundColor' => $color, 'app' => $this->translateStatus($status), 'color' => $color ? 'white' : 'black']);
             })
             ->addIndexColumn()
-            ->addColumn('action', function($row){
+            ->addColumn('action', function ($row) {
 
-                if(auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id)
-                {
+                if (auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id) {
                     $data['edit'] = route('site.applications.edit', $row->id);
                 }
 
                 $data['show'] = route('site.applications.show', $row->id);
 
-                if($row->user_id == auth()->user()->id)
-                {
+                if ($row->user_id == auth()->user()->id) {
                     $data['destroy'] = route('site.applications.destroy', $row->id);
                 }
 
-                if(($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused)||($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected))
-                {
+                if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
                 return json_encode(['link' => $data]);
             })
-            ->rawColumns(['action','status'])
+            ->rawColumns(['action', 'status'])
             ->make(true);
     }
 
@@ -113,29 +111,31 @@ class BranchService
     {
         switch ($status) {
             case 'new':
-                return __('Новая');
+                return __('new');
                 break;
             case "in_process":
-                return __('На рассмотрении');
+                return __('in_process');
                 break;
             case "overdue":
-                return __('просрочен');
+                return __('overdue');
                 break;
             case "refused":
-                return __('Отказана');
+                return __('refused');
                 break;
             case "agreed":
-                return __('Согласована');
+                return __('agreed');
                 break;
             case "rejected":
-                return __('Отклонена');
+                return __('rejected');
                 break;
             case "distributed":
-                return __('Распределен');
+                return __('distributed');
                 break;
             case "canceled":
-                return __('Отменен');
+                return __('canceled');
                 break;
+            default:
+                return $status;
         }
     }
 }

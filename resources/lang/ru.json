@@ -250,5 +250,6 @@
     "Performer_status": "Статус исполнителя",
     "notification": "Уведомлений",
     "minutes": "минут",
-    "search": "Поиск"
+    "search": "Поиск",
+    "not_filled": "Не заполнено"
 }
