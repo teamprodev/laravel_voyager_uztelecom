@@ -222,10 +222,8 @@
 
                     <div class="mb-3 row">
                         <label for="currency" class="col-sm-6 col-form-label">{{ __('Валюта') }}</label>
-                        <select class="form-control col-sm-6" name="currency" id="currency">
-                            <option value="UZS" @if($application->currency === "UZS") selected @endif>UZS</option>
-                            <option value="USD" @if($application->currency === "USD") selected @endif>USD</option>
-                        </select>
+                        <select class="form-control col-sm-6" name="currency" id="currency" disabled>
+                            <option value="{{$application->currency}}" selected>{{$application->currency}}</option></select>
                     </div>
                     @if($application->with_nds == 1)
                         <div class="mb-3 row">

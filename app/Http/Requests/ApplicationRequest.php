@@ -45,7 +45,6 @@ class ApplicationRequest extends FormRequest
             'incoterms' => 'nullable',
             'signers' => 'nullable',
             'performer_user_id' => 'nullable',
-            'currency' => 'required',
             'branch_customer_id' => 'nullable',
             'lot_number' => 'nullable',
             'contract_number' => 'nullable',

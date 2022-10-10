@@ -581,6 +581,7 @@ class ApplicationService
             }
         }
 
+
         if (isset($data['performer_role_id'])) {
             $data['performer_received_date'] = $now->toDateTimeString();
             $data['status'] = ApplicationStatusEnum::Distributed;
