@@ -461,11 +461,11 @@ class ApplicationService
         $purchases = Purchase::all();
         $branch_name = Branch::find($application->user->branch_id, 'name');
         $branch = Branch::all()->pluck('name', 'id');
-        $perms['CompanyLeader'] = $user_branch && $application->user_id !== $user->id && $user->hasPermission(PermissionEnum::Company_Leader) && $application->show_leader === ApplicationMagicNumber::one;
-        $perms['BranchLeader'] = $user_branch && $application->user_id !== $user->id && $user->hasPermission(PermissionEnum::Branch_Leader) && $application->show_leader === ApplicationMagicNumber::one;
+        $perms['CompanyLeader'] = $user_branch && $user->hasPermission(PermissionEnum::Company_Leader) && $application->show_leader === ApplicationMagicNumber::one;
+        $perms['BranchLeader'] = $user_branch && $user->hasPermission(PermissionEnum::Branch_Leader) && $application->show_leader === ApplicationMagicNumber::one;
         $perms['PerformerComment'] = $user_branch && $application->performer_role_id === $user->role_id && $user->leader === ApplicationMagicNumber::zero;
         $perms['NumberChange'] = $user_branch && $user->hasPermission(PermissionEnum::Number_Change) && !$user->hasPermission(PermissionEnum::Plan_Budget) && !$user->hasPermission(PermissionEnum::Plan_Business);
-        $perms['Plan'] = ($user_branch) || ($user_branch && $user->hasPermission('Plan_Business') && $check);
+        $perms['Plan'] = ($user_branch && $check) || ($user_branch && $user->hasPermission('Plan_Business') && $check);
         $perms['PerformerLeader'] = $user_branch && $application->performer_role_id === $user->role_id && $user->leader === ApplicationMagicNumber::one;
         $perms['Signers'] = ($user_branch && $access && $user->hasPermission(PermissionEnum::Company_Signer || PermissionEnum::Add_Company_Signer || PermissionEnum::Branch_Signer || PermissionEnum::Add_Branch_Signer || PermissionEnum::Company_Performer || PermissionEnum::Branch_Performer)) || ($user_branch && $access && $user->role_id === ApplicationMagicNumber::Director && $application->show_director === ApplicationMagicNumber::one);
         $status = $application->status;
