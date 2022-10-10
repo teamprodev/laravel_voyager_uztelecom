@@ -29,7 +29,7 @@ class ApplicationRequest extends FormRequest
             'purchase_basis' => 'nullable',
             'specification' => 'nullable',
             'delivery_date' => 'nullable',
-            'name' => 'required',
+            'name' => 'nullable',
             'basis' => 'nullable',
             'separate_requirements' => 'nullable',
             'other_requirements' => 'nullable',
