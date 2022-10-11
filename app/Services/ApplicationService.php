@@ -473,8 +473,9 @@ class ApplicationService
         $perms['Plan'] = ($user_branch && $check) || ($user_branch && $user->hasPermission('Plan_Business') && $check);
         $perms['PerformerLeader'] = $user_branch && $application->performer_role_id === $user->role_id && $user->leader === ApplicationMagicNumber::one;
         $perms['Signers'] = ($user_branch && $access && $user->hasPermission(PermissionEnum::Company_Signer || PermissionEnum::Add_Company_Signer || PermissionEnum::Branch_Signer || PermissionEnum::Add_Branch_Signer || PermissionEnum::Company_Performer || PermissionEnum::Branch_Performer)) || ($user_branch && $access && $user->role_id === ApplicationMagicNumber::Director && $application->show_director === ApplicationMagicNumber::one);
-        $status = $application->status;
-        return ['performer_file' => $performer_file, 'perms' => $perms, 'access_comment' => $access_comment, 'performers_company' => $performers_company, 'performers_branch' => $performers_branch, 'file_basis' => $file_basis, 'file_tech_spec' => $file_tech_spec, 'other_files' => $other_files, 'user' => $user, 'application' => $application, 'branch' => $branch, 'signedDocs' => $signedDocs, 'same_role_user_ids' => $same_role_user_ids, 'access' => $access, 'subjects' => $subjects, 'purchases' => $purchases, 'branch_name' => $branch_name, 'check' => $check, 'status' => $status];
+        $status = $application->performer_status == null ? $application->status : StatusExtended::find($application->performer_status)->name;
+        $color_status = $application->performer_status == null ? setting("color.{$status}"): StatusExtended::find($application->performer_status)->color;
+        return ['performer_file' => $performer_file, 'perms' => $perms, 'access_comment' => $access_comment, 'performers_company' => $performers_company, 'performers_branch' => $performers_branch, 'file_basis' => $file_basis, 'file_tech_spec' => $file_tech_spec, 'other_files' => $other_files, 'user' => $user, 'application' => $application, 'branch' => $branch, 'signedDocs' => $signedDocs, 'same_role_user_ids' => $same_role_user_ids, 'access' => $access, 'subjects' => $subjects, 'purchases' => $purchases, 'branch_name' => $branch_name, 'check' => $check, 'status' => $status , 'color_status' => $color_status];
     }
 
     public function edit($application, $user)
@@ -704,9 +705,7 @@ class ApplicationService
         if ($application->user_id == $user->id && $application->show_leader != Application::NOT_DISTRIBUTED) {
             $component[] = "site.applications.form_edit";
         }
-        if (($user->hasPermission('Branch_Performer') && $application->user_id != $user->id) ||
-            ($user->hasPermission('Company_Performer') && $application->user_id != $user->id) ||
-            ($application->performer_role_id == $user->role_id)) {
+        if ($application->performer_role_id == $user->role_id) {
             $component[] = "site.applications.performer";
         }
         if (($user->hasPermission('Warehouse') && $application->status == ApplicationStatusEnum::Accepted) ||
