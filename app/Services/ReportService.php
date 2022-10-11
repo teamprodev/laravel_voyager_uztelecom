@@ -30,7 +30,7 @@ class ReportService
 
     public function application_query()
     {
-        $application =  Application::query()->where('draft','!=',ApplicationMagicNumber::one);
+        $application =  Application::query()->where('status','!=','draft');
         return $this->query = $application;
     }
     public function report_1()
