@@ -46,6 +46,7 @@ class ApplicationRequest extends FormRequest
             'signers' => 'nullable',
             'performer_user_id' => 'nullable',
             'branch_customer_id' => 'nullable',
+            'currency' => 'required',
             'lot_number' => 'nullable',
             'contract_number' => 'nullable',
             'contract_date' => 'nullable',
