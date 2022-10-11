@@ -496,7 +496,7 @@
                             ->name('performer_role_id')
                         }}
                     @endif
-                    <button type="submit" class="btn btn-success col-md-2">{{ __('Отправить') }}</button>
+                    <button type="submit" class="btn btn-success col-md-2">{{ __('Распределить') }}</button>
                 </div>
             @endif
         @elseif($perms["PerformerLeader"])
