@@ -635,7 +635,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('performer_status', '<=' ,39)->where('currency','!=','USD')->get();
+                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('performer_status', '<=' ,39)->get();
                 return count($applications);
             })
             ->addColumn('summa', function($branch){
@@ -645,7 +645,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('performer_status', '<=' ,39)->where('currency','!=','USD')->pluck('contract_price')->toArray();
+                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('performer_status', '<=' ,39)->pluck('contract_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('count_1', function($branch){
@@ -655,7 +655,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('currency','!=','USD')->where('subject',ApplicationMagicNumber::one)->get();
+                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->get();
                 return count($applications);
             })
             ->addColumn('summa_1', function($branch){
@@ -665,7 +665,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('currency','!=','USD')->where('subject',ApplicationMagicNumber::one)->pluck('contract_price')->toArray();
+                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->pluck('contract_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('count_2', function($branch){
@@ -675,7 +675,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('currency','!=','USD')->where('subject',ApplicationMagicNumber::two)->get();
+                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->get();
                 return count($applications);
             })
             ->addColumn('summa_2', function($branch){
@@ -685,7 +685,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('currency','!=','USD')->where('subject',ApplicationMagicNumber::two)->pluck('contract_price')->toArray();
+                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->pluck('contract_price')->toArray();
                 return array_sum($applications);
             })
             ->addColumn('count_3', function($branch){
@@ -695,7 +695,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('currency','!=','USD')->where('subject',ApplicationMagicNumber::three)->get();
+                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->get();
                 return count($applications);
             })
             ->addColumn('summa_3', function($branch){
@@ -705,7 +705,7 @@ class ReportService
 
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
-                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('currency','!=','USD')->where('subject',ApplicationMagicNumber::three)->pluck('contract_price')->toArray();
+                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->pluck('contract_price')->toArray();
                 return array_sum($applications);
             })
             ->make(true);

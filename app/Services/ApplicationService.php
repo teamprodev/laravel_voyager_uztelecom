@@ -64,7 +64,7 @@ class ApplicationService
                 $query = $application->get();
                 break;
             case $user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer') || $user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'):
-                $query = $application
+                $query = Application::query()->where('branch_initiator_id',$user->branch_id)
                     ->where('signers', 'like', "%{$user->role_id}%")
                     ->orWhere('performer_role_id', $user->role->id)
                     ->where('draft', '!=', ApplicationMagicNumber::one)
