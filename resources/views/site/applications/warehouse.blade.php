@@ -1,3 +1,8 @@
+{{ Aire::open()
+
+        ->route('site.applications.update',$application->id)
+        ->enctype("multipart/form-data")
+        ->post() }}
 <div class="mt-6">
 </div>
 <div class="w-full text-center pb-8 ">
@@ -10,3 +15,4 @@
         товар прибыл
     </button>
 </div>
+{{Aire::close()}}

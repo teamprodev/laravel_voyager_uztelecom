@@ -141,6 +141,7 @@ Route::group([
                         Route::get('{application}/edit','edit')->name('edit')->middleware('branch');
                         Route::get('{application}/clone','clone')->name('clone')->middleware('branch');
                         Route::post('{application}/update','update')->name('update')->middleware('branch');
+                        Route::post('{application}/edit_update','edit_update')->name('edit_update')->middleware('branch');
                         Route::get('{application}/destroy','destroy')->name('destroy')->middleware('branch','application_user_id');
                         Route::get('create','create')->name('create')->middleware('branch');
                         Route::post('store','store')->name('store')->middleware('branch');

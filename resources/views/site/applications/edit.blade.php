@@ -37,15 +37,9 @@
 
     @endif
     @if($application->is_more_than_limit !== null)
-        {{ Aire::open()
-
-        ->route('site.applications.update',$application->id)
-        ->enctype("multipart/form-data")
-        ->post() }}
         @foreach($component as $view)
             @include($view)
         @endforeach
-        {{ Aire::close() }}
     @endif
 
 @endsection

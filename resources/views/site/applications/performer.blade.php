@@ -1,4 +1,9 @@
 @if($application->performer_role_id == auth()->user()->role_id)
+    {{ Aire::open()
+
+            ->route('site.applications.update',$application->id)
+            ->enctype("multipart/form-data")
+            ->post() }}
 <div class="pt-6">
     <div class="w-full flex">
         <div class="p-6">
@@ -99,6 +104,7 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <x-laravelUppy url="{{route('uploadImage', $application->id)}}" target="#file" fieldName="performer_file"/>
 </div>
+{{Aire::close()}}
 @else
     <h3 style="text-align:center;color:red;">{{ __('Руководство не выбрало вас') }}</h3>
 @endif

@@ -143,6 +143,11 @@ class ApplicationController extends Controller
         $user = auth()->user();
         return $this->service->update($application,$request,$user);
     }
+    public function edit_update(Application $application, ApplicationRequest $request)
+    {
+        $user = auth()->user();
+        return $this->service->edit_update($application,$request,$user);
+    }
     /**
      * Chernovik bo'lgan applicationlarni ko'rish
     */

@@ -1,3 +1,8 @@
+{{ Aire::open()
+
+        ->route('site.applications.edit_update',$application->id)
+        ->enctype("multipart/form-data")
+        ->post() }}
 <div class="mt-6">
     <div class="w-full flex">
         <div class="p-6">
@@ -222,12 +227,14 @@
 
             @if($application->is_more_than_limit == '1')
                 {{Aire::checkboxGroup($company_signers, 'radio', __('lang.signers'))
+                    ->id('signers')
                     ->name('signers[]')
                     ->value(json_decode($application->signers))
                     ->multiple()
                 }}
             @elseif($application->is_more_than_limit != '1' )
                 {{Aire::checkboxGroup($branch_signers, 'radio', __('lang.signers'))
+                    ->id('signers')
                     ->name('signers[]')
                     ->value(json_decode($application->signers))
                     ->multiple()
@@ -364,3 +371,5 @@
 <x-laravelUppy url="{{route('uploadImage', $application->id)}}" target="#file_basis" fieldName="file_basis"/>
 <x-laravelUppy url="{{route('uploadImage', $application->id)}}" target="#file_tech_spec" fieldName="file_tech_spec"/>
 <x-laravelUppy url="{{route('uploadImage', $application->id)}}" target="#other_files" fieldName="other_files"/>
+
+{{ Aire::close() }}

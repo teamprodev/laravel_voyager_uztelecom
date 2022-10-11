@@ -22,6 +22,7 @@ use App\Models\StatusExtended;
 use App\Models\Subject;
 use App\Models\User;
 use App\Models\Warehouse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -507,8 +508,36 @@ class ApplicationService
     {
         $now = Carbon::now();
         $data = $request->validated();
-        $data['with_nds'] = 0;
+        if (isset($data['performer_status'])) {
+            $application->performer_user_id = $user->id;
+            $application->status = ApplicationStatusEnum::Extended;
+        }
+        if (isset($data['performer_leader_comment'])) {
+            $data['performer_leader_comment_date'] = $now->toDateTimeString();
+            $data['performer_leader_user_id'] = $user->id;
+        }
+        if (isset($data['performer_comment'])) {
+            $data['performer_comment_date'] = $now->toDateTimeString();
+            $data['performer_user_id'] = $user->id;
+        }
+        if (isset($data['performer_role_id'])) {
+            $data['performer_received_date'] = $now->toDateTimeString();
+            $data['status'] = ApplicationStatusEnum::Distributed;
+            $data['show_leader'] = ApplicationMagicNumber::two;
+            $data['branch_leader_user_id'] = $user->id;
+        }
+
+        $result = $application->update($data);
+        if ($result)
+            return redirect()->route('site.applications.show', $application->id);
+
+        return redirect()->back()->with('danger', trans('site.application_failed'));
+    }
+    public function edit_update($application, $request, $user)
+    {
+        $data = $request->validated();
         $roles = ($application->branch_signers->signers);
+        $data['with_nds'] = 0;
         if (isset($data['signers'])) {
             $array = $roles ? array_merge(json_decode($roles), $data['signers']) : $data['signers'];
             $data['signers'] = json_encode($array);
@@ -561,18 +590,6 @@ class ApplicationService
             elseif ($application->draft == 1)
                 $data['status'] = ApplicationStatusEnum::New;
         }
-        if (isset($data['performer_status'])) {
-            $application->performer_user_id = $user->id;
-            $application->status = ApplicationStatusEnum::Extended;
-        }
-        if (isset($data['performer_leader_comment'])) {
-            $data['performer_leader_comment_date'] = $now->toDateTimeString();
-            $data['performer_leader_user_id'] = $user->id;
-        }
-        if (isset($data['performer_comment'])) {
-            $data['performer_comment_date'] = $now->toDateTimeString();
-            $data['performer_user_id'] = $user->id;
-        }
         if (isset($data['resource_id'])) {
             if ($data['resource_id'] === "[object Object]") {
                 $data['resource_id'] = null;
@@ -581,15 +598,6 @@ class ApplicationService
                 $data['resource_id'] = json_encode($explode);
             }
         }
-
-
-        if (isset($data['performer_role_id'])) {
-            $data['performer_received_date'] = $now->toDateTimeString();
-            $data['status'] = ApplicationStatusEnum::Distributed;
-            $data['show_leader'] = ApplicationMagicNumber::two;
-            $data['branch_leader_user_id'] = $user->id;
-        }
-
         $result = $application->update($data);
         if ($result)
             return redirect()->route('site.applications.show', $application->id);
