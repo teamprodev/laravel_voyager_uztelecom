@@ -36,7 +36,7 @@
                 style="text-align: center; display: flex; justify-content: end; align-items: center; column-gap: 10px; margin-right: 20px">
                 {{Aire::select($branch, 'select', 'Филиал')->value(auth()->user()->select_branch_id)->name('branch_id')}}
 
-                <button type="submit" class="btn btn-success" style="margin-top: 8px;">Выбрать</button>
+                <button type="submit" class="btn btn-success" style="margin-top: 8px;">{{ __('Выбрать') }} </button>
             </div>
             {{ Aire::close() }}
             @if(auth()->user()->select_branch_id != null)
@@ -88,7 +88,6 @@
                                 var details = JSON.parse(row.status).backgroundColor;
                                 var color = JSON.parse(row.status).color;
                                 var app = JSON.parse(row.status).app;
-
                                 return `<button style='background-color: ${details};color:${color};' class='btn-sm'>` + app + `</button>`;
                             }
                         },
