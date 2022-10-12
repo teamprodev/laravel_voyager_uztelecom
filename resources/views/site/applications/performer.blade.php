@@ -70,10 +70,13 @@
                     }}
 
                     <div class="mr-4 pt-2 pb-2 w-50">
-                        {{Aire::select($subject, 'select', __('Предмет закупки'))
-                            ->name('subject')
-                            ->value($application->subject)
-                        }}
+                        <b>{{__('Предмет закупки')}}</b>
+                        <select required name="subject" id="pet-select" class="block w-full p-2 leading-normal border rounded-sm bg-white appearance-none text-gray-900">
+                            <option value="">{{__('')}}</option>
+                            @foreach($subject as $element)
+                            <option value="{{$element->id}}">{{$element->name}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="pt-2 pb-2 w-50">
                         {{Aire::select($purchase, 'select', __('Вид закупки'))

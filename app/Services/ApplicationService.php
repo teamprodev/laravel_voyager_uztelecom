@@ -491,7 +491,7 @@ class ApplicationService
         return [
             'application' => $application,
             'purchase' => Purchase::all()->pluck('name', 'id'),
-            'subject' => Subject::all()->pluck('name', 'id'),
+            'subject' => Subject::all(),
             'branch' => Branch::all()->pluck('name', 'id'),
             'status_extented' => $status_extented,
             'countries' => $countries,
