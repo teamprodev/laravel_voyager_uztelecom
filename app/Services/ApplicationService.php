@@ -423,7 +423,7 @@ class ApplicationService
         $user_branch = true;
         if(!$user->hasPermission('Purchasing_Management_Center'))
         {
-            $user_branch = $application->branch_initiator_id == $user->branch_id;
+            $user_branch = $application->branch_id == $user->branch_id;
         }
         if($user->branch_id == ApplicationMagicNumber::Filial || $user->branch_id == ApplicationMagicNumber::Company)
         {
