@@ -47,7 +47,7 @@ class BranchService
      **/
     public function ajax_branch($id)
     {
-        $data = Application::where('status','!=','draft')->where('branch_id', $id)->get();
+        $data = Application::where('status','!=','draft')->where('branch_id', $id)->where('name', '!=', 'null')->get();
         return Datatables::of($data)
             ->editColumn('is_more_than_limit', function ($query) {
                 return $query->is_more_than_limit == ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
