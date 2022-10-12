@@ -626,7 +626,7 @@
                         ->disabled()
                     }}
                     {{Aire::input('bio', __('Cумма договора'))
-                        ->value(number_format((float)$application->contract_price,0,',',' '))
+                        ->value($application->contract_price)
                         ->disabled()
                     }}
                 </div>
