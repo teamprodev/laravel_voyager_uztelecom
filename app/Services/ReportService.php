@@ -589,7 +589,7 @@ class ReportService
                     $status = $a->name;
                     $color = $a->color;
                 }
-                return json_encode(['backgroundColor' => $color,'app' => $status,'color' => $color ? 'white':'black']);
+                return json_encode(['backgroundColor' => $color,'app' => $this->translateStatus($status),'color' => $color ? 'white':'black']);
             })
             ->editColumn('resource_id', function($application)
             {
@@ -1067,5 +1067,37 @@ class ReportService
                 return count($applications);
             })
             ->make(true);
+    }
+
+    private function translateStatus($status)
+    {
+        switch ($status) {
+            case 'new':
+                return __('new');
+                break;
+            case "in_process":
+                return __('in_process');
+                break;
+            case "overdue":
+                return __('overdue');
+                break;
+            case "refused":
+                return __('refused');
+                break;
+            case "agreed":
+                return __('agreed');
+                break;
+            case "rejected":
+                return __('rejected');
+                break;
+            case "distributed":
+                return __('distributed');
+                break;
+            case "canceled":
+                return __('canceled');
+                break;
+            default:
+                return $status;
+        }
     }
 }
