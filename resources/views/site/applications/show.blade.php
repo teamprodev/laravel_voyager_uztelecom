@@ -15,7 +15,7 @@
         <h5><strong>{{ __('Номер заявки') }} : </strong> {{$application->number}} </h5>
         <h5><strong>Date : </strong>
             @if($application->date!==null)
-{{--                {{ Carbon\Carbon::createFromFormat('Y-m-d', $application->date)->Format('d.m.Y') }}{{ __('г') }}--}}
+                {{ Carbon\Carbon::createFromFormat('Y-m-d', $application->date)->Format('d.m.Y') }}{{ __('г') }}
             @endif
         </h5> <br>
         <h5><strong>{{ __('Статус') }} : <div style='background-color: {{$color_status}};color: {{$color_status ? 'white' : 'black'}};' class='btn btn-sm'>{{__($status)}}</div></strong>
