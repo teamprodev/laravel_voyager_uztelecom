@@ -30,7 +30,7 @@ class ReportService
 
     public function application_query()
     {
-        $application =  Application::query()->where('status','!=','draft');
+        $application =  Application::query()->where('status','!=','draft')->where('name', '!=', null);
         return $this->query = $application;
     }
     public function report_1()
