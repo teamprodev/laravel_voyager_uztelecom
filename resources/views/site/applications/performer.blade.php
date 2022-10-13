@@ -41,7 +41,7 @@
                     }}
                     {{Aire::checkbox('checkbox', __('С НДС'))
                        ->name('with_nds')
-                       ->value($applicaion->with_nds)
+                       ->value($application->with_nds)
                     }}
                     {{Aire::input('bio', __('Общая реальная сумма'))
                         ->name('contract_price')
