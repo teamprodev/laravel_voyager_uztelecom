@@ -199,16 +199,6 @@
                         ->required()
                     }}
                 </div>
-                @if($application->with_nds == 1)
-                    {{Aire::checkbox('checkbox', __('With_VAT'))
-                                ->checked()
-                           ->name('with_nds')
-                        }}
-                @else
-                    {{Aire::checkbox('checkbox', __('With_VAT'))
-                       ->name('with_nds')
-                       }}
-                @endif
             </div>
 
             @if(isset($application->resource_id))

@@ -225,22 +225,6 @@
                         <select class="form-control col-sm-6" name="currency" id="currency" disabled>
                             <option value="{{$application->currency}}" selected>{{$application->currency}}</option></select>
                     </div>
-                    @if($application->with_nds == 1)
-                        <div class="mb-3 row">
-                            {{Aire::checkbox('checkbox', __('С НДС'))
-                               ->checked()
-                               ->disabled()
-                               ->name('with_nds')
-                            }}
-                        </div>
-                    @else
-                        <div class="mb-3 row">
-                            {{Aire::checkbox('checkbox', __('С НДС'))
-                                ->disabled()
-                               ->name('with_nds')
-                               }}
-                        </div>
-                    @endif
                     <div class="product">
                         @if(isset($application->resource_id))
                             <b>{{ __('Продукт')}}</b>:
@@ -623,8 +607,10 @@
                         ->disabled()
                     }}
                     {{Aire::checkbox('checkbox', __('С НДС'))
-                        ->disabled()
-                    }}
+                               ->disabled()
+                               ->checked($application->with_nds)
+                               ->name('with_nds')
+                            }}
                     {{Aire::input('bio', __('Cумма договора'))
                         ->value($application->contract_price)
                         ->disabled()
