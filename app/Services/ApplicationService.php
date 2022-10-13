@@ -538,7 +538,6 @@ class ApplicationService
     {
         $data = $request->validated();
         $roles = ($application->branch_signers->signers);
-        $data['with_nds'] = 0;
         if (isset($data['signers'])) {
             $array = $roles ? array_merge(json_decode($roles), $data['signers']) : $data['signers'];
             $data['signers'] = json_encode($array);
