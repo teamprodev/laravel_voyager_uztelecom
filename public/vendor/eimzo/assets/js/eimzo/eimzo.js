@@ -124,7 +124,7 @@ var uiCreateItem = function (itmkey, vo) {
             console.log('error');
         }
     });
-    if (vo.serialNumber === data[0]) {
+    if (vo.PINFL === data[0]) {
         var now = new Date();
         vo.expired = dates.compare(now, vo.validTo) > 0;
         var itm = document.createElement("option");
