@@ -95,6 +95,7 @@
     var columns = [
         {data: "id", name: 'id'},
         {data: "name", name: 'name'},
+
         {data: "supplier_inn", name: 'supplier_inn'},
 
         {data: "contract_count", name: 'contract_count'},
@@ -109,14 +110,16 @@
         {data: "auction_count", name: 'auction_count'},
         {data: "auction_sum", name: 'auction_sum'},
 
-        {data: "coop_portal_count", name: 'coop_portal_count'},
-        {data: "coop_portal_sum", name: 'coop_portal_sum'},
+        {data: "coop_count", name: 'coop_count'},
+        {data: "coop_sum", name: 'coop_sum'},
 
-        {data: "tender_platform_count", name: 'tender_platform_count'},
-        {data: "tender_platform_sum", name: 'tender_platform_sum'},
+        {data: "shaffof_count", name: 'shaffof_count'},
+        {data: "shaffof_sum", name: 'shaffof_sum'},
+
 
         {data: "exchange_count", name: 'exchange_count'},
         {data: "exchange_sum", name: 'exchange_sum'},
+
 
         {data: "konkurs_count", name: 'konkurs_count'},
         {data: "konkurs_sum", name: 'konkurs_sum'},
@@ -124,14 +127,15 @@
         {data: "tender_count", name: 'tender_count'},
         {data: "tender_sum", name: 'tender_sum'},
 
-        {data: "otbor_count", name: 'otbor_count'},
-        {data: "otbor_sum", name: 'otbor_sum'},
+        {data: "offers_count", name: 'offers_count'},
+        {data: "offers_sum", name: 'offers_sum'},
 
         {data: "sole_supplier_count", name: 'sole_supplier_count'},
         {data: "sole_supplier_sum", name: 'sole_supplier_sum'},
 
         {data: "direct_count", name: 'direct_count'},
         {data: "direct_sum", name: 'direct_sum'},
+
     ];
 </script>
 <x-laravelYajra getData="{{ route('report','9') }}" tableTitle="{{__('9 - Ойлик харидлар илова плановый')}}"/>
