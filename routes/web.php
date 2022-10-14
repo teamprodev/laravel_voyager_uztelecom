@@ -32,7 +32,7 @@ use Teamprodev\Eimzo\Http\Controllers\EimzoController;
 */
 
 Route::get('/auth/user', function (){
-    return response()->json(['serialNumber' => auth()->user()->username]);
+    return response()->json(['serialNumber' => auth()->user()->pinfl]);
 });
 Route::get('branches/{id}/getData', [BranchController::class,'getData'])->name('signers.getData');
 Route::get('/branches/ajax_branch', [BranchController::class,'ajax_branch'])->name('branches.ajax_branch');
