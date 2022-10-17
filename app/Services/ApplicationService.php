@@ -64,7 +64,7 @@ class ApplicationService
                 $query = $application->get();
                 break;
             case $user->hasPermission('Company_Signer') || $user->hasPermission('Add_Company_Signer') || $user->hasPermission('Branch_Signer') || $user->hasPermission('Add_Branch_Signer'):
-                $query = Application::query()->where('branch_initiator_id',$user->branch_id)
+                $query = Application::query()->where('branch_initiator_id', $user->branch_id)
                     ->where('signers', 'like', "%{$user->role_id}%")
                     ->orWhere('performer_role_id', $user->role->id)
                     ->where('draft', '!=', ApplicationMagicNumber::one)
@@ -140,7 +140,7 @@ class ApplicationService
                 if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
-                return json_encode(['link' => $data]);
+                return json_encode(['link' => $this->createBlockAction($data,$row)]);
             })
             ->rawColumns(['action', 'status'])
             ->make(true);
@@ -211,7 +211,7 @@ class ApplicationService
                 if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
-                return json_encode(['link' => $data]);
+                return json_encode(['link' => $this->createBlockAction($data,$row)]);
             })
             ->rawColumns(['action', 'status'])
             ->make(true);
@@ -282,7 +282,7 @@ class ApplicationService
                 if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
-                return json_encode(['link' => $data]);
+                return json_encode(['link' => $this->createBlockAction($data,$row)]);
             })
             ->rawColumns(['action', 'status'])
             ->make(true);
@@ -367,7 +367,7 @@ class ApplicationService
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
 
-                return json_encode(['link' => $data]);
+                return json_encode(['link' => $this->createBlockAction($data,$row)]);
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -465,8 +465,8 @@ class ApplicationService
         $perms['PerformerLeader'] = $application->performer_role_id === $user->role_id && $user->leader === ApplicationMagicNumber::one;
         $perms['Signers'] = ($access && $user->hasPermission(PermissionEnum::Company_Signer || PermissionEnum::Add_Company_Signer || PermissionEnum::Branch_Signer || PermissionEnum::Add_Branch_Signer || PermissionEnum::Company_Performer || PermissionEnum::Branch_Performer)) || ($access && $user->role_id === ApplicationMagicNumber::Director && $application->show_director === ApplicationMagicNumber::one);
         $status = $application->performer_status == null ? $application->status : StatusExtended::find($application->performer_status)->name;
-        $color_status = $application->performer_status == null ? setting("color.{$status}"): StatusExtended::find($application->performer_status)->color;
-        return ['performer_file' => $performer_file, 'perms' => $perms, 'access_comment' => $access_comment, 'performers_company' => $performers_company, 'performers_branch' => $performers_branch, 'file_basis' => $file_basis, 'file_tech_spec' => $file_tech_spec, 'other_files' => $other_files, 'user' => $user, 'application' => $application, 'branch' => $branch, 'signedDocs' => $signedDocs, 'same_role_user_ids' => $same_role_user_ids, 'access' => $access, 'subjects' => $subjects, 'purchases' => $purchases, 'branch_name' => $branch_name, 'check' => $check, 'status' => $status , 'color_status' => $color_status];
+        $color_status = $application->performer_status == null ? setting("color.{$status}") : StatusExtended::find($application->performer_status)->color;
+        return ['performer_file' => $performer_file, 'perms' => $perms, 'access_comment' => $access_comment, 'performers_company' => $performers_company, 'performers_branch' => $performers_branch, 'file_basis' => $file_basis, 'file_tech_spec' => $file_tech_spec, 'other_files' => $other_files, 'user' => $user, 'application' => $application, 'branch' => $branch, 'signedDocs' => $signedDocs, 'same_role_user_ids' => $same_role_user_ids, 'access' => $access, 'subjects' => $subjects, 'purchases' => $purchases, 'branch_name' => $branch_name, 'check' => $check, 'status' => $status, 'color_status' => $color_status];
     }
 
     public function edit($application, $user)
@@ -525,6 +525,7 @@ class ApplicationService
 
         return redirect()->back()->with('danger', trans('site.application_failed'));
     }
+
     public function edit_update($application, $request, $user)
     {
         $data = $request->validated();
@@ -683,7 +684,7 @@ class ApplicationService
                 if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
-                return json_encode(['link' => $data]);
+                return json_encode(['link' => $this->createBlockAction($data,$row)]);
             })
             ->rawColumns(['action', 'status'])
             ->make(true);
@@ -736,5 +737,45 @@ class ApplicationService
             default:
                 return $status;
         }
+    }
+
+    private function createBlockAction($data, $row): string
+    {
+        $block = '';
+        if (!empty($data['show'])) {
+            $block .= $this->getLinkHtmlBladeShow($row);
+        }
+        if (!empty($data['edit'])) {
+            $block .= "</br>" . $this->getLinkHtmlBladeEdit($row);
+        }
+        if (!empty($data['destroy'])) {
+            $block .= "</br>" . $this->getLinkHtmlBladeDestroy($row);
+        }
+        if (!empty($data['clone'])) {
+            $block .= "</br>" . $this->getLinkHtmlBladeClone($row);
+        }
+        return $block;
+    }
+
+    private function getLinkHtmlBladeEdit($row)
+    {
+        return "<a href='" . route("site.applications.edit", $row->id) . "' class='m-1 col edit btn btn-sm btn-secondary'> " . __('edit') . "</a>";
+    }
+
+    private function getLinkHtmlBladeShow($row)
+    {
+        return "<a style='background-color: #000080; color: white' href='" . route('site.applications.show', $row->id) . "' class='m-1 col edit btn btn-sm'> " . __('show') . " </a>";
+    }
+
+    private function getLinkHtmlBladeDestroy($row)
+    {
+        $alert_word = __('Вы уверены?');
+        $alert = "onclick='return confirm({$alert_word})'";
+        return "<a href='" . route('site.applications.destroy', $row->id) . "' ${alert} class='m-1 col edit btn btn-sm btn-danger' > " . __('destroy') . " </a>";
+    }
+
+    private function getLinkHtmlBladeClone($row)
+    {
+        return "<a href='" . route('site.applications.clone', $row->id) . "' class='m-1 col edit btn btn-sm btn-secondary'> " . __('edit') . "</a>";
     }
 }
