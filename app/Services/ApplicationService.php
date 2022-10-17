@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\DataTables;
+use function Sodium\add;
 
 class ApplicationService
 {
@@ -140,7 +141,7 @@ class ApplicationService
                 if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
-                return json_encode(['link' => $this->createBlockAction($data,$row)]);
+                return json_encode(['link' => $this->createBlockAction($data, $row)]);
             })
             ->rawColumns(['action', 'status'])
             ->make(true);
@@ -211,7 +212,7 @@ class ApplicationService
                 if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
-                return json_encode(['link' => $this->createBlockAction($data,$row)]);
+                return json_encode(['link' => $this->createBlockAction($data, $row)]);
             })
             ->rawColumns(['action', 'status'])
             ->make(true);
@@ -282,7 +283,7 @@ class ApplicationService
                 if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
-                return json_encode(['link' => $this->createBlockAction($data,$row)]);
+                return json_encode(['link' => $this->createBlockAction($data, $row)]);
             })
             ->rawColumns(['action', 'status'])
             ->make(true);
@@ -367,7 +368,7 @@ class ApplicationService
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
 
-                return json_encode(['link' => $this->createBlockAction($data,$row)]);
+                return json_encode(['link' => $this->createBlockAction($data, $row)]);
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -530,6 +531,7 @@ class ApplicationService
     {
         $data = $request->validated();
         $roles = ($application->branch_signers->signers);
+        $this->deleteNullSigners($data, $application, $roles);
         if (isset($data['signers'])) {
             $array = $roles ? array_merge(json_decode($roles), $data['signers']) : $data['signers'];
             $data['signers'] = json_encode($array);
@@ -590,7 +592,9 @@ class ApplicationService
                 $data['resource_id'] = json_encode($explode);
             }
         }
+
         $result = $application->update($data);
+
         if ($result)
             return redirect()->route('site.applications.show', $application->id);
 
@@ -684,7 +688,7 @@ class ApplicationService
                 if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
-                return json_encode(['link' => $this->createBlockAction($data,$row)]);
+                return json_encode(['link' => $this->createBlockAction($data, $row)]);
             })
             ->rawColumns(['action', 'status'])
             ->make(true);
@@ -777,5 +781,28 @@ class ApplicationService
     private function getLinkHtmlBladeClone($row)
     {
         return "<a href='" . route('site.applications.clone', $row->id) . "' class='m-1 col edit btn btn-sm btn-secondary'> " . __('edit') . "</a>";
+    }
+
+
+    // удаление не нужных подписантов
+    private function deleteNullSigners($data, $application, $roles)
+    {
+        $text = explode("[", $roles);
+        $text = explode("]", (string)$text[1]);
+        $text = explode(",", (string)$text[0]);
+        $application_signers = SignedDocs::where('application_id', $application->id)->get();
+        $text = array_merge($text, $data['signers']);
+        foreach ($text as $signer) {
+            $application_signers_new[] = (int)$signer;
+        }
+        foreach ($application_signers as $signer) {
+            $application_signers_old[] = (int) $signer->role_id;
+        }
+        $not_signers = array_diff($application_signers_new,$application_signers_old);
+        if(count($not_signers)>0){
+            foreach ($not_signers as $signer){
+                SignedDocs::where('application_id',$application->id)->where('role_id',$signer)->delete();
+            }
+        }
     }
 }
