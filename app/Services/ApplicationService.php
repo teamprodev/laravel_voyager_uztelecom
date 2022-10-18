@@ -531,6 +531,7 @@ class ApplicationService
     {
         $data = $request->validated();
         $roles = ($application->branch_signers->signers);
+        $this->deleteNullSigners($data, $application, $roles);
         if (isset($data['signers'])) {
             $array = $roles ? array_merge(json_decode($roles), $data['signers']) : $data['signers'];
             $data['signers'] = json_encode($array);
@@ -784,5 +785,27 @@ class ApplicationService
 
 
     // удаление не нужных подписантов
-
+    private function deleteNullSigners($data, $application, $roles)
+    {
+        $text = explode("[", $roles);
+        $text = explode("]", (string)$text[1]);
+        $text = explode(",", (string)$text[0]);
+        $application_signers = SignedDocs::where('application_id', $application->id)->get();
+        if (!isset($data['signers'])) {
+            $data['signers'] = [];
+        }
+        $text = array_merge($text, $data['signers']);
+        foreach ($text as $signer) {
+            $application_signers_new[] = (int)$signer;
+        }
+        foreach ($application_signers as $signer) {
+            $application_signers_old[] = (int)$signer->role_id;
+        }
+        $not_signers = array_diff($application_signers_new, $application_signers_old);
+        if (count($not_signers) > 0) {
+            foreach ($not_signers as $signer) {
+                SignedDocs::where('application_id', $application->id)->where('role_id', $signer)->delete();
+            }
+        }
+    }
 }
