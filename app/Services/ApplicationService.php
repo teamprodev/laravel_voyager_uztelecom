@@ -527,11 +527,12 @@ class ApplicationService
         return redirect()->back()->with('danger', trans('site.application_failed'));
     }
 
-    public function edit_update($application, $request, $user)
+        public function edit_update($application, $request, $user)
     {
         $data = $request->validated();
         $roles = ($application->branch_signers->signers);
         $this->deleteNullSigners($data, $application, $roles);
+        $data['status']=$this->selectStatusApplication($application);
         if (isset($data['signers'])) {
             $array = $roles ? array_merge(json_decode($roles), $data['signers']) : $data['signers'];
             $data['signers'] = json_encode($array);
@@ -592,7 +593,6 @@ class ApplicationService
                 $data['resource_id'] = json_encode($explode);
             }
         }
-
         $result = $application->update($data);
 
         if ($result)
@@ -807,5 +807,13 @@ class ApplicationService
                 SignedDocs::where('application_id', $application->id)->where('role_id', $signer)->delete();
             }
         }
+    }
+
+    public function selectStatusApplication($application){
+        $count_signers=SignedDocs::where('application_id',$application->id)->where('data','!=',null)->count();
+        if($count_signers===0){
+            return ApplicationStatusEnum::New;
+        }
+        return '';
     }
 }
