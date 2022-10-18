@@ -532,7 +532,7 @@ class ApplicationService
         $data = $request->validated();
         $roles = ($application->branch_signers->signers);
         $this->deleteNullSigners($data, $application, $roles);
-        $data['status']=$this->selectStatusApplication($application);
+//        $data['status']=$this->selectStatusApplication($application);
         if (isset($data['signers'])) {
             $array = $roles ? array_merge(json_decode($roles), $data['signers']) : $data['signers'];
             $data['signers'] = json_encode($array);
