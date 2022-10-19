@@ -521,7 +521,7 @@ class ApplicationService
     {
         $data = $request->validated();
         $roles = ($application->branch_signers->signers);
-//        $this->deleteNullSigners($data, $application, $roles);
+        $this->deleteNullSigners($data, $application, $roles);
 
         if (isset($data['signers'])) {
             $array = $roles ? array_merge(json_decode($roles), $data['signers']) : $data['signers'];
@@ -583,7 +583,7 @@ class ApplicationService
                 $data['resource_id'] = json_encode($explode);
             }
         }
-//        $data['status'] = $this->selectStatusApplication($application);
+        $data['status'] = $this->selectStatusApplication($application);
         $result = $application->update($data);
 
         if ($result)
@@ -765,7 +765,7 @@ class ApplicationService
     private function getLinkHtmlBladeDestroy($row)
     {
         $alert_word = __('Вы уверены?');
-        $alert = "onclick='return confirm({$alert_word})'";
+        $alert = "onclick='return confirm(`{$alert_word}`)'";
         return "<a href='" . route('site.applications.destroy', $row->id) . "' ${alert} class='m-1 col edit btn btn-sm btn-danger' > " . __('destroy') . " </a>";
     }
 
@@ -789,20 +789,23 @@ class ApplicationService
         foreach ($text as $signer) {
             $application_signers_new[] = (int)$signer;
         }
-        foreach ($application_signers as $signer) {
-            $application_signers_old[] = (int)$signer->role_id;
-        }
-        $not_signers = array_diff($application_signers_new, $application_signers_old);
-        if (count($not_signers) > 0) {
-            foreach ($not_signers as $signer) {
-                SignedDocs::where('application_id', $application->id)->where('role_id', $signer)->delete();
+        if (count($application_signers) > 0) {
+            foreach ($application_signers as $signer) {
+                $application_signers_old[] = (int)$signer->role_id;
+            }
+            $not_signers = array_diff($application_signers_new, $application_signers_old);
+            if (count($not_signers) > 0) {
+                foreach ($not_signers as $signer) {
+                    SignedDocs::where('application_id', $application->id)->where('role_id', $signer)->delete();
+                }
             }
         }
+
     }
 
     public function selectStatusApplication($application)
     {
-        $count_signers = SignedDocs::where('application_id', $application->id)->where('data', '!=', null)->where('deleted_at',null)->count();
+        $count_signers = SignedDocs::where('application_id', $application->id)->where('data', '!=', null)->where('deleted_at', null)->count();
         if ($count_signers === 0) {
             return ApplicationStatusEnum::New;
         }
