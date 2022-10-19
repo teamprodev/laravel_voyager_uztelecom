@@ -38,7 +38,7 @@ class ApplicationService
     public function index_getData($user)
     {
         if ($user->hasPermission('Purchasing_Management_Center')) {
-            $application = Applувшеication::where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null);
+            $application = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null);
         } elseif ($user->hasPermission('Company_Leader') | $user->hasPermission('Branch_Leader')) {
             $a = 'branch_initiator_id';
             $b = [$user->branch_id];
