@@ -38,7 +38,7 @@ class ApplicationService
     public function index_getData($user)
     {
         if ($user->hasPermission('Purchasing_Management_Center')) {
-            $application = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null);
+            $application = Applувшеication::where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null);
         } elseif ($user->hasPermission('Company_Leader') | $user->hasPermission('Branch_Leader')) {
             $a = 'branch_initiator_id';
             $b = [$user->branch_id];
@@ -531,7 +531,7 @@ class ApplicationService
     {
         $data = $request->validated();
         $roles = ($application->branch_signers->signers);
-        $this->deleteNullSigners($data, $application, $roles);
+//        $this->deleteNullSigners($data, $application, $roles);
 
         if (isset($data['signers'])) {
             $array = $roles ? array_merge(json_decode($roles), $data['signers']) : $data['signers'];
@@ -593,7 +593,7 @@ class ApplicationService
                 $data['resource_id'] = json_encode($explode);
             }
         }
-        $data['status'] = $this->selectStatusApplication($application);
+//        $data['status'] = $this->selectStatusApplication($application);
         $result = $application->update($data);
 
         if ($result)
