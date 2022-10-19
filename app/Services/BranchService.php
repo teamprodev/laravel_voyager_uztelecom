@@ -170,7 +170,7 @@ class BranchService
     private function getLinkHtmlBladeDestroy($row)
     {
         $alert_word = __('Вы уверены?');
-        $alert = "onclick='return confirm({$alert_word})'";
+        $alert = "onclick='return confirm(`{$alert_word}`)'";
         return "<a href='" . route('site.applications.destroy', $row->id) . "' ${alert} class='m-1 col edit btn btn-sm btn-danger' > " . __('destroy') . " </a>";
     }
 
