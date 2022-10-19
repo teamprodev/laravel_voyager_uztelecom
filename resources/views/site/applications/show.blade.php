@@ -230,23 +230,16 @@
                             <option value="{{$application->currency}}" selected>{{$application->currency}}</option></select>
                     </div>
                     <div class="mb-3 row">
-                        @if($application->with_nds == 1)
                             {{Aire::checkbox('checkbox', __('С НДС'))
-                               ->checked()
+                               ->checked($application->with_nds)
                                ->disabled()
                                ->name('with_nds')
                             }}
-                        @else
-                            {{Aire::checkbox('checkbox', __('С НДС'))
-                                ->disabled()
-                               ->name('with_nds')
-                               }}
-                        @endif
                     </div>
                         <div class="product">
                         @if(isset($application->resource_id))
                             <b>{{ __('Продукт')}}</b>:
-                            @foreach($products as $product)
+                            @foreach($products_id as $product)
                                 <br> {{$product}}
                             @endforeach
                         @endif
@@ -523,10 +516,6 @@
                 ->rows(3)
                 ->cols(40)
              }}
-            <input class="hidden"
-                   name="performer_user_id"
-                   value="{{$user->id}}"
-                   type="text">
             <div class="mt-4">
                 <button type="submit" class="btn btn-success col-md-2">{{ __('Отправить') }}</button>
             </div>

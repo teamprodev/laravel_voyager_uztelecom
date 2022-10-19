@@ -7,9 +7,9 @@
     <div class="w-full flex">
         <div class="p-6">
             <h5><strong>{{ __('Визирование заявки через :') }} </strong>
-                @if($application->is_more_than_limit == 1)
+                @if((int)$application->is_more_than_limit === 1)
                     {{__('Компанию')}}
-                @elseif($application->is_more_than_limit == '0')
+                @else
                     {{__('Филиал')}}
                 @endif
             </h5>
@@ -199,23 +199,20 @@
                         ->required()
                     }}
                 </div>
-                @if($application->with_nds == 1)
                     {{Aire::checkbox('checkbox', __('С НДС'))
-                                ->checked()
+                           ->checked($application->with_nds)
                            ->name('with_nds')
                         }}
-                @else
-                    {{Aire::checkbox('checkbox', __('С НДС'))
-                       ->name('with_nds')
-                       }}
-                @endif
             </div>
 
             @if(isset($application->resource_id))
                 <b>{{ __('Продукт')}}</b>:
-                @foreach(json_decode($application->resource_id) as $product)
-                    <br> {{\App\Models\Resource::find($product)->name}}
-                @endforeach
+                @if(isset($application->resource_id))
+                    <b>{{ __('Продукт')}}</b>:
+                    @foreach($products_id as $product)
+                        <br> {{$product}}
+                    @endforeach
+                @endif
             @endif
             <div class="mb-3 row">
                 <label for="currency" class="col-sm-6 col-form-label">{{ __('Валюта') }}</label>
@@ -224,15 +221,14 @@
                     <option value="USD" @if($application->currency === "USD") selected @endif>USD</option>
                 </select>
             </div>
-
-            @if($application->is_more_than_limit == '1')
+            @if((int)$application->is_more_than_limit === 1)
                 {{Aire::checkboxGroup($company_signers, 'radio', __('lang.signers'))
                     ->id('signers')
                     ->name('signers[]')
                     ->value(json_decode($application->signers))
                     ->multiple()
                 }}
-            @elseif($application->is_more_than_limit != '1' )
+            @elseif((int)$application->is_more_than_limit !== 1 )
                 {{Aire::checkboxGroup($branch_signers, 'radio', __('lang.signers'))
                     ->id('signers')
                     ->name('signers[]')

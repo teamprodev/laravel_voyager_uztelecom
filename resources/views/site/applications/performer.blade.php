@@ -1,4 +1,4 @@
-@if($application->performer_role_id == auth()->user()->role_id)
+@if($application->performer_role_id == $user->role_id)
     {{ Aire::open()
 
             ->route('site.applications.update',$application->id)
@@ -41,7 +41,7 @@
                     }}
                     {{Aire::checkbox('checkbox', __('С НДС'))
                        ->name('with_nds')
-                       ->value($application->with_nds)
+                       ->checked($application->with_nds)
                     }}
                     {{Aire::input('bio', __('Общая реальная сумма'))
                         ->name('contract_price')
@@ -75,7 +75,7 @@
                         <select required name="subject" id="pet-select" class="block w-full p-2 leading-normal border rounded-sm bg-white appearance-none text-gray-900">
                             <option value="">{{__('')}}</option>
                             @foreach($subject as $element)
-                            <option value="{{$element->id}}">{{$element->name}}</option>
+                            <option value="{{$element->id}}" @if($element->id === $application->type_of_purchase_id) selected @endif>{{$element->name}}</option>
                             @endforeach
                         </select>
                     </div>

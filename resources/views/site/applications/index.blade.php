@@ -1,6 +1,6 @@
 @extends('site.layouts.app')
 @section('center_content')
-    @if(auth()->user()->branch_id != null && auth()->user()->department_id != null)
+    @if($user->branch_id != null && $user->department_id != null)
         <head>
             <style>
                 .dt-buttons {
@@ -54,10 +54,10 @@
             </div>
         </div>
     @else
-        @if(auth()->user()->department_id == null)
+        @if($user->department_id == null)
             <h1 style="color: red; text-align:center;">Вы не выбрали ваш Отдел<br>Админ должен перенаправить вас в отдел
             </h1>
-        @elseif(auth()->user()->branch_id == null)
+        @elseif($user->branch_id == null)
             <h1 style="color: red; text-align:center;">Вы не выбрали ваш Филиал<br>Админ должен перенаправить вас в
                 филиал</h1>
         @endif

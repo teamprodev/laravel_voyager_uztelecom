@@ -433,11 +433,11 @@ class ApplicationService
         $other_files = json_decode($application->other_files);
         $performer_file = json_decode($application->performer_file);
         $same_role_user_ids = User::where('role_id', auth()->user()->role_id)->get()->pluck('id')->toArray();
-        $products = [];
+        $products_id = [];
         if($application->resource_id !== null)
             foreach(json_decode($application->resource_id) as $product_id)
             {
-                $products[] = Resource::find($product_id)->name;
+                $products_id[] = Resource::find($product_id)->name;
             }
         /*
          * @var id
@@ -475,7 +475,7 @@ class ApplicationService
         $perms['Signers'] = ($access && $user->hasPermission(PermissionEnum::Company_Signer || PermissionEnum::Add_Company_Signer || PermissionEnum::Branch_Signer || PermissionEnum::Add_Branch_Signer || PermissionEnum::Company_Performer || PermissionEnum::Branch_Performer)) || ($access && $user->role_id === ApplicationMagicNumber::Director && $application->show_director === ApplicationMagicNumber::one);
         $status = $application->performer_status == null ? $application->status : StatusExtended::find($application->performer_status)->name;
         $color_status = $application->performer_status == null ? setting("color.$status") : StatusExtended::find($application->performer_status)->color;
-        return ['products' => $products,'performer_file' => $performer_file, 'perms' => $perms, 'access_comment' => $access_comment, 'performers_company' => $performers_company, 'performers_branch' => $performers_branch, 'file_basis' => $file_basis, 'file_tech_spec' => $file_tech_spec, 'other_files' => $other_files, 'user' => $user, 'application' => $application, 'branch' => $branch, 'signedDocs' => $signedDocs, 'same_role_user_ids' => $same_role_user_ids, 'access' => $access, 'subjects' => $subjects, 'purchases' => $purchases, 'branch_name' => $branch_name, 'check' => $check, 'status' => $status, 'color_status' => $color_status];
+        return ['products_id' => $products_id,'performer_file' => $performer_file, 'perms' => $perms, 'access_comment' => $access_comment, 'performers_company' => $performers_company, 'performers_branch' => $performers_branch, 'file_basis' => $file_basis, 'file_tech_spec' => $file_tech_spec, 'other_files' => $other_files, 'user' => $user, 'application' => $application, 'branch' => $branch, 'signedDocs' => $signedDocs, 'same_role_user_ids' => $same_role_user_ids, 'access' => $access, 'subjects' => $subjects, 'purchases' => $purchases, 'branch_name' => $branch_name, 'check' => $check, 'status' => $status, 'color_status' => $color_status];
     }
 
     public function edit($application, $user)
@@ -488,7 +488,14 @@ class ApplicationService
         $branch_signer = json_decode($application->branch->add_signers);
         $addsigner = Branch::find(ApplicationMagicNumber::Company);
         $company_signer = json_decode($addsigner->add_signers);
+        $products_id = [];
+        if($application->resource_id !== null)
+            foreach(json_decode($application->resource_id) as $product_id)
+            {
+                $products_id[] = Resource::find($product_id)->name;
+            }
         return [
+            'products_id' => $products_id,
             'application' => $application,
             'purchase' => Purchase::all()->pluck('name', 'id'),
             'subject' => Subject::all(),

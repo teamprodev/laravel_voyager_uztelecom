@@ -66,7 +66,8 @@ class ApplicationController extends Controller
     */
     public function index()
     {
-        return view('site.applications.index');
+        $user = auth()->user();
+        return view('site.applications.index',['user' => $user]);
     }
     public function index_getData()
     {
