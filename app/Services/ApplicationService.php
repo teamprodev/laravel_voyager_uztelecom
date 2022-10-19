@@ -48,6 +48,7 @@ class ApplicationService
             $b = [$user->department_id];
             $application = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null)->whereIn($a, $b);
         }
+        $query =  $application->get();
         switch ($user->hasPermission('Purchasing_Management_Center') == false) {
             case $user->hasPermission(PermissionEnum::Warehouse) :
                 $status = ApplicationStatusEnum::Accepted;
@@ -72,9 +73,6 @@ class ApplicationService
                 break;
             case $user->hasPermission('Company_Performer') || $user->hasPermission('Branch_Performer') :
                 $query = Application::where('performer_role_id', $user->role_id)->orWhere('user_id', $user->id)->get();
-                break;
-            default :
-                $query = $application->get();
                 break;
         }
         return Datatables::of($query)
