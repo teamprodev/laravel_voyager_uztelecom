@@ -7,7 +7,7 @@
     <div class="px-6 pb-0 pt-6">
         <h5><strong>ID : </strong> {{$application->id}}</h5>
         <h5><strong>{{ __('Автор заявки:') }}</strong> <a
-                    href="{{$application->user->id === auth()->id() ? route('site.profile.index'):route('site.profile.other',$application->user->id)}}">{{$application->user->id === auth()->id() ? 'Вы':$application->user->name}}</a>
+                    href="{{$application->user->id === $user->id ? route('site.profile.index'):route('site.profile.other',$application->user->id)}}">{{$application->user->id === $user->id ? 'Вы':$application->user->name}}</a>
             ( {{ $application->user->role_id ? $application->user->role->display_name : '' }} )</h5>            <h5>
             <strong>{{ __('Филиал автора:') }}</strong> {{ $application->user->branch_id ? $branch_name->name : 'Он(а) не выбрал(а) филиал' }}
         </h5>
@@ -246,8 +246,8 @@
                         <div class="product">
                         @if(isset($application->resource_id))
                             <b>{{ __('Продукт')}}</b>:
-                            @foreach(json_decode($application->resource_id) as $product)
-                                <br> {{\App\Models\Resource::find($product)->name}}
+                            @foreach($products as $product)
+                                <br> {{$product}}
                             @endforeach
                         @endif
                     </div>
