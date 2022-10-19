@@ -37,9 +37,7 @@ class ApplicationService
      */
     public function index_getData($user)
     {
-        if ($user->hasPermission('Purchasing_Management_Center')) {
-            $application = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null);
-        } elseif ($user->hasPermission('Company_Leader') | $user->hasPermission('Branch_Leader')) {
+        if ($user->hasPermission('Company_Leader') | $user->hasPermission('Branch_Leader')) {
             $a = 'branch_initiator_id';
             $b = [$user->branch_id];
             $application = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null)->whereIn($a, $b);
@@ -48,7 +46,6 @@ class ApplicationService
             $b = [$user->department_id];
             $application = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null)->whereIn($a, $b);
         }
-        $query =  $application->get();
         switch (!$user->hasPermission('Purchasing_Management_Center')) {
             case $user->hasPermission(PermissionEnum::Warehouse) :
                 $status = ApplicationStatusEnum::Accepted;
@@ -75,6 +72,10 @@ class ApplicationService
                 $query = Application::where('performer_role_id', $user->role_id)->orWhere('user_id', $user->id)->get();
                 break;
         }
+        if ($user->hasPermission('Purchasing_Management_Center')) {
+            $query = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null)->get();
+        }
+
         return Datatables::of($query)
             ->editColumn('is_more_than_limit', function ($query) {
                 return $query->is_more_than_limit == ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
