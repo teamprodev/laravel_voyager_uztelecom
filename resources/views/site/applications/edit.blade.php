@@ -10,7 +10,7 @@
       ->enctype("multipart/form-data")
       ->post() }}
         <div class="container">
-            @if($application->is_more_than_limit == 1)
+            @if((int)$application->is_more_than_limit === 1)
                 {{ Aire::submit(__("Компания"))
                 ->variant()->green()
                 ->name('is_more_than_limit')
@@ -21,7 +21,7 @@
             ->name('is_more_than_limit')
             ->value('1') }}
             @endif
-            @if($application->is_more_than_limit == '0')
+            @if((int)$application->is_more_than_limit === 0)
                 {{ Aire::submit(__("Филиал"))
                 ->variant()->green()
                 ->name('is_more_than_limit')

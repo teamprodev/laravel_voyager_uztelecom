@@ -19,6 +19,7 @@ class ApplicationMagicNumber
     public const Branch_Signer = 168;
     public const Company_Signer = 165;
     public const Branch_Performer = 172;
+
     public const zero = 0;
     public const one = 1;
     public const two = 2;
