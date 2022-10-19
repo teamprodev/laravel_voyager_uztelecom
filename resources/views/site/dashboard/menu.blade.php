@@ -27,7 +27,7 @@
                         <p>{{ __('Статусы') }}</p>
                     </div>
                     <div class="d-flex align-items-start flex-column">
-                        @if(auth()->user()->role_id != 7)
+                        @if(auth()->user()->role_id != \App\Enums\ApplicationMagicNumber::Director)
                         <a href="{{route('site.applications.show_status', 'new')}}" id="demo" class="collapse">
                               <i class="nav-icon fas fa-chevron-right"></i>
                               <p>{{ __('new') }}</p>
