@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Models\Role;
 
+/**
+ * @method static where(string $string, $role_id)
+ * @property mixed role_id
+ * @property mixed role_index
+ * @property mixed application_id
+ * @property mixed table_name
+ */
 class SignedDocs extends Model
 {
     use HasFactory;

@@ -14,6 +14,7 @@ use App\Models\Position;
 
 /**
  * @property $branch_id
+ * @method static where(string $string, $role_id)
  */
 class User extends \TCG\Voyager\Models\User
 {

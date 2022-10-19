@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Auth;
 
 /**
  * @property $id
+ * @property mixed user_id
+ * @property mixed branch_initiator_id
+ * @property mixed branch_id
+ * @property mixed department_initiator_id
+ * @property mixed|string status
+ * @method static where(string $string, string $string1)
+ * @method static findOrFail($id)
+ * @method static find($signedDocs)
  */
 class Application extends Model
 {

@@ -9,7 +9,7 @@
             </a>
         </li>
         @if(auth()->user()->branch_id != null && auth()->user()->department_id != null)
-        @if(auth()->user()->hasPermission('select_branch'))
+        @if(auth()->user()->hasPermission(\App\Enums\PermissionEnum::Select_Branch))
         <li class="nav-item">
             <a href="{{route('branches.view')}}" class="nav-link">
                 <i class="nav-icon fas fa-th-list"></i>

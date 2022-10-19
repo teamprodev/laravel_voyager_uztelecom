@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use TCG\Voyager\Models\Role;
 
+/**
+ * @method static where(string $string, mixed $role)
+ */
 class PermissionRole extends Model
 {
     use HasFactory;
