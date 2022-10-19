@@ -225,7 +225,21 @@
                         <select class="form-control col-sm-6" name="currency" id="currency" disabled>
                             <option value="{{$application->currency}}" selected>{{$application->currency}}</option></select>
                     </div>
-                    <div class="product">
+                    <div class="mb-3 row">
+                        @if($application->with_nds == 1)
+                            {{Aire::checkbox('checkbox', __('С НДС'))
+                               ->checked()
+                               ->disabled()
+                               ->name('with_nds')
+                            }}
+                        @else
+                            {{Aire::checkbox('checkbox', __('С НДС'))
+                                ->disabled()
+                               ->name('with_nds')
+                               }}
+                        @endif
+                    </div>
+                        <div class="product">
                         @if(isset($application->resource_id))
                             <b>{{ __('Продукт')}}</b>:
                             @foreach(json_decode($application->resource_id) as $product)
