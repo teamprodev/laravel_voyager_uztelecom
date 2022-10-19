@@ -37,7 +37,8 @@
                         <label class="col-sm-6" for="initiator"
                                class="col-sm-2 col-form-label">{{ __('Инициатор (наименование подразделения заказчика)') }}</label>
                         <div class="col-sm-6">
-                            {{Aire::input()
+                            {{Aire::textArea()
+                                ->rows(3)
                                 ->name("initiator")
                                 ->value($application->initiator)
                                 ->class("form-control")
@@ -80,7 +81,8 @@
                         <label class="col-sm-6" for="name"
                                class="col-sm-2 col-form-label">{{ __('Наименование предмета закупки(товар, работа, услуги)') }}</label>
                         <div class="col-sm-6">
-                            {{Aire::input()
+                            {{Aire::textArea()
+                                ->rows(3)
                                 ->name("name")
                                 ->value($application->name)
                                 ->class("form-control")
@@ -156,7 +158,8 @@
                         <label class="col-sm-6" for="planned_price"
                                class="col-sm-2 col-form-label">{{ __('Планируемый бюджет закупки (сумма)') }}</label>
                         <div class="col-sm-6">
-                            {{Aire::input()
+                            {{Aire::textArea()
+                                ->rows(3)
                                 ->name("planned_price")
                                 ->id("planned_price")
                                 ->value(number_format($application->planned_price , 0 , '' , ' '))
@@ -197,7 +200,8 @@
                         <label class="col-sm-6" for="info_business_plan"
                                class="col-sm-2 col-form-label">{{ __('Статья расходов по Бизнес плану') }}</label>
                         <div class="col-sm-6">
-                            {{Aire::input()
+                            {{Aire::textArea()
+                                ->rows(3)
                                 ->name("info_business_plan")
                                 ->value($application->info_business_plan)
                                 ->class("form-control")->disabled()
@@ -256,7 +260,8 @@
                             <div class="mb-3 row">
                                 <label class="col-sm-6" for="info_business_plan" class="col-sm-2 col-form-label">show_leader</label>
                                 <div class="col-sm-6">
-                                    {{Aire::input()
+                                    {{Aire::textArea()
+                                        ->rows(3)
                                         ->name("info_business_plan")
                                         ->value($application->show_leader)
                                         ->class("form-control")->disabled()
