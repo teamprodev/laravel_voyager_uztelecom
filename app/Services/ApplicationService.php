@@ -49,7 +49,7 @@ class ApplicationService
             $application = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null)->whereIn($a, $b);
         }
         $query =  $application->get();
-        switch ($user->hasPermission('Purchasing_Management_Center') == false) {
+        switch (!$user->hasPermission('Purchasing_Management_Center')) {
             case $user->hasPermission(PermissionEnum::Warehouse) :
                 $status = ApplicationStatusEnum::Accepted;
                 $query = $application->where('status', 'like', "%{$status}%")->orWhere('user_id', $user->id)->get();
