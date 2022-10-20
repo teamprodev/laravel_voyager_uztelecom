@@ -67,7 +67,7 @@ class ApplicationService
                 $query = $application->where('status', ApplicationStatusEnum::Agreed)->orWhere('status', ApplicationStatusEnum::Distributed)->orWhere('user_id', $user->id)->get();
                 break;
             case $user->hasPermission(PermissionEnum::Branch_Leader) :
-                $query = $application->where('is_more_than_limit', ApplicationMagicNumber::zero)->where('show_leader', ApplicationMagicNumber::one)->orWhere('is_more_than_limit', ApplicationMagicNumber::zero)->where('status', ApplicationStatusEnum::New)->orWhere('is_more_than_limit', ApplicationMagicNumber::zero)->where('status', ApplicationStatusEnum::Distributed)->orWhere('user_id', $user->id)->get();
+                $query = $application->where('show_leader', ApplicationMagicNumber::one)->orWhere('status', ApplicationStatusEnum::Distributed)->orWhere('user_id', $user->id)->get();
                 break;
             case $user->hasPermission(PermissionEnum::Company_Performer) || $user->hasPermission(PermissionEnum::Branch_Performer) :
                 $query = Application::where('performer_role_id', $user->role_id)->orWhere('user_id', $user->id)->get();
