@@ -68,66 +68,6 @@ class Application extends Model
     {
         return $this->hasMany(Notification::class);
     }
-
-    public function scopeCurrentUser($query)
-    {
-
-        $user = Auth::user();
-        switch ($user->id) {
-            case 2:
-                {
-                    return $query->where('status', "На согласование")->orWhere('status', "В исплонении")->orWhere('status', "Исполнено");
-                }
-                break;
-            case 3:
-                {
-                    return $query->where('user_id', Auth::user()->id);
-                }
-                break;
-            case 9:
-                {
-                    return $query->where('status', "В исплонении");
-                }
-                break;
-
-        }
-
-    }
-
-    public function scopeSteps($query)
-    {
-        $user = auth()->user();
-        switch ($user->role_id) {
-            // APPLICATION CREATOR
-            case 1:
-                {
-                    $result = $query->where('user_id', auth()->id());
-                }
-                break;
-            case 5:
-                {
-                    $result = $query->where('status', ApplicationStatusEnum::Accepted);
-                }
-                break;
-            //HEAD OF DEPARTMENT of user who created APPLICATION
-            case -8:
-                {
-                    // Get all workers id of his department as array
-                    $user_list = User::where('department_id', $user->department_id)->pluck('id')->toArray();
-                    $result = $query->whereIn('user_id', $user_list);
-                }
-                break;
-
-            default:
-                {
-                    $result = Application::all();
-                }
-                break;
-        }
-        return $result;
-
-    }
-
     public function country()
     {
         return $this->belongsTo(Country::class, 'country_produced_id', 'country_alpha3_code');

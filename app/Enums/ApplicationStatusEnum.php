@@ -18,7 +18,7 @@ class ApplicationStatusEnum
     public const In_Process = 'in_process';
     public const Extended = 'extended';
     public const Overdue = 'overdue';
-    public const Accepted = 'accepted';
+    public const Accepted = 'Принята';
     public const Refused = 'refused';
     public const Agreed = 'agreed';
     public const Rejected = 'rejected';

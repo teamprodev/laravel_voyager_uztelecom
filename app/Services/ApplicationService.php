@@ -368,7 +368,7 @@ class ApplicationService
                 $data['edit'] = route('site.applications.edit', $row->id);
                 $data['show'] = route('site.applications.show', $row->id);
                 $data['destroy'] = route('site.applications.destroy', $row->id);
-                if ($row->status === ApplicationStatusEnum::Accepted || $row->status === ApplicationStatusEnum::Refused) {
+                if ($row->status === ApplicationStatusEnum::Refused) {
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
 
