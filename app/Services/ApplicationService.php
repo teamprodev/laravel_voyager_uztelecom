@@ -63,13 +63,12 @@ class ApplicationService
                     ->where('name', '!=', null)
                     ->get();
                 break;
+            case $user->hasPermission(PermissionEnum::Branch_Leader):
             case $user->hasPermission(PermissionEnum::Company_Leader) :
-                $query = $application->where('status', ApplicationStatusEnum::Agreed)->orWhere('status', ApplicationStatusEnum::Distributed)->orWhere('user_id', $user->id)->get();
+                $query = $application->where('show_leader', ApplicationMagicNumber::one)->OrWhere('status', ApplicationStatusEnum::Distributed)->orWhere('user_id', $user->id)->get();
                 break;
-            case $user->hasPermission(PermissionEnum::Branch_Leader) :
-                $query = $application->where('show_leader', ApplicationMagicNumber::one)->orWhere('status', ApplicationStatusEnum::Distributed)->orWhere('user_id', $user->id)->get();
-                break;
-            case $user->hasPermission(PermissionEnum::Company_Performer) || $user->hasPermission(PermissionEnum::Branch_Performer) :
+            case $user->hasPermission(PermissionEnum::Branch_Performer) :
+            case $user->hasPermission(PermissionEnum::Company_Performer) :
                 $query = Application::where('performer_role_id', $user->role_id)->orWhere('user_id', $user->id)->get();
                 break;
             default :
