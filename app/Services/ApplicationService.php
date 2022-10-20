@@ -721,9 +721,7 @@ class ApplicationService
         if ($application->performer_role_id == $user->role_id) {
             $component[] = "site.applications.performer";
         }
-        if (($user->hasPermission(PermissionEnum::Warehouse) && $application->status == ApplicationStatusEnum::Accepted) ||
-            ($user->hasPermission(PermissionEnum::Warehouse) && $application->status == ApplicationStatusEnum::Order_Delivered) ||
-            ($user->hasPermission(PermissionEnum::Warehouse) && $application->status == ApplicationStatusEnum::Order_Arrived)) {
+        if ($user->hasPermission(PermissionEnum::Warehouse) && $application->show_leader == ApplicationMagicNumber::two) {
             $component[] = "site.applications.warehouse";
         }
         return $component;
