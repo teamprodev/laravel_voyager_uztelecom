@@ -13,7 +13,7 @@
         </h5>
         <h5><strong>Должность :</strong> {{ $user->position_id ? $user->position->name:"Нет" }}</h5>
         <h5><strong>{{ __('Номер заявки') }} : </strong> {{$application->number}} </h5>
-        <h5><strong>Date : </strong>
+        <h5><strong>{{ __('Дата заявки') }} : </strong>
             @if($application->date!==null)
                 {{ Carbon\Carbon::createFromFormat('Y-m-d', $application->date)->Format('d.m.Y') }}{{ __('г') }}
             @endif
