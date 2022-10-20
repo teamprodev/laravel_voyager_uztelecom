@@ -488,7 +488,8 @@ class ApplicationService
             default => $application->status
         };
         $color_status_if = ($application->performer_status !== null && $application->status !== ApplicationStatusEnum::Order_Arrived)||$application->performer_status !== null && $application->status !== ApplicationStatusEnum::Order_Delivered;
-        $color_status = $color_status_if  ? setting("color.$status") : StatusExtended::find($application->performer_status)->color;
+        $color_status_check = setting("color.$status") ? : null;
+        $color_status = $color_status_if  ? $color_status_check : StatusExtended::find($application->performer_status)->color;
         return ['products_id' => $products_id,'performer_file' => $performer_file, 'perms' => $perms, 'access_comment' => $access_comment, 'performers_company' => $performers_company, 'performers_branch' => $performers_branch, 'file_basis' => $file_basis, 'file_tech_spec' => $file_tech_spec, 'other_files' => $other_files, 'user' => $user, 'application' => $application, 'branch' => $branch, 'signedDocs' => $signedDocs, 'same_role_user_ids' => $same_role_user_ids, 'access' => $access, 'subjects' => $subjects, 'purchases' => $purchases, 'branch_name' => $branch_name, 'check' => $check, 'status' => $status, 'color_status' => $color_status];
     }
 
