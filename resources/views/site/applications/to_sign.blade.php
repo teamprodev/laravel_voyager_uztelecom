@@ -11,6 +11,7 @@
                 <tr>
                     <th>ID</th>
                     <th>{{ __('Статус заявки') }}</th>
+                    <th>{{__('Номер заявки:') }}</th>
                     <th>{{__('Визирование заявки через:') }}</th>
                     <th>{{ __('Дата заявки')}}</th>
                     <th>{{ __('Инициатор (наименование подразделения заказчика)') }}</th>
@@ -51,8 +52,8 @@
                                 return `<button style='background-color: ${details};color:${color};' class='btn-sm'>` + app + `</button>`;
                             }
                         },
-                        // {data: 'is_more_than_limit', name: 'is_more_than_limit'},
                         {data: 'number', name: 'number'},
+                        {data: 'is_more_than_limit', name: 'is_more_than_limit'},
                         {data: 'date', name: 'date'},
                         {data: 'initiator', name: 'initiator'},
                         {data: 'branch_initiator_id', name: 'branch_initiator_id'},
