@@ -1,6 +1,6 @@
 {{ Aire::open()
 
-        ->route('site.applications.update',$application->id)
+        ->route('site.applications.edit_update',$application->id)
         ->enctype("multipart/form-data")
         ->post() }}
 <div class="mt-6">

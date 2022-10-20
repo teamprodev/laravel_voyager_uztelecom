@@ -465,9 +465,9 @@ class ApplicationService
         $purchases = Purchase::all();
         $branch_name = Branch::find($application->user->branch_id);
         $branch = Branch::all()->pluck('name', 'id');
-        $perms['CompanyLeader'] = $user->hasPermission(PermissionEnum::Company_Leader) && $application->show_leader === ApplicationMagicNumber::one;
-        $perms['BranchLeader'] = $user->hasPermission(PermissionEnum::Branch_Leader) && $application->show_leader === ApplicationMagicNumber::one;
-        $perms['PerformerComment'] = $application->performer_role_id === $user->role_id && $user->leader === ApplicationMagicNumber::zero;
+        $perms['CompanyLeader'] = $user->hasPermission(PermissionEnum::Company_Leader) && (int)$application->show_leader === ApplicationMagicNumber::one;
+        $perms['BranchLeader'] = $user->hasPermission(PermissionEnum::Branch_Leader) && (int)$application->show_leader === ApplicationMagicNumber::one;
+        $perms['PerformerComment'] = $application->performer_role_id === $user->role_id && (int)$user->leader === ApplicationMagicNumber::zero;
         $perms['NumberChange'] = $user->hasPermission(PermissionEnum::Number_Change) && !$user->hasPermission(PermissionEnum::Plan_Budget) && !$user->hasPermission(PermissionEnum::Plan_Business);
         $perms['Plan'] = $user->hasPermission(PermissionEnum::Plan_Business) && $check;
         $perms['PerformerLeader'] = $application->performer_role_id === $user->role_id && $user->leader === ApplicationMagicNumber::one;
@@ -721,7 +721,9 @@ class ApplicationService
         if ($application->performer_role_id == $user->role_id) {
             $component[] = "site.applications.performer";
         }
-        if ($user->hasPermission(PermissionEnum::Warehouse) && $application->show_leader == ApplicationMagicNumber::two) {
+        if (($user->hasPermission(PermissionEnum::Warehouse) && $application->show_leader == ApplicationMagicNumber::two) ||
+            ($user->hasPermission(PermissionEnum::Warehouse) && $application->status == ApplicationStatusEnum::Order_Delivered) ||
+            ($user->hasPermission(PermissionEnum::Warehouse) && $application->status == ApplicationStatusEnum::Order_Arrived)) {
             $component[] = "site.applications.warehouse";
         }
         return $component;
