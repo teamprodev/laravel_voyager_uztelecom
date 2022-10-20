@@ -107,16 +107,15 @@ class ApplicationService
                 /*
                  *  Voyager admin paneldan status ranglarini olish va chiqarish
                  */
-                $status = $query->status;
-                $color = setting("color.$status");
-                if(($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Arrived)||$query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Delivered) {
-                    $a = StatusExtended::find($query->performer_status);
-                    $status = $a->name;
-                    $color = $a->color;
-                }elseif($query->status === ApplicationStatusEnum::Order_Arrived||$query->status === ApplicationStatusEnum::Order_Delivered)
-                {
-                    $status = $query->status === ApplicationStatusEnum::Order_Arrived ? :ApplicationStatusEnum::Order_Delivered;
-                }
+                $status = match (true){
+                    $query->status === ApplicationStatusEnum::Order_Arrived => 'товар прибыл',
+                    $query->status === ApplicationStatusEnum::Order_Delivered => 'товар доставлен',
+                    $query->performer_status !== null => StatusExtended::find($query->performer_status)->name,
+                    default => $query->status
+                };
+                $color_status_if = ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Arrived) || ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Delivered);
+                $color = $color_status_if  ? StatusExtended::find($query->performer_status)->color : setting("color.$status");
+
                 return json_encode(['backgroundColor' => $color, 'app' => $this->translateStatus($status), 'color' => $color ? 'white' : 'black']);
             })
             ->addIndexColumn()
@@ -184,16 +183,15 @@ class ApplicationService
                 return "$planned_price  $query->currency";
             })
             ->editColumn('status', function ($query) {
-                $status = $query->status;
-                $color = setting("color.$status");
-                if(($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Arrived)||$query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Delivered) {
-                    $a = StatusExtended::find($query->performer_status);
-                    $status = $a->name;
-                    $color = $a->color;
-                }elseif($query->status === ApplicationStatusEnum::Order_Arrived||$query->status === ApplicationStatusEnum::Order_Delivered)
-                {
-                    $status = $query->status === ApplicationStatusEnum::Order_Arrived ? :ApplicationStatusEnum::Order_Delivered;
-                }
+                $status = match (true){
+                    $query->status === ApplicationStatusEnum::Order_Arrived => 'товар прибыл',
+                    $query->status === ApplicationStatusEnum::Order_Delivered => 'товар доставлен',
+                    $query->performer_status !== null => StatusExtended::find($query->performer_status)->name,
+                    default => $query->status
+                };
+                $color_status_if = ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Arrived) || ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Delivered);
+                $color = $color_status_if  ? StatusExtended::find($query->performer_status)->color : setting("color.$status");
+
                 return json_encode(['backgroundColor' => $color, 'app' => $this->translateStatus($status), 'color' => $color ? 'white' : 'black']);
             })
             ->addIndexColumn()
@@ -261,16 +259,15 @@ class ApplicationService
                 return "$planned_price  $query->currency";
             })
             ->editColumn('status', function ($query) {
-                $status = $query->status;
-                $color = setting("color.$status");
-                if(($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Arrived)||$query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Delivered) {
-                    $a = StatusExtended::find($query->performer_status);
-                    $status = $a->name;
-                    $color = $a->color;
-                }elseif($query->status === ApplicationStatusEnum::Order_Arrived||$query->status === ApplicationStatusEnum::Order_Delivered)
-                {
-                    $status = $query->status === ApplicationStatusEnum::Order_Arrived ? :ApplicationStatusEnum::Order_Delivered;
-                }
+                $status = match (true){
+                    $query->status === ApplicationStatusEnum::Order_Arrived => 'товар прибыл',
+                    $query->status === ApplicationStatusEnum::Order_Delivered => 'товар доставлен',
+                    $query->performer_status !== null => StatusExtended::find($query->performer_status)->name,
+                    default => $query->status
+                };
+                $color_status_if = ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Arrived) || ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Delivered);
+                $color = $color_status_if  ? StatusExtended::find($query->performer_status)->color : setting("color.$status");
+
                 return json_encode(['backgroundColor' => $color, 'app' => $this->translateStatus($status), 'color' => $color ? 'white' : 'black']);
             })
             ->addIndexColumn()
@@ -695,16 +692,15 @@ class ApplicationService
                      *  Voyager admin paneldan status ranglarini olish va chiqarish
                      */
 
-                $status = $query->status;
-                $color = setting("color.$status");
-                if(($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Arrived)||$query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Delivered) {
-                    $a = StatusExtended::find($query->performer_status);
-                    $status = $a->name;
-                    $color = $a->color;
-                }elseif($query->status === ApplicationStatusEnum::Order_Arrived||$query->status === ApplicationStatusEnum::Order_Delivered)
-                {
-                    $status = $query->status === ApplicationStatusEnum::Order_Arrived ? :ApplicationStatusEnum::Order_Delivered;
-                }
+                $status = match (true){
+                    $query->status === ApplicationStatusEnum::Order_Arrived => 'товар прибыл',
+                    $query->status === ApplicationStatusEnum::Order_Delivered => 'товар доставлен',
+                    $query->performer_status !== null => StatusExtended::find($query->performer_status)->name,
+                    default => $query->status
+                };
+                $color_status_if = ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Arrived) || ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Delivered);
+                $color = $color_status_if  ? StatusExtended::find($query->performer_status)->color : setting("color.$status");
+
                 return json_encode(['backgroundColor' => $color, 'app' => $this->translateStatus($status), 'color' => $color ? 'white' : 'black']);
             })
             ->addIndexColumn()
