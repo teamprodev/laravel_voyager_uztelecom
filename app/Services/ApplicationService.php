@@ -55,7 +55,7 @@ class ApplicationService
                 $query = $application->orWhere('user_id', $user->id)->get();
                 break;
             case $user->hasPermission(PermissionEnum::Company_Signer) || $user->hasPermission(PermissionEnum::Add_Company_Signer) || $user->hasPermission(PermissionEnum::Branch_Signer) || $user->hasPermission(PermissionEnum::Add_Branch_Signer):
-                $query = Application::query()->where('branch_id', $user->branch_id)
+                $query = Application::query()
                     ->where('signers', 'like', "%$user->role_id%")
                     ->orWhere('performer_role_id', $user->role->id)
                     ->orWhere('user_id', $user->id)
