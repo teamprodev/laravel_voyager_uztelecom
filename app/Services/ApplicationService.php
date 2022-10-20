@@ -48,8 +48,7 @@ class ApplicationService
         $application = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null)->whereIn($a, $b);
         switch (!$user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
             case $user->hasPermission(PermissionEnum::Warehouse) :
-                $status = ApplicationStatusEnum::Accepted;
-                $query = $application->where('status', 'like', "%$status%")->orWhere('user_id', $user->id)->get();
+                $query = $application->where('show_leader', ApplicationMagicNumber::two)->orWhere('user_id', $user->id)->get();
                 break;
             case $user->hasPermission(PermissionEnum::Company_Leader) && $user->hasPermission(PermissionEnum::Branch_Leader) :
                 $query = $application->orWhere('user_id', $user->id)->get();
