@@ -1,5 +1,4 @@
 {{ Aire::open()
-
         ->route('site.applications.update',$application->id)
         ->enctype("multipart/form-data")
         ->post() }}
