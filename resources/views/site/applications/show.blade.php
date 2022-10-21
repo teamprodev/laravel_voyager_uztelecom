@@ -7,18 +7,21 @@
     <div class="px-6 pb-0 pt-6">
         <h5><strong>ID : </strong> {{$application->id}}</h5>
         <h5><strong>{{ __('Автор заявки:') }}</strong> <a
-                    href="{{$application->user->id === $user->id ? route('site.profile.index'):route('site.profile.other',$application->user->id)}}">{{$application->user->id === $user->id ? 'Вы':$application->user->name}}</a>
+                href="{{$application->user->id === $user->id ? route('site.profile.index'):route('site.profile.other',$application->user->id)}}">{{$application->user->id === $user->id ? 'Вы':$application->user->name}}</a>
             ( {{ $application->user->role_id ? $application->user->role->display_name : '' }} )</h5>            <h5>
             <strong>{{ __('Филиал автора:') }}</strong> {{ $application->user->branch_id ? $branch_name->name : 'Он(а) не выбрал(а) филиал' }}
         </h5>
-        <h5><strong>Должность :</strong> {{ $user->position_id ? $user->position->name:"Нет" }}</h5>
+        <h5><strong>{{ __('Должность') }} :</strong> {{ $user->position_id ? $user->position->name:"Нет" }}</h5>
         <h5><strong>{{ __('Номер заявки') }} : </strong> {{$application->number}} </h5>
-        <h5><strong>Date : </strong>
+        <h5><strong>{{ __('Дата заявки') }} : </strong>
             @if($application->date!==null)
                 {{ Carbon\Carbon::createFromFormat('Y-m-d', $application->date)->Format('d.m.Y') }}{{ __('г') }}
             @endif
         </h5> <br>
-        <h5><strong>{{ __('Статус') }} : <div style='background-color: {{$color_status}};color: {{$color_status ? 'white' : 'black'}};' class='btn btn-sm'>{{__($status)}}</div></strong>
+        <h5><strong>{{ __('Статус') }} :
+                <div style='background-color: {{$color_status}};color: {{$color_status ? 'white' : 'black'}};'
+                     class='btn btn-sm'>{{__($status)}}</div>
+            </strong>
         </h5>
         <h5><strong>{{__('Визирование заявки через:') }}</strong>
             @if($application->is_more_than_limit === 1)
@@ -227,16 +230,17 @@
                     <div class="mb-3 row">
                         <label for="currency" class="col-sm-6 col-form-label">{{ __('Валюта') }}</label>
                         <select class="form-control col-sm-6" name="currency" id="currency" disabled>
-                            <option value="{{$application->currency}}" selected>{{$application->currency}}</option></select>
+                            <option value="{{$application->currency}}" selected>{{$application->currency}}</option>
+                        </select>
                     </div>
                     <div class="mb-3 row">
-                            {{Aire::checkbox('checkbox', __('С НДС'))
-                               ->checked($application->with_nds)
-                               ->disabled()
-                               ->name('with_nds')
-                            }}
+                        {{Aire::checkbox('checkbox', __('С НДС'))
+                           ->checked($application->with_nds)
+                           ->disabled()
+                           ->name('with_nds')
+                        }}
                     </div>
-                        <div class="product">
+                    <div class="product">
                         @if(isset($application->resource_id))
                             <b>{{ __('Продукт')}}</b>:
                             @foreach($products_id as $product)
@@ -669,23 +673,23 @@
                     @if($performer_file !== 'null' && $performer_file !== null && $performer_file !== [])
                         <h5 class="text-left">{{ __('Файл исполнителя') }}</h5>
                         <form action="/delete_file/{{$application->id}}/performer_file" method="post">
-                        @csrf
-                        @foreach($performer_file as $file)
-                            <input type="text" class="hidden" value="{{$file}}" name="file">
-                            @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
-                                <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
-                            @else
-                                <button type="button" class="btn btn-primary"><a style="color: white;"
-                                                                                 href="/storage/uploads/{{$file}}"
-                                                                                 target="_blank">{{preg_replace('/[0-9]+_/', '', $file)}}</a>
-                                </button>
-                                @if($application->performer_role_id == $user->role_id)
-                                    <button style="text-align: center"
-                                            class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
+                            @csrf
+                            @foreach($performer_file as $file)
+                                <input type="text" class="hidden" value="{{$file}}" name="file">
+                                @if(\Illuminate\Support\Str::contains($file,'jpg')||\Illuminate\Support\Str::contains($file,'png')||\Illuminate\Support\Str::contains($file,'svg'))
+                                    <img src="/storage/uploads/{{$file}}" width="500" height="500" alt="not found">
+                                @else
+                                    <button type="button" class="btn btn-primary"><a style="color: white;"
+                                                                                     href="/storage/uploads/{{$file}}"
+                                                                                     target="_blank">{{preg_replace('/[0-9]+_/', '', $file)}}</a>
+                                    </button>
+                                    @if($application->performer_role_id == $user->role_id)
+                                        <button style="text-align: center"
+                                                class='mbtn btn-sm btn-danger'>{{__('Удалить')}}</button>
+                                    @endif
+                                    <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
                                 @endif
-                                <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
-                            @endif
-                        @endforeach
+                            @endforeach
                         </form>
                     @endif
                 </div>

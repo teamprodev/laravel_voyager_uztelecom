@@ -249,5 +249,7 @@
     "not_filled": "Not filled",
     "Заявки": "Applications",
     "Распределить": "Distribute",
-    "Выберите предмет закупки": "Please choose subject "
+    "Выберите предмет закупки": "Please choose subject ",
+    "Должность": "Position",
+    "Записей": "entries"
 }
