@@ -834,4 +834,14 @@ class ApplicationService
         }
         return $application->status;
     }
+    public function restore_signers()
+    {
+        $applications = Application::where('signers',null)->get();
+        foreach($applications as $application)
+        {
+            $roles = SignedDocs::where('application_id',$application->id)->pluck('role_id')->toArray();
+            $application->signers = json_encode($roles);
+            $application->save();
+        }
+    }
 }
