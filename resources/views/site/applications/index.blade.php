@@ -84,7 +84,7 @@
                     order: [[0, "desc"]],
                     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "{{ __('Все') }}"]],
                     "language": {
-                        "lengthMenu": "Показать _MENU_ записей",
+                        "lengthMenu": "{{ __('show') }} _MENU_ {{ __('Записей') }}",
                         "info": 'Показаны записи в диапазоне от _START_ до _END_ (В общем _TOTAL_)',
                         "search": "{{ __('Поиск') }}",
                         "paginate": {
