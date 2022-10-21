@@ -97,7 +97,7 @@ class ApplicationService
                 return $query->date ? with(new Carbon($query->date))->format('d.m.Y') : '';
             })
             ->editColumn('delivery_date', function ($query) {
-                return $query->updated_at ? with(new Carbon($query->delivery_date))->format('d.m.Y') : '';
+                return $query->delivery_date ? with(new Carbon($query->delivery_date))->format('d.m.Y') : '';
             })
             ->addColumn('planned_price_curr', function ($query) {
                 $planned_price = $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';

@@ -13,6 +13,8 @@
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method void pause()
+ * @method amOnPage(string $string)
+ * @method click(string $string)
  *
  * @SuppressWarnings(PHPMD)
 */

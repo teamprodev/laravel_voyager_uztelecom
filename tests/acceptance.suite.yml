@@ -8,6 +8,6 @@ actor: AcceptanceTester
 modules:
     enabled:
         - PhpBrowser:
-            url: http://bidding.uztelecom.test/
+            url: http://bidding.uztelecom.uz/
         - \Helper\Acceptance
 step_decorators: ~
