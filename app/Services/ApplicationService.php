@@ -38,7 +38,7 @@ class ApplicationService
      */
     public function index_getData($user)
     {
-        if ($user->hasPermission(PermissionEnum::Company_Leader) | $user->hasPermission(PermissionEnum::Branch_Leader)) {
+        if ($user->hasPermission(PermissionEnum::Company_Leader) || $user->hasPermission(PermissionEnum::Branch_Leader)) {
             $a = 'branch_initiator_id';
             $b = [$user->branch_id];
         } else {
@@ -149,9 +149,9 @@ class ApplicationService
     public function status_table($user)
     {
         if ($user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
-            $application = Application::where('branch_initiator_id', '!=', null)->where('name', '!=', null);
+            $application = Application::where('name', '!=', null);
         } else {
-            $application = Application::where('branch_initiator_id', $user->branch_id)->where('name', '!=', null);
+            $application = Application::where('branch_id', $user->branch_id)->where('name', '!=', null);
         }
         $status = setting('admin.show_status');
         $data = $application->where('status', $status)->get();
@@ -225,9 +225,9 @@ class ApplicationService
     public function performer_status($user)
     {
         if ($user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
-            $application = Application::Where('branch_initiator_id', '!=', null)->where('name', '!=', null);
+            $application = Application::where('name', '!=', null);
         } else {
-            $application = Application::where('branch_initiator_id', $user->branch_id)->where('name', '!=', null);
+            $application = Application::where('branch_id', $user->branch_id)->where('name', '!=', null);
         }
         $status = Cache::get('performer_status_get');
         $data = $application->where('performer_status', $status)->get();
