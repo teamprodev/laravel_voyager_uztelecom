@@ -830,8 +830,9 @@ class ApplicationService
     public function selectStatusApplication($application, $data)
     {
         $count_signers = SignedDocs::where('application_id', $application->id)->where('data', '!=', null)->where('deleted_at', null)->count();
-        if ($data['status'] === ApplicationStatusEnum::Draft) {
-            return $data['status'];
+//        dd($application,$data);
+        if ($data['draft'] === "1") {
+            return ApplicationStatusEnum::Draft;
         }
         if ($count_signers === 0) {
             return ApplicationStatusEnum::New;
