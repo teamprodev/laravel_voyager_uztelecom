@@ -63,16 +63,6 @@ class ApplicationCest
         ], "//form[@data-aire-component='form']//button[@value=0]");
     }
 
-    public function clone(AcceptanceTester $I)
-    {
-        $I->am('admin');
-        $I->amOnPage('/admin/login');
-        $I->fillField('email', 'aziz@gmail.com');
-        $I->fillField('password', 'password');
-        $I->click('Войти');
-
-    }
-
     public function getData(AcceptanceTester $I)
     {
         $I->amOnPage('/admin/login');
