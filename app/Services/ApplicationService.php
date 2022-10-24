@@ -560,7 +560,6 @@ class ApplicationService
         $data = $request->validated();
         $roles = ($application->branch_signers->signers);
         $this->deleteNullSigners($data, $application, $roles);
-
         if (isset($data['signers'])) {
             $array = $roles ? array_merge(json_decode($roles), $data['signers']) : $data['signers'];
             $data['signers'] = json_encode($array);
@@ -833,12 +832,11 @@ class ApplicationService
         $count_signers = SignedDocs::where('application_id', $application->id)->where('data', '!=', null)->where('deleted_at', null)->count();
         if ($data['status'] === ApplicationStatusEnum::Draft) {
             return $data['status'];
-        } else {
-            if ($count_signers === 0) {
-                return ApplicationStatusEnum::New;
-            }
-            return $application->status;
         }
+        if ($count_signers === 0) {
+            return ApplicationStatusEnum::New;
+        }
+        return $application->status;
     }
 
     public function restore_signers()

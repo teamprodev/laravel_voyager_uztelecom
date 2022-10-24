@@ -33,8 +33,9 @@ class ApplicationCest
             'info_purchase_plan' => 'TEST!!! Планом закупок предусмотрено',
             'comment' => 'java adsada',
             'resource_id' => 22,
-            'currency' => 'USD'
-        ], 'draft');
+            'currency' => 'USD',
+            'draft'=> 1,
+        ], "//form[@data-aire-component='form']//button[@value=1]");
         $this->id = (int)$this->grabFromUrlIdApplication($I->grabFromCurrentUrl());
     }
 
@@ -59,17 +60,9 @@ class ApplicationCest
             'info_purchase_plan' => 'TEST!!! Планом закупок предусмотрено',
             'comment' => 'java adsada',
             'resource_id' => 32,
-            'currency' => 'USD'
+            'currency' => 'USD',
+            'draft'=>0,
         ], "//form[@data-aire-component='form']//button[@value=0]");
-    }
-
-    public function getData(AcceptanceTester $I)
-    {
-        $I->amOnPage('/admin/login');
-        $I->fillField('email', 'aziz@gmail.com');
-        $I->fillField('password', 'password');
-        $I->click('Войти');
-        $I->amOnPage('/ru/site/applications');
     }
 
     public function draft(AcceptanceTester $I)
@@ -78,7 +71,11 @@ class ApplicationCest
         $I->fillField('email', 'aziz@gmail.com');
         $I->fillField('password', 'password');
         $I->click('Войти');
-        $I->amOnPage('/ru/site/applications/drafts');
+        $I->amOnUrl("http://127.0.0.1:8000/ru/site/applications/$this->id/edit");
+        $I->click('Сохранить и закрыть');
+        $I->amOnUrl("http://127.0.0.1:8000/ru/site/applications/$this->id/show");
+        var_dump($I->grabFromCurrentUrl());
+        $I->see('draft','h5');
     }
 
     public function destroy(AcceptanceTester $I)
