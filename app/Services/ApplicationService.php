@@ -74,7 +74,11 @@ class ApplicationService
                 $query = $application->where('user_id', $user->id)->get();
         }
         if ($user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
-            $query = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null)->get();
+            $query = Application::where('draft', '!=', ApplicationMagicNumber::one)
+                ->where('planned_price', '!=', null)
+                ->OrWhere('signers', 'like', "%$user->role_id%")
+                ->where('planned_price', '!=', null)
+                ->get();
         }
 
         return Datatables::of($query)
