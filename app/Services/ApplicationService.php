@@ -12,6 +12,7 @@ use App\Models\Application;
 use App\Models\Branch;
 use App\Models\Country;
 use App\Models\Notification;
+use App\Models\Permission;
 use App\Models\PermissionRole;
 use App\Models\Position;
 use App\Models\Purchase;
@@ -73,11 +74,23 @@ class ApplicationService
             default :
                 $query = $application->where('user_id', $user->id)->get();
         }
+        $optional_signers = $user->hasPermission(PermissionEnum::Add_Company_Signer) || $user->hasPermission(PermissionEnum::Add_Company_Signer);
+        $required_signers = $user->hasPermission(PermissionEnum::Company_Signer) || $user->hasPermission(PermissionEnum::Company_Signer);
+        $leaders_in_signer =
+            (($user->hasPermission(PermissionEnum::Branch_Leader) && $required_signers) || ($user->hasPermission(PermissionEnum::Branch_Leader) && $optional_signers))
+            ||
+            (($user->hasPermission(PermissionEnum::Company_Leader) && $required_signers) || ($user->hasPermission(PermissionEnum::Company_Leader) && $optional_signers));
         if ($user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
             $query = Application::where('draft', '!=', ApplicationMagicNumber::one)
                 ->where('planned_price', '!=', null)
                 ->OrWhere('signers', 'like', "%$user->role_id%")
                 ->where('planned_price', '!=', null)
+                ->get();
+        }elseif($leaders_in_signer){
+            $query = Application::where('draft', '!=', ApplicationMagicNumber::one)
+                ->where('planned_price', '!=', null)
+                ->where('branch_id', $user->branch_id)
+                ->OrWhere('signers', 'like', "%$user->role_id%")
                 ->get();
         }
 
