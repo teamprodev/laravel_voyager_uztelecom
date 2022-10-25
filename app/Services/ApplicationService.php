@@ -64,7 +64,7 @@ class ApplicationService
                 break;
             case $user->hasPermission(PermissionEnum::Branch_Leader):
             case $user->hasPermission(PermissionEnum::Company_Leader) :
-                $query = $application->where('show_leader', ApplicationMagicNumber::one)->OrWhere('status', ApplicationStatusEnum::Distributed)->orWhere('user_id', $user->id)->get();
+                $query = $application->get();
                 break;
             case $user->hasPermission(PermissionEnum::Branch_Performer) :
             case $user->hasPermission(PermissionEnum::Company_Performer) :
