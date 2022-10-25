@@ -39,7 +39,7 @@
                     processing: true,
                     serverSide: true,
                     ajax:
-                        "{{ route('site.applications.status_table') }}",
+                        "{{ route('site.applications.to_sign_data') }}",
 
                     columns: [
                         {data: 'id', name: 'id'},

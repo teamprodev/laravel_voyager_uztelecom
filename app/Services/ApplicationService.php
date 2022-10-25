@@ -688,6 +688,10 @@ class ApplicationService
             ->editColumn('updated_at', function ($data) {
                 return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
             })
+            ->addColumn('planned_price_curr', function ($query) {
+                $planned_price = $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
+                return "$planned_price  $query->currency";
+            })
             ->editColumn('status', function ($query) {
                 /*
                      *  Voyager admin paneldan status ranglarini olish va chiqarish
