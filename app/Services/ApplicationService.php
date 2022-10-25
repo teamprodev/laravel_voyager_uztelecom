@@ -675,7 +675,7 @@ class ApplicationService
      */
     public function to_sign_data($user)
     {
-        $signedDocs = SignedDocs::where('role_id', $user->role_id)->where('status', null)->pluck('application_id')->toArray();
+        $signedDocs = SignedDocs::where('role_id', $user->role_id)->whereNull('status')->pluck('application_id')->toArray();
         $data = Application::find($signedDocs);
         return Datatables::of($data)
             ->addIndexColumn()
