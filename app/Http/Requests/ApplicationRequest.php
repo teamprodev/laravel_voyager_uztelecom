@@ -38,6 +38,8 @@ class ApplicationRequest extends FormRequest
             'info_business_plan' => 'nullable',
             'equal_planned_price' => 'nullable',
             'branch_initiator_id' => 'nullable',
+            'branch_id' => 'nullable',
+            'show_leader' => 'nullable',
             'subject' => 'nullable',
             'type_of_purchase_id' => 'nullable',
             'info_purchase_plan' => 'nullable',
