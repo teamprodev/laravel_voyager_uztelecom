@@ -174,7 +174,7 @@ class ApplicationService
         $data = $application->where('status', $status)->get();
         return Datatables::of($data)
             ->editColumn('is_more_than_limit', function ($query) {
-                return $query->is_more_than_limit == ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
+                return $query->is_more_than_limit === ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
             })
             ->editColumn('branch_initiator_id', function ($query) {
                 return $query->branch->name;
@@ -694,6 +694,12 @@ class ApplicationService
             ->addIndexColumn()
             ->editColumn('user_id', function ($docs) {
                 return $docs->user_id ? $docs->user->name : "";
+            })
+            ->editColumn('is_more_than_limit', function ($query) {
+                return $query->is_more_than_limit === ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
+            })
+            ->editColumn('branch_initiator_id', function ($query) {
+                return $query->branch->name;
             })
             ->editColumn('created_at', function ($data) {
                 return $data->created_at ? with(new Carbon($data->created_at))->format('d.m.Y') : '';
