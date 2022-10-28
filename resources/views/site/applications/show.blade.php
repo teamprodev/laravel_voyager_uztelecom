@@ -372,7 +372,6 @@
                 <th>{{ __('Комментарий') }}</th>
                 <th>{{ __('Пользователь') }}</th>
                 <th class="hidden">Index</th>
-                <th>{{ __("date_signature") }}</th>
             </tr>
             </thead>
         </table>
@@ -399,7 +398,6 @@
                     {data: 'comment', name: 'comment'},
                     {data: 'user_id', name: 'user_id'},
                     {data: 'role_index', name: 'role_index'},
-                    {data: 'updated_at', name: 'updated_at'},
                 ]
             });
         })
