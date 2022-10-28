@@ -46,7 +46,6 @@
                         <th>{{ __('Ожидаемый срок поставки') }}</th>
                         <th>{{ __('Планируемый бюджет закупки (сумма)') }}</th>
                         <th>{{ __('Условия поставки по INCOTERMS') }}</th>
-                        <th>{{ __('Дата создания') }}</th>
                         <th>{{ __('Действие') }}</th>
                     </tr>
                     </thead>
@@ -69,11 +68,11 @@
                     responsive: true,
                     columnDefs: [
                         {
-                            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12],
+                            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11],
                             className: 'dt-body-center dt-head-center'
                         },
                         {
-                            targets: 12,
+                            targets: 11,
                             className: 'not-exported'
                         },
                         {
@@ -202,7 +201,6 @@
                             }
                         },
                         {data: 'incoterms', name: 'incoterms'},
-                        {data: 'created_at', name: 'created_at'},
                         {
                             data: 'action',
                             render: function (link) {
