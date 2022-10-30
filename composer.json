@@ -28,7 +28,8 @@
         "teamprodev/laravel_dst_eimzo": "1.16",
         "vemcogroup/laravel-translation": "v3.0.7",
         "yajra/laravel-datatables-buttons": "v4.13.3",
-        "yajra/laravel-datatables-oracle": "v9.21.2"
+        "yajra/laravel-datatables-oracle": "v9.21.2",
+        "ext-curl": "*"
     },
     "require-dev": {
         "codeception/codeception": "^4.2",
