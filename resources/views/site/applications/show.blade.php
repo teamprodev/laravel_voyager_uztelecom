@@ -719,6 +719,14 @@
                     ->disabled()
                 }}
             @endif
+            @if(isset($application->branch_leader_user_id))
+                {{Aire::textArea('bio', __('Распределил'))
+                    ->value($application->branch_leader->name)
+                    ->rows(3)
+                    ->cols(40)
+                    ->disabled()
+                }}
+            @endif
             @if(isset($application->performer_role_id))
                 {{Aire::textArea('bio', __('Исполнитель'))
                     ->value($application->performer_role->display_name)
