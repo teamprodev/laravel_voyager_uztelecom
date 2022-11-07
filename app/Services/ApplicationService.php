@@ -659,6 +659,8 @@ class ApplicationService
 
     public function sendNotifications($array, $application, $message)
     {
+        $application_not_new = Application::where('status','!=','new')->pluck('id')->toArray();
+        $notification_delete = Notification::whereIn('application_id',$application_not_new)->delete();
         if ($array !== null) {
             if (is_resource(@fsockopen(env('LARAVEL_WEBSOCKETS_HOST', '127.0.0.1'), env('LARAVEL_WEBSOCKETS_PORT', 6001)))) {
                 $websocket = true;
