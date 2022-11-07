@@ -155,7 +155,6 @@ class ApplicationService
             })
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                $user = auth()->user();
                 if (auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id) {
                     $data['edit'] = route('site.applications.edit', $row->id);
                 }
@@ -247,14 +246,13 @@ class ApplicationService
             })
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-
                 if (auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id) {
                     $data['edit'] = route('site.applications.edit', $row->id);
                 }
 
                 $data['show'] = route('site.applications.show', $row->id);
 
-                if ($row->user_id == auth()->user()->id) {
+                if ($row->user_id === auth()->user()->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two) {
                     $data['destroy'] = route('site.applications.destroy', $row->id);
                 }
 
@@ -339,14 +337,13 @@ class ApplicationService
             })
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-
                 if (auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id) {
                     $data['edit'] = route('site.applications.edit', $row->id);
                 }
 
                 $data['show'] = route('site.applications.show', $row->id);
 
-                if ($row->user_id == auth()->user()->id) {
+                if ($row->user_id === auth()->user()->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two) {
                     $data['destroy'] = route('site.applications.destroy', $row->id);
                 }
 
@@ -437,13 +434,19 @@ class ApplicationService
                 return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
             })
             ->addColumn('action', function ($row) {
-                $data['edit'] = route('site.applications.edit', $row->id);
-                $data['show'] = route('site.applications.show', $row->id);
-                $data['destroy'] = route('site.applications.destroy', $row->id);
-                if ($row->status === ApplicationStatusEnum::Refused) {
-                    $data['clone'] = route('site.applications.clone', $row->id);
+                if (auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id) {
+                    $data['edit'] = route('site.applications.edit', $row->id);
                 }
 
+                $data['show'] = route('site.applications.show', $row->id);
+
+                if ($row->user_id === auth()->user()->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two) {
+                    $data['destroy'] = route('site.applications.destroy', $row->id);
+                }
+
+                if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
+                    $data['clone'] = route('site.applications.clone', $row->id);
+                }
                 return json_encode(['link' => $this->createBlockAction($data, $row)]);
             })
             ->rawColumns(['action'])
@@ -791,15 +794,13 @@ class ApplicationService
             })
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                $data = array();
-
-                if (auth()->user()->id == $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id == auth()->user()->role_id) {
+                if (auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id) {
                     $data['edit'] = route('site.applications.edit', $row->id);
                 }
 
                 $data['show'] = route('site.applications.show', $row->id);
 
-                if ($row->user_id == auth()->user()->id) {
+                if ($row->user_id === auth()->user()->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two) {
                     $data['destroy'] = route('site.applications.destroy', $row->id);
                 }
 
