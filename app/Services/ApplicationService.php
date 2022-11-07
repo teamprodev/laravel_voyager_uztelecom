@@ -252,7 +252,7 @@ class ApplicationService
 
                 $data['show'] = route('site.applications.show', $row->id);
 
-                if ($row->user_id === auth()->user()->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two) {
+                if ($row->user_id === auth()->user()->id && (int)$row->show_leader !== ApplicationMagicNumber::two) {
                     $data['destroy'] = route('site.applications.destroy', $row->id);
                 }
 
