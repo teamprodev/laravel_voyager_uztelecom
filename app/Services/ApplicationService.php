@@ -12,7 +12,6 @@ use App\Models\Application;
 use App\Models\Branch;
 use App\Models\Country;
 use App\Models\Notification;
-use App\Models\Permission;
 use App\Models\PermissionRole;
 use App\Models\Position;
 use App\Models\Purchase;
@@ -39,6 +38,12 @@ class ApplicationService
      */
     public function index_getData($user)
     {
+        Cache::rememberForever('status_extended', function () {
+            return DB::table('status_extended')->get();
+        });
+        Cache::rememberForever('branches', function () {
+            return DB::table('branches')->get();
+        });
         if ($user->hasPermission(PermissionEnum::Company_Leader) || $user->hasPermission(PermissionEnum::Branch_Leader)) {
             $a = 'branch_initiator_id';
             $b = [$user->branch_id];
@@ -102,7 +107,15 @@ class ApplicationService
                 return $query->created_at ? with(new Carbon($query->created_at))->format('d.m.Y') : '';
             })
             ->editColumn('branch_initiator_id', function ($query) {
-                return $query->branch->name;
+                $branches = json_decode(Cache::get('branches'),true);
+                foreach($branches as $branche)
+                {
+                    if ($branche["id"] == $query->branch_id)
+                    {
+                        $branch = $branche;
+                    }
+                }
+                return $branch["name"];
             })
             ->editColumn('planned_price', function ($query) {
                 return $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
@@ -124,27 +137,32 @@ class ApplicationService
                 /*
                  *  Voyager admin paneldan status ranglarini olish va chiqarish
                  */
+                $status_extended_table = json_decode(Cache::get('status_extended'),true);
+                foreach($status_extended_table as $status)
+                {
+                    $status_extended = $status;
+                }
                 $status = match (true) {
                     $query->status === ApplicationStatusEnum::Order_Arrived => 'товар прибыл',
                     $query->status === ApplicationStatusEnum::Order_Delivered => 'товар доставлен',
-                    $query->performer_status !== null => StatusExtended::find($query->performer_status)->name,
+                    $query->performer_status !== null => $status_extended['name'],
                     default => $query->status
                 };
                 $color_status_if = ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Arrived) || ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Delivered);
-                $color = $color_status_if ? StatusExtended::find($query->performer_status)->color : setting("color.$status");
+                $color = $color_status_if ? $status_extended['color'] : setting("color.$status");
 
                 return json_encode(['backgroundColor' => $color, 'app' => $this->translateStatus($status), 'color' => $color ? 'white' : 'black']);
             })
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-
+                $user = auth()->user();
                 if (auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id) {
                     $data['edit'] = route('site.applications.edit', $row->id);
                 }
 
                 $data['show'] = route('site.applications.show', $row->id);
 
-                if ($row->user_id === auth()->user()->id && $row->show_director !== ApplicationMagicNumber::two && $row->show_leader !== ApplicationMagicNumber::two && $row->status !== ApplicationStatusEnum::Refused) {
+                if ($row->user_id === auth()->user()->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two) {
                     $data['destroy'] = route('site.applications.destroy', $row->id);
                 }
 
@@ -177,7 +195,15 @@ class ApplicationService
                 return $query->is_more_than_limit === ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
             })
             ->editColumn('branch_initiator_id', function ($query) {
-                return $query->branch->name;
+                $branches = json_decode(Cache::get('branches'),true);
+                foreach($branches as $branche)
+                {
+                    if ($branche["id"] == $query->branch_id)
+                    {
+                        $branch = $branche;
+                    }
+                }
+                return $branch["name"];
             })
             ->addIndexColumn()
             ->editColumn('user_id', function ($docs) {
@@ -200,14 +226,22 @@ class ApplicationService
                 return "$planned_price  $query->currency";
             })
             ->editColumn('status', function ($query) {
+                /*
+                 *  Voyager admin paneldan status ranglarini olish va chiqarish
+                 */
+                $status_extended_table = json_decode(Cache::get('status_extended'),true);
+                foreach($status_extended_table as $status)
+                {
+                    $status_extended = $status;
+                }
                 $status = match (true) {
                     $query->status === ApplicationStatusEnum::Order_Arrived => 'товар прибыл',
                     $query->status === ApplicationStatusEnum::Order_Delivered => 'товар доставлен',
-                    $query->performer_status !== null => StatusExtended::find($query->performer_status)->name,
+                    $query->performer_status !== null => $status_extended['name'],
                     default => $query->status
                 };
                 $color_status_if = ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Arrived) || ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Delivered);
-                $color = $color_status_if ? StatusExtended::find($query->performer_status)->color : setting("color.$status");
+                $color = $color_status_if ? $status_extended['color'] : setting("color.$status");
 
                 return json_encode(['backgroundColor' => $color, 'app' => $this->translateStatus($status), 'color' => $color ? 'white' : 'black']);
             })
@@ -253,7 +287,15 @@ class ApplicationService
                 return $query->is_more_than_limit == ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
             })
             ->editColumn('branch_initiator_id', function ($query) {
-                return $query->branch->name;
+                $branches = json_decode(Cache::get('branches'),true);
+                foreach($branches as $branche)
+                {
+                    if ($branche["id"] == $query->branch_id)
+                    {
+                        $branch = $branche;
+                    }
+                }
+                return $branch["name"];
             })
             ->addIndexColumn()
             ->editColumn('user_id', function ($docs) {
@@ -276,14 +318,22 @@ class ApplicationService
                 return "$planned_price  $query->currency";
             })
             ->editColumn('status', function ($query) {
+                /*
+                 *  Voyager admin paneldan status ranglarini olish va chiqarish
+                 */
+                $status_extended_table = json_decode(Cache::get('status_extended'),true);
+                foreach($status_extended_table as $status)
+                {
+                    $status_extended = $status;
+                }
                 $status = match (true) {
                     $query->status === ApplicationStatusEnum::Order_Arrived => 'товар прибыл',
                     $query->status === ApplicationStatusEnum::Order_Delivered => 'товар доставлен',
-                    $query->performer_status !== null => StatusExtended::find($query->performer_status)->name,
+                    $query->performer_status !== null => $status_extended['name'],
                     default => $query->status
                 };
                 $color_status_if = ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Arrived) || ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Delivered);
-                $color = $color_status_if ? StatusExtended::find($query->performer_status)->color : setting("color.$status");
+                $color = $color_status_if ? $status_extended['color'] : setting("color.$status");
 
                 return json_encode(['backgroundColor' => $color, 'app' => $this->translateStatus($status), 'color' => $color ? 'white' : 'black']);
             })
@@ -699,7 +749,15 @@ class ApplicationService
                 return $query->is_more_than_limit === ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
             })
             ->editColumn('branch_initiator_id', function ($query) {
-                return $query->branch->name;
+                $branches = json_decode(Cache::get('branches'),true);
+                foreach($branches as $branche)
+                {
+                    if ($branche["id"] == $query->branch_id)
+                    {
+                        $branch = $branche;
+                    }
+                }
+                return $branch["name"];
             })
             ->editColumn('created_at', function ($data) {
                 return $data->created_at ? with(new Carbon($data->created_at))->format('d.m.Y') : '';
@@ -713,17 +771,21 @@ class ApplicationService
             })
             ->editColumn('status', function ($query) {
                 /*
-                     *  Voyager admin paneldan status ranglarini olish va chiqarish
-                     */
-
+                 *  Voyager admin paneldan status ranglarini olish va chiqarish
+                 */
+                $status_extended_table = json_decode(Cache::get('status_extended'),true);
+                foreach($status_extended_table as $status)
+                {
+                    $status_extended = $status;
+                }
                 $status = match (true) {
                     $query->status === ApplicationStatusEnum::Order_Arrived => 'товар прибыл',
                     $query->status === ApplicationStatusEnum::Order_Delivered => 'товар доставлен',
-                    $query->performer_status !== null => StatusExtended::find($query->performer_status)->name,
+                    $query->performer_status !== null => $status_extended['name'],
                     default => $query->status
                 };
                 $color_status_if = ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Arrived) || ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Delivered);
-                $color = $color_status_if ? StatusExtended::find($query->performer_status)->color : setting("color.$status");
+                $color = $color_status_if ? $status_extended['color'] : setting("color.$status");
 
                 return json_encode(['backgroundColor' => $color, 'app' => $this->translateStatus($status), 'color' => $color ? 'white' : 'black']);
             })
