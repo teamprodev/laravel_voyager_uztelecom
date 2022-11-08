@@ -140,8 +140,12 @@ class ApplicationService
                 $status_extended_table = json_decode(Cache::get('status_extended'),true);
                 foreach($status_extended_table as $status)
                 {
-                    $status_extended = $status;
+                    if($query->performer_status == $status["id"])
+                    {
+                        $status_extended = $status;
+                    }
                 }
+
                 $status = match (true) {
                     $query->status === ApplicationStatusEnum::Order_Arrived => 'товар прибыл',
                     $query->status === ApplicationStatusEnum::Order_Delivered => 'товар доставлен',
@@ -231,7 +235,10 @@ class ApplicationService
                 $status_extended_table = json_decode(Cache::get('status_extended'),true);
                 foreach($status_extended_table as $status)
                 {
-                    $status_extended = $status;
+                    if($query->performer_status == $status["id"])
+                    {
+                        $status_extended = $status;
+                    }
                 }
                 $status = match (true) {
                     $query->status === ApplicationStatusEnum::Order_Arrived => 'товар прибыл',
@@ -322,7 +329,10 @@ class ApplicationService
                 $status_extended_table = json_decode(Cache::get('status_extended'),true);
                 foreach($status_extended_table as $status)
                 {
-                    $status_extended = $status;
+                    if($query->performer_status == $status["id"])
+                    {
+                        $status_extended = $status;
+                    }
                 }
                 $status = match (true) {
                     $query->status === ApplicationStatusEnum::Order_Arrived => 'товар прибыл',
@@ -779,7 +789,10 @@ class ApplicationService
                 $status_extended_table = json_decode(Cache::get('status_extended'),true);
                 foreach($status_extended_table as $status)
                 {
-                    $status_extended = $status;
+                    if($query->performer_status == $status["id"])
+                    {
+                        $status_extended = $status;
+                    }
                 }
                 $status = match (true) {
                     $query->status === ApplicationStatusEnum::Order_Arrived => 'товар прибыл',
