@@ -302,7 +302,7 @@
                                             </button>
                                             <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
                                         @endif
-                                        @if($application->user_id == $user->id)
+                                        @if($application->user_id === $user->id && (int)$application->show_leader !== App\Enums\ApplicationMagicNumber::two)
                                             <button class='btn btn-sm btn-danger'>{{__('Удалить')}}</button>
                                         @endif
                                     @endforeach
@@ -326,7 +326,7 @@
                                             </button>
                                             <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
                                         @endif
-                                        @if($application->user_id == $user->id)
+                                        @if($application->user_id == $user->id && (int)$application->show_leader !== App\Enums\ApplicationMagicNumber::two)
                                             <button class='btn btn-sm btn-danger'>{{__('Удалить')}}</button>
                                         @endif
                                     @endforeach
@@ -350,7 +350,7 @@
                                             </button>
                                             <p class="my-2">{{preg_replace('/[0-9]+_/', '', $file)}}</p>
                                         @endif
-                                        @if($application->user_id == $user->id)
+                                        @if($application->user_id == $user->id && (int)$application->show_leader !== App\Enums\ApplicationMagicNumber::two)
                                             <button class='btn btn-sm btn-danger'>{{__('Удалить')}}</button>
                                         @endif
                                     @endforeach
