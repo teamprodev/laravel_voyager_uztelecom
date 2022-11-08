@@ -44,6 +44,7 @@ class ApplicationService
         Cache::rememberForever('branches', function () {
             return DB::table('branches')->get();
         });
+
         if ($user->hasPermission(PermissionEnum::Company_Leader) || $user->hasPermission(PermissionEnum::Branch_Leader)) {
             $a = 'branch_initiator_id';
             $b = [$user->branch_id];
@@ -53,20 +54,20 @@ class ApplicationService
         }
         $application = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null)->whereIn($a, $b);
         switch (!$user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
+            case $user->hasPermission(PermissionEnum::Company_Signer) || $user->hasPermission(PermissionEnum::Add_Company_Signer) || $user->hasPermission(PermissionEnum::Branch_Signer) || $user->hasPermission(PermissionEnum::Add_Branch_Signer):
+                $query = Application::query()
+                    ->where('planned_price', '!=', null)
+                    ->whereRaw('json_contains(signers, \'['.$user->role_id.']\')')
+                    ->orWhere('performer_role_id', $user->role->id)
+                    ->orWhere('user_id', $user->id)
+                    ->where('name', '!=', null)
+                    ->get();
+                break;
             case $user->hasPermission(PermissionEnum::Warehouse) :
                 $query = Application::where('branch_id', $user->branch_id)->where('show_leader', ApplicationMagicNumber::two)->orWhere('user_id', $user->id)->get();
                 break;
             case $user->hasPermission(PermissionEnum::Company_Leader) && $user->hasPermission(PermissionEnum::Branch_Leader) :
                 $query = $application->orWhere('user_id', $user->id)->get();
-                break;
-            case $user->hasPermission(PermissionEnum::Company_Signer) || $user->hasPermission(PermissionEnum::Add_Company_Signer) || $user->hasPermission(PermissionEnum::Branch_Signer) || $user->hasPermission(PermissionEnum::Add_Branch_Signer):
-                $query = Application::query()
-                    ->where('planned_price', '!=', null)
-                    ->where('signers', 'like', "%$user->role_id%")
-                    ->orWhere('performer_role_id', $user->role->id)
-                    ->orWhere('user_id', $user->id)
-                    ->where('name', '!=', null)
-                    ->get();
                 break;
             case $user->hasPermission(PermissionEnum::Branch_Leader):
             case $user->hasPermission(PermissionEnum::Company_Leader) :
@@ -80,7 +81,7 @@ class ApplicationService
                 $query = $application->where('user_id', $user->id)->get();
         }
         $optional_signers = $user->hasPermission(PermissionEnum::Add_Company_Signer) || $user->hasPermission(PermissionEnum::Add_Company_Signer);
-        $required_signers = $user->hasPermission(PermissionEnum::Company_Signer) || $user->hasPermission(PermissionEnum::Company_Signer);
+        $required_signers = $user->hasPermission(PermissionEnum::Company_Signer) || $user->hasPermission(PermissionEnum::Branch_Signer);
         $leaders_in_signer =
             (($user->hasPermission(PermissionEnum::Branch_Leader) && $required_signers) || ($user->hasPermission(PermissionEnum::Branch_Leader) && $optional_signers))
             ||
