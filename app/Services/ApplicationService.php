@@ -55,11 +55,10 @@ class ApplicationService
         $application = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null)->whereIn($a, $b);
         switch (!$user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
             case $user->hasPermission(PermissionEnum::Company_Signer) || $user->hasPermission(PermissionEnum::Add_Company_Signer) || $user->hasPermission(PermissionEnum::Branch_Signer) || $user->hasPermission(PermissionEnum::Add_Branch_Signer):
-                $signedDocs = SignedDocs::where('role_id', $user->role_id)->whereNull('status')->pluck('application_id')->toArray();
+                $signedDocs = SignedDocs::where('role_id', $user->role_id)->pluck('application_id')->toArray();
                 $query = Application::whereIn('id',$signedDocs)
                     ->where('planned_price', '!=', null)
                     ->orWhere('performer_role_id', $user->role->id)
-                    ->OrwhereRaw('json_contains(signers, \'['.$user->role_id.']\')')
                     ->orWhere('user_id', $user->id)
                     ->where('name', '!=', null)
                     ->get();
