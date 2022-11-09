@@ -189,7 +189,7 @@ class ApplicationService
         if ($user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
             $application = Application::where('name', '!=', null);
         } else {
-            $application = Application::where('branch_id', $user->branch_id)->where('name', '!=', null);
+            $application = Application::where('department_initiator_id', $user->department_id)->where('name', '!=', null);
         }
         $status = setting('admin.show_status');
         $data = $application->where('status', $status)->get();
@@ -283,7 +283,7 @@ class ApplicationService
         if ($user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
             $application = Application::where('name', '!=', null);
         } else {
-            $application = Application::where('branch_id', $user->branch_id)->where('name', '!=', null);
+            $application = Application::where('department_initiator_id', $user->department_id)->where('name', '!=', null);
         }
         $status = Cache::get('performer_status_get');
         $data = $application->where('performer_status', $status)->get();
