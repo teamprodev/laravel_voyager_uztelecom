@@ -34,6 +34,10 @@ class Application extends Model
     protected $table = "applications";
     protected $guarded = [];
 
+    public function need_to_sign()
+    {
+        return $this->hasMany(SignedDocs::class)->where('role_id',auth()->user()->role_id)->whereNull('status');
+    }
     public function plan()
     {
         return $this->belongsTo(Plan::class);
