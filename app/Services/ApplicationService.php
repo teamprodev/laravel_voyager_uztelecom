@@ -103,6 +103,17 @@ class ApplicationService
             ->editColumn('is_more_than_limit', function ($query) {
                 return $query->is_more_than_limit == ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
             })
+            ->editColumn('user_id', function ($query) {
+                $branches = json_decode(Cache::get('branches'),true);
+                foreach($branches as $branche)
+                {
+                    if ($branche["id"] == $query->user->branch_id)
+                    {
+                        $branch = $branche;
+                    }
+                }
+                return $branch["name"];
+            })
             ->editColumn('created_at', function ($query) {
                 return $query->created_at ? with(new Carbon($query->created_at))->format('d.m.Y') : '';
             })
