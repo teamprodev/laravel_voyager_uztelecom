@@ -59,6 +59,7 @@ class ApplicationService
                 $query = Application::whereIn('id',$signedDocs)
                     ->where('planned_price', '!=', null)
                     ->orWhere('performer_role_id', $user->role->id)
+                    ->OrwhereRaw('json_contains(signers, \'['.$user->role_id.']\')')
                     ->orWhere('user_id', $user->id)
                     ->where('name', '!=', null)
                     ->get();
