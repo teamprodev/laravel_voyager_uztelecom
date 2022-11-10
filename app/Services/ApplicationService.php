@@ -148,23 +148,14 @@ class ApplicationService
                 /*
                  *  Voyager admin paneldan status ranglarini olish va chiqarish
                  */
-                $status_extended_table = json_decode(Cache::get('status_extended'),true);
-                foreach($status_extended_table as $status)
-                {
-                    if($query->performer_status == $status["id"])
-                    {
-                        $status_extended = $status;
-                    }
-                }
-
                 $status = match (true) {
                     $query->status === ApplicationStatusEnum::Order_Arrived => 'товар прибыл',
                     $query->status === ApplicationStatusEnum::Order_Delivered => 'товар доставлен',
-                    $query->performer_status !== null => $status_extended['name'],
+                    $query->performer_status !== null => StatusExtended::find($query->performer_status)->name,
                     default => $query->status
                 };
                 $color_status_if = ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Arrived) || ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Delivered);
-                $color = $color_status_if ? $status_extended['color'] : setting("color.$status");
+                $color = $color_status_if ? StatusExtended::find($query->performer_status)->color : setting("color.$status");
 
                 return json_encode(['backgroundColor' => $color, 'app' => $this->translateStatus($status), 'color' => $color ? 'white' : 'black']);
             })
