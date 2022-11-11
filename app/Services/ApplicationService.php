@@ -102,7 +102,7 @@ class ApplicationService
                 $branches = json_decode(Cache::tags(['branches'])->get('table'),true);
                 foreach($branches as $branche)
                 {
-                    if ($branche["id"] == $query->branch_id)
+                    if ($branche["id"] == $query->user->branch_id)
                     {
                         $branch = $branche;
                     }
