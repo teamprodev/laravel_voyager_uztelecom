@@ -46,7 +46,9 @@ class ApplicationController extends Controller
     }
     public function performer_status_post(Request $req)
     {
-        Cache::put('performer_status_get', $req->performer_status_get);
+        $voyager = Setting::where('key','admin.performer_status_get')->first();
+        $voyager->value = $req->performer_status_get;
+        $voyager->save();
         return redirect()->route('site.applications.performer_status_get');
     }
     public function status_table()
@@ -57,7 +59,8 @@ class ApplicationController extends Controller
     public function performer_status()
     {
         $user = auth()->user();
-        return $this->service->performer_status($user);
+        $status = setting('admin.performer_status_get');
+        return $this->service->performer_status($user,$status);
     }
     /**
      * All Application

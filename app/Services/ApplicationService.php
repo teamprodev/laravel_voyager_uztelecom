@@ -38,14 +38,10 @@ class ApplicationService
      */
     public function index_getData($user)
     {
-        Cache::forget('status_extended');
-        Cache::forget('branches');
-        Cache::rememberForever('status_extended', function () {
-            return DB::table('status_extended')->get();
-        });
-        Cache::rememberForever('branches', function () {
-            return DB::table('branches')->get();
-        });
+        Cache::tags(['status_extended'])->put('table', StatusExtended::all());
+        Cache::tags(['branches'])->put('table', Branch::all());
+        Cache::tags(['users'])->put('my', $user);
+
         if ($user->hasPermission(PermissionEnum::Company_Leader) || $user->hasPermission(PermissionEnum::Branch_Leader)) {
             $a = 'branch_initiator_id';
             $b = [$user->branch_id];
@@ -89,15 +85,13 @@ class ApplicationService
                 ->where('planned_price', '!=', null)
                 ->OrWhere('signers', 'like', "%$user->role_id%")
                 ->orWhere('user_id', $user->id)
-                ->where('planned_price', '!=', null)
-                ->get();
+                ->where('planned_price', '!=', null);
         }elseif($leaders_in_signer){
             $query = Application::where('draft', '!=', ApplicationMagicNumber::one)
                 ->where('planned_price', '!=', null)
                 ->where('branch_id', $user->branch_id)
                 ->OrWhere('signers', 'like', "%$user->role_id%")
-                ->orWhere('user_id', $user->id)
-                ->get();
+                ->orWhere('user_id', $user->id);
         }
 
         return Datatables::of($query)
@@ -105,10 +99,11 @@ class ApplicationService
                 return $query->is_more_than_limit == ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
             })
             ->editColumn('user_id', function ($query) {
-                $branches = json_decode(Cache::get('branches'),true);
+                $branches = json_decode(Cache::tags(['branches'])->get('table'),true);
+                $user = Cache::tags(['users'])->get('my');
                 foreach($branches as $branche)
                 {
-                    if ($branche["id"] == $query->user->branch_id)
+                    if ($branche["id"] == $user->branch_id)
                     {
                         $branch = $branche;
                     }
@@ -119,7 +114,7 @@ class ApplicationService
                 return $query->created_at ? with(new Carbon($query->created_at))->format('d.m.Y') : '';
             })
             ->editColumn('branch_initiator_id', function ($query) {
-                $branches = json_decode(Cache::get('branches'),true);
+                $branches = json_decode(Cache::tags(['branches'])->get('table'),true);
                 foreach($branches as $branche)
                 {
                     if ($branche["id"] == $query->branch_id)
@@ -149,7 +144,8 @@ class ApplicationService
                 /*
                  *  Voyager admin paneldan status ranglarini olish va chiqarish
                  */
-                $status_extended_table = json_decode(Cache::get('status_extended'),true);
+                $status_extended_table = json_decode(Cache::tags(['status_extended'])->get('table'),true);
+
                 foreach($status_extended_table as $status)
                 {
                     if($query->performer_status == $status["id"])
@@ -165,7 +161,7 @@ class ApplicationService
                 };
                 $color_status_if = ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Arrived) || ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Delivered);
                 $color = $color_status_if ? $status_extended['color'] : setting("color.$status");
-                
+
                 return json_encode(['backgroundColor' => $color, 'app' => $this->translateStatus($status), 'color' => $color ? 'white' : 'black']);
             })
             ->addIndexColumn()
@@ -197,19 +193,36 @@ class ApplicationService
      */
     public function status_table($user)
     {
-        if ($user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
-            $application = Application::where('name', '!=', null);
-        } else {
-            $application = Application::where('department_initiator_id', $user->department_id)->where('name', '!=', null);
-        }
+        Cache::tags(['branches'])->put('table', Branch::all());
+        Cache::tags(['status_extended'])->put('table', StatusExtended::all());
+        Cache::tags(['users'])->put('my', $user);
         $status = setting('admin.show_status');
-        $data = $application->where('status', $status)->get();
-        return Datatables::of($data)
+        $application = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null)->whereIn('branch_initiator_id', [$user->branch_id]);
+        $signedDocs = SignedDocs::where('role_id', $user->role_id)->pluck('application_id')->toArray();
+        switch (true)
+        {
+            case $user->hasPermission(PermissionEnum::Purchasing_Management_Center):
+                $query = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null)->where('status', $status)->get();
+                break;
+            case $user->hasPermission(PermissionEnum::Branch_Leader) && $status === ApplicationStatusEnum::Distributed:
+            case $user->hasPermission(PermissionEnum::Company_Leader) && $status === ApplicationStatusEnum::Distributed:
+                $query = $application->orWhere('user_id', $user->id)->get();
+                break;
+            default:
+                $query = Application::whereIn('id',$signedDocs)
+                    ->where('planned_price', '!=', null)
+                    ->where('status', $status)
+                    ->orWhere('user_id', $user->id)
+                    ->where('status', $status)
+                    ->where('name', '!=', null)
+                    ->get();
+        }
+        return Datatables::of($query)
             ->editColumn('is_more_than_limit', function ($query) {
                 return $query->is_more_than_limit === ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
             })
             ->editColumn('branch_initiator_id', function ($query) {
-                $branches = json_decode(Cache::get('branches'),true);
+                $branches = json_decode(Cache::tags(['branches'])->get('table'),true);
                 foreach($branches as $branche)
                 {
                     if ($branche["id"] == $query->branch_id)
@@ -221,7 +234,7 @@ class ApplicationService
             })
             ->addIndexColumn()
             ->editColumn('user_id', function ($docs) {
-                return $docs->user ? $docs->user->name : "";
+                return Cache::tags(['branches'])->get('table');
             })
             ->editColumn('role_id', function ($docs) {
                 return $docs->role ? $docs->role->display_name : "";
@@ -243,24 +256,8 @@ class ApplicationService
                 /*
                  *  Voyager admin paneldan status ranglarini olish va chiqarish
                  */
-                $status_extended_table = json_decode(Cache::get('status_extended'),true);
-                foreach($status_extended_table as $status)
-                {
-                    if($query->performer_status == $status["id"])
-                    {
-                        $status_extended = $status;
-                    }
-                }
-                $status = match (true) {
-                    $query->status === ApplicationStatusEnum::Order_Arrived => 'товар прибыл',
-                    $query->status === ApplicationStatusEnum::Order_Delivered => 'товар доставлен',
-                    $query->performer_status !== null => $status_extended['name'],
-                    default => $query->status
-                };
-                $color_status_if = ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Arrived) || ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Delivered);
-                $color = $color_status_if ? $status_extended['color'] : setting("color.$status");
 
-                return json_encode(['backgroundColor' => $color, 'app' => $this->translateStatus($status), 'color' => $color ? 'white' : 'black']);
+                return json_encode(['backgroundColor' => setting("color.$query->status"), 'app' => $this->translateStatus($query->status), 'color' => setting("color.$query->status") ? 'white' : 'black']);
             })
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
@@ -289,21 +286,37 @@ class ApplicationService
     /**
      * @throws Exception
      */
-    public function performer_status($user)
+    public function performer_status($user,$status)
     {
-        if ($user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
-            $application = Application::where('name', '!=', null);
-        } else {
-            $application = Application::where('department_initiator_id', $user->department_id)->where('name', '!=', null);
+        Cache::tags(['branches'])->put('table', Branch::all());
+        Cache::tags(['status_extended'])->put('table', StatusExtended::all());
+        Cache::tags(['users'])->put('my', $user);
+        $signedDocs = SignedDocs::where('role_id', $user->role_id)->pluck('application_id')->toArray();
+        switch (true)
+        {
+            case $user->hasPermission(PermissionEnum::Purchasing_Management_Center):
+                $query = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null)->where('performer_status', $status)->get();
+                break;
+            case $user->hasPermission(PermissionEnum::Branch_Leader):
+            case $user->hasPermission(PermissionEnum::Company_Leader):
+                $query = Application::where('branch_leader_user_id',$user->id)->orWhere('user_id', $user->id)
+                ->where('performer_status', $status)->get();
+                break;
+            default:
+                $query = Application::whereIn('id',$signedDocs)
+                    ->where('planned_price', '!=', null)
+                    ->where('performer_status', $status)
+                    ->orWhere('user_id', $user->id)
+                    ->where('performer_status', $status)
+                    ->where('name', '!=', null)
+                    ->get();
         }
-        $status = Cache::get('performer_status_get');
-        $data = $application->where('performer_status', $status)->get();
-        return Datatables::of($data)
+        return Datatables::of($query)
             ->editColumn('is_more_than_limit', function ($query) {
                 return $query->is_more_than_limit == ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
             })
             ->editColumn('branch_initiator_id', function ($query) {
-                $branches = json_decode(Cache::get('branches'),true);
+                $branches = json_decode(Cache::tags(['branches'])->get('table'),true);
                 foreach($branches as $branche)
                 {
                     if ($branche["id"] == $query->branch_id)
@@ -337,7 +350,7 @@ class ApplicationService
                 /*
                  *  Voyager admin paneldan status ranglarini olish va chiqarish
                  */
-                $status_extended_table = json_decode(Cache::get('status_extended'),true);
+                $status_extended_table = json_decode(Cache::tags(['status_extended'])->get('table'),true);
                 foreach($status_extended_table as $status)
                 {
                     if($query->performer_status == $status["id"])
@@ -773,7 +786,7 @@ class ApplicationService
                 return $query->is_more_than_limit === ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
             })
             ->editColumn('branch_initiator_id', function ($query) {
-                $branches = json_decode(Cache::get('branches'),true);
+                $branches = json_decode(Cache::tags(['branches'])->get('table'),true);
                 foreach($branches as $branche)
                 {
                     if ($branche["id"] == $query->branch_id)
@@ -797,7 +810,7 @@ class ApplicationService
                 /*
                  *  Voyager admin paneldan status ranglarini olish va chiqarish
                  */
-                $status_extended_table = json_decode(Cache::get('status_extended'),true);
+                $status_extended_table = json_decode(Cache::tags(['status_extended'])->get('table'),true);
                 foreach($status_extended_table as $status)
                 {
                     if($query->performer_status == $status["id"])

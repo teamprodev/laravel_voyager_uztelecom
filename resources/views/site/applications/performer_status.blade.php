@@ -13,12 +13,11 @@
       ->post() }}
             <div
                 style="text-align: center; display: flex; justify-content: end; align-items: center; column-gap: 10px; margin-right: 20px">
-                {{Aire::select($status, 'select', 'Статус')->value(Illuminate\Support\Facades\Cache::get('performer_status_get'))->name('performer_status_get')}}
+                {{Aire::select($status, 'select', 'Статус')->value(setting('admin.performer_status_get'))->name('performer_status_get')}}
 
                 <button type="submit" class="btn btn-success" style="margin-top: 8px;">{{ __("Выбрать") }}</button>
             </div>
             {{ Aire::close() }}
-            @if(Illuminate\Support\Facades\Cache::get('performer_status_get') != null)
                 <table id="yajra-datatable">
                     <thead>
                     <tr>
@@ -83,5 +82,4 @@
             });
         </script>
     @endpush
-    @endif
 @endsection
