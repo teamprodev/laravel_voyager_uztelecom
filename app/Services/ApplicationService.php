@@ -100,10 +100,9 @@ class ApplicationService
             })
             ->editColumn('user_id', function ($query) {
                 $branches = json_decode(Cache::tags(['branches'])->get('table'),true);
-                $user = Cache::tags(['users'])->get('my');
                 foreach($branches as $branche)
                 {
-                    if ($branche["id"] == $user->branch_id)
+                    if ($branche["id"] == $query->branch_id)
                     {
                         $branch = $branche;
                     }
