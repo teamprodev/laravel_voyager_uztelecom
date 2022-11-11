@@ -308,6 +308,8 @@ class ApplicationService
                     ->where('performer_status', $status)
                     ->orWhere('user_id', $user->id)
                     ->where('performer_status', $status)
+                    ->orWhere('performer_role_id', $user->role_id)
+                    ->where('performer_status', $status)
                     ->where('name', '!=', null)
                     ->get();
         }
