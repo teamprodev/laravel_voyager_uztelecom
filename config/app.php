@@ -1,5 +1,7 @@
 <?php
 
+use App\Providers\CacheServiceProvider;
+
 return [
 
     /*
@@ -178,6 +180,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         Yajra\DataTables\ButtonsServiceProvider::class,
+        CacheServiceProvider::class,
 
         /*
          * Package Service Providers...
