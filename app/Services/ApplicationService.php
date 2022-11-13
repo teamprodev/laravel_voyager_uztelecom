@@ -38,8 +38,6 @@ class ApplicationService
      */
     public function index_getData($user)
     {
-        true;
-        true;
         if ($user->hasPermission(PermissionEnum::Company_Leader) || $user->hasPermission(PermissionEnum::Branch_Leader)) {
             $a = 'branch_initiator_id';
             $b = [$user->branch_id];
