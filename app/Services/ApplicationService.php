@@ -81,13 +81,15 @@ class ApplicationService
                 ->where('planned_price', '!=', null)
                 ->OrWhere('signers', 'like', "%$user->role_id%")
                 ->orWhere('user_id', $user->id)
-                ->where('planned_price', '!=', null);
+                ->where('planned_price', '!=', null)
+                ->get();
         }elseif($leaders_in_signer){
             $query = Application::where('draft', '!=', ApplicationMagicNumber::one)
                 ->where('planned_price', '!=', null)
                 ->where('branch_id', $user->branch_id)
                 ->OrWhere('signers', 'like', "%$user->role_id%")
-                ->orWhere('user_id', $user->id);
+                ->orWhere('user_id', $user->id)
+                ->get();
         }
 
         return Datatables::of($query)
