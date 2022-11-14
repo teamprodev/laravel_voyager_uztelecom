@@ -257,7 +257,7 @@
     <input id="resource_id" name="resource_id" value=null class="hidden" type="text">
     <table id="table"></table>
 @endif
-<script src="https://cdn.jsdelivr.net/npm/jquery.appendgrid@2.1.0/dist/AppendGrid.min.js"></script>
+<script src="https://unpkg.com/jquery.appendgrid@2.0.0/dist/AppendGrid.js"></script>
 {{--@dd(json_encode($products,JSON_UNESCAPED_UNICODE))--}}
 <script>
     const resource_id = document.getElementById('resource_id').value = {};
