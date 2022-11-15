@@ -67,6 +67,8 @@
             $(function () {
                 var table = $('#yajra-datatable').DataTable({
                     responsive: true,
+                    processing: true,
+                    serverSide: true,
                     columnDefs: [
                         {
                             targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11],
@@ -91,8 +93,7 @@
                             "previous": "Назад",
                             "next": "Дальше"
                         }
-                    }, processing: false,
-                    serverSide: true,
+                    },
                     buttons: {
                         buttons: [
                             {
