@@ -851,7 +851,7 @@ class ApplicationService
 
     private function getLinkHtmlBladeClone($row)
     {
-        return "<a href='" . route('site.applications.clone', $row->id) . "' class='m-1 col edit btn btn-sm btn-secondary'> " . __('edit') . "</a>";
+        return "<a href='" . route('site.applications.clone', $row->id) . "' class='m-1 col edit btn btn-sm btn-secondary'> " . __('clone') . "</a>";
     }
 
 
