@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use TCG\Voyager\Facades\Voyager;
 
@@ -24,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Paginator::useBootstrap();
         Voyager::addAction(\App\Actions\ActiveAction::class);
         Voyager::addAction(\App\Actions\ShowApplication::class);
         Voyager::addAction(\App\Actions\AddSignerAction::class);
