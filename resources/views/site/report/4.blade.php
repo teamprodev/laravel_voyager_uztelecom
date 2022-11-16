@@ -49,7 +49,7 @@
         <th style="text-align: center;" class="border border-dark">{{ __('Исполнитель заявки') }}</th>
         <th style="text-align: center;" class="border border-dark">{{ __('Бюджетни режалаштириш булими. Маълумот') }}</th>
         <th style="text-align: center;" class="border border-dark">{{ __('Харидлар режасида мавжудлиги буича маълумот') }}</th>
-        <th style="text-align: center;" class="border border-dark">{{ __('Предмет закупки') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('Цель закупки') }}</th>
         <th style="text-align: center;" class="border border-dark">{{ __('Основание(план закупок, рапорт, расспорежение руководства)') }}</th>
     </tr>
     </thead>
