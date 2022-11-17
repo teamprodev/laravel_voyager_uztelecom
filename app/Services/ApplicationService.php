@@ -32,10 +32,8 @@ use Illuminate\Http\JsonResponse;
 
 class ApplicationService
 {
-    /*
-     * Permissionlarga qarab Applicationlar chiqishi
-     */
     /**
+     * Permissionlarga qarab Applicationlar chiqishi
      * @throws Exception
      */
     final public function index_getData(object $user) : JsonResponse
@@ -163,10 +161,8 @@ class ApplicationService
             ->make(true);
     }
 
-    /*
-     * User tanlagan statusdagi Applicationlarni chiqarish
-     */
     /**
+     * User tanlagan statusdagi Applicationlarni chiqarish
      * @throws Exception
      */
     final public function status_table(object $user) : JsonResponse
@@ -247,10 +243,8 @@ class ApplicationService
             ->make(true);
     }
 
-    /*
-     * User tanlagan Performer_Statusga qarab Applicationlar show bo'lishi
-     * */
     /**
+     * User tanlagan Performer_Statusga qarab Applicationlar show bo'lishi
      * @throws Exception
      */
     final public function performer_status(object $user,string $status) : JsonResponse
@@ -341,8 +335,10 @@ class ApplicationService
             ->make(true);
     }
 
-    /*
+    /**
      * Application Clone(Nusxalash)
+     * @param int $id
+     * @return RedirectResponse
      */
     final public function clone(int $id) : RedirectResponse
     {
@@ -355,6 +351,8 @@ class ApplicationService
     }
 
     /**
+     * @param object $data
+     * @return JsonResponse
      * @throws Exception
      */
     final public function SignedDocs(object $data) : JsonResponse
@@ -385,8 +383,10 @@ class ApplicationService
             ->make(true);
     }
 
-    /*
+    /**
      * Application Create
+     * @param object $user auth user
+     * @return RedirectResponse
      */
     final public function create(object $user) : RedirectResponse
     {
@@ -400,10 +400,10 @@ class ApplicationService
         return redirect()->route('site.applications.edit', $application->id);
     }
 
-    /*
-     * Draft(Chernovik) Applicationlarni chiqazish
-     */
     /**
+     * Draft(Chernovik) Applicationlarni chiqazish
+     * @param object $user
+     * @return JsonResponse
      * @throws Exception
      */
     final public function show_draft_getData(object $user) : JsonResponse
@@ -438,8 +438,11 @@ class ApplicationService
             ->make(true);
     }
 
-    /*
+    /**
      * Image upload
+     * @param object $request
+     * @param object $application
+     * @return bool
      */
     final public function uploadImage(object $request,object $application) : bool
     {
@@ -484,7 +487,14 @@ class ApplicationService
         return true;
     }
 
-    final public function show(object $application,object $user) : array
+    /**
+     *
+     * Function  show
+     * @param object $application
+     * @param object $user
+     * @return  array
+     */
+    final public function show(object $application, object $user) : array
     {
         $access = SignedDocs::where('role_id', auth()->user()->role_id)->where('status', null)->where('application_id', $application->id)->first();
         $check = SignedDocs::where('role_id', auth()->user()->role_id)->where('application_id', $application->id)->first();
@@ -544,7 +554,14 @@ class ApplicationService
         return ['products_id' => $products_id, 'performer_file' => $performer_file, 'perms' => $perms, 'access_comment' => $access_comment, 'performers_company' => $performers_company, 'performers_branch' => $performers_branch, 'file_basis' => $file_basis, 'file_tech_spec' => $file_tech_spec, 'other_files' => $other_files, 'user' => $user, 'application' => $application, 'branch' => $branch, 'signedDocs' => $signedDocs, 'same_role_user_ids' => $same_role_user_ids, 'access' => $access, 'subjects' => $subjects, 'purchases' => $purchases, 'branch_name' => $branch_name, 'check' => $check, 'status' => $status, 'color_status' => $color_status];
     }
 
-    final public function edit(object $application,object $user) : array
+    /**
+     *
+     * Function  edit
+     * @param object $application
+     * @param object $user
+     * @return  array
+     */
+    final public function edit(object $application, object $user) : array
     {
         $status_extented = StatusExtended::all()->pluck('name', 'id')->toArray();
         $countries = ['0' => 'Select country'];
@@ -577,6 +594,14 @@ class ApplicationService
         ];
     }
 
+    /**
+     *
+     * Function  update
+     * @param object $application
+     * @param object $request
+     * @param object $user
+     * @return  RedirectResponse
+     */
     final public function update(object $application, object $request, object $user) : RedirectResponse
     {
         $now = Carbon::now();
