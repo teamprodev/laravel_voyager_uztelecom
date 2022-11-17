@@ -27,10 +27,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
-use phpDocumentor\Reflection\Php\Interface_;
-use phpDocumentor\Reflection\Types\Boolean;
-use phpDocumentor\Reflection\Types\String_;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\JsonResponse;
 
@@ -59,22 +55,23 @@ class ApplicationService
                     ->where('planned_price', '!=', null)
                     ->orWhere('performer_role_id', $user->role->id)
                     ->orWhere('user_id', $user->id)
+                    ->where('draft', '!=', ApplicationMagicNumber::one)
                     ->where('name', '!=', null)
                     ->get();
                 break;
             case $user->hasPermission(PermissionEnum::Warehouse) :
-                $query = Application::where('branch_id', $user->branch_id)->where('show_leader', ApplicationMagicNumber::two)->orWhere('user_id', $user->id)->get();
+                $query = Application::where('branch_id', $user->branch_id)->where('show_leader', ApplicationMagicNumber::two)->orWhere('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->get();
                 break;
             case $user->hasPermission(PermissionEnum::Branch_Leader):
             case $user->hasPermission(PermissionEnum::Company_Leader) :
-                $query = $application->orWhere('user_id', $user->id)->get();
+                $query = $application->orWhere('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->get();
                 break;
             case $user->hasPermission(PermissionEnum::Branch_Performer) :
             case $user->hasPermission(PermissionEnum::Company_Performer) :
-                $query = Application::where('performer_role_id', $user->role_id)->orWhere('user_id', $user->id)->get();
+                $query = Application::where('performer_role_id', $user->role_id)->orWhere('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->get();
                 break;
             default :
-                $query = $application->where('user_id', $user->id)->get();
+                $query = $application->where('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->get();
         }
         $optional_signers = $user->hasPermission(PermissionEnum::Add_Company_Signer) || $user->hasPermission(PermissionEnum::Add_Company_Signer);
         $required_signers = $user->hasPermission(PermissionEnum::Company_Signer) || $user->hasPermission(PermissionEnum::Branch_Signer);
@@ -87,6 +84,7 @@ class ApplicationService
                 ->where('planned_price', '!=', null)
                 ->OrWhere('signers', 'like', "%$user->role_id%")
                 ->orWhere('user_id', $user->id)
+                ->where('draft', '!=', ApplicationMagicNumber::one)
                 ->where('planned_price', '!=', null)
                 ->get();
         }elseif($leaders_in_signer){
@@ -95,6 +93,7 @@ class ApplicationService
                 ->where('branch_id', $user->branch_id)
                 ->OrWhere('signers', 'like', "%$user->role_id%")
                 ->orWhere('user_id', $user->id)
+                ->where('draft', '!=', ApplicationMagicNumber::one)
                 ->get();
         }
 
@@ -694,7 +693,7 @@ class ApplicationService
      * @param object $request
      * @return  bool
      */
-    final public function is_more_than_limit(object $application, object $request) : Boolean
+    final public function is_more_than_limit(object $application, object $request) : bool
     {
         $application->is_more_than_limit = $request->is_more_than_limit;
         $application->signers = null;
@@ -920,13 +919,21 @@ class ApplicationService
         return $application->status;
     }
 
-    public function restore_signers()
+    /**
+     *
+     * Function  restore_signers
+     * @return  bool
+     */
+    public function restore_signers() :bool
     {
+        /** @var object $applications Signers Null yoki Signers o'chib ketgan Applicationlar*/
         $applications = Application::where('signers', null)->get();
         foreach ($applications as $application) {
+            /** @var object $roles  @var object $applicationga tegishli bo'lgan signerlarning Role ID lari*/
             $roles = SignedDocs::where('application_id', $application->id)->pluck('role_id')->toArray();
             $application->signers = json_encode($roles);
             $application->save();
         }
+        return true;
     }
 }
