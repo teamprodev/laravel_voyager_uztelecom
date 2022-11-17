@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Models\Role;
 
 /**
- * @method static where(string $string, $role_id)
+ * @method static where(string $string, int $role_id)
  * @property mixed role_id
  * @property mixed role_index
  * @property mixed application_id

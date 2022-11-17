@@ -23,10 +23,16 @@ use App\Models\Subject;
 use App\Models\User;
 use App\Models\Warehouse;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
+use phpDocumentor\Reflection\Php\Interface_;
+use phpDocumentor\Reflection\Types\Boolean;
+use phpDocumentor\Reflection\Types\String_;
 use Yajra\DataTables\DataTables;
+use Illuminate\Http\JsonResponse;
 
 class ApplicationService
 {
@@ -36,9 +42,8 @@ class ApplicationService
     /**
      * @throws Exception
      */
-    public function index_getData($user)
+    final public function index_getData(object $user) : JsonResponse
     {
-        Cache::tags(['users'])->put('my', auth()->user());
         if ($user->hasPermission(PermissionEnum::Company_Leader) || $user->hasPermission(PermissionEnum::Branch_Leader)) {
             $a = 'branch_initiator_id';
             $b = [$user->branch_id];
@@ -165,7 +170,7 @@ class ApplicationService
     /**
      * @throws Exception
      */
-    public function status_table($user)
+    final public function status_table(object $user) : JsonResponse
     {
         $status = setting('admin.show_status');
         $application = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null)->whereIn('branch_initiator_id', [$user->branch_id]);
@@ -249,7 +254,7 @@ class ApplicationService
     /**
      * @throws Exception
      */
-    public function performer_status($user,$status)
+    final public function performer_status(object $user,string $status) : JsonResponse
     {
         $signedDocs = SignedDocs::where('role_id', $user->role_id)->pluck('application_id')->toArray();
         switch (true)
@@ -340,7 +345,7 @@ class ApplicationService
     /*
      * Application Clone(Nusxalash)
      */
-    public function clone($id)
+    final public function clone(int $id) : RedirectResponse
     {
         $clone = Application::findOrFail($id);
         $application = $clone->replicate();
@@ -353,7 +358,7 @@ class ApplicationService
     /**
      * @throws Exception
      */
-    public function SignedDocs($data)
+    final public function SignedDocs(object $data) : JsonResponse
     {
         return Datatables::of($data)
             ->addIndexColumn()
@@ -384,7 +389,7 @@ class ApplicationService
     /*
      * Application Create
      */
-    public function create($user)
+    final public function create(object $user) : RedirectResponse
     {
         $application = new Application();
         $application->user_id = $user->id;
@@ -402,7 +407,7 @@ class ApplicationService
     /**
      * @throws Exception
      */
-    public function show_draft_getData($user)
+    final public function show_draft_getData(object $user) : JsonResponse
     {
         $data = Application::where('user_id', $user->id)
             ->whereDraft(ApplicationMagicNumber::one);
@@ -437,7 +442,7 @@ class ApplicationService
     /*
      * Image upload
      */
-    public function uploadImage($request, $application)
+    final public function uploadImage(object $request,object $application) : bool
     {
         $file_basis = json_decode($application->file_basis);
         $file_tech_spec = json_decode($application->file_tech_spec);
@@ -477,9 +482,10 @@ class ApplicationService
         $application->file_tech_spec = json_encode($file_tech_spec);
         $application->other_files = json_encode($other_files);
         $application->update();
+        return true;
     }
 
-    public function show($application, $user)
+    final public function show(object $application,object $user) : array
     {
         $access = SignedDocs::where('role_id', auth()->user()->role_id)->where('status', null)->where('application_id', $application->id)->first();
         $check = SignedDocs::where('role_id', auth()->user()->role_id)->where('application_id', $application->id)->first();
@@ -505,11 +511,11 @@ class ApplicationService
         $id = DB::table('roles')->whereRaw('json_contains(branch_id, \'["' . $application->branch_id . '"]\')')->pluck('id')->toArray();
 
         foreach ($id as $role) {
-            $role_company[] = PermissionRole::where('role_id', $role)->where('permission_id', ApplicationMagicNumber::Company_Performer)->get()->pluck('role_id');
+            $role_company[] = PermissionRole::where('role_id', $role)->where('permission_id', ApplicationMagicNumber::Company_Performer)->pluck('role_id');
 
             $role_company = array_diff($role_company, ['[]']);
 
-            $branch = PermissionRole::where('role_id', $role)->where('permission_id', ApplicationMagicNumber::Branch_Performer)->get()->pluck('role_id');
+            $branch = PermissionRole::where('role_id', $role)->where('permission_id', ApplicationMagicNumber::Branch_Performer)->pluck('role_id');
 
             $role_branch[] = $branch;
             $role_branch = array_diff($role_branch, ['[]']);
@@ -539,7 +545,7 @@ class ApplicationService
         return ['products_id' => $products_id, 'performer_file' => $performer_file, 'perms' => $perms, 'access_comment' => $access_comment, 'performers_company' => $performers_company, 'performers_branch' => $performers_branch, 'file_basis' => $file_basis, 'file_tech_spec' => $file_tech_spec, 'other_files' => $other_files, 'user' => $user, 'application' => $application, 'branch' => $branch, 'signedDocs' => $signedDocs, 'same_role_user_ids' => $same_role_user_ids, 'access' => $access, 'subjects' => $subjects, 'purchases' => $purchases, 'branch_name' => $branch_name, 'check' => $check, 'status' => $status, 'color_status' => $color_status];
     }
 
-    public function edit($application, $user)
+    final public function edit(object $application,object $user) : array
     {
         $status_extented = StatusExtended::all()->pluck('name', 'id')->toArray();
         $countries = ['0' => 'Select country'];
@@ -572,7 +578,7 @@ class ApplicationService
         ];
     }
 
-    public function update($application, $request, $user)
+    final public function update(object $application, object $request, object $user) : RedirectResponse
     {
         $now = Carbon::now();
         $data = $request->validated();
@@ -602,81 +608,93 @@ class ApplicationService
         return redirect()->back()->with('danger', trans('site.application_failed'));
     }
 
-    public function edit_update($application, $request, $user)
+    /**
+     *
+     * Function  edit_update
+     * @param object $application Application Data
+     * @param object $request ApplicationRequest
+     * @param object $user auth()->user()
+     * @return  RedirectResponse
+     */
+    final public function edit_update(object $application, object $request, object $user) : RedirectResponse
     {
         $data = $request->validated();
+        /** @var string $roles create qilgan userning filialidagi Required Podpisantlar */
         $roles = ($application->branch_signers->signers);
         $this->deleteNullSigners($data, $application, $roles);
+
         if (isset($data['signers'])) {
-            $array = $roles ? array_merge(json_decode($roles), $data['signers']) : $data['signers'];
-            $data['signers'] = json_encode($array);
-            foreach ($array as $signers) {
-                $signer = SignedDocs::where('application_id', $application->id)->where('role_id', $signers)->first();
-                $docs = new SignedDocs();
-                $docs->role_id = $signers;
-                $docs->role_index = Roles::find($signers)->index === null ? ApplicationMagicNumber::one : (Roles::find($signers)->index);
-                $docs->application_id = $application->id;
-                $docs->table_name = "applications";
-                $signer === null ? $docs->save() : [];
-            }
-            if ($application->signers !== null) {
-                $signers = json_decode($data['signers']);
-                $signedDocs = SignedDocs::where('application_id', $application->id)->pluck('role_id')->toArray();
-                $not_signer = array_diff($signedDocs, $signers);
-                foreach ($not_signer as $delete) {
-                    SignedDocs::where('application_id', $application->id)->where('role_id', $delete)->delete();
-                }
-            }
-            $message = "$application->id " . "$application->name " . setting('admin.application_created');
-            $this->sendNotifications($array, $application, $message);
+            $this->signers($data,$application,$roles);
         } elseif ($application->signers === null) {
-            $data['signers'] = $roles;
-            $array = json_decode($roles);
-            foreach ($array as $signers) {
-                $signer = SignedDocs::where('application_id', $application->id)->where('role_id', $signers)->first();
-                $docs = new SignedDocs();
-                $docs->role_id = $signers;
-                $docs->role_index = Roles::find($signers)->index;
-                $docs->application_id = $application->id;
-                $docs->table_name = "applications";
-                $signer === null ? $docs->save() : [];
-            }
-            $message = "$application->id " . "$application->name " . setting('admin.application_created');
-            $this->sendNotifications($array, $application, $message);
-        }
-        if ($application->signers !== null && !isset($data['signers'])) {
-            $signers = json_decode($roles);
-            $signedDocs = SignedDocs::where('application_id', $application->id)->pluck('role_id')->toArray();
-            $not_signer = array_diff($signedDocs, $signers);
-            $data['signers'] = $roles;
-            foreach ($not_signer as $delete) {
-                SignedDocs::where('application_id', $application->id)->where('role_id', $delete)->delete();
-            }
+            $this->signers($data,$application,$roles);
         }
         if (isset($data['draft'])) {
-            if ($data['draft'] == ApplicationMagicNumber::one)
+            if ((int)$data['draft'] === ApplicationMagicNumber::one) {
                 $data['status'] = ApplicationStatusEnum::Draft;
-            elseif ($application->draft == 1)
+            }elseif ((int)$application->draft === 1) {
                 $data['status'] = ApplicationStatusEnum::New;
-        }
-        if (isset($data['resource_id'])) {
-            if ($data['resource_id'] === "[object Object]") {
-                $data['resource_id'] = null;
-            } else {
-                $explode = explode(',', $data['resource_id']);
-                $data['resource_id'] = json_encode($explode);
             }
         }
+        if (isset($data['resource_id'])) {
+            /** @var array $explode Product*/
+            $explode = explode(',', $data['resource_id']);
+            $data['resource_id'] = json_encode($explode);
+        }
         $data['status'] = $this->selectStatusApplication($application, $data);
+        /** @var bool $result */
         $result = $application->update($data);
-
         if ($result)
             return redirect()->route('site.applications.show', $application->id);
 
         return redirect()->back()->with('danger', trans('site.application_failed'));
     }
 
-    public function is_more_than_limit($application, $request)
+    /**
+     *
+     * Function  signers
+     * @param array $data
+     * @param object $application
+     * @param string $roles
+     */
+    final protected function signers(array $data, object $application, string $roles)
+    {
+        $data['signers'] = $data['signers'] ?? [];
+        /** @var array $array Application Signers */
+        /** @var string $roles Application Create qilgan User filialidagi Signerlar */
+        $array = $roles ? array_merge(json_decode($roles),$data['signers']) : $data['signers'];
+        $data['signers'] = json_encode($array);
+        foreach ($array as $signers) {
+            /** @var int $signers Role ID */
+            $signer = SignedDocs::where('application_id', $application->id)->where('role_id', $signers)->first();
+            $docs = new SignedDocs();
+            $docs->role_id = $signers;
+            $docs->role_index = Roles::find($signers)->index;
+            $docs->application_id = $application->id;
+            $docs->table_name = "applications";
+            $signer === null ?? $docs->save();
+        }
+        if ($application->signers !== null) {
+            $signers = json_decode($data['signers']);
+            $signedDocs = SignedDocs::where('application_id', $application->id)->pluck('role_id')->toArray();
+            /** @var array $not_signer Delete qilinishi kerak bo'lgan Role ID lar */
+            $not_signer = array_diff($signedDocs, $signers);
+            foreach ($not_signer as $delete) {
+                /** @var int $delete Delete qilinayotgan Role ID */
+                SignedDocs::where('application_id', $application->id)->where('role_id', $delete)->delete();
+            }
+        }
+        $message = "$application->id " . "$application->name " . setting('admin.application_created');
+        $this->sendNotifications($array, $application, $message);
+    }
+
+    /**
+     *
+     * Function  is_more_than_limit
+     * @param object $application
+     * @param object $request
+     * @return  bool
+     */
+    final public function is_more_than_limit(object $application, object $request) : Boolean
     {
         $application->is_more_than_limit = $request->is_more_than_limit;
         $application->signers = null;
@@ -688,7 +706,7 @@ class ApplicationService
         }
         $application->branch_id = $branch_id;
         SignedDocs::where('application_id', $application->id)->delete();
-        $application->save();
+        return $application->save();
     }
 
     public function sendNotifications($array, $application, $message)
@@ -718,11 +736,15 @@ class ApplicationService
     }
 
     /**
+     * @param object $user
+     * @return JsonResponse
      * @throws Exception
      */
-    public function to_sign_data($user)
+    final public function to_sign_data(object $user) : JsonResponse
     {
+        /** @var array $signedDocs Podpis qo'yilishi kerak bo'lgan zayavkalarning ID lari */
         $signedDocs = SignedDocs::where('role_id', $user->role_id)->whereNull('status')->pluck('application_id')->toArray();
+        /** @var object $data  Podpis qoyilishi kerak bo'lgan zayavkalar*/
         $data = Application::find($signedDocs);
         return Datatables::of($data)
             ->addIndexColumn()
@@ -799,7 +821,7 @@ class ApplicationService
         return $component;
     }
 
-    private function translateStatus($status)
+    private function translateStatus(string $status) : string
     {
         return match ($status) {
             'new' => __('new'),
@@ -873,11 +895,14 @@ class ApplicationService
             foreach ($application_signers as $signer) {
                 $application_signers_old[] = (int)$signer->role_id;
             }
-            $not_signers = array_diff($application_signers_new, $application_signers_old);
+            /** @var array $not_signers  zayavka signers dan udalit qilinishi kerak bo'lgan Role ID lar*/
+            $not_signers = array_diff($application_signers_old,$application_signers_new);
             if (count($not_signers) > 0) {
                 foreach ($not_signers as $signer) {
+                    /** @var int $signer  Udalit qilinayotgan Role ID*/
                     SignedDocs::where('application_id', $application->id)->where('role_id', $signer)->delete();
                 }
+                $application->signers = json_encode($not_signers);
             }
         }
     }

@@ -56,6 +56,10 @@ class ApplicationController extends Controller
         $user = auth()->user();
         return $this->service->status_table($user);
     }
+
+    /**
+     * @throws \Exception
+     */
     public function performer_status()
     {
         $user = auth()->user();
@@ -83,7 +87,7 @@ class ApplicationController extends Controller
     public function clone($id)
     {
         $this->middleware('application_clone');
-        return $this->service->clone($id);
+        return $this->service->clone((int)$id);
     }
     /**
      * Application Show
