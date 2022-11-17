@@ -62,7 +62,7 @@
             <th style="text-align: center;" class="border border-dark">{{ __('Предмет закупки (товар,работа,услуга)')}}</th>
             <th style="text-align: center;" class="border border-dark">{{ __('номер заявки') }}</th>
             <th style="text-align: center;" class="border border-dark">{{ __('сумма заявки') }}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('Предмет договора (контракта) и краткая характеристика') }}__('Предмет договора (контракта) и краткая характеристика')</th>
+            <th style="text-align: center;" class="border border-dark">{{ __('Предмет договора (контракта) и краткая характеристика') }}</th>
             <th style="text-align: center;" class="border border-dark">{{ __('Общая сумма договора (контракта)') }}</th>
             <th style="text-align: center;" class="border border-dark">{{ __('Номер протокола внутренней комиссии') }}</th>
             <th style="text-align: center;" class="border border-dark">{{ __('Дата протокола внутренней комиссии') }}</th>

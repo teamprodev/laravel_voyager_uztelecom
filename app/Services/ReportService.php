@@ -595,7 +595,7 @@ class ReportService
                 }
                 return json_encode(['backgroundColor' => $color,'app' => $this->translateStatus($status),'color' => $color ? 'white':'black']);
             })
-            ->editColumn('resource_id', function($application)
+            ->editColumn('product', function($application)
             {
                 if($application->resource_id != null)
                 {
