@@ -35,9 +35,9 @@
         <th style="text-align: center;" class="border border-dark">{{ __('Контактный телефон инициатора') }}</th>
         <th style="text-align: center;" class="border border-dark">{{ __('отдел инициатора') }}</th>
         <th style="text-align: center;" class="border border-dark">{{ __('вид закупки')}}</th>
-        <th style="text-align: center;" class="border border-dark">{{ __('Сотиб олинадиган махсулот номи (махсулот, иш, хизмат)') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('Наименование предмета закупки(товар, работа, услуги)') }}</th>
         <th style="text-align: center;" class="border border-dark">{{ __('Предмет закупки (товар,работа,услуга)')}}</th>
-        <th style="text-align: center;" class="border border-dark">{{ __('период') }}</th>
+        <th style="text-align: center;" class="border border-dark">{{ __('Гарантийный срок качества товара (работ, услуг)') }}</th>
         <th style="text-align: center;" class="border border-dark">{{ __('сумма заявки') }}</th>
         <th style="text-align: center;" class="border border-dark">{{ __('С НДС')}}</th>
         <th style="text-align: center;" class="border border-dark">{{ __('Валюта') }}</th>
@@ -80,7 +80,7 @@
         {data: 'phone', name: 'phone'},
         {data: 'department_initiator_id', name: 'department_initiator_id'},
         {data: 'type_of_purchase_id', name: 'type_of_purchase_id'},
-        {data: 'resource_id', name: 'resource_id'},
+        {data: 'name', name: 'name'},
         {data: 'subject', name: 'subject'},
         {data: 'expire_warranty_date', name: 'expire_warranty_date'},
         {data: 'planned_price', name: 'planned_price'},
