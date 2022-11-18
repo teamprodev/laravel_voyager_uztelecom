@@ -11,12 +11,16 @@ use App\Models\Setting;
 use App\Models\StatusExtended;
 use App\Services\ApplicationService;
 use App\Models\SignedDocs;
+use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon as Date;
 use Illuminate\Support\Facades\File;
 use App\Enums\ApplicationStatusEnum;
+use Illuminate\View\View;
 
 class ApplicationController extends Controller
 {
@@ -29,70 +33,116 @@ class ApplicationController extends Controller
         $this->middleware('auth');
         $this->service = $service;
     }
-    public function show_status($status)
+
+    /**
+     *
+     * Function  show_status
+     * @param string $status
+     * @return  View
+     */
+    final public function show_status(string $status) : View
     {
         $voyager = Setting::where('key','admin.show_status')->first();
         $voyager->value = $status;
         $voyager->save();
         return view('site.applications.status');
     }
+
     /**
      * Performer Statusda bo'lgan Applicationlarni ko'rsatish
-    */
-    public function performer_status_get()
+     *
+     * @return View
+     */
+    final public function performer_status_get() : View
     {
         $status = StatusExtended::pluck('name','id')->toArray();
         return view('site.applications.performer_status',compact('status'));
     }
-    public function performer_status_post(Request $req)
+
+    /**
+     *
+     * Function  performer_status_post
+     * @param Request $req
+     * @return  RedirectResponse
+     */
+    final public function performer_status_post(Request $req) : RedirectResponse
     {
         $voyager = Setting::where('key','admin.performer_status_get')->first();
         $voyager->value = $req->performer_status_get;
         $voyager->save();
         return redirect()->route('site.applications.performer_status_get');
     }
-    public function status_table()
+
+    /**
+     *
+     * Function  status_table
+     * @return  JsonResponse
+     * @throws Exception
+     */
+    final public function status_table() : JsonResponse
     {
+        /** @var object $user*/
         $user = auth()->user();
         return $this->service->status_table($user);
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
-    public function performer_status()
+    final public function performer_status() : JsonResponse
     {
+        /** @var object $user*/
         $user = auth()->user();
         $status = setting('admin.performer_status_get');
         return $this->service->performer_status($user,$status);
     }
+
     /**
      * All Application
      *
      * Hamma Applicationlar(Zayavkalar)
-    */
-    public function index()
+     *
+     * @return View
+     */
+    final public function index() : View
     {
         $user = auth()->user();
         return view('site.applications.index',['user' => $user]);
     }
-    public function index_getData()
+
+    /**
+     *
+     * Function  index_getData
+     * @return  JsonResponse
+     * @throws Exception
+     */
+    final public function index_getData() : JsonResponse
     {
+        /** @var object $user*/
         $user = auth()->user();
         return $this->service->index_getData($user);
     }
+
     /**
      * Application Clone(Nusxalash)
-    */
-    public function clone($id)
+     *
+     * @param int $id
+     * @return RedirectResponse
+     */
+    final public function clone(int $id) : RedirectResponse
     {
         $this->middleware('application_clone');
-        return $this->service->clone((int)$id);
+        return $this->service->clone($id);
     }
+
     /**
      * Application Show
-    */
-    public function show(Application $application, $view = false)
+     *
+     * @param Application $application
+     * @param bool $view
+     * @return View
+     */
+    final public function show(Application $application, $view = false) : View
     {
         if (isset($view)) {
             Notification::query()
@@ -103,34 +153,50 @@ class ApplicationController extends Controller
         $compact = $this->service->show($application, auth()->user());
         return view('site.applications.show', $compact);
     }
+
     /**
-     * @var application ga tegishli bolgan SignedDocs
-    */
-    public function SignedDocs($application)
+     * @throws Exception
+     * @var int $application ga tegishli bolgan SignedDocs
+     */
+    final public function SignedDocs(int $application) : JsonResponse
     {
         $data = SignedDocs::where('application_id',$application);
         return $this->service->SignedDocs($data);
     }
+
     /**
      * Application Image Upload
-    */
-    public function uploadImage(Request $request, Application $application)
+     *
+     * @param Request $request
+     * @param Application $application
+     * @return bool
+     */
+    final public function uploadImage(Request $request, Application $application) : bool
     {
         return $this->service->uploadImage($request,$application);
     }
+
     /**
      * Application Create
-    */
-    public function create()
+     *
+     * @return RedirectResponse
+     */
+    final public function create() : RedirectResponse
     {
+        /** @var object $user*/
         $user = auth()->user();
         return $this->service->create($user);
     }
+
     /**
      * Application Edit
-    */
-    public function edit(Application $application)
+     *
+     * @param Application $application
+     * @return View|RedirectResponse
+     */
+    final public function edit(Application $application) : View | RedirectResponse
     {
+        /** @var object $user*/
         $user = auth()->user();
 //        if(((($application->performer_role_id !== null) && ($application->performer_role_id !== auth()->user()->role_id)) && $user->hasPermission(PermissionEnum::Warehouse)) || $application->show_leader === 2)
 //        {
@@ -143,35 +209,55 @@ class ApplicationController extends Controller
         return view('site.applications.edit', $compact);
 
     }
+
     /**
      * Application Update
-    */
-    public function update(Application $application, ApplicationRequest $request)
+     *
+     * @param Application $application
+     * @param ApplicationRequest $request
+     * @return RedirectResponse
+     */
+    final public function update(Application $application, ApplicationRequest $request) : RedirectResponse
     {
+        /** @var object $user*/
         $user = auth()->user();
         return $this->service->update($application,$request,$user);
     }
-    public function edit_update(Application $application, ApplicationRequest $request)
+    final public function edit_update(Application $application, ApplicationRequest $request) : RedirectResponse
     {
+        /** @var object $user*/
         $user = auth()->user();
         return $this->service->edit_update($application,$request,$user);
     }
     /**
      * Chernovik bo'lgan applicationlarni ko'rish
     */
-    public function show_draft()
+    final public function show_draft() : View
     {
         return view('site.applications.draft');
     }
-    public function show_draft_getData()
+
+    /**
+     *
+     * Function  show_draft_getData
+     * @return  JsonResponse
+     * @throws Exception
+     */
+    final public function show_draft_getData() : JsonResponse
     {
+        /** @var object $user*/
         $user = auth()->user();
         return $this->service->show_draft_getData($user);
     }
+
     /**
      * soft delete post
+     *
+     * Function destroy
+     * @param Application $application
+     * @return RedirectResponse
      */
-    public function destroy(Application $application)
+    final public function destroy(Application $application) : RedirectResponse
     {
         $application->delete_from = auth()->user()->id;
         $application->save();
@@ -188,25 +274,49 @@ class ApplicationController extends Controller
      * Chunki 9 id bu Company AK UZBEKTELECOM
      *
      * Kelayotgan request 0 bo'lsa unda shu applicationni create qilgan userni filiali branch_initiator_id ga tushadi.
+     *
+     * @param Application $application
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function is_more_than_limit(Application $application,Request $request)
+    final public function is_more_than_limit(Application $application,Request $request) : RedirectResponse
     {
         $this->service->is_more_than_limit($application,$request);
         return redirect()->back();
     }
-    public function to_sign()
+
+    /**
+     *
+     * Function  to_sign
+     * @return  View
+     */
+    final public function to_sign() : View
     {
         return view('site.applications.to_sign');
     }
-    public function to_sign_data()
+
+    /**
+     *
+     * Function  to_sign_data
+     * @return  JsonResponse
+     * @throws Exception
+     */
+    final public function to_sign_data() : JsonResponse
     {
+        /** @var object $user*/
         $user = auth()->user();
         return $this->service->to_sign_data($user);
     }
-    /*
-        File delete
-    */
-    public function file_delete(Request $request, Application $application,$column)
+
+    /**
+     *   File delete
+     *
+     * @param Request $request
+     * @param Application $application
+     * @param string $column
+     * @return RedirectResponse
+     */
+    final public function file_delete(Request $request, Application $application, string $column) : RedirectResponse
     {
         $file = json_decode($application->$column, true);
         $delete = array_diff($file,[$request->file]);
@@ -218,7 +328,13 @@ class ApplicationController extends Controller
         File::move($file, public_path() . "/storage/backups/{$file_rename}" . Date::now()->format('Y-m-d-H-i-s') . '.' . $file_ext);
         return redirect()->back();
     }
-    public function change_status()
+
+    /**
+     *
+     * Function  change_status
+     * @return  bool
+     */
+    final public function change_status() : bool
     {
         $applications = Application::where('performer_role_id','!=',null)->where('status',ApplicationStatusEnum::In_Process)->get();
         foreach ($applications as $application) {
@@ -228,18 +344,14 @@ class ApplicationController extends Controller
         }
 
         $signed_docs = Application::where('draft','!=',ApplicationMagicNumber::one)->get();
-        foreach ($signed_docs as $docs) {
+        foreach($signed_docs as $docs) {
             $signedDocsId = SignedDocs::where('application_id',$docs->id)->get();
 
             $agreedUsers = $signedDocsId->where('status', ApplicationMagicNumber::one)->map(function ($doc) {
-                if (isset($doc->role_id)) {
-                    $role_id = $doc->role_id;
-                    return $role_id;
-                }
+                return $doc->role_id;
             });
             $canceledUsers = $signedDocsId->where('status', ApplicationMagicNumber::zero)->whereNotNull('status')->map(function ($doc) {
-                $role_id = $doc->role_id;
-                return $role_id;
+                return $doc->role_id;
             });
             $roles_need_sign = json_decode($docs->signers);
             switch (true){
@@ -267,7 +379,8 @@ class ApplicationController extends Controller
                     $docs->status = ApplicationStatusEnum::Rejected;
                     break;
             }
-            $docs->save();
+            return $docs->save();
         }
+        return true;
     }
 }
