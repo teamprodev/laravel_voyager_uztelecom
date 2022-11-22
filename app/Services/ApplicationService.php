@@ -97,31 +97,26 @@ class ApplicationService
 
         return Datatables::of($query)
             ->editColumn('is_more_than_limit', function ($query) {
-                return $query->is_more_than_limit == ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
+                return (int)$query->is_more_than_limit === ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
             })
             ->editColumn('user_id', function ($query) {
-                return Cache::tags(['table'])->get('branches')->find($query->user->branch_id)->name;
-            })
-            ->editColumn('created_at', function ($query) {
-                return $query->created_at ? with(new Carbon($query->created_at))->format('d.m.Y') : '';
+                $user = Cache::tags(['table'])->get('users')->find($query->user_id);
+                return Cache::tags(['table'])->get('branches')->find($user->branch_id)->name;
             })
             ->editColumn('branch_initiator_id', function ($query) {
                 return Cache::tags(['table'])->get('branches')->find($query->branch_id)->name;
             })
-            ->editColumn('planned_price', function ($query) {
-                return $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
-            })
             ->editColumn('updated_at', function ($query) {
-                return $query->updated_at ? with(new Carbon($query->updated_at))->format('d.m.Y') : '';
+                return with(new Carbon($query->updated_at))->format('d.m.Y');
             })
             ->editColumn('date', function ($query) {
-                return $query->date ? with(new Carbon($query->date))->format('d.m.Y') : '';
+                return $query->date ?? with(new Carbon($query->date))->format('d.m.Y');
             })
             ->editColumn('delivery_date', function ($query) {
-                return $query->delivery_date ? with(new Carbon($query->delivery_date))->format('d.m.Y') : '';
+                return $query->delivery_date ?? with(new Carbon($query->delivery_date))->format('d.m.Y');
             })
             ->addColumn('planned_price_curr', function ($query) {
-                $planned_price = $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
+                $planned_price = $query->planned_price ?? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ');
                 return "$planned_price  $query->currency";
             })
             ->editColumn('status', function ($query) {
@@ -142,17 +137,18 @@ class ApplicationService
             })
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                if (auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id) {
+                $user = Cache::tags(['table'])->get('users')->find(auth()->user()->id);
+                if ($user->id === $row->user_id || $user->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === $user->role_id) {
                     $data['edit'] = route('site.applications.edit', $row->id);
                 }
 
                 $data['show'] = route('site.applications.show', $row->id);
 
-                if ($row->user_id === auth()->user()->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two) {
+                if ($row->user_id === $user->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two) {
                     $data['destroy'] = route('site.applications.destroy', $row->id);
                 }
 
-                if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
+                if (($row->user_id === $user->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === $user->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === $user->id && $row->status === ApplicationStatusEnum::Rejected)) {
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
                 return json_encode(['link' => $this->createBlockAction($data, $row)]);
@@ -279,20 +275,11 @@ class ApplicationService
                 return Cache::tags(['table'])->get('branches')->find($query->branch_id)->name;
             })
             ->addIndexColumn()
-            ->editColumn('user_id', function ($docs) {
-                return $docs->user ? $docs->user->name : "";
-            })
-            ->editColumn('role_id', function ($docs) {
-                return $docs->role ? $docs->role->display_name : "";
-            })
             ->editColumn('planned_price', function ($query) {
                 return $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
             })
             ->editColumn('delivery_date', function ($query) {
-                return $query->updated_at ? with(new Carbon($query->delivery_date))->format('d.m.Y') : '';
-            })
-            ->editColumn('updated_at', function ($data) {
-                return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
+                return $query->delivery_date ? with(new Carbon($query->delivery_date))->format('d.m.Y') : '';
             })
             ->addColumn('planned_price_curr', function ($query) {
                 $planned_price = $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
