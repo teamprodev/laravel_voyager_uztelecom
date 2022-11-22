@@ -728,7 +728,12 @@ class ApplicationService
         } else {
             $application->branch_initiator_id = $branch_id;
         }
-        $application->branch_id = $branch_id;
+
+        if ($request->is_more_than_limit == ApplicationMagicNumber::one) {
+            $application->branch_id = ApplicationMagicNumber::Company;
+        } else {
+            $application->branch_id = $branch_id;
+        }
         SignedDocs::where('application_id', $application->id)->delete();
         return $application->save();
     }
