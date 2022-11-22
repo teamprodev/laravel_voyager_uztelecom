@@ -564,17 +564,16 @@
                               rows="3"></textarea>
                 </div>
                 <br/>
-                <input id="status" name="status" class="hidden" type="text">
                 <input value="applications" id="table_name" name="table_name" class="hidden" type="text">
                 <input value="{{$application->id}}" id="application_id" name="application_id" class="hidden"
                        type="text">
                 <input value="{{$user->id}}" name="user_id" class="hidden" type="text">
                 <input value="{{$user->role_id}}" name="role_id" class="hidden" type="text">
                 <div class="row ml-4 pb-4">
-                    <button onclick="status1()" type="submit" class="btn btn-success col-md-2">
+                    <button name="status" value="1" type="submit" class="btn btn-success col-md-2">
                         {{ __('Принять') }}
                     </button>
-                    <button onclick="status0()" type="submit" class="btn btn-danger col-md-2 mx-2   ">
+                    <button name="status" value="0" type="submit" class="btn btn-danger col-md-2 mx-2   ">
                         {{ __('Отказ') }}
                     </button>
                 </div>
@@ -743,14 +742,6 @@
             document.getElementById('eri_data').value = data;
             console.log(data);
             sign();
-        }
-
-        function status1() {
-            document.getElementById('status').value = 1;
-        }
-
-        function status0() {
-            document.getElementById('status').value = 0;
         }
 
         function functionBack() {
