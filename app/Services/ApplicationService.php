@@ -367,7 +367,24 @@ class ApplicationService
                 };
                 return $status_signer;
             })
+            ->addColumn('action', function ($row) {
+                $data = [];
+                $branch = Cache::tags(['table'])->get('branches')->find($row->application->branch_initiator_id);
+                if ($row->application->user_id === auth()->user()->id && !in_array($row->role_id, json_decode($branch->signers))) {
+                    $data['destroy'] = route('site.applications.delete.signedocs', [$row->id,$row->application->id]);
+                }
+                return json_encode(['link' => $this->createBlockAction($data, $row)]);
+            })
+            ->rawColumns(['action'])
             ->make(true);
+    }
+    final public function SignedDocsDelete(object $signedDocs,object $application) : bool
+    {
+        $signers = json_decode($application->signers);
+        $array = array_diff($signers,array($signedDocs->role_id));
+        $application->signers = json_encode($array);
+        $application->save();
+        return $signedDocs->delete();
     }
 
     /**
@@ -632,12 +649,9 @@ class ApplicationService
         $data = $request->validated();
         /** @var string $roles create qilgan userning filialidagi Required Podpisantlar */
         $roles = ($application->branch_signers->signers);
-        $this->deleteNullSigners($data, $application, $roles);
 
         if (isset($data['signers'])) {
-            $this->signers($data,$application,$roles);
-        } elseif ($application->signers === null) {
-            $this->signers($data,$application,$roles);
+            $data['signers'] = $this->signers($data,$application,$roles);
         }
         if (isset($data['draft'])) {
             if ((int)$data['draft'] === ApplicationMagicNumber::one) {
@@ -686,6 +700,7 @@ class ApplicationService
         }
         $message = "$application->id " . "$application->name " . setting('admin.application_created');
         $this->sendNotifications($array, $application, $message);
+        return $data['signers'];
     }
 
     /**
@@ -852,7 +867,7 @@ class ApplicationService
             $block .= "</br>" . $this->getLinkHtmlBladeEdit($row);
         }
         if (!empty($data['destroy'])) {
-            $block .= "</br>" . $this->getLinkHtmlBladeDestroy($row);
+            $block .= "</br>" . $this->getLinkHtmlBladeDestroy($data,$row);
         }
         if (!empty($data['clone'])) {
             $block .= "</br>" . $this->getLinkHtmlBladeClone($row);
@@ -870,11 +885,11 @@ class ApplicationService
         return "<a style='background-color: #000080; color: white' href='" . route('site.applications.show', $row->id) . "' class='m-1 col edit btn btn-sm'> " . __('show') . " </a>";
     }
 
-    private function getLinkHtmlBladeDestroy($row)
+    private function getLinkHtmlBladeDestroy($data,$row)
     {
         $alert_word = __('Вы уверены?');
         $alert = "onclick='return confirm(`$alert_word`)'";
-        return "<a href='" . route('site.applications.destroy', $row->id) . "' ${alert} class='m-1 col edit btn btn-sm btn-danger' > " . __('destroy') . " </a>";
+        return "<a href='" . $data['destroy'] . "' ${alert} class='m-1 col edit btn btn-sm btn-danger' > " . __('destroy') . " </a>";
     }
 
     private function getLinkHtmlBladeClone($row)

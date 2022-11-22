@@ -137,6 +137,7 @@ Route::group([
                         Route::get('performer_status/show','performer_status')->name('performer_status');
                         Route::get('list','getdata')->name('list');
                         Route::get('list/signedocs/{application}','SignedDocs')->name('list.signedocs');
+                        Route::get('list/{signedocs_id}/{application_id}/delete','SignedDocsDelete')->name('delete.signedocs');
                         Route::get('{application}/show/{view?}','show')->name('show')->middleware('branch');
                         Route::get('{application}/edit','edit')->name('edit')->middleware('branch');
                         Route::get('{application}/clone','clone')->name('clone')->middleware('branch');

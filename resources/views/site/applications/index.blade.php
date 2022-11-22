@@ -197,7 +197,12 @@
                         {data: 'user_id', name: 'user_id'},
                         {data: 'name', name: 'name'},
                         {data: 'delivery_date', name: 'delivery_date'},
-                        {data: 'planned_price_curr', name: 'planned_price_curr'},
+                        {
+                            data: 'planned_price_curr', name: 'planned_price_curr', render: function (data, type, row) {
+                                if (row.planned_price === null || row.planned_price==="" ) return `{{ __('not_filled') }}`;
+                                return row.planned_price + ' ' + row.currency;
+                            }
+                        },
                         {data: 'incoterms', name: 'incoterms'},
                         {
                             data: 'action',

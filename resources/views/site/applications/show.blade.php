@@ -371,7 +371,8 @@
                 <th>{{ __('Роль') }}</th>
                 <th>{{ __('Комментарий') }}</th>
                 <th>{{ __('Пользователь') }}</th>
-                <th class="hidden">Index</th>
+                <th>{{ __('Пользователь') }}</th>
+                <th>{{ __('Действие') }}</th>
             </tr>
             </thead>
         </table>
@@ -398,6 +399,13 @@
                     {data: 'comment', name: 'comment'},
                     {data: 'user_id', name: 'user_id'},
                     {data: 'role_index', name: 'role_index'},
+                    {
+                        data: 'action',
+                        render: function (link) {
+                            return JSON.parse(link).link;
+                        },
+                        name: 'action',
+                    },
                 ]
             });
         })

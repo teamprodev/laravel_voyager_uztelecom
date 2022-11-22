@@ -163,6 +163,17 @@ class ApplicationController extends Controller
         $data = SignedDocs::where('application_id',$application);
         return $this->service->SignedDocs($data);
     }
+    /**
+     * @throws Exception
+     * @var int $application
+     *
+     * $application ga tegishli bolgan SignedDocs ni o'chirish
+     */
+    final public function SignedDocsDelete(SignedDocs $signedocs_id,Application $application_id) : RedirectResponse
+    {
+        $this->service->SignedDocsDelete($signedocs_id,$application_id);
+        return redirect()->route('site.applications.show',$application_id->id);
+    }
 
     /**
      * Application Image Upload
