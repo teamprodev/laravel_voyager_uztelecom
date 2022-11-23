@@ -521,7 +521,8 @@ class ApplicationService
          * Permissionni Company_Performer va Branch_Performer bo'lganlarini ovotti
          */
 
-        $id = json_decode($application->branch->signers, true);
+        $id = DB::table('roles')->whereRaw('json_contains(branch_id, \'["' . $application->branch_id . '"]\')')->pluck('id')->toArray();
+
         foreach ($id as $role) {
             $role_company[] = PermissionRole::where('role_id', $role)->where('permission_id', ApplicationMagicNumber::Company_Performer)->pluck('role_id');
 
