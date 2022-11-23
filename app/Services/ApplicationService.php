@@ -649,9 +649,21 @@ class ApplicationService
         $data = $request->validated();
         /** @var string $roles create qilgan userning filialidagi Required Podpisantlar */
         $roles = ($application->branch_signers->signers);
-
         if (isset($data['signers'])) {
             $data['signers'] = $this->signers($data,$application,$roles);
+        }elseif(!isset($data['signers']) && $application->signers === null)
+        {
+            $data['signers'] = $roles;
+            foreach (json_decode($roles) as $signers) {
+                /** @var int $signers Role ID */
+                $signer = SignedDocs::where('application_id', $application->id)->where('role_id', $signers)->first();
+                $docs = new SignedDocs();
+                $docs->role_id = $signers;
+                $docs->role_index = Roles::find($signers)->index;
+                $docs->application_id = $application->id;
+                $docs->table_name = "applications";
+                $signer !== null || $docs->save();
+            }
         }
         if (isset($data['draft'])) {
             if ((int)$data['draft'] === ApplicationMagicNumber::one) {
