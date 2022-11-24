@@ -515,7 +515,7 @@ class ApplicationService
      */
     final public function show(object $application, object $user) : array
     {
-        $access = SignedDocs::where('role_id', auth()->user()->role_id)->where('status', null)->where('application_id', $application->id)->first();
+        $access = SignedDocs::where('role_id', auth()->user()->role_id)->whereNull('status')->where('application_id', $application->id)->first();
         $check = SignedDocs::where('role_id', auth()->user()->role_id)->where('application_id', $application->id)->first();
         $signedDocs = $application->signedDocs()->get();
         $file_basis = json_decode($application->file_basis);
