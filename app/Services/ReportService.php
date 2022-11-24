@@ -950,7 +950,7 @@ class ReportService
         $status = StatusExtended::query();
         return Datatables::of($status)
             ->addColumn('january', function($status){
-                $date = Cache::get('date_10');
+                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-01-01")
                     ->toDateTimeString();
 
@@ -960,7 +960,7 @@ class ReportService
                 return count($applications);
             })
             ->addColumn('february', function($status){
-                $date = Cache::get('date_10');
+                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-02-01")
                     ->toDateTimeString();
 
@@ -970,7 +970,7 @@ class ReportService
                 return count($applications);
             })
             ->addColumn('march', function($status){
-                $date = Cache::get('date_10');
+                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-03-01")
                     ->toDateTimeString();
 
@@ -980,7 +980,7 @@ class ReportService
                 return count($applications);
             })
             ->addColumn('april', function($status){
-                $date = Cache::get('date_10');
+                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-04-01")
                     ->toDateTimeString();
 
@@ -990,7 +990,7 @@ class ReportService
                 return count($applications);
             })
             ->addColumn('may', function($status){
-                $date = Cache::get('date_10');
+                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-05-01")
                     ->toDateTimeString();
 
@@ -1000,7 +1000,7 @@ class ReportService
                 return count($applications);
             })
             ->addColumn('june', function($status){
-                $date = Cache::get('date_10');
+                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-06-01")
                     ->toDateTimeString();
 
@@ -1010,7 +1010,7 @@ class ReportService
                 return count($applications);
             })
             ->addColumn('july', function($status){
-                $date = Cache::get('date_10');
+                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-07-01")
                     ->toDateTimeString();
 
@@ -1020,7 +1020,7 @@ class ReportService
                 return count($applications);
             })
             ->addColumn('august', function($status){
-                $date = Cache::get('date_10');
+                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-08-01")
                     ->toDateTimeString();
 
@@ -1030,7 +1030,7 @@ class ReportService
                 return count($applications);
             })
             ->addColumn('september', function($status){
-                $date = Cache::get('date_10');
+                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-09-01")
                     ->toDateTimeString();
 
@@ -1040,7 +1040,7 @@ class ReportService
                 return count($applications);
             })
             ->addColumn('october', function($status){
-                $date = Cache::get('date_10');
+                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-10-01")
                     ->toDateTimeString();
 
@@ -1050,7 +1050,7 @@ class ReportService
                 return count($applications);
             })
             ->addColumn('november', function($status){
-                $date = Cache::get('date_10');
+                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-11-01")
                     ->toDateTimeString();
 
@@ -1060,7 +1060,7 @@ class ReportService
                 return count($applications);
             })
             ->addColumn('december', function($status){
-                $date = Cache::get('date_10');
+                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-12-01")
                     ->toDateTimeString();
 
@@ -1070,7 +1070,7 @@ class ReportService
                 return count($applications);
             })
             ->addColumn('all', function($status){
-                $date = Cache::get('date_10');
+                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-01")
                     ->toDateTimeString();
 
