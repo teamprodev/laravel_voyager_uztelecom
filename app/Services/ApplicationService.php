@@ -384,7 +384,16 @@ class ApplicationService
             ->rawColumns(['action'])
             ->make(true);
     }
-    final public function SignedDocsDelete(object $signedDocs,object $application) : bool
+
+    /**
+     *
+     * Function  SignedDocsDelete
+     *
+     * @param object $signedDocs
+     * @param object $application
+     * @return  bool
+     */
+    final public function SignedDocsDelete(object $signedDocs, object $application) : bool
     {
         $signers = json_decode($application->signers);
         $array = array_diff($signers,array($signedDocs->role_id));
