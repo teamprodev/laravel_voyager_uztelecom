@@ -7,21 +7,28 @@ use App\Http\Requests\ProfileRequest;
 use App\Jobs\UpdateProfileJob;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function index()
+    final public function index() : View
     {
         $user = auth()->user();
         return view('site.profile.profile',['user' => $user]);
     }
 
-    public function other(User $id)
+    /**
+     *
+     * Function  other
+     * @param User $id
+     * @return  View
+     */
+    final public function other(User $id) : View
     {
         $user = $id;
         return view('site.profile.other',['user' => $user]);
