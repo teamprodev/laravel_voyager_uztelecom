@@ -582,9 +582,9 @@ class ApplicationService
      */
     final public function edit(object $application, object $user) : array
     {
-        $status_extented = StatusExtended::all()->pluck('name', 'id')->toArray();
+        $status_extented = StatusExtended::pluck('name', 'id')->toArray();
         $countries = ['0' => 'Select country'];
-        $countries[] = Country::get()->pluck('country_name', 'country_alpha3_code')->toArray();
+        $countries[] = Country::pluck('country_name', 'country_alpha3_code')->toArray();
         $select = Resource::pluck('name', 'id');
         $performer_file = json_decode($application->performer_file);
         $branch_signer = json_decode($application->branch->add_signers);
