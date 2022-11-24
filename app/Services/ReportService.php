@@ -8,6 +8,7 @@ use App\Enums\ApplicationStatusEnum;
 use App\Enums\PermissionEnum;
 use App\Models\Application;
 use App\Models\Branch;
+use App\Models\ReportDate;
 use App\Models\Resource;
 use App\Models\StatusExtended;
 use App\Models\User;
@@ -218,7 +219,7 @@ class ReportService
         }
         return Datatables::of($query)
             ->addColumn('tovar_1', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-01-01")
                     ->toDateTimeString();
 
@@ -228,7 +229,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('tovar_1_nds', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-01-01")
                     ->toDateTimeString();
 
@@ -239,7 +240,7 @@ class ReportService
             })
 
             ->addColumn('rabota_1', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-01-01")
                     ->toDateTimeString();
 
@@ -249,7 +250,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('rabota_1_nds', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-01-01")
                     ->toDateTimeString();
 
@@ -260,7 +261,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('usluga_1', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-01-01")
                     ->toDateTimeString();
 
@@ -270,7 +271,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('usluga_1_nds', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-01-01")
                     ->toDateTimeString();
 
@@ -280,7 +281,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('tovar_2', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-04-01")
                     ->toDateTimeString();
 
@@ -290,7 +291,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('tovar_2_nds', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-04-01")
                     ->toDateTimeString();
 
@@ -300,7 +301,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('rabota_2', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-04-01")
                     ->toDateTimeString();
 
@@ -310,7 +311,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('rabota_2_nds', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-04-01")
                     ->toDateTimeString();
 
@@ -320,7 +321,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('usluga_2', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-04-01")
                     ->toDateTimeString();
 
@@ -330,7 +331,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('usluga_2_nds', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-04-01")
                     ->toDateTimeString();
 
@@ -340,7 +341,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('tovar_3', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-07-01")
                     ->toDateTimeString();
 
@@ -350,7 +351,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('tovar_3_nds', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-07-01")
                     ->toDateTimeString();
 
@@ -361,7 +362,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('rabota_3', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-07-01")
                     ->toDateTimeString();
 
@@ -371,7 +372,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('rabota_3_nds', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-07-01")
                     ->toDateTimeString();
 
@@ -381,7 +382,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('usluga_3', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-07-01")
                     ->toDateTimeString();
 
@@ -391,7 +392,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('usluga_3_nds', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-07-01")
                     ->toDateTimeString();
 
@@ -401,7 +402,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('tovar_4', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-10-01")
                     ->toDateTimeString();
 
@@ -411,7 +412,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('tovar_4_nds', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-10-01")
                     ->toDateTimeString();
 
@@ -421,7 +422,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('rabota_4', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-10-01")
                     ->toDateTimeString();
 
@@ -431,7 +432,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('rabota_4_nds', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-10-01")
                     ->toDateTimeString();
 
@@ -441,7 +442,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('usluga_4', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-10-01")
                     ->toDateTimeString();
 
@@ -451,7 +452,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('usluga_4_nds', function($branch){
-                $date = Cache::get('date_2');
+                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
                 $start_date = Carbon::parse("{$date}-10-01")
                     ->toDateTimeString();
 

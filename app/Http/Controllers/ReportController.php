@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ApplicationMagicNumber;
+use App\Http\Requests\ReportDateRequest;
+use App\Models\ReportDate;
 use App\Models\StatusExtended;
 use App\Services\ApplicationService;
 use App\Services\ReportService;
@@ -30,16 +32,15 @@ class ReportController extends Controller
      * Request da Reportlar date keladi.
      * Shuni Cache ga put qiladi.
     **/
-    public function request(Request $request)
+    public function request(ReportDateRequest $request)
     {
-        Cache::put('date',$request->date);
-        Cache::put('date_2',$request->date_2);
-        Cache::put('date_10',$request->date_10);
-        Cache::put('date_5',$request->date_5);
-        Cache::put('date_6',$request->date_6);
-        Cache::put('date_9',$request->date_9);
-        Cache::put('date_3_month',$request->date_3_month);
-        Cache::put('date_4',$request->date_4);
+        $data = $request->validated();
+        foreach($data as $key=>$value)
+        {
+            $report = ReportDate::UpdateOrCreate(['report_key' => $key]);
+            $report->report_value = $value;
+            $report->save();
+        }
         return redirect()->back();
     }
     /**
@@ -47,12 +48,13 @@ class ReportController extends Controller
      **/
     public function index($id)
     {
+        $report = ReportDate::all();
             if($id == self::Quarterly_Planned_Report)
-                return view("site.report.{$id}");
+                return view("site.report.{$id}",compact('report'));
             elseif($id < self::Report_Statuses_Quantity){
-                return view("site.report.{$id}");
+                return view("site.report.{$id}",compact('report'));
             }
-            return view("site.report.10");
+            return view("site.report.10",compact('report'));
     }
     /**
      * Nechinchi Report ligiga qarab data chiqadi.
