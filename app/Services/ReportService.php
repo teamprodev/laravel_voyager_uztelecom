@@ -634,7 +634,7 @@ class ReportService
         }
         return Datatables::of($query)
             ->addColumn('count', function($branch){
-                $date = Cache::get('date_5');
+                $date = ReportDate::where('report_key','date_5')->pluck('report_value')[0];
                 $start_date = \Carbon\Carbon::parse("{$date}-01")
                     ->toDateTimeString();
 
@@ -644,7 +644,7 @@ class ReportService
                 return count($applications);
             })
             ->addColumn('summa', function($branch){
-                $date = Cache::get('date_5');
+                $date = ReportDate::where('report_key','date_5')->pluck('report_value')[0];
                 $start_date = \Carbon\Carbon::parse("{$date}-01")
                     ->toDateTimeString();
 
@@ -654,7 +654,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('count_1', function($branch){
-                $date = Cache::get('date_5');
+                $date = ReportDate::where('report_key','date_5')->pluck('report_value')[0];
                 $start_date = \Carbon\Carbon::parse("{$date}-01")
                     ->toDateTimeString();
 
@@ -664,7 +664,7 @@ class ReportService
                 return count($applications);
             })
             ->addColumn('summa_1', function($branch){
-                $date = Cache::get('date_5');
+                $date = ReportDate::where('report_key','date_5')->pluck('report_value')[0];
                 $start_date = \Carbon\Carbon::parse("{$date}-01")
                     ->toDateTimeString();
 
@@ -674,7 +674,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('count_2', function($branch){
-                $date = Cache::get('date_5');
+                $date = ReportDate::where('report_key','date_5')->pluck('report_value')[0];
                 $start_date = \Carbon\Carbon::parse("{$date}-01")
                     ->toDateTimeString();
 
@@ -684,7 +684,7 @@ class ReportService
                 return count($applications);
             })
             ->addColumn('summa_2', function($branch){
-                $date = Cache::get('date_5');
+                $date = ReportDate::where('report_key','date_5')->pluck('report_value')[0];
                 $start_date = \Carbon\Carbon::parse("{$date}-01")
                     ->toDateTimeString();
 
@@ -694,7 +694,7 @@ class ReportService
                 return array_sum($applications);
             })
             ->addColumn('count_3', function($branch){
-                $date = Cache::get('date_5');
+                $date = ReportDate::where('report_key','date_5')->pluck('report_value')[0];
                 $start_date = \Carbon\Carbon::parse("{$date}-01")
                     ->toDateTimeString();
 
@@ -704,7 +704,7 @@ class ReportService
                 return count($applications);
             })
             ->addColumn('summa_3', function($branch){
-                $date = Cache::get('date_5');
+                $date = ReportDate::where('report_key','date_5')->pluck('report_value')[0];
                 $start_date = \Carbon\Carbon::parse("{$date}-01")
                     ->toDateTimeString();
 
