@@ -58,10 +58,6 @@
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>{{ __('canceled') }}</p>
                         </a>
-                        <a href="{{route('site.applications.show_status', 'performed')}}" id="demo" class="collapse">
-                            <i class="nav-icon fas fa-chevron-right"></i>
-                            <p>{{ __('Исполнен') }}</p>
-                        </a>
                         <a href="{{route('site.applications.show_status', 'overdue')}}" id="demo" class="collapse">
                             <i class="nav-icon fas fa-chevron-right"></i>
                             <p>{{ __('overdue') }}</p>
