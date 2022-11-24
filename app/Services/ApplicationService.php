@@ -45,6 +45,7 @@ class ApplicationService
             $a = 'department_initiator_id';
             $b = [$user->department_id];
         }
+        $query = Application::query();
         $application = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null)->whereIn($a, $b);
         $optional_signers = $user->hasPermission(PermissionEnum::Add_Company_Signer) || $user->hasPermission(PermissionEnum::Add_Company_Signer);
         $required_signers = $user->hasPermission(PermissionEnum::Company_Signer) || $user->hasPermission(PermissionEnum::Branch_Signer);
@@ -55,14 +56,14 @@ class ApplicationService
         switch (true) {
             case $user->hasPermission(PermissionEnum::Purchasing_Management_Center) || $leaders_in_signer:
                 if ($user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
-                    $query = Application::where('draft', '!=', ApplicationMagicNumber::one)
+                    $query->where('draft', '!=', ApplicationMagicNumber::one)
                         ->where('planned_price', '!=', null)
                         ->OrWhere('signers', 'like', "%$user->role_id%")
                         ->orWhere('user_id', $user->id)
                         ->where('draft', '!=', ApplicationMagicNumber::one)
                         ->get();
                 }elseif($leaders_in_signer){
-                    $query = Application::where('draft', '!=', ApplicationMagicNumber::one)
+                    $query->where('draft', '!=', ApplicationMagicNumber::one)
                         ->where('planned_price', '!=', null)
                         ->where('branch_id', $user->branch_id)
                         ->OrWhere('signers', 'like', "%$user->role_id%")
@@ -73,7 +74,7 @@ class ApplicationService
                 break;
             case $user->hasPermission(PermissionEnum::Company_Signer) || $user->hasPermission(PermissionEnum::Add_Company_Signer) || $user->hasPermission(PermissionEnum::Branch_Signer) || $user->hasPermission(PermissionEnum::Add_Branch_Signer):
                 $signedDocs = SignedDocs::where('role_id', $user->role_id)->pluck('application_id')->toArray();
-                $query = Application::whereIn('id',$signedDocs)
+                $query->whereIn('id',$signedDocs)
                     ->where('planned_price', '!=', null)
                     ->orWhere('performer_role_id', $user->role->id)
                     ->orWhere('user_id', $user->id)
@@ -81,7 +82,7 @@ class ApplicationService
                     ->get();
                 break;
             case $user->hasPermission(PermissionEnum::Warehouse) :
-                $query = Application::where('branch_id', $user->branch_id)->where('show_leader', ApplicationMagicNumber::two)->orWhere('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->get();
+                $query->where('branch_id', $user->branch_id)->where('show_leader', ApplicationMagicNumber::two)->orWhere('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->get();
                 break;
             case $user->hasPermission(PermissionEnum::Branch_Leader):
             case $user->hasPermission(PermissionEnum::Company_Leader) :
@@ -89,7 +90,7 @@ class ApplicationService
                 break;
             case $user->hasPermission(PermissionEnum::Branch_Performer) :
             case $user->hasPermission(PermissionEnum::Company_Performer) :
-                $query = Application::where('performer_role_id', $user->role_id)->orWhere('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->get();
+                $query->where('performer_role_id', $user->role_id)->orWhere('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->get();
                 break;
             default :
                 $query = $application->where('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->get();
