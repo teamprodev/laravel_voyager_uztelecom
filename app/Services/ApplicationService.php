@@ -46,7 +46,7 @@ class ApplicationService
             $b = [$user->department_id];
         }
         $query = Application::query();
-        $application = Application::where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null)->whereIn($a, $b);
+        $application = $query->where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null)->whereIn($a, $b);
         $optional_signers = $user->hasPermission(PermissionEnum::Add_Company_Signer) || $user->hasPermission(PermissionEnum::Add_Company_Signer);
         $required_signers = $user->hasPermission(PermissionEnum::Company_Signer) || $user->hasPermission(PermissionEnum::Branch_Signer);
         $leaders_in_signer =
