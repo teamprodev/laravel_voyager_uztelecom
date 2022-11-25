@@ -122,6 +122,29 @@ class ApplicationController extends Controller
         $user = auth()->user();
         return $this->service->index_getData($user);
     }
+    /**
+     * O'zi yaratgan Applicationlar(Zayavkalar)
+     *
+     * @return View
+     */
+    final public function my_applications() : View
+    {
+        $user = auth()->user();
+        return view('site.applications.my_applications',['user' => $user]);
+    }
+
+    /**
+     *
+     * Function  my_applications_getData
+     * @return  JsonResponse
+     * @throws Exception
+     */
+    final public function my_applications_getData() : JsonResponse
+    {
+        /** @var object $user*/
+        $user = auth()->user();
+        return $this->service->my_applications_getData($user);
+    }
 
     /**
      * Application Clone(Nusxalash)

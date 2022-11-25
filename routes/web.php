@@ -128,6 +128,8 @@ Route::group([
                     Route::controller(ApplicationController::class)->group(function() {
                         Route::get('', 'index')->name('index');
                         Route::get('index_getData', 'index_getData')->name('index_getData');
+                        Route::get('my_applications', 'my_applications')->name('my_applications');
+                        Route::get('my_applications_getData', 'my_applications_getData')->name('my_applications_getData');
                         Route::get('{status}/show_status','show_status')->name('show_status');
                         Route::get('status_table/show','status_table')->name('status_table');
                         Route::get('to_sign/','to_sign')->name('to_sign');

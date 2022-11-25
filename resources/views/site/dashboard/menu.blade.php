@@ -8,6 +8,14 @@
                 </p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{route('site.applications.my_applications')}}" class="nav-link">
+                <i class="nav-icon fas fa-th-list"></i>
+                <p>
+                    {{ __('Мои заявки') }}
+                </p>
+            </a>
+        </li>
         @if(auth()->user()->branch_id != null && auth()->user()->department_id != null)
         @if(auth()->user()->hasPermission(\App\Enums\PermissionEnum::Select_Branch))
         <li class="nav-item">

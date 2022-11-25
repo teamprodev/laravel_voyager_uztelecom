@@ -150,6 +150,74 @@ class ApplicationService
             ->rawColumns(['action', 'status'])
             ->make(true);
     }
+    final public function my_applications_getData(object $user) : JsonResponse
+    {
+        $query = Application::query()->where('user_id',$user->id);
+
+        return Datatables::of($query)
+            ->editColumn('is_more_than_limit', function ($query) {
+                return (int)$query->is_more_than_limit === ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
+            })
+            ->editColumn('user_id', function ($query) {
+                $user = Cache::tags(['table'])->get('users')->find($query->user_id);
+                return Cache::tags(['table'])->get('branches')->find($user->branch_id)->name;
+            })
+            ->editColumn('branch_initiator_id', function ($query) {
+                return Cache::tags(['table'])->get('branches')->find($query->branch_id)->name;
+            })
+            ->editColumn('updated_at', function ($query) {
+                return with(new Carbon($query->updated_at))->format('d.m.Y');
+            })
+            ->editColumn('date', function ($query) {
+                return $query->date ?? with(new Carbon($query->date))->format('d.m.Y');
+            })
+            ->editColumn('delivery_date', function ($query) {
+                return $query->delivery_date ?? with(new Carbon($query->delivery_date))->format('d.m.Y');
+            })
+            ->editColumn('planned_price', function ($query) {
+                return $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
+            })
+            ->addColumn('planned_price_curr', function ($query) {
+                $planned_price = $query->planned_price ?? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ');
+                return "$planned_price  $query->currency";
+            })
+            ->editColumn('status', function ($query) {
+                /*
+                 *  Voyager admin paneldan status ranglarini olish va chiqarish
+                 */
+                $status_extended = Cache::tags(['table'])->get('status_extended')->find($query->performer_status);
+                $status = match (true) {
+                    $query->status === ApplicationStatusEnum::Order_Arrived => 'товар прибыл',
+                    $query->status === ApplicationStatusEnum::Order_Delivered => 'товар доставлен',
+                    $query->performer_status !== null => $status_extended->name,
+                    default => $query->status
+                };
+                $color_status_if = ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Arrived) || ($query->performer_status !== null && $query->status !== ApplicationStatusEnum::Order_Delivered);
+                $color = $color_status_if ? $status_extended->color : setting("color.$status");
+
+                return json_encode(['backgroundColor' => $color, 'app' => $this->translateStatus($status), 'color' => $color ? 'white' : 'black']);
+            })
+            ->addIndexColumn()
+            ->addColumn('action', function ($row) {
+                $user = Cache::tags(['table'])->get('users')->find(auth()->user()->id);
+                if ($user->id === $row->user_id || $user->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === $user->role_id) {
+                    $data['edit'] = route('site.applications.edit', $row->id);
+                }
+
+                $data['show'] = route('site.applications.show', $row->id);
+
+                if ($row->user_id === $user->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two) {
+                    $data['destroy'] = route('site.applications.destroy', $row->id);
+                }
+
+                if (($row->user_id === $user->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === $user->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === $user->id && $row->status === ApplicationStatusEnum::Rejected)) {
+                    $data['clone'] = route('site.applications.clone', $row->id);
+                }
+                return json_encode(['link' => $this->createBlockAction($data, $row)]);
+            })
+            ->rawColumns(['action', 'status'])
+            ->make(true);
+    }
 
     /**
      * User tanlagan statusdagi Applicationlarni chiqarish
