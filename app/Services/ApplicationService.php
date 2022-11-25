@@ -551,7 +551,7 @@ class ApplicationService
         $perms['NumberChange'] = $user->hasPermission(PermissionEnum::Number_Change) && !$user->hasPermission(PermissionEnum::Plan_Budget) && !$user->hasPermission(PermissionEnum::Plan_Business);
         $perms['Plan'] = $user->hasPermission(PermissionEnum::Plan_Business) && $check;
         $perms['PerformerLeader'] = $application->performer_role_id === $user->role_id && $user->leader === ApplicationMagicNumber::one;
-        $perms['Signers'] = ($access && $user->hasPermission(PermissionEnum::Company_Signer || PermissionEnum::Add_Company_Signer || PermissionEnum::Branch_Signer || PermissionEnum::Add_Branch_Signer || PermissionEnum::Company_Performer || PermissionEnum::Branch_Performer)) || ($access && (int)$user->role_id === ApplicationMagicNumber::Director && $application->show_director === ApplicationMagicNumber::one);
+        $perms['Signers'] = (($access && $user->hasPermission(PermissionEnum::Company_Signer || PermissionEnum::Add_Company_Signer || PermissionEnum::Branch_Signer || PermissionEnum::Add_Branch_Signer || PermissionEnum::Company_Performer || PermissionEnum::Branch_Performer)) || ($access && (int)$user->role_id === ApplicationMagicNumber::Director && $application->show_director === ApplicationMagicNumber::one)) && (int)$application->draft !== 1;
         $status = match (true) {
             $application->status === ApplicationStatusEnum::Order_Arrived => 'товар прибыл',
             $application->status === ApplicationStatusEnum::Order_Delivered => 'товар доставлен',
@@ -656,33 +656,26 @@ class ApplicationService
         $roles = ($application->branch_signers->signers);
         if (isset($data['signers'])) {
             $data['signers'] = $this->signers($data,$application,$roles);
+            $this->createSignedDocs(json_decode($data['signers']),$application);
+            $message = "$application->id " . "$application->name " . setting('admin.application_created');
+            $this->sendNotifications(json_decode($roles), $application, $message);
         }elseif(!isset($data['signers']) && $application->signers === null)
         {
+            $this->createSignedDocs(json_decode($roles),$application);
+            $message = "$application->id " . "$application->name " . setting('admin.application_created');
+            $this->sendNotifications(json_decode($roles), $application, $message);
             $data['signers'] = $roles;
-            foreach (json_decode($roles) as $signers) {
-                /** @var int $signers Role ID */
-                $signer = SignedDocs::where('application_id', $application->id)->where('role_id', $signers)->first();
-                $docs = new SignedDocs();
-                $docs->role_id = $signers;
-                $docs->role_index = Roles::find($signers)->index;
-                $docs->application_id = $application->id;
-                $docs->table_name = "applications";
-                $signer !== null || $docs->save();
-            }
-        }
-        if (isset($data['draft'])) {
-            if ((int)$data['draft'] === ApplicationMagicNumber::one) {
-                $data['status'] = ApplicationStatusEnum::Draft;
-            }elseif ((int)$application->draft === 1) {
-                $data['status'] = ApplicationStatusEnum::New;
-            }
         }
         if (isset($data['resource_id'])) {
             /** @var array $explode Product*/
             $explode = explode(',', $data['resource_id']);
             $data['resource_id'] = json_encode($explode);
         }
-        $data['status'] = $this->selectStatusApplication($application, $data);
+        if ((int)$data['draft'] === 1) {
+            $data['status'] = ApplicationStatusEnum::Draft;
+        }else{
+            $data['status'] = ApplicationStatusEnum::New;
+        }
         /** @var bool $result */
         $result = $application->update($data);
         if ($result)
@@ -705,19 +698,22 @@ class ApplicationService
         /** @var string $roles Application Create qilgan User filialidagi Signerlar */
         $array = $roles ? array_merge(json_decode($roles),$data['signers']) : $data['signers'];
         $data['signers'] = json_encode($array);
-        foreach ($array as $signers) {
+        return $data['signers'];
+    }
+    final protected function createSignedDocs(array $array,object $application) : bool
+    {
+        $roles = Roles::find($array);
+        foreach ($array as $key=>$signers) {
             /** @var int $signers Role ID */
             $signer = SignedDocs::where('application_id', $application->id)->where('role_id', $signers)->first();
             $docs = new SignedDocs();
             $docs->role_id = $signers;
-            $docs->role_index = Roles::find($signers)->index;
+            $docs->role_index = $roles[$key]->index;
             $docs->application_id = $application->id;
             $docs->table_name = "applications";
             $signer !== null || $docs->save();
         }
-        $message = "$application->id " . "$application->name " . setting('admin.application_created');
-        $this->sendNotifications($array, $application, $message);
-        return $data['signers'];
+        return true;
     }
 
     /**
