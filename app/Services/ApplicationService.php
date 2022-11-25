@@ -152,7 +152,7 @@ class ApplicationService
     }
     final public function my_applications_getData(object $user) : JsonResponse
     {
-        $query = Application::query()->where('user_id',$user->id);
+        $query = Application::where('user_id',$user->id)->whereNotNull('planned_price')->get();
 
         return Datatables::of($query)
             ->editColumn('is_more_than_limit', function ($query) {
@@ -169,7 +169,7 @@ class ApplicationService
                 return with(new Carbon($query->updated_at))->format('d.m.Y');
             })
             ->editColumn('date', function ($query) {
-                return $query->date ?? with(new Carbon($query->date))->format('d.m.Y');
+                return $query->date ? with(new Carbon($query->date))->format('d.m.Y'): '';
             })
             ->editColumn('delivery_date', function ($query) {
                 return $query->delivery_date ?? with(new Carbon($query->delivery_date))->format('d.m.Y');
