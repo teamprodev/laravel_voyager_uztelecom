@@ -65,8 +65,6 @@ class ApplicationService
                         ->where('planned_price', '!=', null)
                         ->where('branch_id', $user->branch_id)
                         ->OrWhere('signers', 'like', "%$user->role_id%")
-                        ->orWhere('user_id', $user->id)
-                        ->where('draft', '!=', ApplicationMagicNumber::one)
                         ->get();
                 }
                 break;
@@ -75,23 +73,17 @@ class ApplicationService
                 $query->whereIn('id',$signedDocs)
                     ->where('planned_price', '!=', null)
                     ->orWhere('performer_role_id', $user->role->id)
-                    ->orWhere('user_id', $user->id)
-                    ->where('draft', '!=', ApplicationMagicNumber::one)
                     ->get();
                 break;
             case $user->hasPermission(PermissionEnum::Warehouse) :
-                $query->where('branch_id', $user->branch_id)->where('show_leader', ApplicationMagicNumber::two)->orWhere('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->get();
-                break;
-            case $user->hasPermission(PermissionEnum::Branch_Leader):
-            case $user->hasPermission(PermissionEnum::Company_Leader) :
-                $query = $application->orWhere('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->get();
+                $query->where('branch_id', $user->branch_id)->where('show_leader', ApplicationMagicNumber::two)->get();
                 break;
             case $user->hasPermission(PermissionEnum::Branch_Performer) :
             case $user->hasPermission(PermissionEnum::Company_Performer) :
-                $query->where('performer_role_id', $user->role_id)->orWhere('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->get();
+                $query->where('performer_role_id', $user->role_id)->get();
                 break;
             default :
-                $query = $application->where('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->get();
+                $query = $application->get();
         }
 
         return Datatables::of($query)
