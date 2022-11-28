@@ -61,10 +61,12 @@ class ApplicationService
                         ->OrWhere('signers', 'like', "%$user->role_id%")
                         ->get();
                 }elseif($leaders_in_signer){
-                    $query->where('draft', '!=', ApplicationMagicNumber::one)
+                    $query = Application::query()->where('draft', '!=', ApplicationMagicNumber::one)
                         ->where('planned_price', '!=', null)
                         ->where('branch_id', $user->branch_id)
                         ->OrWhere('signers', 'like', "%$user->role_id%")
+                        ->OrWhere('user_id', $user->id)
+                        ->where('draft', '!=', ApplicationMagicNumber::one)
                         ->get();
                 }
                 break;
@@ -80,7 +82,7 @@ class ApplicationService
                 break;
             case $user->hasPermission(PermissionEnum::Branch_Performer) :
             case $user->hasPermission(PermissionEnum::Company_Performer) :
-                $query->where('performer_role_id', $user->role_id)->get();
+                 $query = Application::query()->where('performer_role_id', $user->role_id)->Orwhere('user_id', $user->id)->where('draft', '!=', ApplicationMagicNumber::one)->get();
                 break;
             default :
                 $query = $application->get();
