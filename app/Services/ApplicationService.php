@@ -72,9 +72,11 @@ class ApplicationService
                 break;
             case $user->hasPermission(PermissionEnum::Company_Signer) || $user->hasPermission(PermissionEnum::Add_Company_Signer) || $user->hasPermission(PermissionEnum::Branch_Signer) || $user->hasPermission(PermissionEnum::Add_Branch_Signer):
                 $signedDocs = SignedDocs::where('role_id', $user->role_id)->pluck('application_id')->toArray();
-                $query->whereIn('id',$signedDocs)
+                $query = Application::query()->whereIn('id',$signedDocs)
                     ->where('planned_price', '!=', null)
                     ->orWhere('performer_role_id', $user->role->id)
+                    ->OrWhere('user_id', $user->id)
+                    ->where('draft', '!=', ApplicationMagicNumber::one)
                     ->get();
                 break;
             case $user->hasPermission(PermissionEnum::Warehouse) :
