@@ -78,6 +78,7 @@
                     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "{{ __('Все') }}"]],
                     processing: true,
                     serverSide: true,
+                    fixedHeader: true,
                     ajax:
                         "/branches/ajax_branch",
 
@@ -109,8 +110,7 @@
                         },
                     ]
                 });
-
-
+                new $.fn.dataTable.FixedHeader( table );
             });
         </script>
     @endpush
