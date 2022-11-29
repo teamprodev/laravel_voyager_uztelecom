@@ -45,7 +45,7 @@ class ApplicationService
             $a = 'department_initiator_id';
             $b = [$user->department_id];
         }
-        $query = Application::query()->where('draft', '!=', ApplicationMagicNumber::one)->orWhere('user_id', $user->id);
+        $query = Application::query()->orWhere('user_id', $user->id);
         $application = $query->where('draft', '!=', ApplicationMagicNumber::one)->where('planned_price', '!=', null)->whereIn($a, $b);
         $optional_signers = $user->hasPermission(PermissionEnum::Add_Company_Signer) || $user->hasPermission(PermissionEnum::Add_Company_Signer);
         $required_signers = $user->hasPermission(PermissionEnum::Company_Signer) || $user->hasPermission(PermissionEnum::Branch_Signer);
@@ -58,7 +58,8 @@ class ApplicationService
                 if ($user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
                     $query->where('draft', '!=', ApplicationMagicNumber::one)
                         ->where('planned_price', '!=', null)
-                        ->OrWhere('signers', 'like', "%$user->role_id%")
+                        ->Where('signers', 'like', "%$user->role_id%")
+                        ->orwhere('draft', '!=', ApplicationMagicNumber::one)
                         ->get();
                 }elseif($leaders_in_signer){
                     $query = Application::query()->where('draft', '!=', ApplicationMagicNumber::one)
