@@ -2,10 +2,10 @@
 
 use App\Models\Notification;
 
-$notifications = Notification::with('application:id,created_at')->has('application')
-    ->where('user_id', auth()->id())
-    ->where('is_read', 0)
-    ->get();
+//$notifications = Notification::with('application:id,created_at')->has('application')
+//    ->where('user_id', auth()->id())
+//    ->where('is_read', 0)
+//    ->get();
 ?>
     <!-- Navbar -->
 <ul class="navbar-nav">
@@ -39,30 +39,30 @@ $notifications = Notification::with('application:id,created_at')->has('applicati
     <li class="nav-item">
         @include('site.dashboard.language')
     </li>
-    <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-            <i class="far fa-bell"></i>
-            <span class="badge badge-warning navbar-badge red-notification bg-danger"
-                  id="notification_count">{{$notifications->count() == 0 ? '' : $notifications->count()}}</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right notifications-menu" id="notifications">
-            <span class="dropdown-header" id="notification_count_text">{{$notifications->count()}} {{ __("notification") }}</span>
-            <div class="py-1 overflow-y-auto max-h-96">
-                @foreach($notifications as $notification)
-                    <div class="dropdown-divider"></div>
-                    <a href="{{route('site.applications.show', ['application' => $notification->application->id, 'view' => 1])}}" class="dropdown-item">
-                        <p>
-                            <i class="fas fa-envelope mr-2"></i>
-                            {{$notification->message}}
-                            <span class="float-right text-muted text-sm">
-                                {{now()->diffInMinutes($notification->created_at)}} {{ __('minutes') }}
-                            </span>
-                        </p>
-                    </a>
-                @endforeach
-            </div>
-        </div>
-    </li>
+{{--    <li class="nav-item dropdown">--}}
+{{--        <a class="nav-link" data-toggle="dropdown" href="#">--}}
+{{--            <i class="far fa-bell"></i>--}}
+{{--            <span class="badge badge-warning navbar-badge red-notification bg-danger"--}}
+{{--                  id="notification_count">{{$notifications->count() == 0 ? '' : $notifications->count()}}</span>--}}
+{{--        </a>--}}
+{{--        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right notifications-menu" id="notifications">--}}
+{{--            <span class="dropdown-header" id="notification_count_text">{{$notifications->count()}} {{ __("notification") }}</span>--}}
+{{--            <div class="py-1 overflow-y-auto max-h-96">--}}
+{{--                @foreach($notifications as $notification)--}}
+{{--                    <div class="dropdown-divider"></div>--}}
+{{--                    <a href="{{route('site.applications.show', ['application' => $notification->application->id, 'view' => 1])}}" class="dropdown-item">--}}
+{{--                        <p>--}}
+{{--                            <i class="fas fa-envelope mr-2"></i>--}}
+{{--                            {{$notification->message}}--}}
+{{--                            <span class="float-right text-muted text-sm">--}}
+{{--                                {{now()->diffInMinutes($notification->created_at)}} {{ __('minutes') }}--}}
+{{--                            </span>--}}
+{{--                        </p>--}}
+{{--                    </a>--}}
+{{--                @endforeach--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </li>--}}
     <li class="nav-item">
         <div class="relative inline-block ">
             <button onclick="toggleDD('myDropdown')"
