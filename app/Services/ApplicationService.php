@@ -106,7 +106,7 @@ class ApplicationService
                 return with(new Carbon($query->updated_at))->format('d.m.Y');
             })
             ->editColumn('date', function ($query) {
-                return $query->date ?? with(new Carbon($query->date))->format('d.m.Y');
+                return $query->date ? with(new Carbon($query->date))->format('d.m.Y'): '';
             })
             ->editColumn('delivery_date', function ($query) {
                 return $query->delivery_date ?? with(new Carbon($query->delivery_date))->format('d.m.Y');
