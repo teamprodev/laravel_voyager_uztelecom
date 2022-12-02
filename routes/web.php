@@ -39,7 +39,7 @@ Route::get('/branches/ajax_branch', [BranchController::class,'ajax_branch'])->na
 
 Route::controller(ReportController::class)->group(function() {
     Route::post('/request','request')->name('request');
-    Route::get('/report/request/{id}','report')->name('report');
+    Route::post('/report/request/{id}','report')->name('report');
 
 });
 Route::get('roles/getData',[RoleController::class,'getData'])->name('voyager.roles.getData');

@@ -969,12 +969,12 @@ class ApplicationService
 
     private function getLinkHtmlBladeEdit($row)
     {
-        return "<a href='" . route("site.applications.edit", $row->id) . "' class='m-1 col edit btn btn-sm btn-secondary'> " . __('edit') . "</a>";
+        return "<a target='_blank' href='" . route("site.applications.edit", $row->id) . "' class='m-1 col edit btn btn-sm btn-secondary'> " . __('edit') . "</a>";
     }
 
     private function getLinkHtmlBladeShow($row)
     {
-        return "<a style='background-color: #000080; color: white' href='" . route('site.applications.show', $row->id) . "' class='m-1 col edit btn btn-sm'> " . __('show') . " </a>";
+        return "<a target='_blank' style='background-color: #000080; color: white' href='" . route('site.applications.show', $row->id) . "' class='m-1 col edit btn btn-sm'> " . __('show') . " </a>";
     }
 
     private function getLinkHtmlBladeDestroy($data,$row)

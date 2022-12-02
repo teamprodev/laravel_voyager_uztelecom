@@ -3,7 +3,7 @@
         $.fn.dataTable.moment('DD-MM-YYYY');
 
         $('#example').DataTable( {
-
+            serverSide: true,
             stateSave: true,
             "language": {
                 "lengthMenu": "Показать _MENU_ записей",
@@ -83,7 +83,11 @@
             pageLength: 10,
             dom: 'Qlfrtip' + 'Bfrtip',
 
-            ajax: "{{$getData}}",
+            ajax: {
+                url: " {{$getData}}",
+                data: { _token: '{{csrf_token()}}' },
+                type: "POST",
+            },
 
             columns: columns,
             buttons: {
