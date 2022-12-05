@@ -505,6 +505,46 @@
                     <button type="submit" class="btn btn-success col-md-2">{{ __('Распределить') }}</button>
                 </div>
             @endif
+        @elseif($perms['ChangePerformer'])
+            @if(isset($application->performer_role_id))
+                {{ Aire::textArea('bio', '')
+                        ->name('show_leader')
+                        ->class('hidden')
+                        ->value(1)}}
+                {{ Aire::textArea('bio', '')
+                            ->name('branch_leader_comment')
+                            ->class('hidden')
+                            ->value(null)}}
+                {{ Aire::textArea('bio', '')
+                            ->name('branch_leader_user_id')
+                            ->class('hidden')
+                            ->value(null)}}
+                {{ Aire::textArea('bio', '')
+                            ->name('performer_role_id')
+                            ->class('hidden')
+                            ->value(null)}}
+                {{ Aire::textArea('bio', '')
+                            ->name('performer_user_id')
+                            ->class('hidden')
+                            ->value(null)}}
+                {{ Aire::textArea('bio', '')
+                            ->name('performer_received_date')
+                            ->class('hidden')
+                            ->value(null)}}
+                {{ Aire::textArea('bio', '')
+                            ->name('performer_comment')
+                            ->class('hidden')
+                            ->value(null)}}
+                {{ Aire::textArea('bio', '')
+                            ->name('status')
+                            ->class('hidden')
+                            ->value('agreed')}}
+                {{ Aire::textArea('bio', '')
+                            ->name('performer_status')
+                            ->class('hidden')
+                            ->value(null)}}
+                <button onclick="return confirm(`Вы точно хотите перевыбрать исполнителя?`)" type="submit" class="btn btn-danger col-md-2">{{ __('Перевыбрать исполнителя') }}</button>
+            @endif
         @elseif($perms["PerformerLeader"])
             {{Aire::textArea('bio', __('Комментарии начальника'))
                 ->name('performer_leader_comment')

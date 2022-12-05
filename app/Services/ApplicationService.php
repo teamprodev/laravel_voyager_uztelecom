@@ -624,6 +624,7 @@ class ApplicationService
         $branch = Branch::all()->pluck('name', 'id');
         $perms['CompanyLeader'] = $user->hasPermission(PermissionEnum::Company_Leader) && (int)$application->show_leader === ApplicationMagicNumber::one;
         $perms['BranchLeader'] = $user->hasPermission(PermissionEnum::Branch_Leader) && (int)$application->show_leader === ApplicationMagicNumber::one;
+        $perms['ChangePerformer'] = $user->hasPermission(PermissionEnum::Branch_Leader) && (int)$application->show_leader === ApplicationMagicNumber::two;
         $perms['PerformerComment'] = $application->performer_role_id === $user->role_id && (int)$user->leader === ApplicationMagicNumber::zero;
         $perms['NumberChange'] = $user->hasPermission(PermissionEnum::Number_Change) && !$user->hasPermission(PermissionEnum::Plan_Budget) && !$user->hasPermission(PermissionEnum::Plan_Business);
         $perms['Plan'] = $user->hasPermission(PermissionEnum::Plan_Business) && $check;
