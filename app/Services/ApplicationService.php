@@ -711,7 +711,17 @@ class ApplicationService
             $data['show_leader'] = ApplicationMagicNumber::two;
             $data['branch_leader_user_id'] = $user->id;
         }
-
+        if((int)$data['show_leader'] === 3)
+        {
+            $data['show_leader'] = 1;
+            $data['branch_leader_comment'] = null;
+            $data['performer_role_id'] = null;
+            $data['performer_user_id'] = null;
+            $data['performer_received_date'] = null;
+            $data['performer_comment'] = null;
+            $data['performer_status'] = null;
+            $data['status'] = (int)$application->is_more_than_limit === 1 ? ApplicationStatusEnum::Agreed : ApplicationStatusEnum::In_Process;
+        }
         $result = $application->update($data);
         if ($result)
             return redirect()->route('site.applications.show', $application->id);
