@@ -790,13 +790,12 @@ class ApplicationService
     }
     final protected function createSignedDocs(array $array,object $application) : bool
     {
-        $roles = Roles::find($array);
-        foreach ($array as $key=>$signers) {
+        foreach ($array as $signers) {
             /** @var int $signers Role ID */
             $signer = SignedDocs::where('application_id', $application->id)->where('role_id', $signers)->first();
             $docs = new SignedDocs();
             $docs->role_id = $signers;
-            $docs->role_index = $roles[$key]->index;
+            $docs->role_index = Roles::find($signers)->index;
             $docs->application_id = $application->id;
             $docs->table_name = "applications";
             $signer !== null || $docs->save();
