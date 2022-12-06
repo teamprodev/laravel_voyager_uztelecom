@@ -462,7 +462,11 @@ class ApplicationService
     {
         $signers = json_decode($application->signers);
         $array = array_diff($signers,array($signedDocs->role_id));
-        $application->signers = json_encode($array);
+        foreach ($array as $signer)
+        {
+            $signers2[] = $signer;
+        }
+        $application->signers = $signers2;
         $application->save();
         return $signedDocs->delete();
     }
