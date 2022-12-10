@@ -101,12 +101,7 @@
 <body class="sidebar-mini" style="height: auto;">
     <div class="wrapper">
         @php
-            use Illuminate\Support\Facades\Cache;
                 $auth_user = auth()->user();
-                $notifications = Cache::tags(['table'])->get('notification')::with('application:id,created_at')->has('application')
-                ->where('user_id', auth()->id())
-                ->where('is_read', 0)
-                ->get();
         @endphp
 
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
