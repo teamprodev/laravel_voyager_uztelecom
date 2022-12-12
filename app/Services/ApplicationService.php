@@ -122,7 +122,7 @@ class ApplicationService
                 /*
                  *  Voyager admin paneldan status ranglarini olish va chiqarish
                  */
-                $status_extended = Cache::tags(['table'])->get('status_extended')->find($query->performer_status);
+                $status_extended = StatusExtended::find($query->performer_status);
                 $status = match (true) {
                     $query->status === ApplicationStatusEnum::Order_Arrived => 'товар прибыл',
                     $query->status === ApplicationStatusEnum::Order_Delivered => 'товар доставлен',
@@ -190,7 +190,7 @@ class ApplicationService
                 /*
                  *  Voyager admin paneldan status ranglarini olish va chiqarish
                  */
-                $status_extended = Cache::tags(['table'])->get('status_extended')->find($query->performer_status);
+                $status_extended = StatusExtended::find($query->performer_status);
                 $status = match (true) {
                     $query->status === ApplicationStatusEnum::Order_Arrived => 'товар прибыл',
                     $query->status === ApplicationStatusEnum::Order_Delivered => 'товар доставлен',
@@ -358,7 +358,7 @@ class ApplicationService
                 /*
                  *  Voyager admin paneldan status ranglarini olish va chiqarish
                  */
-                $status_extended = Cache::tags(['table'])->get('status_extended')->find($query->performer_status);
+                $status_extended = StatusExtended::find($query->performer_status);
                 $status = match (true) {
                     $query->status === ApplicationStatusEnum::Order_Arrived => 'товар прибыл',
                     $query->status === ApplicationStatusEnum::Order_Delivered => 'товар доставлен',
@@ -896,7 +896,7 @@ class ApplicationService
                 /*
                  *  Voyager admin paneldan status ranglarini olish va chiqarish
                  */
-                $status_extended = Cache::tags(['table'])->get('status_extended')->find($query->performer_status);
+                $status_extended = StatusExtended::find($query->performer_status);
                 $status = match (true) {
                     $query->status === ApplicationStatusEnum::Order_Arrived => 'товар прибыл',
                     $query->status === ApplicationStatusEnum::Order_Delivered => 'товар доставлен',
