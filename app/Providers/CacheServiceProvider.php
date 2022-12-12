@@ -31,7 +31,6 @@ class CacheServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Cache::tags(['table'])->put('status_extended', StatusExtended::all());
         Cache::tags(['table'])->put('branches',Branch::all());
         Cache::tags(['table'])->put('users',User::all());
     }
