@@ -162,11 +162,11 @@ class ApplicationService
                 return (int)$query->is_more_than_limit === ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
             })
             ->editColumn('user_id', function ($query) {
-                $user = Cache::tags(['table'])->get('users')->find($query->user_id);
-                return Cache::tags(['table'])->get('branches')->find($user->branch_id)->name;
+                $user = Cache::get('users')->find($query->user_id);
+                return Cache::get('branches')->find($user->branch_id)->name;
             })
             ->editColumn('branch_initiator_id', function ($query) {
-                return Cache::tags(['table'])->get('branches')->find($query->branch_id)->name;
+                return Cache::get('branches')->find($query->branch_id)->name;
             })
             ->editColumn('updated_at', function ($query) {
                 return with(new Carbon($query->updated_at))->format('d.m.Y');
@@ -202,7 +202,7 @@ class ApplicationService
             })
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                $user = Cache::tags(['table'])->get('users')->find(auth()->user()->id);
+                $user = Cache::get('users')->find(auth()->user()->id);
                 if ($user->id === $row->user_id || $user->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === $user->role_id) {
                     $data['edit'] = route('site.applications.edit', $row->id);
                 }
@@ -254,11 +254,11 @@ class ApplicationService
                 return $query->is_more_than_limit === ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
             })
             ->editColumn('branch_initiator_id', function ($query) {
-                return Cache::tags(['table'])->get('branches')->find($query->branch_id)->name;
+                return Cache::get('branches')->find($query->branch_id)->name;
             })
             ->addIndexColumn()
             ->editColumn('user_id', function ($docs) {
-                return Cache::tags(['table'])->get('branches');
+                return Cache::get('branches');
             })
             ->editColumn('role_id', function ($docs) {
                 return $docs->role ? $docs->role->display_name : "";
@@ -339,7 +339,7 @@ class ApplicationService
                 return $query->is_more_than_limit == ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
             })
             ->editColumn('branch_initiator_id', function ($query) {
-                return Cache::tags(['table'])->get('branches')->find($query->branch_id)->name;
+                return Cache::get('branches')->find($query->branch_id)->name;
             })
             ->addIndexColumn()
             ->editColumn('planned_price', function ($query) {
@@ -438,7 +438,7 @@ class ApplicationService
             })
             ->addColumn('action', function ($row) {
                 $data = [];
-                $branch = Cache::tags(['table'])->get('branches')->find($row->application->branch_initiator_id);
+                $branch = Cache::get('branches')->find($row->application->branch_initiator_id);
                 if ($row->application->user_id === auth()->user()->id && !in_array($row->role_id, json_decode($branch->signers))) {
                     $data['destroy'] = route('site.applications.delete.signedocs', [$row->id,$row->application->id]);
                 }
@@ -885,7 +885,7 @@ class ApplicationService
                 return $query->is_more_than_limit === ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
             })
             ->editColumn('branch_initiator_id', function ($query) {
-                return Cache::tags(['table'])->get('branches')->find($query->branch_id)->name;
+                return Cache::get('branches')->find($query->branch_id)->name;
             })
             ->editColumn('created_at', function ($data) {
                 return $data->created_at ? with(new Carbon($data->created_at))->format('d.m.Y') : '';
