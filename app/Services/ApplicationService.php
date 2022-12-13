@@ -58,8 +58,7 @@ class ApplicationService
                 if ($user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
                     $query->where('draft', '!=', ApplicationMagicNumber::one)
                         ->where('planned_price', '!=', null)
-                        ->Where('signers', 'like', "%$user->role_id%")
-                        ->orwhere('draft', '!=', ApplicationMagicNumber::one)
+                        ->orWhere('signers', 'like', "%$user->role_id%")
                         ->get();
                 }elseif($leaders_in_signer){
                     $query = Application::query()->where('draft', '!=', ApplicationMagicNumber::one)
