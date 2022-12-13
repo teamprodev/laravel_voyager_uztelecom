@@ -31,7 +31,11 @@ class CacheServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Cache::tags(['table'])->put('branches',Branch::all());
-        Cache::tags(['table'])->put('users',User::all());
+        Cache::remember('branches', 900, function() {
+            return Branch::get();
+        });
+        Cache::remember('users', 900, function() {
+            return User::get();
+        });
     }
 }

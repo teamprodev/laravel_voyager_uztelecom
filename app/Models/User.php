@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Events\BranchDeleted;
+use App\Events\BranchSaved;
+use App\Events\UserDeleted;
+use App\Events\UserSaved;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -20,6 +24,10 @@ class User extends \TCG\Voyager\Models\User
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $dispatchesEvents = [
+        'saved' => UserSaved::class,
+        'deleted' => UserDeleted::class,
+    ];
     /**
      * The attributes that are mass assignable.
      *

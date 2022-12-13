@@ -90,17 +90,16 @@ class ApplicationService
             default :
                 $query = $application->get();
         }
-
         return Datatables::of($query)
             ->editColumn('is_more_than_limit', function ($query) {
                 return (int)$query->is_more_than_limit === ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');
             })
             ->editColumn('user_id', function ($query) {
-                $user = Cache::tags(['table'])->get('users')->find($query->user_id);
-                return Cache::tags(['table'])->get('branches')->find($user->branch_id)->name;
+                $user = Cache::get('users')->find($query->user_id);
+                return Cache::get('branches')->find($user->branch_id)->name;
             })
             ->editColumn('branch_initiator_id', function ($query) {
-                return Cache::tags(['table'])->get('branches')->find($query->branch_id)->name;
+                return Cache::get('branches')->find($query->branch_id)->name;
             })
             ->editColumn('updated_at', function ($query) {
                 return with(new Carbon($query->updated_at))->format('d.m.Y');
@@ -136,7 +135,7 @@ class ApplicationService
             })
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                $user = Cache::tags(['table'])->get('users')->find(auth()->user()->id);
+                $user = Cache::get('users')->find(auth()->user()->id);
                 if ($user->id === $row->user_id || $user->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === $user->role_id) {
                     $data['edit'] = route('site.applications.edit', $row->id);
                 }

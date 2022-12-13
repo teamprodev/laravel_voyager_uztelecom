@@ -2,6 +2,14 @@
 
 namespace App\Providers;
 
+use App\Events\BranchDeleted;
+use App\Events\BranchSaved;
+use App\Events\CheckAndClearTopBranchesCache;
+use App\Events\CheckAndClearTopUsersCache;
+use App\Events\ClearBranchCache;
+use App\Events\ClearUsersCache;
+use App\Events\UserDeleted;
+use App\Events\UserSaved;
 use App\Models\Application;
 use App\Models\SignedDocs;
 use App\Observers\ApplicationObserver;
@@ -21,6 +29,20 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+
+        BranchSaved::class => [
+            ClearBranchCache::class,
+        ],
+        BranchDeleted::class => [
+            CheckAndClearTopBranchesCache::class,
+        ],
+
+        UserSaved::class => [
+            ClearUsersCache::class,
+        ],
+        UserDeleted::class => [
+            CheckAndClearTopUsersCache::class,
         ],
     ];
 
