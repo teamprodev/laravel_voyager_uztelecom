@@ -95,6 +95,9 @@
         .main-sidebar{
             position: fixed !important;
         }
+        td, th{
+            font-size: 1rem !important;
+        }
     </style>
 </head>
 

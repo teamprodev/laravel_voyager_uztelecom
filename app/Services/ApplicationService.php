@@ -58,8 +58,7 @@ class ApplicationService
                 if ($user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
                     $query->where('draft', '!=', ApplicationMagicNumber::one)
                         ->where('planned_price', '!=', null)
-                        ->Where('signers', 'like', "%$user->role_id%")
-                        ->orwhere('draft', '!=', ApplicationMagicNumber::one)
+                        ->orWhere('signers', 'like', "%$user->role_id%")
                         ->get();
                 }elseif($leaders_in_signer){
                     $query = Application::query()->where('draft', '!=', ApplicationMagicNumber::one)
@@ -833,6 +832,13 @@ class ApplicationService
         return $application->save();
     }
 
+    public static function getNotifications(){
+        return Notification::with('application:id,created_at')->has('application')
+            ->where('user_id', auth()->id())
+            ->where('is_read', 0)
+            ->get();
+    }
+
     public function sendNotifications($array, $application, $message)
     {
         if ($array !== null) {
@@ -841,7 +847,7 @@ class ApplicationService
             } else {
                 $websocket = false;
             }
-            $user_ids = User::query()->whereIn('role_id', $array)->pluck('id')->toArray();
+            $user_ids = User::query()->whereIn('role_id', $array)->where('branch_id', $application->branch_initiator_id)->pluck('id')->toArray();
             foreach ($user_ids as $user_id) {
                 $notification = Notification::query()->firstOrCreate(['user_id' => $user_id, 'application_id' => $application->id, 'message' => $message]);
                 if ($notification->wasRecentlyCreated) {

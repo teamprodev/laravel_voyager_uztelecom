@@ -82,11 +82,11 @@
     <div class="w-full text-right py-4 pr-10">
         <button type="submit"
         class="bg-green-500 hover:bg-green-700 p-2 transition duration-300 rounded-md text-white">
-            {{ __('Сохранить и отправить') }}
+            {{ __('Отправить на подпись') }}
         </button>
         <button type="submit"
                 class="bg-green-500 hover:bg-green-700 p-2 transition duration-300 rounded-md text-white">
-            {{ __('Сохранить и закрыть') }}
+            {{ __('Сохранить в черновик') }}
         </button>
 
     </div>
