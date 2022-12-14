@@ -832,12 +832,12 @@ class ApplicationService
         return $application->save();
     }
 
-    public static function getNotifications(){
-        return Notification::with('application:id,created_at')->has('application')
-            ->where('user_id', auth()->id())
-            ->where('is_read', 0)
-            ->get();
-    }
+//    public static function getNotifications(){
+//        return Notification::with('application:id,created_at')->has('application')
+//            ->where('user_id', auth()->id())
+//            ->where('is_read', 0)
+//            ->get();
+//    }
 
     public function sendNotifications($array, $application, $message)
     {
