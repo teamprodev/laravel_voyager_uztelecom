@@ -100,7 +100,7 @@
                             {
                                 extend: 'copyHtml5',
                                 text: '<i class="fas fa-copy"></i>',
-                                title: "Заявки",
+                                title: "Мои заявки",
                                 titleAttr: 'Скопировать в буфер обмена',
                                 exportOptions: {
                                     columns: ':Not(.not-exported)',
@@ -110,7 +110,7 @@
                             {
                                 extend: 'excelHtml5',
                                 text: '<i class="fas fa-file-excel"></i>',
-                                title: "Заявки",
+                                title: "Мои заявки",
                                 titleAttr: 'Экспорт в Excel',
                                 exportOptions: {
                                     columns: ':Not(.not-exported)',
@@ -120,7 +120,7 @@
                             {
                                 extend: 'pdfHtml5',
                                 text: '<i class="fas fa-file-pdf"></i>',
-                                title: "Заявки",
+                                title: "Мои заявки",
                                 titleAttr: 'Экспорт в PDF',
                                 orientation: 'landscape',
                                 pageSize: 'LEGAL',
@@ -132,7 +132,7 @@
                             {
                                 extend: 'print',
                                 text: '<i class="fas fa-print"></i>',
-                                title: "Заявки",
+                                title: "Мои заявки",
                                 titleAttr: 'Распечатать',
                                 exportOptions: {
                                     columns: ':Not(.not-exported)',

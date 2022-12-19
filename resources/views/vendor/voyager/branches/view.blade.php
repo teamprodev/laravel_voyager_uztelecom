@@ -73,6 +73,10 @@
                             targets: 9,
                             className: 'dt-body-right dt-head-center'
                         },
+                        {
+                            targets: 11,
+                            className: 'not-exported'
+                        },
                     ],
                     order: [[0, "desc"]],
                     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "{{ __('Все') }}"]],
@@ -81,7 +85,91 @@
                     fixedHeader: true,
                     ajax:
                         "/branches/ajax_branch",
+                    buttons: {
+                        buttons: [
+                            { extend: 'copyHtml5',
+                                text: '<i class="fas fa-copy"></i>',
+                                title: 'Заявки по филиалу',
+                                titleAttr: 'Скопировать в буфер обмена',
+                                exportOptions: {
+                                    columns: ':visible:Not(.not-exported)',
+                                    rows: ':visible',
+                                    format:{
+                                        header: function ( data, columnIdx ) {
+                                            if(typeof export_format === "function")
+                                                return export_format(data, columnIdx);
+                                            return data;
+                                        }
+                                    }
+                                },
+                            },
+                            { extend: 'excelHtml5',
+                                text: '<i class="fas fa-file-excel"></i>',
+                                title: 'Заявки по филиалу',
+                                titleAttr: 'Экспорт в Excel',
+                                exportOptions: {
+                                    columns: ':visible:Not(.not-exported)',
+                                    rows: ':visible',
+                                    format:{
+                                        header: function ( data, columnIdx ) {
+                                            if(typeof export_format === "function")
+                                                return export_format(data, columnIdx);
+                                            return data;
+                                        }
+                                    }
+                                },
+                            },
+                            { extend: 'pdfHtml5',
+                                text: '<i class="fas fa-file-pdf"></i>',
+                                title: 'Заявки по филиалу',
+                                titleAttr: 'Экспорт в PDF',
+                                orientation: 'landscape',
+                                pageSize: 'LEGAL',
+                                exportOptions: {
+                                    columns: ':visible:Not(.not-exported)',
+                                    rows: ':visible',
+                                    format:{
+                                        header: function ( data, columnIdx ) {
+                                            if(typeof export_format === "function")
+                                                return export_format(data, columnIdx);
+                                            return data;
+                                        }
+                                    }
+                                },
+                            },
+                            { extend: 'print',
+                                text: '<i class="fas fa-print"></i>',
+                                title: 'Заявки по филиалу',
+                                titleAttr: 'Распечатать',
+                                exportOptions: {
+                                    columns: ':visible:Not(.not-exported)',
+                                    rows: ':visible',
+                                    format:{
+                                        header: function ( data, columnIdx ) {
+                                            if(typeof export_format === "function")
+                                                return export_format(data, columnIdx);
+                                            return data;
+                                        }
+                                    }
+                                },
+                            },
+                            { extend: 'colvis',
+                                text: '<i class="fas fa-eye"></i>',
+                                titleAttr: 'Показать/скрыть колонки',
+                                exportOptions: {
+                                    columns: ':visible:Not(.not-exported)',
+                                    rows: ':visible',
+                                },
+                            }
+                        ],
 
+                        dom: {
+                            button: {
+                                className: 'dt-button'
+                            }
+                        }
+                    },
+                    dom: 'lBfrtip',
                     columns: [
                         {data: 'id', name: 'id'},
                         {

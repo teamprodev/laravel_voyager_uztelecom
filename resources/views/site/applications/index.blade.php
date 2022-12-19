@@ -76,7 +76,7 @@
                             className: 'dt-body-center dt-head-center'
                         },
                         {
-                            targets: 11,
+                            targets: 12,
                             className: 'not-exported'
                         },
                         {
