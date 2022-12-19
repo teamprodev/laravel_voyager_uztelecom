@@ -34,13 +34,101 @@
                         {
                             targets: "_all",
                             className: 'dt-body-center dt-head-center'
+                        },
+                        {
+                            targets: 11,
+                            className: 'not-exported'
                         }],
                     order: [[0, "desc"]],
                     processing: true,
                     serverSide: true,
                     ajax:
                         "{{ route('site.applications.to_sign_data') }}",
+                    buttons: {
+                        buttons: [
+                            { extend: 'copyHtml5',
+                                text: '<i class="fas fa-copy"></i>',
+                                title: 'На подпись',
+                                titleAttr: 'Скопировать в буфер обмена',
+                                exportOptions: {
+                                    columns: ':visible:Not(.not-exported)',
+                                    rows: ':visible',
+                                    format:{
+                                        header: function ( data, columnIdx ) {
+                                            if(typeof export_format === "function")
+                                                return export_format(data, columnIdx);
+                                            return data;
+                                        }
+                                    }
+                                },
+                            },
+                            { extend: 'excelHtml5',
+                                text: '<i class="fas fa-file-excel"></i>',
+                                title: 'На подпись',
+                                titleAttr: 'Экспорт в Excel',
+                                exportOptions: {
+                                    columns: ':visible:Not(.not-exported)',
+                                    rows: ':visible',
+                                    format:{
+                                        header: function ( data, columnIdx ) {
+                                            if(typeof export_format === "function")
+                                                return export_format(data, columnIdx);
+                                            return data;
+                                        }
+                                    }
+                                },
+                            },
+                            { extend: 'pdfHtml5',
+                                text: '<i class="fas fa-file-pdf"></i>',
+                                title: 'На подпись',
+                                titleAttr: 'Экспорт в PDF',
+                                orientation: 'landscape',
+                                pageSize: 'LEGAL',
+                                exportOptions: {
+                                    columns: ':visible:Not(.not-exported)',
+                                    rows: ':visible',
+                                    format:{
+                                        header: function ( data, columnIdx ) {
+                                            if(typeof export_format === "function")
+                                                return export_format(data, columnIdx);
+                                            return data;
+                                        }
+                                    }
+                                },
+                            },
+                            { extend: 'print',
+                                text: '<i class="fas fa-print"></i>',
+                                title: 'На подпись',
+                                titleAttr: 'Распечатать',
+                                exportOptions: {
+                                    columns: ':visible:Not(.not-exported)',
+                                    rows: ':visible',
+                                    format:{
+                                        header: function ( data, columnIdx ) {
+                                            if(typeof export_format === "function")
+                                                return export_format(data, columnIdx);
+                                            return data;
+                                        }
+                                    }
+                                },
+                            },
+                            { extend: 'colvis',
+                                text: '<i class="fas fa-eye"></i>',
+                                titleAttr: 'Показать/скрыть колонки',
+                                exportOptions: {
+                                    columns: ':visible:Not(.not-exported)',
+                                    rows: ':visible',
+                                },
+                            }
+                        ],
 
+                        dom: {
+                            button: {
+                                className: 'dt-button'
+                            }
+                        }
+                    },
+                    dom: 'lBfrtip',
                     columns: [
                         {data: 'id', name: 'id'},
                         {
