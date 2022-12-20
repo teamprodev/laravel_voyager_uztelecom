@@ -745,26 +745,27 @@ class ApplicationService
         /** @var string $roles create qilgan userning filialidagi Required Podpisantlar */
         $roles = ($application->branch_signers->signers);
         if (isset($data['signers'])) {
-            $data['signers'] = $this->signers($data,$application,$roles);
-            $this->createSignedDocs(json_decode($data['signers']),$application);
+            $data['signers'] = $this->signers($data, $application, $roles);
+            $this->createSignedDocs(json_decode($data['signers']), $application);
             $message = "$application->id " . "$application->name " . setting('admin.application_created');
             $this->sendNotifications(json_decode($roles), $application, $message);
-        }elseif(!isset($data['signers']) && $application->signers === null)
-        {
-            $this->createSignedDocs(json_decode($roles),$application);
+        } elseif (!isset($data['signers']) && $application->signers === null) {
+            $this->createSignedDocs(json_decode($roles), $application);
             $message = "$application->id " . "$application->name " . setting('admin.application_created');
             $this->sendNotifications(json_decode($roles), $application, $message);
             $data['signers'] = $roles;
         }
         if (isset($data['resource_id'])) {
-            /** @var array $explode Product*/
+            /** @var array $explode Product */
             $explode = explode(',', $data['resource_id']);
             $data['resource_id'] = json_encode($explode);
         }
         if ((int)$data['draft'] === 1) {
             $data['status'] = ApplicationStatusEnum::Draft;
-        }else{
+        } elseif ((int)$data['draft'] === 0 && $application->status === ApplicationStatusEnum::Draft) {
             $data['status'] = ApplicationStatusEnum::New;
+        } else {
+            $data['status'] = $application->status;
         }
         /** @var bool $result */
         $result = $application->update($data);
