@@ -1,13 +1,34 @@
 @extends('site.layouts.app')
 @section('center_content')
+    <head>
+        <style>
+            .dt-body-center, .dt-body-right {
+                font-size: 0.8rem;
+            }
+
+            .btn {
+                font-size: 0.9rem !important;
+                padding: 2px !important;
+            }
+
+            .btn-sm {
+                font-size: 0.75rem !important;
+                padding: 3px !important;
+            }
+
+            thead > tr > th.sorting, table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sorting_desc, table.dataTable thead > tr > th.sorting_asc_disabled, table.dataTable thead > tr > th.sorting_desc_disabled, table.dataTable thead > tr > td.sorting, table.dataTable thead > tr > td.sorting_asc, table.dataTable thead > tr > td.sorting_desc, table.dataTable thead > tr > td.sorting_asc_disabled, table.dataTable thead > tr > td.sorting_desc_disabled {
+                padding-right: 0 !important;
+            }
+        </style>
+    </head>
     <h2 class="ml-5 pt-8">
         {{ __('Черновик') }}
     </h2>
-    <div class="w-11/12 mx-auto pt-8 pb-16">
-        <table class="data-table display wrap">
+    <div class="pt-8 pb-16">
+        <table class="data-table display wrap"  class="display wrap responsive" style="width: 100%">
             <thead>
             <tr>
-                <th>id</th>
+                <th>ID</th>
                 <th>№</th>
                 <th>{{ __('Инициатор (наименование подразделения заказчика)') }}</th>
                 <th>{{ __('Наименование предмета закупки(товар, работа, услуги)') }}</th>
