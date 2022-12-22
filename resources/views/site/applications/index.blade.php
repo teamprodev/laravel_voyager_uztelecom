@@ -47,6 +47,8 @@
                         <th>{{ __('Ожидаемый срок поставки') }}</th>
                         <th>{{ __('Планируемый бюджет закупки (сумма)') }}</th>
                         <th>{{ __('Условия поставки по INCOTERMS') }}</th>
+                        <th>{{ __('Информация о наличии в «Плане закупок» приобретаемых товаров') }}</th>
+                        <th>{{ __('Статья расходов по Бизнес плану') }}</th>
                         <th>{{ __('Действие') }}</th>
                     </tr>
                     </thead>
@@ -72,16 +74,22 @@
                     fixedHeader: true,
                     columnDefs: [
                         {
-                            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11],
+                            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13],
                             className: 'dt-body-center dt-head-center'
                         },
                         {
-                            targets: 11,
+                            targets: 14,
                             className: 'not-exported'
                         },
                         {
                             targets: 9,
                             className: 'dt-body-right dt-head-center'
+                        },
+                        {
+                            responsivePriority: 10002, targets: 6
+                        },
+                        {
+                            responsivePriority: 10001, targets: 11
                         },
                     ],
                     order: [[0, "desc"]],
@@ -205,6 +213,8 @@
                             }
                         },
                         {data: 'incoterms', name: 'incoterms'},
+                        {data: 'info_purchase_plan', name: 'info_purchase_plan'},
+                        {data: 'info_business_plan', name: 'info_business_plan'},
                         {
                             data: 'action',
                             render: function (link) {
