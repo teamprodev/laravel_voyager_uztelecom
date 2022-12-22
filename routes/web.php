@@ -18,7 +18,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\BranchController;
 USE App\Http\Controllers\HomeController;
-use Teamprodev\Eimzo\Http\Controllers\EimzoController;
+use App\Http\Controllers\EimzoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +33,18 @@ use Teamprodev\Eimzo\Http\Controllers\EimzoController;
 
 Route::get('/auth/user', function (){
     return response()->json(['serialNumber' => auth()->user()->pinfl]);
+});
+Route::post('eimzo/login', [EimzoController::class, 'auth'])->name('eri.login');
+Route::post('eimzo/register', [EimzoController::class, 'register'])->name('eri.register');
+
+Route::group([
+    'middleware' => 'web',
+    'prefix' => 'eimzo',
+    'as' => 'eimzo.',
+    'namespace' => 'App\Http\Controllers'
+], function () {
+    Route::get('login', [EimzoController::class,'login'])->name('showLogin');
+    Route::post('postLogin', [EimzoController::class,'auth'])->name('postLogin');
 });
 Route::get('branches/{id}/getData', [BranchController::class,'getData'])->name('signers.getData');
 Route::get('/branches/ajax_branch', [BranchController::class,'ajax_branch'])->name('branches.ajax_branch');
@@ -70,8 +82,6 @@ Route::group([
 
 });
 Auth::routes();
-
-Route::post('eimzo/login', [EimzoController::class, 'auth'])->name('eri.login');
 
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
