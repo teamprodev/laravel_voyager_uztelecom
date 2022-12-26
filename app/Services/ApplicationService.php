@@ -112,6 +112,9 @@ class ApplicationService
             ->editColumn('planned_price', function ($query) {
                 return $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
             })
+            ->editColumn('with_nds', function ($query) {
+                return $query->with_nds ? 'С НДС' : 'Без НДС';
+            })
             ->addColumn('planned_price_curr', function ($query) {
                 $planned_price = $query->planned_price ?? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ');
                 return "$planned_price  $query->currency";

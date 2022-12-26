@@ -78,6 +78,9 @@ class BranchService
                 $planned_price = $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
                 return $planned_price;
             })
+            ->editColumn('with_nds', function ($query) {
+                return $query->with_nds ? 'С НДС' : 'Без НДС';
+            })
             ->editColumn('status', function ($query) {
                 $status = $query->status;
                 $color = setting("color.{$status}");
