@@ -76,7 +76,7 @@ class BranchService
             })
             ->addColumn('planned_price_curr', function ($query) {
                 $planned_price = $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
-                return "{$planned_price}  {$query->currency}";
+                return $planned_price;
             })
             ->editColumn('status', function ($query) {
                 $status = $query->status;

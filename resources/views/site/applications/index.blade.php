@@ -46,6 +46,7 @@
                         <th>{{ __('Наименование предмета закупки(товар, работа, услуги)') }}</th>
                         <th>{{ __('Ожидаемый срок поставки') }}</th>
                         <th>{{ __('Планируемый бюджет закупки (сумма)') }}</th>
+                        <th>{{ __('Валюта') }}</th>
                         <th>{{ __('Условия поставки по INCOTERMS') }}</th>
                         <th>{{ __('Информация о наличии в «Плане закупок» приобретаемых товаров') }}</th>
                         <th>{{ __('Статья расходов по Бизнес плану') }}</th>
@@ -74,22 +75,22 @@
                     fixedHeader: true,
                     columnDefs: [
                         {
-                            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13],
+                            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14],
                             className: 'dt-body-center dt-head-center'
                         },
                         {
-                            targets: 14,
+                            targets: 15,
                             className: 'not-exported'
                         },
                         {
-                            targets: 9,
+                            targets: 10,
                             className: 'dt-body-right dt-head-center'
                         },
                         {
                             responsivePriority: 10002, targets: 6
                         },
                         {
-                            responsivePriority: 10001, targets: 11
+                            responsivePriority: 10001, targets: 12
                         },
                     ],
                     order: [[0, "desc"]],
@@ -209,9 +210,10 @@
                         {
                             data: 'planned_price_curr', name: 'planned_price_curr', render: function (data, type, row) {
                                 if (row.planned_price === null || row.planned_price==="" ) return `{{ __('not_filled') }}`;
-                                return row.planned_price + ' ' + row.currency;
+                                return row.planned_price;
                             }
                         },
+                        {data: 'currency', name: 'currency'},
                         {data: 'incoterms', name: 'incoterms'},
                         {data: 'info_purchase_plan', name: 'info_purchase_plan'},
                         {data: 'info_business_plan', name: 'info_business_plan'},
