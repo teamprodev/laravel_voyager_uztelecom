@@ -1,35 +1,77 @@
-<div class="w-96">
-        <div>
-            <label class="block text-sm">
-                Name
-            </label>
-            <input type="text"
-                   class="w-full px-4 py-2 text-sm border rounded-md focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-600"
-                   placeholder="Name" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+<section class="vh-100">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-xl-9">
+                <form name="eri_form" action="{{route('eri.register')}}"method="post">
+                    @csrf
+                <h1 class="text-white mb-4">Registration</h1>
+
+                <div class="card" style="border-radius: 15px;">
+                    <div class="card-body">
+
+                        <div class="row align-items-center pt-4 pb-3">
+                            <div class="col-md-3 ps-5">
+
+                                <h6 class="mb-0">Full name</h6>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="text" name="name" class="form-control form-control-lg" />
+
+                            </div>
+                        </div>
+
+                        <hr class="mx-n3">
+
+                        <div class="row align-items-center py-3">
+                            <div class="col-md-3 ps-5">
+
+                                <h6 class="mb-0">Email address</h6>
+
+                            </div>
+                            <div class="col-md-9 pe-5">
+
+                                <input type="email" name="email" class="form-control form-control-lg" placeholder="example@example.com" />
+
+                            </div>
+                        </div>
+
+                        <hr class="mx-n3">
+
+                        <div class="row">
+                            <div class="col-md-3 ps-5">
+                                <select class="selectpicker" data-show-subtext="true" data-live-search="true" name="branch">
+                                    @foreach($branch as $b)
+                                        <option value="{{$b->id}}">{{$b->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-9 pe-5">
+                                <select class="selectpicker" data-show-subtext="true" data-live-search="true" name="department">
+                                    @foreach($department as $d)
+                                        <option value="{{$d->id}}">{{$d->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <hr class="mx-n3">
+
+                        <div class="px-5 py-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Register</button>
+                            <input type="text" class="hidden" name="params" value="{{json_encode($params)}}">
+                        </div>
+
+                    </div>
+                </div>
+                </form>
+            </div>
         </div>
-        <div class="mt-4">
-            <label class="block text-sm">
-                Email Adress
-            </label>
-            <input type="email"
-                   class="w-full px-4 py-2 text-sm border rounded-md focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-600"
-                   placeholder="Email Address" />
-        </div>
-        <div>
-            <label class="block mt-4 text-sm">
-                Password
-            </label>
-            <input
-                class="w-full px-4 py-2 text-sm border rounded-md focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-600"
-                placeholder="Password" type="password" />
-        </div>
-        <div>
-            <label class="block mt-4 text-sm">
-                Confirm Password
-            </label>
-            <input class="w-full px-4 py-2 text-sm border rounded-md focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-600" placeholder="Password" type="password" />
-        </div>
-        <button class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">
-            Register
-        </button>
     </div>
+</section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
