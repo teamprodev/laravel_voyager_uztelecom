@@ -40,6 +40,8 @@
                     <th>{{ __('Наименование предмета закупки(товар, работа, услуги)') }}</th>
                     <th>{{ __('Ожидаемый срок поставки') }}</th>
                     <th>{{ __('Планируемый бюджет закупки (сумма)') }}</th>
+                    <th>{{ __('Валюта') }}</th>
+                    <th>{{ __('НДС') }}</th>
                     <th>{{ __('Условия поставки по INCOTERMS') }}</th>
                     <th>{{ __('Информация о наличии в «Плане закупок» приобретаемых товаров') }}</th>
                     <th>{{ __('Статья расходов по Бизнес плану') }}</th>
@@ -55,7 +57,7 @@
                 var table = $('#yajra-datatable').DataTable({
                     columnDefs: [
                         {
-                            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13],
+                            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15],
                             className: 'dt-body-center dt-head-center'
                         },
                         {
@@ -63,14 +65,14 @@
                             className: 'dt-body-right dt-head-center'
                         },
                         {
-                            targets: 13,
+                            targets: 15,
                             className: 'not-exported'
                         },
                         {
                             responsivePriority: 10002, targets: 6
                         },
                         {
-                            responsivePriority: 10001, targets: 10
+                            responsivePriority: 10001, targets: 12
                         },
                     ],
                     order: [[0, "desc"]],
@@ -184,6 +186,8 @@
                         {data: 'name', name: 'name'},
                         {data: 'delivery_date', name: 'delivery_date'},
                         {data: 'planned_price_curr', name: 'planned_price_curr'},
+                        {data: 'currency', name: 'currency'},
+                        {data: 'with_nds', name: 'with_nds'},
                         {data: 'incoterms', name: 'incoterms'},
                         {data: 'info_purchase_plan', name: 'info_purchase_plan'},
                         {data: 'info_business_plan', name: 'info_business_plan'},

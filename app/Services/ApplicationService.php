@@ -117,7 +117,7 @@ class ApplicationService
             })
             ->addColumn('planned_price_curr', function ($query) {
                 $planned_price = $query->planned_price ?? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ');
-                return "$planned_price  $query->currency";
+                return $planned_price;
             })
             ->editColumn('status', function ($query) {
                 /*
@@ -185,7 +185,10 @@ class ApplicationService
             })
             ->addColumn('planned_price_curr', function ($query) {
                 $planned_price = $query->planned_price ?? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ');
-                return "$planned_price  $query->currency";
+                return $planned_price;
+            })
+            ->editColumn('with_nds', function ($query) {
+                return $query->with_nds ? 'С НДС' : 'Без НДС';
             })
             ->editColumn('status', function ($query) {
                 /*
@@ -277,7 +280,10 @@ class ApplicationService
             })
             ->addColumn('planned_price_curr', function ($query) {
                 $planned_price = $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
-                return "$planned_price  $query->currency";
+                return $planned_price;
+            })
+            ->editColumn('with_nds', function ($query) {
+                return $query->with_nds ? 'С НДС' : 'Без НДС';
             })
             ->editColumn('status', function ($query) {
                 /*
@@ -353,7 +359,10 @@ class ApplicationService
             })
             ->addColumn('planned_price_curr', function ($query) {
                 $planned_price = $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
-                return "$planned_price  $query->currency";
+                return $planned_price;
+            })
+            ->editColumn('with_nds', function ($query) {
+                return $query->with_nds ? 'С НДС' : 'Без НДС';
             })
             ->editColumn('status', function ($query) {
                 /*
@@ -899,7 +908,10 @@ class ApplicationService
             })
             ->addColumn('planned_price_curr', function ($query) {
                 $planned_price = $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
-                return "$planned_price  $query->currency";
+                return $planned_price;
+            })
+            ->editColumn('with_nds', function ($query) {
+                return $query->with_nds ? 'С НДС' : 'Без НДС';
             })
             ->editColumn('status', function ($query) {
                 /*
