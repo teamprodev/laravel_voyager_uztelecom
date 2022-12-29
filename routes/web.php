@@ -35,7 +35,7 @@ Route::get('/auth/user', function (){
     return response()->json(['serialNumber' => auth()->user()->pinfl]);
 });
 Route::post('eimzo/login', [EimzoController::class, 'auth'])->name('eri.login');
-Route::post('eimzo/register', [EimzoController::class, 'register'])->name('eri.register');
+Route::post('eimzo/register', [EimzoController::class, 'register_post'])->name('eri.register');
 
 Route::group([
     'middleware' => 'web',
