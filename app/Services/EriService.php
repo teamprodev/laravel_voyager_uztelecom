@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Controllers\EimzoController;
 use App\Models\Branch;
 use App\Models\Department;
 use Illuminate\Support\Arr;
@@ -43,7 +44,10 @@ class EriService {
             $params
         )->first();
         if($user === null)
-            return view('site.auth.register',['branch' => Branch::all(),'department' => Department::all(),'params' => $params]);
+        {
+            $controller = new EimzoController();
+            return $controller->register($params);
+        }
         // AUTHORIZE USER
         Auth::login($user);
         return redirect()->route('site.applications.index');

@@ -36,7 +36,9 @@
                             <div class="col-md-9 pe-5">
 
                                 <input required type="email" name="email" class="form-control form-control-lg" placeholder="example@example.com" />
-
+                                @error('email')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
