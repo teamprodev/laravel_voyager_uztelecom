@@ -6,7 +6,8 @@
             <div class="col-xl-9">
                 <form name="eri_form" action="{{route('eri.register')}}"method="post">
                     @csrf
-                <h1 class="text-white mb-4">Registration</h1>
+                <h1 class="text-white mb-4">{{ __('Регистрация') }}</h1>
+                <h5 class="text-white mb-4"><span style="color: red">*</span> - {{ __('Поля обязательные к заполнению') }}</h5>
 
                 <div class="card" style="border-radius: 15px;">
                     <div class="card-body">
@@ -14,12 +15,12 @@
                         <div class="row align-items-center pt-4 pb-3">
                             <div class="col-md-3 ps-5">
 
-                                <h6 class="mb-0">Full name</h6>
+                                <h6 class="mb-0">{{ __('ФИО') }}<span style="color: red">*</span></h6>
 
                             </div>
                             <div class="col-md-9 pe-5">
 
-                                <input type="text" name="name" class="form-control form-control-lg" />
+                                <input required type="text" name="name" class="form-control form-control-lg" />
 
                             </div>
                         </div>
@@ -29,12 +30,12 @@
                         <div class="row align-items-center py-3">
                             <div class="col-md-3 ps-5">
 
-                                <h6 class="mb-0">Email address</h6>
+                                <h6 class="mb-0">{{ __('Электронная почта') }}<span style="color: red">*</span></h6>
 
                             </div>
                             <div class="col-md-9 pe-5">
 
-                                <input type="email" name="email" class="form-control form-control-lg" placeholder="example@example.com" />
+                                <input required type="email" name="email" class="form-control form-control-lg" placeholder="example@example.com" />
 
                             </div>
                         </div>
@@ -61,7 +62,7 @@
                         <hr class="mx-n3">
 
                         <div class="px-5 py-4">
-                            <button type="submit" class="btn btn-primary btn-lg">Register</button>
+                            <button type="submit" class="btn btn-primary btn-lg">{{ __('Зарегистрироваться') }}</button>
                             <input type="text" class="hidden" name="params" value="{{json_encode($params)}}">
                         </div>
 
