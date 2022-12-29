@@ -44,9 +44,6 @@ class EriService {
         )->first();
         if($user === null)
             return view('site.auth.register',['branch' => Branch::all(),'department' => Department::all(),'params' => $params]);
-        if(!$user->status)
-            throw new \Exception(trans("user::trans.user_is_inactive"), 401);
-
         // AUTHORIZE USER
         Auth::login($user);
         return redirect()->route('site.applications.index');

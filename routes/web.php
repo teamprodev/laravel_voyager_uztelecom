@@ -59,7 +59,9 @@ Route::get('departments/getData',[DepartmentController::class,'getData'])->name(
 Route::post('/warehouse',[WarehouseController::class,'create'])->name('warehouse.create');
 Route::post('/delete_file/{application}/{column}',[ApplicationController::class,'file_delete'])->name('delete_file');
 
-Route::get('/user/{user}',[UserController::class,'changeLeader'])->name('users.leader');
+Route::get('/user/{user}/leader',[UserController::class,'changeLeader'])->name('users.leader');
+
+Route::get('/user/{user}/status',[UserController::class,'changeStatus'])->name('users.status');
 
 Route::get('/', function () {
     return redirect()->route('site.applications.index');

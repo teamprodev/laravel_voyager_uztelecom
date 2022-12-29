@@ -27,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
         Voyager::addAction(\App\Actions\ActiveAction::class);
+        Voyager::addAction(\App\Actions\AssignAction::class);
         Voyager::addAction(\App\Actions\ShowApplication::class);
         Voyager::addAction(\App\Actions\AddSignerAction::class);
     }
