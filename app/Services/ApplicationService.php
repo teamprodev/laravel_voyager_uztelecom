@@ -263,8 +263,9 @@ class ApplicationService
                 return Cache::get('branches')->find($query->branch_id)->name;
             })
             ->addIndexColumn()
-            ->editColumn('user_id', function ($docs) {
-                return Cache::get('branches');
+            ->editColumn('user_id', function ($query) {
+                $user = Cache::get('users')->find($query->user_id);
+                return Cache::get('branches')->find($user->branch_id)->name;
             })
             ->editColumn('role_id', function ($docs) {
                 return $docs->role ? $docs->role->display_name : "";
@@ -353,6 +354,10 @@ class ApplicationService
             ->addIndexColumn()
             ->editColumn('planned_price', function ($query) {
                 return $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
+            })
+            ->editColumn('user_id', function ($query) {
+                $user = Cache::get('users')->find($query->user_id);
+                return Cache::get('branches')->find($user->branch_id)->name;
             })
             ->editColumn('delivery_date', function ($query) {
                 return $query->delivery_date ? with(new Carbon($query->delivery_date))->format('d.m.Y') : '';
@@ -891,8 +896,9 @@ class ApplicationService
         $data = Application::find($signedDocs);
         return Datatables::of($data)
             ->addIndexColumn()
-            ->editColumn('user_id', function ($docs) {
-                return $docs->user_id ? $docs->user->name : "";
+            ->editColumn('user_id', function ($query) {
+                $user = Cache::get('users')->find($query->user_id);
+                return Cache::get('branches')->find($user->branch_id)->name;
             })
             ->editColumn('is_more_than_limit', function ($query) {
                 return $query->is_more_than_limit === ApplicationMagicNumber::one ? __('Компанию') : __('Филиал');

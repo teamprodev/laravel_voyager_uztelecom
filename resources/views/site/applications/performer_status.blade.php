@@ -49,6 +49,7 @@
                         <th>{{ __('Дата заявки')}}</th>
                         <th>{{ __('Инициатор (наименование подразделения заказчика)') }}</th>
                         <th>{{ __('Филиал') }}</th>
+                        <th>{{ __('Филиал Автора') }}</th>
                         <th>{{ __('Наименование предмета закупки(товар, работа, услуги)') }}</th>
                         <th>{{ __('Ожидаемый срок поставки') }}</th>
                         <th>{{ __('Планируемый бюджет закупки (сумма)') }}</th>
@@ -69,22 +70,22 @@
                 var table = $('#yajra-datatable').DataTable({
                     columnDefs: [
                         {
-                            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15],
+                            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15],
                             className: 'dt-body-center dt-head-center'
                         },
                         {
-                            targets: 9,
+                            targets: 10,
                             className: 'dt-body-right dt-head-center'
                         },
                         {
-                            targets: 15,
+                            targets: 16,
                             className: 'not-exported'
                         },
                         {
                             responsivePriority: 10002, targets: 6
                         },
                         {
-                            responsivePriority: 10001, targets: 12
+                            responsivePriority: 10001, targets: 13
                         },
                     ],
                     order: [[0, "desc"]],
@@ -193,6 +194,7 @@
                         {data: 'date', name: 'date'},
                         {data: 'initiator', name: 'initiator'},
                         {data: 'branch_initiator_id', name: 'branch_initiator_id'},
+                        {data: 'user_id', name: 'user_id'},
                         {data: 'name', name: 'name'},
                         {data: 'delivery_date', name: 'delivery_date'},
                         {data: 'planned_price_curr', name: 'planned_price_curr'},
