@@ -56,8 +56,9 @@ class BranchService
                 return $query->branch->name;
             })
             ->addIndexColumn()
-            ->editColumn('user_id', function ($docs) {
-                return $docs->user ? $docs->user->name : "";
+            ->editColumn('user_id', function ($query) {
+                $user = Cache::get('users')->find($query->user_id);
+                return Cache::get('branches')->find($user->branch_id)->name;
             })
             ->editColumn('role_id', function ($docs) {
                 return $docs->role ? $docs->role->display_name : "";
