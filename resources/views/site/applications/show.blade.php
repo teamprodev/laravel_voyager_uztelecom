@@ -363,7 +363,7 @@
         </div>
     </div>
     <div class="px-6">
-        <table id="yajra-datatable">
+        <table id="yajra-datatable" class="display wrap responsive">
             <thead>
             <tr>
                 <th>ID</th>
