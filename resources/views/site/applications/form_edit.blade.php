@@ -201,6 +201,7 @@
                 </div>
                     {{Aire::checkbox('checkbox', __('С НДС'))
                            ->checked($application->with_nds)
+                           ->defaultChecked()
                            ->name('with_nds')
                         }}
             </div>
