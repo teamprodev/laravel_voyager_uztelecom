@@ -499,6 +499,7 @@ class ApplicationService
         $application->branch_id = $user->branch_id;
         $application->department_initiator_id = $user->department_id;
         $application->status = ApplicationStatusEnum::New;
+        $application->with_nds = ApplicationMagicNumber::With_NDS;
         $application->save();
         return redirect()->route('site.applications.edit', $application->id);
     }
