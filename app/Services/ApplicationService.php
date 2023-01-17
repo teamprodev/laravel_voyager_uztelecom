@@ -648,7 +648,7 @@ class ApplicationService
         $perms['NumberChange'] = $user->hasPermission(PermissionEnum::Number_Change) && !$user->hasPermission(PermissionEnum::Plan_Budget) && !$user->hasPermission(PermissionEnum::Plan_Business);
         $perms['Plan'] = $user->hasPermission(PermissionEnum::Plan_Business) && $check;
         $perms['PerformerLeader'] = $application->performer_role_id === $user->role_id && $user->leader === ApplicationMagicNumber::one;
-        $perms['Signers'] = (($access && $user->hasPermission(PermissionEnum::Company_Signer || PermissionEnum::Add_Company_Signer || PermissionEnum::Branch_Signer || PermissionEnum::Add_Branch_Signer || PermissionEnum::Company_Performer || PermissionEnum::Branch_Performer)) || ($access && (int)$user->role_id === ApplicationMagicNumber::Director && $application->show_director === ApplicationMagicNumber::one)) && (int)$application->draft !== 1;
+        $perms['Signers'] = (($access && $user->hasPermission(PermissionEnum::Company_Signer || PermissionEnum::Add_Company_Signer || PermissionEnum::Branch_Signer || PermissionEnum::Add_Branch_Signer || PermissionEnum::Company_Performer || PermissionEnum::Branch_Performer)) || ($access && (int)$user->role_id === ApplicationMagicNumber::Director && $application->show_director === ApplicationMagicNumber::one)) && (int)$application->draft !== ApplicationMagicNumber::one;
         $status = match (true) {
             $application->status === ApplicationStatusEnum::Order_Arrived => 'товар прибыл',
             $application->status === ApplicationStatusEnum::Order_Delivered => 'товар доставлен',
@@ -732,14 +732,14 @@ class ApplicationService
         }
         if(isset($data['show_leader']) && (int)$data['show_leader'] === 3)
         {
-            $data['show_leader'] = 1;
+            $data['show_leader'] = ApplicationMagicNumber::one;
             $data['branch_leader_comment'] = null;
             $data['performer_role_id'] = null;
             $data['performer_user_id'] = null;
             $data['performer_received_date'] = null;
             $data['performer_comment'] = null;
             $data['performer_status'] = null;
-            $data['status'] = (int)$application->is_more_than_limit === 1 ? ApplicationStatusEnum::Agreed : ApplicationStatusEnum::In_Process;
+            $data['status'] = (int)$application->is_more_than_limit === ApplicationMagicNumber::one ? ApplicationStatusEnum::Agreed : ApplicationStatusEnum::In_Process;
         }
         $result = $application->update($data);
         if ($result)
@@ -777,9 +777,9 @@ class ApplicationService
             $explode = explode(',', $data['resource_id']);
             $data['resource_id'] = json_encode($explode);
         }
-        if ((int)$data['draft'] === 1) {
+        if ((int)$data['draft'] === ApplicationMagicNumber::one) {
             $data['status'] = ApplicationStatusEnum::Draft;
-        } elseif ((int)$data['draft'] === 0 && $application->status === ApplicationStatusEnum::Draft) {
+        } elseif ((int)$data['draft'] === ApplicationMagicNumber::zero && $application->status === ApplicationStatusEnum::Draft) {
             $data['status'] = ApplicationStatusEnum::New;
         } else {
             $data['status'] = $application->status;
