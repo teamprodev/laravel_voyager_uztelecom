@@ -17,7 +17,7 @@ class laravelYajra extends Component
     public $startDate;
     public $endDate;
 
-    public function __construct($getData,$tableTitle, $startDate, $endDate)
+    public function __construct($getData,$tableTitle, $startDate = '2020-03-03', $endDate = '2023-01-23')
     {
         $this->tableTitle = $tableTitle;
         $this->getData = $getData;
