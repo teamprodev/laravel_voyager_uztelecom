@@ -417,4 +417,9 @@ class ApplicationController extends Controller
         }
         return true;
     }
+
+    public function daterangepicker(Request $request){
+        $applications = Application::whereBetween('created_at', [$request->startDate, $request->endDate])->get();
+        return view('site.daterangepicker', ['applications' => $applications]);
+    }
 }

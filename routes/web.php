@@ -36,7 +36,6 @@ Route::get('/auth/user', function (){
 });
 Route::post('eimzo/login', [EimzoController::class, 'auth'])->name('eri.login');
 Route::post('eimzo/register', [EimzoController::class, 'register_post'])->name('eri.register');
-
 Route::group([
     'middleware' => 'web',
     'prefix' => 'eimzo',
@@ -51,7 +50,7 @@ Route::get('/branches/ajax_branch', [BranchController::class,'ajax_branch'])->na
 
 Route::controller(ReportController::class)->group(function() {
     Route::post('/request','request')->name('request');
-    Route::post('/report/request/{id}','report')->name('report');
+    Route::any('/report/request/{id}','report')->name('report');
 
 });
 Route::get('roles/getData',[RoleController::class,'getData'])->name('voyager.roles.getData');
@@ -163,6 +162,7 @@ Route::group([
                         Route::put('{application}/vote','vote')->name('vote')->middleware('branch');
                         Route::post('{application}/is_more_than_limit','is_more_than_limit')->name('is_more_than_limit')->middleware('branch','application_user_id');
                         Route::get('getAll','getAll')->name('getAll');
+                        Route::get('daterangepicker','daterangepicker')->name('daterangepicker');
                     });
                 });
 
