@@ -85,7 +85,11 @@
 
             ajax: {
                 url: " {{$getData}}",
-                data: { _token: '{{csrf_token()}}' },
+                data: {
+                    _token: '{{csrf_token()}}',
+                    startDate: '{{$startDate}}',
+                    endDate: '{{$endDate}}'
+                },
                 type: "POST",
             },
 

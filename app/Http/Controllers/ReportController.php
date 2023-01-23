@@ -59,42 +59,43 @@ class ReportController extends Controller
     /**
      * Nechinchi Report ligiga qarab data chiqadi.
      **/
-    public function report($id)
+    public function report($id, Request $request)
     {
+        $this->service->application_query($request);
         switch ($id)
         {
             case ApplicationMagicNumber::one:
-            return $this->service->report_1();
+            return $this->service->report_1($request);
             break;
             case ApplicationMagicNumber::two:
-            return $this->service->report_2();
+            return $this->service->report_2($request);
             break;
             case ApplicationMagicNumber::twentyTwo:
-            return $this->service->report_2_2();
+            return $this->service->report_2_2($request);
             break;
             case ApplicationMagicNumber::three:
-            return $this->service->report_3();
+            return $this->service->report_3($request);
             break;
             case ApplicationMagicNumber::four:
-            return $this->service->report_4();
+            return $this->service->report_4($request);
             break;
             case ApplicationMagicNumber::five:
-            return $this->service->report_5();
+            return $this->service->report_5($request);
             break;
             case ApplicationMagicNumber::six:
-            return $this->service->report_6();
+            return $this->service->report_6($request);
             break;
             case ApplicationMagicNumber::seven:
-            return $this->service->report_7();
+            return $this->service->report_7($request);
             break;
             case ApplicationMagicNumber::eight:
-            return $this->service->report_8();
+            return $this->service->report_8($request);
             break;
             case ApplicationMagicNumber::nine:
-            return $this->service->report_9();
+            return $this->service->report_9($request);
             break;
             default:
-            return $this->service->report_10();
+            return $this->service->report_10($request);
         }
 
 
