@@ -542,7 +542,11 @@ class ReportService
     {
         if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
-            $query = $this->application_query()->whereBetween('created_at', [$request->startDate, $request->endDate]);
+            if($request->startDate === null){
+                $query = $this->application_query();
+            }else{
+                $query = $this->application_query()->whereBetween('created_at', [$request->startDate, $request->endDate]);
+            }
         }else{
             $query = $this->application_query()->where('branch_id',auth()->user()->branch_id)->where('draft','!=',ApplicationMagicNumber::one)->get();
         }
