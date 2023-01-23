@@ -12,6 +12,7 @@ use App\Models\ReportDate;
 use App\Models\Resource;
 use App\Models\StatusExtended;
 use App\Models\User;
+use http\Client\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Purchase;
@@ -537,12 +538,11 @@ class ReportService
             ->make(true);
     }
 
-    public function report_4()
+    public function report_4(object $request)
     {
         if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
-
-            $query = $this->application_query();
+            $query = $this->application_query()->whereBetween('created_at', [$request->startDate, $request->endDate]);
         }else{
             $query = $this->application_query()->where('branch_id',auth()->user()->branch_id)->where('draft','!=',ApplicationMagicNumber::one)->get();
         }
