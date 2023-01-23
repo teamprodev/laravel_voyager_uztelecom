@@ -3,6 +3,7 @@
 @section('center_content')
 
 <div id="fortext"></div>
+<x-laravelDateRangePicker route="{{ route('site.report.index','3') }}"/>
 {{ Aire::open()
   ->route('request')
   ->enctype("multipart/form-data")
@@ -63,6 +64,6 @@
             {data: 'usluga_1_nds', name: 'usluga_1_nds'},
         ];
     </script>
-    <x-laravelYajra getData="{{ route('report','3') }}" tableTitle="{{ __('3 - Отчет за год') }}"/>
+    <x-laravelYajra getData="{{ route('report','3') }}" tableTitle="{{ __('3 - Отчет за год') }}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
 @endif
 @endsection

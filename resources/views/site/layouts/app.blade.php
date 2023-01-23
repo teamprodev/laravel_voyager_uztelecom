@@ -68,6 +68,12 @@
         #example_paginate{
             display: none;
         }
+        .dataTables_paginate {
+            float: left !important;
+        }
+        .dataTables_info{
+            float: right !important;
+        }
         #example_info{
             display: none;
         }
