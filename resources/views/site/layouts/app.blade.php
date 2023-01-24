@@ -62,20 +62,11 @@
             background-color: {{ setting('color.delete') }};
             color: white !important;
         }
-        #example_filter{
-            display: none;
-        }
-        #example_paginate{
-            display: none;
-        }
         .dataTables_paginate {
             float: left !important;
         }
         .dataTables_info{
             float: right !important;
-        }
-        #example_info{
-            display: none;
         }
         .dt-buttons{
             width: 60%;
@@ -86,10 +77,6 @@
             width: 20%;
             margin-bottom: 15px;
         }
-        .dataTables_filter{
-            width: 20%;
-            margin-bottom: 15px;
-        }
         .dtsb-searchBuilder{
             width: fit-content;
         }
@@ -97,7 +84,6 @@
             white-space: inherit !important;
         }
         .wrapper{
-            width: fit-content !important;
             min-width: 100%;
         }
         .main-sidebar{
@@ -107,9 +93,15 @@
             font-size: 1rem !important;
         }
         .daterangepicker-form{
-            padding: 20px !important;
             display: flex !important;
             column-gap: 10px !important;
+            flex: 45%;
+            align-items: center !important;
+        }
+        .buttons-container{
+            display: flex;
+            padding-bottom: 20px;
+            align-items: baseline !important;
         }
     </style>
 </head>

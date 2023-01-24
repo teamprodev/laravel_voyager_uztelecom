@@ -4,7 +4,6 @@
 
 <div id="fortext"></div>
 <x-laravelDateRangePicker route="{{ route('site.report.index','10') }}"/>
-@if($report->where('report_key','date_10')->first()->report_value != null)
     <table id="example" class="display wrap table-bordered " style="border-collapse: collapse; width: 100%; padding-top: 10px">
         <thead class="border border-dark">
         <tr class="border border-dark">
@@ -44,6 +43,5 @@
         {data: 'all', name: 'all'},
     ];
 </script>
-@endif
 <x-laravelYajra getData="{{ route('report','10') }}" tableTitle="{{__('10 - Отчет по кол-ву статусам')}}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
 @endsection

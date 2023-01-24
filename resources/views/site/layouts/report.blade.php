@@ -19,6 +19,24 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css"/>
+    <style>
+
+        .dataTables_filter input {
+            border: 1px solid #aaa !important;
+            border-radius: 3px;
+            padding: 5px;
+            background-color: transparent;
+            margin-left: 3px;
+        }
+        .dataTables_length select {
+            border: 1px solid #aaa;
+            border-radius: 3px;
+            padding: 5px;
+            background-color: transparent;
+            padding: 4px;
+        }
+
+    </style>
 </head>
 
 
