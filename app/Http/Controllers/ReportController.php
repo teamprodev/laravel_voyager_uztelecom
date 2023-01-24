@@ -61,6 +61,10 @@ class ReportController extends Controller
      **/
     public function report($id, Request $request)
     {
+        if(!(session()->has("report_$id.startDate") && session()->has("report_$id.endDate"))){
+            $request->session()->put("report_$id.startDate", $request->startDate);
+            $request->session()->put("report_$id.endDate", $request->endDate);
+        }
         $this->service->application_query($request);
         switch ($id)
         {

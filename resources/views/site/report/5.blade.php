@@ -3,7 +3,7 @@
 @section('center_content')
 
 <div id="fortext"></div>
-<x-laravelDateRangePicker route="{{ route('site.report.index','5') }}"/>
+<x-laravelDateRangePicker reportId="5" route="{{ route('site.report.index','5') }}"/>
     <table id="example" class="display wrap table-bordered " style="border-collapse: collapse; width: 100%; padding-top: 10px">
         <thead class="border border-dark">
 

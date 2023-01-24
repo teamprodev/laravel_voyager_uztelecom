@@ -19,12 +19,22 @@
 
 <script>
     $(function() {
-
-        var start = moment().subtract(30, 'days');
-        var end = moment();
+        var start;
+        var end;
+        if("{{session()->has("report_$reportId.startDate")}}"){
+            start = moment("{{Session::get("report_$reportId.startDate")}}").locale('ru');
+            end = moment("{{Session::get("report_$reportId.endDate")}}").locale('ru');
+            console.log('first')
+        }
+        else{
+            start = moment().locale('ru').subtract(30, 'days');
+            end = moment().locale('ru');
+            console.log('second')
+        }
 
         function cb(start, end) {
             $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            console.log(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
         };
         moment.locale('ru');
         $('#reportrange').daterangepicker({
@@ -78,7 +88,6 @@
         }, cb);
 
         cb(start, end);
-
         $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
             $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
             $('#startDate').val(picker.startDate.format('YYYY-MM-DD'));

@@ -12,10 +12,12 @@ class laravelDateRangePicker extends Component
      *
      * @return void
      */
+    public $reportId;
     public $route;
 
-    public function __construct($route)
+    public function __construct($reportId, $route)
     {
+        $this->reportId = $reportId;
         $this->route = $route;
     }
 
