@@ -39,7 +39,7 @@ class ReportService
         $application =  Application::query()->where('status','!=','draft')->where('name', '!=', null);
         return $this->query = $application;
     }
-    public function report_1()
+    public function report_1(object $request)
     {
         /** @var User $authUser */
         $authUser = auth()->user();
@@ -77,7 +77,7 @@ class ReportService
             })
             ->make(true);
     }
-    public function report_2()
+    public function report_2(object $request)
     {
         if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
@@ -209,7 +209,7 @@ class ReportService
             })
             ->make(true);
     }
-    public function report_2_2()
+    public function report_2_2(object $request)
     {
         if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
@@ -464,7 +464,7 @@ class ReportService
             })
             ->make(true);
     }
-    public function report_3()
+    public function report_3(object $request)
     {
         if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
@@ -627,7 +627,7 @@ class ReportService
             ->make(true);
     }
 
-    public function report_5()
+    public function report_5(object $request)
     {
         if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
@@ -720,12 +720,16 @@ class ReportService
             ->make(true);
     }
 
-    public function report_6()
+    public function report_6(object $request)
     {
         if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
 
-            $query = $this->application_query();
+            if($request->startDate === null){
+                $query = $this->application_query();
+            }else{
+                $query = $this->application_query()->whereBetween('created_at', [$request->startDate, $request->endDate]);
+            }
         }else{
             $query = $this->application_query()->where('branch_id',auth()->user()->branch_id)->where('draft','!=',ApplicationMagicNumber::one)->get();
         }
@@ -747,11 +751,15 @@ class ReportService
 
     }
 
-    public function report_7(){
+    public function report_7(object $request){
         if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
 
-            $query = $this->application_query();
+            if($request->startDate === null){
+                $query = $this->application_query();
+            }else{
+                $query = $this->application_query()->whereBetween('created_at', [$request->startDate, $request->endDate]);
+            }
         }else{
             $query = $this->application_query()->where('branch_id',auth()->user()->branch_id)->where('draft','!=',ApplicationMagicNumber::one)->get();
         }
@@ -769,11 +777,15 @@ class ReportService
 
             ->make(true);
     }
-    public function report_8(){
+    public function report_8(object $request){
         if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
 
-            $query = $this->application_query();
+            if($request->startDate === null){
+                $query = $this->application_query();
+            }else{
+                $query = $this->application_query()->whereBetween('created_at', [$request->startDate, $request->endDate]);
+            }
         }else{
             $query = $this->application_query()->where('branch_id',auth()->user()->branch_id)->where('draft','!=',ApplicationMagicNumber::one)->get();
         }
@@ -815,7 +827,7 @@ class ReportService
             ->make(true);
     }
 
-    public function report_9()
+    public function report_9(object $request)
     {
         if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
@@ -936,7 +948,7 @@ class ReportService
             ->make(true);
     }
 
-    public function report_10()
+    public function report_10(object $request)
     {
         /** @var User $user */
         $user = auth()->user();
