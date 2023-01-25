@@ -61,7 +61,7 @@ class ReportController extends Controller
      **/
     public function report($id, Request $request)
     {
-        if(!(session()->has("report_$id.startDate") && session()->has("report_$id.endDate"))){
+        if($request->startDate !== null && $request->endDate !== null){
             $request->session()->put("report_$id.startDate", $request->startDate);
             $request->session()->put("report_$id.endDate", $request->endDate);
         }
