@@ -45,6 +45,7 @@
                     }}
                     {{Aire::input('bio', __('Общая реальная сумма'))
                         ->name('contract_price')
+                        ->id('imask_number')
                         ->value($application->contract_price)
                     }}
                 </div>

@@ -69,11 +69,13 @@ class ReportService
             })
             ->addColumn('summa', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('with_nds', '=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('nds', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('with_nds', '!=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->make(true);
     }
@@ -95,7 +97,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-03-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('rabota_1', function($branch){
                 $date = ReportDate::where('report_key','date')->pluck('report_value')[0];
@@ -105,7 +108,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-03-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_1', function($branch){
                 $date = ReportDate::where('report_key','date')->pluck('report_value')[0];
@@ -115,7 +119,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-03-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('tovar_2', function($branch){
                 $date = ReportDate::where('report_key','date')->pluck('report_value')[0];
@@ -125,7 +130,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-06-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('rabota_2', function($branch){
                 $date = ReportDate::where('report_key','date')->pluck('report_value')[0];
@@ -135,7 +141,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-06-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_2', function($branch){
                 $date = ReportDate::where('report_key','date')->pluck('report_value')[0];
@@ -145,7 +152,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-06-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('tovar_3', function($branch){
                 $date = ReportDate::where('report_key','date')->pluck('report_value')[0];
@@ -155,7 +163,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-09-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('rabota_3', function($branch){
                 $date = ReportDate::where('report_key','date')->pluck('report_value')[0];
@@ -165,7 +174,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-09-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_3', function($branch){
                 $date = ReportDate::where('report_key','date')->pluck('report_value')[0];
@@ -175,7 +185,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-09-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('tovar_4', function($branch){
                 $date = ReportDate::where('report_key','date')->pluck('report_value')[0];
@@ -185,7 +196,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-12-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('rabota_4', function($branch){
                 $date = ReportDate::where('report_key','date')->pluck('report_value')[0];
@@ -195,7 +207,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-12-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_4', function($branch){
                 $date = ReportDate::where('report_key','date')->pluck('report_value')[0];
@@ -205,7 +218,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-12-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->make(true);
     }
@@ -227,7 +241,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-03-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('tovar_1_nds', function($branch){
                 $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
@@ -237,7 +252,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-03-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
 
             ->addColumn('rabota_1', function($branch){
@@ -248,7 +264,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-03-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('rabota_1_nds', function($branch){
                 $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
@@ -259,7 +276,8 @@ class ReportService
                     ->toDateTimeString();
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_1', function($branch){
                 $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
@@ -269,7 +287,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-03-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_1_nds', function($branch){
                 $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
@@ -279,7 +298,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-03-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('tovar_2', function($branch){
                 $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
@@ -289,7 +309,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-06-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('tovar_2_nds', function($branch){
                 $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
@@ -299,7 +320,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-06-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('rabota_2', function($branch){
                 $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
@@ -309,7 +331,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-06-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('rabota_2_nds', function($branch){
                 $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
@@ -319,7 +342,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-06-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_2', function($branch){
                 $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
@@ -329,7 +353,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-06-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_2_nds', function($branch){
                 $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
@@ -339,7 +364,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-06-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('tovar_3', function($branch){
                 $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
@@ -349,7 +375,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-09-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('tovar_3_nds', function($branch){
                 $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
@@ -360,7 +387,8 @@ class ReportService
                     ->toDateTimeString();
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('rabota_3', function($branch){
                 $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
@@ -370,7 +398,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-09-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('rabota_3_nds', function($branch){
                 $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
@@ -380,7 +409,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-09-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_3', function($branch){
                 $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
@@ -390,7 +420,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-09-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_3_nds', function($branch){
                 $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
@@ -400,7 +431,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-09-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('tovar_4', function($branch){
                 $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
@@ -410,7 +442,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-12-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('tovar_4_nds', function($branch){
                 $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
@@ -420,7 +453,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-12-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('rabota_4', function($branch){
                 $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
@@ -430,7 +464,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-12-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('rabota_4_nds', function($branch){
                 $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
@@ -440,7 +475,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-12-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_4', function($branch){
                 $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
@@ -450,7 +486,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-12-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_4_nds', function($branch){
                 $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
@@ -460,7 +497,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-12-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->make(true);
     }
@@ -482,7 +520,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('tovar_1_nds', function($branch){
                 $date = ReportDate::where('report_key','date_3_month')->pluck('report_value')[0];
@@ -492,7 +531,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
 
             ->addColumn('rabota_1', function($branch){
@@ -503,7 +543,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('rabota_1_nds', function($branch){
                 $date = ReportDate::where('report_key','date_3_month')->pluck('report_value')[0];
@@ -513,7 +554,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_1', function($branch){
                 $date = ReportDate::where('report_key','date_3_month')->pluck('report_value')[0];
@@ -523,7 +565,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_1_nds', function($branch){
                 $date = ReportDate::where('report_key','date_3_month')->pluck('report_value')[0];
@@ -533,7 +576,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->make(true);
     }
@@ -621,7 +665,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','=',null)->pluck('planned_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->rawColumns(['status'])
             ->make(true);
@@ -655,7 +700,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('performer_status', '<=' ,39)->pluck('contract_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('count_1', function($branch){
                 $date = ReportDate::where('report_key','date_5')->pluck('report_value')[0];
@@ -675,7 +721,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->pluck('contract_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('count_2', function($branch){
                 $date = ReportDate::where('report_key','date_5')->pluck('report_value')[0];
@@ -695,7 +742,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->pluck('contract_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('count_3', function($branch){
                 $date = ReportDate::where('report_key','date_5')->pluck('report_value')[0];
@@ -715,7 +763,8 @@ class ReportService
                 $end_date = Carbon::parse("{$date}-31")
                     ->toDateTimeString();
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->pluck('contract_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->make(true);
     }
@@ -847,7 +896,8 @@ class ReportService
             })
             ->addColumn('contract_sum', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->pluck('contract_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('eshop_count', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::EShop_id)->get();
@@ -855,7 +905,8 @@ class ReportService
             })
             ->addColumn('eshop_sum', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::EShop_id)->pluck('contract_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('nat_eshop_count', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::NationalEshop_id)->get();
@@ -863,7 +914,8 @@ class ReportService
             })
             ->addColumn('nat_eshop_sum', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::NationalEshop_id)->pluck('contract_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('auction_count', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::ElectronicAuction_id)->get();
@@ -871,7 +923,8 @@ class ReportService
             })
             ->addColumn('auction_sum', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::ElectronicAuction_id)->pluck('contract_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('shaffof_count', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::Shaffof_id)->get();
@@ -879,7 +932,8 @@ class ReportService
             })
             ->addColumn('shaffof_sum', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::Shaffof_id)->pluck('contract_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('tender_platform_count', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::TenderPlatform_id)->get();
@@ -887,7 +941,8 @@ class ReportService
             })
             ->addColumn('tender_platform_sum', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::TenderPlatform_id)->pluck('contract_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('exchange_count', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::ExchangeTrading_id)->get();
@@ -895,7 +950,8 @@ class ReportService
             })
             ->addColumn('exchange_sum', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::ExchangeTrading_id)->pluck('contract_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('konkurs_count', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::Competition_id)->get();
@@ -903,7 +959,8 @@ class ReportService
             })
             ->addColumn('konkurs_sum', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::Competition_id)->pluck('contract_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('tender_count', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::Tender_id)->get();
@@ -911,7 +968,8 @@ class ReportService
             })
             ->addColumn('tender_sum', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::Tender_id)->pluck('contract_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('offers_count', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::SelectionOffers_id)->get();
@@ -919,7 +977,8 @@ class ReportService
             })
             ->addColumn('offers_sum', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::SelectionOffers_id)->pluck('contract_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('sole_supplier_count', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::SoleSupplier_id)->get();
@@ -927,7 +986,8 @@ class ReportService
             })
             ->addColumn('sole_supplier_sum', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::SoleSupplier_id)->pluck('contract_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('direct_count', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::Direct_id)->get();
@@ -935,7 +995,8 @@ class ReportService
             })
             ->addColumn('direct_sum', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::Direct_id)->pluck('contract_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('coop_count', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::CooperationPortal_id)->get();
@@ -943,7 +1004,8 @@ class ReportService
             })
             ->addColumn('coop_sum', function($branch){
                 $applications = $this->application_query()->where('branch_id', $branch->id)->where('type_of_purchase_id', self::CooperationPortal_id)->pluck('contract_price')->toArray();
-                return array_sum($applications);
+                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->make(true);
     }
