@@ -601,14 +601,14 @@ class ApplicationService
      */
     final public function show(object $application, object $user) : array
     {
-        $access = SignedDocs::where('role_id', auth()->user()->role_id)->whereNull('status')->where('application_id', $application->id)->first();
-        $check = SignedDocs::where('role_id', auth()->user()->role_id)->where('application_id', $application->id)->first();
+        $access = SignedDocs::where('role_id', $user->role_id)->whereNull('status')->where('application_id', $application->id)->first();
+        $check = SignedDocs::where('role_id', $user->role_id)->where('application_id', $application->id)->first();
         $signedDocs = $application->signedDocs()->get();
         $file_basis = json_decode($application->file_basis);
         $file_tech_spec = json_decode($application->file_tech_spec);
         $other_files = json_decode($application->other_files);
         $performer_file = json_decode($application->performer_file);
-        $same_role_user_ids = User::where('role_id', auth()->user()->role_id)->get()->pluck('id')->toArray();
+        $same_role_user_ids = User::where('role_id', $user->role_id)->get()->pluck('id')->toArray();
         $products_id = [];
         if ($application->resource_id !== null)
             foreach (json_decode($application->resource_id) as $product_id) {
