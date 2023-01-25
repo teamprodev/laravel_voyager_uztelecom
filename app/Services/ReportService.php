@@ -89,134 +89,158 @@ class ReportService
             $query = Branch::query()->where('id',auth()->user()->branch_id)->get();
         }
         return Datatables::of($query)
-            ->addColumn('tovar_1', function($branch){
-                $date = ReportDate::where('report_key','date')->pluck('report_value')[0];
-                $start_date = \Carbon\Carbon::parse("{$date}-01-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-03-31")
-                    ->toDateTimeString();
+            ->addColumn('tovar_1', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('rabota_1', function($branch){
-                $date = ReportDate::where('report_key','date')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-01-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-03-31")
-                    ->toDateTimeString();
+            ->addColumn('rabota_1', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('usluga_1', function($branch){
-                $date = ReportDate::where('report_key','date')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-01-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-03-31")
-                    ->toDateTimeString();
+            ->addColumn('usluga_1', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('tovar_2', function($branch){
-                $date = ReportDate::where('report_key','date')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-04-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-06-31")
-                    ->toDateTimeString();
+            ->addColumn('tovar_2', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('rabota_2', function($branch){
-                $date = ReportDate::where('report_key','date')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-04-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-06-31")
-                    ->toDateTimeString();
+            ->addColumn('rabota_2', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('usluga_2', function($branch){
-                $date = ReportDate::where('report_key','date')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-04-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-06-31")
-                    ->toDateTimeString();
+            ->addColumn('usluga_2', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('tovar_3', function($branch){
-                $date = ReportDate::where('report_key','date')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-07-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-09-31")
-                    ->toDateTimeString();
+            ->addColumn('tovar_3', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('rabota_3', function($branch){
-                $date = ReportDate::where('report_key','date')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-07-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-09-31")
-                    ->toDateTimeString();
+            ->addColumn('rabota_3', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('usluga_3', function($branch){
-                $date = ReportDate::where('report_key','date')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-07-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-09-31")
-                    ->toDateTimeString();
+            ->addColumn('usluga_3', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('tovar_4', function($branch){
-                $date = ReportDate::where('report_key','date')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-10-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-12-31")
-                    ->toDateTimeString();
+            ->addColumn('tovar_4', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('rabota_4', function($branch){
-                $date = ReportDate::where('report_key','date')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-10-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-12-31")
-                    ->toDateTimeString();
+            ->addColumn('rabota_4', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('usluga_4', function($branch){
-                $date = ReportDate::where('report_key','date')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-10-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-12-31")
-                    ->toDateTimeString();
+            ->addColumn('usluga_4', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
@@ -233,269 +257,317 @@ class ReportService
             $query = Branch::query()->where('id',auth()->user()->branch_id)->get();
         }
         return Datatables::of($query)
-            ->addColumn('tovar_1', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-01-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-03-31")
-                    ->toDateTimeString();
+            ->addColumn('tovar_1', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('tovar_1_nds', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-01-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-03-31")
-                    ->toDateTimeString();
+            ->addColumn('tovar_1_nds', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
 
-            ->addColumn('rabota_1', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-01-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-03-31")
-                    ->toDateTimeString();
+            ->addColumn('rabota_1', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('rabota_1_nds', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-01-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-03-31")
-                    ->toDateTimeString();
+            ->addColumn('rabota_1_nds', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('usluga_1', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-01-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-03-31")
-                    ->toDateTimeString();
+            ->addColumn('usluga_1', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('usluga_1_nds', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-01-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-03-31")
-                    ->toDateTimeString();
+            ->addColumn('usluga_1_nds', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('tovar_2', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-04-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-06-31")
-                    ->toDateTimeString();
+            ->addColumn('tovar_2', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('tovar_2_nds', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-04-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-06-31")
-                    ->toDateTimeString();
+            ->addColumn('tovar_2_nds', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('rabota_2', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-04-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-06-31")
-                    ->toDateTimeString();
+            ->addColumn('rabota_2', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('rabota_2_nds', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-04-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-06-31")
-                    ->toDateTimeString();
+            ->addColumn('rabota_2_nds', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('usluga_2', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-04-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-06-31")
-                    ->toDateTimeString();
+            ->addColumn('usluga_2', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('usluga_2_nds', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-04-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-06-31")
-                    ->toDateTimeString();
+            ->addColumn('usluga_2_nds', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('tovar_3', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-07-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-09-31")
-                    ->toDateTimeString();
+            ->addColumn('tovar_3', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('tovar_3_nds', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-07-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-09-31")
-                    ->toDateTimeString();
+            ->addColumn('tovar_3_nds', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('rabota_3', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-07-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-09-31")
-                    ->toDateTimeString();
+            ->addColumn('rabota_3', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('rabota_3_nds', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-07-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-09-31")
-                    ->toDateTimeString();
+            ->addColumn('rabota_3_nds', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('usluga_3', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-07-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-09-31")
-                    ->toDateTimeString();
+            ->addColumn('usluga_3', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('usluga_3_nds', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-07-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-09-31")
-                    ->toDateTimeString();
+            ->addColumn('usluga_3_nds', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('tovar_4', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-10-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-12-31")
-                    ->toDateTimeString();
+            ->addColumn('tovar_4', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('tovar_4_nds', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-10-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-12-31")
-                    ->toDateTimeString();
+            ->addColumn('tovar_4_nds', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('rabota_4', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-10-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-12-31")
-                    ->toDateTimeString();
+            ->addColumn('rabota_4', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('rabota_4_nds', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-10-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-12-31")
-                    ->toDateTimeString();
+            ->addColumn('rabota_4_nds', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('usluga_4', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-10-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-12-31")
-                    ->toDateTimeString();
+            ->addColumn('usluga_4', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('usluga_4_nds', function($branch){
-                $date = ReportDate::where('report_key','date_2')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-10-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-12-31")
-                    ->toDateTimeString();
+            ->addColumn('usluga_4_nds', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
@@ -512,69 +584,81 @@ class ReportService
             $query = Branch::find(auth()->user()->branch_id);
         }
         return Datatables::of($query)
-            ->addColumn('tovar_1', function($branch){
-                $date = ReportDate::where('report_key','date_3_month')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-31")
-                    ->toDateTimeString();
+            ->addColumn('tovar_1', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('tovar_1_nds', function($branch){
-                $date = ReportDate::where('report_key','date_3_month')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-31")
-                    ->toDateTimeString();
+            ->addColumn('tovar_1_nds', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
 
-            ->addColumn('rabota_1', function($branch){
-                $date = ReportDate::where('report_key','date_3_month')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-31")
-                    ->toDateTimeString();
+            ->addColumn('rabota_1', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('rabota_1_nds', function($branch){
-                $date = ReportDate::where('report_key','date_3_month')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-31")
-                    ->toDateTimeString();
+            ->addColumn('rabota_1_nds', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('usluga_1', function($branch){
-                $date = ReportDate::where('report_key','date_3_month')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-31")
-                    ->toDateTimeString();
+            ->addColumn('usluga_1', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
-            ->addColumn('usluga_1_nds', function($branch){
-                $date = ReportDate::where('report_key','date_3_month')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-31")
-                    ->toDateTimeString();
+            ->addColumn('usluga_1_nds', function($branch) use ($request){
+                if($request->startDate !== null){
+                    $start_date = $request->startDate;
+                    $end_date = $request->endDate;
+                }
+                else{
+                    $start_date = "2022-08-01";
+                    $end_date = "2025-12-31";
+                }
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
