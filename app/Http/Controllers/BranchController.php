@@ -60,8 +60,11 @@ class BranchController extends Controller
      **/
     public function ajax_branch()
     {
-        $id = auth()->user()->select_branch_id;
-        return $this->service->ajax_branch($id);
+        /**@var object $user*/
+
+        $user = auth()->user();
+        $id = $user->select_branch_id;
+        return $this->service->ajax_branch($id, $user);
     }
     /**
      * vxod qilgan user da select_branch permissionni bo'lsa

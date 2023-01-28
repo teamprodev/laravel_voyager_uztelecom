@@ -12,6 +12,7 @@
         "ext-curl": "*",
         "ext-json": "*",
         "almasaeed2010/adminlte": "v3.2.0",
+        "teamprodev/laravel-components": "dev-master",
         "beyondcode/laravel-websockets": "v1.13.1",
         "fruitcake/laravel-cors": "v2.2.0",
         "glhd/aire": "v2.6.0",

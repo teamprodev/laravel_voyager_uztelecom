@@ -45,7 +45,7 @@ class BranchService
      * users tablitsadagi select_branch_id columni value sini olib
      * shu branch_id ga tegishli bolgan zayavkalarni ciqarb beradi
      **/
-    public function ajax_branch($id)
+    public function ajax_branch($id, object $user)
     {
         $data = Application::where('status','!=','draft')->where('branch_id', $id)->where('name', '!=', 'null')->get();
         return Datatables::of($data)
@@ -93,19 +93,19 @@ class BranchService
                 return json_encode(['backgroundColor' => $color, 'app' => $this->translateStatus($status), 'color' => $color ? 'white' : 'black']);
             })
             ->addIndexColumn()
-            ->addColumn('action', function ($row) {
+            ->addColumn('action', function ($row) use ($user) {
 
-                if (auth()->user()->id === $row->user_id || auth()->user()->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === auth()->user()->role_id) {
+                if ($user->id === $row->user_id || $user->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === $user->role_id) {
                     $data['edit'] = route('site.applications.edit', $row->id);
                 }
 
                 $data['show'] = route('site.applications.show', $row->id);
 
-                if ($row->user_id == auth()->user()->id) {
+                if ($row->user_id === $user->id) {
                     $data['destroy'] = route('site.applications.destroy', $row->id);
                 }
 
-                if (($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === auth()->user()->id && $row->status === ApplicationStatusEnum::Rejected)) {
+                if (($row->user_id === $user->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === $user->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === $user->id && $row->status === ApplicationStatusEnum::Rejected)) {
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
                 return json_encode(['link' => $this->createBlockAction($data,$row)]);
