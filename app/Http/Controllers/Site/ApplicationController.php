@@ -183,8 +183,10 @@ class ApplicationController extends Controller
      */
     final public function SignedDocs(int $application) : JsonResponse
     {
+        /** @var object $user*/
+        $user = auth()->user();
         $data = SignedDocs::where('application_id',$application);
-        return $this->service->SignedDocs($data);
+        return $this->service->SignedDocs($data, $user);
     }
     /**
      * @throws Exception
@@ -315,7 +317,9 @@ class ApplicationController extends Controller
      */
     final public function is_more_than_limit(Application $application,Request $request) : RedirectResponse
     {
-        $this->service->is_more_than_limit($application,$request);
+        /**@var object $user*/
+        $user = auth()->user();
+        $this->service->is_more_than_limit($application, $request, $user);
         return redirect()->back();
     }
 
