@@ -39,16 +39,14 @@ class ReportService
         $application =  Application::query()->where('status','!=','draft')->where('name', '!=', null);
         return $this->query = $application;
     }
-    public function report_1(object $request)
+    public function report_1(object $request, object $user)
     {
-        /** @var User $authUser */
-        $authUser = auth()->user();
-        if($authUser->hasPermission(PermissionEnum::Purchasing_Management_Center))
+        if($user->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
             $query = Branch::query();
         }
         else{
-            $query = Branch::query()->where('id', $authUser->branch_id)->get();
+            $query = Branch::query()->where('id', $user->branch_id)->get();
         }
         return Datatables::of($query)
             ->addColumn('count', function($branch){
@@ -79,14 +77,14 @@ class ReportService
             })
             ->make(true);
     }
-    public function report_2(object $request)
+    public function report_2(object $request, object $user)
     {
-        if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
+        if($user->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
             $query = Branch::query();
         }
         else{
-            $query = Branch::query()->where('id',auth()->user()->branch_id)->get();
+            $query = Branch::query()->where('id',$user->branch_id)->get();
         }
         return Datatables::of($query)
             ->addColumn('tovar_1', function($branch) use ($request){
@@ -247,14 +245,14 @@ class ReportService
             })
             ->make(true);
     }
-    public function report_2_2(object $request)
+    public function report_2_2(object $request, object $user)
     {
-        if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
+        if($user->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
             $query = Branch::query();
         }
         else{
-            $query = Branch::query()->where('id',auth()->user()->branch_id)->get();
+            $query = Branch::query()->where('id',$user->branch_id)->get();
         }
         return Datatables::of($query)
             ->addColumn('tovar_1', function($branch) use ($request){
@@ -574,14 +572,14 @@ class ReportService
             })
             ->make(true);
     }
-    public function report_3(object $request)
+    public function report_3(object $request, object $user)
     {
-        if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
+        if($user->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
             $query = Branch::query();
         }
         else{
-            $query = Branch::find(auth()->user()->branch_id);
+            $query = Branch::find($user->branch_id);
         }
         return Datatables::of($query)
             ->addColumn('tovar_1', function($branch) use ($request){
@@ -666,9 +664,9 @@ class ReportService
             ->make(true);
     }
 
-    public function report_4(object $request)
+    public function report_4(object $request, object $user)
     {
-        if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
+        if($user->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
             if($request->startDate === null){
                 $query = $this->application_query();
@@ -676,7 +674,7 @@ class ReportService
                 $query = $this->application_query()->whereBetween('created_at', [$request->startDate, $request->endDate]);
             }
         }else{
-            $query = $this->application_query()->where('branch_id',auth()->user()->branch_id)->where('draft','!=',ApplicationMagicNumber::one)->get();
+            $query = $this->application_query()->where('branch_id',$user->branch_id)->where('draft','!=',ApplicationMagicNumber::one)->get();
         }
         return Datatables::of($query)
             ->editColumn('branch_id', function($application)
@@ -756,14 +754,14 @@ class ReportService
             ->make(true);
     }
 
-    public function report_5(object $request)
+    public function report_5(object $request, object $user)
     {
-        if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
+        if($user->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
             $query = Branch::query();
         }
         else{
-            $query = Branch::query()->where('id',auth()->user()->branch_id)->get();
+            $query = Branch::query()->where('id',$user->branch_id)->get();
         }
         return Datatables::of($query)
             ->addColumn('count', function($branch) use ($request){
@@ -869,9 +867,9 @@ class ReportService
             ->make(true);
     }
 
-    public function report_6(object $request)
+    public function report_6(object $request, object $user)
     {
-        if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
+        if($user->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
 
             if($request->startDate === null){
@@ -880,7 +878,7 @@ class ReportService
                 $query = $this->application_query()->whereBetween('created_at', [$request->startDate, $request->endDate]);
             }
         }else{
-            $query = $this->application_query()->where('branch_id',auth()->user()->branch_id)->where('draft','!=',ApplicationMagicNumber::one)->get();
+            $query = $this->application_query()->where('branch_id',$user->branch_id)->where('draft','!=',ApplicationMagicNumber::one)->get();
         }
         return Datatables::of($query)
             ->addColumn('name', function($branch){
@@ -900,8 +898,8 @@ class ReportService
 
     }
 
-    public function report_7(object $request){
-        if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
+    public function report_7(object $request, object $user){
+        if($user->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
 
             if($request->startDate === null){
@@ -910,7 +908,7 @@ class ReportService
                 $query = $this->application_query()->whereBetween('created_at', [$request->startDate, $request->endDate]);
             }
         }else{
-            $query = $this->application_query()->where('branch_id',auth()->user()->branch_id)->where('draft','!=',ApplicationMagicNumber::one)->get();
+            $query = $this->application_query()->where('branch_id',$user->branch_id)->where('draft','!=',ApplicationMagicNumber::one)->get();
         }
         return Datatables::of($query)
             ->addColumn('name', function($branch){
@@ -926,8 +924,8 @@ class ReportService
 
             ->make(true);
     }
-    public function report_8(object $request){
-        if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
+    public function report_8(object $request, object $user){
+        if($user->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
 
             if($request->startDate === null){
@@ -936,7 +934,7 @@ class ReportService
                 $query = $this->application_query()->whereBetween('created_at', [$request->startDate, $request->endDate]);
             }
         }else{
-            $query = $this->application_query()->where('branch_id',auth()->user()->branch_id)->where('draft','!=',ApplicationMagicNumber::one)->get();
+            $query = $this->application_query()->where('branch_id',$user->branch_id)->where('draft','!=',ApplicationMagicNumber::one)->get();
         }
         return Datatables::of($query)
             ->addColumn('initiator', function($branch){
@@ -976,14 +974,14 @@ class ReportService
             ->make(true);
     }
 
-    public function report_9(object $request)
+    public function report_9(object $request, object $user)
     {
-        if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
+        if($user->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
             $query = Branch::query();
         }
         else{
-            $query = Branch::query()->where('id',auth()->user()->branch_id)->get();
+            $query = Branch::query()->where('id',$user->branch_id)->get();
         }
 
         return Datatables::of($query)
@@ -1110,10 +1108,8 @@ class ReportService
             ->make(true);
     }
 
-    public function report_10(object $request)
+    public function report_10(object $request, object $user)
     {
-        /** @var User $user */
-        $user = auth()->user();
         if($user->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
             $operator = '!=';
