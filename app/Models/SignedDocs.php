@@ -14,7 +14,7 @@ use Spatie\Permission\Models\Role;
  * @property mixed application_id
  * @property mixed table_name
  */
-class SignedDocs extends Model
+class SignedDocs extends ALL
 {
     use HasFactory;
     use SoftDeletes;

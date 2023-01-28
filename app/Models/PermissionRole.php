@@ -9,7 +9,7 @@ use TCG\Voyager\Models\Role;
 /**
  * @method static where(string $string, mixed $role)
  */
-class PermissionRole extends Model
+class PermissionRole extends ALL
 {
     use HasFactory;
     protected $guarded = [];

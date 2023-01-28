@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "ext-curl": "*",
         "ext-json": "*",
         "almasaeed2010/adminlte": "v3.2.0",
         "beyondcode/laravel-websockets": "v1.13.1",
@@ -27,9 +28,9 @@
         "tcg/voyager": "v1.5.2",
         "teamprodev/laravel_dst_eimzo": "1.16",
         "vemcogroup/laravel-translation": "v3.0.7",
+        "wildside/userstamps": "^2.2",
         "yajra/laravel-datatables-buttons": "v4.13.3",
-        "yajra/laravel-datatables-oracle": "v9.21.2",
-        "ext-curl": "*"
+        "yajra/laravel-datatables-oracle": "v9.21.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",

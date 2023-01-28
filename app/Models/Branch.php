@@ -11,7 +11,7 @@ use TCG\Voyager\Models\Role;
 /**
  * @method static find(mixed $all)
  */
-class Branch extends Model
+class Branch extends ALL
 {
     use HasFactory;
     protected $table = 'branches';

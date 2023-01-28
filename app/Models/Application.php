@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
  * @method static findOrFail($id)
  * @method static find($signedDocs)
  */
-class Application extends Model
+class Application extends ALL
 {
     use HasFactory;
     use SoftDeletes;
