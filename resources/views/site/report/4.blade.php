@@ -72,6 +72,6 @@
         {data: 'basis', name: 'basis'},
     ];
 </script>
-<x-laravelYajra getData="{{ route('report','4') }}" tableTitle="{{ __('4 - Отчет заявки по статусам') }}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
+<x-laravelYajraLoc getData="{{ route('report','4') }}" tableTitle="{{ __('4 - Отчет заявки по статусам') }}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
 
 @endsection

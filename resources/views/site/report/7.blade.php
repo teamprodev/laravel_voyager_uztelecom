@@ -41,5 +41,5 @@
         {data: 'purchase_basis', name: 'purchase_basis'},
     ];
 </script>
-<x-laravelYajra getData="{{ route('report','7') }}" tableTitle="{{__('7 - Плановый')}}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
+<x-laravelYajraLoc getData="{{ route('report','7') }}" tableTitle="{{__('7 - Плановый')}}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
 @endsection
