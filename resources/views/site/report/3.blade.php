@@ -3,17 +3,8 @@
 @section('center_content')
 
 <div id="fortext"></div>
-{{ Aire::open()
-  ->route('request')
-  ->enctype("multipart/form-data")
-  ->post() }}
-<div style="text-align: center; display: flex; justify-content: end; align-items: center; column-gap: 10px; margin-right: 20px">
-    {{Aire::month('m', __('Месяц'))->value($report->where('report_key','date_3_month')->first()->report_value)->name('date_3_month')}}
+<x-laravelDateRangePicker reportId="3" route="{{ route('site.report.index','3') }}"/>
 
-    <button type="submit" class="btn btn-success" style="margin-top: 8px;">{{__('Выбрать')  }}</button>
-</div>
-{{ Aire::close() }}
-@if($report->where('report_key','date_3_month')->first()->report_value != null)
     <table id="example" class="display wrap table-bordered " style="border-collapse: collapse; width: 100%; padding-top: 10px">
         <thead class="border border-dark">
 
@@ -63,6 +54,5 @@
             {data: 'usluga_1_nds', name: 'usluga_1_nds'},
         ];
     </script>
-    <x-laravelYajra getData="{{ route('report','3') }}" tableTitle="{{ __('3 - Отчет за год') }}"/>
-@endif
+    <x-laravelYajraLoc getData="{{ route('report','3') }}" tableTitle="{{ __('3 - Отчет за год') }}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
 @endsection

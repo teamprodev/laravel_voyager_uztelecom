@@ -62,14 +62,11 @@
             background-color: {{ setting('color.delete') }};
             color: white !important;
         }
-        #example_filter{
-            display: none;
+        .dataTables_paginate {
+            float: left !important;
         }
-        #example_paginate{
-            display: none;
-        }
-        #example_info{
-            display: none;
+        .dataTables_info{
+            float: right !important;
         }
         .dt-buttons{
             width: 60%;
@@ -80,10 +77,6 @@
             width: 20%;
             margin-bottom: 15px;
         }
-        .dataTables_filter{
-            width: 20%;
-            margin-bottom: 15px;
-        }
         .dtsb-searchBuilder{
             width: fit-content;
         }
@@ -91,7 +84,6 @@
             white-space: inherit !important;
         }
         .wrapper{
-            width: fit-content !important;
             min-width: 100%;
         }
         .main-sidebar{
@@ -99,6 +91,17 @@
         }
         td, th{
             font-size: 1rem !important;
+        }
+        .daterangepicker-form{
+            display: flex !important;
+            column-gap: 10px !important;
+            flex: 45%;
+            align-items: center !important;
+        }
+        .buttons-container{
+            display: flex;
+            padding-bottom: 20px;
+            align-items: baseline !important;
         }
     </style>
 </head>
@@ -154,7 +157,8 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.3.1/js/dataTables.fixedHeader.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" defer></script>
-
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment-with-locales.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/6.4.3/imask.min.js" integrity="sha512-yJ3vm1HmQtcgeMtbUYCp7PuTLyjU+ffCnVNTuE1Uccv1BmkoaJIXt1EjBVGnscjCILc62hTJJJ2rJJBTcw8RjQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js" integrity="sha512-ubuT8Z88WxezgSqf3RLuNi5lmjstiJcyezx34yIU2gAHonIi27Na7atqzUZCOoY4CExaoFumzOsFQ2Ch+I/HCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -212,6 +216,14 @@
         });
 
     });
+
+//    IMask Number
+    var numberMask = IMask(
+        document.getElementById('imask_number'),
+        {
+            mask: Number,
+            thousandsSeparator: ' '
+        });
 </script>
 </body>
 </html>

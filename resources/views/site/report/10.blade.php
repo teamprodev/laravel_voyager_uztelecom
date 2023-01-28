@@ -3,17 +3,7 @@
 @section('center_content')
 
 <div id="fortext"></div>
-{{ Aire::open()
-  ->route('request')
-  ->enctype("multipart/form-data")
-  ->post() }}
-<div style="text-align: center; display: flex; justify-content: end; align-items: center; column-gap: 10px; margin-right: 20px">
-    {{Aire::select([2021 => '2021', 2022 => '2022', 2023 => '2023',2024 => '2024'], 'select', __('Год'))->value($report->where('report_key','date_10')->first()->report_value)->name('date_10')}}
-
-    <button type="submit" class="btn btn-success" style="margin-top: 8px;">{{ __('Выбрать')  }}</button>
-</div>
-{{ Aire::close() }}
-@if($report->where('report_key','date_10')->first()->report_value != null)
+<x-laravelDateRangePicker reportId="10" route="{{ route('site.report.index','10') }}"/>
     <table id="example" class="display wrap table-bordered " style="border-collapse: collapse; width: 100%; padding-top: 10px">
         <thead class="border border-dark">
         <tr class="border border-dark">
@@ -53,6 +43,5 @@
         {data: 'all', name: 'all'},
     ];
 </script>
-@endif
-<x-laravelYajra getData="{{ route('report','10') }}" tableTitle="{{__('10 - Отчет по кол-ву статусам')}}"/>
+<x-laravelYajraLoc getData="{{ route('report','10') }}" tableTitle="{{__('10 - Отчет по кол-ву статусам')}}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
 @endsection
