@@ -11,5 +11,5 @@ use Wildside\Userstamps\Userstamps;
 
 class ALL extends Model
 {
-    use Userstamps;
+    use Userstamps, SoftDeletes;
 }
