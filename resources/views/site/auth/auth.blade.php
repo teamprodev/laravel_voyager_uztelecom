@@ -10,7 +10,15 @@
     <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
     <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
     <style>
-
+        .select2-selection__rendered {
+            line-height: 35px !important;
+        }
+        .select2-container .select2-selection--single {
+            height: 40px !important;
+        }
+        .select2-selection__arrow {
+            height: 38px !important;
+        }
     </style>
 </head>
 <body>
@@ -19,7 +27,7 @@
 <section class="bg-blueGray-50">
 
     <!--Modal-->
-    <div class="w-full h-full mt-28 flex items-center justify-center" style="height: 40em;">
+    <div class="w-full h-full flex items-center justify-center" style="height: 100vh;">
 
         <div class="bg-white w-11/12 md:max-w-lg mx-auto rounded shadow-lg z-50 overflow-y-auto" style="background-color: #0b2e13">
             <!-- Add margin if you want to see some of the overlay behind the modal-->
