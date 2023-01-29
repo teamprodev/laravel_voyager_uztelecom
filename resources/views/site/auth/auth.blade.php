@@ -7,9 +7,32 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.css" rel="stylesheet">
   <title>Uztelecom</title>
     @bukStyles
+    <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
+    <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
+    <style>
+
+    </style>
 </head>
 <body>
+@include('site.auth.navbar')
 @bukScripts
-<x-eimzo_login url="{{route('eri.login')}}"></x-eimzo_login>
+<section class="bg-blueGray-50">
+
+    <!--Modal-->
+    <div class="w-full h-full mt-28 flex items-center justify-center" style="height: 40em;">
+
+        <div class="bg-white w-11/12 md:max-w-lg mx-auto rounded shadow-lg z-50 overflow-y-auto" style="background-color: #0b2e13">
+            <!-- Add margin if you want to see some of the overlay behind the modal-->
+            <div class="py-2 text-left px-6" style="display: flex;flex-direction: column;height: 30em;justify-content: start;">
+
+                <div class="flex justify-between items-center ">
+                    <h5 style="margin: 4em auto;font-size: 1.6rem">Вход с помощью ЭЦП</h5>
+                </div>
+                <x-eimzo_login url="{{route('eri.login')}}"></x-eimzo_login>
+            </div>
+        </div>
+    </div>
+
+</section>
 </body>
 </html>
