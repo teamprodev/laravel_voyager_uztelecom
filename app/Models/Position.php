@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @method static find($position_id)
  */
-class Position extends ALL
+class Position extends Model
 {
     use HasFactory;
     protected $table = 'position';

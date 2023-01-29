@@ -17,7 +17,6 @@ use Spatie\Permission\Models\Role;
 class SignedDocs extends ALL
 {
     use HasFactory;
-    use SoftDeletes;
     protected $with = 'application';
     protected $table = "signed_docs";
 

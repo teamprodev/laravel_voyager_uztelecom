@@ -38,10 +38,6 @@ class Application extends ALL
     {
         return $this->hasMany(SignedDocs::class)->where('role_id',auth()->user()->role_id)->whereNull('status');
     }
-    public function plan()
-    {
-        return $this->belongsTo(Plan::class);
-    }
 
     public function user()
     {

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @method static get()
  */
-class Country extends ALL
+class Country extends Model
 {
     use HasFactory;
     protected $primaryKey = 'country_alpha3_code';
