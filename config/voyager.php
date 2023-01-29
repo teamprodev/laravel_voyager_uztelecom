@@ -206,7 +206,7 @@ return [
     ],
 
     // Activate compass when environment is NOT local
-    'compass_in_production' => true,
+    'compass_in_production' => false,
 
     'media' => [
         // The allowed mimetypes to be uploaded through the media-manager.
