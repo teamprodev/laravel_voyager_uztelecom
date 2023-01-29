@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "98819476f99eb71a9bd5c5d9df2c2065",
+    "content-hash": "5b4c903a756e30b71e4b7fcb22556f14",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -8259,6 +8259,82 @@
             "time": "2021-11-09T08:33:29+00:00"
         },
         {
+            "name": "teamprodev/laravel-components",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/teamprodev/laravel-components.git",
+                "reference": "81cdb2a4850dd0a458161d3037d235c5a2a9b09e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/teamprodev/laravel-components/zipball/81cdb2a4850dd0a458161d3037d235c5a2a9b09e",
+                "reference": "81cdb2a4850dd0a458161d3037d235c5a2a9b09e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "illuminate/filesystem": "^7.0|^8.0|^9.0",
+                "illuminate/support": "^7.0|^8.0|^9.0",
+                "illuminate/view": "^7.0|^8.0|^9.0",
+                "nesbot/carbon": "^2.38",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "gajus/dindent": "^2.0",
+                "guzzlehttp/guzzle": "^7.4",
+                "league/commonmark": "^1.4|^2.0",
+                "lorisleiva/cron-translator": "^0.1.1",
+                "orchestra/testbench": "^5.0|^6.0|^7.1",
+                "phpunit/phpunit": "^9.0"
+            },
+            "suggest": {
+                "league/commonmark": "Required to use the markdown component (^1.4).",
+                "lorisleiva/cron-translator": "Required to use the cron component (^0.1.1)."
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "BladeUIKit\\BladeUIKitServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "BladeUIKit\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Faxriddin077",
+                    "email": "faxriddinqodirov077@gmail.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "arabic0513",
+                    "email": "sardoryusupov230@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A set of renderless components to utilise in your Laravel Blade views.",
+            "keywords": [
+                "blade",
+                "laravel",
+                "ui"
+            ],
+            "support": {
+                "issues": "https://github.com/teamprodev/laravel-components/issues",
+                "source": "https://github.com/teamprodev/laravel-components/tree/master"
+            },
+            "time": "2023-01-28T09:44:07+00:00"
+        },
+        {
             "name": "teamprodev/laravel_dst_eimzo",
             "version": "1.16",
             "source": {
@@ -12522,7 +12598,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "teamprodev/laravel-components": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
