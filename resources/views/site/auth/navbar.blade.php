@@ -5,7 +5,7 @@
         </a>
         <div class="" id="navbarSupportedContent" style="display: contents;">
             <form class="d-flex">
-                <b><h3 style="margin:1em;color: white" type="">+998(99)857-40-12</h3></b>
+                <b><h3 style="margin:1em;color: white" type="">{{setting('admin.support_number')}}</h3></b>
             </form>
         </div>
     </div>
