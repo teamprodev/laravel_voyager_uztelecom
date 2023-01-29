@@ -29,7 +29,7 @@
     <!--Modal-->
     <div class="w-full h-full flex items-center justify-center" style="height: 86vh;">
 
-        <div class="bg-white w-11/12 mx-auto rounded shadow-lg z-50 overflow-y-auto" style="background-color: #0b2e13; max-width: 30%">
+        <div class="bg-white w-11/12 mx-auto rounded shadow-lg z-50 overflow-y-auto" style="background-color: #0b2e13; max-width: 50%">
             <!-- Add margin if you want to see some of the overlay behind the modal-->
             <div class="py-2 text-left px-6" style="display: flex;flex-direction: column;height: 30em;justify-content: start;">
 
