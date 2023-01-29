@@ -27,7 +27,7 @@
 <section class="bg-blueGray-50">
 
     <!--Modal-->
-    <div class="w-full h-full flex items-center justify-center" style="height: 100vh;">
+    <div class="w-full h-full flex items-center justify-center" style="height: 86vh;">
 
         <div class="bg-white w-11/12 md:max-w-lg mx-auto rounded shadow-lg z-50 overflow-y-auto" style="background-color: #0b2e13">
             <!-- Add margin if you want to see some of the overlay behind the modal-->
