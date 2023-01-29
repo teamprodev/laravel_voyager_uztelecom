@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @method static where(string $string, $id)
  */
-class Warehouse extends Model
+class Warehouse extends ALL
 {
     use HasFactory;
     protected $table = 'warehouse';

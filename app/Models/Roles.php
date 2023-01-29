@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @method static find(mixed $role_company)
  */
-class Roles extends Model
+class Roles extends ALL
 {
     use HasFactory;
     protected $table = 'roles';

@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
  * @method static findOrFail($id)
  * @method static find($signedDocs)
  */
-class Application extends Model
+class Application extends ALL
 {
     use HasFactory;
     use SoftDeletes;
@@ -37,10 +37,6 @@ class Application extends Model
     public function need_to_sign()
     {
         return $this->hasMany(SignedDocs::class)->where('role_id',auth()->user()->role_id)->whereNull('status');
-    }
-    public function plan()
-    {
-        return $this->belongsTo(Plan::class);
     }
 
     public function user()

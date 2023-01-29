@@ -32,6 +32,6 @@ class laravelYajra extends Component
      */
     public function render()
     {
-        return view('components.laravelYajra');
+        return view('components.laravelYajraLoc');
     }
 }

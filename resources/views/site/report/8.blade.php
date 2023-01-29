@@ -45,5 +45,5 @@
         {data: 'created_at', name: 'created_at'},
     ];
 </script>
-<x-laravelYajra getData="{{ route('report','8') }}" tableTitle="{{__('8 - Отчет по видам закупки')}}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
+<x-laravelYajraLoc getData="{{ route('report','8') }}" tableTitle="{{__('8 - Отчет по видам закупки')}}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
 @endsection

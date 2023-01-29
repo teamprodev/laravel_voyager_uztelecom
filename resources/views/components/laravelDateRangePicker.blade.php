@@ -1,11 +1,5 @@
 <form class="form-inline daterangepicker-form" method="GET" action="{{$route}}" id="daterangepicker-form">
     @csrf
-{{--    <div class="form-group mx-sm-3 mb-2">--}}
-{{--        <label for="dateFilter" class="sr-only">Filter</label>--}}
-{{--        <input type="text" id="reportrange" name="reportrange" />--}}
-{{--        <input type="hidden" name="startDate" id="startDate">--}}
-{{--        <input type="hidden" name="endDate" id="endDate">--}}
-{{--    </div>--}}
     <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc;">
         <i class="fa fa-calendar"></i>&nbsp;
         <span></span> <i class="fa fa-caret-down"></i>

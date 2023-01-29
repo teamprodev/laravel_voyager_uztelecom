@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 use TCG\Voyager\Models\Role;
 use App\Models\Branch;
 use App\Models\Position;
+use Wildside\Userstamps\Userstamps;
 
 /**
  * @property $branch_id
@@ -22,7 +23,7 @@ use App\Models\Position;
  */
 class User extends \TCG\Voyager\Models\User
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, Userstamps;
 
     protected $dispatchesEvents = [
         'saved' => UserSaved::class,

@@ -136,19 +136,19 @@ class ApplicationService
                 return json_encode(['backgroundColor' => $color, 'app' => $this->translateStatus($status), 'color' => $color ? 'white' : 'black']);
             })
             ->addIndexColumn()
-            ->addColumn('action', function ($row) {
-                $user = Cache::get('users')->find(auth()->user()->id);
-                if ($user->id === $row->user_id || $user->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === $user->role_id) {
+            ->addColumn('action', function ($row) use ($user) {
+                $user_get = Cache::get('users')->find($user->id);
+                if ($user_get->id === $row->user_id || $user_get->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === $user_get->role_id) {
                     $data['edit'] = route('site.applications.edit', $row->id);
                 }
 
                 $data['show'] = route('site.applications.show', $row->id);
 
-                if ($row->user_id === $user->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two) {
+                if ($row->user_id === $user_get->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two) {
                     $data['destroy'] = route('site.applications.destroy', $row->id);
                 }
 
-                if (($row->user_id === $user->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === $user->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === $user->id && $row->status === ApplicationStatusEnum::Rejected)) {
+                if (($row->user_id === $user_get->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === $user_get->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === $user_get->id && $row->status === ApplicationStatusEnum::Rejected)) {
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
                 return json_encode(['link' => $this->createBlockAction($data, $row)]);
@@ -207,19 +207,19 @@ class ApplicationService
                 return json_encode(['backgroundColor' => $color, 'app' => $this->translateStatus($status), 'color' => $color ? 'white' : 'black']);
             })
             ->addIndexColumn()
-            ->addColumn('action', function ($row) {
-                $user = Cache::get('users')->find(auth()->user()->id);
-                if ($user->id === $row->user_id || $user->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === $user->role_id) {
+            ->addColumn('action', function ($row) use ($user) {
+                $user_get = Cache::get('users')->find($user->id);
+                if ($user_get->id === $row->user_id || $user_get->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === $user_get->role_id) {
                     $data['edit'] = route('site.applications.edit', $row->id);
                 }
 
                 $data['show'] = route('site.applications.show', $row->id);
 
-                if ($row->user_id === $user->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two) {
+                if ($row->user_id === $user_get->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two) {
                     $data['destroy'] = route('site.applications.destroy', $row->id);
                 }
 
-                if (($row->user_id === $user->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === $user->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === $user->id && $row->status === ApplicationStatusEnum::Rejected)) {
+                if (($row->user_id === $user_get->id && $row->status === ApplicationStatusEnum::Canceled) || ($row->user_id === $user_get->id && $row->status === ApplicationStatusEnum::Refused) || ($row->user_id === $user_get->id && $row->status === ApplicationStatusEnum::Rejected)) {
                     $data['clone'] = route('site.applications.clone', $row->id);
                 }
                 return json_encode(['link' => $this->createBlockAction($data, $row)]);
@@ -294,9 +294,7 @@ class ApplicationService
                 return json_encode(['backgroundColor' => setting("color.$query->status"), 'app' => $this->translateStatus($query->status), 'color' => setting("color.$query->status") ? 'white' : 'black']);
             })
             ->addIndexColumn()
-            ->addColumn('action', function ($row) {
-                /**@var object $user*/
-                $user = auth()->user();
+            ->addColumn('action', function ($row) use ($user) {
                 if ($user->id === $row->user_id || $user->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === $user->role_id) {
                     $data['edit'] = route('site.applications.edit', $row->id);
                 }
@@ -386,9 +384,7 @@ class ApplicationService
                 return json_encode(['backgroundColor' => $color, 'app' => $this->translateStatus($status), 'color' => $color ? 'white' : 'black']);
             })
             ->addIndexColumn()
-            ->addColumn('action', function ($row) {
-                /**@var object $user*/
-                $user = auth()->user();
+            ->addColumn('action', function ($row) use ($user){
                 if ($user->id === $row->user_id || $user->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === $user->role_id) {
                     $data['edit'] = route('site.applications.edit', $row->id);
                 }
@@ -428,7 +424,7 @@ class ApplicationService
      * @return JsonResponse
      * @throws Exception
      */
-    final public function SignedDocs(object $data) : JsonResponse
+    final public function SignedDocs(object $data, object $user) : JsonResponse
     {
         return Datatables::of($data)
             ->addIndexColumn()
@@ -453,10 +449,10 @@ class ApplicationService
                 };
                 return $status_signer;
             })
-            ->addColumn('action', function ($row) {
+            ->addColumn('action', function ($row) use ($user) {
                 $data = [];
                 $branch = Cache::get('branches')->find($row->application->branch_initiator_id);
-                if ($row->application->user_id === auth()->user()->id && !in_array($row->role_id, json_decode($branch->signers))) {
+                if ($row->application->user_id === $user->id && !in_array($row->role_id, json_decode($branch->signers))) {
                     $data['destroy'] = route('site.applications.delete.signedocs', [$row->id,$row->application->id]);
                 }
                 return json_encode(['link' => $this->createBlockAction($data, $row)]);
@@ -521,9 +517,7 @@ class ApplicationService
             ->editColumn('updated_at', function ($data) {
                 return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
             })
-            ->addColumn('action', function ($row) {
-                /**@var object $user*/
-                $user = auth()->user();
+            ->addColumn('action', function ($row) use ($user) {
                 if ($user->id === $row->user_id || $user->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === $user->role_id) {
                     $data['edit'] = route('site.applications.edit', $row->id);
                 }
@@ -830,11 +824,11 @@ class ApplicationService
      * @param object $request
      * @return  bool
      */
-    final public function is_more_than_limit(object $application, object $request) : bool
+    final public function is_more_than_limit(object $application, object $request, object $user) : bool
     {
         $application->is_more_than_limit = $request->is_more_than_limit;
         $application->signers = null;
-        $branch_id = auth()->user()->branch_id;
+        $branch_id = $user->branch_id;
         if ($request->is_more_than_limit == ApplicationMagicNumber::one) {
             $application->branch_initiator_id = ApplicationMagicNumber::Company;
         } else {
@@ -936,9 +930,7 @@ class ApplicationService
                 return json_encode(['backgroundColor' => $color, 'app' => $this->translateStatus($status), 'color' => $color ? 'white' : 'black']);
             })
             ->addIndexColumn()
-            ->addColumn('action', function ($row) {
-                /**@var object $user*/
-                $user = auth()->user();
+            ->addColumn('action', function ($row) use ($user){
                 if ($user->id === $row->user_id || $user->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === $user->role_id) {
                     $data['edit'] = route('site.applications.edit', $row->id);
                 }
