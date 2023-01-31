@@ -28,15 +28,22 @@
 
     <!--Modal-->
     <div class="w-full h-full flex items-center justify-center" style="height: 86vh;">
-
-        <div class="bg-white w-11/12 mx-auto rounded shadow-lg z-50 overflow-y-auto" style="background-color: #0b2e13; max-width: 50%">
-            <!-- Add margin if you want to see some of the overlay behind the modal-->
-            <div class="py-2 text-left px-6" style="display: flex;flex-direction: column;height: 30em;justify-content: start;">
-
-                <div class="flex justify-between items-center ">
-                    <h5 style="margin: 4em auto;font-size: 1.6rem">Вход с помощью ЭЦП</h5>
+        <div class="bg-white w-11/12 mx-auto rounded shadow-lg z-50 overflow-y-auto" style="background-color: #0b2e13; max-width: 40%;max-height: 80%;">
+            <div style="height: 25em;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;">
+                <div class="block text-center">
+                    <div class="py-3 px-6 border-b border-gray-300" style="font-size: 2em;">
+                        Система электронных заявок
+                    </div>
+                    <div class="p-6">
+                        <h5 class="text-gray-900 text-xl font-medium mb-2">Вход с помощью ЭЦП</h5>
+                    </div>
+                    <div class="inline-block p-2" style="width: 80%;">
+                        <x-eimzo_login url="{{route('eri.login')}}"></x-eimzo_login>
+                    </div>
                 </div>
-                <x-eimzo_login url="{{route('eri.login')}}"></x-eimzo_login>
             </div>
         </div>
     </div>
