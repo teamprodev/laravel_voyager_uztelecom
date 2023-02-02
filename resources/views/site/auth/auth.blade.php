@@ -26,7 +26,6 @@
 @bukScripts
 <section class="bg-blueGray-50">
 
-    <!--Modal-->
     <div class="w-full h-full flex items-center justify-center" style="height: 86vh;">
         <div class="bg-white w-11/12 mx-auto rounded shadow-lg z-50 overflow-y-auto" style="background-color: #0b2e13; max-width: 40%;max-height: 80%;">
             <div style="height: 25em;
@@ -40,9 +39,18 @@
                     <div class="p-6">
                         <h5 class="text-gray-900 text-xl font-medium mb-2">Вход с помощью ЭЦП</h5>
                     </div>
-                    <div class="inline-block p-2" style="width: 80%;">
-                        <x-eimzo_login url="{{route('eri.login')}}"></x-eimzo_login>
-                    </div>
+                    <form name="eri_form" action="{{route('eri.login')}}" id="eri_form" method="post">
+                        @csrf
+                        <div class="inline-block p-2" style="width: 80%;">
+                            <x-eimzo_login></x-eimzo_login>
+                        </div>
+                        <div class="inline-block">
+                            <x-eimzo_login_update_button></x-eimzo_login_update_button>
+                        </div>
+                        <div style="margin-top: 3em;">
+                            <x-eimzo_login_sign_button></x-eimzo_login_sign_button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
