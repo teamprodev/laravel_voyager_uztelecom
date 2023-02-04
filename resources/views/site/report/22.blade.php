@@ -146,5 +146,5 @@
             {data: 'usluga_4_nds', name: 'usluga_4_nds'},
         ];
     </script>
-<x-laravelYajraLoc getData="{{ route('report','22') }}" tableTitle="{{__('2 - Отчет квартальный плановый')}}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
+<x-laravelYajra dom='Blfrtip' getData="{{ route('report','22') }}" tableTitle="{{__('2 - Отчет квартальный плановый')}}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
 @endsection

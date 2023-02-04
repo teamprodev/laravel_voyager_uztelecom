@@ -49,5 +49,5 @@
         {data: 'usluga_4', name: 'usluga_4'},
     ];
 </script>
-<x-laravelYajraLoc getData="{{ route('report','2') }}" tableTitle="{{ __('2 - Отчет квартальный итоговый') }}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
+<x-laravelYajra dom='Blfrtip' getData="{{ route('report','2') }}" tableTitle="{{ __('2 - Отчет квартальный итоговый') }}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
 @endsection

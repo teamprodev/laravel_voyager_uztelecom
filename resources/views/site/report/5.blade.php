@@ -61,6 +61,6 @@
             {data: 'summa_3', name: 'summa_3'},
         ];
     </script>
-    <x-laravelYajraLoc getData="{{ route('report','5') }}" tableTitle="{{ __('5 - Отчет свод  общий') }}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
+    <x-laravelYajra dom='Blfrtip' getData="{{ route('report','5') }}" tableTitle="{{ __('5 - Отчет свод  общий') }}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
 
 @endsection
