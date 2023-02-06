@@ -844,21 +844,17 @@ class ApplicationService
         return $application->save();
     }
 
-//    public static function getNotifications(){
-//        return Notification::with('application:id,created_at')->has('application')
-//            ->where('user_id', auth()->id())
-//            ->where('is_read', 0)
-//            ->get();
-//    }
+    public static function getNotifications(){
+        return Notification::with('application:id,created_at')->has('application')
+            ->where('user_id', auth()->id())
+            ->where('is_read', 0)
+            ->orderBy('id', 'desc')
+            ->get();
+    }
 
     public function sendNotifications($array, $application, $message)
     {
         if ($array !== null) {
-            if (is_resource(@fsockopen(env('LARAVEL_WEBSOCKETS_HOST', '127.0.0.1'), env('LARAVEL_WEBSOCKETS_PORT', 6001)))) {
-                $websocket = true;
-            } else {
-                $websocket = false;
-            }
             $user_ids = User::query()->whereIn('role_id', $array)->where('branch_id', $application->branch_initiator_id)->pluck('id')->toArray();
             foreach ($user_ids as $user_id) {
                 $notification = Notification::query()->firstOrCreate(['user_id' => $user_id, 'application_id' => $application->id, 'message' => $message]);
@@ -868,9 +864,7 @@ class ApplicationService
                         'id' => $application->id,
                         'time' => $diff === ApplicationMagicNumber::zero ? 'recently' : $diff
                     ];
-                    if ($websocket) {
                         broadcast(new Notify(json_encode($data, $assoc = true), $user_id))->toOthers();     // notification
-                    }
                 }
             }
         }
