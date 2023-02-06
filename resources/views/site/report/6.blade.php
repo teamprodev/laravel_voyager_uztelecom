@@ -37,5 +37,5 @@
         {data: 'protocol_date', name: 'protocol_date'},
     ];
 </script>
-<x-laravelYajra dom='Blfrtip' getData="{{ route('report','6') }}" tableTitle="{{__('6 - Отчет свод')}}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
+<x-laravelYajraLoc dom='Blfrtip' getData="{{ route('report','6') }}" tableTitle="{{__('6 - Отчет свод')}}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
 @endsection
