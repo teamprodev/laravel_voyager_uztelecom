@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\Notify;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TypeOfPurchase;
 use App\Http\Controllers\UserController;
