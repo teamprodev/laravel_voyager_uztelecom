@@ -165,7 +165,7 @@
                                 ->rows(3)
                                 ->name("planned_price")
                                 ->id("planned_price")
-                                ->value(number_format($application->planned_price , 0 , '' , ' '))
+                                ->value($application->planned_price)
                                 ->class("form-control")->disabled()
                             }}
                         </div>
