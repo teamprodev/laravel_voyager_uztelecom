@@ -16,6 +16,7 @@ use http\Client\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Purchase;
+use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
 class ReportService
@@ -706,7 +707,7 @@ class ReportService
                 return $application->subject ? $application->subjects->name:'';
             })
             ->addColumn('planned_price', function ($query) {
-                return $query->planned_price;
+                return !Str::contains($query->planned_price, ' ') ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : $query->planned_price;
             })
             ->editColumn('with_nds', function($application)
             {
@@ -886,7 +887,7 @@ class ReportService
                 return Branch::query()->where('id', $branch->branch_id)->get()->pluck('name')->toArray();
             })
             ->addColumn('planned_price', function ($query) {
-                return $query->planned_price;
+                return !Str::contains($query->planned_price, ' ') ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : $query->planned_price;
             })
             ->addColumn('product', function($application){
                 $product = json_decode($application->resource_id,true);
@@ -959,7 +960,7 @@ class ReportService
                 return "{$branch->number } {$branch->date }";
             })
             ->addColumn('planned_price', function ($query) {
-                return $query->planned_price;
+                return !Str::contains($query->planned_price, ' ') ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : $query->planned_price;
             })
             ->addColumn('product', function($application){
                 $product = json_decode($application->resource_id,true);

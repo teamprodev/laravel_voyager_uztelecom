@@ -165,7 +165,7 @@
                                 ->rows(3)
                                 ->name("planned_price")
                                 ->id("planned_price")
-                                ->value($application->planned_price)
+                                ->value(!\Str::contains($application->planned_price, ' ') ? number_format($application->planned_price, App\Enums\ApplicationMagicNumber::zero, '', ' ') : $application->planned_price)
                                 ->class("form-control")->disabled()
                             }}
                         </div>

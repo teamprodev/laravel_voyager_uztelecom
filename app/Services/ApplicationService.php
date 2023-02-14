@@ -27,6 +27,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\JsonResponse;
 
@@ -110,7 +111,7 @@ class ApplicationService
                 return $query->delivery_date ? with(new Carbon($query->delivery_date))->format('d.m.Y') : with(new Carbon($query->update_at = Carbon::now()->addMonth()))->format('d.m.Y');
             })
             ->editColumn('planned_price', function ($query) {
-                return $query->planned_price;
+                return !Str::contains($query->planned_price, ' ') ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : $query->planned_price;
             })
             ->editColumn('with_nds', function ($query) {
                 return $query->with_nds ? 'С НДС' : 'Без НДС';
@@ -181,7 +182,7 @@ class ApplicationService
                 return $query->delivery_date ?? with(new Carbon($query->delivery_date))->format('d.m.Y');
             })
             ->editColumn('planned_price', function ($query) {
-                return $query->planned_price;
+                return !Str::contains($query->planned_price, ' ') ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : $query->planned_price;
             })
             ->addColumn('planned_price_curr', function ($query) {
                 $planned_price = $query->planned_price ?? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ');
@@ -271,7 +272,7 @@ class ApplicationService
                 return $docs->role ? $docs->role->display_name : "";
             })
             ->editColumn('planned_price', function ($query) {
-                return $query->planned_price;
+                return !Str::contains($query->planned_price, ' ') ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : $query->planned_price;
             })
             ->editColumn('delivery_date', function ($query) {
                 return $query->updated_at ? with(new Carbon($query->delivery_date))->format('d.m.Y') : '';
@@ -280,7 +281,7 @@ class ApplicationService
                 return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
             })
             ->addColumn('planned_price_curr', function ($query) {
-                $planned_price = $query->planned_price;
+                $planned_price = !Str::contains($query->planned_price, ' ') ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : $query->planned_price;
                 return $planned_price;
             })
             ->editColumn('with_nds', function ($query) {
@@ -351,7 +352,7 @@ class ApplicationService
             })
             ->addIndexColumn()
             ->editColumn('planned_price', function ($query) {
-                return $query->planned_price;
+                return !Str::contains($query->planned_price, ' ') ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : $query->planned_price;
             })
             ->editColumn('user_id', function ($query) {
                 $user = Cache::get('users')->find($query->user_id);
@@ -361,7 +362,7 @@ class ApplicationService
                 return $query->delivery_date ? with(new Carbon($query->delivery_date))->format('d.m.Y') : '';
             })
             ->addColumn('planned_price_curr', function ($query) {
-                $planned_price = $query->planned_price;
+                $planned_price = !Str::contains($query->planned_price, ' ') ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : $query->planned_price;
                 return $planned_price;
             })
             ->editColumn('with_nds', function ($query) {
@@ -901,7 +902,7 @@ class ApplicationService
                 return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
             })
             ->addColumn('planned_price_curr', function ($query) {
-                $planned_price = $query->planned_price;
+                $planned_price = !Str::contains($query->planned_price, ' ') ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : $query->planned_price;
                 return $planned_price;
             })
             ->editColumn('with_nds', function ($query) {
