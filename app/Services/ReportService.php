@@ -889,14 +889,7 @@ class ReportService
             ->addColumn('planned_price', function ($query) {
                 return !Str::contains($query->planned_price, ' ') ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : $query->planned_price;
             })
-            ->addColumn('product', function($application){
-                $product = json_decode($application->resource_id,true);
-                $names = collect($product);
-                $ucnames = $names->map(function($item, $key) {
-                    return Resource::find($item)->name;
-                });
-                return json_decode($ucnames);
-            })->make(true);
+            ->make(true);
 
     }
 
