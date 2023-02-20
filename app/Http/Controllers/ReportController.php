@@ -114,17 +114,10 @@ class ReportController extends Controller
         $user = auth()->user();
 
         $users = match ($id) {
-            '1' => 'Скоро',
-            '2' => 'Скоро',
-            '3' => 'Скоро',
             '4' => $this->exportService->export_4($request, $user),
-            '5' => 'Скоро',
             '6' => $this->exportService->export_6($request, $user),
             '7' => $this->exportService->export_7($request, $user),
             '8' => $this->exportService->export_8($request, $user),
-            '9' => 'Скоро',
-            '10' => 'Скоро',
-            '22' => 'Скоро',
         };
         return $users;
     }
