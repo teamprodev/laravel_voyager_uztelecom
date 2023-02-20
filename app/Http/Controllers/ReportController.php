@@ -7,6 +7,7 @@ use App\Http\Requests\ReportDateRequest;
 use App\Models\ReportDate;
 use App\Models\StatusExtended;
 use App\Services\ApplicationService;
+use App\Services\ReportExportService;
 use App\Services\ReportService;
 use Illuminate\Http\Request;
 use App\Models\Application;
@@ -22,11 +23,13 @@ class ReportController extends Controller
     const Report_Statuses_Quantity = 10;
 
     private ReportService $service;
+    private ReportExportService $exportService;
 
-    public function __construct(ReportService $service)
+    public function __construct(ReportService $service, ReportExportService $exportService)
     {
         $this->middleware('auth');
         $this->service = $service;
+        $this->exportService = $exportService;
     }
     /**
      * Request da Reportlar date keladi.
@@ -105,5 +108,15 @@ class ReportController extends Controller
         }
 
 
+    }
+
+    public function report_export($id, Request $request){
+        $user = auth()->user();
+
+        $users = match ($id) {
+            '4' => $this->exportService->export_4($request, $user),
+            '7' => $this->exportService->export_7($request, $user),
+        };
+        return $users;
     }
 }

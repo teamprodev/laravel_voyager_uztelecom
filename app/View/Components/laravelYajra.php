@@ -16,13 +16,15 @@ class laravelYajra extends Component
     public $getData;
     public $startDate;
     public $endDate;
+    public $exportId;
 
-    public function __construct($getData,$tableTitle, $startDate, $endDate)
+    public function __construct($getData,$tableTitle, $startDate, $endDate, $exportId)
     {
         $this->tableTitle = $tableTitle;
         $this->getData = $getData;
         $this->startDate = $startDate;
         $this->endDate = $endDate;
+        $this->exportId = $exportId;
     }
 
     /**

@@ -114,6 +114,12 @@
                             }
                         },
                     },
+                    {
+                        text: 'Export',
+                        action: function ( e, dt, node, config ) {
+                            window.location.href = "{{$exportId}}";
+                        }
+                    },
                     { extend: 'excelHtml5',
                         text: '<i class="fas fa-file-excel"></i>',
                         title: '{{$tableTitle}}',
@@ -130,6 +136,7 @@
                             }
                         },
                     },
+
                     { extend: 'pdfHtml5',
                         text: '<i class="fas fa-file-pdf"></i>',
                         title: '{{$tableTitle}}',
