@@ -11,6 +11,7 @@ use Yajra\DataTables\Services\DataTable;
 
 class UsersDataTable extends DataTable
 {
+    protected $fastExcel = true;
     /**
      * Build DataTable class.
      *

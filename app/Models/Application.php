@@ -29,14 +29,18 @@ class Application extends ALL
     const CANCELED_APP = 4;
 
     protected $dates = ['deleted_at'];
-
-
+//    protected $hidden = ['other_files'];
     protected $table = "applications";
     protected $guarded = [];
 
     public function need_to_sign()
     {
         return $this->hasMany(SignedDocs::class)->where('role_id',auth()->user()->role_id)->whereNull('status');
+    }
+
+    public function type_of_purchase()
+    {
+        return $this->belongsTo(Purchase::class, 'type_of_purchase_id');
     }
 
     public function user()

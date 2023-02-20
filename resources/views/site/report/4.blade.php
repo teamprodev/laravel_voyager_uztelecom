@@ -72,6 +72,6 @@
         {data: 'basis', name: 'basis'},
     ];
 </script>
-<x-laravelYajraLoc dom='Blfrtip' getData="{{ route('report','4') }}" tableTitle="{{ __('4 - Отчет заявки по статусам') }}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
+<x-laravelYajraLoc dom='Blfrtip' getData="{{ route('report','4') }}" exportId="{{ route('report_export','4') }}" tableTitle="{{ __('4 - Отчет заявки по статусам') }}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
 
 @endsection
