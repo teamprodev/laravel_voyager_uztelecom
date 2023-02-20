@@ -54,5 +54,5 @@
             {data: 'usluga_1_nds', name: 'usluga_1_nds'},
         ];
     </script>
-    <x-laravelYajraLoc dom='Blfrtip' getData="{{ route('report','3') }}" tableTitle="{{ __('3 - Отчет за год') }}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
+    <x-laravelYajraLoc dom='Blfrtip' getData="{{ route('report','3') }}" exportId="{{ route('report_export','3') }}" tableTitle="{{ __('3 - Отчет за год') }}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
 @endsection

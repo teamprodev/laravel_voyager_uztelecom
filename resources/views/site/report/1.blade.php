@@ -32,6 +32,6 @@
         {data: 'nds', name: 'nds'},
     ];
 </script>
-<x-laravelYajraLoc getData="{{ route('report','1') }}" tableTitle="{{ __('1 - Отчет общий') }}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}" dom='Blfrtip'/>
+<x-laravelYajraLoc getData="{{ route('report','1') }}" exportId="{{ route('report_export','1') }}" tableTitle="{{ __('1 - Отчет общий') }}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}" dom='Blfrtip'/>
 
 @endsection

@@ -43,5 +43,5 @@
         {data: 'all', name: 'all'},
     ];
 </script>
-<x-laravelYajraLoc dom='Blfrtip' getData="{{ route('report','10') }}" tableTitle="{{__('10 - Отчет по кол-ву статусам')}}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
+<x-laravelYajraLoc dom='Blfrtip' getData="{{ route('report','10') }}" exportId="{{ route('report_export','10') }}" tableTitle="{{__('10 - Отчет по кол-ву статусам')}}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
 @endsection
