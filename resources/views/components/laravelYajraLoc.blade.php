@@ -114,12 +114,14 @@
                             }
                         },
                     },
-                    {
-                        text: 'Export',
-                        action: function ( e, dt, node, config ) {
-                            window.location.href = "{{$exportId}}";
-                        }
-                    },
+                        @if($getData == route('report', '4') || $getData == route('report', '6') || $getData == route('report', '7') || $getData == route('report', '8'))
+                            {
+                                text: 'Export',
+                                action: function ( e, dt, node, config ) {
+                                    window.location.href = "{{$exportId}}";
+                                }
+                            },
+                        @endif
                     { extend: 'excelHtml5',
                         text: '<i class="fas fa-file-excel"></i>',
                         title: '{{$tableTitle}}',
