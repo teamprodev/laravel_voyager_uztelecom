@@ -27,7 +27,7 @@
         {data: "id", name: 'id'},
         {data: 'name', name: 'name'},
         {data: 'supplier_name', name: 'supplier_name'},
-        {data: 'contract_number', name: 'contract_number    '},
+        {data: 'contract_number', name: 'contract_number'},
         {data: 'subject', name: 'subject'},
         {data: 'number', name: 'number'},
         {data: 'planned_price', name: 'planned_price'},
