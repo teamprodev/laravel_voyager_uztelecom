@@ -800,7 +800,7 @@ class ReportService
                     $start_date = "2022-08-01";
                     $end_date = "2025-12-31";
                 }
-                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->whereNotNull('contract_price')->where('subject',ApplicationMagicNumber::one)->get();
+                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->whereNotNull('contract_price')->where('performer_status', '<=' ,39)->where('subject',ApplicationMagicNumber::one)->get();
                 return count($applications);
             })
             ->addColumn('summa_1', function($branch) use ($request){
@@ -812,7 +812,7 @@ class ReportService
                     $start_date = "2022-08-01";
                     $end_date = "2025-12-31";
                 }
-                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->whereNotNull('contract_price')->where('subject',ApplicationMagicNumber::one)->pluck('contract_price')->toArray();
+                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->whereNotNull('contract_price')->where('performer_status', '<=' ,39)->where('subject',ApplicationMagicNumber::one)->pluck('contract_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
@@ -825,7 +825,7 @@ class ReportService
                     $start_date = "2022-08-01";
                     $end_date = "2025-12-31";
                 }
-                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->whereNotNull('contract_price')->where('subject',ApplicationMagicNumber::two)->get();
+                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->whereNotNull('contract_price')->where('performer_status', '<=' ,39)->where('subject',ApplicationMagicNumber::two)->get();
                 return count($applications);
             })
             ->addColumn('summa_2', function($branch) use ($request){
@@ -837,7 +837,7 @@ class ReportService
                     $start_date = "2022-08-01";
                     $end_date = "2025-12-31";
                 }
-                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->whereNotNull('contract_price')->where('subject',ApplicationMagicNumber::two)->pluck('contract_price')->toArray();
+                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->whereNotNull('contract_price')->where('performer_status', '<=' ,39)->where('subject',ApplicationMagicNumber::two)->pluck('contract_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
@@ -850,7 +850,7 @@ class ReportService
                     $start_date = "2022-08-01";
                     $end_date = "2025-12-31";
                 }
-                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->whereNotNull('contract_price')->where('subject',ApplicationMagicNumber::three)->get();
+                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->whereNotNull('contract_price')->where('performer_status', '<=' ,39)->where('subject',ApplicationMagicNumber::three)->get();
                 return count($applications);
             })
             ->addColumn('summa_3', function($branch) use ($request){
@@ -862,7 +862,7 @@ class ReportService
                     $start_date = "2022-08-01";
                     $end_date = "2025-12-31";
                 }
-                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->whereNotNull('contract_price')->where('subject',ApplicationMagicNumber::three)->pluck('contract_price')->toArray();
+                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->whereNotNull('contract_price')->where('performer_status', '<=' ,39)->where('subject',ApplicationMagicNumber::three)->pluck('contract_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
