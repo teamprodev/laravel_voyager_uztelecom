@@ -112,7 +112,7 @@ class ReportExportService
             $query = $this->application_query()
                 ->whereBetween('created_at', [$request->startDate, $request->endDate]);
         }
-
+        $query = $this->application_query()->where('status', 'extended');
         $applications = $query->with(['branch', 'type_of_purchase'])->get()->map(function ($application) {
             return [
                 'ID' => $application->id,
