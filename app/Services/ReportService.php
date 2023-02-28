@@ -97,96 +97,96 @@ class ReportService
         }
         return Datatables::of($query)
             ->addColumn('tovar_1', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-01-01" : "2022-01-01";
+                $end_date = $request->endDate ? "$request->endDate-03-31" : "2022-03-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('rabota_1', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-01-01" : "2022-01-01";
+                $end_date = $request->endDate ? "$request->endDate-03-31" : "2022-03-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_1', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-01-01" : "2022-01-01";
+                $end_date = $request->endDate ? "$request->endDate-03-31" : "2022-03-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('tovar_2', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-04-01" : "2022-04-01";
+                $end_date = $request->endDate ? "$request->endDate-06-31" : "2022-06-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('rabota_2', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-04-01" : "2022-04-01";
+                $end_date = $request->endDate ? "$request->endDate-06-31" : "2022-06-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_2', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-04-01" : "2022-04-01";
+                $end_date = $request->endDate ? "$request->endDate-06-31" : "2022-06-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('tovar_3', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-07-01" : "2022-07-01";
+                $end_date = $request->endDate ? "$request->endDate-09-31" : "2022-09-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('rabota_3', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-07-01" : "2022-07-01";
+                $end_date = $request->endDate ? "$request->endDate-09-31" : "2022-09-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_3', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-07-01" : "2022-07-01";
+                $end_date = $request->endDate ? "$request->endDate-09-31" : "2022-09-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('tovar_4', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-10-01" : "2022-10-01";
+                $end_date = $request->endDate ? "$request->endDate-12-31" : "2022-12-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('rabota_4', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-10-01" : "2022-10-01";
+                $end_date = $request->endDate ? "$request->endDate-12-31" : "2022-12-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_4', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-10-01" : "2022-10-01";
+                $end_date = $request->endDate ? "$request->endDate-12-31" : "2022-12-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
@@ -205,16 +205,16 @@ class ReportService
         }
         return Datatables::of($query)
             ->addColumn('tovar_1', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-01-01" : "2022-01-01";
+                $end_date = $request->endDate ? "$request->endDate-03-31" : "2022-03-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('tovar_1_nds', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-01-01" : "2022-01-01";
+                $end_date = $request->endDate ? "$request->endDate-03-31" : "2022-03-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
@@ -222,16 +222,16 @@ class ReportService
             })
 
             ->addColumn('rabota_1', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-01-01" : "2022-01-01";
+                $end_date = $request->endDate ? "$request->endDate-03-31" : "2022-03-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('rabota_1_nds', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-01-01" : "2022-01-01";
+                $end_date = $request->endDate ? "$request->endDate-03-31" : "2022-03-31";
 
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
@@ -239,80 +239,80 @@ class ReportService
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_1', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-01-01" : "2022-01-01";
+                $end_date = $request->endDate ? "$request->endDate-03-31" : "2022-03-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_1_nds', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-01-01" : "2022-01-01";
+                $end_date = $request->endDate ? "$request->endDate-03-31" : "2022-03-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('tovar_2', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-04-01" : "2022-04-01";
+                $end_date = $request->endDate ? "$request->endDate-06-31" : "2022-06-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('tovar_2_nds', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-04-01" : "2022-04-01";
+                $end_date = $request->endDate ? "$request->endDate-06-31" : "2022-06-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('rabota_2', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-04-01" : "2022-04-01";
+                $end_date = $request->endDate ? "$request->endDate-06-31" : "2022-06-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('rabota_2_nds', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-04-01" : "2022-04-01";
+                $end_date = $request->endDate ? "$request->endDate-06-31" : "2022-06-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_2', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-04-01" : "2022-04-01";
+                $end_date = $request->endDate ? "$request->endDate-06-31" : "2022-06-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_2_nds', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-04-01" : "2022-04-01";
+                $end_date = $request->endDate ? "$request->endDate-06-31" : "2022-06-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('tovar_3', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-07-01" : "2022-07-01";
+                $end_date = $request->endDate ? "$request->endDate-09-31" : "2022-09-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('tovar_3_nds', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-07-01" : "2022-07-01";
+                $end_date = $request->endDate ? "$request->endDate-09-31" : "2022-09-31";
 
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
@@ -320,80 +320,80 @@ class ReportService
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('rabota_3', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-07-01" : "2022-07-01";
+                $end_date = $request->endDate ? "$request->endDate-09-31" : "2022-09-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('rabota_3_nds', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-07-01" : "2022-07-01";
+                $end_date = $request->endDate ? "$request->endDate-09-31" : "2022-09-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_3', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-07-01" : "2022-07-01";
+                $end_date = $request->endDate ? "$request->endDate-09-31" : "2022-09-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_3_nds', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                $start_date = $request->startDate ? "$request->startDate-07-01" : "2022-07-01";
+                $end_date = $request->endDate ? "$request->endDate-09-31" : "2022-09-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('tovar_4', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                 $start_date = $request->startDate ? "$request->startDate-10-01" : "2022-10-01";
+                $end_date = $request->endDate ? "$request->endDate-12-31" : "2022-12-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('tovar_4_nds', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                 $start_date = $request->startDate ? "$request->startDate-10-01" : "2022-10-01";
+                $end_date = $request->endDate ? "$request->endDate-12-31" : "2022-12-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('rabota_4', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                 $start_date = $request->startDate ? "$request->startDate-10-01" : "2022-10-01";
+                $end_date = $request->endDate ? "$request->endDate-12-31" : "2022-12-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('rabota_4_nds', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                 $start_date = $request->startDate ? "$request->startDate-10-01" : "2022-10-01";
+                $end_date = $request->endDate ? "$request->endDate-12-31" : "2022-12-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_4', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                 $start_date = $request->startDate ? "$request->startDate-10-01" : "2022-10-01";
+                $end_date = $request->endDate ? "$request->endDate-12-31" : "2022-12-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
             ->addColumn('usluga_4_nds', function($branch) use ($request){
-                $start_date = $request->startDate ?? '2022-08-01';
-                $end_date = $request->endDate ?? '2025-12-31';
+                 $start_date = $request->startDate ? "$request->startDate-10-01" : "2022-10-01";
+                $end_date = $request->endDate ? "$request->endDate-12-31" : "2022-12-31";
 
                 $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
