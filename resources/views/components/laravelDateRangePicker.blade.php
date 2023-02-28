@@ -32,6 +32,8 @@
         };
         moment.locale('ru');
         $('#reportrange').daterangepicker({
+            minYear: 2022,
+            maxYear: 2026,
             startDate: start,
             endDate: end,
             "autoApply": true,
@@ -76,7 +78,10 @@
                 'Последние 7 дней': [moment().subtract(6, 'days'), moment()],
                 'Последние 30 дней': [moment().subtract(29, 'days'), moment()],
                 'Этот Месяц': [moment().startOf('month'), moment().endOf('month')],
-                'Прошлый месяц': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                'Прошлый месяц': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                '2022 год': [moment('2022-01-01'), moment('2022-12-31')],
+                '2023 год': [moment('2023-01-01'), moment('2023-12-31')],
+                '2024 год': [moment('2024-01-01'), moment('2024-12-31')],
             },
 
         }, cb);
@@ -84,8 +89,8 @@
         cb(start, end);
         $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
             $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
-            $('#startDate').val(picker.startDate.format('YYYY-MM-DD'));
-            $('#endDate').val(picker.endDate.format('YYYY-MM-DD'));
+            $('#startDate').val(picker.startDate.format("{{$format}}"));
+            $('#endDate').val(picker.endDate.format("{{$format}}"));
         });
 
     });
