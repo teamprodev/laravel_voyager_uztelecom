@@ -3,14 +3,22 @@
 @section('center_content')
 
 <div id="fortext"></div>
-<x-laravelDateRangePicker reportId="2"  route="{{ route('site.report.index','2') }}"/>
+<x-laravelDateRangePicker reportId="2"  route="{{ route('site.report.index','2') }}" format="YYYY"/>
 
     <table id="example" class="display wrap table-bordered " style="border-collapse: collapse; width: 100%; padding-top: 10px">
         <thead class="border border-dark">
 
         <tr class="border border-dark">
-            <th style="text-align: center;" class="border border-dark">{{ __('ID') }}</th>
-            <th style="text-align: center;" class="border border-dark">{{ __('Филиал') }}</th>
+            <th style="text-align: center;" rowspan="2" class="border border-dark">{{ __('ID') }}</th>
+            <th style="text-align: center;" rowspan="2" class="border border-dark">{{ __('Филиал') }}</th>
+            <th colspan="3" style="text-align: center;" class="border border-dark">{{ __('1 - Квартал') }}</th>
+            <th colspan="3" style="text-align: center;" class="border border-dark">{{ __('2 - Квартал') }}</th>
+            <th colspan="3" style="text-align: center;" class="border border-dark">{{ __('3 - Квартал') }}</th>
+            <th colspan="3" style="text-align: center;" class="border border-dark">{{ __('4 - Квартал') }}</th>
+        </tr>
+
+        <tr class="border border-dark">
+
             <th style="text-align: center;" class="border border-dark">{{ __('товар') }}</th>
             <th style="text-align: center;" class="border border-dark">{{ __('работа') }}</th>
             <th style="text-align: center;" class="border border-dark">{{ __('услуга') }}</th>
