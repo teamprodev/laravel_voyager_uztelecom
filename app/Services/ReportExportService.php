@@ -147,6 +147,7 @@ class ReportExportService
                 ->whereBetween('created_at', [$request->startDate, $request->endDate]);
         }
         setlocale(LC_TIME, 'ru_RU.utf8');
+        $query = $this->application_query()->where('status', 'extended');
         $applications = $query->get()->map(function ($application) {
             return [
                 'ID' => $application->id,

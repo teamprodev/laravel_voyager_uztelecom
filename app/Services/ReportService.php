@@ -46,7 +46,6 @@ class ReportService
             ->whereBetween('created_at', [$startDate, $endDate])
             ->where('branch_id', $branch->id)
             ->whereNotNull('contract_price')
-            ->where('performer_status', '<=', 39)
             ->where('status', 'extended');
     }
     public function report_1(object $request, object $user)
