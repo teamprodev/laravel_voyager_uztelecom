@@ -3,9 +3,11 @@
 namespace App\Services;
 
 use App\Enums\ApplicationMagicNumber;
+use App\Enums\ApplicationStatusEnum;
 use App\Enums\PermissionEnum;
 use App\Models\Application;
 use App\Models\Resource;
+use App\Models\StatusExtended;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -35,6 +37,20 @@ class ReportExportService
         $applications = $query->with(['branch', 'performer', 'department', 'user', 'purchase'])
             ->get()
             ->map(function ($application) {
+                $status_extended = StatusExtended::find($application->performer_status);
+                $status = match (true) {
+                    $application->status === ApplicationStatusEnum::Order_Arrived => 'товар прибыл',
+                    $application->status === ApplicationStatusEnum::Order_Delivered => 'товар доставлен',
+                    $application->status === ApplicationStatusEnum::Agreed => 'Согласована',
+                    $application->status === ApplicationStatusEnum::In_Process => 'На рассмотрении',
+                    $application->status === ApplicationStatusEnum::Distributed => 'Распределен',
+                    $application->status === ApplicationStatusEnum::Refused => 'Отказана',
+                    $application->status === ApplicationStatusEnum::Rejected => 'Отклонена',
+                    $application->status === ApplicationStatusEnum::Draft => 'Черновик',
+                    $application->status === ApplicationStatusEnum::New => 'Новая',
+                    $application->performer_status !== null => $status_extended->name,
+                    default => $application->status
+                };
                 return [
                     'ID' => $application->id,
                     'Филиал' => $application->branch_id ? $application->branch->name : '',
@@ -53,7 +69,7 @@ class ReportExportService
                     'Наименование поставщика' => $application->supplier_name,
                     'сумма договора' => $application->contract_price,
                     'Махсулот келишининг муддати' => $application->delivery_date,
-                    'Статус' => $application->status,
+                    'Статус' => $status,
                     'Начальник Исполнителя заявки' => $application->performer_leader_user_id ? $application->performer_leader->name : '',
                     'Исполнитель заявки' => $application->performer_user_id ? $application->performer->name : '',
                     'Бюджетни режалаштириш булими. Маълумот' => $application->info_business_plan,
