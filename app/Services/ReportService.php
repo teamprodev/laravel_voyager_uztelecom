@@ -415,7 +415,7 @@ class ReportService
                 $start_date = $request->startDate ?? '2022-08-01';
                 $end_date = $request->endDate ?? '2025-12-31';
 
-                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','=',null)->pluck('planned_price')->toArray();
+                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('status', 'extended')->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
@@ -423,7 +423,7 @@ class ReportService
                 $start_date = $request->startDate ?? '2022-08-01';
                 $end_date = $request->endDate ?? '2025-12-31';
 
-                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
+                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('status', 'extended')->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
@@ -432,7 +432,7 @@ class ReportService
                 $start_date = $request->startDate ?? '2022-08-01';
                 $end_date = $request->endDate ?? '2025-12-31';
 
-                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','=',null)->pluck('planned_price')->toArray();
+                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('status', 'extended')->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
@@ -440,7 +440,7 @@ class ReportService
                 $start_date = $request->startDate ?? '2022-08-01';
                 $end_date = $request->endDate ?? '2025-12-31';
 
-                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
+                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('status', 'extended')->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
@@ -448,7 +448,7 @@ class ReportService
                 $start_date = $request->startDate ?? '2022-08-01';
                 $end_date = $request->endDate ?? '2025-12-31';
 
-                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','=',null)->pluck('planned_price')->toArray();
+                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('status', 'extended')->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
@@ -456,7 +456,7 @@ class ReportService
                 $start_date = $request->startDate ?? '2022-08-01';
                 $end_date = $request->endDate ?? '2025-12-31';
 
-                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
+                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('status', 'extended')->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->where('with_nds','!=',null)->pluck('planned_price')->toArray();
                 $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
                 return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
             })
