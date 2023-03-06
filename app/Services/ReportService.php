@@ -863,123 +863,87 @@ class ReportService
         $this->b = $b;
         $status = StatusExtended::query();
         return Datatables::of($status)
-            ->addColumn('january', function($status){
-                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-01-01")
-                    ->toDateTimeString();
+            ->addColumn('january', function($status) use($request){
+                $start_date = $request->startDate ? "$request->startDate-01-01" : "2022-10-01";
+                $end_date = $request->endDate ? "$request->endDate-02-01" : "2022-11-01";
 
-                $end_date = Carbon::parse("{$date}-02-01")
-                    ->toDateTimeString();
                 $applications = Application::where('draft','!=',ApplicationMagicNumber::one)->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('performer_status', $status->id)->get();
                 return count($applications);
             })
-            ->addColumn('february', function($status){
-                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-02-01")
-                    ->toDateTimeString();
+            ->addColumn('february', function($status) use($request){
+                $start_date = $request->startDate ? "$request->startDate-02-01" : "2022-02-01";
+                $end_date = $request->endDate ? "$request->endDate-03-01" : "2022-03-01";
 
-                $end_date = Carbon::parse("{$date}-03-01")
-                    ->toDateTimeString();
                 $applications = Application::where('draft','!=',ApplicationMagicNumber::one)->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('performer_status', $status->id)->get();
                 return count($applications);
             })
-            ->addColumn('march', function($status){
-                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-03-01")
-                    ->toDateTimeString();
+            ->addColumn('march', function($status) use($request){
+                $start_date = $request->startDate ? "$request->startDate-03-01" : "2022-03-01";
+                $end_date = $request->endDate ? "$request->endDate-04-01" : "2022-04-01";
 
-                $end_date = Carbon::parse("{$date}-04-01")
-                    ->toDateTimeString();
                 $applications = Application::where('draft','!=',ApplicationMagicNumber::one)->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('performer_status', $status->id)->get();
                 return count($applications);
             })
-            ->addColumn('april', function($status){
-                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-04-01")
-                    ->toDateTimeString();
+            ->addColumn('april', function($status) use($request){
+                $start_date = $request->startDate ? "$request->startDate-04-01" : "2022-04-01";
+                $end_date = $request->endDate ? "$request->endDate-05-01" : "2022-05-01";
 
-                $end_date = Carbon::parse("{$date}-05-01")
-                    ->toDateTimeString();
                 $applications = Application::where('draft','!=',ApplicationMagicNumber::one)->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('performer_status', $status->id)->get();
                 return count($applications);
             })
-            ->addColumn('may', function($status){
-                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-05-01")
-                    ->toDateTimeString();
+            ->addColumn('may', function($status) use($request){
+                $start_date = $request->startDate ? "$request->startDate-05-01" : "2022-05-01";
+                $end_date = $request->endDate ? "$request->endDate-06-01" : "2022-06-01";
 
-                $end_date = Carbon::parse("{$date}-06-01")
-                    ->toDateTimeString();
                 $applications = Application::where('draft','!=',ApplicationMagicNumber::one)->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('performer_status', $status->id)->get();
                 return count($applications);
             })
-            ->addColumn('june', function($status){
-                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-06-01")
-                    ->toDateTimeString();
+            ->addColumn('june', function($status) use($request){
+                $start_date = $request->startDate ? "$request->startDate-06-01" : "2022-06-01";
+                $end_date = $request->endDate ? "$request->endDate-07-01" : "2022-07-01";
 
-                $end_date = Carbon::parse("{$date}-07-01")
-                    ->toDateTimeString();
                 $applications = Application::where('draft','!=',ApplicationMagicNumber::one)->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('performer_status', $status->id)->get();
                 return count($applications);
             })
-            ->addColumn('july', function($status){
-                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-07-01")
-                    ->toDateTimeString();
+            ->addColumn('july', function($status) use($request){
+                $start_date = $request->startDate ? "$request->startDate-07-01" : "2022-07-01";
+                $end_date = $request->endDate ? "$request->endDate-08-01" : "2022-08-01";
 
-                $end_date = Carbon::parse("{$date}-08-01")
-                    ->toDateTimeString();
                 $applications = Application::where('draft','!=',ApplicationMagicNumber::one)->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('performer_status', $status->id)->get();
                 return count($applications);
             })
-            ->addColumn('august', function($status){
-                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-08-01")
-                    ->toDateTimeString();
+            ->addColumn('august', function($status) use($request){
+                $start_date = $request->startDate ? "$request->startDate-08-01" : "2022-08-01";
+                $end_date = $request->endDate ? "$request->endDate-09-01" : "2022-09-01";
 
-                $end_date = Carbon::parse("{$date}-09-01")
-                    ->toDateTimeString();
                 $applications = Application::where('draft','!=',ApplicationMagicNumber::one)->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('performer_status', $status->id)->get();
                 return count($applications);
             })
-            ->addColumn('september', function($status){
-                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-09-01")
-                    ->toDateTimeString();
+            ->addColumn('september', function($status) use($request){
+                $start_date = $request->startDate ? "$request->startDate-09-01" : "2022-09-01";
+                $end_date = $request->endDate ? "$request->endDate-10-01" : "2022-10-01";
 
-                $end_date = Carbon::parse("{$date}-10-01")
-                    ->toDateTimeString();
                 $applications = Application::where('draft','!=',ApplicationMagicNumber::one)->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('performer_status', $status->id)->get();
                 return count($applications);
             })
-            ->addColumn('october', function($status){
-                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-10-01")
-                    ->toDateTimeString();
+            ->addColumn('october', function($status) use ($request){
+                $start_date = $request->startDate ? "$request->startDate-10-01" : "2022-10-01";
+                $end_date = $request->endDate ? "$request->endDate-11-01" : "2022-11-01";
 
-                $end_date = Carbon::parse("{$date}-11-01")
-                    ->toDateTimeString();
                 $applications = Application::where('draft','!=',ApplicationMagicNumber::one)->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('performer_status', $status->id)->get();
                 return count($applications);
             })
-            ->addColumn('november', function($status){
-                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-11-01")
-                    ->toDateTimeString();
+            ->addColumn('november', function($status) use($request){
+                $start_date = $request->startDate ? "$request->startDate-11-01" : "2022-11-01";
+                $end_date = $request->endDate ? "$request->endDate-12-01" : "2022-12-01";
 
-                $end_date = Carbon::parse("{$date}-11-31")
-                    ->toDateTimeString();
                 $applications = Application::where('draft','!=',ApplicationMagicNumber::one)->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('performer_status', $status->id)->get();
                 return count($applications);
             })
-            ->addColumn('december', function($status){
-                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-12-01")
-                    ->toDateTimeString();
+            ->addColumn('december', function($status) use($request){
+                $start_date = $request->startDate ? "$request->startDate-12-01" : "2022-12-01";
+                $end_date = $request->endDate ? "$request->endDate-12-31" : "2022-12-31";
 
-                $end_date = Carbon::parse("{$date}-12-31")
-                    ->toDateTimeString();
                 $applications = Application::where('draft','!=',ApplicationMagicNumber::one)->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('performer_status', $status->id)->get();
                 return count($applications);
             })
