@@ -984,13 +984,8 @@ class ReportService
                 return count($applications);
             })
             ->addColumn('all', function($status){
-                $date = ReportDate::where('report_key','date_10')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-01")
-                    ->toDateTimeString();
 
-                $end_date = Carbon::parse("{$date}-12-31")
-                    ->toDateTimeString();
-                $applications = Application::where('draft','!=',ApplicationMagicNumber::one)->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('performer_status', $status->id)->get();
+                $applications = Application::where('draft','!=',ApplicationMagicNumber::one)->where($this->a,$this->operator,$this->b)->where('performer_status', $status->id)->get();
                 return count($applications);
             })
             ->make(true);
