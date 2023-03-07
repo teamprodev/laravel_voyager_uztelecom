@@ -864,8 +864,8 @@ class ReportService
         $status = StatusExtended::query();
         return Datatables::of($status)
             ->addColumn('january', function($status) use($request){
-                $start_date = $request->startDate ? "$request->startDate-01-01" : "2022-10-01";
-                $end_date = $request->endDate ? "$request->endDate-02-01" : "2022-11-01";
+                $start_date = $request->startDate ? "$request->startDate-01-01" : "2022-01-01";
+                $end_date = $request->endDate ? "$request->endDate-02-01" : "2022-02-01";
 
                 $applications = Application::where('draft','!=',ApplicationMagicNumber::one)->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('performer_status', $status->id)->get();
                 return count($applications);
