@@ -51,11 +51,58 @@ class ReportController extends Controller
      **/
     public function index($id)
     {
+
+        $dtHeaders = [
+            __('ID') => [
+              'rowspan' => 2,
+              'colspan' => 0,
+            ],
+            __('Филиал') => [
+              'rowspan' => 2,
+              'colspan' => 0,
+            ],
+            __('1 - Квартал') => [
+              'rowspan' => 0,
+              'colspan' => 3,
+            ],
+            __('2 - Квартал') => [
+              'rowspan' => 0,
+              'colspan' => 3,
+            ],
+            __('3 - Квартал') => [
+              'rowspan' => 0,
+              'colspan' => 3,
+            ],
+            __('4 - Квартал') => [
+              'rowspan' => 0,
+              'colspan' => 3,
+            ],
+        ];
+
+
+        $dtTitles = [
+            __('товар'),
+            __('работа'),
+            __('услуга'),
+
+            __('товар'),
+            __('работа'),
+            __('услуга'),
+
+            __('товар'),
+            __('работа'),
+            __('услуга'),
+
+            __('товар'),
+            __('работа'),
+            __('услуга'),
+        ];
+
         $report = ReportDate::all();
             if($id == self::Quarterly_Planned_Report)
-                return view("site.report.{$id}",compact('report'));
+                return view("site.report.{$id}",compact('report', 'dtHeaders', 'dtTitles'));
             elseif($id < self::Report_Statuses_Quantity){
-                return view("site.report.{$id}",compact('report'));
+                return view("site.report.{$id}",compact('report', 'dtHeaders', 'dtTitles'));
             }
             return view("site.report.10",compact('report'));
     }
