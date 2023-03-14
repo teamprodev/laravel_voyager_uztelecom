@@ -34,7 +34,7 @@ class ApplicationRequest extends FormRequest
             'separate_requirements' => 'nullable',
             'other_requirements' => 'nullable',
             'expire_warranty_date' => 'nullable',
-            'planned_price' => 'numeric',
+            'planned_price' => 'nullable',
             'info_business_plan' => 'nullable',
             'equal_planned_price' => 'nullable',
             'branch_initiator_id' => 'nullable',

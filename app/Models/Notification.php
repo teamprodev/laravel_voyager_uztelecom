@@ -12,6 +12,6 @@ class Notification extends ALL
 
     public function application()
     {
-        return $this->belongsTo(Application::class)->has('need_to_sign');
+        return $this->belongsTo(Application::class);
     }
 }

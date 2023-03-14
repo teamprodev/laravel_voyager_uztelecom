@@ -3,7 +3,7 @@
 @section('center_content')
 
 <div id="fortext"></div>
-<x-laravelDateRangePicker reportId="7" route="{{ route('site.report.index','7') }}"/>
+<x-laravelDateRangePicker format="YYYY-MM-DD" reportId="7" route="{{ route('site.report.index','7') }}"/>
 <table id="example" class="display wrap table-bordered " style="border-collapse: collapse; width: 100%; padding-top: 10px">
     <thead class="border border-dark">
     <tr class="border border-dark">
@@ -41,5 +41,5 @@
         {data: 'purchase_basis', name: 'purchase_basis'},
     ];
 </script>
-<x-laravelYajraLoc getData="{{ route('report','7') }}" tableTitle="{{__('7 - Плановый')}}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
+<x-laravelYajraLoc dom='Blfrtip' getData="{{ route('report','7') }}" exportId="{{ route('report_export','7') }}" tableTitle="{{__('7 - Плановый')}}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
 @endsection

@@ -221,6 +221,7 @@
     var numberMask = IMask(
         document.getElementById('imask_number'),
         {
+            radix: ' ',
             mask: Number,
             thousandsSeparator: ' '
         });

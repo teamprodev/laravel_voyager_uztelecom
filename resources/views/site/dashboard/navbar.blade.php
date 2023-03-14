@@ -97,15 +97,12 @@
 
     <script>
         // Pusher.logToConsole = true;
-        let pusher = new Pusher('{{env("MIX_PUSHER_APP_KEY")}}', {
+        let pusher = new Pusher('{{env("PUSHER_APP_KEY")}}', {
             cluster: '{{env("PUSHER_APP_CLUSTER")}}',
-            wsHost: '{{env('LARAVEL_WEBSOCKETS_HOST')}}',
-            wsPort: '{{env('LARAVEL_WEBSOCKETS_PORT')}}',
-            wssPort: {{env('WEBSOCKET_SERVER_PORT', 6001)}},
 
-            // encrypted: true,
+            encrypted: true,
             forceTLS: true,
-            disableStats: true,
+            disableStats: false,
         });
         let channel = pusher.subscribe('send-notification-' + {{auth()->id()}});
         let count_element = $('#notification_count').text()

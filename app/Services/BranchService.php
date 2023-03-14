@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
 class BranchService
@@ -64,7 +65,7 @@ class BranchService
                 return $docs->role ? $docs->role->display_name : "";
             })
             ->editColumn('planned_price', function ($query) {
-                return $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
+                return !Str::contains($query->planned_price, ' ') ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : $query->planned_price;
             })
             ->editColumn('date', function ($query) {
                 return $query->date ? with(new Carbon($query->date))->format('d.m.Y'): '';
@@ -76,7 +77,7 @@ class BranchService
                 return $data->updated_at ? with(new Carbon($data->updated_at))->format('d.m.Y') : '';
             })
             ->addColumn('planned_price_curr', function ($query) {
-                $planned_price = $query->planned_price ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : '';
+                $planned_price = !Str::contains($query->planned_price, ' ') ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : $query->planned_price;
                 return $planned_price;
             })
             ->editColumn('with_nds', function ($query) {
@@ -166,12 +167,12 @@ class BranchService
 
     private function getLinkHtmlBladeEdit($row)
     {
-        return "<a href='" . route("site.applications.edit", $row->id) . "' class='m-1 col edit btn btn-sm btn-secondary'> " . __('edit') . "</a>";
+        return "<a target='_blank' href='" . route("site.applications.edit", $row->id) . "' class='m-1 col edit btn btn-sm btn-secondary'> " . __('edit') . "</a>";
     }
 
     private function getLinkHtmlBladeShow($row)
     {
-        return "<a style='background-color: #000080; color: white' href='" . route('site.applications.show', $row->id) . "' class='m-1 col edit btn btn-sm'> " . __('show') . " </a>";
+        return "<a target='_blank'  style='background-color: #000080;  color: white' href='" . route('site.applications.show', $row->id) . "' class='m-1 col edit btn btn-sm'> " . __('show') . " </a>";
     }
 
     private function getLinkHtmlBladeDestroy($row)

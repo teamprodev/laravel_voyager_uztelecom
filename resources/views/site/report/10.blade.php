@@ -3,7 +3,7 @@
 @section('center_content')
 
 <div id="fortext"></div>
-<x-laravelDateRangePicker reportId="10" route="{{ route('site.report.index','10') }}"/>
+<x-laravelDateRangePicker format="YYYY" reportId="10" route="{{ route('site.report.index','10') }}"/>
     <table id="example" class="display wrap table-bordered " style="border-collapse: collapse; width: 100%; padding-top: 10px">
         <thead class="border border-dark">
         <tr class="border border-dark">
@@ -43,5 +43,5 @@
         {data: 'all', name: 'all'},
     ];
 </script>
-<x-laravelYajraLoc getData="{{ route('report','10') }}" tableTitle="{{__('10 - Отчет по кол-ву статусам')}}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
+<x-laravelYajraLoc dom='Blfrtip' getData="{{ route('report','10') }}" exportId="{{ route('report_export','10') }}" tableTitle="{{__('10 - Отчет по кол-ву статусам')}}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
 @endsection

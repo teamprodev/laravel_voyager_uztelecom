@@ -7,6 +7,7 @@ use App\Http\Requests\ReportDateRequest;
 use App\Models\ReportDate;
 use App\Models\StatusExtended;
 use App\Services\ApplicationService;
+use App\Services\ReportExportService;
 use App\Services\ReportService;
 use Illuminate\Http\Request;
 use App\Models\Application;
@@ -22,11 +23,13 @@ class ReportController extends Controller
     const Report_Statuses_Quantity = 10;
 
     private ReportService $service;
+    private ReportExportService $exportService;
 
-    public function __construct(ReportService $service)
+    public function __construct(ReportService $service, ReportExportService $exportService)
     {
         $this->middleware('auth');
         $this->service = $service;
+        $this->exportService = $exportService;
     }
     /**
      * Request da Reportlar date keladi.
@@ -68,42 +71,33 @@ class ReportController extends Controller
             $request->session()->put("report_$id.endDate", $request->endDate);
         }
         $this->service->application_query($request);
-        switch ($id)
-        {
-            case ApplicationMagicNumber::one:
-            return $this->service->report_1($request, $user);
-            break;
-            case ApplicationMagicNumber::two:
-            return $this->service->report_2($request, $user);
-            break;
-            case ApplicationMagicNumber::twentyTwo:
-            return $this->service->report_2_2($request, $user);
-            break;
-            case ApplicationMagicNumber::three:
-            return $this->service->report_3($request, $user);
-            break;
-            case ApplicationMagicNumber::four:
-            return $this->service->report_4($request, $user);
-            break;
-            case ApplicationMagicNumber::five:
-            return $this->service->report_5($request, $user);
-            break;
-            case ApplicationMagicNumber::six:
-            return $this->service->report_6($request, $user);
-            break;
-            case ApplicationMagicNumber::seven:
-            return $this->service->report_7($request, $user);
-            break;
-            case ApplicationMagicNumber::eight:
-            return $this->service->report_8($request, $user);
-            break;
-            case ApplicationMagicNumber::nine:
-            return $this->service->report_9($request, $user);
-            break;
-            default:
-            return $this->service->report_10($request, $user);
-        }
+        $reports = match ($id) {
+            '1' => $this->service->report_1($request, $user),
+            '2' => $this->service->report_2($request, $user),
+            '3' => $this->service->report_3($request, $user),
+            '4' => $this->service->report_4($request, $user),
+            '5' => $this->service->report_5($request, $user),
+            '6' => $this->service->report_6($request, $user),
+            '7' => $this->service->report_7($request, $user),
+            '8' => $this->service->report_8($request, $user),
+            '9' => $this->service->report_9($request, $user),
+            '10' => $this->service->report_10($request, $user),
+            '22' => $this->service->report_2_2($request, $user),
+        };
 
+        return $reports;
 
+    }
+
+    public function report_export($id, Request $request){
+        $user = auth()->user();
+
+        $users = match ($id) {
+            '4' => $this->exportService->export_4($request, $user),
+            '6' => $this->exportService->export_6($request, $user),
+            '7' => $this->exportService->export_7($request, $user),
+            '8' => $this->exportService->export_8($request, $user),
+        };
+        return $users;
     }
 }

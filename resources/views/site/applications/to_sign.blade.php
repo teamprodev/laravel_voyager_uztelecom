@@ -79,6 +79,7 @@
                     order: [[0, "desc"]],
                     processing: true,
                     serverSide: true,
+                    "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "{{ __('Все') }}"] ] ,
                     ajax:
                         "{{ route('site.applications.to_sign_data') }}",
                     buttons: {

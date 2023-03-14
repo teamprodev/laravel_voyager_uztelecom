@@ -167,12 +167,12 @@ class ApplicationController extends Controller
      */
     final public function show(Application $application, $view = false) : View
     {
-//        if (isset($view)) {
-//            Notification::query()
-//                ->where('application_id', $application->id)
-//                ->where('user_id', auth()->id())
-//                ->update(['is_read' => ApplicationMagicNumber::one]);
-//        }
+        if (isset($view)) {
+            Notification::query()
+                ->where('application_id', $application->id)
+                ->where('user_id', auth()->id())
+                ->update(['is_read' => ApplicationMagicNumber::one]);
+        }
         $compact = $this->service->show($application, auth()->user());
         return view('site.applications.show', $compact);
     }

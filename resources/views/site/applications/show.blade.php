@@ -165,7 +165,7 @@
                                 ->rows(3)
                                 ->name("planned_price")
                                 ->id("planned_price")
-                                ->value(number_format($application->planned_price , 0 , '' , ' '))
+                                ->value(!\Str::contains($application->planned_price, ' ') ? number_format($application->planned_price, App\Enums\ApplicationMagicNumber::zero, '', ' ') : $application->planned_price)
                                 ->class("form-control")->disabled()
                             }}
                         </div>
@@ -234,11 +234,12 @@
                         </select>
                     </div>
                     <div class="mb-3 row">
-                        {{Aire::checkbox('checkbox', __('С НДС'))
-                           ->checked($application->with_nds)
-                           ->disabled()
-                           ->name('with_nds')
-                        }}
+                        @if($application->with_nds === 1)
+                            <p style="color: green; font-size: 1.3rem"><strong>{{__('С НДС')}}</strong></p>
+                        @else
+                            <p style="color: red; font-size: 1.3rem"><strong>{{__('Без НДС')}}</strong></p>
+
+                        @endif
                     </div>
                     <div class="product">
                         @if(isset($application->resource_id))
