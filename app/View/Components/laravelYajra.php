@@ -79,7 +79,6 @@ class laravelYajra extends Component
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->exportId = $exportId;
-
     }
 
     /**

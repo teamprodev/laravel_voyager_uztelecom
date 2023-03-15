@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Blade::component('laravelYajra', laravelYajra::class);
+        Blade::component('laravelYajraL', laravelYajra::class);
         Paginator::useBootstrap();
         Voyager::addAction(\App\Actions\ActiveAction::class);
         Voyager::addAction(\App\Actions\AssignAction::class);
