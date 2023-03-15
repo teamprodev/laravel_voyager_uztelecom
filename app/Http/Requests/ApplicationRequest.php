@@ -54,7 +54,7 @@ class ApplicationRequest extends FormRequest
             'contract_date' => 'nullable',
             'protocol_date' => 'nullable',
             'contract_info' => 'nullable',
-            'with_nds' => 'nullable',
+            'with_nds' => 'nullable|digits:1',
             'country_produced_id' => 'nullable',
             'contract_price' => 'nullable',
             'supplier_name' => 'nullable',

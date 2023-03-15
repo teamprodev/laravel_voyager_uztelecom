@@ -199,10 +199,14 @@
                         ->required()
                     }}
                 </div>
+                {{Aire::hidden()
+                           ->name('with_nds')
+                           ->value(0)
+                        }}
                     {{Aire::checkbox('checkbox', __('С НДС'))
+                           ->name('with_nds')
                            ->checked($application->with_nds)
                            ->defaultChecked()
-                           ->name('with_nds')
                         }}
             </div>
 
