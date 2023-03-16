@@ -8,12 +8,13 @@
         <th colspan="{{$key["colspan"]}}" rowspan="{{$key["rowspan"]}}" style="text-align: center;" class="border border-dark">{{ $header }}</th>
         @endforeach
     </tr>
-
-    <tr class="border border-dark">
-        @foreach($dtTitles as $title)
-        <th style="text-align: center;" class="border border-dark">{{ $title }}</th>
-        @endforeach
-    </tr>
+    @if($dtTitles != null)
+        <tr class="border border-dark">
+            @foreach($dtTitles as $title)
+            <th style="text-align: center;" class="border border-dark">{{ $title }}</th>
+            @endforeach
+        </tr>
+    @endif
     </thead>
 </table>
 <script>

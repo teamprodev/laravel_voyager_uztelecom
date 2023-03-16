@@ -7,6 +7,7 @@ use App\Http\Requests\ReportDateRequest;
 use App\Models\ReportDate;
 use App\Models\StatusExtended;
 use App\Services\ApplicationService;
+use App\Services\ReportDataService;
 use App\Services\ReportExportService;
 use App\Services\ReportService;
 use Illuminate\Http\Request;
@@ -23,12 +24,14 @@ class ReportController extends Controller
     const Report_Statuses_Quantity = 10;
 
     private ReportService $service;
+    private ReportDataService $data;
     private ReportExportService $exportService;
 
-    public function __construct(ReportService $service, ReportExportService $exportService)
+    public function __construct(ReportService $service, ReportExportService $exportService, ReportDataService $data)
     {
         $this->middleware('auth');
         $this->service = $service;
+        $this->data = $data;
         $this->exportService = $exportService;
     }
     /**
@@ -49,82 +52,23 @@ class ReportController extends Controller
     /**
      * Nechinchi Reportligiga qarab blade korsatiladi.
      **/
-    public function index($id)
+    public function index($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-
-        $dtHeaders = [
-            __('ID') => [
-              'rowspan' => 2,
-              'colspan' => 0,
-            ],
-            __('Филиал') => [
-              'rowspan' => 2,
-              'colspan' => 0,
-            ],
-            __('1 - Квартал') => [
-              'rowspan' => 0,
-              'colspan' => 3,
-            ],
-            __('2 - Квартал') => [
-              'rowspan' => 0,
-              'colspan' => 3,
-            ],
-            __('3 - Квартал') => [
-              'rowspan' => 0,
-              'colspan' => 3,
-            ],
-            __('4 - Квартал') => [
-              'rowspan' => 0,
-              'colspan' => 3,
-            ],
-        ];
-
-
-        $dtTitles = [
-            __('товар'),
-            __('работа'),
-            __('услуга'),
-
-            __('товар'),
-            __('работа'),
-            __('услуга'),
-
-            __('товар'),
-            __('работа'),
-            __('услуга'),
-
-            __('товар'),
-            __('работа'),
-            __('услуга'),
-        ];
-
-        $dtColumns = "[
-            {data: 'id', name: 'id'},
-            {data: 'name', name: 'name'},
-
-            {data: 'tovar_1', name: 'tovar_1'},
-            {data: 'rabota_1', name: 'rabota_1'},
-            {data: 'usluga_1', name: 'usluga_1'},
-
-            {data: 'tovar_2', name: 'tovar_2'},
-            {data: 'rabota_2', name: 'rabota_2'},
-            {data: 'usluga_2', name: 'usluga_2'},
-
-            {data: 'tovar_3', name: 'tovar_3'},
-            {data: 'rabota_3', name: 'rabota_3'},
-            {data: 'usluga_3', name: 'usluga_3'},
-
-            {data: 'tovar_4', name: 'tovar_4'},
-            {data: 'rabota_4', name: 'rabota_4'},
-            {data: 'usluga_4', name: 'usluga_4'},
-    ]";
         $report = ReportDate::all();
-            if($id == self::Quarterly_Planned_Report)
-                return view("site.report.{$id}",compact('report', 'dtHeaders', 'dtTitles','dtColumns'));
-            elseif($id < self::Report_Statuses_Quantity){
-                return view("site.report.{$id}",compact('report', 'dtHeaders', 'dtTitles','dtColumns'));
-            }
-            return view("site.report.10",compact('report'));
+        return match($id)
+        {
+            "1" => $this->data->report1_data($report),
+            "2" => $this->data->report2_data($report),
+            "22" => $this->data->report22_data($report),
+            "3" => $this->data->report3_data($report),
+            "4" => $this->data->report4_data($report),
+            "5" => $this->data->report5_data($report),
+            "6" => $this->data->report6_data($report),
+            "7" => $this->data->report7_data($report),
+            "8" => $this->data->report8_data($report),
+            "9" => $this->data->report9_data($report),
+            "10" => $this->data->report10_data($report),
+        };
     }
     /**
      * Nechinchi Report ligiga qarab data chiqadi.
