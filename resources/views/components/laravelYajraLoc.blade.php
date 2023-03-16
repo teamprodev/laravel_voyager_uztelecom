@@ -1,7 +1,7 @@
 <div id="fortext"></div>
 <x-laravelDateRangePicker reportId="2"  route="{{ route('site.report.index','2') }}" format="YYYY"/>
 
-<table id="example" class="display wrap table-bordered " style="border-collapse: collapse; width: 100%; padding-top: 10px">
+<table id="{{$tableId}}" class="display wrap table-bordered " style="border-collapse: collapse; width: 100%; padding-top: 10px">
     <thead class="border border-dark">
 
     <tr class="border border-dark">
@@ -17,34 +17,11 @@
     </tr>
     </thead>
 </table>
-
-<script>
-    var columns = [
-        {data: "id", name: 'id'},
-        {data: 'name', name: 'name'},
-
-        {data: 'tovar_1', name: 'tovar_1'},
-        {data: 'rabota_1', name: 'rabota_1'},
-        {data: 'usluga_1', name: 'usluga_1'},
-
-        {data: 'tovar_2', name: 'tovar_2'},
-        {data: 'rabota_2', name: 'rabota_2'},
-        {data: 'usluga_2', name: 'usluga_2'},
-
-        {data: 'tovar_3', name: 'tovar_3'},
-        {data: 'rabota_3', name: 'rabota_3'},
-        {data: 'usluga_3', name: 'usluga_3'},
-
-        {data: 'tovar_4', name: 'tovar_4'},
-        {data: 'rabota_4', name: 'rabota_4'},
-        {data: 'usluga_4', name: 'usluga_4'},
-    ];
-</script>
 <script>
     $(document).ready(function() {
         $.fn.dataTable.moment('DD-MM-YYYY');
 
-        $('#example').DataTable( {
+        $('#{{$tableId}}').DataTable( {
             keys: {{$keys}},
             rowReorder: {{$rowReorder}},
             rowGroup: {{$rowGroup}},
@@ -57,101 +34,11 @@
             pageLength: {{$pageLength}},
             "language" : {!! $language !!},
             dom: "{{$dom}}",
+            columns: {!! str_replace("&#039;", "'", $dtColumns); !!},
             ajax: "{{$getData}}",
+            stateSave: "{{$stateSave}}",
             {!! $buttons !!}
-            columns: columns,
-            {{--buttons: {--}}
-            {{--    buttons: [--}}
-            {{--        { extend: 'copyHtml5',--}}
-            {{--            text: '<i class="fas fa-copy"></i>',--}}
-            {{--            title: '{{$tableTitle}}',--}}
-            {{--            titleAttr: 'Скопировать в буфер обмена',--}}
-            {{--            exportOptions: {--}}
-            {{--                columns: ':visible:Not(.not-exported)',--}}
-            {{--                rows: ':visible',--}}
-            {{--                format:{--}}
-            {{--                    header: function ( data, columnIdx ) {--}}
-            {{--                        if(typeof export_format === "function")--}}
-            {{--                            return export_format(data, columnIdx);--}}
-            {{--                        return data;--}}
-            {{--                    }--}}
-            {{--                }--}}
-            {{--            },--}}
-            {{--        },--}}
-            {{--            @if($getData == route('report', '4') || $getData == route('report', '6') || $getData == route('report', '7') || $getData == route('report', '8'))--}}
-            {{--        {--}}
-            {{--            text: 'Export',--}}
-            {{--            action: function ( e, dt, node, config ) {--}}
-            {{--                window.location.href = "{{$exportId}}";--}}
-            {{--            }--}}
-            {{--        },--}}
-            {{--            @endif--}}
-            {{--        { extend: 'excelHtml5',--}}
-            {{--            text: '<i class="fas fa-file-excel"></i>',--}}
-            {{--            title: '{{$tableTitle}}',--}}
-            {{--            titleAttr: 'Экспорт в Excel',--}}
-            {{--            exportOptions: {--}}
-            {{--                columns: ':visible:Not(.not-exported)',--}}
-            {{--                rows: ':visible',--}}
-            {{--                format:{--}}
-            {{--                    header: function ( data, columnIdx ) {--}}
-            {{--                        if(typeof export_format === "function")--}}
-            {{--                            return export_format(data, columnIdx);--}}
-            {{--                        return data;--}}
-            {{--                    }--}}
-            {{--                }--}}
-            {{--            },--}}
-            {{--        },--}}
-
-            {{--        { extend: 'pdfHtml5',--}}
-            {{--            text: '<i class="fas fa-file-pdf"></i>',--}}
-            {{--            title: '{{$tableTitle}}',--}}
-            {{--            titleAttr: 'Экспорт в PDF',--}}
-            {{--            orientation: 'landscape',--}}
-            {{--            pageSize: 'LEGAL',--}}
-            {{--            exportOptions: {--}}
-            {{--                columns: ':visible:Not(.not-exported)',--}}
-            {{--                rows: ':visible',--}}
-            {{--                format:{--}}
-            {{--                    header: function ( data, columnIdx ) {--}}
-            {{--                        if(typeof export_format === "function")--}}
-            {{--                            return export_format(data, columnIdx);--}}
-            {{--                        return data;--}}
-            {{--                    }--}}
-            {{--                }--}}
-            {{--            },--}}
-            {{--        },--}}
-            {{--        { extend: 'print',--}}
-            {{--            text: '<i class="fas fa-print"></i>',--}}
-            {{--            title: '{{$tableTitle}}',--}}
-            {{--            titleAttr: 'Распечатать',--}}
-            {{--            exportOptions: {--}}
-            {{--                columns: ':visible:Not(.not-exported)',--}}
-            {{--                rows: ':visible',--}}
-            {{--                format:{--}}
-            {{--                    header: function ( data, columnIdx ) {--}}
-            {{--                        if(typeof export_format === "function")--}}
-            {{--                            return export_format(data, columnIdx);--}}
-            {{--                        return data;--}}
-            {{--                    }--}}
-            {{--                }--}}
-            {{--            },--}}
-            {{--        },--}}
-            {{--        { extend: 'colvis',--}}
-            {{--            text: '<i class="fas fa-eye"></i>',--}}
-            {{--            titleAttr: 'Показать/скрыть колонки',--}}
-            {{--            exportOptions: {--}}
-            {{--                columns: ':visible:Not(.not-exported)',--}}
-            {{--                rows: ':visible',--}}
-            {{--            },--}}
-            {{--        }--}}
-            {{--    ],--}}
-            {{--    dom: {--}}
-            {{--        button: {--}}
-            {{--            className: 'dt-button'--}}
-            {{--        }--}}
-            {{--    }--}}
-            {{--},--}}
+            scrollX: "{{$scrollX}}",
             "fnInitComplete": function(){
 
                 // Enable THEAD scroll bars

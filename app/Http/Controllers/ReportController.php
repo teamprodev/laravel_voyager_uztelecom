@@ -98,11 +98,31 @@ class ReportController extends Controller
             __('услуга'),
         ];
 
+        $dtColumns = "[
+            {data: 'id', name: 'id'},
+            {data: 'name', name: 'name'},
+
+            {data: 'tovar_1', name: 'tovar_1'},
+            {data: 'rabota_1', name: 'rabota_1'},
+            {data: 'usluga_1', name: 'usluga_1'},
+
+            {data: 'tovar_2', name: 'tovar_2'},
+            {data: 'rabota_2', name: 'rabota_2'},
+            {data: 'usluga_2', name: 'usluga_2'},
+
+            {data: 'tovar_3', name: 'tovar_3'},
+            {data: 'rabota_3', name: 'rabota_3'},
+            {data: 'usluga_3', name: 'usluga_3'},
+
+            {data: 'tovar_4', name: 'tovar_4'},
+            {data: 'rabota_4', name: 'rabota_4'},
+            {data: 'usluga_4', name: 'usluga_4'},
+    ]";
         $report = ReportDate::all();
             if($id == self::Quarterly_Planned_Report)
-                return view("site.report.{$id}",compact('report', 'dtHeaders', 'dtTitles'));
+                return view("site.report.{$id}",compact('report', 'dtHeaders', 'dtTitles','dtColumns'));
             elseif($id < self::Report_Statuses_Quantity){
-                return view("site.report.{$id}",compact('report', 'dtHeaders', 'dtTitles'));
+                return view("site.report.{$id}",compact('report', 'dtHeaders', 'dtTitles','dtColumns'));
             }
             return view("site.report.10",compact('report'));
     }

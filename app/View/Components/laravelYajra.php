@@ -14,12 +14,16 @@ class laravelYajra extends Component
      * @return void
      */
     public string $tableTitle;
+    public string $dtColumns;
+    public string $tableId;
     public string $getData;
     public string $language;
     public string $dom;
     public int $pageLength;
     public string $buttons;
     public string|bool $colReorder;
+    public string|bool $stateSave;
+    public string|bool $scrollX;
     public string|bool $responsive;
     public string|bool $select;
     public string|int $scrollY;
@@ -37,11 +41,13 @@ class laravelYajra extends Component
 
     public function __construct(
         array $dtTitles,
+        string $dtColumns,
         $dtHeaders,
         $startDate,
         $endDate,
         $exportId,
         string      $tableTitle = null,
+        string      $tableId = "example",
         string      $getData = null,
         string        $language = 'en-GB',
         bool        $buttons = null,
@@ -49,6 +55,8 @@ class laravelYajra extends Component
         string|bool $select = 'false',
         string $responsive = 'false',
         string|bool $colReorder = 'false',
+        string|bool $stateSave = 'false',
+        string|bool $scrollX = 'false',
         int         $pageLength = 10,
         string|int $scrollY = null,
         string|bool $scroller = 'false',
@@ -60,12 +68,16 @@ class laravelYajra extends Component
     {
         $text = new textYajra();
         $this->tableTitle = $tableTitle;
+        $this->dtColumns = $dtColumns;
+        $this->tableId = $tableId;
         $this->getData = $getData;
         $this->language = isset($language) ? $text->language($language) : $language;
         $this->dom = $dom;
         $this->pageLength = $pageLength;
         $this->buttons = $text->buttons($tableTitle);
         $this->colReorder = $colReorder;
+        $this->stateSave = $stateSave;
+        $this->scrollX = $scrollX;
         $this->responsive = $responsive;
         $this->select = $select;
         $this->scrollY = isset($scrollY) ? "scrollY:  $scrollY," : "";
