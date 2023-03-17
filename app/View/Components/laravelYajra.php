@@ -35,12 +35,10 @@ class laravelYajra extends Component
     public $startDate;
     public $endDate ;
     public array $dtHeaders ;
-    public array $dtTitles ;
     public $exportId;
 
 
     public function __construct(
-        array $dtTitles,
         string $dtColumns,
         $dtHeaders,
         $startDate,
@@ -86,7 +84,6 @@ class laravelYajra extends Component
         $this->rowReorder = $rowReorder;
         $this->rowGroup = $rowGroup;
         $this->pagingType = $pagingType;
-        $this->dtTitles = $dtTitles;
         $this->dtHeaders = $dtHeaders;
         $this->startDate = $startDate;
         $this->endDate = $endDate;

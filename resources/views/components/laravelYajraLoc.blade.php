@@ -2,19 +2,13 @@
 
 <table id="{{$tableId}}" class="display wrap table-bordered " style="border-collapse: collapse; width: 100%; padding-top: 10px">
     <thead class="border border-dark">
-
-    <tr class="border border-dark">
-        @foreach($dtHeaders as $header => $key)
-        <th colspan="{{$key["colspan"]}}" rowspan="{{$key["rowspan"]}}" style="text-align: center;" class="border border-dark">{{ $header }}</th>
-        @endforeach
-    </tr>
-    @if($dtTitles != null)
+    @foreach($dtHeaders as $array => $data)
         <tr class="border border-dark">
-            @foreach($dtTitles as $title)
-            <th style="text-align: center;" class="border border-dark">{{ $title }}</th>
+            @foreach($data as $header=>$key)
+                <th colspan="{{$key["colspan"]}}" rowspan="{{$key["rowspan"]}}" style="text-align: center;" class="border border-dark">{{ $header }}</th>
             @endforeach
         </tr>
-    @endif
+    @endforeach
     </thead>
 </table>
 <script>
