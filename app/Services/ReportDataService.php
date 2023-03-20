@@ -867,4 +867,90 @@ class ReportDataService
     ]";
         return view('site.report._7',compact('report', 'dtHeaders','dtColumns'));
     }
+    final public function report8_data($report): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        $dtHeaders = [
+            [
+                __('ID') => [
+                    'rowspan' => 2,
+                    'colspan' => 0,
+                ],
+                __('Филиал') => [
+                    'rowspan' => 2,
+                    'colspan' => 0,
+                ],
+                __('Информация о заявке') => [
+                    'rowspan' => 0,
+                    'colspan' => 4,
+                ],
+                __('Наименование товара') => [
+                    'rowspan' => 2,
+                    'colspan' => 0,
+                ],
+                __('Вид закупки') => [
+                    'rowspan' => 2,
+                    'colspan' => 0,
+                ],
+                __('Договор') => [
+                    'rowspan' => 0,
+                    'colspan' => 3,
+                ],
+                __('Исполнитель') => [
+                    'rowspan' => 2,
+                    'colspan' => 0,
+                ],
+                __('Дата Создания') => [
+                    'rowspan' => 2,
+                    'colspan' => 0,
+                ],
+            ],
+            [
+                __('Номер и дата заявки') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Планируемый бюджет закупки (сум)') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Дата получения отделом') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Инициатор') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Номер договора') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Поставщик') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Сумма') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+            ],
+        ];
+
+        $dtColumns = "[
+            {data: 'id', name: 'id'},
+            {data: 'filial', name: 'filial'},
+            {data: 'number_and_date_of_app', name: 'number_and_date_of_app'},
+            {data: 'planned_price', name: 'planned_price'},
+            {data: 'performer_received_date', name: 'performer_received_date'},
+            {data: 'initiator', name: 'initiator'},
+            {data: 'product', name: 'product'},
+            {data: 'type_of_purchase', name: 'type_of_purchase'},
+            {data: 'contract_number', name: 'contract_number'},
+            {data: 'supplier_name', name: 'supplier_name'},
+            {data: 'contract_price', name: 'contract_price'},
+            {data: 'performer_user_id', name: 'performer_user_id'},
+            {data: 'created_at', name: 'created_at'},
+        ]";
+        return view('site.report._8',compact('report', 'dtHeaders','dtColumns'));
+    }
 }
