@@ -75,7 +75,7 @@ class ReportDataService
             {data: 'summa', name: 'summa'},
             {data: 'nds', name: 'nds'},
         ]";
-        return view("site.report.1",compact('report', 'dtHeaders','dtColumns'));
+        return view("site.report._1",compact('report', 'dtHeaders','dtColumns'));
     }
 
     /**
@@ -187,7 +187,7 @@ class ReportDataService
                 {data: 'rabota_4', name: 'rabota_4'},
                 {data: 'usluga_4', name: 'usluga_4'},
         ]";
-        return view("site.report.2",compact('report', 'dtHeaders','dtColumns'));
+        return view("site.report._2",compact('report', 'dtHeaders','dtColumns'));
     }
 
     /**
@@ -425,7 +425,7 @@ class ReportDataService
             {data: 'usluga_4', name: 'usluga_4'},
             {data: 'usluga_4_nds', name: 'usluga_4_nds'},
         ]";
-        return view("site.report.22",compact('report', 'dtHeaders','dtColumns'));
+        return view("site.report._22",compact('report', 'dtHeaders','dtColumns'));
     }
 
     /**
@@ -500,7 +500,7 @@ class ReportDataService
             {data: 'usluga_1', name: 'usluga_1'},
             {data: 'usluga_1_nds', name: 'usluga_1_nds'},
         ]";
-        return view("site.report.3",compact('report', 'dtHeaders','dtColumns'));
+        return view("site.report._3",compact('report', 'dtHeaders','dtColumns'));
     }
 
     /**
@@ -640,7 +640,7 @@ class ReportDataService
         {data: 'purchase_basis', name: 'purchase_basis'},
         {data: 'basis', name: 'basis'},
     ]";
-        return view('site.report.4',compact('report', 'dtHeaders','dtColumns'));
+        return view('site.report._4',compact('report', 'dtHeaders','dtColumns'));
     }
     final public function report5_data($report): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
@@ -724,5 +724,71 @@ class ReportDataService
             {data: 'summa_3', name: 'summa_3'},
         ]";
         return view('site.report._5',compact('report', 'dtHeaders','dtColumns'));
+    }
+    final public function report6_data($report): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        $dtHeaders = [
+            [
+                __('ID') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Филиал') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Контрагент (предприятия поставляющий товаров. работ. услуг)') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Договор (контракт)') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Предмет закупки (товар,работа,услуга)') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('номер заявки') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('сумма заявки') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Предмет договора (контракта) и краткая характеристика') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Общая сумма договора (контракта)') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Номер протокола внутренней комиссии') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Дата протокола внутренней комиссии') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+            ],
+        ];
+
+        $dtColumns = "[
+        {data: 'id', name: 'id'},
+        {data: 'name', name: 'name'},
+        {data: 'supplier_name', name: 'supplier_name'},
+        {data: 'contract_number', name: 'contract_number'},
+        {data: 'subject', name: 'subject'},
+        {data: 'number', name: 'number'},
+        {data: 'planned_price', name: 'planned_price'},
+        {data: 'contract_info', name: 'contract_info'},
+        {data: 'contract_price', name: 'contract_price'},
+        {data: 'protocol_number', name: 'protocol_number'},
+        {data: 'protocol_date', name: 'protocol_date'},
+    ]";
+        return view('site.report._6',compact('report', 'dtHeaders','dtColumns'));
     }
 }
