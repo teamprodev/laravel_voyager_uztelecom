@@ -642,4 +642,88 @@ class ReportDataService
     ]";
         return view('site.report.4',compact('report', 'dtHeaders','dtColumns'));
     }
+    final public function report5_data($report): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        $dtHeaders = [
+            [
+                __('ID') => [
+                    'rowspan' => 2,
+                    'colspan' => 0,
+                ],
+                __('Филиал') => [
+                    'rowspan' => 2,
+                    'colspan' => 0,
+                ],
+                __('Заключенные договора') => [
+                    'rowspan' => 2,
+                    'colspan' => 0,
+                ],
+                __('товар') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('работа') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('услуга') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+            ],
+
+            [
+                __(' кол-во') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __(' сумма') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+
+                __('кол-во') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('сумма') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+
+                __('кол-во ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('сумма ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+
+                __('кол-во  ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('сумма  ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+            ],
+        ];
+
+        $dtColumns = "[
+            {data: 'id', name: 'id'},
+            {data: 'name', name: 'name'},
+
+            {data: 'count', name: 'count'},
+            {data: 'summa', name: 'summa'},
+            {data: 'count_1', name: 'count_1'},
+            {data: 'summa_1', name: 'summa_1'},
+            {data: 'count_2', name: 'count_2'},
+            {data: 'summa_2', name: 'summa_2'},
+            {data: 'count_3', name: 'count_3'},
+            {data: 'summa_3', name: 'summa_3'},
+        ]";
+        return view('site.report.5',compact('report', 'dtHeaders','dtColumns'));
+    }
 }
