@@ -655,8 +655,8 @@ class ReportDataService
                     'colspan' => 0,
                 ],
                 __('Заключенные договора') => [
-                    'rowspan' => 2,
-                    'colspan' => 0,
+                    'rowspan' => 0,
+                    'colspan' => 2,
                 ],
                 __('товар') => [
                     'rowspan' => 0,
@@ -671,7 +671,6 @@ class ReportDataService
                     'colspan' => 2,
                 ],
             ],
-
             [
                 __(' кол-во') => [
                     'rowspan' => 0,
@@ -724,6 +723,6 @@ class ReportDataService
             {data: 'count_3', name: 'count_3'},
             {data: 'summa_3', name: 'summa_3'},
         ]";
-        return view('site.report.5',compact('report', 'dtHeaders','dtColumns'));
+        return view('site.report._5',compact('report', 'dtHeaders','dtColumns'));
     }
 }

@@ -9,7 +9,6 @@
             @endforeach
         </tr>
     @endforeach
-
     </thead>
 </table>
 <script>
