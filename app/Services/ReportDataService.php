@@ -791,4 +791,80 @@ class ReportDataService
     ]";
         return view('site.report._6',compact('report', 'dtHeaders','dtColumns'));
     }
+    final public function report7_data($report): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        $dtHeaders = [
+            [
+                __('ID') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Источник финансирование') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Наименование доставщика') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Стир доставщика') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Номер договора') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Дата договора') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Сумма договора') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Валюта') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Номер и дата лота размещенных на специальном информационном портале о государственных закупках') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Тип закупки') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Предмет закупки') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Страна происхождения товаров (услуг)') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Основание: Закон о государственных закупках / другие решения') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+            ],
+        ];
+
+        $dtColumns = "[
+            {data: 'id', name: 'id'},
+            {data: 'name', name: 'name'},
+            {data: 'supplier_name', name: 'supplier_name'},
+            {data: 'supplier_inn', name: 'supplier_inn'},
+            {data: 'contract_number', name: 'contract_number'},
+            {data: 'contract_date', name: 'contract_date'},
+            {data: 'contract_price', name: 'contract_price'},
+            {data: 'currency', name: 'currency'},
+            {data: 'lot_number', name: 'lot_number'},
+            {data: 'type_of_purchase', name: 'type_of_purchase'},
+            {data: 'contract_info', name: 'contract_info'},
+            {data: 'country_produced_id', name: 'country_produced_id'},
+            {data: 'purchase_basis', name: 'purchase_basis'},
+    ]";
+        return view('site.report._7',compact('report', 'dtHeaders','dtColumns'));
+    }
 }
