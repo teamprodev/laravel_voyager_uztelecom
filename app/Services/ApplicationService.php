@@ -853,11 +853,12 @@ class ApplicationService
     }
 
     public static function getNotifications(){
-        return Notification::with('application:id,created_at')->has('application')
+        return Notification::where('is_read', 0)
             ->where('user_id', auth()->id())
-            ->where('is_read', 0)
+            ->with('application')
             ->orderBy('id', 'desc')
             ->get();
+
     }
 
     public function sendNotifications($array, $application, $message)
