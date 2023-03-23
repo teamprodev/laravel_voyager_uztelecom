@@ -853,11 +853,19 @@ class ApplicationService
     }
 
     public static function getNotifications(){
-        return Notification::where('is_read', 0)
+        $signedDocs = SignedDocs::where('role_id', auth()->user()->role_id)->whereNull('status')->pluck('application_id')->toArray();
+        /** @var object $data  Podpis qoyilishi kerak bo'lgan zayavkalar*/
+        $data = Notification::whereIn('application_id',$signedDocs)
+            ->where('is_read', 0)
             ->where('user_id', auth()->id())
-            ->with('application')
             ->orderBy('id', 'desc')
             ->get();
+//        Notification::where('is_read', 0)
+//            ->where('user_id', auth()->id())
+//            ->with('application')
+//            ->orderBy('id', 'desc')
+//            ->get();
+        return $data;
 
     }
 
