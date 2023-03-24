@@ -915,21 +915,21 @@ class ReportDataService
             ],
         ];
 
-        $dtColumns = "[
-            {data: 'id', name: 'id'},
-            {data: 'filial', name: 'filial'},
-            {data: 'number_and_date_of_app', name: 'number_and_date_of_app'},
-            {data: 'planned_price', name: 'planned_price'},
-            {data: 'performer_received_date', name: 'performer_received_date'},
-            {data: 'initiator', name: 'initiator'},
-            {data: 'product', name: 'product'},
-            {data: 'type_of_purchase', name: 'type_of_purchase'},
-            {data: 'contract_number', name: 'contract_number'},
-            {data: 'supplier_name', name: 'supplier_name'},
-            {data: 'contract_price', name: 'contract_price'},
-            {data: 'performer_user_id', name: 'performer_user_id'},
-            {data: 'created_at', name: 'created_at'},
-        ]";
+        $dtColumns = array(
+            array('data' => 'id', 'name' => 'id'),
+            array('data' => 'filial', 'name' => 'filial'),
+            array('data' => 'number_and_date_of_app', 'name' => 'number_and_date_of_app'),
+            array('data' => 'planned_price', 'name' => 'planned_price'),
+            array('data' => 'performer_received_date', 'name' => 'performer_received_date'),
+            array('data' => 'initiator', 'name' => 'initiator'),
+            array('data' => 'product', 'name' => 'product'),
+            array('data' => 'type_of_purchase', 'name' => 'type_of_purchase'),
+            array('data' => 'contract_number', 'name' => 'contract_number'),
+            array('data' => 'supplier_name', 'name' => 'supplier_name'),
+            array('data' => 'contract_price', 'name' => 'contract_price'),
+            array('data' => 'performer_user_id', 'name' => 'performer_user_id'),
+            array('data' => 'created_at', 'name' => 'created_at'),
+        );
         return view('site.report._8',compact('report', 'dtHeaders','dtColumns'));
     }
     final public function report9_data($report): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
