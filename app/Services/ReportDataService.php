@@ -473,17 +473,16 @@ class ReportDataService
         ];
 
 
-        $dtColumns = "[
-            {data: 'id', name: 'id'},
-            {data: 'name', name: 'name'},
-
-            {data: 'tovar_1', name: 'tovar_1'},
-            {data: 'tovar_1_nds', name: 'tovar_1_nds'},
-            {data: 'rabota_1', name: 'rabota_1'},
-            {data: 'rabota_1_nds', name: 'rabota_1_nds'},
-            {data: 'usluga_1', name: 'usluga_1'},
-            {data: 'usluga_1_nds', name: 'usluga_1_nds'},
-        ]";
+        $dtColumns = array(
+            array('data' => 'id', 'name' => 'id'),
+            array('data' => 'name', 'name' => 'name'),
+            array('data' => 'tovar_1', 'name' => 'tovar_1'),
+            array('data' => 'tovar_1_nds', 'name' => 'tovar_1_nds'),
+            array('data' => 'rabota_1', 'name' => 'rabota_1'),
+            array('data' => 'rabota_1_nds', 'name' => 'rabota_1_nds'),
+            array('data' => 'usluga_1', 'name' => 'usluga_1'),
+            array('data' => 'usluga_1_nds', 'name' => 'usluga_1_nds')
+        );
         return view("site.report._3",compact('report', 'dtHeaders','dtColumns'));
     }
 
