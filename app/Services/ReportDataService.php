@@ -755,19 +755,19 @@ class ReportDataService
             ],
         ];
 
-        $dtColumns = "[
-        {data: 'id', name: 'id'},
-        {data: 'name', name: 'name'},
-        {data: 'supplier_name', name: 'supplier_name'},
-        {data: 'contract_number', name: 'contract_number'},
-        {data: 'subject', name: 'subject'},
-        {data: 'number', name: 'number'},
-        {data: 'planned_price', name: 'planned_price'},
-        {data: 'contract_info', name: 'contract_info'},
-        {data: 'contract_price', name: 'contract_price'},
-        {data: 'protocol_number', name: 'protocol_number'},
-        {data: 'protocol_date', name: 'protocol_date'},
-    ]";
+        $dtColumns = array(
+            array('data' => 'id', 'name' => 'id'),
+            array('data' => 'name', 'name' => 'name'),
+            array('data' => 'supplier_name', 'name' => 'supplier_name'),
+            array('data' => 'contract_number', 'name' => 'contract_number'),
+            array('data' => 'subject', 'name' => 'subject'),
+            array('data' => 'number', 'name' => 'number'),
+            array('data' => 'planned_price', 'name' => 'planned_price'),
+            array('data' => 'contract_info', 'name' => 'contract_info'),
+            array('data' => 'contract_price', 'name' => 'contract_price'),
+            array('data' => 'protocol_number', 'name' => 'protocol_number'),
+            array('data' => 'protocol_date', 'name' => 'protocol_date'),
+        );
         return view('site.report._6',compact('report', 'dtHeaders','dtColumns'));
     }
     final public function report7_data($report): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
