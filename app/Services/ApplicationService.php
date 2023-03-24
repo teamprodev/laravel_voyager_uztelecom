@@ -599,10 +599,7 @@ class ApplicationService
         $access = $application->show_leader !== 1;
 
         if ($application->is_more_than_limit) {
-            $access = SignedDocs::where('application_id', $application->id)
-                ->where('role_id', 7)
-                ->whereNull('status')
-                ->first();
+            $access = SignedDocs::where('role_id', $user->role_id)->whereNull('status')->where('application_id', $application->id)->first();
         }
         $check = SignedDocs::where('role_id', $user->role_id)->where('application_id', $application->id)->first();
         $signedDocs = $application->signedDocs()->get();
