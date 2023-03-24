@@ -381,49 +381,34 @@ class ReportDataService
         ];
 
 
-        $dtColumns = "[
-            {data: 'id', name: 'id'},
-            {data: 'name', name: 'name'},
-
-            {data: 'tovar_1', name: 'tovar_1'},
-            {data: 'tovar_1_nds', name: 'tovar_1_nds'},
-
-            {data: 'rabota_1', name: 'rabota_1'},
-            {data: 'rabota_1_nds', name: 'rabota_1_nds'},
-
-            {data: 'usluga_1', name: 'usluga_1'},
-            {data: 'usluga_1_nds', name: 'usluga_1_nds'},
-
-
-            {data: 'tovar_2', name: 'tovar_2'},
-            {data: 'tovar_2_nds', name: 'tovar_2_nds'},
-
-            {data: 'rabota_2', name: 'rabota_2'},
-            {data: 'rabota_2_nds', name: 'rabota_2_nds'},
-
-            {data: 'usluga_2', name: 'usluga_2'},
-            {data: 'usluga_2_nds', name: 'usluga_2_nds'},
-
-
-            {data: 'tovar_3', name: 'tovar_3'},
-            {data: 'tovar_3_nds', name: 'tovar_3_nds'},
-
-            {data: 'rabota_3', name: 'rabota_3'},
-            {data: 'rabota_3_nds', name: 'rabota_3_nds'},
-
-            {data: 'usluga_3', name: 'usluga_3'},
-            {data: 'usluga_3_nds', name: 'usluga_3_nds'},
-
-
-            {data: 'tovar_4', name: 'tovar_4'},
-            {data: 'tovar_4_nds', name: 'tovar_4_nds'},
-
-            {data: 'rabota_4', name: 'rabota_4'},
-            {data: 'rabota_4_nds', name: 'rabota_4_nds'},
-
-            {data: 'usluga_4', name: 'usluga_4'},
-            {data: 'usluga_4_nds', name: 'usluga_4_nds'},
-        ]";
+        $dtColumns = array(
+            array('data' => 'id', 'name' => 'id'),
+            array('data' => 'name', 'name' => 'name'),
+            array('data' => 'tovar_1', 'name' => 'tovar_1'),
+            array('data' => 'tovar_1_nds', 'name' => 'tovar_1_nds'),
+            array('data' => 'rabota_1', 'name' => 'rabota_1'),
+            array('data' => 'rabota_1_nds', 'name' => 'rabota_1_nds'),
+            array('data' => 'usluga_1', 'name' => 'usluga_1'),
+            array('data' => 'usluga_1_nds', 'name' => 'usluga_1_nds'),
+            array('data' => 'tovar_2', 'name' => 'tovar_2'),
+            array('data' => 'tovar_2_nds', 'name' => 'tovar_2_nds'),
+            array('data' => 'rabota_2', 'name' => 'rabota_2'),
+            array('data' => 'rabota_2_nds', 'name' => 'rabota_2_nds'),
+            array('data' => 'usluga_2', 'name' => 'usluga_2'),
+            array('data' => 'usluga_2_nds', 'name' => 'usluga_2_nds'),
+            array('data' => 'tovar_3', 'name' => 'tovar_3'),
+            array('data' => 'tovar_3_nds', 'name' => 'tovar_3_nds'),
+            array('data' => 'rabota_3', 'name' => 'rabota_3'),
+            array('data' => 'rabota_3_nds', 'name' => 'rabota_3_nds'),
+            array('data' => 'usluga_3', 'name' => 'usluga_3'),
+            array('data' => 'usluga_3_nds', 'name' => 'usluga_3_nds'),
+            array('data' => 'tovar_4', 'name' => 'tovar_4'),
+            array('data' => 'tovar_4_nds', 'name' => 'tovar_4_nds'),
+            array('data' => 'rabota_4', 'name' => 'rabota_4'),
+            array('data' => 'rabota_4_nds', 'name' => 'rabota_4_nds'),
+            array('data' => 'usluga_4', 'name' => 'usluga_4'),
+            array('data' => 'usluga_4_nds', 'name' => 'usluga_4_nds')
+        );
         return view("site.report._22",compact('report', 'dtHeaders','dtColumns'));
     }
 
