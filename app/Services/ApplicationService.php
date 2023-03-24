@@ -852,7 +852,8 @@ class ApplicationService
         return $application->save();
     }
 
-    public static function getNotifications(){
+    public static function getNotifications()
+    {
         $signedDocs = SignedDocs::where('role_id', auth()->user()->role_id)->whereNull('status')->pluck('application_id')->toArray();
         /** @var object $data  Podpis qoyilishi kerak bo'lgan zayavkalar*/
         $data = Notification::whereIn('application_id',$signedDocs)

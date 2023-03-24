@@ -106,4 +106,15 @@ class Application extends ALL
     {
         return $this->hasMany(SignedDocs::class);
     }
+
+    /**
+     *
+     * Function  delete
+     * @return  bool
+     */
+    final public function delete() : bool
+    {
+        $this->deleted_by = auth()->id();
+        return parent::delete();
+    }
 }

@@ -14,4 +14,9 @@ class Notification extends ALL
     {
         return $this->belongsTo(Application::class);
     }
+    public function delete()
+    {
+        $this->deleted_by = auth()->id();
+        return parent::delete();
+    }
 }

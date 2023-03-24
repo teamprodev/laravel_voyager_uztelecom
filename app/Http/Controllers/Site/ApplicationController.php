@@ -295,10 +295,11 @@ class ApplicationController extends Controller
      */
     final public function destroy(Application $application) : RedirectResponse
     {
-        $application->delete_from = auth()->user()->id;
-        $application->save();
+        $application->notifications()->get()->map(function($notification){
+            return $notification->delete();
+        });
         $application->delete();
-        return redirect()->back();
+        return redirect()->route('site.applications.index');
     }
 
     /**
