@@ -594,35 +594,32 @@ class ReportDataService
         ];
 
 
-        $dtColumns = "[
-        {data: 'id', name: 'id'},
-        {data: 'branch_id', name: 'branch_id'},
-        {data: 'number', name: 'number'},
-        {data: 'date', name: 'date'},
-        {data: 'user_id', name: 'user_id'},
-        {data: 'phone', name: 'phone'},
-        {data: 'department_initiator_id', name: 'department_initiator_id'},
-        {data: 'type_of_purchase_id', name: 'type_of_purchase_id'},
-        {data: 'name', name: 'name'},
-        {data: 'subject', name: 'subject'},
-        {data: 'expire_warranty_date', name: 'expire_warranty_date'},
-        {data: 'planned_price', name: 'planned_price'},
-        {data: 'with_nds', name: 'with_nds'},
-        {data: 'currency', name: 'currency'},
-        {data: 'supplier_name', name: 'supplier_name'},
-        {data: 'contract_price', name: 'contract_price'},
-        {data: 'delivery_date', name: 'delivery_date'},
-        {
-            'data': 'status',
-            'name': 'status'
-        },
-        {data: 'performer_leader_user_id', name: 'performer_leader_user_id'},
-        {data: 'performer_user_id', name: 'performer_user_id'},
-        {data: 'info_business_plan', name: 'info_business_plan'},
-        {data: 'info_purchase_plan', name: 'info_purchase_plan'},
-        {data: 'purchase_basis', name: 'purchase_basis'},
-        {data: 'basis', name: 'basis'},
-    ]";
+        $dtColumns = array(
+            array('data' => 'id', 'name' => 'id'),
+            array('data' => 'branch_id', 'name' => 'branch_id'),
+            array('data' => 'number', 'name' => 'number'),
+            array('data' => 'date', 'name' => 'date'),
+            array('data' => 'user_id', 'name' => 'user_id'),
+            array('data' => 'phone', 'name' => 'phone'),
+            array('data' => 'department_initiator_id', 'name' => 'department_initiator_id'),
+            array('data' => 'type_of_purchase_id', 'name' => 'type_of_purchase_id'),
+            array('data' => 'name', 'name' => 'name'),
+            array('data' => 'subject', 'name' => 'subject'),
+            array('data' => 'expire_warranty_date', 'name' => 'expire_warranty_date'),
+            array('data' => 'planned_price', 'name' => 'planned_price'),
+            array('data' => 'with_nds', 'name' => 'with_nds'),
+            array('data' => 'currency', 'name' => 'currency'),
+            array('data' => 'supplier_name', 'name' => 'supplier_name'),
+            array('data' => 'contract_price', 'name' => 'contract_price'),
+            array('data' => 'delivery_date', 'name' => 'delivery_date'),
+            array('data' => 'status', 'name' => 'status'),
+            array('data' => 'performer_leader_user_id', 'name' => 'performer_leader_user_id'),
+            array('data' => 'performer_user_id', 'name' => 'performer_user_id'),
+            array('data' => 'info_business_plan', 'name' => 'info_business_plan'),
+            array('data' => 'info_purchase_plan', 'name' => 'info_purchase_plan'),
+            array('data' => 'purchase_basis', 'name' => 'purchase_basis'),
+            array('data' => 'basis', 'name' => 'basis')
+        );
         return view('site.report._4',compact('report', 'dtHeaders','dtColumns'));
     }
     final public function report5_data($report): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
