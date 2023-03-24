@@ -596,11 +596,7 @@ class ApplicationService
      */
     final public function show(object $application, object $user) : array
     {
-        $access = $application->show_leader !== 1;
-
-        if ($application->is_more_than_limit) {
-            $access = SignedDocs::where('role_id', $user->role_id)->whereNull('status')->where('application_id', $application->id)->first();
-        }
+        $access = SignedDocs::where('role_id', $user->role_id)->whereNull('status')->where('application_id', $application->id)->first();
         $check = SignedDocs::where('role_id', $user->role_id)->where('application_id', $application->id)->first();
         $signedDocs = $application->signedDocs()->get();
         $file_basis = json_decode($application->file_basis);
