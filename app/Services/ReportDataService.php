@@ -690,19 +690,18 @@ class ReportDataService
             ],
         ];
 
-        $dtColumns = "[
-            {data: 'id', name: 'id'},
-            {data: 'name', name: 'name'},
-
-            {data: 'count', name: 'count'},
-            {data: 'summa', name: 'summa'},
-            {data: 'count_1', name: 'count_1'},
-            {data: 'summa_1', name: 'summa_1'},
-            {data: 'count_2', name: 'count_2'},
-            {data: 'summa_2', name: 'summa_2'},
-            {data: 'count_3', name: 'count_3'},
-            {data: 'summa_3', name: 'summa_3'},
-        ]";
+        $dtColumns = array(
+            array('data' => 'id', 'name' => 'id'),
+            array('data' => 'name', 'name' => 'name'),
+            array('data' => 'count', 'name' => 'count'),
+            array('data' => 'summa', 'name' => 'summa'),
+            array('data' => 'count_1', 'name' => 'count_1'),
+            array('data' => 'summa_1', 'name' => 'summa_1'),
+            array('data' => 'count_2', 'name' => 'count_2'),
+            array('data' => 'summa_2', 'name' => 'summa_2'),
+            array('data' => 'count_3', 'name' => 'count_3'),
+            array('data' => 'summa_3', 'name' => 'summa_3'),
+        );
         return view('site.report._5',compact('report', 'dtHeaders','dtColumns'));
     }
     final public function report6_data($report): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
