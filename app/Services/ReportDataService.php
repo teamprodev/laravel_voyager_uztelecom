@@ -829,21 +829,21 @@ class ReportDataService
             ],
         ];
 
-        $dtColumns = "[
-            {data: 'id', name: 'id'},
-            {data: 'name', name: 'name'},
-            {data: 'supplier_name', name: 'supplier_name'},
-            {data: 'supplier_inn', name: 'supplier_inn'},
-            {data: 'contract_number', name: 'contract_number'},
-            {data: 'contract_date', name: 'contract_date'},
-            {data: 'contract_price', name: 'contract_price'},
-            {data: 'currency', name: 'currency'},
-            {data: 'lot_number', name: 'lot_number'},
-            {data: 'type_of_purchase', name: 'type_of_purchase'},
-            {data: 'contract_info', name: 'contract_info'},
-            {data: 'country_produced_id', name: 'country_produced_id'},
-            {data: 'purchase_basis', name: 'purchase_basis'},
-    ]";
+        $dtColumns = array(
+            array('data' => 'id', 'name' => 'id'),
+            array('data' => 'name', 'name' => 'name'),
+            array('data' => 'supplier_name', 'name' => 'supplier_name'),
+            array('data' => 'supplier_inn', 'name' => 'supplier_inn'),
+            array('data' => 'contract_number', 'name' => 'contract_number'),
+            array('data' => 'contract_date', 'name' => 'contract_date'),
+            array('data' => 'contract_price', 'name' => 'contract_price'),
+            array('data' => 'currency', 'name' => 'currency'),
+            array('data' => 'lot_number', 'name' => 'lot_number'),
+            array('data' => 'type_of_purchase', 'name' => 'type_of_purchase'),
+            array('data' => 'contract_info', 'name' => 'contract_info'),
+            array('data' => 'country_produced_id', 'name' => 'country_produced_id'),
+            array('data' => 'purchase_basis', 'name' => 'purchase_basis'),
+        );
         return view('site.report._7',compact('report', 'dtHeaders','dtColumns'));
     }
     final public function report8_data($report): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
