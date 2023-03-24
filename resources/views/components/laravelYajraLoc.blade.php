@@ -28,7 +28,11 @@
             pageLength: {{$pageLength}},
             "language" : {!! $language !!},
             dom: "{{$dom}}",
-            columns: {!! str_replace("&#039;", "'", $dtColumns); !!},
+            columns: [
+                @foreach($dtColumns as $column)
+                    {data: "{{$column['data']}}", name: "{{$column['name']}}" },
+                @endforeach
+            ],
             ajax: "{{$getData}}",
             stateSave: "{{$stateSave}}",
             {!! $buttons !!}

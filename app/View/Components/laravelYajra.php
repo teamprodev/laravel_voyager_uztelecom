@@ -14,7 +14,7 @@ class laravelYajra extends Component
      * @return void
      */
     public string $tableTitle;
-    public string $dtColumns;
+    public array $dtColumns;
     public string $tableId;
     public string $getData;
     public string $language;
@@ -39,7 +39,7 @@ class laravelYajra extends Component
 
 
     public function __construct(
-        string $dtColumns,
+        array $dtColumns,
         $dtHeaders,
         $startDate,
         $endDate,
