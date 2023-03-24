@@ -622,6 +622,13 @@ class ReportDataService
         );
         return view('site.report._4',compact('report', 'dtHeaders','dtColumns'));
     }
+
+    /**
+     *
+     * Function  report5_data
+     * @param $report
+     * @return  \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+     */
     final public function report5_data($report): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $dtHeaders = [
@@ -704,6 +711,13 @@ class ReportDataService
         );
         return view('site.report._5',compact('report', 'dtHeaders','dtColumns'));
     }
+
+    /**
+     *
+     * Function  report6_data
+     * @param $report
+     * @return  \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+     */
     final public function report6_data($report): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $dtHeaders = [
@@ -770,6 +784,13 @@ class ReportDataService
         );
         return view('site.report._6',compact('report', 'dtHeaders','dtColumns'));
     }
+
+    /**
+     *
+     * Function  report7_data
+     * @param $report
+     * @return  \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+     */
     final public function report7_data($report): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $dtHeaders = [
@@ -846,6 +867,13 @@ class ReportDataService
         );
         return view('site.report._7',compact('report', 'dtHeaders','dtColumns'));
     }
+
+    /**
+     *
+     * Function  report8_data
+     * @param $report
+     * @return  \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+     */
     final public function report8_data($report): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $dtHeaders = [
@@ -932,6 +960,13 @@ class ReportDataService
         );
         return view('site.report._8',compact('report', 'dtHeaders','dtColumns'));
     }
+
+    /**
+     *
+     * Function  report9_data
+     * @param $report
+     * @return  \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+     */
     final public function report9_data($report): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $dtHeaders = [
@@ -1000,50 +1035,35 @@ class ReportDataService
         ];
 
 
-        $dtColumns = "[
-        {data: 'id', name: 'id'},
-        {data: 'name', name: 'name'},
-
-        {data: 'supplier_inn', name: 'supplier_inn'},
-
-        {data: 'contract_count', name: 'contract_count'},
-        {data: 'contract_sum', name: 'contract_sum'},
-
-        {data: 'eshop_count', name: 'eshop_count'},
-        {data: 'eshop_sum', name: 'eshop_sum'},
-
-        {data: 'nat_eshop_count', name: 'nat_eshop_count'},
-        {data: 'nat_eshop_sum', name: 'nat_eshop_sum'},
-
-        {data: 'auction_count', name: 'auction_count'},
-        {data: 'auction_sum', name: 'auction_sum'},
-
-        {data: 'coop_count', name: 'coop_count'},
-        {data: 'coop_sum', name: 'coop_sum'},
-
-        {data: 'shaffof_count', name: 'shaffof_count'},
-        {data: 'shaffof_sum', name: 'shaffof_sum'},
-
-
-        {data: 'exchange_count', name: 'exchange_count'},
-        {data: 'exchange_sum', name: 'exchange_sum'},
-
-
-        {data: 'konkurs_count', name: 'konkurs_count'},
-        {data: 'konkurs_sum', name: 'konkurs_sum'},
-
-        {data: 'tender_count', name: 'tender_count'},
-        {data: 'tender_sum', name: 'tender_sum'},
-
-        {data: 'offers_count', name: 'offers_count'},
-        {data: 'offers_sum', name: 'offers_sum'},
-
-        {data: 'sole_supplier_count', name: 'sole_supplier_count'},
-        {data: 'sole_supplier_sum', name: 'sole_supplier_sum'},
-
-        {data: 'direct_count', name: 'direct_count'},
-        {data: 'direct_sum', name: 'direct_sum'},
-        ]";
+        $dtColumns = array(
+            array('data' => 'id', 'name' => 'id'),
+            array('data' => 'name', 'name' => 'name'),
+            array('data' => 'supplier_inn', 'name' => 'supplier_inn'),
+            array('data' => 'contract_count', 'name' => 'contract_count'),
+            array('data' => 'contract_sum', 'name' => 'contract_sum'),
+            array('data' => 'eshop_count', 'name' => 'eshop_count'),
+            array('data' => 'eshop_sum', 'name' => 'eshop_sum'),
+            array('data' => 'nat_eshop_count', 'name' => 'nat_eshop_count'),
+            array('data' => 'nat_eshop_sum', 'name' => 'nat_eshop_sum'),
+            array('data' => 'auction_count', 'name' => 'auction_count'),
+            array('data' => 'auction_sum', 'name' => 'auction_sum'),
+            array('data' => 'coop_count', 'name' => 'coop_count'),
+            array('data' => 'coop_sum', 'name' => 'coop_sum'),
+            array('data' => 'shaffof_count', 'name' => 'shaffof_count'),
+            array('data' => 'shaffof_sum', 'name' => 'shaffof_sum'),
+            array('data' => 'exchange_count', 'name' => 'exchange_count'),
+            array('data' => 'exchange_sum', 'name' => 'exchange_sum'),
+            array('data' => 'konkurs_count', 'name' => 'konkurs_count'),
+            array('data' => 'konkurs_sum', 'name' => 'konkurs_sum'),
+            array('data' => 'tender_count', 'name' => 'tender_count'),
+            array('data' => 'tender_sum', 'name' => 'tender_sum'),
+            array('data' => 'offers_count', 'name' => 'offers_count'),
+            array('data' => 'offers_sum', 'name' => 'offers_sum'),
+            array('data' => 'sole_supplier_count', 'name' => 'sole_supplier_count'),
+            array('data' => 'sole_supplier_sum', 'name' => 'sole_supplier_sum'),
+            array('data' => 'direct_count', 'name' => 'direct_count'),
+            array('data' => 'direct_sum', 'name' => 'direct_sum'),
+        );
         return view("site.report._9",compact('report', 'dtHeaders','dtColumns'));
     }
 }
