@@ -1227,6 +1227,10 @@ class ReportDataService
                     'rowspan' => 0,
                     'colspan' => 0,
                 ],
+                __('Итого') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
             ],
         ];
 
