@@ -1032,6 +1032,104 @@ class ReportDataService
                     'colspan' => 2,
                 ],
             ],
+            [
+                'Количество 1' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 1' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Количество 2' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 2' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Количество 3' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 3' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Количество 4' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 4' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Количество 5' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 5' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Количество 6' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 6' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Количество 7' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 7' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Количество 8' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 8' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Количество 9' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 9' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Количество 10' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 10' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Количество 11' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 11' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Количество 12' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 12' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+            ],
         ];
 
 
@@ -1065,5 +1163,90 @@ class ReportDataService
             array('data' => 'direct_sum', 'name' => 'direct_sum'),
         );
         return view("site.report._9",compact('report', 'dtHeaders','dtColumns'));
+    }
+
+    /**
+     *
+     * Function  report10_data
+     * @param $report
+     * @return  \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+     */
+    final public function report10_data($report): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        $dtHeaders = [
+            [
+                __('Год') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Январь') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Февраль') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Март') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Апрель') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Май') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Июнь') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Июль') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Август') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Сентябрь') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Октябрь') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Ноябрь') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Декабрь') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+            ],
+        ];
+
+
+        $dtColumns = array(
+            array('data' => 'name', 'name' => 'name'),
+            array('data' => 'january', 'name' => 'january'),
+            array('data' => 'february', 'name' => 'february'),
+            array('data' => 'march', 'name' => 'march'),
+            array('data' => 'april', 'name' => 'april'),
+            array('data' => 'may', 'name' => 'may'),
+            array('data' => 'june', 'name' => 'june'),
+            array('data' => 'july', 'name' => 'july'),
+            array('data' => 'august', 'name' => 'august'),
+            array('data' => 'september', 'name' => 'september'),
+            array('data' => 'october', 'name' => 'october'),
+            array('data' => 'november', 'name' => 'november'),
+            array('data' => 'december', 'name' => 'december'),
+            array('data' => 'all', 'name' => 'all'),
+        );
+        return view("site.report._10",compact('report', 'dtHeaders','dtColumns'));
     }
 }
