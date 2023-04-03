@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 /**
  * @property $id
  * @property mixed user_id
+ * @property mixed user_role_id
  * @property mixed branch_initiator_id
  * @property mixed branch_id
  * @property mixed department_initiator_id
