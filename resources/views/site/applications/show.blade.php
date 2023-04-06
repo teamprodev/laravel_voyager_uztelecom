@@ -11,7 +11,7 @@
             ( {{ $application->user_role_id ? $application_user_role->display_name : $application->user->role->display_name }} )</h5>            <h5>
             <strong>{{ __('Филиал автора:') }}</strong> {{ $application->user->branch_id ? $branch_name->name : 'Он(а) не выбрал(а) филиал' }}
         </h5>
-        <h5><strong>{{ __('Должность') }} :</strong> {{ $user->position_id ? $user->position->name:"Нет" }}</h5>
+        <h5><strong>{{ __('Должность') }} :</strong> {{ $application->user->position_id ? $$application->user->position->name:"Нет" }}</h5>
         <h5><strong>{{ __('Номер заявки') }} : </strong> {{$application->number}} </h5>
         <h5><strong>{{ __('Дата заявки') }} : </strong>
             @if($application->date!==null)
