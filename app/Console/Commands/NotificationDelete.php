@@ -35,11 +35,20 @@ class NotificationDelete extends Command
     /**
      * Execute the console command.
      *
-     * @return Application[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection
+     * @return string
      */
     public function handle()
     {
-        $application = Application::onlyTrashed()->pluck('id')->toArray();
-        return Notification::whereIn('application_id',$application)->delete();
+        $applications = Application::onlyTrashed()->pluck('id')->toArray();
+        Notification::whereIn('application_id',$applications)->delete();
+        $notifications = Notification::all();
+        foreach($notifications as $notification)
+        {
+            $application = Application::find($notification->application_id);
+            if ($application === null) {
+                $notification->delete();
+            }
+        }
+        return 'Deleted Notifications Where Not Exists In Application Table';
     }
 }
