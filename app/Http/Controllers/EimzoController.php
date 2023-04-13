@@ -24,6 +24,12 @@ class EimzoController extends Controller
         $params = $oneAuthService->makeParams($request->toArray());
         return $oneAuthService->authorizeUser($params);
     }
+    public function change_key(Request $request)
+    {
+        $oneAuthService = new EriService();
+        $params = $oneAuthService->makeParams($request->toArray());
+        return $oneAuthService->change_key($params);
+    }
     public function register($params)
     {
         return view('site.auth.register',['branch' => Branch::all(),'department' => Department::all(),'params' => $params]);

@@ -36,6 +36,7 @@ Route::get('/auth/user', function (){
     return response()->json(['serialNumber' => auth()->user()->pinfl]);
 });
 Route::post('eimzo/login', [EimzoController::class, 'auth'])->name('eri.login');
+Route::post('eimzo/change/key', [EimzoController::class, 'change_key'])->name('eri.change_key');
 Route::post('eimzo/register', [EimzoController::class, 'register_post'])->name('eri.register');
 Route::group([
     'middleware' => 'web',
@@ -112,6 +113,7 @@ Route::group([
                 ],
                 function(){
                     Route::get('', [ProfileController::class, 'index'])->name('index');
+                    Route::get('/change/key', [ProfileController::class, 'change_key'])->name('change_key');
                     Route::get('{id}/show', [ProfileController::class, 'other'])->name('other');
                     Route::put('update', [ProfileController::class, 'update'])->name('update');
                 });

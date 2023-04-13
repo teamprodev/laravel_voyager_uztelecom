@@ -93,4 +93,14 @@ class ProfileController extends Controller
     {
         //
     }
+
+    /**
+     * Change Eimzo Key
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+     */
+    final public function change_key(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        return view('site.profile.change_key');
+    }
 }

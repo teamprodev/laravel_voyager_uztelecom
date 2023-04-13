@@ -27,17 +27,15 @@ class EriService {
             'passport_expire_date' => null,
             'phone' => null,
             'address' => null,
-            'email' => $data['eri_sn'] . "@test.uz",
-            'name' => $data['eri_fullname'],
             'password' => Hash::make(uniqid()),
             'auth_type' => 'eri',
-            'role_id' => config('eimzo.user.default_role_id'),
             'status' => 1,
             'user_type' => 'Jismoniy shaxs'
         ];
     }
 
-    public function authorizeUser($params) {
+    public function authorizeUser($params)
+    {
         // CREATE NEW OR UPDATE EXISTING USER
         $user = User::where(
             ['pinfl' => $params['pinfl']],
@@ -51,6 +49,22 @@ class EriService {
         // AUTHORIZE USER
         Auth::login($user);
         return redirect()->route('site.applications.index');
+    }
+
+    public function change_key($params)
+    {
+        // CREATE NEW OR UPDATE EXISTING USER
+        $user = User::where(
+            ['pinfl' => $params['pinfl']],
+            $params
+        )->first();
+        if($user === null)
+        {
+            $user = auth()->user();
+            $user->update($params);
+            return redirect()->route('site.applications.index');
+        }
+        return redirect()->back()->with('error', __('Bu Kalitga tegishli user bazada bor'));
     }
 
     protected function parseFullname($fullname) {
