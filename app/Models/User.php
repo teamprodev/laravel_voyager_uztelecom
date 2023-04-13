@@ -8,6 +8,7 @@ use App\Events\UserDeleted;
 use App\Events\UserSaved;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -23,7 +24,7 @@ use Wildside\Userstamps\Userstamps;
  */
 class User extends \TCG\Voyager\Models\User
 {
-    use HasApiTokens, HasFactory, Notifiable, Userstamps;
+    use HasApiTokens, HasFactory, Notifiable, Userstamps, SoftDeletes;
 
     protected $dispatchesEvents = [
         'saved' => UserSaved::class,
