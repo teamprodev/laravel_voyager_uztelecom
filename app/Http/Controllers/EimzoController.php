@@ -45,7 +45,7 @@ class EimzoController extends Controller
         $data = $data->validated();
         $oneAuthService = new EriService();
         $new_request = json_decode($request->params,true);
-        $new_request['username'] = $request->name;
+        $new_request['name'] = $request->name;
         $new_request['email']= $data['email'];
         $new_request['branch_id'] = $request->branch;
         $new_request['department_id'] = $request->department;
