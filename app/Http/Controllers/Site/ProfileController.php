@@ -28,9 +28,9 @@ class ProfileController extends Controller
      * @param User $id
      * @return  View
      */
-    final public function other(User $id) : View
+    final public function other($id) : View
     {
-        $user = $id;
+        $user = User::withTrashed()->find($id);
         return view('site.profile.other',['user' => $user]);
     }
     /**
