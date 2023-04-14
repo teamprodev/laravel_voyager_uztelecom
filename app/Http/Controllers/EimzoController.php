@@ -30,9 +30,9 @@ class EimzoController extends Controller
         $params = $oneAuthService->makeParams($request->toArray());
         return $oneAuthService->change_key($params);
     }
-    public function register($params)
+    public function register($params, $error = null)
     {
-        return view('site.auth.register',['branch' => Branch::all(),'department' => Department::all(),'params' => $params]);
+        return view('site.auth.register',['branch' => Branch::all(),'department' => Department::all(),'params' => $params])->with('error',$error);
     }
     public function register_post(Request $request)
     {
@@ -40,7 +40,7 @@ class EimzoController extends Controller
             'email' => 'unique:users',
         ]);
         if ($data->fails()) {
-            return $this->register(json_decode($request->params,true));
+            return $this->register(json_decode($request->params,true),$data->messages());
         }
         $data = $data->validated();
         $oneAuthService = new EriService();

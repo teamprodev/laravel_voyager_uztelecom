@@ -16,7 +16,6 @@
                             <div class="col-md-3 ps-5">
 
                                 <h6 class="mb-0">{{ __('ФИО') }}<span style="color: red">*</span></h6>
-
                             </div>
                             <div class="col-md-9 pe-5">
 
@@ -31,14 +30,13 @@
                             <div class="col-md-3 ps-5">
 
                                 <h6 class="mb-0">{{ __('Электронная почта') }}<span style="color: red">*</span></h6>
-
                             </div>
                             <div class="col-md-9 pe-5">
 
                                 <input required type="email" name="email" class="form-control form-control-lg" placeholder="example@example.com" />
-                                @error('email')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
+                                @isset($error)
+                                <div class="alert alert-danger">{{ $error->first('email') }}</div>
+                                @endisset
                             </div>
                         </div>
 
