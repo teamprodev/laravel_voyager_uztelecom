@@ -18,6 +18,7 @@ use App\Models\Purchase;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
+use Exception;
 
 class ReportDataService
 {
@@ -74,6 +75,7 @@ class ReportDataService
             array('data' => 'summa', 'name' => 'summa'),
             array('data' => 'nds', 'name' => 'nds')
         );
+
         return view("site.report._1",compact('report', 'dtHeaders','dtColumns'));
     }
 
@@ -498,7 +500,7 @@ class ReportDataService
                     'rowspan' => 0,
                     'colspan' => 0,
                 ],
-                __('Филиал') => [
+                __('Филиал')  => [
                     'rowspan' => 0,
                     'colspan' => 0,
                 ],
@@ -618,8 +620,9 @@ class ReportDataService
             array('data' => 'info_business_plan', 'name' => 'info_business_plan'),
             array('data' => 'info_purchase_plan', 'name' => 'info_purchase_plan'),
             array('data' => 'purchase_basis', 'name' => 'purchase_basis'),
-            array('data' => 'basis', 'name' => 'basis')
+            array('data' => 'basis', 'name' => 'basis'),
         );
+
         return view('site.report._4',compact('report', 'dtHeaders','dtColumns'));
     }
 

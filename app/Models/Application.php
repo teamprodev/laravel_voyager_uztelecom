@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 /**
  * @property $id
  * @property mixed user_id
+ * @property mixed user_role_id
  * @property mixed branch_initiator_id
  * @property mixed branch_id
  * @property mixed department_initiator_id
@@ -45,12 +46,12 @@ class Application extends ALL
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withTrashed();
     }
 
     public function performer()
     {
-        return $this->belongsTo(User::class, 'performer_user_id', 'id');
+        return $this->belongsTo(User::class, 'performer_user_id', 'id')->withTrashed();
     }
 
     public function performer_role()
@@ -60,12 +61,12 @@ class Application extends ALL
 
     public function performer_leader()
     {
-        return $this->belongsTo(User::class, 'performer_leader_user_id', 'id');
+        return $this->belongsTo(User::class, 'performer_leader_user_id', 'id')->withTrashed();
     }
 
     public function branch_leader()
     {
-        return $this->belongsTo(User::class, 'branch_leader_user_id', 'id');
+        return $this->belongsTo(User::class, 'branch_leader_user_id', 'id')->withTrashed();
     }
 
     public function notifications()
@@ -105,5 +106,16 @@ class Application extends ALL
     public function signedDocs()
     {
         return $this->hasMany(SignedDocs::class);
+    }
+
+    /**
+     *
+     * Function  delete
+     * @return  bool
+     */
+    final public function delete() : bool
+    {
+        $this->deleted_by = auth()->id();
+        return parent::delete();
     }
 }

@@ -28,9 +28,9 @@ class ProfileController extends Controller
      * @param User $id
      * @return  View
      */
-    final public function other(User $id) : View
+    final public function other($id) : View
     {
-        $user = $id;
+        $user = User::withTrashed()->find($id);
         return view('site.profile.other',['user' => $user]);
     }
     /**
@@ -92,5 +92,15 @@ class ProfileController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Change Eimzo Key
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+     */
+    final public function change_key(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        return view('site.profile.change_key');
     }
 }

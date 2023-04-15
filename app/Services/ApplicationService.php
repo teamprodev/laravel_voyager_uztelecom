@@ -492,6 +492,7 @@ class ApplicationService
     {
         $application = new Application();
         $application->user_id = $user->id;
+        $application->user_role_id = $user->role_id;
         $application->branch_initiator_id = $user->branch_id;
         $application->branch_id = $user->branch_id;
         $application->department_initiator_id = $user->department_id;
@@ -652,7 +653,9 @@ class ApplicationService
         };
         $color_status_if = ($application->performer_status !== null && $application->status !== ApplicationStatusEnum::Order_Arrived) || ($application->performer_status !== null && $application->status !== ApplicationStatusEnum::Order_Delivered);
         $color_status = $color_status_if ? StatusExtended::find($application->performer_status)->color : setting("color.$status");
-        return ['products_id' => $products_id, 'performer_file' => $performer_file, 'perms' => $perms, 'access_comment' => $access_comment, 'performers_company' => $performers_company, 'performers_branch' => $performers_branch, 'file_basis' => $file_basis, 'file_tech_spec' => $file_tech_spec, 'other_files' => $other_files, 'user' => $user, 'application' => $application, 'branch' => $branch, 'signedDocs' => $signedDocs, 'same_role_user_ids' => $same_role_user_ids, 'access' => $access, 'subjects' => $subjects, 'purchases' => $purchases, 'branch_name' => $branch_name, 'check' => $check, 'status' => $status, 'color_status' => $color_status];
+
+        $application_user_role = Roles::find($application->user_role_id);
+        return ['products_id' => $products_id, 'performer_file' => $performer_file, 'perms' => $perms, 'access_comment' => $access_comment, 'performers_company' => $performers_company, 'performers_branch' => $performers_branch, 'file_basis' => $file_basis, 'file_tech_spec' => $file_tech_spec, 'other_files' => $other_files, 'user' => $user, 'application' => $application, 'branch' => $branch, 'signedDocs' => $signedDocs, 'same_role_user_ids' => $same_role_user_ids, 'access' => $access, 'subjects' => $subjects, 'purchases' => $purchases, 'branch_name' => $branch_name, 'check' => $check, 'status' => $status, 'color_status' => $color_status, 'application_user_role' => $application_user_role];
     }
 
     /**
@@ -845,18 +848,28 @@ class ApplicationService
         return $application->save();
     }
 
-    public static function getNotifications(){
-        return Notification::with('application:id,created_at')->has('application')
-            ->where('user_id', auth()->id())
+    public static function getNotifications()
+    {
+        $signedDocs = SignedDocs::where('role_id', auth()->user()->role_id)->whereNull('status')->pluck('application_id')->toArray();
+        /** @var object $data  Podpis qoyilishi kerak bo'lgan zayavkalar*/
+        $data = Notification::whereIn('application_id',$signedDocs)
             ->where('is_read', 0)
+            ->where('user_id', auth()->id())
             ->orderBy('id', 'desc')
             ->get();
+//        Notification::where('is_read', 0)
+//            ->where('user_id', auth()->id())
+//            ->with('application')
+//            ->orderBy('id', 'desc')
+//            ->get();
+        return $data;
+
     }
 
     public function sendNotifications($array, $application, $message)
     {
         if ($array !== null) {
-            $user_ids = User::query()->whereIn('role_id', $array)->where('branch_id', $application->branch_initiator_id)->pluck('id')->toArray();
+            $user_ids = User::query()->whereIn('role_id', $array)->pluck('id')->toArray();
             foreach ($user_ids as $user_id) {
                 $notification = Notification::query()->firstOrCreate(['user_id' => $user_id, 'application_id' => $application->id, 'message' => $message]);
                 if ($notification->wasRecentlyCreated) {

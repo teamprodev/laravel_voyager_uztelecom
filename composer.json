@@ -24,6 +24,7 @@
         "mcamara/laravel-localization": "v1.7.0",
         "pusher/pusher-php-server": "v7.0.2",
         "rap2hpoutre/fast-excel": "^5.1",
+        "sentry/sentry-laravel": "^3.3",
         "spatie/laravel-permission": "v5.5.5",
         "spatie/laravel-translatable": "v4.6.0",
         "tcg/voyager": "v1.5.2",
@@ -82,7 +83,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     },
     "minimum-stability": "stable",
     "prefer-stable": true

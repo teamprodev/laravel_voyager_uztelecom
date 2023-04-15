@@ -341,7 +341,7 @@ class ReportService
             })
             ->editColumn('performer_user_id', function($application)
             {
-                return $application->performer_user_id ? $application->performer->name:"";
+                return $application->performer->name ?? $application->performer_user_id;
             })
             ->editColumn('department_initiator_id', function($application)
             {
@@ -390,7 +390,7 @@ class ReportService
                 {
                     foreach (json_decode($application->resource_id) as $product)
                     {
-                        $all[] = Resource::find($product)->name;
+                        $all[] = Resource::withTrashed()->find($product)->name;
                     }
                     return $all;
                 }

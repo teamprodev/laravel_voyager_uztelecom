@@ -36,6 +36,7 @@ Route::get('/auth/user', function (){
     return response()->json(['serialNumber' => auth()->user()->pinfl]);
 });
 Route::post('eimzo/login', [EimzoController::class, 'auth'])->name('eri.login');
+Route::post('eimzo/change/key', [EimzoController::class, 'change_key'])->name('eri.change_key');
 Route::post('eimzo/register', [EimzoController::class, 'register_post'])->name('eri.register');
 Route::group([
     'middleware' => 'web',
@@ -75,6 +76,11 @@ Route::group([
     Voyager::routes();
     Route::put('roles/{id}/update',[RoleController::class,'update'])->name('voyager.roles.update');
     Route::get('roles/{id}/delete',[RoleController::class,'delete'])->name('voyager.roles.delete');
+
+    Route::delete('/users/{user}/destroy',[UserController::class,'delete'])->name('voyager.users.destroy');
+
+    Route::get('/users/{id}/restore',[UserController::class,'restore'])->name('voyager.users.restore');
+
     Route::post('create/role',[RoleController::class,'store'])->name('voyager.roles.store');
     Route::put('users/{id}/update',[UserController::class,'update'])->name('voyager.users.update');
     Route::get('roles/',[RoleController::class,'index'])->name('voyager.roles.index');
@@ -112,6 +118,7 @@ Route::group([
                 ],
                 function(){
                     Route::get('', [ProfileController::class, 'index'])->name('index');
+                    Route::get('/change/key', [ProfileController::class, 'change_key'])->name('change_key');
                     Route::get('{id}/show', [ProfileController::class, 'other'])->name('other');
                     Route::put('update', [ProfileController::class, 'update'])->name('update');
                 });

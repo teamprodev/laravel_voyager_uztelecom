@@ -1,6 +1,5 @@
 @extends('site.layouts.app')
 @section('center_content')
-
    <div class="bg-blue-50 h-screen">
        <div class="max-w-4xl flex items-center flex-col mx-auto pt-2">
 
@@ -65,6 +64,11 @@
                                        {{ __("Сохранить") }}
                                    </button>
                                </td>
+                               <td class="pt-4">
+                                   <a href="{{route('site.profile.change_key')}}" type="button" class="float-right bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 border border-green-700 rounded">
+                                       {{ __("Изменить ЭЦП") }}
+                                   </a>
+                               </td>
                            </tr>
                        </form>
                        </tbody>
@@ -77,8 +81,6 @@
 
        </div>
    </div>
-
-
    <script>
            $(".change1").click(function(){
                $(".input1").focus();
