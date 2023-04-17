@@ -568,7 +568,7 @@ class ReportService
                 return json_decode($ucnames);
             })
             ->editColumn('performer_user_id', function($application){
-                return $application->performer_user_id ?$application->performer->name:'';
+                return $application->performer->name ?? $application->performer_user_id;
             })
             ->make(true);
     }
