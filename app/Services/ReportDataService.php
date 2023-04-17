@@ -65,18 +65,18 @@ class ReportDataService
             ],
         ];
 
-        $dtColumns = array(
-            array('data' => 'id', 'name' => 'id'),
-            array('data' => 'name', 'name' => 'name'),
-            array('data' => 'count', 'name' => 'count'),
-            array('data' => 'tovar', 'name' => 'tovar'),
-            array('data' => 'rabota', 'name' => 'rabota'),
-            array('data' => 'usluga', 'name' => 'usluga'),
-            array('data' => 'summa', 'name' => 'summa'),
-            array('data' => 'nds', 'name' => 'nds')
-        );
+        $dtColumns = [
+            ['data' => 'id', 'name' => 'id'],
+            ['data' => 'name', 'name' => 'name'],
+            ['data' => 'count', 'name' => 'count'],
+            ['data' => 'tovar', 'name' => 'tovar'],
+            ['data' => 'rabota', 'name' => 'rabota'],
+            ['data' => 'usluga', 'name' => 'usluga'],
+            ['data' => 'summa', 'name' => 'summa'],
+            ['data' => 'nds', 'name' => 'nds'],
+        ];
 
-        return view("site.report._1",compact('report', 'dtHeaders','dtColumns'));
+        return view("site.report.1",compact('report', 'dtHeaders','dtColumns'));
     }
 
     /**
@@ -168,27 +168,23 @@ class ReportDataService
             ]
         ];
 
-        $dtColumns = array(
-            array('data' => 'id', 'name' => 'id'),
-            array('data' => 'name', 'name' => 'name'),
-
-            array('data' => 'tovar_1', 'name' => 'tovar_1'),
-            array('data' => 'rabota_1', 'name' => 'rabota_1'),
-            array('data' => 'usluga_1', 'name' => 'usluga_1'),
-
-            array('data' => 'tovar_2', 'name' => 'tovar_2'),
-            array('data' => 'rabota_2', 'name' => 'rabota_2'),
-            array('data' => 'usluga_2', 'name' => 'usluga_2'),
-
-            array('data' => 'tovar_3', 'name' => 'tovar_3'),
-            array('data' => 'rabota_3', 'name' => 'rabota_3'),
-            array('data' => 'usluga_3', 'name' => 'usluga_3'),
-
-            array('data' => 'tovar_4', 'name' => 'tovar_4'),
-            array('data' => 'rabota_4', 'name' => 'rabota_4'),
-            array('data' => 'usluga_4', 'name' => 'usluga_4')
-        );
-        return view("site.report._2",compact('report', 'dtHeaders','dtColumns'));
+        $dtColumns = [
+            ['data' => 'id', 'name' => 'id'],
+            ['data' => 'name', 'name' => 'name'],
+            ['data' => 'tovar_1', 'name' => 'tovar_1'],
+            ['data' => 'rabota_1', 'name' => 'rabota_1'],
+            ['data' => 'usluga_1', 'name' => 'usluga_1'],
+            ['data' => 'tovar_2', 'name' => 'tovar_2'],
+            ['data' => 'rabota_2', 'name' => 'rabota_2'],
+            ['data' => 'usluga_2', 'name' => 'usluga_2'],
+            ['data' => 'tovar_3', 'name' => 'tovar_3'],
+            ['data' => 'rabota_3', 'name' => 'rabota_3'],
+            ['data' => 'usluga_3', 'name' => 'usluga_3'],
+            ['data' => 'tovar_4', 'name' => 'tovar_4'],
+            ['data' => 'rabota_4', 'name' => 'rabota_4'],
+            ['data' => 'usluga_4', 'name' => 'usluga_4'],
+        ];
+        return view("site.report.2",compact('report', 'dtHeaders','dtColumns'));
     }
 
     /**
@@ -383,35 +379,35 @@ class ReportDataService
         ];
 
 
-        $dtColumns = array(
-            array('data' => 'id', 'name' => 'id'),
-            array('data' => 'name', 'name' => 'name'),
-            array('data' => 'tovar_1', 'name' => 'tovar_1'),
-            array('data' => 'tovar_1_nds', 'name' => 'tovar_1_nds'),
-            array('data' => 'rabota_1', 'name' => 'rabota_1'),
-            array('data' => 'rabota_1_nds', 'name' => 'rabota_1_nds'),
-            array('data' => 'usluga_1', 'name' => 'usluga_1'),
-            array('data' => 'usluga_1_nds', 'name' => 'usluga_1_nds'),
-            array('data' => 'tovar_2', 'name' => 'tovar_2'),
-            array('data' => 'tovar_2_nds', 'name' => 'tovar_2_nds'),
-            array('data' => 'rabota_2', 'name' => 'rabota_2'),
-            array('data' => 'rabota_2_nds', 'name' => 'rabota_2_nds'),
-            array('data' => 'usluga_2', 'name' => 'usluga_2'),
-            array('data' => 'usluga_2_nds', 'name' => 'usluga_2_nds'),
-            array('data' => 'tovar_3', 'name' => 'tovar_3'),
-            array('data' => 'tovar_3_nds', 'name' => 'tovar_3_nds'),
-            array('data' => 'rabota_3', 'name' => 'rabota_3'),
-            array('data' => 'rabota_3_nds', 'name' => 'rabota_3_nds'),
-            array('data' => 'usluga_3', 'name' => 'usluga_3'),
-            array('data' => 'usluga_3_nds', 'name' => 'usluga_3_nds'),
-            array('data' => 'tovar_4', 'name' => 'tovar_4'),
-            array('data' => 'tovar_4_nds', 'name' => 'tovar_4_nds'),
-            array('data' => 'rabota_4', 'name' => 'rabota_4'),
-            array('data' => 'rabota_4_nds', 'name' => 'rabota_4_nds'),
-            array('data' => 'usluga_4', 'name' => 'usluga_4'),
-            array('data' => 'usluga_4_nds', 'name' => 'usluga_4_nds')
-        );
-        return view("site.report._22",compact('report', 'dtHeaders','dtColumns'));
+        $dtColumns = [
+            ['data' => 'id', 'name' => 'id'],
+            ['data' => 'name', 'name' => 'name'],
+            ['data' => 'tovar_1', 'name' => 'tovar_1'],
+            ['data' => 'tovar_1_nds', 'name' => 'tovar_1_nds'],
+            ['data' => 'rabota_1', 'name' => 'rabota_1'],
+            ['data' => 'rabota_1_nds', 'name' => 'rabota_1_nds'],
+            ['data' => 'usluga_1', 'name' => 'usluga_1'],
+            ['data' => 'usluga_1_nds', 'name' => 'usluga_1_nds'],
+            ['data' => 'tovar_2', 'name' => 'tovar_2'],
+            ['data' => 'tovar_2_nds', 'name' => 'tovar_2_nds'],
+            ['data' => 'rabota_2', 'name' => 'rabota_2'],
+            ['data' => 'rabota_2_nds', 'name' => 'rabota_2_nds'],
+            ['data' => 'usluga_2', 'name' => 'usluga_2'],
+            ['data' => 'usluga_2_nds', 'name' => 'usluga_2_nds'],
+            ['data' => 'tovar_3', 'name' => 'tovar_3'],
+            ['data' => 'tovar_3_nds', 'name' => 'tovar_3_nds'],
+            ['data' => 'rabota_3', 'name' => 'rabota_3'],
+            ['data' => 'rabota_3_nds', 'name' => 'rabota_3_nds'],
+            ['data' => 'usluga_3', 'name' => 'usluga_3'],
+            ['data' => 'usluga_3_nds', 'name' => 'usluga_3_nds'],
+            ['data' => 'tovar_4', 'name' => 'tovar_4'],
+            ['data' => 'tovar_4_nds', 'name' => 'tovar_4_nds'],
+            ['data' => 'rabota_4', 'name' => 'rabota_4'],
+            ['data' => 'rabota_4_nds', 'name' => 'rabota_4_nds'],
+            ['data' => 'usluga_4', 'name' => 'usluga_4'],
+            ['data' => 'usluga_4_nds', 'name' => 'usluga_4_nds'],
+        ];
+        return view("site.report.22",compact('report', 'dtHeaders','dtColumns'));
     }
 
     /**
@@ -475,17 +471,17 @@ class ReportDataService
         ];
 
 
-        $dtColumns = array(
-            array('data' => 'id', 'name' => 'id'),
-            array('data' => 'name', 'name' => 'name'),
-            array('data' => 'tovar_1', 'name' => 'tovar_1'),
-            array('data' => 'tovar_1_nds', 'name' => 'tovar_1_nds'),
-            array('data' => 'rabota_1', 'name' => 'rabota_1'),
-            array('data' => 'rabota_1_nds', 'name' => 'rabota_1_nds'),
-            array('data' => 'usluga_1', 'name' => 'usluga_1'),
-            array('data' => 'usluga_1_nds', 'name' => 'usluga_1_nds')
-        );
-        return view("site.report._3",compact('report', 'dtHeaders','dtColumns'));
+        $dtColumns = [
+            ['data' => 'id', 'name' => 'id'],
+            ['data' => 'name', 'name' => 'name'],
+            ['data' => 'tovar_1', 'name' => 'tovar_1'],
+            ['data' => 'tovar_1_nds', 'name' => 'tovar_1_nds'],
+            ['data' => 'rabota_1', 'name' => 'rabota_1'],
+            ['data' => 'rabota_1_nds', 'name' => 'rabota_1_nds'],
+            ['data' => 'usluga_1', 'name' => 'usluga_1'],
+            ['data' => 'usluga_1_nds', 'name' => 'usluga_1_nds'],
+        ];
+        return view("site.report.3",compact('report', 'dtHeaders','dtColumns'));
     }
 
     /**
@@ -596,34 +592,34 @@ class ReportDataService
         ];
 
 
-        $dtColumns = array(
-            array('data' => 'id', 'name' => 'id'),
-            array('data' => 'branch_id', 'name' => 'branch_id'),
-            array('data' => 'number', 'name' => 'number'),
-            array('data' => 'date', 'name' => 'date'),
-            array('data' => 'user_id', 'name' => 'user_id'),
-            array('data' => 'phone', 'name' => 'phone'),
-            array('data' => 'department_initiator_id', 'name' => 'department_initiator_id'),
-            array('data' => 'type_of_purchase_id', 'name' => 'type_of_purchase_id'),
-            array('data' => 'name', 'name' => 'name'),
-            array('data' => 'subject', 'name' => 'subject'),
-            array('data' => 'expire_warranty_date', 'name' => 'expire_warranty_date'),
-            array('data' => 'planned_price', 'name' => 'planned_price'),
-            array('data' => 'with_nds', 'name' => 'with_nds'),
-            array('data' => 'currency', 'name' => 'currency'),
-            array('data' => 'supplier_name', 'name' => 'supplier_name'),
-            array('data' => 'contract_price', 'name' => 'contract_price'),
-            array('data' => 'delivery_date', 'name' => 'delivery_date'),
-            array('data' => 'status', 'name' => 'status'),
-            array('data' => 'performer_leader_user_id', 'name' => 'performer_leader_user_id'),
-            array('data' => 'performer_user_id', 'name' => 'performer_user_id'),
-            array('data' => 'info_business_plan', 'name' => 'info_business_plan'),
-            array('data' => 'info_purchase_plan', 'name' => 'info_purchase_plan'),
-            array('data' => 'purchase_basis', 'name' => 'purchase_basis'),
-            array('data' => 'basis', 'name' => 'basis'),
-        );
+        $dtColumns = [
+            ['data' => 'id', 'name' => 'id'],
+            ['data' => 'branch_id', 'name' => 'branch_id'],
+            ['data' => 'number', 'name' => 'number'],
+            ['data' => 'date', 'name' => 'date'],
+            ['data' => 'user_id', 'name' => 'user_id'],
+            ['data' => 'phone', 'name' => 'phone'],
+            ['data' => 'department_initiator_id', 'name' => 'department_initiator_id'],
+            ['data' => 'type_of_purchase_id', 'name' => 'type_of_purchase_id'],
+            ['data' => 'name', 'name' => 'name'],
+            ['data' => 'subject', 'name' => 'subject'],
+            ['data' => 'expire_warranty_date', 'name' => 'expire_warranty_date'],
+            ['data' => 'planned_price', 'name' => 'planned_price'],
+            ['data' => 'with_nds', 'name' => 'with_nds'],
+            ['data' => 'currency', 'name' => 'currency'],
+            ['data' => 'supplier_name', 'name' => 'supplier_name'],
+            ['data' => 'contract_price', 'name' => 'contract_price'],
+            ['data' => 'delivery_date', 'name' => 'delivery_date'],
+            ['data' => 'status', 'name' => 'status'],
+            ['data' => 'performer_leader_user_id', 'name' => 'performer_leader_user_id'],
+            ['data' => 'performer_user_id', 'name' => 'performer_user_id'],
+            ['data' => 'info_business_plan', 'name' => 'info_business_plan'],
+            ['data' => 'info_purchase_plan', 'name' => 'info_purchase_plan'],
+            ['data' => 'purchase_basis', 'name' => 'purchase_basis'],
+            ['data' => 'basis', 'name' => 'basis'],
+        ];
 
-        return view('site.report._4',compact('report', 'dtHeaders','dtColumns'));
+        return view('site.report.4',compact('report', 'dtHeaders','dtColumns'));
     }
 
     /**
@@ -700,19 +696,19 @@ class ReportDataService
             ],
         ];
 
-        $dtColumns = array(
-            array('data' => 'id', 'name' => 'id'),
-            array('data' => 'name', 'name' => 'name'),
-            array('data' => 'count', 'name' => 'count'),
-            array('data' => 'summa', 'name' => 'summa'),
-            array('data' => 'count_1', 'name' => 'count_1'),
-            array('data' => 'summa_1', 'name' => 'summa_1'),
-            array('data' => 'count_2', 'name' => 'count_2'),
-            array('data' => 'summa_2', 'name' => 'summa_2'),
-            array('data' => 'count_3', 'name' => 'count_3'),
-            array('data' => 'summa_3', 'name' => 'summa_3'),
-        );
-        return view('site.report._5',compact('report', 'dtHeaders','dtColumns'));
+        $dtColumns = [
+            ['data' => 'id', 'name' => 'id'],
+            ['data' => 'name', 'name' => 'name'],
+            ['data' => 'count', 'name' => 'count'],
+            ['data' => 'summa', 'name' => 'summa'],
+            ['data' => 'count_1', 'name' => 'count_1'],
+            ['data' => 'summa_1', 'name' => 'summa_1'],
+            ['data' => 'count_2', 'name' => 'count_2'],
+            ['data' => 'summa_2', 'name' => 'summa_2'],
+            ['data' => 'count_3', 'name' => 'count_3'],
+            ['data' => 'summa_3', 'name' => 'summa_3'],
+        ];
+        return view('site.report.5',compact('report', 'dtHeaders','dtColumns'));
     }
 
     /**
@@ -772,20 +768,20 @@ class ReportDataService
             ],
         ];
 
-        $dtColumns = array(
-            array('data' => 'id', 'name' => 'id'),
-            array('data' => 'name', 'name' => 'name'),
-            array('data' => 'supplier_name', 'name' => 'supplier_name'),
-            array('data' => 'contract_number', 'name' => 'contract_number'),
-            array('data' => 'subject', 'name' => 'subject'),
-            array('data' => 'number', 'name' => 'number'),
-            array('data' => 'planned_price', 'name' => 'planned_price'),
-            array('data' => 'contract_info', 'name' => 'contract_info'),
-            array('data' => 'contract_price', 'name' => 'contract_price'),
-            array('data' => 'protocol_number', 'name' => 'protocol_number'),
-            array('data' => 'protocol_date', 'name' => 'protocol_date'),
-        );
-        return view('site.report._6',compact('report', 'dtHeaders','dtColumns'));
+        $dtColumns = [
+            ['data' => 'id', 'name' => 'id'],
+            ['data' => 'name', 'name' => 'name'],
+            ['data' => 'supplier_name', 'name' => 'supplier_name'],
+            ['data' => 'contract_number', 'name' => 'contract_number'],
+            ['data' => 'subject', 'name' => 'subject'],
+            ['data' => 'number', 'name' => 'number'],
+            ['data' => 'planned_price', 'name' => 'planned_price'],
+            ['data' => 'contract_info', 'name' => 'contract_info'],
+            ['data' => 'contract_price', 'name' => 'contract_price'],
+            ['data' => 'protocol_number', 'name' => 'protocol_number'],
+            ['data' => 'protocol_date', 'name' => 'protocol_date'],
+        ];
+        return view('site.report.6',compact('report', 'dtHeaders','dtColumns'));
     }
 
     /**
@@ -853,22 +849,23 @@ class ReportDataService
             ],
         ];
 
-        $dtColumns = array(
-            array('data' => 'id', 'name' => 'id'),
-            array('data' => 'name', 'name' => 'name'),
-            array('data' => 'supplier_name', 'name' => 'supplier_name'),
-            array('data' => 'supplier_inn', 'name' => 'supplier_inn'),
-            array('data' => 'contract_number', 'name' => 'contract_number'),
-            array('data' => 'contract_date', 'name' => 'contract_date'),
-            array('data' => 'contract_price', 'name' => 'contract_price'),
-            array('data' => 'currency', 'name' => 'currency'),
-            array('data' => 'lot_number', 'name' => 'lot_number'),
-            array('data' => 'type_of_purchase', 'name' => 'type_of_purchase'),
-            array('data' => 'contract_info', 'name' => 'contract_info'),
-            array('data' => 'country_produced_id', 'name' => 'country_produced_id'),
-            array('data' => 'purchase_basis', 'name' => 'purchase_basis'),
-        );
-        return view('site.report._7',compact('report', 'dtHeaders','dtColumns'));
+        $dtColumns = [
+            ['data' => 'id', 'name' => 'id'],
+            ['data' => 'name', 'name' => 'name'],
+            ['data' => 'supplier_name', 'name' => 'supplier_name'],
+            ['data' => 'supplier_inn', 'name' => 'supplier_inn'],
+            ['data' => 'contract_number', 'name' => 'contract_number'],
+            ['data' => 'contract_date', 'name' => 'contract_date'],
+            ['data' => 'contract_price', 'name' => 'contract_price'],
+            ['data' => 'currency', 'name' => 'currency'],
+            ['data' => 'lot_number', 'name' => 'lot_number'],
+            ['data' => 'type_of_purchase', 'name' => 'type_of_purchase'],
+            ['data' => 'contract_info', 'name' => 'contract_info'],
+            ['data' => 'country_produced_id', 'name' => 'country_produced_id'],
+            ['data' => 'purchase_basis', 'name' => 'purchase_basis'],
+        ];
+
+        return view('site.report.7',compact('report', 'dtHeaders','dtColumns'));
     }
 
     /**
@@ -946,22 +943,23 @@ class ReportDataService
             ],
         ];
 
-        $dtColumns = array(
-            array('data' => 'id', 'name' => 'id'),
-            array('data' => 'filial', 'name' => 'filial'),
-            array('data' => 'number_and_date_of_app', 'name' => 'number_and_date_of_app'),
-            array('data' => 'planned_price', 'name' => 'planned_price'),
-            array('data' => 'performer_received_date', 'name' => 'performer_received_date'),
-            array('data' => 'initiator', 'name' => 'initiator'),
-            array('data' => 'product', 'name' => 'product'),
-            array('data' => 'type_of_purchase', 'name' => 'type_of_purchase'),
-            array('data' => 'contract_number', 'name' => 'contract_number'),
-            array('data' => 'supplier_name', 'name' => 'supplier_name'),
-            array('data' => 'contract_price', 'name' => 'contract_price'),
-            array('data' => 'performer_user_id', 'name' => 'performer_user_id'),
-            array('data' => 'created_at', 'name' => 'created_at'),
-        );
-        return view('site.report._8',compact('report', 'dtHeaders','dtColumns'));
+        $dtColumns = [
+            ['data' => 'id', 'name' => 'id'],
+            ['data' => 'filial', 'name' => 'filial'],
+            ['data' => 'number_and_date_of_app', 'name' => 'number_and_date_of_app'],
+            ['data' => 'planned_price', 'name' => 'planned_price'],
+            ['data' => 'performer_received_date', 'name' => 'performer_received_date'],
+            ['data' => 'initiator', 'name' => 'initiator'],
+            ['data' => 'product', 'name' => 'product'],
+            ['data' => 'type_of_purchase', 'name' => 'type_of_purchase'],
+            ['data' => 'contract_number', 'name' => 'contract_number'],
+            ['data' => 'supplier_name', 'name' => 'supplier_name'],
+            ['data' => 'contract_price', 'name' => 'contract_price'],
+            ['data' => 'performer_user_id', 'name' => 'performer_user_id'],
+            ['data' => 'created_at', 'name' => 'created_at'],
+        ];
+
+        return view('site.report.8',compact('report', 'dtHeaders','dtColumns'));
     }
 
     /**
@@ -1136,36 +1134,36 @@ class ReportDataService
         ];
 
 
-        $dtColumns = array(
-            array('data' => 'id', 'name' => 'id'),
-            array('data' => 'name', 'name' => 'name'),
-            array('data' => 'supplier_inn', 'name' => 'supplier_inn'),
-            array('data' => 'contract_count', 'name' => 'contract_count'),
-            array('data' => 'contract_sum', 'name' => 'contract_sum'),
-            array('data' => 'eshop_count', 'name' => 'eshop_count'),
-            array('data' => 'eshop_sum', 'name' => 'eshop_sum'),
-            array('data' => 'nat_eshop_count', 'name' => 'nat_eshop_count'),
-            array('data' => 'nat_eshop_sum', 'name' => 'nat_eshop_sum'),
-            array('data' => 'auction_count', 'name' => 'auction_count'),
-            array('data' => 'auction_sum', 'name' => 'auction_sum'),
-            array('data' => 'coop_count', 'name' => 'coop_count'),
-            array('data' => 'coop_sum', 'name' => 'coop_sum'),
-            array('data' => 'shaffof_count', 'name' => 'shaffof_count'),
-            array('data' => 'shaffof_sum', 'name' => 'shaffof_sum'),
-            array('data' => 'exchange_count', 'name' => 'exchange_count'),
-            array('data' => 'exchange_sum', 'name' => 'exchange_sum'),
-            array('data' => 'konkurs_count', 'name' => 'konkurs_count'),
-            array('data' => 'konkurs_sum', 'name' => 'konkurs_sum'),
-            array('data' => 'tender_count', 'name' => 'tender_count'),
-            array('data' => 'tender_sum', 'name' => 'tender_sum'),
-            array('data' => 'offers_count', 'name' => 'offers_count'),
-            array('data' => 'offers_sum', 'name' => 'offers_sum'),
-            array('data' => 'sole_supplier_count', 'name' => 'sole_supplier_count'),
-            array('data' => 'sole_supplier_sum', 'name' => 'sole_supplier_sum'),
-            array('data' => 'direct_count', 'name' => 'direct_count'),
-            array('data' => 'direct_sum', 'name' => 'direct_sum'),
-        );
-        return view("site.report._9",compact('report', 'dtHeaders','dtColumns'));
+        $dtColumns = [
+            ['data' => 'id', 'name' => 'id'],
+            ['data' => 'name', 'name' => 'name'],
+            ['data' => 'supplier_inn', 'name' => 'supplier_inn'],
+            ['data' => 'contract_count', 'name' => 'contract_count'],
+            ['data' => 'contract_sum', 'name' => 'contract_sum'],
+            ['data' => 'eshop_count', 'name' => 'eshop_count'],
+            ['data' => 'eshop_sum', 'name' => 'eshop_sum'],
+            ['data' => 'nat_eshop_count', 'name' => 'nat_eshop_count'],
+            ['data' => 'nat_eshop_sum', 'name' => 'nat_eshop_sum'],
+            ['data' => 'auction_count', 'name' => 'auction_count'],
+            ['data' => 'auction_sum', 'name' => 'auction_sum'],
+            ['data' => 'coop_count', 'name' => 'coop_count'],
+            ['data' => 'coop_sum', 'name' => 'coop_sum'],
+            ['data' => 'shaffof_count', 'name' => 'shaffof_count'],
+            ['data' => 'shaffof_sum', 'name' => 'shaffof_sum'],
+            ['data' => 'exchange_count', 'name' => 'exchange_count'],
+            ['data' => 'exchange_sum', 'name' => 'exchange_sum'],
+            ['data' => 'konkurs_count', 'name' => 'konkurs_count'],
+            ['data' => 'konkurs_sum', 'name' => 'konkurs_sum'],
+            ['data' => 'tender_count', 'name' => 'tender_count'],
+            ['data' => 'tender_sum', 'name' => 'tender_sum'],
+            ['data' => 'offers_count', 'name' => 'offers_count'],
+            ['data' => 'offers_sum', 'name' => 'offers_sum'],
+            ['data' => 'sole_supplier_count', 'name' => 'sole_supplier_count'],
+            ['data' => 'sole_supplier_sum', 'name' => 'sole_supplier_sum'],
+            ['data' => 'direct_count', 'name' => 'direct_count'],
+            ['data' => 'direct_sum', 'name' => 'direct_sum']
+        ];
+        return view("site.report.9",compact('report', 'dtHeaders','dtColumns'));
     }
 
     /**
@@ -1238,22 +1236,22 @@ class ReportDataService
         ];
 
 
-        $dtColumns = array(
-            array('data' => 'name', 'name' => 'name'),
-            array('data' => 'january', 'name' => 'january'),
-            array('data' => 'february', 'name' => 'february'),
-            array('data' => 'march', 'name' => 'march'),
-            array('data' => 'april', 'name' => 'april'),
-            array('data' => 'may', 'name' => 'may'),
-            array('data' => 'june', 'name' => 'june'),
-            array('data' => 'july', 'name' => 'july'),
-            array('data' => 'august', 'name' => 'august'),
-            array('data' => 'september', 'name' => 'september'),
-            array('data' => 'october', 'name' => 'october'),
-            array('data' => 'november', 'name' => 'november'),
-            array('data' => 'december', 'name' => 'december'),
-            array('data' => 'all', 'name' => 'all'),
-        );
-        return view("site.report._10",compact('report', 'dtHeaders','dtColumns'));
+        $dtColumns = [
+            ['data' => 'name', 'name' => 'name'],
+            ['data' => 'january', 'name' => 'january'],
+            ['data' => 'february', 'name' => 'february'],
+            ['data' => 'march', 'name' => 'march'],
+            ['data' => 'april', 'name' => 'april'],
+            ['data' => 'may', 'name' => 'may'],
+            ['data' => 'june', 'name' => 'june'],
+            ['data' => 'july', 'name' => 'july'],
+            ['data' => 'august', 'name' => 'august'],
+            ['data' => 'september', 'name' => 'september'],
+            ['data' => 'october', 'name' => 'october'],
+            ['data' => 'november', 'name' => 'november'],
+            ['data' => 'december', 'name' => 'december'],
+            ['data' => 'all', 'name' => 'all'],
+        ];
+        return view("site.report.10",compact('report', 'dtHeaders','dtColumns'));
     }
 }
