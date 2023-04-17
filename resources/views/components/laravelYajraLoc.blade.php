@@ -16,6 +16,9 @@
         $.fn.dataTable.moment('DD-MM-YYYY');
 
         $('#{{$tableId}}').DataTable( {
+            stateSave: "{{$stateSave}}",
+            scrollX: "{{$scrollX}}",
+            serverSide: "{{$serverSide}}",
             keys: {{$keys}},
             rowReorder: {{$rowReorder}},
             rowGroup: {{$rowGroup}},
@@ -33,10 +36,8 @@
                     {data: "{{$column['data']}}", name: "{{$column['name']}}" },
                 @endforeach
             ],
-            ajax: "{{$getData}}",
-            stateSave: "{{$stateSave}}",
             {!! $buttons !!}
-            scrollX: "{{$scrollX}}",
+            ajax: "{{$getData}}",
             "fnInitComplete": function(){
 
                 // Enable THEAD scroll bars

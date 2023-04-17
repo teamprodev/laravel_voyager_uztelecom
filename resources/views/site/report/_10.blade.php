@@ -3,5 +3,5 @@
 @section('center_content')
 
 <x-laravelDateRangePicker format="YYYY" reportId="10" route="{{ route('site.report.index','10') }}"/>
-<x-laravelYajraL tableId="report10" :dtColumns=$dtColumns :dtHeaders=$dtHeaders scrollX="true" dom='Blfrtip' serverSide="true" getData="{{ route('report','10') }}" exportId="{{ route('report_export','10') }}" tableTitle="{{__('10 - Отчет по кол-ву статусам')}}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
+<x-laravelYajra tableId="report10" :dtColumns=$dtColumns :dtHeaders=$dtHeaders scrollX="true" dom='Blfrtip' serverSide="true" getData="{{ route('report','10') }}" exportId="{{ route('report_export','10') }}" tableTitle="{{__('10 - Отчет по кол-ву статусам')}}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
 @endsection
