@@ -3,7 +3,7 @@
 @section('center_content')
 
 <x-laravelDateRangePicker format="YYYY-MM-DD" reportId="5" route="{{ route('site.report.index','5') }}"/>
-<x-laravelYajra tableId="report5" stateSave="true" :dtColumns=$dtColumns :dtHeaders=$dtHeaders dom='Blfrtip' getData="{{ route('report','5') }}" exportId="{{ route('report_export','5') }}" tableTitle="{{ __('5 - Отчет свод  общий') }}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
+<x-laravelYajra language="ru" tableId="report5" stateSave="true" :dtColumns=$dtColumns :dtHeaders=$dtHeaders dom='Blfrtip' getData="{{ route('report','5') }}" exportId="{{ route('report_export','5') }}" tableTitle="{{ __('5 - Отчет свод  общий') }}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
 <script>
     function export_format(data, columnIdx){
         switch (columnIdx) {
