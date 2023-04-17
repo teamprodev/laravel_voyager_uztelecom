@@ -9576,12 +9576,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/teamprodev/laravel-components.git",
-                "reference": "7005f9c07945c27c1fccd799afa91f73220be73d"
+                "reference": "95b5de3e915ecb3e96edcb7ff3d2a163ce9cc944"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teamprodev/laravel-components/zipball/7005f9c07945c27c1fccd799afa91f73220be73d",
-                "reference": "7005f9c07945c27c1fccd799afa91f73220be73d",
+                "url": "https://api.github.com/repos/teamprodev/laravel-components/zipball/95b5de3e915ecb3e96edcb7ff3d2a163ce9cc944",
+                "reference": "95b5de3e915ecb3e96edcb7ff3d2a163ce9cc944",
                 "shasum": ""
             },
             "require": {
@@ -9644,7 +9644,7 @@
                 "issues": "https://github.com/teamprodev/laravel-components/issues",
                 "source": "https://github.com/teamprodev/laravel-components/tree/master"
             },
-            "time": "2023-04-17T09:47:23+00:00"
+            "time": "2023-04-17T11:50:20+00:00"
         },
         {
             "name": "teamprodev/laravel_dst_eimzo",
