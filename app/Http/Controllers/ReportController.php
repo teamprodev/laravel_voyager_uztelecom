@@ -7,6 +7,7 @@ use App\Http\Requests\ReportDateRequest;
 use App\Models\ReportDate;
 use App\Models\StatusExtended;
 use App\Services\ApplicationService;
+use App\Services\ReportDataService;
 use App\Services\ReportExportService;
 use App\Services\ReportService;
 use Illuminate\Http\Request;
@@ -23,12 +24,14 @@ class ReportController extends Controller
     const Report_Statuses_Quantity = 10;
 
     private ReportService $service;
+    private ReportDataService $data;
     private ReportExportService $exportService;
 
-    public function __construct(ReportService $service, ReportExportService $exportService)
+    public function __construct(ReportService $service, ReportExportService $exportService, ReportDataService $data)
     {
         $this->middleware('auth');
         $this->service = $service;
+        $this->data = $data;
         $this->exportService = $exportService;
     }
     /**
@@ -49,15 +52,23 @@ class ReportController extends Controller
     /**
      * Nechinchi Reportligiga qarab blade korsatiladi.
      **/
-    public function index($id)
+    public function index($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $report = ReportDate::all();
-            if($id == self::Quarterly_Planned_Report)
-                return view("site.report.{$id}",compact('report'));
-            elseif($id < self::Report_Statuses_Quantity){
-                return view("site.report.{$id}",compact('report'));
-            }
-            return view("site.report.10",compact('report'));
+        return match($id)
+        {
+            "1" => $this->data->report1_data($report),
+            "2" => $this->data->report2_data($report),
+            "22" => $this->data->report22_data($report),
+            "3" => $this->data->report3_data($report),
+            "4" => $this->data->report4_data($report),
+            "5" => $this->data->report5_data($report),
+            "6" => $this->data->report6_data($report),
+            "7" => $this->data->report7_data($report),
+            "8" => $this->data->report8_data($report),
+            "9" => $this->data->report9_data($report),
+            "10" => $this->data->report10_data($report),
+        };
     }
     /**
      * Nechinchi Report ligiga qarab data chiqadi.

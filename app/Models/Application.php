@@ -51,7 +51,7 @@ class Application extends ALL
 
     public function performer()
     {
-        return $this->belongsTo(User::class, 'performer_user_id', 'id');
+        return $this->belongsTo(User::class, 'performer_user_id', 'id')->withTrashed();
     }
 
     public function performer_role()
@@ -61,12 +61,12 @@ class Application extends ALL
 
     public function performer_leader()
     {
-        return $this->belongsTo(User::class, 'performer_leader_user_id', 'id');
+        return $this->belongsTo(User::class, 'performer_leader_user_id', 'id')->withTrashed();
     }
 
     public function branch_leader()
     {
-        return $this->belongsTo(User::class, 'branch_leader_user_id', 'id');
+        return $this->belongsTo(User::class, 'branch_leader_user_id', 'id')->withTrashed();
     }
 
     public function notifications()
