@@ -20,7 +20,41 @@ class ReportExportService
         $application =  Application::query()->where('status','!=','draft')->where('name', '!=', null);
         return $this->query = $application;
     }
+    public function export_1(object $request, object $user)
+    {
+        if (!$user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
+            $query = $this->application_query()
+                ->where('branch_id', $user->branch_id)
+                ->where('draft', '!=', ApplicationMagicNumber::one);
+        } elseif ($request->startDate === null) {
+            $query = $this->application_query();
+        } else {
+            $query = $this->application_query()
+                ->whereBetween('created_at', [$request->startDate, $request->endDate]);
+        }
+        $this->columns = $request->dtcolumns;
+        $this->headers = $request->dtheaders;
+        setlocale(LC_TIME, 'ru_RU.utf8');
+        $applications = $query->with(['branch', 'performer', 'department', 'user', 'purchase'])
+            ->get()
+            ->map(function ($application) {
+                foreach ($this->columns as $column)
+                {
+                    $columns[] = $application->$column["data"];
+                }
+                foreach ($this->headers as $header)
+                {
+                    $headers[] = array_keys($header);
+                }
 
+                $combinedArray = array_combine($headers[0],$columns);
+
+                dd($combinedArray);
+                return '';
+            });
+
+        return (new FastExcel($applications))->download('4 - Отчет заявки по статусам.xlsx');
+    }
     public function export_4(object $request, object $user)
     {
         if (!$user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
@@ -70,7 +104,7 @@ class ReportExportService
                     'сумма договора' => $application->contract_price,
                     'Махсулот келишининг муддати' => $application->delivery_date,
                     'Статус' => $status,
-                    'Начальник Исполнителя заявки' => $application->performer_leader_user_id ? $application->performer_leader->name : '',
+                    'Начальник Исполнителя заявки' => $application->performer_leader->name ? $application->performer_leader->name : '',
                     'Исполнитель заявки' => $application->performer_user_id ? $application->performer->name : '',
                     'Бюджетни режалаштириш булими. Маълумот' => $application->info_business_plan,
                     'Харидлар режасида мавжудлиги буича маълумот' => $application->info_purchase_plan,
