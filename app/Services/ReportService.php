@@ -12,6 +12,7 @@ use App\Models\ReportDate;
 use App\Models\Resource;
 use App\Models\StatusExtended;
 use App\Models\User;
+use App\Reports\One;
 use http\Client\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -334,7 +335,13 @@ class ReportService
         }else{
             $query = $this->application_query()->where('branch_id',$user->branch_id)->where('draft','!=',ApplicationMagicNumber::one)->get();
         }
+
+
         return Datatables::of($query)
+
+
+
+
             ->editColumn('branch_id', function($application)
             {
                 return $application->branch_id ? $application->branch->name:"";

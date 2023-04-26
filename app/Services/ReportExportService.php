@@ -9,6 +9,8 @@ use App\Models\Application;
 use App\Models\Resource;
 use App\Models\StatusExtended;
 use App\Models\User;
+use App\Reports\ALL;
+use App\Reports\One;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Rap2hpoutre\FastExcel\FastExcel;
@@ -20,6 +22,9 @@ class ReportExportService
         $application =  Application::query()->where('status','!=','draft')->where('name', '!=', null);
         return $this->query = $application;
     }
+
+
+
     public function export_1(object $request, object $user)
     {
         if (!$user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
@@ -38,23 +43,75 @@ class ReportExportService
         $applications = $query->with(['branch', 'performer', 'department', 'user', 'purchase'])
             ->get()
             ->map(function ($application) {
-                foreach ($this->columns as $column)
+                $data = One::init();
+                foreach ($data as $item=>$key)
                 {
-                    $columns[] = $application->$column["data"];
-                }
-                foreach ($this->headers as $header)
-                {
-                    $headers[] = array_keys($header);
+                    $return[] = [$item['name'] => $item['data']];
+                    $my_array['index_name'] = 'value';
+
+                    $my_array = ['index_name' => 'value'];
                 }
 
-                $combinedArray = array_combine($headers[0],$columns);
-
-                dd($combinedArray);
-                return '';
+                dd($return);
+//                foreach ($this->columns as $column)
+//                {
+//                    $id = $column["data"];
+//                    $columns[] = $application->$id;
+//                }
+//                dd($columns,$this->columns);
+//                foreach ($this->headers as $header)
+//                {
+//                    $headers[] = array_keys($header);
+//                }
+//
+//                $combinedArray = array_combine($headers[0],$columns);
+//
+//                return $combinedArray;
             });
 
         return (new FastExcel($applications))->download('4 - Отчет заявки по статусам.xlsx');
     }
+
+
+
+
+    public function export(ALL $model, object $request, object $user)
+    {
+
+
+        if (!$user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
+            $query = $this->application_query()
+                ->where('branch_id', $user->branch_id)
+                ->where('draft', '!=', ApplicationMagicNumber::one);
+        } elseif ($request->startDate === null) {
+            $query = $this->application_query();
+        } else {
+            $query = $this->application_query()
+                ->whereBetween('created_at', [$request->startDate, $request->endDate]);
+        }
+        $this->columns = $request->dtcolumns;
+        $this->headers = $request->dtheaders;
+        setlocale(LC_TIME, 'ru_RU.utf8');
+        $applications = $query->with(['branch', 'performer', 'department', 'user', 'purchase'])
+            ->get()
+            ->map(function ($application) use ($model) {
+                $data = $model::data();
+                foreach ($data as $item=>$key)
+                {
+                    $return[] = [$item['name'] => $item['data']];
+                    $my_array['index_name'] = 'value';
+
+                    $my_array = ['index_name' => 'value'];
+                }
+
+
+            });
+
+        return (new FastExcel($applications))->download($model::title());
+    }
+
+
+
     public function export_4(object $request, object $user)
     {
         if (!$user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
@@ -71,6 +128,8 @@ class ReportExportService
         $applications = $query->with(['branch', 'performer', 'department', 'user', 'purchase'])
             ->get()
             ->map(function ($application) {
+
+
                 $status_extended = StatusExtended::find($application->performer_status);
                 $status = match (true) {
                     $application->status === ApplicationStatusEnum::Order_Arrived => 'товар прибыл',
@@ -85,6 +144,9 @@ class ReportExportService
                     $application->performer_status !== null => $status_extended->name,
                     default => $application->status
                 };
+
+
+
                 return [
                     'ID' => $application->id,
                     'Филиал' => $application->branch_id ? $application->branch->name : '',
@@ -98,8 +160,8 @@ class ReportExportService
                     'Предмет закупки (товар,работа,услуга)' => $application->subject ? $application->subjects->name:'',
                     'Гарантийный срок качества товара (работ, услуг)' => $application->expire_warranty_date,
                     'сумма заявки' => $application->planned_price,
-                    'С НДС' => $application->with_nds ?'Да':'Нет',
-                    'Валюта' => $application->currency,
+                    'С НДС' => fn() => $application->with_nds ?'Да':'Нет',
+                    'Валюта' => fn() => $application->currency,
                     'Наименование поставщика' => $application->supplier_name,
                     'сумма договора' => $application->contract_price,
                     'Махсулот келишининг муддати' => $application->delivery_date,

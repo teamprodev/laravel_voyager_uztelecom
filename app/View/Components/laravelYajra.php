@@ -47,6 +47,10 @@ class laravelYajra extends Component
         $exportId,
         string      $tableTitle = null,
         string      $tableId = "example",
+
+        /**
+         *
+         */
         string      $getData = null,
         string        $language = 'en-GB',
         bool        $buttons = null,

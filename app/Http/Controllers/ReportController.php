@@ -16,6 +16,7 @@ use App\Models\Branch;
 use App\Models\Subject;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\DataTables;
 
 class ReportController extends Controller
@@ -100,16 +101,17 @@ class ReportController extends Controller
 
     }
 
-    public function report_export($id, Request $request){
+    public function report_export($model, Request $request){
         $user = auth()->user();
 
-        $users = match ($id) {
-            '1' => $this->exportService->export_1($request, $user),
-            '4' => $this->exportService->export_4($request, $user),
-            '6' => $this->exportService->export_6($request, $user),
-            '7' => $this->exportService->export_7($request, $user),
-            '8' => $this->exportService->export_8($request, $user),
-        };
-        return $users;
+        if (class_exists($model)) {
+            $data =  $this->exportService->export($model, $request, $user);
+                    }
+        else{
+            Log::error('Model not exists {}');
+
+        }
+
+        return $data;
     }
 }
