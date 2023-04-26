@@ -145,7 +145,7 @@ class ApplicationService
 
                 $data['show'] = route('site.applications.show', $row->id);
 
-                if ($row->user_id === $user_get->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two && $row->status !== ApplicationStatusEnum::Canceled) {
+                if ($row->user_id === $user_get->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two && $row->status !== ApplicationStatusEnum::Canceled && $row->status !== ApplicationStatusEnum::Refused && $row->status !== ApplicationStatusEnum::Rejected) {
                     $data['destroy'] = route('site.applications.destroy', $row->id);
                 }
 
@@ -216,7 +216,7 @@ class ApplicationService
 
                 $data['show'] = route('site.applications.show', $row->id);
 
-                if ($row->user_id === $user_get->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two) {
+                if ($row->user_id === $user_get->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two && $row->status !== ApplicationStatusEnum::Canceled && $row->status !== ApplicationStatusEnum::Refused && $row->status !== ApplicationStatusEnum::Rejected) {
                     $data['destroy'] = route('site.applications.destroy', $row->id);
                 }
 
@@ -296,13 +296,14 @@ class ApplicationService
             })
             ->addIndexColumn()
             ->addColumn('action', function ($row) use ($user) {
+                $user_get = Cache::get('users')->find($user->id);
                 if ($user->id === $row->user_id || $user->hasPermission(PermissionEnum::Warehouse) || $row->performer_role_id === $user->role_id) {
                     $data['edit'] = route('site.applications.edit', $row->id);
                 }
 
                 $data['show'] = route('site.applications.show', $row->id);
 
-                if ($row->user_id === $user->id && (int)$row->show_leader !== ApplicationMagicNumber::two) {
+                if ($row->user_id === $user_get->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two && $row->status !== ApplicationStatusEnum::Canceled && $row->status !== ApplicationStatusEnum::Refused && $row->status !== ApplicationStatusEnum::Rejected) {
                     $data['destroy'] = route('site.applications.destroy', $row->id);
                 }
 
@@ -392,7 +393,7 @@ class ApplicationService
 
                 $data['show'] = route('site.applications.show', $row->id);
 
-                if ($row->user_id === $user->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two) {
+                if ($row->user_id === $user->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two && $row->status !== ApplicationStatusEnum::Canceled && $row->status !== ApplicationStatusEnum::Refused) {
                     $data['destroy'] = route('site.applications.destroy', $row->id);
                 }
 
@@ -526,7 +527,7 @@ class ApplicationService
 
                 $data['show'] = route('site.applications.show', $row->id);
 
-                if ($row->user_id === $user->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two) {
+                if ($row->user_id === $user->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two && $row->status !== ApplicationStatusEnum::Canceled && $row->status !== ApplicationStatusEnum::Refused) {
                     $data['destroy'] = route('site.applications.destroy', $row->id);
                 }
 
@@ -945,7 +946,7 @@ class ApplicationService
 
                 $data['show'] = route('site.applications.show', $row->id);
 
-                if ($row->user_id === $user->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two) {
+                if ($row->user_id === $user->id && (int)$row->show_director !== ApplicationMagicNumber::two && (int)$row->show_leader !== ApplicationMagicNumber::two && $row->status !== ApplicationStatusEnum::Canceled && $row->status !== ApplicationStatusEnum::Refused) {
                     $data['destroy'] = route('site.applications.destroy', $row->id);
                 }
 
