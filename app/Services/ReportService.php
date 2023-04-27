@@ -91,6 +91,9 @@ class ReportService
         return $return;
     }
 
+
+
+
     public function report_1(object $request, object $user)
     {
         if($user->hasPermission(PermissionEnum::Purchasing_Management_Center))

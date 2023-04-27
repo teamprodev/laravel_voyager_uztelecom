@@ -78,32 +78,16 @@ class ReportExportService
     public function export(ALL $model, object $request, object $user)
     {
 
-
-        if (!$user->hasPermission(PermissionEnum::Purchasing_Management_Center)) {
-            $query = $this->application_query()
-                ->where('branch_id', $user->branch_id)
-                ->where('draft', '!=', ApplicationMagicNumber::one);
-        } elseif ($request->startDate === null) {
-            $query = $this->application_query();
-        } else {
-            $query = $this->application_query()
-                ->whereBetween('created_at', [$request->startDate, $request->endDate]);
-        }
-        $this->columns = $request->dtcolumns;
-        $this->headers = $request->dtheaders;
-        setlocale(LC_TIME, 'ru_RU.utf8');
-        $applications = $query->with(['branch', 'performer', 'department', 'user', 'purchase'])
+        $query = $model::condition();
+        $applications = $query
             ->get()
             ->map(function ($application) use ($model) {
                 $data = $model::data();
-                foreach ($data as $item=>$key)
+                foreach ($data as $item)
                 {
-                    $return[] = [$item['name'] => $item['data']];
-                    $my_array['index_name'] = 'value';
-
-                    $my_array = ['index_name' => 'value'];
+                    $return[$item['title']] = $item['data']($application);
                 }
-
+                return $return;
 
             });
 

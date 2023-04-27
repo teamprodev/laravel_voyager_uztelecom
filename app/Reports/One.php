@@ -4,14 +4,41 @@ namespace App\Reports;
 
 use App\Enums\ApplicationMagicNumber;
 use App\Enums\ApplicationStatusEnum;
+use App\Enums\PermissionEnum;
+use App\Models\Application;
+use App\Models\Branch;
 use App\Models\StatusExtended;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class One implements ALL
 {
 
 
+
+    public static function core() {
+        $query =  Application::query()->where('status','!=','draft')->where('name', '!=', null);
+        return $query;
+
+    }
+    public static function condition()
+    {
+        if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
+        {
+            $query = Branch::query();
+        }
+        else{
+            $query = Branch::query()->where('id', auth()->user()->branch_id)->get();
+        }
+        return $query;
+    }
+
+
     public static function data() {
+
+
+
 
         $data = [
             'id' => [
@@ -36,7 +63,7 @@ class One implements ALL
                 'name' =>  'count',
                 'title' => __('Количество заявок'),
                 'data' => function($branch){
-                    $applications = $this->application_query()->where('branch_id', $branch->id)->get();
+                    $applications = self::core()->where('branch_id', $branch->id)->get();
                     return count($applications);
                 },
                 'rowspan' => 0,
@@ -46,7 +73,7 @@ class One implements ALL
                 'name' =>  'tovar',
                 'title' => __('Товар'),
                 'data' => function($branch){
-                    $applications = $this->application_query()->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->get();
+                    $applications = self::core()->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->get();
                     return count($applications);
                 },
                 'rowspan' => 0,
@@ -56,7 +83,7 @@ class One implements ALL
                 'name' =>  'rabota',
                 'title' => __('Работа'),
                 'data' => function($branch){
-                    $applications = $this->application_query()->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->get();
+                    $applications = self::core()->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::two)->get();
                     return count($applications);
                 },
                 'rowspan' => 0,
@@ -66,7 +93,7 @@ class One implements ALL
                 'name' =>  'usluga',
                 'title' => __('Услуга'),
                 'data' => function($branch){
-                    $applications = $this->application_query()->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->get();
+                    $applications = self::core()->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->get();
                     return count($applications);
                 },
                 'rowspan' => 0,
@@ -76,8 +103,9 @@ class One implements ALL
                 'name' =>  'summa',
                 'title' => __('Сумма без НДС'),
                 'data' => function($branch){
-                    $applications = $this->application_query()->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->get();
-                    return count($applications);
+                    $applications = self::core()->where('branch_id', $branch->id)->where('with_nds', '=',null)->pluck('planned_price')->toArray();
+                    $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                    return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
                 },
                 'rowspan' => 0,
                 'colspan' => 0,
@@ -86,8 +114,9 @@ class One implements ALL
                 'name' =>  'nds',
                 'title' => __('Сумма с НДС'),
                 'data' => function($branch){
-                    $applications = $this->application_query()->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::three)->get();
-                    return count($applications);
+                    $applications = self::core()->where('branch_id', $branch->id)->where('with_nds', '!=',null)->pluck('planned_price')->toArray();
+                    $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
+                    return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
                 },
                 'rowspan' => 0,
                 'colspan' => 0,

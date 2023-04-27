@@ -103,10 +103,9 @@ class ReportController extends Controller
 
     public function report_export($model, Request $request){
         $user = auth()->user();
-
         if (class_exists($model)) {
-            $data =  $this->exportService->export($model, $request, $user);
-                    }
+            $data =  $this->exportService->export(app($model), $request, $user);
+        }
         else{
             Log::error('Model not exists {}');
 
