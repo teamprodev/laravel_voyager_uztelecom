@@ -13,6 +13,7 @@ use App\Reports\ALL;
 use App\Reports\One;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use OpenSpout\Common\Entity\Style\Style;
 use Rap2hpoutre\FastExcel\FastExcel;
 
 class ReportExportService
@@ -90,7 +91,7 @@ class ReportExportService
                 return $return;
 
             });
-
+        (new Style())->cell
         return (new FastExcel($applications))->download($model::title());
     }
 

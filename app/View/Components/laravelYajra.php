@@ -78,7 +78,7 @@ class laravelYajra extends Component
         $this->language = isset($language) ? $text->language($language) : $language;
         $this->dom = $dom;
         $this->pageLength = $pageLength;
-        $this->buttons = $text->buttons($tableTitle,$exportId,$dtColumns,$dtHeaders);
+        $this->buttons = $text->buttons($tableTitle,$exportId);
         $this->colReorder = $colReorder;
         $this->stateSave = $stateSave;
         $this->serverSide = $serverSide;
