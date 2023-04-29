@@ -79,7 +79,7 @@ class ReportExportService
     public function export(ALL $model, object $request, object $user)
     {
 
-        $query = $model::condition();
+        $query = $model::condition($request->startDate, $request->endDate);
         $applications = $query
             ->get()
             ->map(function ($application) use ($model) {
@@ -91,7 +91,6 @@ class ReportExportService
                 return $return;
 
             });
-        (new Style())->cell
         return (new FastExcel($applications))->download($model::title());
     }
 

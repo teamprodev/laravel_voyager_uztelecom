@@ -22,7 +22,7 @@ class One implements ALL
         return $query;
 
     }
-    public static function condition()
+    public static function condition($startDate, $endDate)
     {
         if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
