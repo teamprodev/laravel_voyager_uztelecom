@@ -394,30 +394,6 @@ class ReportService
                 }
                 return json_encode(['backgroundColor' => $color,'app' => $this->translateStatus($status),'color' => $color ? 'white':'black']);
             })
-            ->editColumn('product', function($application)
-            {
-                if($application->resource_id != null)
-                {
-                    foreach (json_decode($application->resource_id) as $product)
-                    {
-                        $all[] = Resource::withTrashed()->find($product)->name;
-                    }
-                    return $all;
-                }
-
-            })
-            ->addColumn('tovar_1', function($branch)
-            {
-                $date = ReportDate::where('report_key','date_3_month')->pluck('report_value')[0];
-                $start_date = Carbon::parse("{$date}-01")
-                    ->toDateTimeString();
-
-                $end_date = Carbon::parse("{$date}-31")
-                    ->toDateTimeString();
-                $applications = $this->application_query()->whereBetween('created_at',[$start_date,$end_date])->where('branch_id', $branch->id)->where('subject',ApplicationMagicNumber::one)->where('with_nds','=',null)->pluck('planned_price')->toArray();
-                $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
-                return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
-            })
             ->rawColumns(['status'])
             ->make(true);
     }
