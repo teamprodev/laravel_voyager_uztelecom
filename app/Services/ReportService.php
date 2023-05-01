@@ -483,8 +483,8 @@ class ReportService
             $query = $this->application_query()->where('branch_id',$user->branch_id)->where('draft','!=',ApplicationMagicNumber::one)->get();
         }
         return Datatables::of($query)
-            ->addColumn('name', function($branch){
-                return Branch::query()->where('id', $branch->branch_id)->get()->pluck('name')->toArray();
+            ->addColumn('name', function($application){
+                return $application->branch_id ? $application->branch->name:"";
             })
             ->addColumn('planned_price', function ($query) {
                 return !Str::contains($query->planned_price, ' ') ? number_format($query->planned_price, ApplicationMagicNumber::zero, '', ' ') : $query->planned_price;
