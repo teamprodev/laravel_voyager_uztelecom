@@ -510,7 +510,7 @@ class ReportService
                 return Branch::query()->where('id', $branch->branch_id)->get()->pluck('name')->toArray();
             })
             ->addColumn('type_of_purchase', function($branch){
-                return Purchase::query()->where('id', $branch->type_of_purchase_id)->get()->pluck('name')->toArray();
+                return $branch->type_of_purchase_id ? $branch->purchase->name:'';
             })
 
             ->make(true);
