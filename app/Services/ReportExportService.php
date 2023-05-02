@@ -82,8 +82,8 @@ class ReportExportService
         $query = $model::condition($request->startDate, $request->endDate);
         $applications = $query
             ->get()
-            ->map(function ($application) use ($model) {
-                $data = $model::data();
+            ->map(function ($application) use ($model,$request) {
+                $data = $model::data($request->startDate, $request->endDate);
                 foreach ($data as $item)
                 {
                     $return[$item['title']] = $item['data']($application);
