@@ -143,19 +143,19 @@ return [
             'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js',
         ],
         'yajra' => [
-            'https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css',
-            'https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css',
-            'https://cdn.datatables.net/searchbuilder/1.4.0/css/searchBuilder.dataTables.min.css',
+            'https://cdn.jsdelivr.net/gh/DataTables/Dist-DataTables-DataTables@1.12.1/css/jquery.dataTables.min.css',
+            'https://cdn.jsdelivr.net/gh/DataTables/Dist-DataTables-Responsive-DataTables@2.3.0/css/responsive.dataTables.min.css',
+            'https://cdn.jsdelivr.net/gh/DataTables/Dist-DataTables-SearchBuilder-DataTables@1.4.0/css/searchBuilder.dataTables.min.css',
             'https://cdn.jsdelivr.net/npm/datatables.net-datetime@1.2.0/dist/dataTables.dateTime.min.css',
-            'https://cdn.datatables.net/fixedheader/3.3.1/css/fixedHeader.dataTables.min.css',
-            'https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css',
+            'https://cdn.jsdelivr.net/gh/DataTables/Dist-DataTables-FixedHeader-DataTables@3.3.1/css/fixedHeader.dataTables.min.css',
+            'https://cdn.jsdelivr.net/gh/DataTables/Dist-DataTables-Buttons-DataTables@2.2.2/css/buttons.dataTables.min.css',
             'https://cdn.jsdelivr.net/npm/datatables.net@1.12.1/js/jquery.dataTables.min.js',
             'https://cdn.jsdelivr.net/npm/datatables.net-searchbuilder@1.4.0/js/dataTables.searchBuilder.min.js',
             'https://cdn.jsdelivr.net/npm/datatables.net-datetime@1.2.0/dist/dataTables.dateTime.min.js',
             'https://cdn.jsdelivr.net/npm/datatables.net-responsive@2.3.0/js/dataTables.responsive.min.js',
             'https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js',
-            'https://cdn.datatables.net/plug-ins/1.10.24/dataRender/datetime.js',
-            'https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js'
+            'https://cdn.jsdelivr.net/gh/DataTables/Plugins@1.10.24/dataRender/datetime.js',
+            'https://cdn.jsdelivr.net/gh/DataTables/Plugins@1.10.19/sorting/datetime-moment.js'
         ],
         'uppy' => [
             'https://releases.transloadit.com/uppy/v2.4.1/uppy.min.css',
