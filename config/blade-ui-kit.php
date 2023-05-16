@@ -147,7 +147,6 @@ return [
             'https://cdn.jsdelivr.net/gh/DataTables/Dist-DataTables-SearchBuilder-DataTables@1.4.0/css/searchBuilder.dataTables.min.css',
             'https://cdn.jsdelivr.net/npm/datatables.net-datetime@1.2.0/dist/dataTables.dateTime.min.css',
             'https://cdn.jsdelivr.net/npm/datatables.net-fixedheader-dt@3.3.1/css/fixedHeader.dataTables.min.css',
-            'https://cdn.jsdelivr.net/npm/datatables.net-fixedheader-dt@3.3.1/js/fixedHeader.dataTables.min.js',
             'https://cdn.jsdelivr.net/gh/DataTables/Dist-DataTables-Buttons-DataTables@2.2.2/css/buttons.dataTables.min.css',
             'https://cdn.jsdelivr.net/npm/datatables.net@1.12.1/js/jquery.dataTables.min.js',
             'https://cdn.jsdelivr.net/npm/datatables.net-searchbuilder@1.4.0/js/dataTables.searchBuilder.min.js',
