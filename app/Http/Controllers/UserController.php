@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ApplicationMagicNumber;
+use App\Exports\ApplicationExport;
+use App\Exports\ExportUser;
+use App\Models\Application;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use TCG\Voyager\Http\Controllers\VoyagerUserController;
 
 class UserController extends VoyagerUserController
@@ -41,5 +45,8 @@ class UserController extends VoyagerUserController
     {
         User::withTrashed()->find($id)->restore();
         return redirect()->back();
+    }
+    public function exportUsers(Request $request){
+        return Excel::download(new ApplicationExport(new Application), 'users.xlsx');
     }
 }
