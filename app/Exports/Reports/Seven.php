@@ -2,6 +2,7 @@
 
 namespace App\Exports\Reports;
 
+use App\Models\Application;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -23,21 +24,25 @@ use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class Seven extends DefaultValueBinder implements FromQuery, WithHeadings,WithCustomStartCell
+class Seven extends DefaultValueBinder implements WithStyles, FromQuery, WithHeadings,WithCustomStartCell
 {
     use Exportable;
 
     private $query;
 
-    public function __construct($query)
+    public function __construct()
     {
-        $this->query = $query;
+        $this->query = Application::query()->where('status','!=','draft')->where('name', '!=', null);
     }
     public function startCell(): string
     {
         return 'A1';
     }
-
+    public function styles(Worksheet $sheet): Worksheet
+    {
+        $sheet->getStyle(1)->getFont()->setBold(true);
+        return $sheet;
+    }
     public function query()
     {
         return $this->query->select(

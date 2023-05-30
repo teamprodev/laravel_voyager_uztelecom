@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
+use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use Maatwebsite\Excel\Concerns\WithStyles;
@@ -26,17 +27,24 @@ use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class Two extends DefaultValueBinder implements FromQuery, WithHeadings,WithCustomStartCell,WithStyles
+class Two extends DefaultValueBinder implements FromCollection,WithHeadings,WithCustomStartCell,WithStyles
 {
     use Exportable;
 
-    private $query;
     private $startDate;
     private $endDate;
 
-    public function __construct($query)
+    public function __construct($startDate,$endDate)
     {
-        $this->query = $query;
+        if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
+        {
+            $this->query = Branch::query()->select('id','name');
+        }
+        else{
+            $this->query = Branch::query()->select('id','name')->where('id',auth()->user()->branch_id);
+        }
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
     }
     private static function core()
     {
@@ -67,15 +75,9 @@ class Two extends DefaultValueBinder implements FromQuery, WithHeadings,WithCust
         return $sheet;
     }
 
-    public function query()
+    public function collection()
     {
-        if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
-        {
-            $query = Branch::select('id','name')->get();
-        }
-        else{
-            $query = Branch::select('id','name')->where('id',auth()->user()->branch_id)->get();
-        }
+        $query = $this->query->get();
         for($i = 0;$i<count($query);$i++)
         {
             $query[$i]->tovar_1 = $this->get_2($query[$i], $this->startDate, $this->endDate, ApplicationMagicNumber::one, '01', '03');
@@ -86,17 +88,20 @@ class Two extends DefaultValueBinder implements FromQuery, WithHeadings,WithCust
             $query[$i]->usluga_2 = $this->get_2($query[$i], $this->startDate, $this->endDate, ApplicationMagicNumber::three, '04', '06');
             $query[$i]->tovar_3 = $this->get_2($query[$i], $this->startDate, $this->endDate, ApplicationMagicNumber::one, '07', '09');
             $query[$i]->rabota_3 = $this->get_2($query[$i], $this->startDate, $this->endDate, ApplicationMagicNumber::two, '07', '09');
-            $query[$i]->usluga_3 = $this->get_2($query[$i], $this->startDate, $this->endDate, ApplicationMagicNumber::three, '07', '09');
+            $query[$i]->usluga_3 = $this->get_2($query[$i], $this->startDate, $this->endDate, ApplicationMagicNumber::two, '07', '09');
+            $query[$i]->tovar_4 = $this->get_2($query[$i], $this->startDate, $this->endDate, ApplicationMagicNumber::one, '10', '12');
+            $query[$i]->rabota_4 = $this->get_2($query[$i], $this->startDate, $this->endDate, ApplicationMagicNumber::two, '10', '12');
+            $query[$i]->usluga_4 = $this->get_2($query[$i], $this->startDate, $this->endDate, ApplicationMagicNumber::three, '10', '12');
         }
-        $query = $query->toQuery();
-        dd($query);
         return $query;
     }
-    private function get_2($branch, $start_date,$end_date, $subject, $startMonth, $endMonth)
+    private function get_2($branch, $start_date,$end_date, $subject,$startMonth,$endMonth)
     {
+        $start_date = $start_date ? "$start_date-$startMonth-01" : "2022-$startMonth-01";
+        $end_date = $end_date ? "$end_date-$endMonth-31" : "2022-$endMonth-31";
+
         $applications = self::core()
-            ->whereBetween('created_at', [$start_date, $end_date])
-            ->where('branch_id', $branch->id)
+            ->whereBetween('created_at', [$start_date, $end_date])->where('branch_id', $branch->id)
             ->where('subject', $subject)
             ->where('status', 'extended')
             ->pluck('planned_price')

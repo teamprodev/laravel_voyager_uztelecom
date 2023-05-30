@@ -26,7 +26,7 @@ class ReportExportService
     public function export($model, object $request, object $user)
     {
         $title = $model::title();
-        return Excel::download(new $model(Application::query()->where('status','!=','draft')->where('name', '!=', null),$request->startDate,$request->endDate), "$title.xlsx");
+        return Excel::download(new $model($request->startDate,$request->endDate), "$title.xlsx");
     }
     public function export1(ALL $model, object $request, object $user)
     {
