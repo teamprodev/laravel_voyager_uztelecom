@@ -1,5 +1,4 @@
 @extends('site.layouts.app')
-@extends('site.layouts.report')
 @section('center_content')
 
 <x-laravelDateRangePicker format="YYYY-MM-DD" reportId="9" route="{{ route('site.report.index','9') }}"/>
