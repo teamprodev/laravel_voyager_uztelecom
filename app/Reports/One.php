@@ -11,12 +11,16 @@ use App\Models\StatusExtended;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 
-class One implements ALL
+class One implements ALL,WithCustomStartCell
 {
 
 
-
+    public function startCell(): string
+    {
+        return 'A5';
+    }
     public static function core() {
         $query =  Application::query()->where('status','!=','draft')->where('name', '!=', null);
         return $query;
@@ -35,7 +39,7 @@ class One implements ALL
     }
 
 
-    public static function data() {
+    public static function data($startDate,$endDate) {
 
 
 

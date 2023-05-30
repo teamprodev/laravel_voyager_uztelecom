@@ -1,9 +1,29 @@
 <?php
 
-use Maatwebsite\Excel\Concerns\FromQuery;
-use Maatwebsite\Excel\Concerns\Exportable;
+namespace App\Exports\Reports;
 
-class ApplicationsExport implements FromQuery
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
+use Maatwebsite\Excel\Concerns\WithCustomStartCell;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Concerns\WithTitle;
+use PhpOffice\PhpSpreadsheet\Cell\Cell;
+use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\FromQuery;
+use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
+use Maatwebsite\Excel\Concerns\WithDrawings;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\DefaultValueBinder;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+
+class Seven extends DefaultValueBinder implements FromQuery, WithHeadings,WithCustomStartCell
 {
     use Exportable;
 
@@ -12,6 +32,10 @@ class ApplicationsExport implements FromQuery
     public function __construct($query)
     {
         $this->query = $query;
+    }
+    public function startCell(): string
+    {
+        return 'A1';
     }
 
     public function query()
@@ -52,5 +76,8 @@ class ApplicationsExport implements FromQuery
             'Основание: Закон о государственных закупках / другие решения',
         ];
     }
+    public static function title() : string
+    {
+        return '7 - Плановый';
+    }
 }
-
