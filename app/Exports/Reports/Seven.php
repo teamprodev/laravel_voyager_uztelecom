@@ -28,7 +28,6 @@ class Seven extends DefaultValueBinder implements WithStyles, FromQuery, WithHea
 {
     use Exportable;
 
-    private $query;
     private $startDate;
     private $endDate;
 
