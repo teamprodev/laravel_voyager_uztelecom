@@ -58,7 +58,7 @@ class One extends DefaultValueBinder implements WithStyles, FromCollection, With
     }
     public function styles(Worksheet $sheet): Worksheet
     {
-        $sheet->getStyle(1)->getFont()->setBold(true);
+        $sheet->getStyle('1')->getFont()->setBold(true);
         return $sheet;
     }
     public function collection()
