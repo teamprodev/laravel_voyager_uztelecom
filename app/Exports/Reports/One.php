@@ -32,7 +32,6 @@ class One extends DefaultValueBinder implements WithStyles, FromCollection, With
 {
     use Exportable;
 
-    private $query;
     private $startDate;
     private $endDate;
 
