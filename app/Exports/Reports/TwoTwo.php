@@ -125,20 +125,6 @@ class TwoTwo extends DefaultValueBinder implements WithEvents,FromCollection,Wit
         }
         return $query;
     }
-    private function get_2($branch, $start_date,$end_date, $subject,$startMonth,$endMonth)
-    {
-        $start_date = $start_date ? "$start_date-$startMonth-01" : "2022-$startMonth-01";
-        $end_date = $end_date ? "$end_date-$endMonth-31" : "2022-$endMonth-31";
-
-        $applications = self::core()
-            ->whereBetween('created_at', [$start_date, $end_date])->where('branch_id', $branch->id)
-            ->where('subject', $subject)
-            ->where('status', 'extended')
-            ->pluck('planned_price')
-            ->toArray();
-        $result = array_sum(preg_replace('/[^0-9]/', '', $applications));
-        return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
-    }
     public function headings(): array
     {
         return [
