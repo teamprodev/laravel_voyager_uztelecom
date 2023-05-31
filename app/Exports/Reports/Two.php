@@ -70,8 +70,7 @@ class Two extends DefaultValueBinder implements FromCollection,WithHeadings,With
         foreach($data as $value=>$item){
             $sheet->setCellValue($item, $value);
         }
-        $sheet->getStyle(1)->getFont()->setBold(true);
-        $sheet->getStyle(2)->getFont()->setBold(true);
+        $sheet->getStyle('1:2')->getFont()->setBold(true);
         return $sheet;
     }
 
