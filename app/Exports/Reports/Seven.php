@@ -29,10 +29,14 @@ class Seven extends DefaultValueBinder implements WithStyles, FromQuery, WithHea
     use Exportable;
 
     private $query;
+    private $startDate;
+    private $endDate;
 
-    public function __construct()
+    public function __construct($startDate,$endDate)
     {
         $this->query = Application::query()->where('status','!=','draft')->where('name', '!=', null);
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
     }
     public function startCell(): string
     {
