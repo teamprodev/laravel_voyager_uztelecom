@@ -118,6 +118,7 @@ class Three extends DefaultValueBinder implements WithEvents,FromCollection,With
 
         $result = array_sum(preg_replace('/[^0-9]/', '', $applications->where('branch_id', $branch->id)
             ->where('subject', $subject)
+            ->where('status', 'extended')
             ->where('with_nds', $withNds)
             ->pluck('planned_price')
             ->toArray()));
