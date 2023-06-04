@@ -37,7 +37,11 @@ class Three extends DefaultValueBinder implements WithEvents,FromCollection,With
     private $startDate;
     private $endDate;
 
-    public function __construct($startDate,$endDate)
+    /**
+     * @param $startDate
+     * @param $endDate
+     */
+    public function __construct($startDate, $endDate)
     {
         if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
@@ -49,12 +53,19 @@ class Three extends DefaultValueBinder implements WithEvents,FromCollection,With
         $this->startDate = $startDate;
         $this->endDate = $endDate;
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     private static function core()
     {
         $query =  Application::query()->where('status','!=','draft')->where('name', '!=', null);
         return $query;
     }
 
+    /**
+     * @return string
+     */
     public function startCell(): string
     {
         return 'A2';
@@ -76,6 +87,9 @@ class Three extends DefaultValueBinder implements WithEvents,FromCollection,With
         return $sheet;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
+     */
     public function collection()
     {
         $query = $this->query->get();
@@ -90,6 +104,10 @@ class Three extends DefaultValueBinder implements WithEvents,FromCollection,With
         }
         return $query;
     }
+
+    /**
+     * @return array
+     */
     public function headings(): array
     {
         return [
@@ -103,10 +121,21 @@ class Three extends DefaultValueBinder implements WithEvents,FromCollection,With
             __('С НДС'),
         ];
     }
+
+    /**
+     * @return string
+     */
     public static function title() : string
     {
         return '3 - Отчет за год';
     }
+
+    /**
+     * @param $branch
+     * @param $subject
+     * @param $withNds
+     * @return string
+     */
     private function get_3($branch, $subject, $withNds)
     {
         $start_date = $this->startDate ?? null;
