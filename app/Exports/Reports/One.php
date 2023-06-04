@@ -12,9 +12,11 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
+use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
+use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
@@ -28,7 +30,7 @@ use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class One extends DefaultValueBinder implements WithStyles, FromCollection, WithHeadings,WithCustomStartCell
+class One extends DefaultValueBinder implements WithStyles, FromCollection, WithHeadings,WithCustomStartCell,WithEvents
 {
     use Exportable;
 
@@ -105,5 +107,26 @@ class One extends DefaultValueBinder implements WithStyles, FromCollection, With
         $applications = self::core()->where('branch_id', $branch->id)->where('with_nds', '!=',null)->pluck('planned_price')->toArray();
         $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
         return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
+    }
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class    => function(AfterSheet $event) {
+
+                $event->sheet->getDelegate()->getColumnDimension('B')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('C')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('G')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('H')->setWidth(40);
+
+
+                $event->sheet->getDelegate()->getStyle('1')
+                    ->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            },
+        ];
     }
 }
