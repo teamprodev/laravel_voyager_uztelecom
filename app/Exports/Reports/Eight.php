@@ -39,7 +39,11 @@ class Eight extends DefaultValueBinder implements FromCollection,WithEvents,With
     private $startDate;
     private $endDate;
 
-    public function __construct($startDate,$endDate)
+    /**
+     * @param $startDate
+     * @param $endDate
+     */
+    public function __construct($startDate, $endDate)
     {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
@@ -54,12 +58,19 @@ class Eight extends DefaultValueBinder implements FromCollection,WithEvents,With
             $this->query = self::core()->select('id', 'branch_id','number', 'planned_price', 'performer_received_date', 'initiator', 'product_info', 'type_of_purchase_id', 'contract_number', 'supplier_name', 'contract_price', 'performer_user_id', 'created_at')->where('branch_id',auth()->user()->branch_id)->where('draft','!=',ApplicationMagicNumber::one);
         }
     }
-    private static function core()
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    private static function core(): \Illuminate\Database\Eloquent\Builder
     {
         $query =  Application::query()->where('status','!=','draft')->where('name', '!=', null);
         return $query;
     }
 
+    /**
+     * @return string
+     */
     public function startCell(): string
     {
         return 'A2';
@@ -80,7 +91,10 @@ class Eight extends DefaultValueBinder implements FromCollection,WithEvents,With
         return $sheet;
     }
 
-    public function collection()
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
+     */
+    public function collection(): \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|array
     {
         $query = $this->query->get();
         for($i = 0;$i<count($query);$i++)
@@ -98,6 +112,11 @@ class Eight extends DefaultValueBinder implements FromCollection,WithEvents,With
         }
         return $query;
     }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
     private function get_product($query)
     {
         $product = json_decode($query->resource_id,true);
@@ -107,6 +126,10 @@ class Eight extends DefaultValueBinder implements FromCollection,WithEvents,With
         });
         return json_decode($ucnames);
     }
+
+    /**
+     * @return array
+     */
     public function headings(): array
     {
         return [
@@ -125,6 +148,10 @@ class Eight extends DefaultValueBinder implements FromCollection,WithEvents,With
             __('Дата Создания'),
         ];
     }
+
+    /**
+     * @return string
+     */
     public static function title() : string
     {
         return '8 - Отчет по видам закупки';
