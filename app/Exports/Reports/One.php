@@ -37,7 +37,11 @@ class One extends DefaultValueBinder implements WithStyles, FromCollection, With
     private $startDate;
     private $endDate;
 
-    public function __construct($startDate,$endDate)
+    /**
+     * @param $startDate
+     * @param $endDate
+     */
+    public function __construct($startDate, $endDate)
     {
         if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
@@ -49,20 +53,37 @@ class One extends DefaultValueBinder implements WithStyles, FromCollection, With
         $this->startDate = $startDate;
         $this->endDate = $endDate;
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     private static function core()
     {
         $query =  Application::query()->where('status','!=','draft')->where('name', '!=', null);
         return $query;
     }
+
+    /**
+     * @return string
+     */
     public function startCell(): string
     {
         return 'A1';
     }
+
+    /**
+     * @param Worksheet $sheet
+     * @return Worksheet
+     */
     public function styles(Worksheet $sheet): Worksheet
     {
         $sheet->getStyle('1')->getFont()->setBold(true);
         return $sheet;
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
+     */
     public function collection()
     {
         $query = $this->query->get();
@@ -78,6 +99,9 @@ class One extends DefaultValueBinder implements WithStyles, FromCollection, With
         return $query;
     }
 
+    /**
+     * @return string[]
+     */
     public function headings(): array
     {
         return [
@@ -91,17 +115,30 @@ class One extends DefaultValueBinder implements WithStyles, FromCollection, With
             'Сумма с НДС',
         ];
     }
+
+    /**
+     * @return string
+     */
     public static function title() : string
     {
         return '1 - Отчет общий';
     }
 
+    /**
+     * @param $branch
+     * @return string
+     */
     private function summa($branch)
     {
         $applications = self::core()->where('branch_id', $branch->id)->where('with_nds', '=',null)->pluck('planned_price')->toArray();
         $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
         return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
     }
+
+    /**
+     * @param $branch
+     * @return string
+     */
     private function nds($branch)
     {
         $applications = self::core()->where('branch_id', $branch->id)->where('with_nds', '!=',null)->pluck('planned_price')->toArray();
