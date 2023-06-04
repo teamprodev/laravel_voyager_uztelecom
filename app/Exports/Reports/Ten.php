@@ -39,7 +39,11 @@ class Ten extends DefaultValueBinder implements WithStyles, FromCollection, With
     private $startDate;
     private $endDate;
 
-    public function __construct($startDate,$endDate)
+    /**
+     * @param $startDate
+     * @param $endDate
+     */
+    public function __construct($startDate, $endDate)
     {
         if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
@@ -55,16 +59,29 @@ class Ten extends DefaultValueBinder implements WithStyles, FromCollection, With
         $this->startDate = $startDate;
         $this->endDate = $endDate;
     }
+
+    /**
+     * @return string
+     */
     public function startCell(): string
     {
         return 'A1';
     }
+
+    /**
+     * @param Worksheet $sheet
+     * @return Worksheet
+     */
     public function styles(Worksheet $sheet): Worksheet
     {
         $sheet->getStyle('1')->getFont()->setBold(true);
         return $sheet;
     }
-    public function collection()
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function collection(): \Illuminate\Support\Collection
     {
         $query = $this->query->get();
         for($i = 0;$i<count($query);$i++)
@@ -86,7 +103,14 @@ class Ten extends DefaultValueBinder implements WithStyles, FromCollection, With
         }
         return $query;
     }
-    private function get_10($startMonth,$endMonth,$query)
+
+    /**
+     * @param $startMonth
+     * @param $endMonth
+     * @param $query
+     * @return int
+     */
+    private function get_10($startMonth, $endMonth, $query): int
     {
         $year = Carbon::now()->year;
         $start_date = $this->startDate ? "$this->startDate-$startMonth" : "$year-$startMonth";
@@ -95,6 +119,10 @@ class Ten extends DefaultValueBinder implements WithStyles, FromCollection, With
         $applications = Application::where('draft','!=',ApplicationMagicNumber::one)->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('performer_status', $query->id)->get();
         return count($applications);
     }
+
+    /**
+     * @return array
+     */
     public function headings(): array
     {
         return [
@@ -114,6 +142,10 @@ class Ten extends DefaultValueBinder implements WithStyles, FromCollection, With
             __('Итого'),
         ];
     }
+
+    /**
+     * @return string
+     */
     public static function title() : string
     {
         return '10 - Отчет по кол-ву статусам';
