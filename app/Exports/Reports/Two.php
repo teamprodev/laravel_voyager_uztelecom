@@ -37,7 +37,11 @@ class Two extends DefaultValueBinder implements FromCollection,WithHeadings,With
     private $startDate;
     private $endDate;
 
-    public function __construct($startDate,$endDate)
+    /**
+     * @param $startDate
+     * @param $endDate
+     */
+    public function __construct($startDate, $endDate)
     {
         if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
@@ -49,12 +53,19 @@ class Two extends DefaultValueBinder implements FromCollection,WithHeadings,With
         $this->startDate = $startDate;
         $this->endDate = $endDate;
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     private static function core()
     {
         $query =  Application::query()->where('status','!=','draft')->where('name', '!=', null);
         return $query;
     }
 
+    /**
+     * @return string
+     */
     public function startCell(): string
     {
         return 'A2';
@@ -77,6 +88,9 @@ class Two extends DefaultValueBinder implements FromCollection,WithHeadings,With
         return $sheet;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
+     */
     public function collection()
     {
         $query = $this->query->get();
@@ -97,7 +111,17 @@ class Two extends DefaultValueBinder implements FromCollection,WithHeadings,With
         }
         return $query;
     }
-    private function get_2($branch, $start_date,$end_date, $subject,$startMonth,$endMonth)
+
+    /**
+     * @param $branch
+     * @param $start_date
+     * @param $end_date
+     * @param $subject
+     * @param $startMonth
+     * @param $endMonth
+     * @return string
+     */
+    private function get_2($branch, $start_date, $end_date, $subject, $startMonth, $endMonth)
     {
         $start_date = $start_date ? "$start_date-$startMonth-01" : "2022-$startMonth-01";
         $end_date = $end_date ? "$end_date-$endMonth-31" : "2022-$endMonth-31";
@@ -111,6 +135,10 @@ class Two extends DefaultValueBinder implements FromCollection,WithHeadings,With
         $result = array_sum(preg_replace('/[^0-9]/', '', $applications));
         return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
     }
+
+    /**
+     * @return array
+     */
     public function headings(): array
     {
         return [
@@ -130,6 +158,10 @@ class Two extends DefaultValueBinder implements FromCollection,WithHeadings,With
             __('услуга 4'),
         ];
     }
+
+    /**
+     * @return string
+     */
     public static function title() : string
     {
         return '2 - Отчет квартальный итоговый';

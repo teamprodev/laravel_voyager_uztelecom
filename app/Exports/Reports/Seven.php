@@ -36,21 +36,38 @@ class Seven extends DefaultValueBinder implements WithStyles, FromCollection, Wi
     private $startDate;
     private $endDate;
 
-    public function __construct($startDate,$endDate)
+    /**
+     * @param $startDate
+     * @param $endDate
+     */
+    public function __construct($startDate, $endDate)
     {
         $this->query = Application::where('status','!=','draft')->where('name', '!=', null)->select('id', 'name', 'supplier_name', 'supplier_inn', 'contract_number', 'contract_date', 'contract_price', 'currency', 'lot_number', 'type_of_purchase_id', 'contract_info', 'country_produced_id', 'purchase_basis');
         $this->startDate = $startDate;
         $this->endDate = $endDate;
     }
+
+    /**
+     * @return string
+     */
     public function startCell(): string
     {
         return 'A1';
     }
+
+    /**
+     * @param Worksheet $sheet
+     * @return Worksheet
+     */
     public function styles(Worksheet $sheet): Worksheet
     {
         $sheet->getStyle('1')->getFont()->setBold(true);
         return $sheet;
     }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
     public function collection()
     {
         $query = $this->query->get();
@@ -63,6 +80,9 @@ class Seven extends DefaultValueBinder implements WithStyles, FromCollection, Wi
         return $query;
     }
 
+    /**
+     * @return string[]
+     */
     public function headings(): array
     {
         return [
@@ -81,6 +101,10 @@ class Seven extends DefaultValueBinder implements WithStyles, FromCollection, Wi
             'Основание: Закон о государственных закупках / другие решения',
         ];
     }
+
+    /**
+     * @return string
+     */
     public static function title() : string
     {
         return '7 - Плановый';
