@@ -25,7 +25,11 @@ class Six extends DefaultValueBinder implements FromCollection,WithEvents,WithHe
     private $startDate;
     private $endDate;
 
-    public function __construct($startDate,$endDate)
+    /**
+     * @param $startDate
+     * @param $endDate
+     */
+    public function __construct($startDate, $endDate)
     {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
@@ -40,12 +44,19 @@ class Six extends DefaultValueBinder implements FromCollection,WithEvents,WithHe
             $this->query = self::core()->select('id', 'name', 'supplier_name', 'contract_number', 'subject', 'number', 'planned_price', 'contract_info', 'contract_price', 'protocol_number', 'protocol_date');
         }
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     private static function core()
     {
         $query =  Application::query()->where('status','!=','draft')->where('name', '!=', null);
         return $query;
     }
 
+    /**
+     * @return string
+     */
     public function startCell(): string
     {
         return 'A1';
@@ -59,6 +70,9 @@ class Six extends DefaultValueBinder implements FromCollection,WithEvents,WithHe
         return $sheet;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
+     */
     public function collection()
     {
         $query = $this->query->get();
@@ -70,6 +84,10 @@ class Six extends DefaultValueBinder implements FromCollection,WithEvents,WithHe
         }
         return $query;
     }
+
+    /**
+     * @return array
+     */
     public function headings(): array
     {
         return [
@@ -86,6 +104,10 @@ class Six extends DefaultValueBinder implements FromCollection,WithEvents,WithHe
             __('Дата протокола внутренней комиссии'),
         ];
     }
+
+    /**
+     * @return string
+     */
     public static function title() : string
     {
         return '6 - Отчет свод';
