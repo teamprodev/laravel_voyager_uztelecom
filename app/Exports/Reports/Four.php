@@ -25,7 +25,11 @@ class Four extends DefaultValueBinder implements FromCollection,WithColumnFormat
     private $startDate;
     private $endDate;
 
-    public function __construct($startDate,$endDate)
+    /**
+     * @param $startDate
+     * @param $endDate
+     */
+    public function __construct($startDate, $endDate)
     {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
@@ -40,12 +44,19 @@ class Four extends DefaultValueBinder implements FromCollection,WithColumnFormat
             $this->query = self::core()->select('id', 'branch_id', 'number', 'date', 'user_id', 'user_role_id', 'department_initiator_id', 'type_of_purchase_id', 'name', 'subject', 'expire_warranty_date', 'planned_price', 'with_nds', 'currency', 'supplier_name', 'contract_price', 'delivery_date', 'status', 'performer_leader_user_id', 'performer_user_id', 'info_business_plan', 'info_purchase_plan', 'purchase_basis', 'basis')->where('branch_id',auth()->user()->branch_id)->where('draft','!=',ApplicationMagicNumber::one);
         }
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     private static function core()
     {
         $query =  Application::query()->where('status','!=','draft')->where('name', '!=', null);
         return $query;
     }
 
+    /**
+     * @return string
+     */
     public function startCell(): string
     {
         return 'A1';
@@ -59,6 +70,9 @@ class Four extends DefaultValueBinder implements FromCollection,WithColumnFormat
         return $sheet;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
+     */
     public function collection()
     {
         $query = $this->query->get();
@@ -78,12 +92,20 @@ class Four extends DefaultValueBinder implements FromCollection,WithColumnFormat
         }
         return $query;
     }
+
+    /**
+     * @return string[]
+     */
     public function columnFormats(): array
     {
         return [
             'F' =>  "0",
         ];
     }
+
+    /**
+     * @return array
+     */
     public function headings(): array
     {
         return [
@@ -113,10 +135,19 @@ class Four extends DefaultValueBinder implements FromCollection,WithColumnFormat
             __('Основание(план закупок, рапорт, расспорежение руководства)'),
         ];
     }
+
+    /**
+     * @return string
+     */
     public static function title() : string
     {
         return '4 - Отчет заявки по статусам';
     }
+
+    /**
+     * @param $status
+     * @return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Translation\Translator|string|null
+     */
     private function translateStatus($status)
     {
         switch ($status) {
