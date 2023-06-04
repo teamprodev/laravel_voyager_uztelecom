@@ -103,6 +103,7 @@ class Six extends DefaultValueBinder implements FromCollection,WithEvents,WithHe
                 $event->sheet->getDelegate()->getColumnDimension('B')->setWidth(60);
                 $event->sheet->getDelegate()->getColumnDimension('C')->setWidth(60);
                 $event->sheet->getDelegate()->getColumnDimension('D')->setWidth(50);
+                $event->sheet->getDelegate()->getColumnDimension('F')->setWidth(15);
                 $event->sheet->getDelegate()->getColumnDimension('H')->setWidth(55);
                 $event->sheet->getDelegate()->getColumnDimension('I')->setWidth(50);
                 $event->sheet->getDelegate()->getColumnDimension('J')->setWidth(50);
