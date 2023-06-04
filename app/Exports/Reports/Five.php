@@ -37,7 +37,11 @@ class Five extends DefaultValueBinder implements WithEvents,FromCollection,WithH
     private $startDate;
     private $endDate;
 
-    public function __construct($startDate,$endDate)
+    /**
+     * @param $startDate
+     * @param $endDate
+     */
+    public function __construct($startDate, $endDate)
     {
         if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
@@ -49,12 +53,19 @@ class Five extends DefaultValueBinder implements WithEvents,FromCollection,WithH
         $this->startDate = $startDate;
         $this->endDate = $endDate;
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     private static function core()
     {
         $query =  Application::query()->where('status','!=','draft')->where('name', '!=', null);
         return $query;
     }
 
+    /**
+     * @return string
+     */
     public function startCell(): string
     {
         return 'A2';
@@ -77,6 +88,9 @@ class Five extends DefaultValueBinder implements WithEvents,FromCollection,WithH
         return $sheet;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
+     */
     public function collection()
     {
         $query = $this->query->get();
@@ -93,6 +107,10 @@ class Five extends DefaultValueBinder implements WithEvents,FromCollection,WithH
         }
         return $query;
     }
+
+    /**
+     * @return array
+     */
     public function headings(): array
     {
         return [
@@ -108,10 +126,19 @@ class Five extends DefaultValueBinder implements WithEvents,FromCollection,WithH
             __('сумма'),
         ];
     }
+
+    /**
+     * @return string
+     */
     public static function title() : string
     {
         return '5 - Отчет свод общий';
     }
+
+    /**
+     * @param $branch
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     private function get_5($branch)
     {
         $start_date = $this->startDate ?? null;
@@ -127,6 +154,11 @@ class Five extends DefaultValueBinder implements WithEvents,FromCollection,WithH
 
         return $result;
     }
+
+    /**
+     * @param $applications
+     * @return string
+     */
     private function get_summa($applications)
     {
         $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
