@@ -187,6 +187,32 @@ class TwoTwo extends DefaultValueBinder implements WithEvents,FromCollection,Wit
         return [
             AfterSheet::class    => function(AfterSheet $event) {
 
+                $event->sheet->getDelegate()->getColumnDimension('B')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('C')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('D')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('E')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('F')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('G')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('H')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('I')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('J')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('K')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('L')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('M')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('N')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('O')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('P')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('Q')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('R')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('S')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('T')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('U')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('V')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('W')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('X')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('Y')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('Z')->setWidth(15);
+
                 $event->sheet->mergeCells('C1:H1', Worksheet::MERGE_CELL_CONTENT_MERGE);
                 $event->sheet->mergeCells('I1:N1', Worksheet::MERGE_CELL_CONTENT_MERGE);
                 $event->sheet->mergeCells('O1:T1', Worksheet::MERGE_CELL_CONTENT_MERGE);
