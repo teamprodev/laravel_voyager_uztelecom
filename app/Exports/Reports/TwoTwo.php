@@ -37,7 +37,11 @@ class TwoTwo extends DefaultValueBinder implements WithEvents,FromCollection,Wit
     private $startDate;
     private $endDate;
 
-    public function __construct($startDate,$endDate)
+    /**
+     * @param $startDate
+     * @param $endDate
+     */
+    public function __construct($startDate, $endDate)
     {
         if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
@@ -49,12 +53,19 @@ class TwoTwo extends DefaultValueBinder implements WithEvents,FromCollection,Wit
         $this->startDate = $startDate;
         $this->endDate = $endDate;
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     private static function core()
     {
         $query =  Application::query()->where('status','!=','draft')->where('name', '!=', null);
         return $query;
     }
 
+    /**
+     * @return string
+     */
     public function startCell(): string
     {
         return 'A3';
@@ -93,6 +104,9 @@ class TwoTwo extends DefaultValueBinder implements WithEvents,FromCollection,Wit
         return $sheet;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
+     */
     public function collection()
     {
         $query = $this->query->get();
@@ -125,6 +139,10 @@ class TwoTwo extends DefaultValueBinder implements WithEvents,FromCollection,Wit
         }
         return $query;
     }
+
+    /**
+     * @return array
+     */
     public function headings(): array
     {
         return [
@@ -156,10 +174,23 @@ class TwoTwo extends DefaultValueBinder implements WithEvents,FromCollection,Wit
             __('С НДС 4  '),
         ];
     }
+
+    /**
+     * @return string
+     */
     public static function title() : string
     {
         return '2 - Отчет квартальный плановый';
     }
+
+    /**
+     * @param $branch
+     * @param $startMonth
+     * @param $endMonth
+     * @param $subject
+     * @param $withNds
+     * @return string
+     */
     private function get_2_2($branch, $startMonth, $endMonth, $subject, $withNds)
     {
         $start_date = $this->startDate ? "$this->startDate-$startMonth-01 00:00" : "2022-$startMonth-01";
