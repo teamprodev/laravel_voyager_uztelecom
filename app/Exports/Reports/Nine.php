@@ -189,7 +189,7 @@ class Nine extends DefaultValueBinder implements FromCollection,WithEvents,WithH
     }
     public static function title() : string
     {
-        return '8 - Отчет по видам закупки';
+        return '9 - Ойлик харидлар илова плановый';
     }
     /**
      * Write code on Method
