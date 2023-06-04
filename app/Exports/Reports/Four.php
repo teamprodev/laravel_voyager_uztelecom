@@ -10,13 +10,15 @@ use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
+use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\DefaultValueBinder;
+use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class Four extends DefaultValueBinder implements FromCollection,WithColumnFormatting,WithHeadings,WithCustomStartCell,WithStyles
+class Four extends DefaultValueBinder implements FromCollection,WithColumnFormatting,WithHeadings,WithCustomStartCell,WithStyles,WithEvents
 {
     use Exportable;
 
@@ -30,12 +32,12 @@ class Four extends DefaultValueBinder implements FromCollection,WithColumnFormat
         if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
             if($this->startDate === null){
-                $this->query = self::core()->select('id', 'branch_id', 'number', 'date', 'user_id', 'department_initiator_id', 'type_of_purchase_id', 'name', 'subject', 'expire_warranty_date', 'planned_price', 'with_nds', 'currency', 'supplier_name', 'contract_price', 'delivery_date', 'status', 'performer_leader_user_id', 'performer_user_id', 'info_business_plan', 'info_purchase_plan', 'purchase_basis', 'basis');
+                $this->query = self::core()->select('id', 'branch_id', 'number', 'date', 'user_id', 'user_role_id', 'department_initiator_id', 'type_of_purchase_id', 'name', 'subject', 'expire_warranty_date', 'planned_price', 'with_nds', 'currency', 'supplier_name', 'contract_price', 'delivery_date', 'status', 'performer_leader_user_id', 'performer_user_id', 'info_business_plan', 'info_purchase_plan', 'purchase_basis', 'basis');
             }else{
-                $this->query = self::core()->select('id', 'branch_id', 'number', 'date', 'user_id', 'department_initiator_id', 'type_of_purchase_id', 'name', 'subject', 'expire_warranty_date', 'planned_price', 'with_nds', 'currency', 'supplier_name', 'contract_price', 'delivery_date', 'status', 'performer_leader_user_id', 'performer_user_id', 'info_business_plan', 'info_purchase_plan', 'purchase_basis', 'basis')->whereBetween('created_at', [$this->startDate, $this->endDate]);
+                $this->query = self::core()->select('id', 'branch_id', 'number', 'date', 'user_id', 'user_role_id', 'department_initiator_id', 'type_of_purchase_id', 'name', 'subject', 'expire_warranty_date', 'planned_price', 'with_nds', 'currency', 'supplier_name', 'contract_price', 'delivery_date', 'status', 'performer_leader_user_id', 'performer_user_id', 'info_business_plan', 'info_purchase_plan', 'purchase_basis', 'basis')->whereBetween('created_at', [$this->startDate, $this->endDate]);
             }
         }else{
-            $this->query = self::core()->select('id', 'branch_id', 'number', 'date', 'user_id', 'department_initiator_id', 'type_of_purchase_id', 'name', 'subject', 'expire_warranty_date', 'planned_price', 'with_nds', 'currency', 'supplier_name', 'contract_price', 'delivery_date', 'status', 'performer_leader_user_id', 'performer_user_id', 'info_business_plan', 'info_purchase_plan', 'purchase_basis', 'basis')->where('branch_id',auth()->user()->branch_id)->where('draft','!=',ApplicationMagicNumber::one)->get();
+            $this->query = self::core()->select('id', 'branch_id', 'number', 'date', 'user_id', 'user_role_id', 'department_initiator_id', 'type_of_purchase_id', 'name', 'subject', 'expire_warranty_date', 'planned_price', 'with_nds', 'currency', 'supplier_name', 'contract_price', 'delivery_date', 'status', 'performer_leader_user_id', 'performer_user_id', 'info_business_plan', 'info_purchase_plan', 'purchase_basis', 'basis')->where('branch_id',auth()->user()->branch_id)->where('draft','!=',ApplicationMagicNumber::one);
         }
     }
     private static function core()
@@ -60,16 +62,11 @@ class Four extends DefaultValueBinder implements FromCollection,WithColumnFormat
     public function collection()
     {
         $query = $this->query->get();
-
         for($i = 0;$i<count($query);$i++)
         {
-            $attributes1 = array_keys($query[$i]->getAttributes());
-            $attributes2 = array_values($query[$i]->getAttributes());
-            array_splice($attributes1,
-                5,0,'phone');
-            array_splice($attributes2,
-                5,0,isset($query[$i]->user->phone) ? $query[$i]->user->phone:"Not Phone Number");
             $query[$i]->branch_id = $query[$i]->branch_id ? $query[$i]->branch->name:"";
+            //phone
+            $query[$i]->user_role_id = isset($query[$i]->user->phone) ? $query[$i]->user->phone:"Not Phone Number";
             $query[$i]->performer_user_id = $query[$i]->performer->name ?? $query[$i]->performer_user_id;
             $query[$i]->department_initiator_id = $query[$i]->department_initiator_id ? $query[$i]->department->name:"";
             $query[$i]->user_id = $query[$i]->user->name;
@@ -78,7 +75,6 @@ class Four extends DefaultValueBinder implements FromCollection,WithColumnFormat
             $query[$i]->planned_price = !Str::contains($query[$i]->planned_price, ' ') ? number_format($query[$i]->planned_price, ApplicationMagicNumber::zero, '', ' ') : $query[$i]->planned_price;
             $query[$i]->with_nds = $query[$i]->with_nds ?'Да':'Нет';
             $query[$i]->status = $query[$i]->status ? $this->translateStatus($query[$i]->status) : StatusExtended::find($query[$i]->performer_status)->name;
-            $query[$i]->setRawAttributes(array_combine($attributes1,$attributes2));
         }
         return $query;
     }
@@ -151,5 +147,44 @@ class Four extends DefaultValueBinder implements FromCollection,WithColumnFormat
             default:
                 return $status;
         }
+    }
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class    => function(AfterSheet $event) {
+
+                $event->sheet->getDelegate()->getColumnDimension('B')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('C')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('D')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('E')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('F')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('G')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('H')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('I')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('J')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('K')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('L')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('M')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('N')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('O')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('P')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('Q')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('R')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('S')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('T')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('U')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('V')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('W')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('X')->setWidth(100);
+
+                $event->sheet->getDelegate()->getStyle('1')
+                    ->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            },
+        ];
     }
 }
