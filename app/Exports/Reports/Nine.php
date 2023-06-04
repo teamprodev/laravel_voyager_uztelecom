@@ -53,7 +53,11 @@ class Nine extends DefaultValueBinder implements FromCollection,WithEvents,WithH
     private $startDate;
     private $endDate;
 
-    public function __construct($startDate,$endDate)
+    /**
+     * @param $startDate
+     * @param $endDate
+     */
+    public function __construct($startDate, $endDate)
     {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
@@ -65,12 +69,19 @@ class Nine extends DefaultValueBinder implements FromCollection,WithEvents,WithH
             $this->query = Branch::query()->select('id','name','inn')->where('id',auth()->user()->branch_id);
         }
     }
-    private static function core()
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    private static function core(): \Illuminate\Database\Eloquent\Builder
     {
         $query =  Application::query()->where('status','!=','draft')->where('name', '!=', null);
         return $query;
     }
 
+    /**
+     * @return string
+     */
     public function startCell(): string
     {
         return 'A2';
@@ -101,7 +112,10 @@ class Nine extends DefaultValueBinder implements FromCollection,WithEvents,WithH
         return $sheet;
     }
 
-    public function collection()
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|array
+     */
+    public function collection(): \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|array
     {
         $query = $this->query->get();
         for($i = 0;$i<count($query);$i++)
@@ -135,7 +149,12 @@ class Nine extends DefaultValueBinder implements FromCollection,WithEvents,WithH
         }
         return $query;
     }
-    private function get_9($branch)
+
+    /**
+     * @param $branch
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    private function get_9($branch): \Illuminate\Database\Eloquent\Builder
     {
         $start_date = $this->startDate ?? null;
         $end_date = $this->endDate ?? null;
@@ -150,11 +169,20 @@ class Nine extends DefaultValueBinder implements FromCollection,WithEvents,WithH
 
         return $result;
     }
-    private function get_summa($applications)
+
+    /**
+     * @param $applications
+     * @return string
+     */
+    private function get_summa($applications): string
     {
         $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
         return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
     }
+
+    /**
+     * @return array
+     */
     public function headings(): array
     {
         return [
@@ -187,6 +215,10 @@ class Nine extends DefaultValueBinder implements FromCollection,WithEvents,WithH
             __('Сумма'),
         ];
     }
+
+    /**
+     * @return string
+     */
     public static function title() : string
     {
         return '9 - Ойлик харидлар илова плановый';
