@@ -12,8 +12,10 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
+use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
@@ -26,8 +28,9 @@ use Maatwebsite\Excel\DefaultValueBinder;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use function React\Promise\all;
 
-class Two extends DefaultValueBinder implements FromCollection,WithHeadings,WithCustomStartCell,WithStyles
+class Two extends DefaultValueBinder implements FromCollection,WithHeadings,WithCustomStartCell,WithStyles,WithEvents
 {
     use Exportable;
 
@@ -130,5 +133,39 @@ class Two extends DefaultValueBinder implements FromCollection,WithHeadings,With
     public static function title() : string
     {
         return '2 - Отчет квартальный итоговый';
+    }
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class    => function(AfterSheet $event) {
+
+                $event->sheet->getDelegate()->getColumnDimension('B')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('C')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('D')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('E')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('F')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('G')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('H')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('I')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('J')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('K')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('L')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('M')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('N')->setWidth(15);
+
+                $event->sheet->mergeCells('C1:E1', Worksheet::MERGE_CELL_CONTENT_MERGE);
+                $event->sheet->mergeCells('F1:H1', Worksheet::MERGE_CELL_CONTENT_MERGE);
+                $event->sheet->mergeCells('I1:K1', Worksheet::MERGE_CELL_CONTENT_MERGE);
+                $event->sheet->mergeCells('L1:N1', Worksheet::MERGE_CELL_CONTENT_MERGE);
+
+                $event->sheet->getDelegate()->getStyle('1')
+                    ->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            },
+        ];
     }
 }
