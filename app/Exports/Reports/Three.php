@@ -135,6 +135,14 @@ class Three extends DefaultValueBinder implements WithEvents,FromCollection,With
         return [
             AfterSheet::class    => function(AfterSheet $event) {
 
+                $event->sheet->getDelegate()->getColumnDimension('B')->setWidth(40);
+                $event->sheet->getDelegate()->getColumnDimension('C')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('D')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('E')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('F')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('G')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('H')->setWidth(15);
+
                 $event->sheet->mergeCells('C1:D1', Worksheet::MERGE_CELL_CONTENT_MERGE);
                 $event->sheet->mergeCells('E1:F1', Worksheet::MERGE_CELL_CONTENT_MERGE);
                 $event->sheet->mergeCells('G1:H1', Worksheet::MERGE_CELL_CONTENT_MERGE);
