@@ -610,7 +610,12 @@ class ReportDataService
             ['data' => 'supplier_name', 'name' => 'supplier_name'],
             ['data' => 'contract_price', 'name' => 'contract_price'],
             ['data' => 'delivery_date', 'name' => 'delivery_date'],
-            ['data' => 'status', 'name' => 'status'],
+            ['data' => 'status', 'name' => 'status','render' => 'function (data, type, row) {
+                                var details = JSON.parse(row.status).backgroundColor;
+                                var color = JSON.parse(row.status).color;
+                                var app = JSON.parse(row.status).app;
+                                return `<button style="background-color: ${details};color:${color};" class="btn btn-sm">` + app + `</button>`;
+                            }'],
             ['data' => 'performer_leader_user_id', 'name' => 'performer_leader_user_id'],
             ['data' => 'performer_user_id', 'name' => 'performer_user_id'],
             ['data' => 'info_business_plan', 'name' => 'info_business_plan'],
