@@ -38,5 +38,5 @@
             }
         }
     </script>
-<x-laravelYajra language="ru" tableId="report22" stateSave="true" :dtColumns=$dtColumns :dtHeaders=$dtHeaders dom='QBlfrtip' serverSide="true" getData="{{ route('report','22') }}" exportId="{{\App\Exports\Reports\TwoTwo::class }}" tableTitle="{{__('2 - Отчет квартальный плановый')}}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
+<x-laravelYajra language="ru" tableId="report22" stateSave="true" dom='QBlfrtip' serverSide="true" getData="{{ route('report','22') }}" exportId="{{\App\Reports\TwoTwo::class }}" tableTitle="{{__('2 - Отчет квартальный плановый')}}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
 @endsection
