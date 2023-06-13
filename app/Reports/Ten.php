@@ -6,228 +6,252 @@ use App\Enums\ApplicationMagicNumber;
 use App\Enums\PermissionEnum;
 use App\Models\Application;
 use App\Models\Branch;
-use App\Models\ReportDate;
-use App\Models\Resource;
 use App\Models\StatusExtended;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
+use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithCustomStartCell;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Concerns\WithTitle;
+use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Cell\Cell;
+use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\FromQuery;
+use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
+use Maatwebsite\Excel\Concerns\WithDrawings;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\DefaultValueBinder;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class Ten implements ALL
+class Ten extends DefaultValueBinder implements WithStyles, FromCollection, WithHeadings,WithCustomStartCell,WithEvents
 {
+    use Exportable;
 
-    public $a;
+    private $startDate;
+    private $endDate;
 
-    public static function core() {
+    /**
+     * @param $startDate
+     * @param $endDate
+     */
+    public function __construct($startDate, $endDate)
+    {
         if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
-            $operator = '!=';
-            $b = null;
+            $this->operator = '!=';
+            $this->b = null;
         }else{
-            $operator = '==';
-            $b = auth()->user()->branch_id;
+            $this->operator = '==';
+            $this->b = auth()->user()->branch_id;
         }
-        $a = 'branch_id';
-        $query =  Application::query()->where('status','!=','draft')->where('name', '!=', null)->where($a,$operator,$b);
-        return $query;
+        $this->a = 'branch_id';
 
+        $this->query = StatusExtended::select('id','name');
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
     }
-    public static function condition($startDate, $endDate)
+
+    /**
+     * @return string
+     */
+    public function startCell(): string
     {
-        $status = StatusExtended::query();
-        return $status;
+        return 'A1';
     }
 
+    /**
+     * @param Worksheet $sheet
+     * @return Worksheet
+     */
+    public function styles(Worksheet $sheet): Worksheet
+    {
+        $sheet->getStyle('1')->getFont()->setBold(true);
+        return $sheet;
+    }
 
-    public static function data($startDate, $endDate) {
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function collection(): \Illuminate\Support\Collection
+    {
+        $query = $this->query->get();
+        for($i = 0;$i<count($query);$i++)
+        {
+            $query[$i]->january = $this->get_10('01-01','02-01',$query[$i]);
+            $query[$i]->february = $this->get_10('02-01','03-01',$query[$i]);
+            $query[$i]->march = $this->get_10('03-01','04-01',$query[$i]);
+            $query[$i]->april = $this->get_10('04-01','05-01',$query[$i]);
+            $query[$i]->may = $this->get_10('05-01','06-01',$query[$i]);
+            $query[$i]->june = $this->get_10('06-01','07-01',$query[$i]);
+            $query[$i]->july = $this->get_10('07-01','08-01',$query[$i]);
+            $query[$i]->august = $this->get_10('08-01','09-01',$query[$i]);
+            $query[$i]->september = $this->get_10('09-01','10-01',$query[$i]);
+            $query[$i]->october = $this->get_10('10-01','11-01',$query[$i]);
+            $query[$i]->november = $this->get_10('11-01','12-01',$query[$i]);
+            $query[$i]->december = $this->get_10('12-01','12-31',$query[$i]);
+            $query[$i]->all = $this->get_10('01-01','12-31',$query[$i]);
+            unset($query[$i]->id);
+        }
+        return $query;
+    }
 
+    /**
+     * @param $startMonth
+     * @param $endMonth
+     * @param $query
+     * @return int
+     */
+    private function get_10($startMonth, $endMonth, $query): int
+    {
+        $year = Carbon::now()->year;
+        $start_date = $this->startDate ? "$this->startDate-$startMonth" : "$year-$startMonth";
+        $end_date = $this->endDate ? "$this->endDate-$endMonth" : "$year-$endMonth";
 
+        $applications = Application::where('draft','!=',ApplicationMagicNumber::one)->whereBetween('created_at',[$start_date,$end_date])->where($this->a,$this->operator,$this->b)->where('performer_status', $query->id)->get();
+        return count($applications);
+    }
 
+    /**
+     * @return array
+     */
+    public function headings(): array
+    {
+        return [
+            __('Год'),
+            __('Январь'),
+            __('Февраль'),
+            __('Март'),
+            __('Апрель'),
+            __('Май'),
+            __('Июнь'),
+            __('Июль'),
+            __('Август'),
+            __('Сентябрь'),
+            __('Октябрь'),
+            __('Ноябрь'),
+            __('Декабрь'),
+            __('Итого'),
+        ];
+    }
 
-        $data = [
-            'name' => [
-                'name' => 'name',
-                'title' => __('Год'),
-                'data' => function($application){
-                    return  $application->name;
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
-            'january' => [
-                'name' => 'january',
-                'title' => __('Январь'),
-                'data' => function($status) use ($startDate, $endDate){
-                    $startDate = $startDate ? "$startDate-01-01" : "2022-01-01";
-                    $endDate = $endDate ? "$endDate-02-01" : "2022-02-01";
-
-                    $applications = self::core()->where('performer_status', $status->id)->whereBetween('created_at',[$startDate, $endDate])->get();
-                    return count($applications);
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
-            'february' => [
-                'name' => 'february',
-                'title' => __('Февраль'),
-                'data' => function($status) use ($startDate, $endDate){
-                    $startDate = $startDate ? "$startDate-02-01" : "2022-02-01";
-                    $endDate = $endDate ? "$endDate-03-01" : "2022-03-01";
-
-                    $applications = self::core()->where('performer_status', $status->id)->whereBetween('created_at',[$startDate, $endDate])->get();
-                    return count($applications);
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
-            'march' => [
-                'name' => 'march',
-                'title' => __('Март'),
-                'data' => function($status) use ($startDate, $endDate){
-                    $startDate = $startDate ? "$startDate-03-01" : "2022-03-01";
-                    $endDate = $endDate ? "$endDate-04-01" : "2022-04-01";
-
-                    $applications = self::core()->where('performer_status', $status->id)->whereBetween('created_at',[$startDate, $endDate])->get();
-                    return count($applications);
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
-            'april' => [
-                'name' => 'april',
-                'title' => __('Апрель'),
-                'data' => function($status) use ($startDate, $endDate){
-                    $startDate = $startDate ? "$startDate-04-01" : "2022-04-01";
-                    $endDate = $endDate ? "$endDate-05-01" : "2022-05-01";
-
-                    $applications = self::core()->where('performer_status', $status->id)->whereBetween('created_at',[$startDate, $endDate])->get();
-                    return count($applications);
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
-            'may' => [
-                'name' => 'may',
-                'title' => __('Май'),
-                'data' => function($status) use ($startDate, $endDate){
-                    $startDate = $startDate ? "$startDate-05-01" : "2022-05-01";
-                    $endDate = $endDate ? "$endDate-06-01" : "2022-06-01";
-
-                    $applications = self::core()->where('performer_status', $status->id)->whereBetween('created_at',[$startDate, $endDate])->get();
-                    return count($applications);
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
-            'june' => [
-                'name' => 'june',
-                'title' => __('Июнь'),
-                'data' => function($status) use ($startDate, $endDate){
-                    $startDate = $startDate ? "$startDate-06-01" : "2022-06-01";
-                    $endDate = $endDate ? "$endDate-07-01" : "2022-07-01";
-
-                    $applications = self::core()->where('performer_status', $status->id)->whereBetween('created_at',[$startDate, $endDate])->get();
-                    return count($applications);
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
-            'july' => [
-                'name' => 'july',
-                'title' => __('Июль'),
-                'data' => function($status) use ($startDate, $endDate){
-                    $startDate = $startDate ? "$startDate-07-01" : "2022-07-01";
-                    $endDate = $endDate ? "$endDate-08-01" : "2022-08-01";
-
-                    $applications = self::core()->where('performer_status', $status->id)->whereBetween('created_at',[$startDate, $endDate])->get();
-                    return count($applications);
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
-            'august' => [
-                'name' => 'august',
-                'title' => __('Август'),
-                'data' => function($status) use ($startDate, $endDate){
-                    $startDate = $startDate ? "$startDate-08-01" : "2022-08-01";
-                    $endDate = $endDate ? "$endDate-09-01" : "2022-09-01";
-
-                    $applications = self::core()->where('performer_status', $status->id)->whereBetween('created_at',[$startDate, $endDate])->get();
-                    return count($applications);
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
-            'september' => [
-                'name' => 'september',
-                'title' => __('Сентябрь'),
-                'data' => function($status) use ($startDate, $endDate){
-                    $startDate = $startDate ? "$startDate-09-01" : "2022-09-01";
-                    $endDate = $endDate ? "$endDate-10-01" : "2022-10-01";
-
-                    $applications = self::core()->where('performer_status', $status->id)->whereBetween('created_at',[$startDate, $endDate])->get();
-                    return count($applications);
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
-            'october' => [
-                'name' => 'october',
-                'title' => __('Октябрь'),
-                'data' => function($status) use ($startDate, $endDate){
-                    $startDate = $startDate ? "$startDate-10-01" : "2022-10-01";
-                    $endDate = $endDate ? "$endDate-11-01" : "2022-11-01";
-
-                    $applications = self::core()->where('performer_status', $status->id)->whereBetween('created_at',[$startDate, $endDate])->get();
-                    return count($applications);
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
-            'november' => [
-                'name' => 'november',
-                'title' => __('Ноябрь'),
-                'data' => function($status) use ($startDate, $endDate){
-                    $startDate = $startDate ? "$startDate-11-01" : "2022-11-01";
-                    $endDate = $endDate ? "$endDate-12-01" : "2022-12-01";
-
-                    $applications = self::core()->where('performer_status', $status->id)->whereBetween('created_at',[$startDate, $endDate])->get();
-                    return count($applications);
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
-            'december' => [
-                'name' => 'december',
-                'title' => __('Декабрь'),
-                'data' => function($status) use ($startDate, $endDate){
-                    $startDate = $startDate ? "$startDate-12-01" : "2022-12-01";
-                    $endDate = $endDate ? "$endDate-12-31" : "2022-12-31";
-
-                    $applications = self::core()->where('performer_status', $status->id)->whereBetween('created_at',[$startDate, $endDate])->get();
-                    return count($applications);
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
-
-            'all' => [
-                'name' => 'all',
-                'title' => __('Итого'),
-                'data' => function($status) use ($startDate, $endDate){
-                    $applications = self::core()->where('performer_status', $status->id)->whereBetween('created_at',[$startDate, $endDate])->get();
-                    return count($applications);
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
+    /**
+     * @return string
+     */
+    public static function title() : string
+    {
+        return '10 - Отчет по кол-ву статусам';
+    }
+    /**
+     * @return array
+     */
+    public static function dtHeaders()
+    {
+        return [
+            [
+                __('Год') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Январь') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Февраль') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Март') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Апрель') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Май') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Июнь') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Июль') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Август') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Сентябрь') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Октябрь') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Ноябрь') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Декабрь') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Итого') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
             ],
         ];
-
-        return $data;
     }
+    /**
+     * @return array
+     */
+    public static function dtColumns()
+    {
+        return [
+            ['data' => 'name', 'name' => 'name'],
+            ['data' => 'january', 'name' => 'january'],
+            ['data' => 'february', 'name' => 'february'],
+            ['data' => 'march', 'name' => 'march'],
+            ['data' => 'april', 'name' => 'april'],
+            ['data' => 'may', 'name' => 'may'],
+            ['data' => 'june', 'name' => 'june'],
+            ['data' => 'july', 'name' => 'july'],
+            ['data' => 'august', 'name' => 'august'],
+            ['data' => 'september', 'name' => 'september'],
+            ['data' => 'october', 'name' => 'october'],
+            ['data' => 'november', 'name' => 'november'],
+            ['data' => 'december', 'name' => 'december'],
+            ['data' => 'all', 'name' => 'all'],
+        ];
+    }
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class    => function(AfterSheet $event) {
 
-
-    public static function title() {
-
-        return  __('10 - Отчет по кол-ву статусам.xlsx');
+                $event->sheet->getDelegate()->getColumnDimension('A')->setWidth(100);
+                $event->sheet->getDelegate()->getStyle('1')
+                    ->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            },
+        ];
     }
 }
