@@ -5,7 +5,6 @@
 <x-laravelYajra language="ru" tableId="report8" stateSave="true" dom='QBlfrtip'
                 serverSide="true" scrollX="true" getData="{{ route('report','8') }}"
                 exportId="{{ \App\Reports\Eight::class }}"
-                tableTitle="{{__('8 - Отчет по видам закупки')}}"
                 startDate="{{request()->input('startDate')}}"
                 endDate="{{request()->input('endDate')}}"/>
 @endsection
