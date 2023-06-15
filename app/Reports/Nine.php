@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exports\Reports;
+namespace App\Reports;
 
 use App\Enums\ApplicationMagicNumber;
 use App\Enums\PermissionEnum;
@@ -222,6 +222,209 @@ class Nine extends DefaultValueBinder implements FromCollection,WithEvents,WithH
     public static function title() : string
     {
         return '9 - Ойлик харидлар илова плановый';
+    }
+    /**
+     * @return array
+     */
+    public static function dtHeaders()
+    {
+        return [
+            [
+                __('ID') => [
+                    'rowspan' => 2,
+                    'colspan' => 0,
+                ],
+                __('Наименование заказчика') => [
+                    'rowspan' => 2,
+                    'colspan' => 0,
+                ],
+                __('СТИР') => [
+                    'rowspan' => 2,
+                    'colspan' => 0,
+                ],
+                __('Договоры') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('Через электронный магазин (E-shop)') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('Через национальный магазин') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('Через электронный аукцион') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('Через кооперационный портал') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('Через платформы "Шаффоф қурилиш"') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('Через электронные биржевые торги на специальных торговых площадках') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('Через конкурс(выбор)') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('Через тендер') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('Выбор наиболее приемлемых предложений') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('С едиными поставщиками') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('Прямые (ПП-3988 и др. ПП, УП, РП)') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+            ],
+            [
+                'Количество 1' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 1' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Количество 2' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 2' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Количество 3' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 3' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Количество 4' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 4' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Количество 5' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 5' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Количество 6' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 6' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Количество 7' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 7' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Количество 8' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 8' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Количество 9' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 9' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Количество 10' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 10' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Количество 11' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 11' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Количество 12' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                'Сумма 12' => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+            ],
+        ];
+    }
+    /**
+     * @return array
+     */
+    public static function dtColumns()
+    {
+        return [
+            ['data' => 'id', 'name' => 'id'],
+            ['data' => 'name', 'name' => 'name'],
+            ['data' => 'supplier_inn', 'name' => 'supplier_inn'],
+            ['data' => 'contract_count', 'name' => 'contract_count'],
+            ['data' => 'contract_sum', 'name' => 'contract_sum'],
+            ['data' => 'eshop_count', 'name' => 'eshop_count'],
+            ['data' => 'eshop_sum', 'name' => 'eshop_sum'],
+            ['data' => 'nat_eshop_count', 'name' => 'nat_eshop_count'],
+            ['data' => 'nat_eshop_sum', 'name' => 'nat_eshop_sum'],
+            ['data' => 'auction_count', 'name' => 'auction_count'],
+            ['data' => 'auction_sum', 'name' => 'auction_sum'],
+            ['data' => 'coop_count', 'name' => 'coop_count'],
+            ['data' => 'coop_sum', 'name' => 'coop_sum'],
+            ['data' => 'shaffof_count', 'name' => 'shaffof_count'],
+            ['data' => 'shaffof_sum', 'name' => 'shaffof_sum'],
+            ['data' => 'exchange_count', 'name' => 'exchange_count'],
+            ['data' => 'exchange_sum', 'name' => 'exchange_sum'],
+            ['data' => 'konkurs_count', 'name' => 'konkurs_count'],
+            ['data' => 'konkurs_sum', 'name' => 'konkurs_sum'],
+            ['data' => 'tender_count', 'name' => 'tender_count'],
+            ['data' => 'tender_sum', 'name' => 'tender_sum'],
+            ['data' => 'offers_count', 'name' => 'offers_count'],
+            ['data' => 'offers_sum', 'name' => 'offers_sum'],
+            ['data' => 'sole_supplier_count', 'name' => 'sole_supplier_count'],
+            ['data' => 'sole_supplier_sum', 'name' => 'sole_supplier_sum'],
+            ['data' => 'direct_count', 'name' => 'direct_count'],
+            ['data' => 'direct_sum', 'name' => 'direct_sum']
+        ];
     }
     /**
      * Write code on Method

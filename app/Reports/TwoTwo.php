@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exports\Reports;
+namespace App\Reports;
 
 use App\Enums\ApplicationMagicNumber;
 use App\Enums\PermissionEnum;
@@ -207,6 +207,230 @@ class TwoTwo extends DefaultValueBinder implements WithEvents,FromCollection,Wit
         $result = array_sum(preg_replace('/[^0-9]/', '', $applications));
         $return = $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
         return $return;
+    }
+
+    /**
+     * @return array
+     */
+    public static function dtHeaders()
+    {
+        return [
+            [
+                __('ID') => [
+                    'rowspan' => 3,
+                    'colspan' => 0,
+                ],
+                __('Филиал') => [
+                    'rowspan' => 3,
+                    'colspan' => 0,
+                ],
+                __('1 - Квартал') => [
+                    'rowspan' => 0,
+                    'colspan' => 6,
+                ],
+                __('2 - Квартал') => [
+                    'rowspan' => 0,
+                    'colspan' => 6,
+                ],
+                __('3 - Квартал') => [
+                    'rowspan' => 0,
+                    'colspan' => 6,
+                ],
+                __('4 - Квартал') => [
+                    'rowspan' => 0,
+                    'colspan' => 6,
+                ],
+            ],
+
+            [
+                __('товар 1') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('работа 1') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('услуга 1') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+
+                __('товар 2') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('работа 2') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('услуга 2') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+
+                __('товар 3') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('работа 3') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('услуга 3') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+
+                __('товар 4') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('работа 4') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('услуга 4') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+            ],
+
+            [
+                __('Без НДС 1') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('С НДС 1') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Без НДС 1 ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('С НДС 1 ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Без НДС 1  ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('С НДС 1  ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+
+                __('Без НДС 2') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('С НДС 2') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Без НДС 2 ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('С НДС 2 ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Без НДС 2  ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('С НДС 2  ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+
+                __('Без НДС 3') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('С НДС 3') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Без НДС 3 ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('С НДС 3 ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Без НДС 3  ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('С НДС 3  ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+
+                __('Без НДС 4') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('С НДС 4') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Без НДС 4 ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('С НДС 4 ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Без НДС 4  ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('С НДС 4  ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+            ],
+        ];
+    }/**
+     * @return array
+     */
+    public static function dtColumns()
+    {
+        return [
+            ['data' => 'id', 'name' => 'id'],
+            ['data' => 'name', 'name' => 'name'],
+            ['data' => 'tovar_1', 'name' => 'tovar_1'],
+            ['data' => 'tovar_1_nds', 'name' => 'tovar_1_nds'],
+            ['data' => 'rabota_1', 'name' => 'rabota_1'],
+            ['data' => 'rabota_1_nds', 'name' => 'rabota_1_nds'],
+            ['data' => 'usluga_1', 'name' => 'usluga_1'],
+            ['data' => 'usluga_1_nds', 'name' => 'usluga_1_nds'],
+            ['data' => 'tovar_2', 'name' => 'tovar_2'],
+            ['data' => 'tovar_2_nds', 'name' => 'tovar_2_nds'],
+            ['data' => 'rabota_2', 'name' => 'rabota_2'],
+            ['data' => 'rabota_2_nds', 'name' => 'rabota_2_nds'],
+            ['data' => 'usluga_2', 'name' => 'usluga_2'],
+            ['data' => 'usluga_2_nds', 'name' => 'usluga_2_nds'],
+            ['data' => 'tovar_3', 'name' => 'tovar_3'],
+            ['data' => 'tovar_3_nds', 'name' => 'tovar_3_nds'],
+            ['data' => 'rabota_3', 'name' => 'rabota_3'],
+            ['data' => 'rabota_3_nds', 'name' => 'rabota_3_nds'],
+            ['data' => 'usluga_3', 'name' => 'usluga_3'],
+            ['data' => 'usluga_3_nds', 'name' => 'usluga_3_nds'],
+            ['data' => 'tovar_4', 'name' => 'tovar_4'],
+            ['data' => 'tovar_4_nds', 'name' => 'tovar_4_nds'],
+            ['data' => 'rabota_4', 'name' => 'rabota_4'],
+            ['data' => 'rabota_4_nds', 'name' => 'rabota_4_nds'],
+            ['data' => 'usluga_4', 'name' => 'usluga_4'],
+            ['data' => 'usluga_4_nds', 'name' => 'usluga_4_nds'],
+        ];
     }
     /**
      * Write code on Method

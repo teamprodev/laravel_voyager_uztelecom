@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exports\Reports;
+namespace App\Reports;
 
 use App\Enums\ApplicationMagicNumber;
 use App\Enums\PermissionEnum;
@@ -153,6 +153,81 @@ class Three extends DefaultValueBinder implements WithEvents,FromCollection,With
             ->toArray()));
         $return = $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
         return $return;
+    }
+    /**
+     * @return array
+     */
+    public static function dtHeaders()
+    {
+        return [
+            [
+                __('ID') => [
+                    'rowspan' => 2,
+                    'colspan' => 0,
+                ],
+                __('Филиал') => [
+                    'rowspan' => 2,
+                    'colspan' => 0,
+                ],
+                __('товар') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('работа') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('услуга') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+            ],
+
+            [
+                __(' Без НДС') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __(' С НДС') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+
+                __('Без НДС') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('С НДС') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+
+                __('Без НДС  ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('С НДС  ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+            ],
+        ];
+    }
+    /**
+     * @return array
+     */
+    public static function dtColumns()
+    {
+        return [
+            ['data' => 'id', 'name' => 'id'],
+            ['data' => 'name', 'name' => 'name'],
+            ['data' => 'tovar_1', 'name' => 'tovar_1'],
+            ['data' => 'tovar_1_nds', 'name' => 'tovar_1_nds'],
+            ['data' => 'rabota_1', 'name' => 'rabota_1'],
+            ['data' => 'rabota_1_nds', 'name' => 'rabota_1_nds'],
+            ['data' => 'usluga_1', 'name' => 'usluga_1'],
+            ['data' => 'usluga_1_nds', 'name' => 'usluga_1_nds'],
+        ];
     }
     /**
      * Write code on Method

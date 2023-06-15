@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exports\Reports;
+namespace App\Reports;
 
 use App\Enums\ApplicationMagicNumber;
 use App\Enums\PermissionEnum;
@@ -163,6 +163,95 @@ class Five extends DefaultValueBinder implements WithEvents,FromCollection,WithH
     {
         $result = array_sum(preg_replace( '/[^0-9]/', '', $applications));
         return $result ? number_format($result, ApplicationMagicNumber::zero, '', ' ') : '0';
+    }
+    /**
+     * @return array
+     */
+    public static function dtHeaders()
+    {
+        return [
+            [
+                __('ID') => [
+                    'rowspan' => 2,
+                    'colspan' => 0,
+                ],
+                __('Филиал') => [
+                    'rowspan' => 2,
+                    'colspan' => 0,
+                ],
+                __('Заключенные договора') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('товар') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('работа') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+                __('услуга') => [
+                    'rowspan' => 0,
+                    'colspan' => 2,
+                ],
+            ],
+            [
+                __(' кол-во') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __(' сумма') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+
+                __('кол-во') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('сумма') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+
+                __('кол-во ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('сумма ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+
+                __('кол-во  ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('сумма  ') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+            ],
+        ];
+    }
+    /**
+     * @return array
+     */
+    public static function dtColumns()
+    {
+        return [
+            ['data' => 'id', 'name' => 'id'],
+            ['data' => 'name', 'name' => 'name'],
+            ['data' => 'count', 'name' => 'count'],
+            ['data' => 'summa', 'name' => 'summa'],
+            ['data' => 'count_1', 'name' => 'count_1'],
+            ['data' => 'summa_1', 'name' => 'summa_1'],
+            ['data' => 'count_2', 'name' => 'count_2'],
+            ['data' => 'summa_2', 'name' => 'summa_2'],
+            ['data' => 'count_3', 'name' => 'count_3'],
+            ['data' => 'summa_3', 'name' => 'summa_3'],
+        ];
     }
     /**
      * Write code on Method

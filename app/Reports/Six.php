@@ -5,150 +5,205 @@ namespace App\Reports;
 use App\Enums\ApplicationMagicNumber;
 use App\Enums\PermissionEnum;
 use App\Models\Application;
-use App\Models\Branch;
-use App\Models\ReportDate;
-use App\Models\Resource;
 use App\Models\StatusExtended;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use Maatwebsite\Excel\Concerns\WithCustomStartCell;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\DefaultValueBinder;
+use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class Six implements ALL
+class Six extends DefaultValueBinder implements FromCollection,WithEvents,WithHeadings,WithCustomStartCell,WithStyles
 {
+    use Exportable;
 
-    public static function core() {
-        $query =  Application::query()->where('status','!=','draft')->where('name', '!=', null);
-        return $query;
+    private $startDate;
+    private $endDate;
 
-    }
-    public static function condition($startDate, $endDate)
+    /**
+     * @param $startDate
+     * @param $endDate
+     */
+    public function __construct($startDate, $endDate)
     {
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
         if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
-            if($startDate === null){
-                $query = self::core();
+            if($this->startDate === null){
+                $this->query = self::core()->select('id', 'name', 'supplier_name', 'contract_number', 'subject', 'number', 'planned_price', 'contract_info', 'contract_price', 'protocol_number', 'protocol_date');
             }else{
-                $query = self::core()->whereBetween('created_at', [$startDate, $endDate]);
+                $this->query = self::core()->select('id', 'name', 'supplier_name', 'contract_number', 'subject', 'number', 'planned_price', 'contract_info', 'contract_price', 'protocol_number', 'protocol_date');
             }
         }else{
-            $query = self::core()->where('branch_id',auth()->user()->branch_id)->where('draft','!=',ApplicationMagicNumber::one)->get();
+            $this->query = self::core()->select('id', 'name', 'supplier_name', 'contract_number', 'subject', 'number', 'planned_price', 'contract_info', 'contract_price', 'protocol_number', 'protocol_date');
+        }
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    private static function core()
+    {
+        $query =  Application::query()->where('status','!=','draft')->where('name', '!=', null);
+        return $query;
+    }
+
+    /**
+     * @return string
+     */
+    public function startCell(): string
+    {
+        return 'A1';
+    }
+    /**
+     * @return Worksheet
+     */
+    public function styles(Worksheet $sheet): Worksheet
+    {
+        $sheet->getStyle('1')->getFont()->setBold(true);
+        return $sheet;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
+     */
+    public function collection()
+    {
+        $query = $this->query->get();
+        $branches = $this->query->select('branch_id')->get();
+        for($i = 0;$i<count($query);$i++)
+        {
+            $query[$i]->name = $branches[$i]->branch_id ? $branches[$i]->branch->name:"";
+            $query[$i]->planned_price = !Str::contains($query[$i]->planned_price, ' ') ? number_format($query[$i]->planned_price, ApplicationMagicNumber::zero, '', ' ') : $query[$i]->planned_price;
         }
         return $query;
     }
 
-
-    public static function data() {
-
-
-
-
-        $data = [
-            'id' => [
-                'name' => 'id',
-                'title' => __('ID'),
-                'data' => function($application){
-                    return  $application->id;
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
-            'name' => [
-                'name' =>  'name',
-                'title' => __('Филиал'),
-                'data' => function($application){
-                    return $application->branch_id ? $application->branch->name:"";
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
-            'supplier_name' => [
-                'name' =>  'supplier_name',
-                'title' => __('Контрагент (предприятия поставляющий товаров. работ. услуг)'),
-                'data' => function($application){
-                    return $application->supplier_name;
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
-            'contract_number' => [
-                'name' =>  'contract_number',
-                'title' => __('Договор (контракт)'),
-                'data' => function($application){
-                    return $application->contract_number;
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
-            'subject' => [
-                'name' =>  'subject',
-                'title' => __('Предмет закупки (товар,работа,услуга)'),
-                'data' => function($application){
-                    return $application->subject ? $application->subjects->name:'';
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
-            'number' => [
-                'name' =>  'number',
-                'title' =>  __('номер заявки'),
-                'data' => function($application){
-                    return  $application->number;
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
-            'planned_price' => [
-                'name' =>  'planned_price',
-                'title' => __('сумма заявки'),
-                'data' => function($application){
-                    return !Str::contains($application->planned_price, ' ') ? number_format($application->planned_price, ApplicationMagicNumber::zero, '', ' ') : $application->planned_price;
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
-            'contract_info' => [
-                'name' =>  'contract_info',
-                'title' => __('Предмет договора (контракта) и краткая характеристика'),
-                'data' => function($application){
-                    return $application->contract_info;
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
-            'contract_price' => [
-                'name' =>  'contract_price',
-                'title' => __('Общая сумма договора (контракта)'),
-                'data' => function($application){
-                    return $application->contract_price;
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
-            'protocol_number' => [
-                'name' =>  'protocol_number',
-                'title' => __('Номер протокола внутренней комиссии'),
-                'data' => function($application){
-                    return $application->protocol_number;
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
-            'protocol_date' => [
-                'name' =>  'protocol_date',
-                'title' => __('Дата протокола внутренней комиссии'),
-                'data' => function($application){
-                    return $application->protocol_date;
-                },
-                'rowspan' => 0,
-                'colspan' => 0,
-            ],
+    /**
+     * @return array
+     */
+    public function headings(): array
+    {
+        return [
+            __('ID'),
+            __('Филиал'),
+            __('Контрагент (предприятия поставляющий товаров. работ. услуг)'),
+            __('Договор (контракт)'),
+            __('Предмет закупки (товар,работа,услуга)'),
+            __('номер заявки'),
+            __('сумма заявки'),
+            __('Предмет договора (контракта) и краткая характеристика'),
+            __('Общая сумма договора (контракта)'),
+            __('Номер протокола внутренней комиссии'),
+            __('Дата протокола внутренней комиссии'),
         ];
-
-        return $data;
     }
 
+    /**
+     * @return string
+     */
+    public static function title() : string
+    {
+        return '6 - Отчет свод';
+    }
+    /**
+     * @return array
+     */
+    public static function dtHeaders()
+    {
+        return [
+            [
+                __('ID') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Филиал') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Контрагент (предприятия поставляющий товаров. работ. услуг)') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Договор (контракт)') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Предмет закупки (товар,работа,услуга)') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('номер заявки') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('сумма заявки') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Предмет договора (контракта) и краткая характеристика') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Общая сумма договора (контракта)') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Номер протокола внутренней комиссии') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+                __('Дата протокола внутренней комиссии') => [
+                    'rowspan' => 0,
+                    'colspan' => 0,
+                ],
+            ],
+        ];
+    }
+    /**
+     * @return array
+     */
+    public static function dtColumns()
+    {
+        return [
+            ['data' => 'id', 'name' => 'id'],
+            ['data' => 'name', 'name' => 'name'],
+            ['data' => 'supplier_name', 'name' => 'supplier_name'],
+            ['data' => 'contract_number', 'name' => 'contract_number'],
+            ['data' => 'subject', 'name' => 'subject'],
+            ['data' => 'number', 'name' => 'number'],
+            ['data' => 'planned_price', 'name' => 'planned_price'],
+            ['data' => 'contract_info', 'name' => 'contract_info'],
+            ['data' => 'contract_price', 'name' => 'contract_price'],
+            ['data' => 'protocol_number', 'name' => 'protocol_number'],
+            ['data' => 'protocol_date', 'name' => 'protocol_date'],
+        ];
+    }
+    /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class    => function(AfterSheet $event) {
 
-    public static function title() {
-
-        return  __('6 - Отчет свод.xlsx');
+                $event->sheet->getDelegate()->getColumnDimension('B')->setWidth(60);
+                $event->sheet->getDelegate()->getColumnDimension('C')->setWidth(60);
+                $event->sheet->getDelegate()->getColumnDimension('D')->setWidth(50);
+                $event->sheet->getDelegate()->getColumnDimension('F')->setWidth(15);
+                $event->sheet->getDelegate()->getColumnDimension('H')->setWidth(55);
+                $event->sheet->getDelegate()->getColumnDimension('I')->setWidth(50);
+                $event->sheet->getDelegate()->getColumnDimension('J')->setWidth(50);
+                $event->sheet->getDelegate()->getColumnDimension('K')->setWidth(50);
+            },
+        ];
     }
 }

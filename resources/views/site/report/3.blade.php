@@ -19,5 +19,5 @@
             }
         }
     </script>
-    <x-laravelYajra language="ru" tableId="report3" stateSave="true" :dtColumns=$dtColumns :dtHeaders=$dtHeaders dom='QBlfrtip' serverSide="true" getData="{{ route('report','3') }}" exportId="{{ App\Exports\Reports\Three::class }}" tableTitle="{{ __('3 - Отчет за год') }}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
+    <x-laravelYajra language="ru" tableId="report3" stateSave="true" dom='QBlfrtip' serverSide="true" getData="{{ route('report','3') }}" exportId="{{ App\Reports\Three::class }}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
 @endsection
