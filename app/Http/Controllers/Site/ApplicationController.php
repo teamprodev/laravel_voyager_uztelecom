@@ -12,11 +12,10 @@ use App\Models\StatusExtended;
 use App\Services\ApplicationService;
 use App\Models\SignedDocs;
 use Exception;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon as Date;
 use Illuminate\Support\Facades\File;
 use App\Enums\ApplicationStatusEnum;
@@ -264,9 +263,7 @@ class ApplicationController extends Controller
     }
     final public function edit_update(Application $application, ApplicationRequest $request) : RedirectResponse
     {
-        /** @var object $user*/
-        $user = auth()->user();
-        return $this->service->edit_update($application,$request,$user);
+        return $this->service->edit_update($application,$request);
     }
     /**
      * Chernovik bo'lgan applicationlarni ko'rish
@@ -426,7 +423,8 @@ class ApplicationController extends Controller
         return true;
     }
 
-    public function daterangepicker(Request $request){
+    public function daterangepicker(Request $request): Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
         $applications = Application::whereBetween('created_at', [$request->startDate, $request->endDate])->get();
         return view('site.daterangepicker', ['applications' => $applications]);
     }
