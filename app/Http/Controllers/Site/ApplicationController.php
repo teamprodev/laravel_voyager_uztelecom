@@ -361,13 +361,13 @@ class ApplicationController extends Controller
     final public function file_delete(Request $request, Application $application, string $column) : RedirectResponse
     {
         $file = json_decode($application->$column, true);
-        $delete = array_diff($file,[$request->file]);
+        $delete = array_diff($file,[$request->input('file')]);
         $application->$column = $delete;
         $application->save();
-        $file = public_path() . "/storage/uploads/{$request->file}";
+        $file = public_path() . "/storage/uploads/{$request->input('file')}";
         $file_ext = File::extension($file);
-        $file_rename = str_replace($file_ext, '', $request->file);
-        File::move($file, public_path() . "/storage/backups/{$file_rename}" . Date::now()->format('Y-m-d-H-i-s') . '.' . $file_ext);
+        $file_rename = str_replace($file_ext, '', $request->input('file'));
+        File::move($file, public_path() . "/storage/backups/$file_rename" . Date::now()->format('Y-m-d-H-i-s') . '.' . $file_ext);
         return redirect()->back();
     }
 
