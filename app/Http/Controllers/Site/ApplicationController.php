@@ -190,11 +190,11 @@ class ApplicationController extends Controller
         $data = SignedDocs::where('application_id',$application);
         return $this->service->SignedDocs($data, $user);
     }
+
     /**
-     * @throws Exception
-     * @var int $application
-     *
-     * $application ga tegishli bolgan SignedDocs ni o'chirish
+     * @param SignedDocs $signedocs_id
+     * @param Application $application_id
+     * @return RedirectResponse
      */
     final public function SignedDocsDelete(SignedDocs $signedocs_id,Application $application_id) : RedirectResponse
     {
