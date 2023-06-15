@@ -6,6 +6,7 @@ use App\Enums\ApplicationStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
  * @property mixed|string status
  * @method static findOrFail($id)
  * @method static find($signedDocs)
+ * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
 class Application extends ALL
 {
