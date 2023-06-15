@@ -83,7 +83,6 @@ class ApplicationController extends Controller
      */
     final public function status_table() : JsonResponse
     {
-        /** @var object $user*/
         $user = auth()->user();
         return $this->service->status_table($user);
     }
@@ -93,7 +92,6 @@ class ApplicationController extends Controller
      */
     final public function performer_status() : JsonResponse
     {
-        /** @var object $user*/
         $user = auth()->user();
         $status = setting('admin.performer_status_get');
         return $this->service->performer_status($user,$status);
@@ -120,7 +118,6 @@ class ApplicationController extends Controller
      */
     final public function index_getData() : JsonResponse
     {
-        /** @var object $user*/
         $user = auth()->user();
         return $this->service->index_getData($user);
     }
@@ -143,7 +140,6 @@ class ApplicationController extends Controller
      */
     final public function my_applications_getData() : JsonResponse
     {
-        /** @var object $user*/
         $user = auth()->user();
         return $this->service->my_applications_getData($user);
     }
@@ -167,7 +163,7 @@ class ApplicationController extends Controller
      * @param bool $view
      * @return View
      */
-    final public function show(Application $application, $view = false) : View
+    final public function show(Application $application, bool $view = false) : View
     {
         if (isset($view)) {
             Notification::query()
