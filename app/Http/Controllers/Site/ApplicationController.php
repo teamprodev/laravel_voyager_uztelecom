@@ -378,7 +378,7 @@ class ApplicationController extends Controller
      */
     final public function change_status() : bool
     {
-        $applications = Application::where('performer_role_id','!=',null)->where('status',ApplicationStatusEnum::In_Process)->get();
+        $applications = Application::where('performer_role_id','!=')->where('status',ApplicationStatusEnum::In_Process)->get();
         foreach ($applications as $application) {
             $application->status = ApplicationStatusEnum::Distributed;
             $application->show_leader = ApplicationMagicNumber::two;
