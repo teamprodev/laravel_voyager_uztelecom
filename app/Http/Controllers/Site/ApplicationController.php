@@ -24,6 +24,8 @@ use Illuminate\View\View;
 
 class ApplicationController extends Controller
 {
+    private ApplicationService $service;
+
     /**
      * @var ApplicationService
      */
