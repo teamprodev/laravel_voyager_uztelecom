@@ -68,7 +68,7 @@ class ApplicationController extends Controller
     final public function performer_status_post(Request $req) : RedirectResponse
     {
         $voyager = Setting::where('key','admin.performer_status_get')->first();
-        $voyager->value = $req->performer_status_get;
+        $voyager->value = $req->input('performer_status_get');
         $voyager->save();
         return redirect()->route('site.applications.performer_status_get');
     }
