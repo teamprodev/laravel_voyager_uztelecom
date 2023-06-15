@@ -192,6 +192,7 @@ class ApplicationController extends Controller
     }
 
     /**
+     * $application ga tegishli bolgan SignedDocs ni o'chirish
      * @param SignedDocs $signedocs_id
      * @param Application $application_id
      * @return RedirectResponse
