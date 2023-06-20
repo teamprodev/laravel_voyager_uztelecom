@@ -27,6 +27,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\JsonResponse;
@@ -499,6 +500,13 @@ class ApplicationService
         $application->department_initiator_id = $user->department_id;
         $application->status = ApplicationStatusEnum::New;
         $application->save();
+        Log::info("$user->name created Application",[
+            'user_id' => $user->id,
+            'user_name' => $user->name,
+            'branch_id' => $application->branch_id,
+            'branch_name' => $application->branch->name,
+            'application_id' => $application->id,
+        ]);
         return redirect()->route('site.applications.edit', $application->id);
     }
 
