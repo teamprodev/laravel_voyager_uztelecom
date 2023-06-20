@@ -17,9 +17,16 @@ use Illuminate\Support\Facades\Auth;
  * @property mixed branch_id
  * @property mixed department_initiator_id
  * @property mixed|string status
- * @method static findOrFail($id)
- * @method static find($signedDocs)
- * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
+ * @property mixed|null signers
+ * @method static Application findOrFail($id)
+ * @method static Application find($id, $columns = ['*'])
+ * @method static Application where($column, $operator = null, $value = null, $boolean = 'and')
+ * @method static Application whereBetween($column, array $values, $boolean = 'and', $not = false)
+ * @method static Application whereDraft($value)
+ * @method static Application orWhere($column, $operator = null, $value = null)
+ * @method static Application whereIn($column, $values, $boolean = 'and', $not = false)
+ * @method static Application whereNotNull($columns, $boolean = 'and')
+ * @method static Application get($columns = ['*'])
  */
 class Application extends ALL
 {
