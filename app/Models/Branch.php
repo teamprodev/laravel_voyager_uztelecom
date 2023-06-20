@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use TCG\Voyager\Models\Role;
 
 /**
- * @method static find(mixed $all)
+ * @method static find($id, $columns = ['*'])
  */
 class Branch extends ALL
 {
