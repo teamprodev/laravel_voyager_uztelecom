@@ -750,6 +750,17 @@ class ApplicationService
             $data['status'] = (int)$application->is_more_than_limit === ApplicationMagicNumber::one ? ApplicationStatusEnum::Agreed : ApplicationStatusEnum::In_Process;
         }
         $result = $application->update($data);
+        Log::info("$user->name updated Application",[
+            'user_id' => $user->id,
+            'application_user_id' => $application->user_id,
+            'application_status' => $application->status,
+            'application_performer_status' => $application->performer_status,
+            'user_name' => $user->name,
+            'branch_id' => $application->branch_id,
+            'branch_name' => $application->branch->name,
+            'result' => $result,
+            'application_id' => $application->id,
+        ]);
         if ($result)
             return redirect()->route('site.applications.show', $application->id);
 
@@ -794,6 +805,17 @@ class ApplicationService
         }
         /** @var bool $result */
         $result = $application->update($data);
+        Log::info("$user->name updated his Application",[
+            'user_id' => $user->id,
+            'application_user_id' => $application->user_id,
+            'application_status' => $application->status,
+            'application_performer_status' => $application->performer_status,
+            'user_name' => $user->name,
+            'branch_id' => $application->branch_id,
+            'branch_name' => $application->branch->name,
+            'result' => $result,
+            'application_id' => $application->id,
+        ]);
         if ($result)
             return redirect()->route('site.applications.show', $application->id);
 
