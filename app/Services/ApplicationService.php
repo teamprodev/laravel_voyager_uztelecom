@@ -665,6 +665,16 @@ class ApplicationService
         $color_status = $color_status_if ? StatusExtended::find($application->performer_status)->color : setting("color.$status");
 
         $application_user_role = Roles::find($application->user_role_id);
+        Log::info("$user->name opened the Application",[
+            'user_id' => $user->id,
+            'application_user_id' => $application->user_id,
+            'application_status' => $application->status,
+            'application_performer_status' => $application->performer_status,
+            'user_name' => $user->name,
+            'application_branch_id' => $application->branch_id,
+            'application_branch_name' => $application->branch->name,
+            'application_id' => $application->id,
+        ]);
         return ['products_id' => $products_id, 'performer_file' => $performer_file, 'perms' => $perms, 'access_comment' => $access_comment, 'performers_company' => $performers_company, 'performers_branch' => $performers_branch, 'file_basis' => $file_basis, 'file_tech_spec' => $file_tech_spec, 'other_files' => $other_files, 'user' => $user, 'application' => $application, 'branch' => $branch, 'signedDocs' => $signedDocs, 'same_role_user_ids' => $same_role_user_ids, 'access' => $access, 'subjects' => $subjects, 'purchases' => $purchases, 'branch_name' => $branch_name, 'check' => $check, 'status' => $status, 'color_status' => $color_status, 'application_user_role' => $application_user_role];
     }
 
