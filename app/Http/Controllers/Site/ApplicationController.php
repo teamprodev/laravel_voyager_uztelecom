@@ -263,7 +263,7 @@ class ApplicationController extends Controller
     }
     final public function edit_update(Application $application, ApplicationRequest $request) : RedirectResponse
     {
-        return $this->service->edit_update($application,$request);
+        return $this->service->edit_update($application,$request,auth()->user());
     }
     /**
      * Chernovik bo'lgan applicationlarni ko'rish
