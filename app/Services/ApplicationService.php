@@ -412,13 +412,23 @@ class ApplicationService
      * @param int $id
      * @return RedirectResponse
      */
-    final public function clone(int $id) : RedirectResponse
+    final public function clone(int $id, object $user) : RedirectResponse
     {
         $clone = Application::findOrFail($id);
         $application = $clone->replicate();
         $application->signers = null;
         $application->status = ApplicationStatusEnum::New;
         $application->save();
+        Log::info("$user->name cloned his Application",[
+            'user_id' => $user->id,
+            'user_name' => $user->name,
+            'application_user_id' => $application->user_id,
+            'application_status' => $application->status,
+            'application_performer_status' => $application->performer_status,
+            'application_branch_id' => $application->branch_id,
+            'application_branch_name' => $application->branch->name,
+            'application_id' => $application->id,
+        ]);
         return redirect()->back();
     }
 

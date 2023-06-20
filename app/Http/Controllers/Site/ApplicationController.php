@@ -156,7 +156,7 @@ class ApplicationController extends Controller
     final public function clone(int $id) : RedirectResponse
     {
         $this->middleware('application_clone');
-        return $this->service->clone($id);
+        return $this->service->clone($id,auth()->user());
     }
 
     /**
