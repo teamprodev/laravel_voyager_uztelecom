@@ -499,12 +499,13 @@ class ApplicationService
         $application->branch_id = $user->branch_id;
         $application->department_initiator_id = $user->department_id;
         $application->status = ApplicationStatusEnum::New;
-        $application->save();
+        $result = $application->save();
         Log::info("$user->name created Application",[
             'user_id' => $user->id,
             'user_name' => $user->name,
             'branch_id' => $application->branch_id,
             'branch_name' => $application->branch->name,
+            'result' => $result,
             'application_id' => $application->id,
         ]);
         return redirect()->route('site.applications.edit', $application->id);
