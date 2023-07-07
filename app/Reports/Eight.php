@@ -50,12 +50,12 @@ class Eight extends DefaultValueBinder implements FromCollection,WithEvents,With
         if(auth()->user()->hasPermission(PermissionEnum::Purchasing_Management_Center))
         {
             if($this->startDate === null){
-                $this->query = self::core()->select('id', 'branch_id','number', 'planned_price', 'performer_received_date', 'initiator', 'product_info', 'type_of_purchase_id', 'contract_number', 'supplier_name', 'contract_price', 'performer_user_id', 'created_at');
+                $this->query = self::core()->select('id', 'branch_id','number', 'planned_price', 'performer_received_date', 'user_id', 'resource_id', 'type_of_purchase_id', 'contract_number', 'supplier_name', 'contract_price', 'performer_user_id', 'created_at');
             }else{
-                $this->query = self::core()->select('id', 'branch_id','number', 'planned_price', 'performer_received_date', 'initiator', 'product_info', 'type_of_purchase_id', 'contract_number', 'supplier_name', 'contract_price', 'performer_user_id', 'created_at')->whereBetween('created_at', [$this->startDate, $this->endDate]);
+                $this->query = self::core()->select('id', 'branch_id','number', 'planned_price', 'performer_received_date', 'user_id', 'resource_id', 'type_of_purchase_id', 'contract_number', 'supplier_name', 'contract_price', 'performer_user_id', 'created_at')->whereBetween('created_at', [$this->startDate, $this->endDate]);
             }
         }else{
-            $this->query = self::core()->select('id', 'branch_id','number', 'planned_price', 'performer_received_date', 'initiator', 'product_info', 'type_of_purchase_id', 'contract_number', 'supplier_name', 'contract_price', 'performer_user_id', 'created_at')->where('branch_id',auth()->user()->branch_id)->where('draft','!=',ApplicationMagicNumber::one);
+            $this->query = self::core()->select('id', 'branch_id','number', 'planned_price', 'performer_received_date', 'user_id', 'resource_id', 'type_of_purchase_id', 'contract_number', 'supplier_name', 'contract_price', 'performer_user_id', 'created_at')->where('branch_id',auth()->user()->branch_id)->where('draft','!=',ApplicationMagicNumber::one);
         }
     }
 
@@ -99,7 +99,7 @@ class Eight extends DefaultValueBinder implements FromCollection,WithEvents,With
         $query = $this->query->get();
         for($i = 0;$i<count($query);$i++)
         {
-            $query[$i]->initiator = isset($query[$i]->user->name) ? $query[$i]->user->name : 'User Deleted';
+            $query[$i]->user_id = isset($query[$i]->user->name) ? $query[$i]->user->name : 'User Deleted';
             $query[$i]->created_at = $query[$i]->created_at ? with(new Carbon($query[$i]->created_at))->format('d-m-Y') : '';
             $query[$i]->branch_id = $query[$i]->branch->name;
             $query[$i]->type_of_purchase_id = $query[$i]->type_of_purchase->name ?? [];
@@ -107,7 +107,7 @@ class Eight extends DefaultValueBinder implements FromCollection,WithEvents,With
             $query[$i]->number = "{$query[$i]->number}  {$query[$i]->date}";
             $query[$i]->planned_price = !Str::contains($query[$i]->planned_price, ' ') ? number_format($query[$i]->planned_price, ApplicationMagicNumber::zero, '', ' ') : $query[$i]->planned_price;
             //product
-            $query[$i]->product_info = $this->get_product($query[$i]);
+            $query[$i]->resource_id = $this->get_product($query[$i]);
             $query[$i]->performer_user_id = $query[$i]->performer->name ?? $query[$i]->performer_user_id;
         }
         return $query;
@@ -124,7 +124,7 @@ class Eight extends DefaultValueBinder implements FromCollection,WithEvents,With
         $ucnames = $names->map(function($item, $key) {
             return Resource::find($item)->name;
         });
-        return json_decode($ucnames);
+        return json_encode($ucnames,JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -248,6 +248,14 @@ class Eight extends DefaultValueBinder implements FromCollection,WithEvents,With
             ['data' => 'performer_user_id', 'name' => 'performer_user_id'],
             ['data' => 'created_at', 'name' => 'created_at'],
         ];
+    }
+    public static function events(): array
+    {
+        return [];
+    }
+    public static function options(): array
+    {
+        return [];
     }
     /**
      * Write code on Method

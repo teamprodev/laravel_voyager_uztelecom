@@ -253,6 +253,14 @@ class Five extends DefaultValueBinder implements WithEvents,FromCollection,WithH
             ['data' => 'summa_3', 'name' => 'summa_3'],
         ];
     }
+    public static function events(): array
+    {
+        return [];
+    }
+    public static function options(): array
+    {
+        return [];
+    }
     /**
      * Write code on Method
      *

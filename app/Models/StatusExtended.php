@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 
 /**
- * @method static find($performer_status)
+ * @property mixed $name
+ * @property mixed $color
+ * @method static StatusExtended find($id, $columns = ['*'])
+ * @method static StatusExtended pluck($column, $key = null)
  */
 class StatusExtended extends ALL
 {

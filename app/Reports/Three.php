@@ -229,6 +229,14 @@ class Three extends DefaultValueBinder implements WithEvents,FromCollection,With
             ['data' => 'usluga_1_nds', 'name' => 'usluga_1_nds'],
         ];
     }
+    public static function events(): array
+    {
+        return [];
+    }
+    public static function options(): array
+    {
+        return [];
+    }
     /**
      * Write code on Method
      *

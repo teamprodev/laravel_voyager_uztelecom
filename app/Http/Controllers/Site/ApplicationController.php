@@ -12,11 +12,10 @@ use App\Models\StatusExtended;
 use App\Services\ApplicationService;
 use App\Models\SignedDocs;
 use Exception;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon as Date;
 use Illuminate\Support\Facades\File;
 use App\Enums\ApplicationStatusEnum;
@@ -24,6 +23,8 @@ use Illuminate\View\View;
 
 class ApplicationController extends Controller
 {
+    private ApplicationService $service;
+
     /**
      * @var ApplicationService
      */
@@ -68,7 +69,7 @@ class ApplicationController extends Controller
     final public function performer_status_post(Request $req) : RedirectResponse
     {
         $voyager = Setting::where('key','admin.performer_status_get')->first();
-        $voyager->value = $req->performer_status_get;
+        $voyager->value = $req->input('performer_status_get');
         $voyager->save();
         return redirect()->route('site.applications.performer_status_get');
     }
@@ -155,7 +156,7 @@ class ApplicationController extends Controller
     final public function clone(int $id) : RedirectResponse
     {
         $this->middleware('application_clone');
-        return $this->service->clone($id);
+        return $this->service->clone($id,auth()->user());
     }
 
     /**
@@ -165,7 +166,7 @@ class ApplicationController extends Controller
      * @param bool $view
      * @return View
      */
-    final public function show(Application $application, $view = false) : View
+    final public function show(Application $application, bool $view = false) : View
     {
         if (isset($view)) {
             Notification::query()
@@ -188,11 +189,12 @@ class ApplicationController extends Controller
         $data = SignedDocs::where('application_id',$application);
         return $this->service->SignedDocs($data, $user);
     }
+
     /**
-     * @throws Exception
-     * @var int $application
-     *
      * $application ga tegishli bolgan SignedDocs ni o'chirish
+     * @param SignedDocs $signedocs_id
+     * @param Application $application_id
+     * @return RedirectResponse
      */
     final public function SignedDocsDelete(SignedDocs $signedocs_id,Application $application_id) : RedirectResponse
     {
@@ -261,9 +263,7 @@ class ApplicationController extends Controller
     }
     final public function edit_update(Application $application, ApplicationRequest $request) : RedirectResponse
     {
-        /** @var object $user*/
-        $user = auth()->user();
-        return $this->service->edit_update($application,$request,$user);
+        return $this->service->edit_update($application,$request,auth()->user());
     }
     /**
      * Chernovik bo'lgan applicationlarni ko'rish
@@ -358,13 +358,13 @@ class ApplicationController extends Controller
     final public function file_delete(Request $request, Application $application, string $column) : RedirectResponse
     {
         $file = json_decode($application->$column, true);
-        $delete = array_diff($file,[$request->file]);
+        $delete = array_diff($file,[$request->input('file')]);
         $application->$column = $delete;
         $application->save();
-        $file = public_path() . "/storage/uploads/{$request->file}";
+        $file = public_path() . "/storage/uploads/{$request->input('file')}";
         $file_ext = File::extension($file);
-        $file_rename = str_replace($file_ext, '', $request->file);
-        File::move($file, public_path() . "/storage/backups/{$file_rename}" . Date::now()->format('Y-m-d-H-i-s') . '.' . $file_ext);
+        $file_rename = str_replace($file_ext, '', $request->input('file'));
+        File::move($file, public_path() . "/storage/backups/$file_rename" . Date::now()->format('Y-m-d-H-i-s') . '.' . $file_ext);
         return redirect()->back();
     }
 
@@ -375,7 +375,7 @@ class ApplicationController extends Controller
      */
     final public function change_status() : bool
     {
-        $applications = Application::where('performer_role_id','!=',null)->where('status',ApplicationStatusEnum::In_Process)->get();
+        $applications = Application::where('performer_role_id','!=')->where('status',ApplicationStatusEnum::In_Process)->get();
         foreach ($applications as $application) {
             $application->status = ApplicationStatusEnum::Distributed;
             $application->show_leader = ApplicationMagicNumber::two;
@@ -423,7 +423,8 @@ class ApplicationController extends Controller
         return true;
     }
 
-    public function daterangepicker(Request $request){
+    public function daterangepicker(Request $request): Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
         $applications = Application::whereBetween('created_at', [$request->startDate, $request->endDate])->get();
         return view('site.daterangepicker', ['applications' => $applications]);
     }

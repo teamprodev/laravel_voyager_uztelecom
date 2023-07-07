@@ -27,6 +27,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\JsonResponse;
@@ -411,13 +412,23 @@ class ApplicationService
      * @param int $id
      * @return RedirectResponse
      */
-    final public function clone(int $id) : RedirectResponse
+    final public function clone(int $id, object $user) : RedirectResponse
     {
         $clone = Application::findOrFail($id);
         $application = $clone->replicate();
         $application->signers = null;
         $application->status = ApplicationStatusEnum::New;
         $application->save();
+        Log::info("$user->name cloned his Application",[
+            'user_id' => $user->id,
+            'user_name' => $user->name,
+            'application_user_id' => $application->user_id,
+            'application_status' => $application->status,
+            'application_performer_status' => $application->performer_status,
+            'application_branch_id' => $application->branch_id,
+            'application_branch_name' => $application->branch->name,
+            'application_id' => $application->id,
+        ]);
         return redirect()->back();
     }
 
@@ -498,7 +509,15 @@ class ApplicationService
         $application->branch_id = $user->branch_id;
         $application->department_initiator_id = $user->department_id;
         $application->status = ApplicationStatusEnum::New;
-        $application->save();
+        $result = $application->save();
+        Log::info("$user->name created Application",[
+            'user_id' => $user->id,
+            'user_name' => $user->name,
+            'branch_id' => $application->branch_id,
+            'branch_name' => $application->branch->name,
+            'result' => $result,
+            'application_id' => $application->id,
+        ]);
         return redirect()->route('site.applications.edit', $application->id);
     }
 
@@ -656,6 +675,16 @@ class ApplicationService
         $color_status = $color_status_if ? StatusExtended::find($application->performer_status)->color : setting("color.$status");
 
         $application_user_role = Roles::find($application->user_role_id);
+        Log::info("$user->name opened the Application",[
+            'user_id' => $user->id,
+            'application_user_id' => $application->user_id,
+            'application_status' => $application->status,
+            'application_performer_status' => $application->performer_status,
+            'user_name' => $user->name,
+            'application_branch_id' => $application->branch_id,
+            'application_branch_name' => $application->branch->name,
+            'application_id' => $application->id,
+        ]);
         return ['products_id' => $products_id, 'performer_file' => $performer_file, 'perms' => $perms, 'access_comment' => $access_comment, 'performers_company' => $performers_company, 'performers_branch' => $performers_branch, 'file_basis' => $file_basis, 'file_tech_spec' => $file_tech_spec, 'other_files' => $other_files, 'user' => $user, 'application' => $application, 'branch' => $branch, 'signedDocs' => $signedDocs, 'same_role_user_ids' => $same_role_user_ids, 'access' => $access, 'subjects' => $subjects, 'purchases' => $purchases, 'branch_name' => $branch_name, 'check' => $check, 'status' => $status, 'color_status' => $color_status, 'application_user_role' => $application_user_role];
     }
 
@@ -741,6 +770,17 @@ class ApplicationService
             $data['status'] = (int)$application->is_more_than_limit === ApplicationMagicNumber::one ? ApplicationStatusEnum::Agreed : ApplicationStatusEnum::In_Process;
         }
         $result = $application->update($data);
+        Log::info("$user->name updated Application",[
+            'user_id' => $user->id,
+            'application_user_id' => $application->user_id,
+            'application_status' => $application->status,
+            'application_performer_status' => $application->performer_status,
+            'user_name' => $user->name,
+            'branch_id' => $application->branch_id,
+            'branch_name' => $application->branch->name,
+            'result' => $result,
+            'application_id' => $application->id,
+        ]);
         if ($result)
             return redirect()->route('site.applications.show', $application->id);
 
@@ -785,6 +825,17 @@ class ApplicationService
         }
         /** @var bool $result */
         $result = $application->update($data);
+        Log::info("$user->name updated his Application",[
+            'user_id' => $user->id,
+            'application_user_id' => $application->user_id,
+            'application_status' => $application->status,
+            'application_performer_status' => $application->performer_status,
+            'user_name' => $user->name,
+            'branch_id' => $application->branch_id,
+            'branch_name' => $application->branch->name,
+            'result' => $result,
+            'application_id' => $application->id,
+        ]);
         if ($result)
             return redirect()->route('site.applications.show', $application->id);
 

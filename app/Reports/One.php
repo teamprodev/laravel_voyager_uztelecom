@@ -205,6 +205,15 @@ class One extends DefaultValueBinder implements WithStyles, FromCollection, With
             ['data' => 'nds', 'name' => 'nds'],
         ];
     }
+
+    public static function events(): array
+    {
+        return [];
+    }
+    public static function options(): array
+    {
+        return [];
+    }
     /**
      * Write code on Method
      *

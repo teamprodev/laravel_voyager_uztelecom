@@ -185,6 +185,14 @@ class Six extends DefaultValueBinder implements FromCollection,WithEvents,WithHe
             ['data' => 'protocol_date', 'name' => 'protocol_date'],
         ];
     }
+    public static function events(): array
+    {
+        return [];
+    }
+    public static function options(): array
+    {
+        return [];
+    }
     /**
      * Write code on Method
      *

@@ -426,6 +426,14 @@ class Nine extends DefaultValueBinder implements FromCollection,WithEvents,WithH
             ['data' => 'direct_sum', 'name' => 'direct_sum']
         ];
     }
+    public static function events(): array
+    {
+        return [];
+    }
+    public static function options(): array
+    {
+        return [];
+    }
     /**
      * Write code on Method
      *
