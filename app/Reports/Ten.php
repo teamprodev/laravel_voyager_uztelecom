@@ -238,6 +238,14 @@ class Ten extends DefaultValueBinder implements WithStyles, FromCollection, With
             ['data' => 'all', 'name' => 'all'],
         ];
     }
+    public static function events(): array
+    {
+        return [];
+    }
+    public static function options(): array
+    {
+        return [];
+    }
     /**
      * Write code on Method
      *

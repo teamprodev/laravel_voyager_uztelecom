@@ -398,7 +398,8 @@ class TwoTwo extends DefaultValueBinder implements WithEvents,FromCollection,Wit
                 ],
             ],
         ];
-    }/**
+    }
+    /**
      * @return array
      */
     public static function dtColumns()
@@ -431,6 +432,14 @@ class TwoTwo extends DefaultValueBinder implements WithEvents,FromCollection,Wit
             ['data' => 'usluga_4', 'name' => 'usluga_4'],
             ['data' => 'usluga_4_nds', 'name' => 'usluga_4_nds'],
         ];
+    }
+    public static function events(): array
+    {
+        return [];
+    }
+    public static function options(): array
+    {
+        return [];
     }
     /**
      * Write code on Method

@@ -255,6 +255,14 @@ class Two extends DefaultValueBinder implements FromCollection,WithHeadings,With
             ]
         ];
     }
+    public static function events(): array
+    {
+        return [];
+    }
+    public static function options(): array
+    {
+        return [];
+    }
     /**
      * @return array
      */

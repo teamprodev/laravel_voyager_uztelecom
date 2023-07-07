@@ -249,6 +249,14 @@ class Eight extends DefaultValueBinder implements FromCollection,WithEvents,With
             ['data' => 'created_at', 'name' => 'created_at'],
         ];
     }
+    public static function events(): array
+    {
+        return [];
+    }
+    public static function options(): array
+    {
+        return [];
+    }
     /**
      * Write code on Method
      *

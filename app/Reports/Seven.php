@@ -192,6 +192,14 @@ class Seven extends DefaultValueBinder implements WithStyles, FromCollection, Wi
             ['data' => 'purchase_basis', 'name' => 'purchase_basis'],
         ];
     }
+    public static function events(): array
+    {
+        return [];
+    }
+    public static function options(): array
+    {
+        return [];
+    }
     /**
      * Write code on Method
      *

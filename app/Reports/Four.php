@@ -322,6 +322,15 @@ class Four extends DefaultValueBinder implements FromCollection,WithColumnFormat
             ['data' => 'basis', 'name' => 'basis'],
         ];
     }
+
+    public static function events(): array
+    {
+        return [];
+    }
+    public static function options(): array
+    {
+        return [];
+    }
     /**
      * Write code on Method
      *
