@@ -15,22 +15,12 @@ class TypeOfPurchase extends Controller
     }
     public function update(Request $request)
     {
-        if ($request->purchase_id == null)
-        {
-            $new = new Purchase();
-            $new
-                ->setTranslation('name', 'en', "{$request->nameEn}")
-                ->setTranslation('name', 'uz', "{$request->nameUz}")
-                ->setTranslation('name', 'ru', "{$request->nameRu}")
-                ->save();
-            return redirect('admin/type-of-purchase');
-        }else{
-            $update = Purchase::find($request->purchase_id);
-            $update->setTranslation('name', 'en', "{$request->nameEn}")
-                ->setTranslation('name', 'uz', "{$request->nameUz}")
-                ->setTranslation('name', 'ru', "{$request->nameRu}")
-                ->update();
-            return redirect()->back();
-        }
+        $purchase = $request->purchase_id == null ? new Purchase() : Purchase::find($request->purchase_id);
+        $purchase
+            ->setTranslation('name', 'en', "{$request->nameEn}")
+            ->setTranslation('name', 'uz', "{$request->nameUz}")
+            ->setTranslation('name', 'ru', "{$request->nameRu}")
+            ->save();
+        return redirect('admin/type-of-purchase');
     }
 }
