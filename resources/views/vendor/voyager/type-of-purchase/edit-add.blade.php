@@ -17,13 +17,13 @@
 
                 <label class="control-label" for="name">Name Ru</label>
                 <input type="text" class="form-control" name="nameRu" placeholder="Name Ru"
-                       @if(isset($purchase))value="{{$purchase->getTranslation('name','ru')}}"@endif>
+                       value="{{$purchase->getTranslation('name','ru')}}">
                 <label class="control-label" for="name">Name Uz</label>
                 <input type="text" class="form-control" name="nameUz" placeholder="Name Uz"
-                       @if(isset($purchase)))value="{{$purchase->getTranslation('name','uz')}}@endif">
+                       value="{{$purchase->getTranslation('name','uz')}}">
                 <label class="control-label" for="name">Name En</label>
                 <input type="text" class="form-control" name="nameEn" placeholder="Name En"
-                       @if(isset($purchase)))value="{{$purchase->getTranslation('name','en')}}@endif">
+                       value="{{$purchase->getTranslation('name','en')}}">
             </div>
             @if(isset($purchase))
             <input type="text" class="hidden" name="purchase_id" value="{{$purchase->id}}">

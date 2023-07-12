@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Purchase;
+use Exception;
 use Illuminate\Http\Request;
 
 class TypeOfPurchase extends Controller
@@ -10,7 +11,7 @@ class TypeOfPurchase extends Controller
     public function edit($id)
     {
        $purchase = Purchase::find($id);
-       return view('vendor.voyager.type-of-purchase.edit-add',compact('purchase'));
+       return empty($purchase) ? throw new Exception("Undefined data with id $id") : view('vendor.voyager.type-of-purchase.edit-add',compact('purchase'));
     }
     public function update(Request $request)
     {
