@@ -167,7 +167,7 @@ class Five extends DefaultValueBinder implements WithEvents,FromCollection,WithH
     /**
      * @return array
      */
-    public static function dtHeaders()
+    public static function headers()
     {
         return [
             [
@@ -238,7 +238,7 @@ class Five extends DefaultValueBinder implements WithEvents,FromCollection,WithH
     /**
      * @return array
      */
-    public static function dtColumns()
+    public static function columns()
     {
         return [
             ['data' => 'id', 'name' => 'id'],

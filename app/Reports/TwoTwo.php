@@ -212,7 +212,7 @@ class TwoTwo extends DefaultValueBinder implements WithEvents,FromCollection,Wit
     /**
      * @return array
      */
-    public static function dtHeaders()
+    public static function headers()
     {
         return [
             [
@@ -402,7 +402,7 @@ class TwoTwo extends DefaultValueBinder implements WithEvents,FromCollection,Wit
     /**
      * @return array
      */
-    public static function dtColumns()
+    public static function columns()
     {
         return [
             ['data' => 'id', 'name' => 'id'],

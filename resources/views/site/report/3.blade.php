@@ -19,5 +19,5 @@
             }
         }
     </script>
-    <x-laravelYajra language="ru" tableId="report3" stateSave=true dom='QBlfrtip' serverSide=true getData="{{ route('report','3') }}" exportId="{{ App\Reports\Three::class }}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
+    <x-SmartsTable language="ru" tableId="report3" stateSave=true dom='QBlfrtip' serverSide=true getData="{{ route('report','3') }}" exportId="{{ App\Reports\Three::class }}" startDate="{{request()->input('startDate')}}" endDate="{{request()->input('endDate')}}"/>
 @endsection

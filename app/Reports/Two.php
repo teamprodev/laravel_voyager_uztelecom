@@ -170,7 +170,7 @@ class Two extends DefaultValueBinder implements FromCollection,WithHeadings,With
     /**
      * @return array
      */
-    public static function dtHeaders()
+    public static function headers()
     {
         return [
             [
@@ -266,7 +266,7 @@ class Two extends DefaultValueBinder implements FromCollection,WithHeadings,With
     /**
      * @return array
      */
-    public static function dtColumns()
+    public static function columns()
     {
         return [
             ['data' => 'id', 'name' => 'id'],

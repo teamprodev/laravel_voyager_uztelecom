@@ -112,7 +112,7 @@ class Seven extends DefaultValueBinder implements WithStyles, FromCollection, Wi
     /**
      * @return array
      */
-    public static function dtHeaders()
+    public static function headers()
     {
         return [
             [
@@ -174,7 +174,7 @@ class Seven extends DefaultValueBinder implements WithStyles, FromCollection, Wi
     /**
      * @return array
      */
-    public static function dtColumns()
+    public static function columns()
     {
         return [
             ['data' => 'id', 'name' => 'id'],
