@@ -42,13 +42,13 @@
                     <form name="eri_form" action="{{route('eri.login')}}" id="eri_form" method="post">
                         @csrf
                         <div class="inline-block p-2" style="width: 80%;">
-                            <x-eimzo_login></x-eimzo_login>
+                            <x-smarts_eimzo_login></x-smarts_eimzo_login>
                         </div>
                         <div class="inline-block">
-                            <x-eimzo_login_update_button></x-eimzo_login_update_button>
+                            <x-smarts_eimzo_login_update_button></x-smarts_eimzo_login_update_button>
                         </div>
                         <div style="margin-top: 3em;">
-                            <x-eimzo_login_sign_button></x-eimzo_login_sign_button>
+                            <x-smarts_eimzo_login_sign_button></x-smarts_eimzo_login_sign_button>
                         </div>
                     </form>
                 </div>
