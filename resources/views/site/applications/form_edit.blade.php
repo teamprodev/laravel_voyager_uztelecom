@@ -366,8 +366,8 @@
 <div class="w-full text-center pb-8 ">
 
 </div>
-<x-laravelUppy width="300" height="200" url="{{route('uploadImage', $application->id)}}" target="#file_basis" fieldName="file_basis"/>
-<x-laravelUppy width="300" height="200" url="{{route('uploadImage', $application->id)}}" target="#file_tech_spec" fieldName="file_tech_spec"/>
-<x-laravelUppy width="300" height="200" url="{{route('uploadImage', $application->id)}}" target="#other_files" fieldName="other_files"/>
+<x-SmartsUppy width="300" height="200" url="{{route('uploadImage', $application->id)}}" target="#file_basis" fieldName="file_basis"/>
+<x-SmartsUppy width="300" height="200" url="{{route('uploadImage', $application->id)}}" target="#file_tech_spec" fieldName="file_tech_spec"/>
+<x-SmartsUppy width="300" height="200" url="{{route('uploadImage', $application->id)}}" target="#other_files" fieldName="other_files"/>
 
 {{ Aire::close() }}
