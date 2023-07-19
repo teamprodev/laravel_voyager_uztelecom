@@ -66,7 +66,7 @@ class RoleController extends VoyagerRoleController
         {
             $signerssss = json_decode($value);
             $array_diff = array_diff($signerssss,array($role->id));
-            $array_diff ? $add_s = $this->array_diff_array($array_diff):$add_s = null;
+            $array_diff ? $add_s = $this->array_diff_array($array_diff):$add_s = [];
             $save = Branch::find($item);
             $save->add_signers = $add_s;
             $save->save();
@@ -75,7 +75,7 @@ class RoleController extends VoyagerRoleController
         {
             $signerssss = json_decode($value);
             $array_diff = array_diff($signerssss,array($role->id));
-            $array_diff ? $required_s = $this->array_diff_array($array_diff):$required_s = null;
+            $array_diff ? $required_s = $this->array_diff_array($array_diff):$required_s = [];
             $save = Branch::find($item);
             $save->signers = $required_s;
             $save->save();
@@ -193,8 +193,8 @@ class RoleController extends VoyagerRoleController
                 {
                     $optional[] = $b;
                 }
-                isset($required) ? : $required = null;
-                isset($optional) ? : $optional = null;
+                isset($required) ? : $required = [];
+                isset($optional) ? : $optional = [];
                 $model->signers = $required;
                 $model->add_signers = $optional;
                 $model->save();
@@ -219,7 +219,7 @@ class RoleController extends VoyagerRoleController
             {
                 $signerssss = json_decode($value);
                 $array_diff = array_diff($signerssss,array($role->id));
-                $array_diff ? $add_s = $this->array_diff_array($array_diff):$add_s = null;
+                $array_diff ? $add_s = $this->array_diff_array($array_diff):$add_s = [];
                 $save = Branch::find($item);
                 $save->add_signers = $add_s;
                 $save->save();
@@ -229,7 +229,7 @@ class RoleController extends VoyagerRoleController
                 $signerssss = json_decode($value);
                 $array_diff = array_diff($signerssss,array($role->id));
                 dd($array_diff);
-                $array_diff ? $required_s = $this->array_diff_array($array_diff):$required_s = null;
+                $array_diff ? $required_s = $this->array_diff_array($array_diff):$required_s = [];
                 $save = Branch::find($item);
                 $save->signers = $required_s;
                 $save->save();
@@ -279,7 +279,7 @@ class RoleController extends VoyagerRoleController
             {
                 $signerssss = json_decode($value);
                 $array_diff = array_diff($signerssss,array($role->id));
-                $array_diff ? $add_s = $this->array_diff_array($array_diff):$add_s = null;
+                $array_diff ? $add_s = $this->array_diff_array($array_diff):$add_s = [];
                 $save = Branch::find($item);
                 $save->add_signers = $add_s;
                 $save->save();
@@ -289,7 +289,7 @@ class RoleController extends VoyagerRoleController
                 $signerssss = json_decode($value);
                 $array_diff = array_diff($signerssss,array($role->id));
                 dd($array_diff);
-                $array_diff ? $required_s = $this->array_diff_array($array_diff):$required_s = null;
+                $array_diff ? $required_s = $this->array_diff_array($array_diff):$required_s = [];
                 $save = Branch::find($item);
                 $save->signers = $required_s;
                 $save->save();
@@ -323,7 +323,7 @@ class RoleController extends VoyagerRoleController
             $signer_1 = json_decode($model->add_signers);
             $array_merge = $signer_1 ? array_merge($signer_0,$signer_1):$signer_0;
             $array_diff =  array_diff(json_decode($model->signers),array($role->id));
-            $model->signers = null;
+            $model->signers = [];
             if($array_diff === null)
             {
                 foreach ($array_diff as $signer)
@@ -338,7 +338,7 @@ class RoleController extends VoyagerRoleController
             $signer_1 = json_decode($model->signers);
             $array_merge = $signer_1 ? array_merge($signer_0,$signer_1):$signer_0;
             $array_diff =  array_diff(json_decode($model->add_signers),array($role->id));
-            $model->add_signers = null;
+            $model->add_signers = [];
             if($array_diff === null)
             {
                 foreach ($array_diff as $signer)
