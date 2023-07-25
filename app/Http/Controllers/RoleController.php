@@ -228,7 +228,6 @@ class RoleController extends VoyagerRoleController
             {
                 $signerssss = json_decode($value);
                 $array_diff = array_diff($signerssss,array($role->id));
-                dd($array_diff);
                 $array_diff ? $required_s = $this->array_diff_array($array_diff):$required_s = [];
                 $save = Branch::find($item);
                 $save->signers = $required_s;
@@ -288,7 +287,6 @@ class RoleController extends VoyagerRoleController
             {
                 $signerssss = json_decode($value);
                 $array_diff = array_diff($signerssss,array($role->id));
-                dd($array_diff);
                 $array_diff ? $required_s = $this->array_diff_array($array_diff):$required_s = [];
                 $save = Branch::find($item);
                 $save->signers = $required_s;
