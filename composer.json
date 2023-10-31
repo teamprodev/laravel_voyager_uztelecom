@@ -30,7 +30,7 @@
         "spatie/laravel-permission": "v5.5.5",
         "spatie/laravel-translatable": "v4.6.0",
         "tcg/voyager": "v1.5.2",
-        "teamprodev/laravel-components": "1.3.0",
+        "teamprodev/laravel-components": "1.5.0",
         "teamprodev/laravel_dst_eimzo": "1.16",
         "vemcogroup/laravel-translation": "v3.0.7",
         "wildside/userstamps": "^2.2",
